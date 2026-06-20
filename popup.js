@@ -84,18 +84,61 @@ function setSearch(val) {
 
 let updateMode = "add";
 
+function handleTaskResult(response) {
+  const btn = document.getElementById("updateBtn");
+  btn.disabled = false;
+  btn.textContent = "查询并写入";
+  if (!response) {
+    setUpdateStatus("没有收到任何响应，本地程序可能异常退出了。", "err");
+    return;
+  }
+  if (response.ok) {
+    setUpdateStatus(
+      "✅ 完成！\n\n" +
+        (response.output || "（没有详细输出）") +
+        "\n\n正在自动重新加载插件，稍后重新打开面板即可看到新工具。",
+      "ok"
+    );
+    setTimeout(() => chrome.runtime.reload(), 1500);
+  } else {
+    setUpdateStatus("❌ 失败：" + (response.error || "未知错误"), "err");
+  }
+}
+
 function setupUpdateButton() {
   const btn = document.getElementById("updateBtn");
   const input = document.getElementById("updateTool");
   const modeBtns = document.querySelectorAll(".mode-btn");
+
+  // Listen for task completion broadcast from background service worker
+  chrome.runtime.onMessage.addListener((msg) => {
+    if (msg.action === "taskComplete") handleTaskResult(msg.response);
+  });
+
+  const HINTS = {
+    add:    "新增模式：从零查询该工具并加入列表。",
+    update: "更新模式：刷新已收录工具的最新内容。",
+    remove: "移除模式：删除数据文件并从筛选列表中移除。⚠️ 内置工具删除后需手动恢复。",
+  };
+  const PLACEHOLDERS = {
+    add:    "工具名，如 OpenCode / IntelliJ IDEA",
+    update: "已收录的工具名，如 Claude Code",
+    remove: "已收录的工具名，如 OpenCode",
+  };
+  const BTN_LABELS = {
+    add:    "查询并写入",
+    update: "检查并更新",
+    remove: "确认移除",
+  };
 
   modeBtns.forEach((mb) => {
     mb.addEventListener("click", () => {
       modeBtns.forEach((b) => b.classList.remove("active"));
       mb.classList.add("active");
       updateMode = mb.dataset.mode;
-      input.placeholder =
-        updateMode === "add" ? "工具名，如 OpenCode / IntelliJ IDEA" : "已收录的工具名，如 Claude Code";
+      input.placeholder = PLACEHOLDERS[updateMode] ?? PLACEHOLDERS.add;
+      document.getElementById("updateHint").textContent = HINTS[updateMode] ?? "";
+      btn.textContent = BTN_LABELS[updateMode] ?? "执行";
     });
   });
 
@@ -105,14 +148,10 @@ function setupUpdateButton() {
       setUpdateStatus("请先输入工具名称", "err");
       return;
     }
-    if (!chrome?.runtime?.sendNativeMessage) {
-      setUpdateStatus("当前浏览器环境不支持 Native Messaging，无法使用此功能。", "err");
-      return;
-    }
 
     const toolId = toToolId(displayName);
 
-    if (updateMode === "update" && !getAllData()[toolId]) {
+    if ((updateMode === "update" || updateMode === "remove") && !getAllData()[toolId]) {
       setUpdateStatus(
         `没有在已收录列表里找到「${displayName}」，如果是想新增这个工具，请切换到"➕ 新增工具"模式。`,
         "err"
@@ -120,41 +159,38 @@ function setupUpdateButton() {
       return;
     }
 
+    const RUNNING_LABELS = {
+      add:    "正在查询新工具…（最长15分钟）",
+      update: "正在检查更新…（请稍候）",
+      remove: "正在移除…",
+    };
+    const RUNNING_HINTS = {
+      add:    "已发送给后台 Claude Code，关闭此面板不会中断任务，可稍后重新打开查看结果…",
+      update: "已发送给后台 Claude Code，关闭此面板不会中断任务，可稍后重新打开查看结果…",
+      remove: "正在删除文件并更新 popup.html，请稍候…",
+    };
     btn.disabled = true;
-    btn.textContent = updateMode === "add" ? "正在查询新工具…（最长15分钟）" : "正在检查更新…（请稍候）";
-    setUpdateStatus("已发送请求给本机 Claude Code，正在后台处理，请耐心等待…", null);
+    btn.textContent = RUNNING_LABELS[updateMode] ?? "执行中…";
+    setUpdateStatus(RUNNING_HINTS[updateMode] ?? "", null);
 
-    chrome.runtime.sendNativeMessage(
-      NATIVE_HOST_NAME,
-      { action: "update_tool", tool: toolId, display_name: displayName, mode: updateMode },
+    chrome.runtime.sendMessage(
+      { action: "startTask", tool: toolId, display_name: displayName, mode: updateMode },
       (response) => {
-        btn.disabled = false;
-        btn.textContent = "查询并写入";
-
         if (chrome.runtime.lastError) {
+          btn.disabled = false;
+          btn.textContent = "查询并写入";
           setUpdateStatus(
-            "连接本地更新程序失败：" +
-              chrome.runtime.lastError.message +
-              "\n\n请确认已运行过 native-host/install.sh（macOS/Linux）或 install.ps1（Windows）安装脚本，并完全重启过浏览器。",
+            "连接后台服务失败：" + chrome.runtime.lastError.message + "\n请重新加载插件后重试。",
             "err"
           );
           return;
         }
-        if (!response) {
-          setUpdateStatus("没有收到任何响应，本地程序可能异常退出了。", "err");
-          return;
+        if (!response?.ok) {
+          btn.disabled = false;
+          btn.textContent = "查询并写入";
+          setUpdateStatus("❌ " + (response?.error ?? "启动失败"), "err");
         }
-        if (response.ok) {
-          setUpdateStatus(
-            "✅ 完成！\n\n" +
-              (response.output || "（没有详细输出）") +
-              "\n\n正在自动重新加载插件，稍后重新打开面板即可看到新工具。",
-            "ok"
-          );
-          setTimeout(() => chrome.runtime.reload(), 1500);
-        } else {
-          setUpdateStatus("❌ 失败：" + (response.error || "未知错误"), "err");
-        }
+        // ok + queued: stay in "running" state, result arrives via taskComplete message
       }
     );
   });
@@ -373,6 +409,20 @@ document.getElementById("search").addEventListener("input", render);
 document.addEventListener("DOMContentLoaded", () => {
   renderFilters();
   setupUpdateButton();
+
+  // Restore task state if the popup was closed while a task was running
+  chrome.runtime.sendMessage({ action: "getTaskStatus" }, (status) => {
+    if (chrome.runtime.lastError || !status) return;
+    if (status.running) {
+      const btn = document.getElementById("updateBtn");
+      btn.disabled = true;
+      btn.textContent = "正在后台执行中…";
+      setUpdateStatus("任务正在后台运行中，请耐心等待。关闭此面板不会中断任务。", null);
+    } else if (status.result && status.finishedAt && Date.now() - status.finishedAt < 30000) {
+      handleTaskResult(status.result);
+      chrome.storage.session.set({ taskStatus: { running: false } }).catch(() => {});
+    }
+  });
 
   loadFavourites(() => {
     if (chrome?.storage?.local) {

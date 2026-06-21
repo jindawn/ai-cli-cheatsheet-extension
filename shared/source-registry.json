@@ -1,107 +1,37 @@
 {
-  "_comment": "精确来源登记。托管平台不能按整个域名授信；只有列出的 URL 前缀可作为对应证据类型。",
+  "_comment": "来源信任和工具适用范围的单一数据源。Native Host、仓库校验器和迁移脚本均从这里读取，不再复制 URL 白名单。",
   "entries": [
-    {
-      "id": "linux-man7",
-      "urlPrefixes": [
-        "https://man7.org/linux/man-pages/",
-        "https://www.man7.org/linux/man-pages/"
-      ],
-      "maintainer": "Linux man-pages project / man7.org",
-      "toolIds": ["linux"],
-      "purposes": ["command-existence", "option-semantics", "examples"],
-      "evidenceTier": "authoritative-community",
-      "lastVerifiedAt": "2026-06-21"
-    },
-    {
-      "id": "tldr-pages",
-      "urlPrefixes": ["https://tldr.sh/"],
-      "maintainer": "tldr-pages community",
-      "toolIds": ["linux", "git"],
-      "purposes": ["examples"],
-      "evidenceTier": "authoritative-community",
-      "lastVerifiedAt": "2026-06-21"
-    },
-    {
-      "id": "ss64",
-      "urlPrefixes": ["https://ss64.com/"],
-      "maintainer": "SS64",
-      "toolIds": ["linux"],
-      "purposes": ["cross-check", "option-semantics", "examples"],
-      "evidenceTier": "authoritative-community",
-      "lastVerifiedAt": "2026-06-21"
-    },
-    {
-      "id": "debian-manpages",
-      "urlPrefixes": ["https://manpages.debian.org/"],
-      "maintainer": "Debian Project",
-      "toolIds": ["linux"],
-      "purposes": ["command-existence", "option-semantics", "cross-check"],
-      "evidenceTier": "authoritative-community",
-      "lastVerifiedAt": "2026-06-21"
-    },
-    {
-      "id": "mdn",
-      "urlPrefixes": ["https://developer.mozilla.org/"],
-      "maintainer": "Mozilla and MDN contributors",
-      "toolIds": ["cursor", "vs-code"],
-      "purposes": ["option-semantics", "examples", "cross-check"],
-      "evidenceTier": "authoritative-community",
-      "lastVerifiedAt": "2026-06-21"
-    },
-    {
-      "id": "archwiki",
-      "urlPrefixes": ["https://wiki.archlinux.org/"],
-      "maintainer": "Arch Linux community",
-      "toolIds": ["linux"],
-      "purposes": ["option-semantics", "examples", "cross-check"],
-      "evidenceTier": "authoritative-community",
-      "lastVerifiedAt": "2026-06-21"
-    },
-    {
-      "id": "devhints",
-      "urlPrefixes": ["https://devhints.io/"],
-      "maintainer": "Devhints maintainers",
-      "toolIds": ["git", "linux"],
-      "purposes": ["examples", "cross-check"],
-      "evidenceTier": "authoritative-community",
-      "lastVerifiedAt": "2026-06-21"
-    },
-    {
-      "id": "cheat-sh",
-      "urlPrefixes": ["https://cheat.sh/"],
-      "maintainer": "cheat.sh maintainers",
-      "toolIds": ["git", "linux"],
-      "purposes": ["examples", "cross-check"],
-      "evidenceTier": "authoritative-community",
-      "lastVerifiedAt": "2026-06-21"
-    },
-    {
-      "id": "openai-codex-repository",
-      "urlPrefixes": ["https://github.com/openai/codex"],
-      "maintainer": "OpenAI",
-      "toolIds": ["codex"],
-      "purposes": ["command-existence", "release-notes", "examples"],
-      "evidenceTier": "first-party",
-      "lastVerifiedAt": "2026-06-21"
-    },
-    {
-      "id": "anthropic-claude-code-repository",
-      "urlPrefixes": ["https://github.com/anthropics/claude-code"],
-      "maintainer": "Anthropic",
-      "toolIds": ["claude-code"],
-      "purposes": ["command-existence", "release-notes", "examples"],
-      "evidenceTier": "first-party",
-      "lastVerifiedAt": "2026-06-21"
-    },
-    {
-      "id": "google-gemini-cli-repository",
-      "urlPrefixes": ["https://github.com/google-gemini/gemini-cli"],
-      "maintainer": "Google",
-      "toolIds": ["gemini-cli"],
-      "purposes": ["command-existence", "release-notes", "examples"],
-      "evidenceTier": "first-party",
-      "lastVerifiedAt": "2026-06-21"
-    }
+    {"id":"antigravity-announcement","title":"Transitioning Gemini CLI to Antigravity CLI","canonicalUrl":"https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/","urlPrefixes":["https://developers.googleblog.com/"],"kind":"official-doc","maintainer":"Google","toolIds":["antigravity-cli"],"purposes":["command-existence","release-notes"],"evidenceTier":"first-party","lastVerifiedAt":"2026-06-21"},
+    {"id":"claude-interactive","title":"Claude Code interactive mode","canonicalUrl":"https://code.claude.com/docs/en/interactive-mode","urlPrefixes":["https://code.claude.com/docs/en/interactive-mode"],"kind":"official-doc","maintainer":"Anthropic","toolIds":["claude-code"],"purposes":["command-existence","option-semantics","examples"],"evidenceTier":"first-party","lastVerifiedAt":"2026-06-21"},
+    {"id":"claude-commands","title":"Claude Code commands","canonicalUrl":"https://code.claude.com/docs/en/commands","urlPrefixes":["https://code.claude.com/docs/en/commands"],"kind":"official-doc","maintainer":"Anthropic","toolIds":["claude-code"],"purposes":["command-existence","option-semantics","examples"],"evidenceTier":"first-party","lastVerifiedAt":"2026-06-21"},
+    {"id":"claude-cli-reference","title":"Claude Code CLI reference","canonicalUrl":"https://code.claude.com/docs/en/cli-reference","urlPrefixes":["https://code.claude.com/docs/en/cli-reference"],"kind":"official-doc","maintainer":"Anthropic","toolIds":["claude-code"],"purposes":["command-existence","option-semantics","examples"],"evidenceTier":"first-party","lastVerifiedAt":"2026-06-21"},
+    {"id":"anthropic-claude-code-repository","title":"Claude Code official repository","canonicalUrl":"https://github.com/anthropics/claude-code","urlPrefixes":["https://github.com/anthropics/claude-code"],"kind":"official-repository","maintainer":"Anthropic","toolIds":["claude-code"],"purposes":["command-existence","release-notes","examples"],"evidenceTier":"first-party","lastVerifiedAt":"2026-06-21"},
+    {"id":"codex-slash-commands","title":"Codex CLI slash commands","canonicalUrl":"https://developers.openai.com/codex/cli/slash-commands","urlPrefixes":["https://developers.openai.com/codex/cli/slash-commands"],"kind":"official-doc","maintainer":"OpenAI","toolIds":["codex"],"purposes":["command-existence","option-semantics","examples"],"evidenceTier":"first-party","lastVerifiedAt":"2026-06-21"},
+    {"id":"codex-cli-reference","title":"Codex CLI command-line options","canonicalUrl":"https://developers.openai.com/codex/cli/reference","urlPrefixes":["https://developers.openai.com/codex/cli/reference"],"kind":"official-doc","maintainer":"OpenAI","toolIds":["codex"],"purposes":["command-existence","option-semantics","examples"],"evidenceTier":"first-party","lastVerifiedAt":"2026-06-21"},
+    {"id":"codex-features","title":"Codex CLI features","canonicalUrl":"https://developers.openai.com/codex/cli/features","urlPrefixes":["https://developers.openai.com/codex/cli/features"],"kind":"official-doc","maintainer":"OpenAI","toolIds":["codex"],"purposes":["command-existence","option-semantics","examples"],"evidenceTier":"first-party","lastVerifiedAt":"2026-06-21"},
+    {"id":"openai-codex-repository","title":"Codex official repository","canonicalUrl":"https://github.com/openai/codex","urlPrefixes":["https://github.com/openai/codex"],"kind":"official-repository","maintainer":"OpenAI","toolIds":["codex"],"purposes":["command-existence","release-notes","examples"],"evidenceTier":"first-party","lastVerifiedAt":"2026-06-21"},
+    {"id":"gemini-commands","title":"Gemini CLI command reference","canonicalUrl":"https://geminicli.com/docs/reference/commands/","urlPrefixes":["https://geminicli.com/docs/reference/commands/"],"kind":"official-doc","maintainer":"Google","toolIds":["gemini-cli"],"purposes":["command-existence","option-semantics","examples"],"evidenceTier":"first-party","lastVerifiedAt":"2026-06-21"},
+    {"id":"gemini-keyboard","title":"Gemini CLI keyboard shortcuts","canonicalUrl":"https://geminicli.com/docs/reference/keyboard-shortcuts/","urlPrefixes":["https://geminicli.com/docs/reference/keyboard-shortcuts/"],"kind":"official-doc","maintainer":"Google","toolIds":["gemini-cli"],"purposes":["command-existence","option-semantics"],"evidenceTier":"first-party","lastVerifiedAt":"2026-06-21"},
+    {"id":"gemini-cli-reference","title":"Gemini CLI cheatsheet","canonicalUrl":"https://geminicli.com/docs/cli/cli-reference/","urlPrefixes":["https://geminicli.com/docs/cli/cli-reference/"],"kind":"official-doc","maintainer":"Google","toolIds":["gemini-cli"],"purposes":["command-existence","option-semantics","examples"],"evidenceTier":"first-party","lastVerifiedAt":"2026-06-21"},
+    {"id":"google-gemini-cli-repository","title":"Gemini CLI official repository","canonicalUrl":"https://github.com/google-gemini/gemini-cli","urlPrefixes":["https://github.com/google-gemini/gemini-cli"],"kind":"official-repository","maintainer":"Google","toolIds":["gemini-cli"],"purposes":["command-existence","release-notes","examples"],"evidenceTier":"first-party","lastVerifiedAt":"2026-06-21"},
+    {"id":"opencode-tui","title":"OpenCode TUI reference","canonicalUrl":"https://opencode.ai/docs/tui/","urlPrefixes":["https://opencode.ai/docs/tui/"],"kind":"official-doc","maintainer":"OpenCode","toolIds":["opencode"],"purposes":["command-existence","option-semantics","examples"],"evidenceTier":"first-party","lastVerifiedAt":"2026-06-21"},
+    {"id":"opencode-keybinds","title":"OpenCode keybinds","canonicalUrl":"https://opencode.ai/docs/keybinds/","urlPrefixes":["https://opencode.ai/docs/keybinds/"],"kind":"official-doc","maintainer":"OpenCode","toolIds":["opencode"],"purposes":["command-existence","option-semantics"],"evidenceTier":"first-party","lastVerifiedAt":"2026-06-21"},
+    {"id":"opencode-cli","title":"OpenCode CLI reference","canonicalUrl":"https://opencode.ai/docs/cli/","urlPrefixes":["https://opencode.ai/docs/cli/"],"kind":"official-doc","maintainer":"OpenCode","toolIds":["opencode"],"purposes":["command-existence","option-semantics","examples"],"evidenceTier":"first-party","lastVerifiedAt":"2026-06-21"},
+    {"id":"openclaw-slash","title":"OpenClaw slash commands","canonicalUrl":"https://docs.openclaw.ai/tools/slash-commands","urlPrefixes":["https://docs.openclaw.ai/tools/slash-commands"],"kind":"official-doc","maintainer":"OpenClaw","toolIds":["openclaw"],"purposes":["command-existence","option-semantics","examples"],"evidenceTier":"first-party","lastVerifiedAt":"2026-06-21"},
+    {"id":"openclaw-cli","title":"OpenClaw CLI reference","canonicalUrl":"https://docs.openclaw.ai/cli","urlPrefixes":["https://docs.openclaw.ai/cli"],"kind":"official-doc","maintainer":"OpenClaw","toolIds":["openclaw"],"purposes":["command-existence","option-semantics","examples"],"evidenceTier":"first-party","lastVerifiedAt":"2026-06-21"},
+    {"id":"cursor-shortcuts","title":"Cursor keyboard shortcuts","canonicalUrl":"https://docs.cursor.com/ide/reference/keyboard-shortcuts","urlPrefixes":["https://docs.cursor.com/ide/reference/keyboard-shortcuts"],"kind":"official-doc","maintainer":"Cursor","toolIds":["cursor"],"purposes":["command-existence","option-semantics"],"evidenceTier":"first-party","lastVerifiedAt":"2026-06-21"},
+    {"id":"vscode-keybindings","title":"VS Code keyboard shortcuts","canonicalUrl":"https://code.visualstudio.com/docs/configure/keybindings","urlPrefixes":["https://code.visualstudio.com/docs/configure/keybindings","https://code.visualstudio.com/docs/reference/default-keybindings"],"kind":"official-doc","maintainer":"Microsoft","toolIds":["vs-code"],"purposes":["command-existence","option-semantics"],"evidenceTier":"first-party","lastVerifiedAt":"2026-06-21"},
+    {"id":"idea-macos-keymap","title":"IntelliJ IDEA predefined macOS keymap","canonicalUrl":"https://www.jetbrains.com/help/idea/reference-keymap-mac-default.html","urlPrefixes":["https://www.jetbrains.com/help/idea/reference-keymap-mac-default.html","https://www.jetbrains.com/help/idea/mastering-keyboard-shortcuts.html"],"kind":"official-doc","maintainer":"JetBrains","toolIds":["idea"],"purposes":["command-existence","option-semantics"],"evidenceTier":"first-party","lastVerifiedAt":"2026-06-21"},
+    {"id":"typora-shortcuts","title":"Typora shortcut keys","canonicalUrl":"https://support.typora.io/Shortcut-Keys/","urlPrefixes":["https://support.typora.io/Shortcut-Keys/"],"kind":"official-doc","maintainer":"Typora","toolIds":["typora"],"purposes":["command-existence","option-semantics"],"evidenceTier":"first-party","lastVerifiedAt":"2026-06-21"},
+    {"id":"git-docs","title":"Git command reference","canonicalUrl":"https://git-scm.com/docs","urlPrefixes":["https://git-scm.com/docs"],"kind":"official-doc","maintainer":"Git project","toolIds":["git"],"purposes":["command-existence","option-semantics","examples"],"evidenceTier":"first-party","lastVerifiedAt":"2026-06-21"},
+    {"id":"gnu-manuals","title":"GNU manuals","canonicalUrl":"https://www.gnu.org/software/coreutils/manual/","urlPrefixes":["https://www.gnu.org/software/"],"kind":"official-doc","maintainer":"GNU Project","toolIds":["linux"],"purposes":["command-existence","option-semantics","examples"],"evidenceTier":"first-party","lastVerifiedAt":"2026-06-21"},
+    {"id":"linux-man7","title":"Linux man-pages and curated project manuals","canonicalUrl":"https://man7.org/linux/man-pages/index.html","urlPrefixes":["https://man7.org/linux/man-pages/","https://www.man7.org/linux/man-pages/"],"kind":"authoritative-reference","maintainer":"Linux man-pages project / man7.org","toolIds":["linux"],"purposes":["command-existence","option-semantics","examples"],"evidenceTier":"authoritative-community","lastVerifiedAt":"2026-06-21"},
+    {"id":"debian-manpages","title":"Debian manpages","canonicalUrl":"https://manpages.debian.org/","urlPrefixes":["https://manpages.debian.org/"],"kind":"authoritative-reference","maintainer":"Debian Project","toolIds":["linux"],"purposes":["command-existence","option-semantics","cross-check"],"evidenceTier":"authoritative-community","lastVerifiedAt":"2026-06-21"},
+    {"id":"tldr-pages","title":"tldr pages","canonicalUrl":"https://tldr.sh/","urlPrefixes":["https://tldr.sh/"],"kind":"authoritative-reference","maintainer":"tldr-pages community","toolIds":["linux","git"],"purposes":["examples"],"evidenceTier":"authoritative-community","lastVerifiedAt":"2026-06-21"},
+    {"id":"ss64","title":"SS64 command reference","canonicalUrl":"https://ss64.com/","urlPrefixes":["https://ss64.com/"],"kind":"authoritative-reference","maintainer":"SS64","toolIds":["linux"],"purposes":["cross-check","option-semantics","examples"],"evidenceTier":"authoritative-community","lastVerifiedAt":"2026-06-21"},
+    {"id":"archwiki","title":"ArchWiki","canonicalUrl":"https://wiki.archlinux.org/","urlPrefixes":["https://wiki.archlinux.org/"],"kind":"authoritative-reference","maintainer":"Arch Linux community","toolIds":["linux"],"purposes":["option-semantics","examples","cross-check"],"evidenceTier":"authoritative-community","lastVerifiedAt":"2026-06-21"},
+    {"id":"mdn","title":"MDN Web Docs","canonicalUrl":"https://developer.mozilla.org/","urlPrefixes":["https://developer.mozilla.org/"],"kind":"authoritative-reference","maintainer":"Mozilla and MDN contributors","toolIds":["cursor","vs-code"],"purposes":["option-semantics","examples","cross-check"],"evidenceTier":"authoritative-community","lastVerifiedAt":"2026-06-21"},
+    {"id":"devhints","title":"Devhints","canonicalUrl":"https://devhints.io/","urlPrefixes":["https://devhints.io/"],"kind":"authoritative-reference","maintainer":"Devhints maintainers","toolIds":["git","linux"],"purposes":["examples","cross-check"],"evidenceTier":"authoritative-community","lastVerifiedAt":"2026-06-21"},
+    {"id":"cheat-sh","title":"cheat.sh","canonicalUrl":"https://cheat.sh/","urlPrefixes":["https://cheat.sh/"],"kind":"authoritative-reference","maintainer":"cheat.sh maintainers","toolIds":["git","linux"],"purposes":["examples","cross-check"],"evidenceTier":"authoritative-community","lastVerifiedAt":"2026-06-21"}
   ]
 }

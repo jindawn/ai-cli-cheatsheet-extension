@@ -78,32 +78,42 @@ SOURCE_KINDS = {
 AUTHORSHIPS = {"official", "editorial", "generated"}
 EVIDENCE_TIERS = {"first-party", "authoritative-community", "community", "none"}
 ADAPTATIONS = {"verbatim", "adapted", "scenario-derived"}
-QUASI_OFFICIAL_DOMAINS = (
-    "tldr.sh",
-    "man7.org",
-    "ss64.com",
-    "manpages.debian.org",
-    "developer.mozilla.org",
-    "wiki.archlinux.org",
-    "devhints.io",
-    "cheat.sh",
+EVIDENCE_STATUSES = {"verified", "partial", "unverified"}
+
+
+def load_source_registry():
+    registry_path = os.path.join(
+        os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+        "shared",
+        "source-registry.json",
+    )
+    with open(registry_path, "r", encoding="utf-8") as handle:
+        payload = json.load(handle)
+    entries = payload.get("entries")
+    if not isinstance(entries, list) or not entries:
+        raise RuntimeError("shared/source-registry.json 缺少 entries")
+    return entries
+
+
+SOURCE_REGISTRY = load_source_registry()
+SOURCE_REGISTRY_BY_ID = {entry["id"]: entry for entry in SOURCE_REGISTRY}
+AUTHORITATIVE_SOURCE_PREFIXES = tuple(
+    prefix
+    for entry in SOURCE_REGISTRY
+    if entry.get("kind") == "authoritative-reference"
+    for prefix in entry.get("urlPrefixes", [])
 )
-AUTHORITATIVE_SOURCE_PREFIXES = (
-    "https://man7.org/linux/man-pages/",
-    "https://www.man7.org/linux/man-pages/",
-    "https://tldr.sh/",
-    "https://ss64.com/",
-    "https://manpages.debian.org/",
-    "https://developer.mozilla.org/",
-    "https://wiki.archlinux.org/",
-    "https://devhints.io/",
-    "https://cheat.sh/",
+OFFICIAL_REPOSITORY_PREFIXES = tuple(
+    prefix
+    for entry in SOURCE_REGISTRY
+    if entry.get("kind") == "official-repository"
+    for prefix in entry.get("urlPrefixes", [])
 )
-OFFICIAL_REPOSITORY_PREFIXES = (
-    "https://github.com/openai/codex",
-    "https://github.com/anthropics/claude-code",
-    "https://github.com/google-gemini/gemini-cli",
-)
+QUASI_OFFICIAL_DOMAINS = tuple(sorted({
+    urllib.parse.urlparse(prefix).hostname.removeprefix("www.")
+    for prefix in AUTHORITATIVE_SOURCE_PREFIXES
+    if urllib.parse.urlparse(prefix).hostname
+}))
 
 
 def host_in_quasi_official_whitelist(url):
@@ -120,6 +130,15 @@ def host_in_quasi_official_whitelist(url):
 
 def url_matches_prefixes(url, prefixes):
     return bool(url) and any(url == prefix.rstrip("/") or url.startswith(prefix) for prefix in prefixes)
+
+
+def matching_registry_entry(tool_id, registry_id, kind, url):
+    entry = SOURCE_REGISTRY_BY_ID.get(registry_id)
+    if not entry or tool_id not in entry.get("toolIds", []) or entry.get("kind") != kind:
+        return None
+    if kind == "local-help":
+        return entry
+    return entry if url_matches_prefixes(url, entry.get("urlPrefixes", [])) else None
 
 
 def validate_source_ids(value, field, known_ids):
@@ -416,6 +435,9 @@ def validate_dataset(payload, expected_tool_id, require_structured_source=True):
             raise ValidationError(f"meta.sources[{source_index}] 必须是对象")
         field = f"meta.sources[{source_index}]"
         source_id = checked_text(source.get("id"), f"{field}.id")
+        registry_id = checked_text(
+            source.get("registryId"), f"{field}.registryId", required=False
+        ) or source_id
         if not re.fullmatch(r"[a-zA-Z0-9_-]{2,64}", source_id):
             raise ValidationError(f"{field}.id 非法")
         if source_id in source_ids:
@@ -430,12 +452,13 @@ def validate_dataset(payload, expected_tool_id, require_structured_source=True):
         url = checked_text(source.get("url"), f"{field}.url", required=kind != "local-help")
         if url and not re.fullmatch(r"https://[^\s]+", url):
             raise ValidationError(f"{field}.url 必须是 HTTPS URL")
-        if kind == "official-repository" and not url_matches_prefixes(url, OFFICIAL_REPOSITORY_PREFIXES):
-            raise ValidationError(f"{field} 不是已登记的官方仓库")
-        if kind == "authoritative-reference" and not url_matches_prefixes(
-            url, AUTHORITATIVE_SOURCE_PREFIXES
+        if kind in {"official-repository", "authoritative-reference"} and not matching_registry_entry(
+            expected_tool_id, registry_id, kind, url
         ):
-            raise ValidationError(f"{field} 不是已登记的权威第三方来源")
+            raise ValidationError(f"{field} 不匹配来源登记中的工具、类型或 URL 范围")
+        if kind in {"local-help", "official-doc", "release-notes"} and registry_id in SOURCE_REGISTRY_BY_ID:
+            if not matching_registry_entry(expected_tool_id, registry_id, kind, url):
+                raise ValidationError(f"{field} 不匹配来源登记中的工具、类型或 URL 范围")
         if kind in {"local-help", "official-doc", "official-repository", "release-notes"}:
             if evidence_tier != "first-party":
                 raise ValidationError(f"{field} 的 evidenceTier 必须为 first-party")
@@ -459,6 +482,8 @@ def validate_dataset(payload, expected_tool_id, require_structured_source=True):
             "evidenceTier": evidence_tier,
             "purposes": list(dict.fromkeys(purpose.strip() for purpose in purposes)),
         }
+        if registry_id != source_id:
+            clean_source["registryId"] = registry_id
         if url:
             clean_source["url"] = url
         if verified_at:
@@ -495,6 +520,22 @@ def validate_dataset(payload, expected_tool_id, require_structured_source=True):
         )
         if item_source_ids:
             clean_item["sourceIds"] = item_source_ids
+        evidence_status = item.get("evidenceStatus")
+        if evidence_status is None and not require_structured_source:
+            evidence_status = "verified" if item_source_ids else "unverified"
+        if evidence_status not in EVIDENCE_STATUSES:
+            raise ValidationError(
+                f"items[{index}].evidenceStatus 必须是 verified、partial 或 unverified"
+            )
+        if evidence_status in {"verified", "partial"} and not item_source_ids:
+            raise ValidationError(
+                f"items[{index}] 标记为 {evidence_status} 时必须包含 sourceIds"
+            )
+        if evidence_status == "unverified" and item_source_ids:
+            raise ValidationError(
+                f"items[{index}] 标记为 unverified 时不得包含 sourceIds"
+            )
+        clean_item["evidenceStatus"] = evidence_status
         keywords = item.get("keywords")
         if keywords is not None:
             if (
@@ -750,6 +791,12 @@ def build_quality_warnings(dataset, previous_dataset=None):
     evidenced = sum(1 for item in items if item.get("sourceIds"))
     if evidenced < expected:
         warnings.append(f"逐条证据覆盖不足：当前 {evidenced} 条，目标 {expected} 条")
+    partial = sum(1 for item in items if item.get("evidenceStatus") == "partial")
+    unverified_items = sum(1 for item in items if item.get("evidenceStatus") == "unverified")
+    if partial:
+        warnings.append(f"部分核验条目：{partial} 条")
+    if unverified_items:
+        warnings.append(f"未核验条目：{unverified_items} 条")
     examples = [
         example for item in items for example in (item.get("examples") or [])
     ]
@@ -827,10 +874,10 @@ def extract_json_output(stdout):
 
 
 def build_source_discovery_prompt(tool_id, display_name, mode, web_enabled):
-    registry = {
-        "authoritativeSourcePrefixes": AUTHORITATIVE_SOURCE_PREFIXES,
-        "officialRepositoryPrefixes": OFFICIAL_REPOSITORY_PREFIXES,
-    }
+    registry = [
+        entry for entry in SOURCE_REGISTRY
+        if tool_id in entry.get("toolIds", [])
+    ]
     network_rule = (
         "你可以联网逐个打开并核对 URL。"
         if web_enabled else
@@ -961,6 +1008,7 @@ JSON 格式：
       "context": "可选；相同 cmd 在不同场景出现时必须填写",
       "keywords": ["3到8个用户常用用途词"],
       "sourceIds": ["支持该命令存在和语义的来源ID"],
+      "evidenceStatus": "verified|partial|unverified",
       "examples": [
         {{
           "scenario": "用户在什么情况下需要它",
@@ -997,7 +1045,7 @@ JSON 格式：
 4. 同一 cat、cmd、context 组合不得重复。
 5. 更新时保留仍有效的条目及其 id，只修改确有变化的内容。{upgrade_note}
 6. 所有字符串必须是有效 JSON 字符串。
-7. sources、updatedAt、coverage 必须填写；每个 item 必须用 sourceIds 绑定证据；平台快捷键应尽量使用 platformCmds 表达。
+7. sources、updatedAt、coverage 必须填写。每个 item 必须填写 evidenceStatus：verified/partial 必须绑定 sourceIds，unverified 不得绑定 sourceIds；平台快捷键应尽量使用 platformCmds 表达。
 8. 每个条目都必须提供 keywords 和 examples；每条最多 3 个示例。
 9. CLI 示例必须是完整可执行命令；IDE/快捷键示例写具体操作场景并设 copyable=false；案例应包含 scenario、goal、expected，说明何时用、结果是什么以及不要与什么混淆。
 10. 更新时保留已有 keywords 和 examples，并为所有新增条目补充关键词和示例。
@@ -1226,7 +1274,7 @@ def item_signature(item):
         key: item.get(key)
         for key in (
             "cat", "cmd", "en", "zh", "context", "keywords", "examples",
-            "sourceIds", "platforms", "platformCmds",
+            "sourceIds", "evidenceStatus", "platforms", "platformCmds",
         )
         if key in item
     }
@@ -1305,6 +1353,18 @@ def build_dataset_diff(old_dataset, new_dataset):
     evidence_rank = {
         "none": 0, "community": 1, "authoritative-community": 2, "first-party": 3
     }
+    status_rank = {"unverified": 0, "partial": 1, "verified": 2}
+    old_statuses = {
+        item["id"]: status_rank.get(item.get("evidenceStatus", "unverified"), 0)
+        for item in old_dataset.get("items", []) if item.get("id")
+    }
+    status_downgrades = [
+        item["id"] for item in new_dataset.get("items", [])
+        if item.get("id") in old_statuses
+        and status_rank.get(item.get("evidenceStatus", "unverified"), 0) < old_statuses[item["id"]]
+    ]
+    if status_downgrades:
+        risks.append(f"{len(status_downgrades)} 个条目的核验状态下降")
     old_evidence = {
         item["id"]: max(
             [evidence_rank.get(example.get("evidenceTier", "none"), 0)
@@ -1356,6 +1416,7 @@ def build_dataset_diff(old_dataset, new_dataset):
             "modified": modified_sources,
             "conflicts": source_conflicts,
             "evidenceDowngrades": evidence_downgrades,
+            "statusDowngrades": status_downgrades,
         },
         "risks": risks,
     }

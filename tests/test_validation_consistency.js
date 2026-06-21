@@ -10,6 +10,7 @@ const path = require("path");
 
 const root = path.resolve(__dirname, "..");
 const rules = require(path.join(root, "shared", "validation-rules.json"));
+const registry = require(path.join(root, "shared", "source-registry.json"));
 const hostPy = fs.readFileSync(path.join(root, "native-host", "host.py"), "utf8");
 
 // 1) JSON 正则可编译且行为正确（基本健全性）。
@@ -42,19 +43,14 @@ assert.strictEqual(hostConstant("MIN_KEYWORDS"), rules.keywords.min, "MIN_KEYWOR
 assert.strictEqual(hostConstant("MAX_KEYWORDS"), rules.keywords.max, "MAX_KEYWORDS 不一致");
 assert.strictEqual(hostConstant("MAX_EXAMPLES"), rules.examples.max, "MAX_EXAMPLES 不一致");
 
-// 4) host.py 镜像同样的来源信任档位与类官方白名单域名。
+// 4) 来源枚举保持一致；URL 范围只允许来自 source-registry.json。
 for (const tier of rules.sourceTiers) {
   assert(hostPy.includes(`"${tier}"`), `host.py SOURCE_TIERS 缺少档位 ${tier}`);
 }
-for (const domain of rules.quasiOfficialDomains) {
-  assert(hostPy.includes(`"${domain}"`), `host.py QUASI_OFFICIAL_DOMAINS 缺少域名 ${domain}`);
-}
-assert(!rules.quasiOfficialDomains.includes("readthedocs.io"), "托管平台不能整体进入权威白名单");
-for (const prefix of rules.authoritativeSourcePrefixes) {
-  assert(hostPy.includes(`"${prefix}"`), `host.py AUTHORITATIVE_SOURCE_PREFIXES 缺少 ${prefix}`);
-}
-for (const prefix of rules.officialRepositoryPrefixes) {
-  assert(hostPy.includes(`"${prefix}"`), `host.py OFFICIAL_REPOSITORY_PREFIXES 缺少 ${prefix}`);
-}
+assert(!("quasiOfficialDomains" in rules), "来源域名不得在 validation-rules.json 重复维护");
+assert(!("authoritativeSourcePrefixes" in rules), "权威 URL 前缀只能来自 source registry");
+assert(!("officialRepositoryPrefixes" in rules), "官方仓库前缀只能来自 source registry");
+assert(hostPy.includes("load_source_registry"), "host.py 必须动态读取 source registry");
+assert(registry.entries.length >= 20, "source registry should cover built-in tool sources");
 
 console.log("Validation consistency tests passed.");

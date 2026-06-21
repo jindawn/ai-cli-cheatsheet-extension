@@ -2,7 +2,7 @@
 
 一个面向 Chrome / Edge 的本地速查扩展，用于查询 AI CLI、编辑器和常用开发工具的命令、参数与快捷键。
 
-当前包含 **12 个工具、874 条数据**，每条均提供语义关键词和用法示例，并支持平台适配、收藏、最近使用和工具筛选。基础查询完全在浏览器本地完成，不上传搜索词或使用记录；只有可选的“新增工具 / 检查更新”功能会调用本机 Claude Code 或配置的 Anthropic 兼容 API。
+当前包含 **12 个工具、888 条数据**，每条均提供语义关键词、用法示例和明确核验状态，并支持平台适配、收藏、最近使用和工具筛选。基础查询完全在浏览器本地完成，不上传搜索词或使用记录；只有可选的“新增工具 / 检查更新”功能会调用本机 Claude Code 或配置的 Anthropic 兼容 API。
 
 ## 支持内容
 
@@ -109,9 +109,11 @@ data/*.js                   各工具数据
 data/index.js               数据文件索引
 usage-examples.js           公共示例派生、风险分类与兼容富化
 enrichments/                按工具拆分、以稳定 item.id 关联的人工核验示例
+shared/source-registry.json  内置工具来源、URL 范围与适用工具的单一登记表
 background.js               弹窗与 Native Host 的任务桥接
 native-host/host.py         模型调用、数据校验、差异计算和原子写入
 tools/validate-data.js      数据文件静态校验
+tools/migrate-built-in-evidence.js  可重复运行的内置数据证据迁移脚本
 tests/                      搜索核心与 Native Host 单元测试
 ```
 

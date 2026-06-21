@@ -15,14 +15,13 @@ const MAX_EXAMPLES = rules.examples.max;
 const DANGEROUS_EXAMPLE_RE = new RegExp(rules.dangerousExample.source, rules.dangerousExample.flags);
 const POSSIBLE_SECRET_RE = new RegExp(rules.possibleSecret.source, rules.possibleSecret.flags);
 const SOURCE_TIERS = rules.sourceTiers;
-const QUASI_OFFICIAL_DOMAINS = rules.quasiOfficialDomains;
 const SOURCE_KINDS = rules.sourceKinds;
 const AUTHORSHIPS = rules.authorships;
 const EVIDENCE_TIERS = rules.evidenceTiers;
 const ADAPTATIONS = rules.adaptations;
-const AUTHORITATIVE_SOURCE_PREFIXES = rules.authoritativeSourcePrefixes;
-const OFFICIAL_REPOSITORY_PREFIXES = rules.officialRepositoryPrefixes;
+const EVIDENCE_STATUSES = rules.evidenceStatuses;
 const EXAMPLE_SOURCE_TYPES = ["official", "quasi-official", "manual", "ai-derived"];
+const REGISTRY_BY_ID = new Map(sourceRegistry.entries.map((entry) => [entry.id, entry]));
 
 const context = { window: {} };
 vm.createContext(context);
@@ -34,13 +33,9 @@ function fail(message) {
 // 类官方来源（tier / sourceType = quasi-official）的 sourceUrl 主机名必须命中白名单，
 // 防止把任意第三方页面冒充成可信参考。空 URL 由各调用点单独处理。
 function hostInQuasiOfficialWhitelist(url) {
-  let host;
-  try {
-    host = new URL(url).hostname.toLowerCase();
-  } catch {
-    return false;
-  }
-  return QUASI_OFFICIAL_DOMAINS.some((domain) => host === domain || host.endsWith(`.${domain}`));
+  return sourceRegistry.entries.some((entry) =>
+    entry.kind === "authoritative-reference" && matchesPrefix(url, entry.urlPrefixes)
+  );
 }
 
 function matchesPrefix(url, prefixes) {
@@ -56,8 +51,20 @@ function sameSourceHost(left, right) {
   }
 }
 
+function matchesRegisteredSource(toolId, source) {
+  const entry = REGISTRY_BY_ID.get(source.registryId || source.id);
+  return Boolean(
+    entry
+    && entry.kind === source.kind
+    && entry.toolIds.includes(toolId)
+    && (source.kind === "local-help" || matchesPrefix(source.url, entry.urlPrefixes))
+  );
+}
+
 for (const entry of sourceRegistry.entries || []) {
   if (!entry.id || !Array.isArray(entry.urlPrefixes) || !entry.urlPrefixes.length
+    || !entry.title || !/^https:\/\/\S+$/.test(entry.canonicalUrl || "")
+    || !SOURCE_KINDS.includes(entry.kind)
     || !entry.maintainer || !Array.isArray(entry.toolIds) || !entry.toolIds.length
     || !Array.isArray(entry.purposes) || !entry.purposes.length
     || !EVIDENCE_TIERS.includes(entry.evidenceTier)
@@ -68,6 +75,9 @@ for (const entry of sourceRegistry.entries || []) {
     if (!/^https:\/\/\S+$/.test(prefix)) fail(`source registry URL invalid: ${prefix}`);
   }
 }
+if (sourceRegistry.entries.some((entry) =>
+  entry.urlPrefixes.some((prefix) => /^https:\/\/(?:[^/]+\.)?readthedocs\.io\/?$/.test(prefix))
+)) fail("source registry must not trust the whole readthedocs.io hosting domain");
 
 vm.runInContext(fs.readFileSync(path.join(dataDir, "index.js"), "utf8"), context, {
   filename: "data/index.js",
@@ -177,18 +187,11 @@ for (const id of files) {
       if (source.kind !== "local-help" && !/^https:\/\/\S+$/.test(source.url || "")) {
         fail(`${id}: source URL required`);
       }
-      if (source.kind === "official-repository"
-        && !matchesPrefix(source.url, OFFICIAL_REPOSITORY_PREFIXES)) {
-        fail(`${id}: unregistered official repository`);
-      }
-      if (source.kind === "authoritative-reference"
-        && !matchesPrefix(source.url, AUTHORITATIVE_SOURCE_PREFIXES)) {
-        fail(`${id}: unregistered authoritative source`);
-      }
+      if (!matchesRegisteredSource(id, source)) fail(`${id}: source ${source.id} is not registered for this tool`);
       if (!Array.isArray(source.purposes) || !source.purposes.length) fail(`${id}: source purposes required`);
       if (!source.title || !source.maintainer) fail(`${id}: source title and maintainer required`);
     }
-  }
+  } else fail(`${id}: meta.sources required`);
   if (tool.meta.platforms !== undefined && (
     !Array.isArray(tool.meta.platforms)
     || tool.meta.platforms.some((platform) => !["mac", "windows", "linux"].includes(platform))
@@ -207,11 +210,23 @@ for (const id of files) {
     if (item.context !== undefined && (typeof item.context !== "string" || !item.context.trim())) {
       fail(`${id}[${index}]: invalid context`);
     }
+    if (typeof item.id !== "string" || !/^[a-zA-Z0-9_-]{4,64}$/.test(item.id)) {
+      fail(`${id}[${index}]: stable id required`);
+    }
     if (item.sourceIds !== undefined && (
       !Array.isArray(item.sourceIds)
       || !item.sourceIds.length
       || item.sourceIds.some((sourceId) => !sourceIds.has(sourceId))
     )) fail(`${id}[${index}]: invalid sourceIds`);
+    if (!EVIDENCE_STATUSES.includes(item.evidenceStatus)) {
+      fail(`${id}[${index}]: invalid evidenceStatus`);
+    }
+    if (["verified", "partial"].includes(item.evidenceStatus) && !item.sourceIds?.length) {
+      fail(`${id}[${index}]: ${item.evidenceStatus} requires sourceIds`);
+    }
+    if (item.evidenceStatus === "unverified" && item.sourceIds !== undefined) {
+      fail(`${id}[${index}]: unverified items must not carry sourceIds`);
+    }
     // 有效 keywords/examples = 条目自带 优先，否则回退到 curated 富化（旁路表，不改写数据）。
     const enrichment = enrichmentByItem.get(item) || {};
     const keywords = item.keywords ?? enrichment.keywords;
@@ -246,7 +261,11 @@ for (const id of files) {
         }
         if (example.sourceType === "official" && example.sourceUrl
           && !sameSourceHost(example.sourceUrl, tool.meta.sourceUrl)
-          && !matchesPrefix(example.sourceUrl, OFFICIAL_REPOSITORY_PREFIXES)) {
+          && !sourceRegistry.entries.some((entry) =>
+            entry.evidenceTier === "first-party"
+            && entry.toolIds.includes(id)
+            && matchesPrefix(example.sourceUrl, entry.urlPrefixes)
+          )) {
           fail(`${id}[${index}].examples[${exampleIndex}]: official source must be first-party`);
         }
         if (!AUTHORSHIPS.includes(example.authorship)) {

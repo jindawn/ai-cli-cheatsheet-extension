@@ -214,11 +214,22 @@
     return `按 ${item.cmd}${item.context ? `（${item.context}）` : ""}`;
   }
 
+  // ASCII 触发词要求前置词边界，避免词内误匹配（'cp ' 命中 'mcp'、'rm ' 命中 'confirm'、
+  // 'init' 命中 'definitions'）注入错误的搜索同义词；中文触发词仍按子串匹配。
+  function triggerHit(haystack, trigger) {
+    const token = trigger.trim();
+    if (/^[\x00-\x7F]+$/.test(token)) {
+      const escaped = token.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      return new RegExp(`(?:^|[^a-z0-9])${escaped}`, "i").test(haystack);
+    }
+    return haystack.includes(trigger);
+  }
+
   function deriveKeywords(item) {
     const haystack = `${item.cmd} ${item.zh} ${item.en} ${item.context || ""}`.toLowerCase();
     const keywords = [];
     KEYWORD_RULES.forEach(([triggers, values]) => {
-      if (triggers.some((trigger) => haystack.includes(trigger))) keywords.push(...values);
+      if (triggers.some((trigger) => triggerHit(haystack, trigger))) keywords.push(...values);
     });
     const fallback = [
       item.zh,

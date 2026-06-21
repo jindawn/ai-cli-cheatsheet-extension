@@ -15,7 +15,157 @@ window.CHEATSHEET_DATA["linux"] = {
       "linux",
       "mac"
     ],
-    "order": 999
+    "order": 999,
+    "sources": [
+      {
+        "id": "gnu-manuals",
+        "title": "GNU manuals",
+        "url": "https://www.gnu.org/software/coreutils/manual/",
+        "kind": "official-doc",
+        "maintainer": "GNU Project",
+        "evidenceTier": "first-party",
+        "lastVerifiedAt": "2026-06-21",
+        "purposes": [
+          "command-existence",
+          "option-semantics",
+          "examples"
+        ]
+      },
+      {
+        "id": "linux-man7",
+        "title": "Linux man-pages and curated project manuals",
+        "url": "https://man7.org/linux/man-pages/index.html",
+        "kind": "authoritative-reference",
+        "maintainer": "Linux man-pages project / man7.org",
+        "evidenceTier": "authoritative-community",
+        "lastVerifiedAt": "2026-06-21",
+        "purposes": [
+          "command-existence",
+          "option-semantics",
+          "examples"
+        ]
+      },
+      {
+        "id": "linux-ps-man",
+        "registryId": "linux-man7",
+        "title": "ps(1) manual page",
+        "url": "https://man7.org/linux/man-pages/man1/ps.1.html",
+        "kind": "authoritative-reference",
+        "maintainer": "Linux man-pages project / man7.org",
+        "evidenceTier": "authoritative-community",
+        "lastVerifiedAt": "2026-06-21",
+        "purposes": [
+          "command-existence",
+          "option-semantics",
+          "examples"
+        ]
+      },
+      {
+        "id": "linux-kill-man",
+        "registryId": "linux-man7",
+        "title": "kill(1) manual page",
+        "url": "https://man7.org/linux/man-pages/man1/kill.1.html",
+        "kind": "authoritative-reference",
+        "maintainer": "Linux man-pages project / man7.org",
+        "evidenceTier": "authoritative-community",
+        "lastVerifiedAt": "2026-06-21",
+        "purposes": [
+          "command-existence",
+          "option-semantics",
+          "examples"
+        ]
+      },
+      {
+        "id": "linux-top-man",
+        "registryId": "linux-man7",
+        "title": "top(1) manual page",
+        "url": "https://man7.org/linux/man-pages/man1/top.1.html",
+        "kind": "authoritative-reference",
+        "maintainer": "Linux man-pages project / man7.org",
+        "evidenceTier": "authoritative-community",
+        "lastVerifiedAt": "2026-06-21",
+        "purposes": [
+          "command-existence",
+          "option-semantics",
+          "examples"
+        ]
+      },
+      {
+        "id": "linux-grep-man",
+        "registryId": "linux-man7",
+        "title": "grep(1) manual page",
+        "url": "https://man7.org/linux/man-pages/man1/grep.1.html",
+        "kind": "authoritative-reference",
+        "maintainer": "Linux man-pages project / man7.org",
+        "evidenceTier": "authoritative-community",
+        "lastVerifiedAt": "2026-06-21",
+        "purposes": [
+          "command-existence",
+          "option-semantics",
+          "examples"
+        ]
+      },
+      {
+        "id": "linux-find-man",
+        "registryId": "linux-man7",
+        "title": "find(1) manual page",
+        "url": "https://man7.org/linux/man-pages/man1/find.1.html",
+        "kind": "authoritative-reference",
+        "maintainer": "Linux man-pages project / man7.org",
+        "evidenceTier": "authoritative-community",
+        "lastVerifiedAt": "2026-06-21",
+        "purposes": [
+          "command-existence",
+          "option-semantics",
+          "examples"
+        ]
+      },
+      {
+        "id": "linux-diff-man",
+        "registryId": "linux-man7",
+        "title": "diff(1) manual page",
+        "url": "https://man7.org/linux/man-pages/man1/diff.1.html",
+        "kind": "authoritative-reference",
+        "maintainer": "Linux man-pages project / man7.org",
+        "evidenceTier": "authoritative-community",
+        "lastVerifiedAt": "2026-06-21",
+        "purposes": [
+          "command-existence",
+          "option-semantics",
+          "examples"
+        ]
+      },
+      {
+        "id": "linux-free-man",
+        "registryId": "linux-man7",
+        "title": "free(1) manual page",
+        "url": "https://man7.org/linux/man-pages/man1/free.1.html",
+        "kind": "authoritative-reference",
+        "maintainer": "Linux man-pages project / man7.org",
+        "evidenceTier": "authoritative-community",
+        "lastVerifiedAt": "2026-06-21",
+        "purposes": [
+          "command-existence",
+          "option-semantics",
+          "examples"
+        ]
+      },
+      {
+        "id": "linux-ping-man",
+        "registryId": "linux-man7",
+        "title": "ping(1) manual page",
+        "url": "https://man7.org/linux/man-pages/man1/ping.1.html",
+        "kind": "authoritative-reference",
+        "maintainer": "Linux man-pages project / man7.org",
+        "evidenceTier": "authoritative-community",
+        "lastVerifiedAt": "2026-06-21",
+        "purposes": [
+          "command-existence",
+          "option-semantics",
+          "examples"
+        ]
+      }
+    ]
   },
   "items": [
     {
@@ -27,7 +177,11 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-ls"
+      "id": "linux-ls",
+      "evidenceStatus": "partial",
+      "sourceIds": [
+        "gnu-manuals"
+      ]
     },
     {
       "cat": "flag",
@@ -38,7 +192,11 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-ls-l"
+      "id": "linux-ls-l",
+      "evidenceStatus": "partial",
+      "sourceIds": [
+        "gnu-manuals"
+      ]
     },
     {
       "cat": "flag",
@@ -49,7 +207,11 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-ls-a"
+      "id": "linux-ls-a",
+      "evidenceStatus": "partial",
+      "sourceIds": [
+        "gnu-manuals"
+      ]
     },
     {
       "cat": "flag",
@@ -60,7 +222,11 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-ls-la"
+      "id": "linux-ls-la",
+      "evidenceStatus": "partial",
+      "sourceIds": [
+        "gnu-manuals"
+      ]
     },
     {
       "cat": "flag",
@@ -72,7 +238,8 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-cd"
+      "id": "linux-cd",
+      "evidenceStatus": "unverified"
     },
     {
       "cat": "flag",
@@ -84,7 +251,8 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-cd-parent"
+      "id": "linux-cd-parent",
+      "evidenceStatus": "unverified"
     },
     {
       "cat": "flag",
@@ -95,7 +263,11 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-pwd"
+      "id": "linux-pwd",
+      "evidenceStatus": "partial",
+      "sourceIds": [
+        "gnu-manuals"
+      ]
     },
     {
       "cat": "flag",
@@ -106,7 +278,11 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-mkdir"
+      "id": "linux-mkdir",
+      "evidenceStatus": "partial",
+      "sourceIds": [
+        "gnu-manuals"
+      ]
     },
     {
       "cat": "flag",
@@ -117,7 +293,11 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-mkdir-p"
+      "id": "linux-mkdir-p",
+      "evidenceStatus": "partial",
+      "sourceIds": [
+        "gnu-manuals"
+      ]
     },
     {
       "cat": "flag",
@@ -128,7 +308,11 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-cp"
+      "id": "linux-cp",
+      "evidenceStatus": "partial",
+      "sourceIds": [
+        "gnu-manuals"
+      ]
     },
     {
       "cat": "flag",
@@ -139,7 +323,11 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-cp-r"
+      "id": "linux-cp-r",
+      "evidenceStatus": "partial",
+      "sourceIds": [
+        "gnu-manuals"
+      ]
     },
     {
       "cat": "flag",
@@ -150,7 +338,11 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-mv"
+      "id": "linux-mv",
+      "evidenceStatus": "partial",
+      "sourceIds": [
+        "gnu-manuals"
+      ]
     },
     {
       "cat": "flag",
@@ -161,7 +353,11 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-rm"
+      "id": "linux-rm",
+      "evidenceStatus": "partial",
+      "sourceIds": [
+        "gnu-manuals"
+      ]
     },
     {
       "cat": "flag",
@@ -172,7 +368,11 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-rm-rf"
+      "id": "linux-rm-rf",
+      "evidenceStatus": "partial",
+      "sourceIds": [
+        "gnu-manuals"
+      ]
     },
     {
       "cat": "flag",
@@ -183,7 +383,11 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-touch"
+      "id": "linux-touch",
+      "evidenceStatus": "partial",
+      "sourceIds": [
+        "gnu-manuals"
+      ]
     },
     {
       "cat": "flag",
@@ -194,7 +398,11 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-cat"
+      "id": "linux-cat",
+      "evidenceStatus": "partial",
+      "sourceIds": [
+        "gnu-manuals"
+      ]
     },
     {
       "cat": "flag",
@@ -205,7 +413,8 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-less"
+      "id": "linux-less",
+      "evidenceStatus": "unverified"
     },
     {
       "cat": "flag",
@@ -216,7 +425,11 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-head"
+      "id": "linux-head",
+      "evidenceStatus": "partial",
+      "sourceIds": [
+        "gnu-manuals"
+      ]
     },
     {
       "cat": "flag",
@@ -227,7 +440,11 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-tail"
+      "id": "linux-tail",
+      "evidenceStatus": "partial",
+      "sourceIds": [
+        "gnu-manuals"
+      ]
     },
     {
       "cat": "flag",
@@ -238,7 +455,11 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-tail-f"
+      "id": "linux-tail-f",
+      "evidenceStatus": "partial",
+      "sourceIds": [
+        "gnu-manuals"
+      ]
     },
     {
       "cat": "flag",
@@ -249,7 +470,11 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-chmod"
+      "id": "linux-chmod",
+      "evidenceStatus": "partial",
+      "sourceIds": [
+        "gnu-manuals"
+      ]
     },
     {
       "cat": "flag",
@@ -260,7 +485,11 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-chmod-x"
+      "id": "linux-chmod-x",
+      "evidenceStatus": "partial",
+      "sourceIds": [
+        "gnu-manuals"
+      ]
     },
     {
       "cat": "flag",
@@ -270,7 +499,11 @@ window.CHEATSHEET_DATA["linux"] = {
       "platforms": [
         "linux"
       ],
-      "id": "linux-chown"
+      "id": "linux-chown",
+      "evidenceStatus": "partial",
+      "sourceIds": [
+        "gnu-manuals"
+      ]
     },
     {
       "cat": "flag",
@@ -281,7 +514,11 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-ps"
+      "id": "linux-ps",
+      "evidenceStatus": "partial",
+      "sourceIds": [
+        "linux-ps-man"
+      ]
     },
     {
       "cat": "flag",
@@ -292,7 +529,11 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-ps-aux"
+      "id": "linux-ps-aux",
+      "evidenceStatus": "partial",
+      "sourceIds": [
+        "linux-ps-man"
+      ]
     },
     {
       "cat": "flag",
@@ -303,7 +544,11 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-kill"
+      "id": "linux-kill",
+      "evidenceStatus": "partial",
+      "sourceIds": [
+        "linux-kill-man"
+      ]
     },
     {
       "cat": "flag",
@@ -314,7 +559,11 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-kill-9"
+      "id": "linux-kill-9",
+      "evidenceStatus": "partial",
+      "sourceIds": [
+        "linux-kill-man"
+      ]
     },
     {
       "cat": "flag",
@@ -325,7 +574,11 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-top"
+      "id": "linux-top",
+      "evidenceStatus": "partial",
+      "sourceIds": [
+        "linux-top-man"
+      ]
     },
     {
       "cat": "flag",
@@ -336,7 +589,11 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-grep"
+      "id": "linux-grep",
+      "evidenceStatus": "partial",
+      "sourceIds": [
+        "linux-grep-man"
+      ]
     },
     {
       "cat": "flag",
@@ -347,7 +604,11 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-grep-r"
+      "id": "linux-grep-r",
+      "evidenceStatus": "partial",
+      "sourceIds": [
+        "linux-grep-man"
+      ]
     },
     {
       "cat": "flag",
@@ -358,7 +619,11 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-grep-i"
+      "id": "linux-grep-i",
+      "evidenceStatus": "partial",
+      "sourceIds": [
+        "linux-grep-man"
+      ]
     },
     {
       "cat": "flag",
@@ -369,7 +634,11 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-find"
+      "id": "linux-find",
+      "evidenceStatus": "partial",
+      "sourceIds": [
+        "linux-find-man"
+      ]
     },
     {
       "cat": "flag",
@@ -380,7 +649,11 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-find-name"
+      "id": "linux-find-name",
+      "evidenceStatus": "partial",
+      "sourceIds": [
+        "linux-find-man"
+      ]
     },
     {
       "cat": "flag",
@@ -391,7 +664,11 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-sort"
+      "id": "linux-sort",
+      "evidenceStatus": "partial",
+      "sourceIds": [
+        "gnu-manuals"
+      ]
     },
     {
       "cat": "flag",
@@ -402,7 +679,11 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-uniq"
+      "id": "linux-uniq",
+      "evidenceStatus": "partial",
+      "sourceIds": [
+        "gnu-manuals"
+      ]
     },
     {
       "cat": "flag",
@@ -413,7 +694,11 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-wc"
+      "id": "linux-wc",
+      "evidenceStatus": "partial",
+      "sourceIds": [
+        "gnu-manuals"
+      ]
     },
     {
       "cat": "flag",
@@ -424,7 +709,11 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-wc-l"
+      "id": "linux-wc-l",
+      "evidenceStatus": "partial",
+      "sourceIds": [
+        "gnu-manuals"
+      ]
     },
     {
       "cat": "flag",
@@ -435,7 +724,11 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-diff"
+      "id": "linux-diff",
+      "evidenceStatus": "partial",
+      "sourceIds": [
+        "linux-diff-man"
+      ]
     },
     {
       "cat": "flag",
@@ -446,7 +739,11 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-df"
+      "id": "linux-df",
+      "evidenceStatus": "partial",
+      "sourceIds": [
+        "gnu-manuals"
+      ]
     },
     {
       "cat": "flag",
@@ -457,7 +754,11 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-du"
+      "id": "linux-du",
+      "evidenceStatus": "partial",
+      "sourceIds": [
+        "gnu-manuals"
+      ]
     },
     {
       "cat": "flag",
@@ -467,7 +768,11 @@ window.CHEATSHEET_DATA["linux"] = {
       "platforms": [
         "linux"
       ],
-      "id": "linux-free"
+      "id": "linux-free",
+      "evidenceStatus": "partial",
+      "sourceIds": [
+        "linux-free-man"
+      ]
     },
     {
       "cat": "flag",
@@ -478,7 +783,8 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-curl"
+      "id": "linux-curl",
+      "evidenceStatus": "unverified"
     },
     {
       "cat": "flag",
@@ -489,7 +795,8 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-wget"
+      "id": "linux-wget",
+      "evidenceStatus": "unverified"
     },
     {
       "cat": "flag",
@@ -500,7 +807,8 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-tar"
+      "id": "linux-tar",
+      "evidenceStatus": "unverified"
     },
     {
       "cat": "flag",
@@ -511,7 +819,8 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-tar-xzf"
+      "id": "linux-tar-xzf",
+      "evidenceStatus": "unverified"
     },
     {
       "cat": "flag",
@@ -522,7 +831,8 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-tar-czf"
+      "id": "linux-tar-czf",
+      "evidenceStatus": "unverified"
     },
     {
       "cat": "flag",
@@ -533,7 +843,11 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-chmod-755"
+      "id": "linux-chmod-755",
+      "evidenceStatus": "partial",
+      "sourceIds": [
+        "gnu-manuals"
+      ]
     },
     {
       "cat": "flag",
@@ -544,7 +858,8 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-pipe"
+      "id": "linux-pipe",
+      "evidenceStatus": "unverified"
     },
     {
       "cat": "flag",
@@ -555,7 +870,8 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-redirect-out"
+      "id": "linux-redirect-out",
+      "evidenceStatus": "unverified"
     },
     {
       "cat": "flag",
@@ -566,7 +882,8 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-redirect-append"
+      "id": "linux-redirect-append",
+      "evidenceStatus": "unverified"
     },
     {
       "cat": "flag",
@@ -577,7 +894,8 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-ssh"
+      "id": "linux-ssh",
+      "evidenceStatus": "unverified"
     },
     {
       "cat": "flag",
@@ -588,7 +906,8 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-scp"
+      "id": "linux-scp",
+      "evidenceStatus": "unverified"
     },
     {
       "cat": "flag",
@@ -599,7 +918,11 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-ping"
+      "id": "linux-ping",
+      "evidenceStatus": "partial",
+      "sourceIds": [
+        "linux-ping-man"
+      ]
     },
     {
       "cat": "flag",
@@ -610,7 +933,11 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-ln-s"
+      "id": "linux-ln-s",
+      "evidenceStatus": "partial",
+      "sourceIds": [
+        "gnu-manuals"
+      ]
     },
     {
       "cat": "flag",
@@ -621,7 +948,8 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-sed"
+      "id": "linux-sed",
+      "evidenceStatus": "unverified"
     },
     {
       "cat": "flag",
@@ -632,7 +960,8 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-awk"
+      "id": "linux-awk",
+      "evidenceStatus": "unverified"
     },
     {
       "cat": "flag",
@@ -643,7 +972,8 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-which"
+      "id": "linux-which",
+      "evidenceStatus": "unverified"
     },
     {
       "cat": "flag",
@@ -655,7 +985,8 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-history"
+      "id": "linux-history",
+      "evidenceStatus": "unverified"
     },
     {
       "cat": "flag",
@@ -667,7 +998,8 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-ctrl-r"
+      "id": "linux-ctrl-r",
+      "evidenceStatus": "unverified"
     },
     {
       "cat": "flag",
@@ -678,7 +1010,8 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-ctrl-c"
+      "id": "linux-ctrl-c",
+      "evidenceStatus": "unverified"
     },
     {
       "cat": "flag",
@@ -689,7 +1022,8 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-ctrl-z"
+      "id": "linux-ctrl-z",
+      "evidenceStatus": "unverified"
     },
     {
       "cat": "flag",
@@ -701,7 +1035,8 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-bg"
+      "id": "linux-bg",
+      "evidenceStatus": "unverified"
     },
     {
       "cat": "flag",
@@ -713,7 +1048,8 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux",
         "mac"
       ],
-      "id": "linux-fg"
+      "id": "linux-fg",
+      "evidenceStatus": "unverified"
     }
   ]
 };

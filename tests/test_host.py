@@ -44,6 +44,7 @@ def valid_dataset(tool_id="sample"):
                 "en": "Open command",
                 "zh": "打开命令",
                 "sourceIds": ["official-docs"],
+                "evidenceStatus": "verified",
             }
         ],
         "summary": "updated",
@@ -124,13 +125,14 @@ class HostValidationTests(unittest.TestCase):
             "kind": "authoritative-reference",
             "evidenceTier": "authoritative-community",
         })
-        with self.assertRaisesRegex(host.ValidationError, "已登记"):
+        with self.assertRaisesRegex(host.ValidationError, "来源登记"):
             host.validate_dataset(payload, "sample")
 
     def test_accepts_registered_official_repository(self):
         payload = valid_dataset("codex")
         payload["meta"]["sources"][0].update({
             "id": "codex-repo",
+            "registryId": "openai-codex-repository",
             "url": "https://github.com/openai/codex/releases",
             "kind": "official-repository",
         })
@@ -315,7 +317,14 @@ class HostFileTests(unittest.TestCase):
             {"id": "stable-item", "cmd": "Ctrl+Shift+K", "zh": "打开新命令"}
         )
         new_dataset["items"].append(
-            {"id": "new-item", "cat": "slash", "cmd": "/new", "en": "New command", "zh": "新命令"}
+            {
+                "id": "new-item",
+                "cat": "slash",
+                "cmd": "/new",
+                "en": "New command",
+                "zh": "新命令",
+                "evidenceStatus": "unverified",
+            }
         )
         with mock.patch.object(
             host, "run_claude_query", return_value=host.validate_dataset(new_dataset, "sample")
@@ -508,10 +517,14 @@ class HostDiffEnrichmentTests(unittest.TestCase):
         self.assertEqual(diff["counts"]["modified"], 1)
 
     def test_diff_flags_new_repository_and_source_conflict(self):
-        old = host.validate_dataset(self._with_id("item-1"), "sample")
-        new_payload = self._with_id("item-1")
+        old_payload = valid_dataset("codex")
+        old_payload["items"][0]["id"] = "item-1"
+        old = host.validate_dataset(old_payload, "codex")
+        new_payload = valid_dataset("codex")
+        new_payload["items"][0]["id"] = "item-1"
         new_payload["meta"]["sources"].append({
             "id": "codex-repo",
+            "registryId": "openai-codex-repository",
             "title": "Codex repository",
             "url": "https://github.com/openai/codex/releases",
             "kind": "official-repository",
@@ -521,11 +534,20 @@ class HostDiffEnrichmentTests(unittest.TestCase):
             "purposes": ["release-notes"],
         })
         new_payload["sourceConflicts"] = ["官方文档与 Release 的命令状态不同"]
-        new = host.validate_dataset(new_payload, "sample")
+        new = host.validate_dataset(new_payload, "codex")
         diff = host.build_dataset_diff(old, new)
         self.assertEqual(len(diff["sourceChanges"]["added"]), 1)
         self.assertEqual(len(diff["sourceChanges"]["conflicts"]), 1)
         self.assertTrue(any("新增需确认来源" in risk for risk in diff["risks"]))
+
+    def test_diff_flags_item_evidence_status_downgrade(self):
+        old = self._with_id("item-1")
+        new = self._with_id("item-1")
+        new["items"][0].pop("sourceIds")
+        new["items"][0]["evidenceStatus"] = "unverified"
+        diff = host.build_dataset_diff(old, new)
+        self.assertEqual(diff["sourceChanges"]["statusDowngrades"], ["item-1"])
+        self.assertTrue(any("核验状态下降" in risk for risk in diff["risks"]))
 
     def test_quality_warning_flags_keyword_gap(self):
         warnings = host.build_quality_warnings(valid_dataset())
@@ -566,7 +588,7 @@ class HostSourceTierGenerationTests(unittest.TestCase):
         # 白名单动态注入：每个域名都应出现在 prompt 中
         for domain in host.QUASI_OFFICIAL_DOMAINS:
             self.assertIn(domain, prompt)
-        self.assertIn("每个 item 必须用 sourceIds 绑定证据", prompt)
+        self.assertIn("每个 item 必须填写 evidenceStatus", prompt)
         self.assertNotIn("目标 50 条以上", prompt)
 
     def test_source_discovery_prompt_precedes_content_generation(self):
@@ -637,7 +659,13 @@ class HostSourceTierGenerationTests(unittest.TestCase):
         # 同 cat/en、无 context 但 cmd 不同：稳定 ID 会碰撞，应通过追加 cmd 重哈希恢复唯一
         payload = valid_dataset()
         payload["items"] = [
-            {"cat": "slash", "cmd": f"/cmd-{index}", "en": "Run", "zh": f"运行 {index}"}
+            {
+                "cat": "slash",
+                "cmd": f"/cmd-{index}",
+                "en": "Run",
+                "zh": f"运行 {index}",
+                "evidenceStatus": "unverified",
+            }
             for index in range(3)
         ]
         dataset = host.validate_dataset(payload, "sample")

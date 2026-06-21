@@ -37,6 +37,7 @@
   context: "编辑器 / 集成终端",            // 可选；相同 cmd 在不同场景出现时必填
   keywords: ["替换", "批量替换"],          // 用户常用语义词，3 到 8 个（仓库提交数据必填，见“校验契约”）
   sourceIds: ["official-docs"],             // 支持该条目的 meta.sources[].id
+  evidenceStatus: "verified",               // verified / partial / unverified
   examples: [                              // 可选；最多 3 个
     {
       scenario: "需要批量替换配置文件中的旧域名",
@@ -84,6 +85,7 @@ meta：
   coverage: "完整命令列表 / macOS 默认键位常用子集",    // 数据覆盖范围
   sources: [{
     id: "official-docs",
+    registryId: "vendor-docs",                         // 可选；来源 ID 与登记项 ID 不同时填写
     title: "工具官方 CLI 文档",
     url: "https://docs.example.com/cli",                // local-help 可省略
     kind: "official-doc",                               // local-help / official-doc / official-repository / release-notes / authoritative-reference / community
@@ -103,6 +105,7 @@ meta：
 ## 多来源证据与兼容
 
 - 新增和自动更新的数据必须使用 `meta.sources[]`，由条目、案例的 `sourceIds` 精确引用。
+- 每个条目必须声明 `evidenceStatus`：`verified`/`partial` 必须绑定来源，`unverified` 不得伪挂来源。
 - `sourceUrl/sourceTier` 保留用于读取旧数据；Native Host 会将旧字段合成来源记录。
 - `authorship` 表示案例由谁编写，`evidenceTier` 表示证据强度，`adaptation` 表示是否改写。
 - 来源优先级为：当前版本本机帮助、官方文档、官方仓库与 Release、登记权威第三方、普通社区线索。
@@ -115,7 +118,7 @@ meta：
 - **quasi-official（类官方）**：可信第三方权威参考。新结构必须匹配 `authoritativeSourcePrefixes` 的精确 URL 前缀。`readthedocs.io`、`github.com` 等托管平台不能按整个域名授信。
 - **community**：其余社区来源，UI 标注"社区"，不强制白名单。
 
-来源登记见 `shared/source-registry.json`，校验前缀见 `shared/validation-rules.json`。官方 GitHub 仓库只认可登记的厂商仓库前缀。
+来源登记和 URL 范围统一维护在 `shared/source-registry.json`；`shared/validation-rules.json` 不再复制来源白名单。
 
 ## 校验契约（生成端宽松，仓库端严格）
 

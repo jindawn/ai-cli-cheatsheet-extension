@@ -24,5 +24,8 @@ assert(script.includes("focusSearch: true"), "finishing onboarding must restore 
 assert(script.includes("官方仓库确认") && script.includes("本机帮助确认"), "source evidence labels are required");
 assert(script.includes("exampleProvenanceLabel"), "example authorship and evidence must be rendered separately");
 assert(script.includes("sourceChanges.conflicts"), "update preview must display source conflicts");
+assert(script.includes("已核验") && script.includes("部分核验") && script.includes("未核验"), "all item evidence states must be visible");
+assert(script.includes("条目核验："), "management view must summarize evidence states");
+assert(script.includes("查看其余") && script.includes("<details>"), "long source lists must remain compact");
 
 console.log("Popup UX contract tests passed.");

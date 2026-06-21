@@ -5,12 +5,20 @@ const assert = require("assert");
 global.window = {};
 require("../data/index.js");
 for (const id of window.CHEATSHEET_FILES) require(`../data/${id}.js`);
-for (const id of ["antigravity-cli", "claude-code", "codex", "gemini-cli", "openclaw", "opencode"]) {
-  require(`../enrichments/${id}.js`);
+const fs = require("fs");
+const path = require("path");
+for (const filename of fs.readdirSync(path.join(__dirname, "..", "enrichments"))
+  .filter((name) => name.endsWith(".js")).sort()) {
+  require(`../enrichments/${filename}`);
 }
 require("../usage-examples.js");
 
 window.CHEATSHEET_BUILD_FULL_ENRICHMENTS(window.CHEATSHEET_DATA);
+assert.deepStrictEqual(
+  window.CHEATSHEET_ENRICHMENT_WARNINGS || [],
+  [],
+  "all curated enrichments must use stable item IDs"
+);
 
 let itemCount = 0;
 let exampleCount = 0;
@@ -19,6 +27,11 @@ const reviewedByTool = {};
 
 for (const [toolId, tool] of Object.entries(window.CHEATSHEET_DATA)) {
   for (const item of tool.items) {
+    assert(/^[a-zA-Z0-9_-]{4,64}$/.test(item.id), `${toolId} ${item.cmd}: stable id required`);
+    assert(
+      ["verified", "partial", "unverified"].includes(item.evidenceStatus),
+      `${toolId} ${item.cmd}: evidenceStatus required`
+    );
     const enrichment = window.CHEATSHEET_ENRICHMENTS[toolId][
       `${item.cmd}\0${item.context || ""}`
     ];
@@ -41,6 +54,13 @@ for (const [toolId, tool] of Object.entries(window.CHEATSHEET_DATA)) {
         assert(
           !/(?:^|\s)(级别|条件|名称|路径|模型|命令|问题|会话|目标|描述|指令|文件名|模式|提示)(?=\s|$)/.test(bare),
           `${toolId} ${item.cmd}: value leaks CJK placeholder type-name -> ${example.value}`
+        );
+      }
+      if (example.riskLevels?.length) {
+        assert(example.warning, `${toolId} ${item.cmd}: risky example requires warning`);
+        assert(
+          /预览|备份|确认|检查|隔离|git status|git diff|只读/.test(example.caveat || ""),
+          `${toolId} ${item.cmd}: risky example requires a safer preview or backup step`
         );
       }
       if (example.sourceType !== "ai-derived") {

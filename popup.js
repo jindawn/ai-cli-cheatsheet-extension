@@ -146,20 +146,10 @@ function exampleProvenanceLabel(example) {
   return "自动生成";
 }
 
-function itemEvidence(entry, sources) {
-  const ids = entry.item.sourceIds || [];
-  const linked = ids.map((id) => sources.find((source) => source.id === id)).filter(Boolean);
-  if (linked.length) {
-    const best = linked.sort((a, b) =>
-      ["none", "community", "authoritative-community", "first-party"].indexOf(b.evidenceTier)
-      - ["none", "community", "authoritative-community", "first-party"].indexOf(a.evidenceTier)
-    )[0];
-    return evidenceLabel(best.evidenceTier, best.kind);
-  }
-  const tiers = (entry.item.examples || []).map((example) => example.evidenceTier);
-  if (tiers.includes("first-party")) return "官方确认";
-  if (tiers.includes("authoritative-community")) return "权威社区补充";
-  return "未独立核验";
+function itemEvidence(entry) {
+  if (entry.item.evidenceStatus === "verified") return "已核验";
+  if (entry.item.evidenceStatus === "partial") return "部分核验";
+  return "未核验";
 }
 
 function riskFor(command, examples) {
@@ -334,7 +324,6 @@ function collectEntries() {
 
 function renderRow(entry, query, includeBadge = false) {
   const tool = getAllData()[entry.toolId];
-  const sources = normalizedSources(tool.meta);
   const key = `${entry.toolId}::${entry.itemId}`;
   const examples = (entry.item.examples || []).map((example, index) => ({
     ...example,
@@ -360,7 +349,7 @@ function renderRow(entry, query, includeBadge = false) {
     commandRisk.requiresConfirmation ? `<span class="trust-tag risk">高风险</span>` : "",
     isStale ? `<span class="trust-tag stale">资料较旧</span>` : "",
     tierTag,
-    `<span class="trust-tag tier">${escapeHtml(itemEvidence(entry, sources))}</span>`,
+    `<span class="trust-tag tier evidence-${escapeHtml(entry.item.evidenceStatus || "unverified")}">${escapeHtml(itemEvidence(entry))}</span>`,
   ].join("");
   const examplesId = `examples-${entry.toolId}-${entry.itemId}`;
   const examplesHtml = examplesOpen ? `<div class="examples">${examples.map((example) => `
@@ -396,13 +385,18 @@ function sourceCard(toolId) {
   const meta = getAllData()[toolId].meta;
   const tierLabel = sourceTierLabel(meta.sourceTier);
   const sources = normalizedSources(meta);
+  const sourceEntry = (source) => `<div class="source-entry">
+    <span>${escapeHtml(evidenceLabel(source.evidenceTier, source.kind))} · ${escapeHtml(source.title || source.id)} · ${escapeHtml(source.maintainer || "维护者未标注")}${source.lastVerifiedAt ? ` · ${escapeHtml(source.lastVerifiedAt)}` : ""}</span>
+    ${source.url ? ` <a href="${escapeHtml(source.url)}" target="_blank" rel="noopener noreferrer">打开 ↗</a>` : ""}
+  </div>`;
+  const primarySources = sources.slice(0, 6);
+  const remainingSources = sources.slice(6);
   return `<div class="source-card" id="source-${toolId}">
     <div>${escapeHtml(meta.coverage || meta.source)}</div>
     <div>来源档位：${escapeHtml(tierLabel)} · 更新：${escapeHtml(meta.updatedAt || "未标注")} · 平台：${escapeHtml((meta.platforms || []).join(" / ") || "未标注")}</div>
-    <div class="source-list">${sources.map((source) => `<div class="source-entry">
-      <span>${escapeHtml(evidenceLabel(source.evidenceTier, source.kind))} · ${escapeHtml(source.title || source.id)} · ${escapeHtml(source.maintainer || "维护者未标注")}${source.lastVerifiedAt ? ` · ${escapeHtml(source.lastVerifiedAt)}` : ""}</span>
-      ${source.url ? ` <a href="${escapeHtml(source.url)}" target="_blank" rel="noopener noreferrer">打开 ↗</a>` : ""}
-    </div>`).join("") || "<div>尚未登记可核验来源</div>"}</div>
+    <div class="source-list">${primarySources.map(sourceEntry).join("") || "<div>尚未登记可核验来源</div>"}
+      ${remainingSources.length ? `<details><summary>查看其余 ${remainingSources.length} 个来源</summary>${remainingSources.map(sourceEntry).join("")}</details>` : ""}
+    </div>
   </div>`;
 }
 
@@ -591,6 +585,10 @@ function renderManage() {
     const meta = getAllData()[toolId].meta;
     const canDelete = !meta.builtIn;
     const sources = normalizedSources(meta);
+    const evidenceCounts = { verified: 0, partial: 0, unverified: 0 };
+    getAllData()[toolId].items.forEach((item) => {
+      evidenceCounts[item.evidenceStatus || "unverified"] += 1;
+    });
     const verification = meta.verificationStatus === "web-assisted"
       ? "生成时允许联网辅助"
       : meta.verificationStatus === "model-knowledge"
@@ -605,6 +603,7 @@ function renderManage() {
     }));
     return `<div class="tool-card"><div class="tool-title"><input type="checkbox" data-enabled="${toolId}" ${enabledTools.has(toolId) ? "checked" : ""}><label>${escapeHtml(meta.name)}</label></div>
       <div class="meta">${escapeHtml(meta.coverage || meta.source)}<br>来源 ${sources.length} 个 · 更新：${escapeHtml(meta.updatedAt || "未标注")}（${escapeHtml(freshnessLabel(meta.updatedAt))}） · <span class="verify">${escapeHtml(verification)}</span></div>
+      <div class="meta">条目核验：已核验 ${evidenceCounts.verified} / 部分核验 ${evidenceCounts.partial} / 未核验 ${evidenceCounts.unverified}</div>
       <div class="meta">用法覆盖：${exampleItems.length}/${getAllData()[toolId].items.length} · 官方依据 ${sourceCounts.official} / 权威社区 ${sourceCounts["quasi-official"]} / 编辑整理 ${sourceCounts.manual} / 自动生成 ${sourceCounts["ai-derived"]}</div>
       <div class="tool-actions"><button class="text-btn" data-update="${toolId}">检查更新</button>${canDelete ? `<button class="text-btn danger" data-remove="${toolId}">删除</button>` : `<span class="meta">内置工具可隐藏，不可删除</span>`}</div></div>`;
   }).join("");

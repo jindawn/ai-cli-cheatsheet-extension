@@ -15,7 +15,22 @@ window.CHEATSHEET_DATA["typora"] = {
       "windows",
       "linux"
     ],
-    "order": 999
+    "order": 999,
+    "sources": [
+      {
+        "id": "typora-shortcuts",
+        "title": "Typora shortcut keys",
+        "url": "https://support.typora.io/Shortcut-Keys/",
+        "kind": "official-doc",
+        "maintainer": "Typora",
+        "evidenceTier": "first-party",
+        "lastVerifiedAt": "2026-06-21",
+        "purposes": [
+          "command-existence",
+          "option-semantics"
+        ]
+      }
+    ]
   },
   "items": [
     {
@@ -28,7 +43,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+N",
         "linux": "Ctrl+N"
       },
-      "id": "417f39e8659d5290"
+      "id": "417f39e8659d5290",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -40,7 +59,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+Shift+N",
         "linux": "Ctrl+Shift+N"
       },
-      "id": "bc6bb96ca92c1882"
+      "id": "bc6bb96ca92c1882",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -52,7 +75,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+O",
         "linux": "Ctrl+O"
       },
-      "id": "c70d6815af282143"
+      "id": "c70d6815af282143",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -64,7 +91,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+P",
         "linux": "Ctrl+P"
       },
-      "id": "cc4229c2d76059f9"
+      "id": "cc4229c2d76059f9",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -76,7 +107,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+Shift+T",
         "linux": "Ctrl+Shift+T"
       },
-      "id": "6ef6b20bd47f1ad5"
+      "id": "6ef6b20bd47f1ad5",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -88,7 +123,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+S",
         "linux": "Ctrl+S"
       },
-      "id": "0fb7315bb64bf0cf"
+      "id": "0fb7315bb64bf0cf",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -100,7 +139,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+Shift+S",
         "linux": "Ctrl+Shift+S"
       },
-      "id": "c5a706b54d1b01a8"
+      "id": "c5a706b54d1b01a8",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -112,7 +155,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+,",
         "linux": "Ctrl+,"
       },
-      "id": "24e974bc64d8dbae"
+      "id": "24e974bc64d8dbae",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -124,21 +171,33 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+W",
         "linux": "Ctrl+W"
       },
-      "id": "10b5542160f83a12"
+      "id": "10b5542160f83a12",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
       "cmd": "Enter",
       "en": "New Paragraph",
       "zh": "插入新段落",
-      "id": "dd6eaa83ec27ba7f"
+      "id": "dd6eaa83ec27ba7f",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
       "cmd": "Shift+Enter",
       "en": "New Line",
       "zh": "插入换行（不产生新段落）",
-      "id": "804738897d29d2f8"
+      "id": "804738897d29d2f8",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -150,7 +209,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+X",
         "linux": "Ctrl+X"
       },
-      "id": "4d519c2944e0299c"
+      "id": "4d519c2944e0299c",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -162,7 +225,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+C",
         "linux": "Ctrl+C"
       },
-      "id": "a6ec5756b87fc283"
+      "id": "a6ec5756b87fc283",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -174,7 +241,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+V",
         "linux": "Ctrl+V"
       },
-      "id": "0b96d5c613e5e29f"
+      "id": "0b96d5c613e5e29f",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -186,7 +257,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+Shift+C",
         "linux": "Ctrl+Shift+C"
       },
-      "id": "d3e7c31ae2cd41e6"
+      "id": "d3e7c31ae2cd41e6",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -198,7 +273,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+Shift+V",
         "linux": "Ctrl+Shift+V"
       },
-      "id": "0c90d93b678482f4"
+      "id": "0c90d93b678482f4",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -210,7 +289,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+A",
         "linux": "Ctrl+A"
       },
-      "id": "5122308a465b18b4"
+      "id": "5122308a465b18b4",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -222,7 +305,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+L",
         "linux": "Ctrl+L"
       },
-      "id": "a1bdb96a275eba34"
+      "id": "a1bdb96a275eba34",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -234,7 +321,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+Shift+Backspace",
         "linux": "Ctrl+Shift+Backspace"
       },
-      "id": "dbe5ef5ec55f3433"
+      "id": "dbe5ef5ec55f3433",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -246,7 +337,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+E",
         "linux": "Ctrl+E"
       },
-      "id": "fe043cda3d3ed81a"
+      "id": "fe043cda3d3ed81a",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -258,7 +353,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+D",
         "linux": "Ctrl+D"
       },
-      "id": "f72bdbb8d52e2e54"
+      "id": "f72bdbb8d52e2e54",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -270,7 +369,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+Shift+D",
         "linux": "Ctrl+Shift+D"
       },
-      "id": "e3f13fc45fbfcf1c"
+      "id": "e3f13fc45fbfcf1c",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -283,7 +386,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+Home",
         "linux": "Ctrl+Home"
       },
-      "id": "289dc1bf4f7804ee"
+      "id": "289dc1bf4f7804ee",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -295,7 +402,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+J",
         "linux": "Ctrl+J"
       },
-      "id": "11061da1568d8e51"
+      "id": "11061da1568d8e51",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -308,7 +419,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+End",
         "linux": "Ctrl+End"
       },
-      "id": "bf56b694c58d4a48"
+      "id": "bf56b694c58d4a48",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -320,7 +435,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+F",
         "linux": "Ctrl+F"
       },
-      "id": "fd71edc6b52ea168"
+      "id": "fd71edc6b52ea168",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -332,7 +451,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "F3",
         "linux": "F3"
       },
-      "id": "7da050c32b248007"
+      "id": "7da050c32b248007",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -344,7 +467,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Shift+F3",
         "linux": "Shift+F3"
       },
-      "id": "0698e50ed572f4a7"
+      "id": "0698e50ed572f4a7",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -356,7 +483,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+H",
         "linux": "Ctrl+H"
       },
-      "id": "bef7d3a3d2866e3b"
+      "id": "bef7d3a3d2866e3b",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -368,7 +499,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+1",
         "linux": "Ctrl+1"
       },
-      "id": "55c6c5a47338ccfe"
+      "id": "55c6c5a47338ccfe",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -380,7 +515,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+0",
         "linux": "Ctrl+0"
       },
-      "id": "b19705850252200e"
+      "id": "b19705850252200e",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -392,7 +531,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+=",
         "linux": "Ctrl+="
       },
-      "id": "eeea61af524a6235"
+      "id": "eeea61af524a6235",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -404,7 +547,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+-",
         "linux": "Ctrl+-"
       },
-      "id": "9294f722dfffaa5a"
+      "id": "9294f722dfffaa5a",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -416,7 +563,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+T",
         "linux": "Ctrl+T"
       },
-      "id": "6b03e4fa2cc02263"
+      "id": "6b03e4fa2cc02263",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -428,7 +579,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+Shift+K",
         "linux": "Ctrl+Shift+K"
       },
-      "id": "8ff5d4ebf926ac5b"
+      "id": "8ff5d4ebf926ac5b",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -440,7 +595,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+Shift+M",
         "linux": "Ctrl+Shift+M"
       },
-      "id": "03e24719a62cb637"
+      "id": "03e24719a62cb637",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -452,7 +611,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+Shift+Q",
         "linux": "Ctrl+Shift+Q"
       },
-      "id": "ee378e4458574444"
+      "id": "ee378e4458574444",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -464,7 +627,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+Shift+[",
         "linux": "Ctrl+Shift+["
       },
-      "id": "e2320f2497efa296"
+      "id": "e2320f2497efa296",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -476,7 +643,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+Shift+]",
         "linux": "Ctrl+Shift+]"
       },
-      "id": "34740a0b6b63d659"
+      "id": "34740a0b6b63d659",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -488,7 +659,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+[",
         "linux": "Ctrl+["
       },
-      "id": "13b2abce829f762c"
+      "id": "13b2abce829f762c",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -500,7 +675,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+]",
         "linux": "Ctrl+]"
       },
-      "id": "f859f83b210ea7c8"
+      "id": "f859f83b210ea7c8",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -512,7 +691,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+B",
         "linux": "Ctrl+B"
       },
-      "id": "00d23027eb3ed071"
+      "id": "00d23027eb3ed071",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -524,7 +707,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+I",
         "linux": "Ctrl+I"
       },
-      "id": "fd0e57a1304905f7"
+      "id": "fd0e57a1304905f7",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -536,7 +723,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+U",
         "linux": "Ctrl+U"
       },
-      "id": "31aea4d9d0228611"
+      "id": "31aea4d9d0228611",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -548,7 +739,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+Shift+`",
         "linux": "Ctrl+Shift+`"
       },
-      "id": "c17f2a3e2652e1fd"
+      "id": "c17f2a3e2652e1fd",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -560,7 +755,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Alt+Shift+5",
         "linux": "Alt+Shift+5"
       },
-      "id": "bd9971cf8f5dbd41"
+      "id": "bd9971cf8f5dbd41",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -572,7 +771,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+K",
         "linux": "Ctrl+K"
       },
-      "id": "198d4e7754c88653"
+      "id": "198d4e7754c88653",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -584,7 +787,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+Shift+I",
         "linux": "Ctrl+Shift+I"
       },
-      "id": "ccf9f836058feaa3"
+      "id": "ccf9f836058feaa3",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -596,7 +803,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+\\",
         "linux": "Ctrl+\\"
       },
-      "id": "83f21268d02dadd3"
+      "id": "83f21268d02dadd3",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -608,7 +819,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+Shift+L",
         "linux": "Ctrl+Shift+L"
       },
-      "id": "4442ca93d34ec475"
+      "id": "4442ca93d34ec475",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -620,7 +835,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+Shift+1",
         "linux": "Ctrl+Shift+1"
       },
-      "id": "475dcb5f19c6c6a1"
+      "id": "475dcb5f19c6c6a1",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -632,7 +851,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+Shift+2",
         "linux": "Ctrl+Shift+2"
       },
-      "id": "0f3aeafb87210b85"
+      "id": "0f3aeafb87210b85",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -644,7 +867,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+Shift+3",
         "linux": "Ctrl+Shift+3"
       },
-      "id": "4617b4b7673cd19c"
+      "id": "4617b4b7673cd19c",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -656,21 +883,33 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+/",
         "linux": "Ctrl+/"
       },
-      "id": "5de8c2eaa7f4f55a"
+      "id": "5de8c2eaa7f4f55a",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
       "cmd": "F8",
       "en": "Focus Mode",
       "zh": "切换专注模式（仅显示当前段落，其余变暗）",
-      "id": "08099184156f407e"
+      "id": "08099184156f407e",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
       "cmd": "F9",
       "en": "Typewriter Mode",
       "zh": "切换打字机模式（光标始终固定在屏幕中央）",
-      "id": "a09eb4a8af3b4e51"
+      "id": "a09eb4a8af3b4e51",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -682,7 +921,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "F11",
         "linux": "F11"
       },
-      "id": "17e36767d36d67d4"
+      "id": "17e36767d36d67d4",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -694,7 +937,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+Tab",
         "linux": "Ctrl+Tab"
       },
-      "id": "496dd8ec12ec6914"
+      "id": "496dd8ec12ec6914",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -705,7 +952,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows",
         "linux"
       ],
-      "id": "2a361d0f31d3cbb1"
+      "id": "2a361d0f31d3cbb1",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -720,7 +971,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+Shift+0",
         "linux": "Ctrl+Shift+0"
       },
-      "id": "2d807b9fdd37a8f7"
+      "id": "2d807b9fdd37a8f7",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -735,7 +990,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+Shift+=",
         "linux": "Ctrl+Shift+="
       },
-      "id": "9704b41d06010589"
+      "id": "9704b41d06010589",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     },
     {
       "cat": "shortcut",
@@ -750,7 +1009,11 @@ window.CHEATSHEET_DATA["typora"] = {
         "windows": "Ctrl+Shift+-",
         "linux": "Ctrl+Shift+-"
       },
-      "id": "d3a8ff9d8ae9d923"
+      "id": "d3a8ff9d8ae9d923",
+      "evidenceStatus": "verified",
+      "sourceIds": [
+        "typora-shortcuts"
+      ]
     }
   ]
 };

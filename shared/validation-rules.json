@@ -7,32 +7,7 @@
   "authorships": ["official", "editorial", "generated"],
   "evidenceTiers": ["first-party", "authoritative-community", "community", "none"],
   "adaptations": ["verbatim", "adapted", "scenario-derived"],
-  "quasiOfficialDomains": [
-    "tldr.sh",
-    "man7.org",
-    "ss64.com",
-    "manpages.debian.org",
-    "developer.mozilla.org",
-    "wiki.archlinux.org",
-    "devhints.io",
-    "cheat.sh"
-  ],
-  "authoritativeSourcePrefixes": [
-    "https://man7.org/linux/man-pages/",
-    "https://www.man7.org/linux/man-pages/",
-    "https://tldr.sh/",
-    "https://ss64.com/",
-    "https://manpages.debian.org/",
-    "https://developer.mozilla.org/",
-    "https://wiki.archlinux.org/",
-    "https://devhints.io/",
-    "https://cheat.sh/"
-  ],
-  "officialRepositoryPrefixes": [
-    "https://github.com/openai/codex",
-    "https://github.com/anthropics/claude-code",
-    "https://github.com/google-gemini/gemini-cli"
-  ],
+  "evidenceStatuses": ["verified", "partial", "unverified"],
   "dangerousExample": {
     "source": "(?:\\brm(?:\\s|$)|\\b(?:reset\\s+--hard|push\\s+--force|kill\\s+-9|chmod|chown|restart)\\b|--(?:delete|yolo)\\b|dangerously-bypass\\b)|(^|\\s)>(?!>)",
     "flags": "i"

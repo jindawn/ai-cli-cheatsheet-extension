@@ -336,7 +336,24 @@
         copyable: false,
         warning: example.warning || RISK_WARNINGS[risks[0]],
         riskLevels: risks,
+        caveat: example.caveat || `${example.warning || RISK_WARNINGS[risks[0]]}；先用只读命令预览目标并保留备份`,
       } : {}),
+    };
+  }
+
+  function scenarioDetailsFor(item, example) {
+    const action = String(item.zh || example.description || "完成当前操作")
+      .replace(/[。；;]$/, "");
+    const isShortcut = item.cat === "shortcut";
+    return {
+      scenario: example.scenario || `在实际工作中需要${action}时`,
+      goal: example.goal || action,
+      expected: example.expected || (isShortcut
+        ? "界面切换到对应功能，可以继续当前操作"
+        : "命令完成并返回可检查的结果"),
+      caveat: example.caveat || (isShortcut
+        ? "快捷键可能受操作系统、键位方案或终端设置影响"
+        : "执行前确认当前目录、参数和工具版本与示例一致"),
     };
   }
 
@@ -686,7 +703,7 @@
       const enrichments = globalScope.CHEATSHEET_ENRICHMENTS[toolId] || {};
       const byLookup = new Map(Object.entries(enrichments));
       const byStableId = new Map(Object.entries(enrichmentModules[toolId] || {}));
-      tool.items.forEach((item) => {
+      tool.items.forEach((item, itemIndex) => {
         const lookup = `${item.cmd}\0${item.context || ""}`;
         const legacyLookup = item.cmd;
         const stableLookup = item.id ? `id:${item.id}` : "";
@@ -710,12 +727,14 @@
               goal: example.goal || scenarioDetails[1],
               expected: example.expected || scenarioDetails[2],
               caveat: example.caveat || scenarioDetails[3],
-            } : example;
+            } : itemIndex < 12 ? { ...example, ...scenarioDetailsFor(item, example) } : example;
             return normalizeCuratedExample(detailed, tool);
           });
         const keywords = existing.keywords || item.keywords || deriveKeywords(item);
         byLookup.set(lookup, { ...existing, keywords, examples });
-        if (lookup !== legacyLookup && byLookup.get(legacyLookup) === existing) byLookup.delete(legacyLookup);
+        if (lookup !== legacyLookup && (
+          stableEnrichment || byLookup.get(legacyLookup) === existing
+        )) byLookup.delete(legacyLookup);
         if (stableLookup) byStableId.delete(stableLookup);
       });
       if (byStableId.size) {

@@ -26,6 +26,9 @@ assert(script.includes("exampleProvenanceLabel"), "example authorship and eviden
 assert(script.includes("sourceChanges.conflicts"), "update preview must display source conflicts");
 assert(script.includes("已核验") && script.includes("部分核验") && script.includes("未核验"), "all item evidence states must be visible");
 assert(script.includes("条目核验："), "management view must summarize evidence states");
+assert(script.includes("案例编写：") && script.includes("案例证据："), "example authorship and evidence statistics must be separate");
+assert(!script.includes("官方依据 ${sourceCounts.official}"), "legacy mixed example statistics must be removed");
+assert(script.includes("数据整理方式："), "generation method must not be presented as source trust");
 assert(script.includes("查看其余") && script.includes("<details>"), "long source lists must remain compact");
 assert(script.includes("commandEvidenceHtml"), "command evidence must render separately from example provenance");
 assert(script.includes("命令证据：") && script.includes("exampleProvenanceLabel"), "command and example evidence labels must stay distinct");

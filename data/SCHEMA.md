@@ -55,7 +55,7 @@
       copyable: true,                       // 可选，默认 true
       warning: "先去掉 -i 预览结果",        // 可选
       riskLevels: ["deleteOrOverwrite"],     // 可选；高风险示例由构建器自动补充并强制不可复制
-      sourceType: "ai-derived",             // 必填：official / quasi-official / manual / ai-derived
+      sourceType: "ai-derived",             // 旧版兼容：official / quasi-official / manual / ai-derived
       sourceUrl: "https://example.com/docs", // 可选；能定位具体官方页面时填写（quasi-official 必填且须为白名单域名）
       sourceIds: ["official-docs"],
       authorship: "editorial",              // official / editorial / generated
@@ -123,6 +123,8 @@ meta：
 - 网页来源记录重定向后的 `resolvedUrl`、实际 `pageTitle` 和 `checkedAt`。
 - `sourceUrl/sourceTier` 保留用于读取旧数据；Native Host 会将旧字段合成来源记录。
 - `authorship` 表示案例由谁编写，`evidenceTier` 表示证据强度，`adaptation` 表示是否改写。
+- `sourceType` 不再参与新 UI 统计，只用于读取旧数据；新案例必须以 `authorship`、`evidenceTier`、`adaptation` 和 `sourceIds` 表达语义。
+- 有证据的案例必须提供有效 `sourceIds`，且 `evidenceTier` 与引用来源一致。`official + verbatim` 仅用于带具体官方原例 URL 的逐字案例；基于官方行为编写的场景仍是 `editorial + adapted`。
 - 来源优先级为：当前版本本机帮助、官方文档、官方仓库与 Release、登记权威第三方、普通社区线索。
 
 ## 来源信任分级（旧字段兼容）
@@ -158,8 +160,8 @@ meta：
 - **类官方仅联网时生成**：只有可联网的 `claude -p` 路径（`web-assisted`）能产出 quasi-official；有 API token 的离线路径（`model-knowledge`）由 `host.py` 的 `_demote_quasi_official` 强制把 quasi-official 降级（meta→community、example→ai-derived 并去 URL），避免编造未经核实的白名单 URL。
 - **联网核对（`prefer_web`）**：版本变化后的更新和强制深度核验固定使用联网 `claude -p`，保证能够核对官方资料；版本未变时不启动模型。管理页开关只控制新增工具是否强制联网。
 - prompt 的白名单域名由 `host.py` 的 `QUASI_OFFICIAL_DOMAINS` 常量动态注入，不要在 prompt 里硬编码域名列表。
-- 官方明确提供的示例标记 official，人工整理标记 manual，基于语义推导标记 ai-derived
-- manual / official 示例必须显式填写能定位到具体行为的 sourceUrl；不得用工具首页自动兜底
+- 官方逐字原例使用 `authorship=official`；人工编写场景使用 `editorial`；模板派生长尾使用 `generated`。
+- 第一方或权威社区案例证据必须绑定 `sourceIds`；只有官方逐字原例必须同时填写具体 `sourceUrl`，编辑场景不得伪装成官方原例。
 - 重点精选条目应提供稳定 `item.id`，富化文件使用 `id:<item.id>` 关联；旧 cmd/context 键仅用于兼容
 - 严禁编造没有查到的命令或快捷键；查不到就如实少收录，不要为了凑数量编内容
 - Claude 只返回结构化 JSON；Native Host 校验后负责生成 JS 和原子写入

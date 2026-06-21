@@ -133,6 +133,12 @@ function exampleProvenanceLabel(example) {
   return "自动生成";
 }
 
+function exampleEvidenceUrl(example, sources) {
+  if (example.sourceUrl) return example.sourceUrl;
+  const sourceId = (example.sourceIds || [])[0];
+  return sources.find((source) => source.id === sourceId)?.url || "";
+}
+
 function itemEvidence(entry) {
   if (entry.item.evidenceStatus === "verified") return "已核验";
   if (entry.item.evidenceStatus === "partial") return "部分核验";
@@ -381,7 +387,7 @@ function renderRow(entry, query, includeBadge = false) {
       ${example.expected ? `<div class="example-context">结果：${escapeHtml(example.expected)}</div>` : ""}
       ${example.prerequisites ? `<div class="example-context">前提：${escapeHtml(example.prerequisites)}</div>` : ""}
       ${example.caveat ? `<div class="example-context">注意：${escapeHtml(example.caveat)}</div>` : ""}
-      <div class="example-source">${escapeHtml(exampleProvenanceLabel(example))}${example.sourceUrl ? ` · <a class="example-doc" href="${escapeHtml(example.sourceUrl)}" target="_blank" rel="noopener noreferrer">证据</a>` : ""}</div>
+      <div class="example-source">${escapeHtml(exampleProvenanceLabel(example))}${exampleEvidenceUrl(example, sources) ? ` · <a class="example-doc" href="${escapeHtml(exampleEvidenceUrl(example, sources))}" target="_blank" rel="noopener noreferrer">证据</a>` : ""}</div>
       ${example.warning ? `<div class="example-warning">⚠ ${escapeHtml(example.warning)}</div>` : ""}
       ${example.copyable !== false ? `<button class="act example-copy" data-example="${example.index}" title="复制此用法" aria-label="复制此用法">复制</button>` : ""}
     </div>`).join("")}</div>` : "";
@@ -611,21 +617,34 @@ function renderManage() {
       evidenceCounts[item.evidenceStatus || "unverified"] += 1;
     });
     const verification = meta.verificationStatus === "web-assisted"
-      ? "生成时允许联网辅助"
+      ? "联网辅助整理"
       : meta.verificationStatus === "model-knowledge"
-        ? "模型知识生成，待人工核验"
-        : "来源状态未标注";
+        ? "模型知识整理"
+        : meta.verificationStatus === "manual"
+          ? "人工维护"
+          : "整理方式未标注";
     const exampleItems = (getAllData()[toolId].items || [])
       .map((item) => enrichItem(toolId, item))
       .filter((item) => item.examples?.length);
-    const sourceCounts = { official: 0, "quasi-official": 0, manual: 0, "ai-derived": 0 };
+    const authorshipCounts = { official: 0, editorial: 0, generated: 0 };
+    const evidenceCountsForExamples = {
+      "first-party": 0,
+      "authoritative-community": 0,
+      community: 0,
+      none: 0,
+    };
     exampleItems.forEach((item) => item.examples.forEach((example) => {
-      if (sourceCounts[example.sourceType] !== undefined) sourceCounts[example.sourceType] += 1;
+      if (authorshipCounts[example.authorship] !== undefined) authorshipCounts[example.authorship] += 1;
+      if (evidenceCountsForExamples[example.evidenceTier] !== undefined) {
+        evidenceCountsForExamples[example.evidenceTier] += 1;
+      }
     }));
     return `<div class="tool-card"><div class="tool-title"><input type="checkbox" data-enabled="${toolId}" ${enabledTools.has(toolId) ? "checked" : ""}><label>${escapeHtml(meta.name)}</label></div>
-      <div class="meta">${escapeHtml(meta.coverage || meta.source)}<br>来源 ${sources.length} 个 · ${escapeHtml(updateStatusLabel(meta))} · <span class="verify">${escapeHtml(verification)}</span></div>
+      <div class="meta">${escapeHtml(meta.coverage || meta.source)}<br>来源 ${sources.length} 个 · ${escapeHtml(updateStatusLabel(meta))} · 数据整理方式：<span class="verify">${escapeHtml(verification)}</span></div>
       <div class="meta">条目核验：已核验 ${evidenceCounts.verified} / 部分核验 ${evidenceCounts.partial} / 未核验 ${evidenceCounts.unverified}</div>
-      <div class="meta">用法覆盖：${exampleItems.length}/${getAllData()[toolId].items.length} · 官方依据 ${sourceCounts.official} / 权威社区 ${sourceCounts["quasi-official"]} / 编辑整理 ${sourceCounts.manual} / 自动生成 ${sourceCounts["ai-derived"]}</div>
+      <div class="meta">用法覆盖：${exampleItems.length}/${getAllData()[toolId].items.length}</div>
+      <div class="meta">案例编写：官方原例 ${authorshipCounts.official} / 编辑整理 ${authorshipCounts.editorial} / 自动生成 ${authorshipCounts.generated}</div>
+      <div class="meta">案例证据：第一方 ${evidenceCountsForExamples["first-party"]} / 权威社区 ${evidenceCountsForExamples["authoritative-community"]} / 普通社区 ${evidenceCountsForExamples.community} / 无独立证据 ${evidenceCountsForExamples.none}</div>
       ${policy === "manual-only" ? "" : `<div class="tool-actions"><button class="text-btn" data-update="${toolId}">${escapeHtml(updateActionLabel(meta))}</button></div>`}
       <details class="advanced-actions"><summary>高级操作</summary>
         <div class="meta">强制深度检查会联网重新发现来源并调用模型，耗时更长且会计入模型用量。</div>

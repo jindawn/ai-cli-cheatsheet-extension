@@ -9,7 +9,7 @@ window.CHEATSHEET_DATA["git"] = {
     "builtIn": false,
     "sourceUrl": "https://git-scm.com/docs",
     "sourceTier": "official",
-    "verificationStatus": "web-assisted",
+    "verificationStatus": "manual",
     "updatedAt": "2026-06-21",
     "contentCheckedAt": "2026-06-21",
     "sourceCheckedAt": "2026-06-21",

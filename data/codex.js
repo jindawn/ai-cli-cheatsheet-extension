@@ -11,6 +11,7 @@ window.CHEATSHEET_DATA["codex"] = {
     "contentCheckedAt": "2026-06-20",
     "sourceCheckedAt": "2026-06-21",
     "updatePolicy": "version-driven",
+    "verificationStatus": "manual",
     "coverage": "官方 CLI 快捷键、斜杠命令与启动参数",
     "platforms": [
       "mac",

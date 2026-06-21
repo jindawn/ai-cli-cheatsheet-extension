@@ -718,13 +718,13 @@ def validate_dataset(payload, expected_tool_id, require_structured_source=True):
                         f"items[{index}].examples[{example_index}].description",
                     ),
                     "copyable": example.get("copyable", True),
-                    "sourceType": example.get("sourceType", "ai-derived"),
                 }
                 if not isinstance(clean_example["copyable"], bool):
                     raise ValidationError(
                         f"items[{index}].examples[{example_index}].copyable 必须是布尔值"
                     )
-                if clean_example["sourceType"] not in EXAMPLE_SOURCE_TYPES:
+                legacy_source_type = example.get("sourceType")
+                if legacy_source_type is not None and legacy_source_type not in EXAMPLE_SOURCE_TYPES:
                     raise ValidationError(
                         f"items[{index}].examples[{example_index}].sourceType 非法"
                     )
@@ -739,17 +739,27 @@ def validate_dataset(payload, expected_tool_id, require_structured_source=True):
                             f"items[{index}].examples[{example_index}].sourceUrl 必须是 HTTPS URL"
                         )
                     clean_example["sourceUrl"] = example_source_url
-                if clean_example["sourceType"] == "quasi-official" and not host_in_quasi_official_whitelist(
-                    example_source_url
+                if (
+                    legacy_source_type == "quasi-official"
+                    and example_source_url
+                    and not host_in_quasi_official_whitelist(example_source_url)
                 ):
                     raise ValidationError(
                         f"items[{index}].examples[{example_index}].sourceType 为 quasi-official 时，"
                         "sourceUrl 主机名必须在白名单内"
                     )
                 authorship = example.get("authorship")
+                if require_structured_source and any(
+                    example.get(field) is None
+                    for field in ("authorship", "evidenceTier", "adaptation")
+                ):
+                    raise ValidationError(
+                        f"items[{index}].examples[{example_index}] 新数据必须显式填写 "
+                        "authorship、evidenceTier 和 adaptation"
+                    )
                 if authorship is None:
                     authorship = (
-                        "generated" if clean_example["sourceType"] == "ai-derived" else "editorial"
+                        "generated" if legacy_source_type == "ai-derived" else "editorial"
                     )
                 evidence_tier = example.get("evidenceTier")
                 if evidence_tier is None:
@@ -758,7 +768,7 @@ def validate_dataset(payload, expected_tool_id, require_structured_source=True):
                         "quasi-official": "authoritative-community",
                         "manual": "community" if example_source_url else "none",
                         "ai-derived": "none",
-                    }[clean_example["sourceType"]]
+                    }.get(legacy_source_type, "none")
                 adaptation = example.get("adaptation")
                 if adaptation is None:
                     adaptation = (
@@ -775,6 +785,12 @@ def validate_dataset(payload, expected_tool_id, require_structured_source=True):
                     "authorship": authorship,
                     "evidenceTier": evidence_tier,
                     "adaptation": adaptation,
+                    # sourceType 仅为旧版读取兼容，不再作为作者或证据的事实来源。
+                    "sourceType": legacy_source_type or (
+                        "official" if evidence_tier == "first-party" else
+                        "quasi-official" if evidence_tier == "authoritative-community" else
+                        "ai-derived" if authorship == "generated" else "manual"
+                    ),
                 })
                 example_source_ids = validate_source_ids(
                     example.get("sourceIds"),
@@ -783,6 +799,31 @@ def validate_dataset(payload, expected_tool_id, require_structured_source=True):
                 )
                 if example_source_ids:
                     clean_example["sourceIds"] = example_source_ids
+                if evidence_tier in {"first-party", "authoritative-community", "community"}:
+                    if not example_source_ids:
+                        raise ValidationError(
+                            f"items[{index}].examples[{example_index}] 声明 {evidence_tier} "
+                            "证据时必须提供 sourceIds"
+                        )
+                    referenced_tiers = {
+                        source_by_id[source_id].get("evidenceTier")
+                        for source_id in example_source_ids
+                    }
+                    if evidence_tier not in referenced_tiers:
+                        raise ValidationError(
+                            f"items[{index}].examples[{example_index}] 的 evidenceTier "
+                            "与 sourceIds 引用来源不一致"
+                        )
+                if authorship == "official" and (
+                    adaptation != "verbatim"
+                    or evidence_tier != "first-party"
+                    or not example_source_ids
+                    or not example_source_url
+                ):
+                    raise ValidationError(
+                        f"items[{index}].examples[{example_index}] 官方原例必须是 verbatim，"
+                        "并提供第一方 sourceIds 和具体 sourceUrl"
+                    )
                 if clean_example["sourceType"] == "official" and example_source_url:
                     referenced = [
                         source_by_id[source_id] for source_id in example_source_ids
@@ -1193,7 +1234,7 @@ JSON 格式：
           "caveat": "可选；版本、平台或易混淆点",
           "copyable": true,
           "warning": "可选；危险操作或注意事项",
-          "sourceType": "official|quasi-official|manual|ai-derived",
+          "sourceType": "可选旧字段；official|quasi-official|manual|ai-derived",
           "sourceUrl": "可选；具体示例来源的HTTPS地址",
           "sourceIds": ["支持这个案例的来源ID"],
           "authorship": "official|editorial|generated",
@@ -1226,7 +1267,8 @@ JSON 格式：
 12. 更新时保留已有 keywords 和 examples，并为所有新增条目补充关键词和示例。
 13. 官方明确示例标记 official；人工整理标记 manual；根据命令语义推导的标记 ai-derived；可信第三方补充按上面第 1 条的来源优先级处理。
 13. {tier_rule}
-14. authorship 表示谁写的案例，evidenceTier 表示证据强度，adaptation 表示是否改写，三者不得混为一个 sourceType。
+14. authorship 表示谁写的案例，evidenceTier 表示证据强度，adaptation 表示是否改写，三者不得混为一个 sourceType。新数据必须显式填写这三个字段；sourceType 仅用于旧版兼容。
+15. first-party、authoritative-community、community 案例证据必须提供 sourceIds，且等级与所引用来源一致。official 作者只允许 verbatim 官方原例，并提供第一方 sourceIds 和具体 sourceUrl。
 15. 高风险命令必须提供 warning，并在 description 或 caveat 中给出预览、备份或更安全替代方案。
 
 来源发现结果：
@@ -1268,11 +1310,16 @@ def _demote_quasi_official(dataset):
         item["evidenceStatus"] = "unverified"
         for example in item.get("examples", []) or []:
             if isinstance(example, dict) and example.get("sourceType") == "quasi-official":
-                example["sourceType"] = "ai-derived"
+                authorship = example.get("authorship") or "editorial"
+                example["sourceType"] = (
+                    "ai-derived" if authorship == "generated" else "manual"
+                )
                 example.pop("sourceUrl", None)
-                example["authorship"] = "generated"
+                example["authorship"] = authorship
                 example["evidenceTier"] = "none"
-                example["adaptation"] = "scenario-derived"
+                example["adaptation"] = example.get("adaptation") or (
+                    "scenario-derived" if authorship == "generated" else "adapted"
+                )
             if removed_ids:
                 example["sourceIds"] = [
                     source_id for source_id in example.get("sourceIds", [])

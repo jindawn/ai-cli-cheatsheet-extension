@@ -123,6 +123,48 @@ class HostValidationTests(unittest.TestCase):
         self.assertEqual(dataset["items"][0]["examples"][0]["sourceType"], "ai-derived")
         self.assertFalse(dataset["qualityWarnings"])
 
+    def test_evidenced_example_requires_matching_source_ids(self):
+        payload = valid_dataset()
+        payload["items"][0]["examples"] = [{
+            "value": "Ctrl+K",
+            "description": "打开命令面板",
+            "sourceType": "official",
+            "authorship": "editorial",
+            "evidenceTier": "first-party",
+            "adaptation": "adapted",
+        }]
+        with self.assertRaisesRegex(host.ValidationError, "必须提供 sourceIds"):
+            host.validate_dataset(payload, "sample")
+
+        payload["items"][0]["examples"][0]["sourceIds"] = ["official-docs"]
+        dataset = host.validate_dataset(payload, "sample")
+        self.assertEqual(
+            dataset["items"][0]["examples"][0]["sourceIds"], ["official-docs"]
+        )
+
+    def test_official_example_requires_verbatim_precise_source(self):
+        payload = valid_dataset()
+        payload["items"][0]["examples"] = [{
+            "value": "Ctrl+K",
+            "description": "官方原例",
+            "sourceType": "official",
+            "sourceIds": ["official-docs"],
+            "authorship": "official",
+            "evidenceTier": "first-party",
+            "adaptation": "adapted",
+        }]
+        with self.assertRaisesRegex(host.ValidationError, "官方原例必须"):
+            host.validate_dataset(payload, "sample")
+
+        payload["items"][0]["examples"][0].update({
+            "adaptation": "verbatim",
+            "sourceUrl": "https://example.com/docs#ctrl-k",
+        })
+        dataset = host.validate_dataset(payload, "sample")
+        self.assertEqual(
+            dataset["items"][0]["examples"][0]["authorship"], "official"
+        )
+
     def test_rejects_invalid_example_structure(self):
         payload = valid_dataset()
         payload["items"][0]["examples"] = [{"value": "", "description": "空命令"}]
@@ -213,6 +255,9 @@ class HostValidationTests(unittest.TestCase):
                 "value": "rm -rf ./example",
                 "description": "删除目录",
                 "sourceType": "ai-derived",
+                "authorship": "generated",
+                "evidenceTier": "none",
+                "adaptation": "scenario-derived",
             }],
         })
         with self.assertRaisesRegex(host.ValidationError, "必须包含 warning"):
@@ -794,8 +839,10 @@ class HostSourceTierGenerationTests(unittest.TestCase):
         self.assertEqual(dataset["items"][0]["evidenceStatus"], "unverified")
         examples = dataset["items"][0]["examples"]
         # 类官方示例降为 ai-derived 并去掉未核实的 URL
-        self.assertEqual(examples[0]["sourceType"], "ai-derived")
+        self.assertEqual(examples[0]["sourceType"], "manual")
         self.assertNotIn("sourceUrl", examples[0])
+        self.assertEqual(examples[0]["authorship"], "editorial")
+        self.assertEqual(examples[0]["evidenceTier"], "none")
         # 非类官方示例不受影响
         self.assertEqual(examples[1]["sourceType"], "official")
         self.assertEqual(examples[1]["sourceUrl"], "https://official.example/y")
@@ -813,6 +860,9 @@ class HostSourceTierGenerationTests(unittest.TestCase):
                 "value": "cmd",
                 "description": "示例",
                 "sourceType": "ai-derived",
+                "authorship": "generated",
+                "evidenceTier": "none",
+                "adaptation": "scenario-derived",
                 "platformValues": {"solaris": "cmd"},
             }],
         })

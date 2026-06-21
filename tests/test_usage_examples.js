@@ -23,7 +23,15 @@ assert.deepStrictEqual(
 let itemCount = 0;
 let exampleCount = 0;
 const sourceCounts = { official: 0, "quasi-official": 0, manual: 0, "ai-derived": 0 };
+const authorshipCounts = { official: 0, editorial: 0, generated: 0 };
+const evidenceCounts = {
+  "first-party": 0,
+  "authoritative-community": 0,
+  community: 0,
+  none: 0,
+};
 const reviewedByTool = {};
+const evidenceByTool = {};
 
 for (const [toolId, tool] of Object.entries(window.CHEATSHEET_DATA)) {
   for (const item of tool.items) {
@@ -68,15 +76,27 @@ for (const [toolId, tool] of Object.entries(window.CHEATSHEET_DATA)) {
           `${toolId} ${item.cmd}: risky example requires a safer preview or backup step`
         );
       }
-      if (example.sourceType !== "ai-derived") {
-        // 人工/官方示例必须带可核验的文档链接（https）。
+      if (example.evidenceTier !== "none") {
+        assert(example.sourceIds?.length, `${toolId} ${item.cmd}: evidenced example requires sourceIds`);
+        const sourceTiers = new Set(example.sourceIds.map((sourceId) =>
+          tool.meta.sources.find((source) => source.id === sourceId)?.evidenceTier
+        ));
         assert(
-          /^https:\/\/\S+$/.test(example.sourceUrl || ""),
-          `${toolId} ${item.cmd}: curated example must carry an https sourceUrl`
+          sourceTiers.has(example.evidenceTier),
+          `${toolId} ${item.cmd}: evidenceTier must match sourceIds`
         );
+        evidenceByTool[toolId] = (evidenceByTool[toolId] || 0) + 1;
+      }
+      if (example.authorship === "official") {
+        assert.strictEqual(example.adaptation, "verbatim");
+        assert.strictEqual(example.evidenceTier, "first-party");
+        assert(example.sourceIds?.length);
+        assert(/^https:\/\/\S+$/.test(example.sourceUrl || ""));
       }
       sourceCounts[example.sourceType] += 1;
-      if (["official", "quasi-official", "manual"].includes(example.sourceType)) {
+      authorshipCounts[example.authorship] += 1;
+      evidenceCounts[example.evidenceTier] += 1;
+      if (example.authorship !== "generated") {
         reviewedByTool[toolId] = (reviewedByTool[toolId] || 0) + 1;
       }
       exampleCount += 1;
@@ -92,6 +112,10 @@ const expectedReviewedMinimums = {
   openclaw: 9,
   opencode: 10,
   git: 14,
+  cursor: 10,
+  idea: 10,
+  typora: 10,
+  "vs-code": 10,
 };
 for (const [toolId, minimum] of Object.entries(expectedReviewedMinimums)) {
   assert(
@@ -102,6 +126,9 @@ for (const [toolId, minimum] of Object.entries(expectedReviewedMinimums)) {
 assert(sourceCounts["ai-derived"] > 0, "the long tail should still receive AI-derived examples");
 assert(sourceCounts.official > 0, "first-party links should not be mislabeled as manual");
 assert(sourceCounts["quasi-official"] > 0, "explicit authoritative-community examples must survive normalization");
+assert(authorshipCounts.editorial > 0, "curated scenarios must remain editorial");
+assert(authorshipCounts.generated > 0, "template-derived long-tail examples must remain generated");
+assert(evidenceCounts["first-party"] > 0, "first-party evidence must be represented independently");
 
 function exampleFor(toolId, command, context = "") {
   return window.CHEATSHEET_ENRICHMENTS[toolId][`${command}\0${context}`].examples[0];
@@ -161,8 +188,29 @@ window.CHEATSHEET_BUILD_FULL_ENRICHMENTS({
   },
 });
 const sourcePolicyExample = window.CHEATSHEET_ENRICHMENTS["source-policy-test"]["command\0"].examples[0];
-assert.strictEqual(sourcePolicyExample.sourceType, "ai-derived");
+assert.strictEqual(sourcePolicyExample.sourceType, "manual");
+assert.strictEqual(sourcePolicyExample.authorship, "editorial");
+assert.strictEqual(sourcePolicyExample.evidenceTier, "none");
 assert.strictEqual(sourcePolicyExample.sourceUrl, undefined);
+
+for (const toolId of ["cursor", "idea", "typora", "vs-code"]) {
+  const examples = Object.values(window.CHEATSHEET_ENRICHMENTS[toolId])
+    .flatMap((enrichment) => enrichment.examples);
+  assert.strictEqual(
+    examples.filter((example) => example.authorship === "editorial").length,
+    10,
+    `${toolId}: selected scenarios must remain editorial`
+  );
+  assert.strictEqual(
+    examples.filter((example) => example.evidenceTier === "first-party").length,
+    10,
+    `${toolId}: selected scenarios must bind first-party evidence`
+  );
+  assert(
+    examples.some((example) => example.authorship === "generated"),
+    `${toolId}: long-tail fallback must remain generated`
+  );
+}
 
 for (const toolId of ["claude-code", "codex", "git", "linux"]) {
   const scenarioRich = Object.values(window.CHEATSHEET_ENRICHMENTS[toolId])

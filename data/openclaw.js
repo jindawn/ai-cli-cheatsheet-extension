@@ -12,6 +12,7 @@ window.CHEATSHEET_DATA["openclaw"] = {
     "contentCheckedAt": "2026-06-20",
     "sourceCheckedAt": "2026-06-21",
     "updatePolicy": "version-driven",
+    "verificationStatus": "manual",
     "coverage": "常用聊天斜杠命令与 CLI 子命令子集",
     "platforms": [
       "mac",

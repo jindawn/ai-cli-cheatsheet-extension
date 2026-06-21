@@ -297,41 +297,71 @@
     };
   }
 
-  function sameSourceHost(left, right) {
-    try {
-      const leftHost = new URL(left).hostname.replace(/^www\./, "");
-      const rightHost = new URL(right).hostname.replace(/^www\./, "");
-      return leftHost === rightHost;
-    } catch (_error) {
-      return false;
-    }
+  function sourceForId(tool, sourceId) {
+    return (tool?.meta?.sources || []).find((source) => source.id === sourceId);
   }
 
-  function normalizeCuratedExample(example, tool) {
+  function sourceIdsForExample(example, tool, item, isCurated) {
+    const knownIds = new Set((tool?.meta?.sources || []).map((source) => source.id));
+    const explicitIds = (example.sourceIds || []).filter((sourceId) => knownIds.has(sourceId));
+    if (explicitIds.length) return explicitIds;
+
+    if (example.sourceUrl) {
+      const matchedIds = (tool?.meta?.sources || []).filter((source) => {
+        if (!source.url) return false;
+        const sourceBase = source.url.replace(/\/$/, "");
+        const exampleBase = example.sourceUrl.replace(/\/$/, "");
+        return exampleBase === sourceBase
+          || exampleBase.startsWith(`${sourceBase}/`)
+          || sourceBase.startsWith(`${exampleBase}/`);
+      }).map((source) => source.id);
+      if (matchedIds.length) return matchedIds;
+    }
+
+    // 精选案例是编辑基于条目行为编写的场景。若条目已有逐条证据，可复用该证据
+    // 支撑“命令/快捷键具有此行为”，但作者仍是 editorial，而不是官方原例。
+    if (isCurated) {
+      return [...new Set((item?.evidenceRefs || [])
+        .map((ref) => ref.sourceId)
+        .filter((sourceId) => knownIds.has(sourceId)))];
+    }
+    return [];
+  }
+
+  function evidenceTierForSources(tool, sourceIds) {
+    const ranks = { none: 0, community: 1, "authoritative-community": 2, "first-party": 3 };
+    return sourceIds.map((sourceId) => sourceForId(tool, sourceId)?.evidenceTier || "none")
+      .sort((left, right) => ranks[right] - ranks[left])[0] || "none";
+  }
+
+  function legacySourceType(authorship, evidenceTier) {
+    if (evidenceTier === "first-party") return "official";
+    if (evidenceTier === "authoritative-community") return "quasi-official";
+    if (authorship === "generated") return "ai-derived";
+    return "manual";
+  }
+
+  function normalizeCuratedExample(example, tool, item, isCurated) {
     const risks = classifyRisk(example.value);
-    const explicitlyTyped = SOURCE_TYPES.has(example.sourceType);
-    const firstPartyUrl = example.sourceUrl && (
-      sameSourceHost(example.sourceUrl, tool?.meta?.sourceUrl)
-      || /^https:\/\/github\.com\/(?:openai\/codex|anthropics\/claude-code|google-gemini\/gemini-cli)(?:\/|$)/.test(example.sourceUrl)
-    );
-    const sourceType = explicitlyTyped
-      ? example.sourceType
-      : firstPartyUrl ? "official" : example.sourceUrl ? "manual" : "ai-derived";
     const authorship = example.authorship
-      || (sourceType === "ai-derived" ? "generated" : sourceType === "official" && example.adaptation === "verbatim" ? "official" : "editorial");
+      || (example.generated === true ? "generated" : isCurated ? "editorial"
+        : example.sourceType === "ai-derived" ? "generated" : "editorial");
+    const sourceIds = sourceIdsForExample(example, tool, item, isCurated);
     const evidenceTier = example.evidenceTier
-      || (sourceType === "official" ? "first-party"
-        : sourceType === "quasi-official" ? "authoritative-community"
-          : sourceType === "manual" && example.sourceUrl ? "community" : "none");
+      || evidenceTierForSources(tool, sourceIds);
     const adaptation = example.adaptation
       || (authorship === "official" ? "verbatim"
-        : sourceType === "ai-derived" ? "scenario-derived" : "adapted");
+        : authorship === "generated" ? "scenario-derived" : "adapted");
+    const sourceType = SOURCE_TYPES.has(example.sourceType)
+      ? example.sourceType
+      : legacySourceType(authorship, evidenceTier);
     return {
       ...example,
       sourceType,
       authorship,
       evidenceTier,
       adaptation,
+      ...(sourceIds.length ? { sourceIds } : {}),
       ...(risks.length ? {
         copyable: false,
         warning: example.warning || RISK_WARNINGS[risks[0]],
@@ -719,6 +749,7 @@
         }
         const scenarioDetails = SCENARIO_DETAILS[toolId]?.[lookup]
           || SCENARIO_DETAILS[toolId]?.[legacyLookup];
+        const hasCuratedExamples = Array.isArray(existing.examples) && existing.examples.length > 0;
         const examples = (existing.examples || item.examples || [deriveExample(toolId, tool, item)])
           .map((example) => {
             const detailed = scenarioDetails ? {
@@ -728,7 +759,7 @@
               expected: example.expected || scenarioDetails[2],
               caveat: example.caveat || scenarioDetails[3],
             } : itemIndex < 12 ? { ...example, ...scenarioDetailsFor(item, example) } : example;
-            return normalizeCuratedExample(detailed, tool);
+            return normalizeCuratedExample(detailed, tool, item, hasCuratedExamples);
           });
         const keywords = existing.keywords || item.keywords || deriveKeywords(item);
         byLookup.set(lookup, { ...existing, keywords, examples });

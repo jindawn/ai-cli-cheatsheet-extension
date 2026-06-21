@@ -13,6 +13,7 @@ window.CHEATSHEET_DATA["linux"] = {
     "contentCheckedAt": "2026-06-20",
     "sourceCheckedAt": "2026-06-21",
     "updatePolicy": "manual-only",
+    "verificationStatus": "manual",
     "coverage": "常用命令子集，覆盖 GNU Coreutils、util-linux、procps-ng 及 POSIX 标准，选取开发者高频使用的约 40 条命令",
     "platforms": [
       "linux",

@@ -11,6 +11,7 @@ window.CHEATSHEET_DATA["idea"] = {
     "contentCheckedAt": "2026-06-20",
     "sourceCheckedAt": "2026-06-21",
     "updatePolicy": "manual-only",
+    "verificationStatus": "manual",
     "coverage": "macOS 默认键位常用子集，Windows/Linux 差异见条目说明",
     "platforms": [
       "mac",

@@ -11,6 +11,7 @@ window.CHEATSHEET_DATA["gemini-cli"] = {
     "contentCheckedAt": "2026-06-20",
     "sourceCheckedAt": "2026-06-21",
     "updatePolicy": "version-driven",
+    "verificationStatus": "manual",
     "coverage": "官方交互快捷键与斜杠命令；产品状态可能变化",
     "platforms": [
       "mac",

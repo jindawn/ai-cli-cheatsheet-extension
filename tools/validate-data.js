@@ -183,6 +183,9 @@ for (const id of files) {
     && !["web-assisted", "model-knowledge", "manual"].includes(tool.meta.verificationStatus)) {
     fail(`${id}: invalid verificationStatus`);
   }
+  if (tool.meta.verificationStatus !== "manual") {
+    fail(`${id}: built-in dataset must declare manual maintenance`);
+  }
   if (tool.meta.sourceTier !== undefined) {
     if (!SOURCE_TIERS.includes(tool.meta.sourceTier)) fail(`${id}: invalid sourceTier`);
     if (tool.meta.sourceTier === "quasi-official"
@@ -220,6 +223,7 @@ for (const id of files) {
       }
     }
   } else fail(`${id}: meta.sources required`);
+  const sourceById = new Map(tool.meta.sources.map((source) => [source.id, source]));
   if (tool.meta.references !== undefined) {
     if (!Array.isArray(tool.meta.references)) fail(`${id}: invalid references`);
     for (const reference of tool.meta.references) {
@@ -304,7 +308,8 @@ for (const id of files) {
         if (example.sourceUrl !== undefined && !/^https:\/\/\S+$/.test(example.sourceUrl)) {
           fail(`${id}[${index}].examples[${exampleIndex}]: invalid sourceUrl`);
         }
-        if (example.sourceType === "quasi-official" && !hostInQuasiOfficialWhitelist(example.sourceUrl || "")) {
+        if (example.sourceType === "quasi-official" && example.sourceUrl
+          && !hostInQuasiOfficialWhitelist(example.sourceUrl)) {
           fail(`${id}[${index}].examples[${exampleIndex}]: quasi-official sourceType requires a whitelisted sourceUrl host`);
         }
         if (example.sourceType === "official" && example.sourceUrl
@@ -331,6 +336,25 @@ for (const id of files) {
           || example.sourceIds.some((sourceId) => !sourceIds.has(sourceId))
         )) fail(`${id}[${index}].examples[${exampleIndex}]: invalid sourceIds`);
         for (const sourceId of example.sourceIds || []) usedSourceIds.add(sourceId);
+        if (["first-party", "authoritative-community", "community"].includes(example.evidenceTier)) {
+          if (!example.sourceIds?.length) {
+            fail(`${id}[${index}].examples[${exampleIndex}]: evidenced example requires sourceIds`);
+          }
+          const referencedTiers = new Set(
+            example.sourceIds.map((sourceId) => sourceById.get(sourceId)?.evidenceTier)
+          );
+          if (!referencedTiers.has(example.evidenceTier)) {
+            fail(`${id}[${index}].examples[${exampleIndex}]: evidenceTier does not match sourceIds`);
+          }
+        }
+        if (example.authorship === "official" && (
+          example.adaptation !== "verbatim"
+          || example.evidenceTier !== "first-party"
+          || !example.sourceIds?.length
+          || !example.sourceUrl
+        )) {
+          fail(`${id}[${index}].examples[${exampleIndex}]: official example needs verbatim first-party evidence and a precise URL`);
+        }
         if (example.warning !== undefined && (typeof example.warning !== "string" || !example.warning.trim())) {
           fail(`${id}[${index}].examples[${exampleIndex}]: invalid warning`);
         }

@@ -11,6 +11,7 @@ window.CHEATSHEET_DATA["opencode"] = {
     "contentCheckedAt": "2026-06-20",
     "sourceCheckedAt": "2026-06-21",
     "updatePolicy": "version-driven",
+    "verificationStatus": "manual",
     "coverage": "官方 TUI、CLI 与快捷键文档",
     "platforms": [
       "mac",

@@ -11,6 +11,7 @@ window.CHEATSHEET_DATA["claude-code"] = {
     "contentCheckedAt": "2026-06-20",
     "sourceCheckedAt": "2026-06-21",
     "updatePolicy": "version-driven",
+    "verificationStatus": "manual",
     "coverage": "官方交互快捷键与斜杠命令",
     "platforms": [
       "mac",

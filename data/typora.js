@@ -12,6 +12,7 @@ window.CHEATSHEET_DATA["typora"] = {
     "contentCheckedAt": "2026-06-20",
     "sourceCheckedAt": "2026-06-21",
     "updatePolicy": "manual-only",
+    "verificationStatus": "manual",
     "coverage": "macOS / Windows / Linux 默认快捷键常用子集",
     "platforms": [
       "mac",

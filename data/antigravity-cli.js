@@ -11,6 +11,7 @@ window.CHEATSHEET_DATA["antigravity-cli"] = {
     "contentCheckedAt": "2026-06-20",
     "sourceCheckedAt": "2026-06-21",
     "updatePolicy": "manual-only",
+    "verificationStatus": "manual",
     "coverage": "官方公告与实测整理的常用子集，非完整官方清单",
     "platforms": [
       "mac",

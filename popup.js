@@ -321,6 +321,18 @@ function renderFilters() {
   });
 }
 
+// 用于结果计数栏：把当前生效的工具筛选与分类筛选组合成可读标签，
+// 让用户看到工具与分类筛选是“叠加”关系。
+function activeFilterLabel() {
+  const data = getAllData();
+  const parts = [];
+  if (activeTool === "recent") parts.push("最近");
+  else if (activeTool === "favourites") parts.push("收藏");
+  else if (activeTool !== "all" && data[activeTool]) parts.push(data[activeTool].meta.name);
+  if (activeCat) parts.push(CAT_LABEL[activeCat]);
+  return parts.join(" ＋ ");
+}
+
 function collectEntries() {
   const data = getAllData();
   const ids = activeTool === "all" || activeTool === "recent" || activeTool === "favourites"
@@ -442,10 +454,25 @@ function render() {
     (recentOrder.get(`${a.toolId}::${a.itemId}`) ?? 99) - (recentOrder.get(`${b.toolId}::${b.itemId}`) ?? 99)
   );
   entries = ranked;
-  document.getElementById("countBar").innerHTML = `共 ${entries.length} 条结果${relaxed ? ' · <span class="relaxed-note">已放宽为任一关键词匹配</span>' : ""} · ${platform === "mac" ? "macOS" : platform === "windows" ? "Windows" : "Linux"}`;
+  const filterLabel = activeFilterLabel();
+  const synonyms = query.trim() ? CORE.expandedSynonyms(query).slice(0, 4) : [];
+  const countSegments = [
+    `共 ${entries.length} 条结果`,
+    relaxed ? '<span class="relaxed-note">已放宽为任一关键词匹配</span>' : "",
+    filterLabel ? `筛选：${escapeHtml(filterLabel)}` : "",
+    synonyms.length ? `同义词：${escapeHtml(synonyms.join("、"))}` : "",
+    platform === "mac" ? "macOS" : platform === "windows" ? "Windows" : "Linux",
+  ].filter(Boolean);
+  document.getElementById("countBar").innerHTML = countSegments.join(" · ");
 
   if (!entries.length) {
-    main.innerHTML = `<div class="empty">${activeTool === "recent" ? "还没有最近复制的命令" : activeTool === "favourites" ? "还没有收藏的命令" : "没有匹配结果，试试用途词，例如“清空”“模型”“历史”"}</div>`;
+    const hasFilter = Boolean(activeCat) || !["all", "recent", "favourites"].includes(activeTool);
+    const emptyMessage = activeTool === "recent"
+      ? "还没有最近复制的命令，复制任意命令后会出现在这里"
+      : activeTool === "favourites"
+        ? "还没有收藏的命令，点条目右侧的 ♡ 即可收藏"
+        : CORE.emptySearchHint(query, { hasFilter });
+    main.innerHTML = `<div class="empty">${escapeHtml(emptyMessage)}</div>`;
     return;
   }
 

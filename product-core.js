@@ -25,8 +25,8 @@
     PREFIX: 800,
     CONTAINS: 650,
     ZH: 460,
+    KEYWORDS: 420,
     EN: 330,
-    KEYWORDS: 260,
     CONTEXT: 220,
     TOOL_NAME: 180,
     EXAMPLES: 160,
@@ -116,6 +116,45 @@
     const normalized = normalizeText(query);
     if (!normalized) return [];
     return normalized.split(/\s+/).filter(Boolean).map(expandQuery);
+  }
+
+  /**
+   * 列出查询经同义词扩展后额外纳入的检索词（不含用户原始输入的词），
+   * 供界面解释“为什么这些结果会出现”。
+   * @param {string} query
+   * @returns {string[]}
+   */
+  function expandedSynonyms(query) {
+    const typed = normalizeText(query).split(/\s+/).filter(Boolean);
+    const typedCompact = new Set(typed.map(compactText));
+    const extras = [];
+    const seen = new Set();
+    typed.forEach((token) => {
+      expandQuery(token).forEach((term) => {
+        const compact = compactText(term);
+        if (typedCompact.has(compact) || seen.has(compact)) return;
+        seen.add(compact);
+        extras.push(term);
+      });
+    });
+    return extras;
+  }
+
+  /**
+   * 为“无结果”状态生成结合查询的引导文案，而非千篇一律的提示。
+   * @param {string} query
+   * @param {{ hasFilter?: boolean }} [options]
+   * @returns {string}
+   */
+  function emptySearchHint(query, options = {}) {
+    const raw = String(query || "").trim();
+    if (!raw) return "输入命令、中文用途或英文说明开始搜索";
+    if (options.hasFilter) return "当前筛选下没有结果，试试点“清除筛选”或切换工具";
+    const tokens = raw.split(/\s+/).filter(Boolean);
+    if (tokens.length > 1) return `没有同时命中「${raw}」的结果，试试只保留一个关键词`;
+    if (/^[a-z0-9+\-]{7,}$/i.test(raw)) return `没有匹配「${raw}」，可能是拼写问题，或改用中文用途词`;
+    if (raw.length > 8) return `「${raw}」太具体了，试试更短的关键词`;
+    return "没有匹配结果，试试用途词，例如“清空”“模型”“历史”";
   }
 
   function includesTerm(value, terms) {
@@ -333,6 +372,8 @@
     normalizeText,
     matchTypeInValue,
     expandQuery,
+    expandedSynonyms,
+    emptySearchHint,
     splitQuery,
     scoreItem,
     explainMatch,

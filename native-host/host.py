@@ -1902,7 +1902,15 @@ def merge_shell_datasets(datasets):
             sources.append(source)
     if sources:
         merged_meta["sources"] = sources
-        primary = next((source for source in sources if source.get("url")), None)
+        # Prefer a shell-appropriate primary so meta.sourceUrl reflects the
+        # interpreter docs (bash/POSIX/zsh) rather than whichever source happens
+        # to be first (e.g. the coreutils manual, which is not Shell).
+        shell_primary_pref = ("gnu-bash-manual", "posix-shell-utilities", "zsh-manual")
+        primary = next(
+            (source for pref in shell_primary_pref
+             for source in sources if source["id"] == pref and source.get("url")),
+            None,
+        ) or next((source for source in sources if source.get("url")), None)
         if primary:
             merged_meta["sourceUrl"] = primary["url"]
             merged_meta["sourceTier"] = "official" if primary.get("evidenceTier") == "first-party" else "community"

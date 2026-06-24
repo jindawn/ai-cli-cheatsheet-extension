@@ -142,9 +142,16 @@ PY
 echo ""
 echo "正在部署到：$INSTALL_DIR"
 mkdir -p "$INSTALL_DIR"
-cp "$SCRIPT_DIR/host.py" "$INSTALL_DIR/host.py"
-chmod 700 "$INSTALL_DIR" "$INSTALL_DIR/host.py"
-echo "✅ host.py 已更新"
+# 开发模式（--symlink 或 AICLI_DEV=1）：软链而非拷贝，改 native-host/host.py 即时生效，无需重新部署。
+if [ "${1:-}" = "--symlink" ] || [ "${AICLI_DEV:-}" = "1" ]; then
+  ln -sfn "$SCRIPT_DIR/host.py" "$INSTALL_DIR/host.py"
+  echo "✅ host.py 已软链到仓库（开发模式：改 native-host/host.py 即时生效）"
+else
+  cp "$SCRIPT_DIR/host.py" "$INSTALL_DIR/host.py"
+  chmod 700 "$INSTALL_DIR/host.py"
+  echo "✅ host.py 已更新"
+fi
+chmod 700 "$INSTALL_DIR"
 
 # 已有安装时，询问是否只更新 host.py、跳过重新配置
 if [ -f "$INSTALL_DIR/run.sh" ]; then

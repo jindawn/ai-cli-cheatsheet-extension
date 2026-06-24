@@ -727,6 +727,25 @@ class HostFileTests(unittest.TestCase):
             dataset = host.run_shell_aggregate_query(prefer_web=False)
         self.assertIn("不归入 Shell", dataset["meta"]["coverage"])
 
+    def test_shell_merge_prefers_bash_manual_as_primary_source(self):
+        def source(sid, url):
+            return {
+                "id": sid, "title": sid, "url": url, "kind": "official-doc",
+                "maintainer": "GNU Project", "evidenceTier": "first-party",
+                "lastVerifiedAt": "2026-06-20", "resolvedUrl": url,
+                "pageTitle": sid, "checkedAt": "2026-06-20",
+                "purposes": ["command-existence"],
+            }
+        base = host.validate_dataset(valid_shell_dataset(), "shell")
+        # Coreutils listed first; bash manual must still win as primary.
+        base["meta"]["sources"] = [
+            source("gnu-manuals", "https://www.gnu.org/software/coreutils/manual/"),
+            source("gnu-bash-manual", "https://www.gnu.org/software/bash/manual/"),
+            *base["meta"]["sources"],
+        ]
+        merged = host.merge_shell_datasets([base])
+        self.assertEqual(merged["meta"]["sourceUrl"], "https://www.gnu.org/software/bash/manual/")
+
     def test_shell_aggregate_retries_truncated_batch_with_smaller_budget(self):
         captured_budgets = []
 

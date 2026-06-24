@@ -668,6 +668,26 @@ class HostFileTests(unittest.TestCase):
             for topic in batch["topics"]:
                 self.assertIn(topic, host.SHELL_TOPICS, f"{batch['id']}:{topic}")
 
+    def test_shell_coverage_is_broad_enough_for_a_full_reference(self):
+        # Shell should yield a rich reference (~120+ items), driven by many fine
+        # batches and a higher per-batch cap, not 9 batches capped at 12.
+        self.assertGreaterEqual(len(host.SHELL_BATCHES), 14)
+        self.assertGreaterEqual(host.SHELL_BATCH_MAX_ITEMS, 16)
+        # Batch ids are unique.
+        ids = [batch["id"] for batch in host.SHELL_BATCHES]
+        self.assertEqual(len(ids), len(set(ids)))
+
+    def test_shell_batch_prompt_sets_a_target_floor(self):
+        discovered = {
+            "sources": valid_shell_dataset()["meta"]["sources"],
+            "conflicts": [],
+            "notes": [],
+        }
+        prompt = host.build_shell_batch_prompt(discovered, host.SHELL_BATCHES[0], True)
+        # A target range (not just a ceiling) is what pushes the model to fill batches.
+        self.assertIn("目标 10", prompt)
+        self.assertIn("常用全集", prompt)
+
     def test_shell_batch_prompt_excludes_external_clis(self):
         discovered = {
             "sources": valid_shell_dataset()["meta"]["sources"],

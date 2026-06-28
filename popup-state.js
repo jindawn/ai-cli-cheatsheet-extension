@@ -501,7 +501,7 @@
         ? afterQuery.length
         : afterQuery.filter((item) => item.categoryKey === category.key).length,
     }));
-    const batched = batchSize > 0 && activeCategory === "all" && !query && !showDismissed;
+    const batched = batchSize > 0 && activeCategory === "all" && !query;
     const batch = batched
       ? sliceRecommendationBatch(sortRecommendationsByRelevance(visible), batchSize, batchOffset)
       : null;

@@ -255,7 +255,11 @@ assert.deepStrictEqual(
 );
 assert(!state.filterRecommendedTools(data, "mac", { batchSize: 6, query: "Ghostty" }).batched, "search should disable batching");
 assert(!state.filterRecommendedTools(data, "mac", { batchSize: 6, category: "cloud-native" }).batched, "a specific category should disable batching");
-assert(!state.filterRecommendedTools(data, "mac", { batchSize: 6, showDismissed: true }).batched, "showing dismissed should disable batching");
+assert(state.filterRecommendedTools(data, "mac", { batchSize: 6, showDismissed: true }).batched, "showing dismissed should still batch in the all view");
+const dismissedBatch = state.filterRecommendedTools(data, "mac", { batchSize: 6, showDismissed: true, dismissedRecommendations: new Set(["ghostty"]) });
+const dismissedBatchRow = render.renderRecommendationCategories(dismissedBatch);
+assert(dismissedBatchRow.includes("data-recommend-shuffle"), "batched + show dismissed should keep the shuffle action");
+assert(dismissedBatchRow.includes('data-recommend-bulk="restore"'), "batched + show dismissed should keep the bulk restore action");
 const relatedBatch = state.filterRecommendedTools({ ...data, docker: { meta: { name: "Docker" }, items: [] } }, "mac", { batchSize: 6, collectedToolIds: new Set(["docker"]) });
 assert(relatedBatch.batch.items.some((item) => item.relatedTo && item.relatedTo.length), "related recommendations should surface in the first batch");
 const batchHtml = render.renderRecommendedTools(firstBatch);

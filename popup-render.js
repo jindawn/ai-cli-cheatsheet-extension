@@ -221,12 +221,18 @@
     const chips = result.categories.map((category) =>
       `<button class="chip ${result.activeCategory === category.key ? "active" : ""}" data-recommend-category="${escapeHtml(category.key)}">${escapeHtml(category.label)} ${category.count}</button>`
     ).join("");
-    // 分批浏览态显示「换一批」；聚焦态（搜索/分类/看已忽略）显示「全部忽略/恢复」，两者互斥。
+    // 分批浏览态（全部 + 非搜索）显示「换一批」；勾「显示已忽略」时并存「全部恢复」。
+    // 聚焦态（搜索 / 选具体分类）显示「全部忽略/恢复」。
     if (result.batched) {
-      const action = result.batch && result.batch.canShuffle
+      const shuffle = result.batch && result.batch.canShuffle
         ? `<button class="chip filter-clear" data-recommend-shuffle>换一批 ↻</button>`
         : "";
-      return chips + action;
+      let restore = "";
+      if (result.showDismissed) {
+        const restorable = result.groups.flatMap((group) => group.items).filter((item) => item.dismissed).length;
+        if (restorable) restore = `<button class="chip filter-clear" data-recommend-bulk="restore">全部恢复 ${restorable}</button>`;
+      }
+      return chips + shuffle + restore;
     }
     const visible = result.groups.flatMap((group) => group.items);
     let bulk = "";

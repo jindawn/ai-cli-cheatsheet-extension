@@ -235,6 +235,12 @@ const terminalItems = terminalPersonalized.groups.flatMap((group) => group.items
 assert(terminalItems.length, "terminal recommendations should exist");
 assert(terminalItems[0].relevanceScore > 0, "backfilled related should activate personalization for terminal recommendations");
 assert(terminalItems[0].relatedTo.length, "personalized terminal recommendation should name its related anchor");
+// D3: 类目亲和度——用户活跃于某类目时，该类目下无显式关联的推荐也获得小幅加成（改动 1B）
+const affinityResult = state.filterRecommendedTools(data, "mac", { category: "dev-env", enabledToolIds: new Set(["vs-code"]) });
+const devEnvItems = affinityResult.groups.flatMap((group) => group.items);
+const lazygitItem = devEnvItems.find((item) => item.tool === "lazygit");
+assert(lazygitItem && lazygitItem.relevanceScore === 8, "category affinity alone should lift a recommendation lacking related edges");
+assert(render.renderRecommendedTools(affinityResult).includes("因为你常关注"), "affinity-only recommendation cards should explain the category signal");
 
 // E: AI 建议持久化的过期剪枝（改动 3）
 assert(state.STORAGE_KEYS.includes("aiRecommendations"), "AI suggestions should be persisted in local storage");

@@ -456,6 +456,31 @@
     return data[toolId]?.meta?.name || toolId;
   }
 
+  // 常见基础工具（不在推荐池里）到推荐类目的映射，用于「类目亲和度」信号。
+  const BASE_TOOL_CATEGORY = {
+    shell: "terminal",
+    iterm2: "terminal",
+    git: "dev-env",
+    linux: "cli-utility",
+    "vs-code": "dev-env",
+    idea: "dev-env",
+    cursor: "dev-env",
+    typora: "dev-env",
+  };
+  // 类目亲和度加成：每个同类目活跃信号 +8，封顶 24（低于显式 related 命中，避免淹没强信号）。
+  const CATEGORY_AFFINITY_PER = 8;
+  const CATEGORY_AFFINITY_CAP = 24;
+
+  function recommendationCategoryOf(toolId) {
+    const rec = TOOL_RECOMMENDATIONS.find((item) => item.tool === toolId);
+    return rec ? rec.categoryKey : (BASE_TOOL_CATEGORY[toolId] || null);
+  }
+
+  function recommendationCategoryLabel(categoryKey) {
+    const category = RECOMMENDATION_CATEGORIES.find((entry) => entry.key === categoryKey);
+    return category ? category.label : "";
+  }
+
   function recommendationSignalContext(data, options = {}) {
     const enabledToolIds = options.enabledToolIds instanceof Set ? options.enabledToolIds : new Set(options.enabledToolIds || []);
     const favouriteTools = new Set();
@@ -468,7 +493,13 @@
     (Array.isArray(options.recents) ? options.recents : []).forEach((item) => {
       if (item && typeof item.toolId === "string") recentTools.add(item.toolId);
     });
-    return { enabledToolIds, favouriteTools, recentTools };
+    // 类目亲和度只看用户的活跃信号（启用/收藏/最近），不含「已收录」——后者近乎全集，无区分度。
+    const categoryAffinity = new Map();
+    new Set([...enabledToolIds, ...favouriteTools, ...recentTools]).forEach((toolId) => {
+      const key = recommendationCategoryOf(toolId);
+      if (key) categoryAffinity.set(key, (categoryAffinity.get(key) || 0) + 1);
+    });
+    return { enabledToolIds, favouriteTools, recentTools, categoryAffinity };
   }
 
   function recommendationSignals(item, data, context) {
@@ -478,15 +509,21 @@
     const relatedFavourite = relatedIds.filter((id) => context.favouriteTools.has(id));
     const relatedCollected = relatedIds.filter((id) => data[id]);
     const signalIds = [...new Set([...relatedRecent, ...relatedFavourite, ...relatedEnabled, ...relatedCollected])];
+    const affinityCount = context.categoryAffinity?.get(item.categoryKey) || 0;
+    const categoryBonus = Math.min(CATEGORY_AFFINITY_CAP, affinityCount * CATEGORY_AFFINITY_PER);
     const reasons = [];
     if (relatedRecent.length) reasons.push(`因为你最近用过 ${relatedRecent.map((id) => toolName(data, id)).join("、")}`);
     if (relatedFavourite.length) reasons.push(`因为你收藏了 ${relatedFavourite.map((id) => toolName(data, id)).join("、")}`);
     if (relatedEnabled.length) reasons.push(`因为你启用了 ${relatedEnabled.map((id) => toolName(data, id)).join("、")}`);
     if (!reasons.length && signalIds.length) reasons.push(`因为你已添加 ${signalIds.map((id) => toolName(data, id)).join("、")}`);
+    if (!reasons.length && categoryBonus > 0) {
+      const label = recommendationCategoryLabel(item.categoryKey);
+      if (label) reasons.push(`因为你常关注「${label}」类工具`);
+    }
     return {
       relatedTo: signalIds.map((id) => toolName(data, id)),
       explainReasons: reasons,
-      relevanceScore: (relatedRecent.length * 60) + (relatedFavourite.length * 50) + (relatedEnabled.length * 30) + (relatedCollected.length * 20),
+      relevanceScore: (relatedRecent.length * 60) + (relatedFavourite.length * 50) + (relatedEnabled.length * 30) + (relatedCollected.length * 20) + categoryBonus,
     };
   }
 

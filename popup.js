@@ -325,6 +325,8 @@ function render() {
     expandedExamples,
     favourites,
     helpers: STATE,
+    dismissedRecommendations,
+    aiRecommendations,
   });
   updateManageBadge();
 }

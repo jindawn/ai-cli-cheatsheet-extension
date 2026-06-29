@@ -313,9 +313,14 @@
   }
 
   // 搜索无结果时，从未收录的推荐池里按查询匹配，给出「添加到速查表」的引导（改动 2）。
+  // 与管理面板保持一致：尊重已忽略项、并纳入 AI 现荐。
   function findUninstalledSuggestions(query, ctx, limit = 2) {
     if (!ctx || !ctx.helpers || typeof ctx.helpers.filterRecommendedTools !== "function") return [];
-    const result = ctx.helpers.filterRecommendedTools(ctx.data || {}, ctx.platform, { query });
+    const result = ctx.helpers.filterRecommendedTools(ctx.data || {}, ctx.platform, {
+      query,
+      dismissedRecommendations: ctx.dismissedRecommendations,
+      extraRecommendations: ctx.aiRecommendations,
+    });
     return result.groups.flatMap((group) => group.items).slice(0, limit);
   }
 

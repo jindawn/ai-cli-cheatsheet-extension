@@ -158,6 +158,11 @@ assert.strictEqual(core.scoreItem(pinyinItem, "q"), -1, "single-letter queries s
 assert.strictEqual(core.scoreItem(pinyinItem, "zzz"), -1, "non-matching pinyin should not score");
 const enWins = { cat: "x", cmd: "/foo", en: "log", zh: "日志查看" };
 assert(core.scoreItem(enWins, "log") > core.scoreItem(pinyinItem, "qk"), "real field matches should outrank the pinyin fallback");
+const categoryMatch = { cat: "x", cmd: "/zzz", en: "Zzz", zh: "无关项" };
+assert(
+  core.scoreItem(categoryMatch, "tools", { categoryLabel: "tools" }) > core.scoreItem(pinyinItem, "qk"),
+  "even the weakest real field (category) should outrank the pinyin fallback"
+);
 
 assert.strictEqual(core.classifyCommandRisk("git status").requiresConfirmation, false);
 assert(core.classifyCommandRisk("rm -rf ./tmp").types.includes("deleteOrOverwrite"));

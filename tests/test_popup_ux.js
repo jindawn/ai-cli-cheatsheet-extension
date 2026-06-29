@@ -249,6 +249,11 @@ assert(bridgeEmpty.includes("速查表还没收录"), "the add CTA should explai
 assert(!render.renderResults([], "zzzznotatool", { activeTool: "all", activeCat: null }, bridgeCtx).includes("data-suggest-add-tool"), "no matching uninstalled tool should not render a CTA");
 assert(!render.renderResults([], "ripgrep", { activeTool: "all", activeCat: "shortcut" }, bridgeCtx).includes("data-suggest-add-tool"), "filter-only empty state should not show the add CTA");
 assert(!render.renderResults([], "", { activeTool: "recent", activeCat: null }, bridgeCtx).includes("data-suggest-add-tool"), "the recent tab empty state should not show the add CTA");
+// CTA 与管理面板一致：尊重已忽略项、纳入 AI 现荐
+const bridgeDismissed = { ...bridgeCtx, dismissedRecommendations: new Set(["ripgrep"]) };
+assert(!render.renderResults([], "ripgrep", { activeTool: "all", activeCat: null }, bridgeDismissed).includes("data-suggest-add-tool"), "dismissed tools should not be offered by the empty-search CTA");
+const bridgeAi = { ...bridgeCtx, aiRecommendations: [{ tool: "fd", displayName: "fd", category: "命令行增强", categoryKey: "cli-utility", reason: "find 替代", tags: ["search"], platforms: ["mac"], source: "ai" }] };
+assert(render.renderResults([], "fd", { activeTool: "all", activeCat: null }, bridgeAi).includes('data-suggest-add-tool="fd"'), "AI recommendations should be eligible for the empty-search CTA");
 
 // E: AI 建议持久化的过期剪枝（改动 3）
 assert(state.STORAGE_KEYS.includes("aiRecommendations"), "AI suggestions should be persisted in local storage");

@@ -43,8 +43,9 @@
     TOOL_NAME: 180,
     EXAMPLES: 260,
     CATEGORY: 140,
-    // 拼音首字母兜底匹配：仅在其它字段都未命中时启用，权重低于真实字段命中。
-    PINYIN: 240,
+    // 拼音首字母兜底匹配：最弱信号，权重低于所有真实字段命中（含 CATEGORY），
+    // 仅在其它字段都未命中时启用，确保拼音不会重排任何真实字段匹配的结果。
+    PINYIN: 110,
     MULTI_TERM_BONUS: 75,
     FAVOURITE_BONUS: 35,
     FAVOURITE_EMPTY_QUERY: 30,

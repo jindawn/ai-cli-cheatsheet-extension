@@ -8,8 +8,8 @@ window.CHEATSHEET_DATA["antigravity-cli"] = {
     "source": "⚠️轻量版：官方公告+第三方实测整理，2026-06（非逐字核对官方文档，命令仍在快速变化中）",
     "sourceUrl": "https://developers.googleblog.com/",
     "updatedAt": "2026-06-20",
-    "contentCheckedAt": "2026-06-20",
-    "sourceCheckedAt": "2026-06-21",
+    "contentCheckedAt": "2026-07-02",
+    "sourceCheckedAt": "2026-07-02",
     "updatePolicy": "manual-only",
     "verificationStatus": "manual",
     "coverage": "官方公告与实测整理的常用子集，非完整官方清单",
@@ -28,14 +28,47 @@ window.CHEATSHEET_DATA["antigravity-cli"] = {
         "kind": "official-doc",
         "maintainer": "Google",
         "evidenceTier": "first-party",
-        "lastVerifiedAt": "2026-06-21",
+        "lastVerifiedAt": "2026-07-02",
         "resolvedUrl": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/",
         "pageTitle": "Transitioning Gemini CLI to Antigravity CLI",
-        "checkedAt": "2026-06-21",
+        "checkedAt": "2026-07-02",
         "purposes": [
           "command-existence",
           "release-notes"
         ]
+      },
+      {
+        "id": "antigravity-repository",
+        "title": "Antigravity CLI official repository",
+        "kind": "official-repository",
+        "maintainer": "Google",
+        "evidenceTier": "first-party",
+        "purposes": [
+          "command-existence",
+          "examples"
+        ],
+        "resolvedUrl": "https://github.com/google-antigravity/antigravity-cli",
+        "pageTitle": "google-antigravity/antigravity-cli",
+        "checkedAt": "2026-07-02",
+        "url": "https://github.com/google-antigravity/antigravity-cli",
+        "lastVerifiedAt": "2026-07-02"
+      },
+      {
+        "id": "antigravity-codelab",
+        "title": "Hands-on with Antigravity CLI (Google Codelabs)",
+        "kind": "authoritative-reference",
+        "maintainer": "Google Developers Codelabs",
+        "evidenceTier": "authoritative-community",
+        "purposes": [
+          "command-existence",
+          "option-semantics",
+          "examples"
+        ],
+        "resolvedUrl": "https://codelabs.developers.google.com/antigravity-cli-hands-on",
+        "pageTitle": "Hands-on with Antigravity CLI",
+        "checkedAt": "2026-07-02",
+        "url": "https://codelabs.developers.google.com/antigravity-cli-hands-on",
+        "lastVerifiedAt": "2026-07-02"
       }
     ]
   },
@@ -46,7 +79,7 @@ window.CHEATSHEET_DATA["antigravity-cli"] = {
       "en": "Launch interactive TUI",
       "zh": "启动交互式终端界面（是 Gemini CLI 的官方继任者，命令从 gemini 换成了 agy）",
       "id": "9214a76c9e068280",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "antigravity-announcement",
@@ -55,6 +88,15 @@ window.CHEATSHEET_DATA["antigravity-cli"] = {
           ],
           "locator": "官方迁移公告中的 Antigravity CLI 产品入口",
           "checkedAt": "2026-06-21"
+        },
+        {
+          "sourceId": "antigravity-codelab",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://codelabs.developers.google.com/antigravity-cli-hands-on · 基础命令表 · agy | 启动交互式会话",
+          "checkedAt": "2026-07-02"
         }
       ]
     },
@@ -64,7 +106,18 @@ window.CHEATSHEET_DATA["antigravity-cli"] = {
       "en": "Set model at launch",
       "zh": "启动时指定模型，例如 Gemini 3.5 Flash / Gemini 3.1 Pro / Claude Sonnet / Claude Opus / GPT-OSS 120B（视套餐）",
       "id": "e441243d9d431615",
-      "evidenceStatus": "unverified"
+      "evidenceStatus": "verified",
+      "evidenceRefs": [
+        {
+          "sourceId": "antigravity-codelab",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://codelabs.developers.google.com/antigravity-cli-hands-on · 命令行参数表 · --model \"模型名\" | 指定特定模型运行该会话",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -72,7 +125,18 @@ window.CHEATSHEET_DATA["antigravity-cli"] = {
       "en": "Non-interactive one-shot",
       "zh": "非交互单次执行模式",
       "id": "c078911b531fbdc3",
-      "evidenceStatus": "unverified"
+      "evidenceStatus": "verified",
+      "evidenceRefs": [
+        {
+          "sourceId": "antigravity-codelab",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://codelabs.developers.google.com/antigravity-cli-hands-on · 命令行参数表 · -p \"prompt\" | 非交互模式（页面仅确认 -p，--print 别名未独立验证）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -80,7 +144,18 @@ window.CHEATSHEET_DATA["antigravity-cli"] = {
       "en": "Check version (safe)",
       "zh": "安全的非交互版本检查（agy version 在无真实终端时可能失败）",
       "id": "5636b05b72aaa4bd",
-      "evidenceStatus": "unverified"
+      "evidenceStatus": "verified",
+      "evidenceRefs": [
+        {
+          "sourceId": "antigravity-codelab",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://codelabs.developers.google.com/antigravity-cli-hands-on · 基础命令表 · agy --version | 显示版本号",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -96,7 +171,18 @@ window.CHEATSHEET_DATA["antigravity-cli"] = {
       "en": "List available models",
       "zh": "列出当前可用的模型（外部命令）",
       "id": "9b27426fc91ec116",
-      "evidenceStatus": "unverified"
+      "evidenceStatus": "verified",
+      "evidenceRefs": [
+        {
+          "sourceId": "antigravity-codelab",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://codelabs.developers.google.com/antigravity-cli-hands-on · 基础命令表 · agy models | 列出可用的模型",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "id": "agy-help",
@@ -128,7 +214,18 @@ window.CHEATSHEET_DATA["antigravity-cli"] = {
       "en": "Show help (3 tabs)",
       "zh": "显示帮助，含 general/commands/shortcuts 三个标签页，用Tab键切换浏览",
       "id": "936faf0ac514a58d",
-      "evidenceStatus": "unverified"
+      "evidenceStatus": "verified",
+      "evidenceRefs": [
+        {
+          "sourceId": "antigravity-codelab",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://codelabs.developers.google.com/antigravity-cli-hands-on · 斜杠命令表 · /help | 显示帮助信息（页面仅确认 /help，? 别名未独立验证）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "slash",
@@ -136,7 +233,18 @@ window.CHEATSHEET_DATA["antigravity-cli"] = {
       "en": "Exit the session",
       "zh": "退出会话（也可以按两次 Ctrl+D）",
       "id": "a9108b8b30a59731",
-      "evidenceStatus": "unverified"
+      "evidenceStatus": "verified",
+      "evidenceRefs": [
+        {
+          "sourceId": "antigravity-codelab",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://codelabs.developers.google.com/antigravity-cli-hands-on · 斜杠命令表 · /quit + 快捷键表 · Ctrl+D（按两次）| 退出（/exit 别名未独立验证）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "id": "agy-config",
@@ -144,7 +252,18 @@ window.CHEATSHEET_DATA["antigravity-cli"] = {
       "cmd": "/config 或 /settings",
       "en": "Open configuration",
       "zh": "打开配置设置（对应 Gemini CLI 的 /settings）",
-      "evidenceStatus": "unverified"
+      "evidenceStatus": "verified",
+      "evidenceRefs": [
+        {
+          "sourceId": "antigravity-codelab",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://codelabs.developers.google.com/antigravity-cli-hands-on · 斜杠命令表 · /config 或 /settings | 打开配置/设置菜单",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "slash",
@@ -152,7 +271,17 @@ window.CHEATSHEET_DATA["antigravity-cli"] = {
       "en": "Switch model mid-session",
       "zh": "会话中切换模型",
       "id": "186d0438d19ceaed",
-      "evidenceStatus": "unverified"
+      "evidenceStatus": "partial",
+      "evidenceRefs": [
+        {
+          "sourceId": "antigravity-codelab",
+          "claims": [
+            "existence"
+          ],
+          "locator": "https://codelabs.developers.google.com/antigravity-cli-hands-on · 斜杠命令表 · /model | 查看当前会话使用的模型（页面只展示查看，未展示切换用法，语义未完全核实）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "slash",
@@ -288,7 +417,18 @@ window.CHEATSHEET_DATA["antigravity-cli"] = {
       "en": "Exit / close TUI",
       "zh": "关闭TUI，恢复原本的shell会话",
       "id": "b6dfa800ff744ae4",
-      "evidenceStatus": "unverified"
+      "evidenceStatus": "verified",
+      "evidenceRefs": [
+        {
+          "sourceId": "antigravity-codelab",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://codelabs.developers.google.com/antigravity-cli-hands-on · 快捷键表 · Ctrl+D（按两次）| 退出Antigravity CLI",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "shortcut",
@@ -352,7 +492,18 @@ window.CHEATSHEET_DATA["antigravity-cli"] = {
       "en": "Main settings file",
       "zh": "主要设置文件（注意路径仍在.gemini目录下的子目录，不是全新独立路径）",
       "id": "de71b9a330f4f520",
-      "evidenceStatus": "unverified"
+      "evidenceStatus": "verified",
+      "evidenceRefs": [
+        {
+          "sourceId": "antigravity-codelab",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://codelabs.developers.google.com/antigravity-cli-hands-on · 配置文件位置 · ~/.gemini/antigravity-cli/settings.json",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -392,7 +543,26 @@ window.CHEATSHEET_DATA["antigravity-cli"] = {
       "en": "curl install script",
       "zh": "通过 curl 拉取安装脚本并在 macOS 或 Linux 上安装 Antigravity CLI",
       "id": "3459535a8fe20604",
-      "evidenceStatus": "unverified"
+      "evidenceStatus": "verified",
+      "evidenceRefs": [
+        {
+          "sourceId": "antigravity-repository",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://github.com/google-antigravity/antigravity-cli · README 安装命令（macOS/Linux）· curl -fsSL https://antigravity.google/cli/install.sh | bash",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "antigravity-codelab",
+          "claims": [
+            "existence"
+          ],
+          "locator": "https://codelabs.developers.google.com/antigravity-cli-hands-on · 安装命令 macOS | Linux（原文一致）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -400,7 +570,26 @@ window.CHEATSHEET_DATA["antigravity-cli"] = {
       "en": "irm install script",
       "zh": "通过 PowerShell 拉取安装脚本并在 Windows 上安装 Antigravity CLI",
       "id": "101f6e4e0132508a",
-      "evidenceStatus": "unverified"
+      "evidenceStatus": "verified",
+      "evidenceRefs": [
+        {
+          "sourceId": "antigravity-repository",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://github.com/google-antigravity/antigravity-cli · README 安装命令（Windows PowerShell）· irm https://antigravity.google/cli/install.ps1 | iex",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "antigravity-codelab",
+          "claims": [
+            "existence"
+          ],
+          "locator": "https://codelabs.developers.google.com/antigravity-cli-hands-on · 安装命令 Windows PowerShell（原文一致）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     }
   ]
 };

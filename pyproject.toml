@@ -1,0 +1,11 @@
+# 仅承载静态检查配置；项目本身无 Python 打包（host.py 是标准库单文件）。
+
+[tool.ruff]
+# host.py 部署后运行在系统 Python 下（macOS 常为 3.9），语法必须保持兼容。
+target-version = "py39"
+extend-exclude = [".venv"]
+
+[tool.ruff.lint]
+# 从 ruff 默认规则集（E4/E7/E9/F）起步：语法错误、未用导入/变量等硬伤。
+# 风格类规则暂不启用，避免对 3000+ 行既有代码产生大规模格式化 diff。
+select = ["E4", "E7", "E9", "F"]

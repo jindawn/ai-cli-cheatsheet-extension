@@ -1,0 +1,25 @@
+name: Verify source URLs
+
+# 来源链接腐烂监测：每周联网核对 shared/source-registry.json 与各数据文件
+# 登记的来源 URL（最终跳转、HTTP 状态、页面标题）。失败即红，人工跟进。
+on:
+  schedule:
+    - cron: "17 3 * * 1" # 每周一 03:17 UTC
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Verify registered source URLs (networked)
+        # 外站偶发瞬时失败（曾见 gnu.org），失败后等 30 秒重试一次再判定。
+        run: |
+          node tools/verify-source-urls.js || {
+            echo "first attempt failed; retrying in 30s..."
+            sleep 30
+            node tools/verify-source-urls.js
+          }

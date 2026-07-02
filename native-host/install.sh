@@ -294,7 +294,7 @@ done
 
 read -rp "同时注册到 Edge？[y/N]: " EDGE_CHOICE
 if [[ "$EDGE_CHOICE" =~ ^[Yy]$ ]]; then
-  EDGE_DIR="$HOME/Library/Application Support/Microsoft Edge/NativeMessagingHosts"
+  # EDGE_DIR 已按操作系统在文件顶部设置（macOS/Linux 路径不同），不要在此覆盖。
   write_manifest "$EDGE_DIR"
 fi
 

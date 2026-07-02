@@ -1,0 +1,14 @@
+# bandit 安全扫描配置。以下例外均为已人工审阅的刻意设计，跳过理由：
+#
+# - B404/B603（subprocess 导入与无 shell 调用）：host.py 只用 argv 列表调用
+#   受控解析的可执行文件（find_executable 从固定目录集解析 CLAUDE_BIN），
+#   刻意不经 shell —— 这本身就是防注入的安全做法，告警属误报。
+# - B310（urlopen 协议审计）：urlopen_with_retry 只用于探测
+#   shared/source-registry.json 中登记的来源 URL；validate-data.js 与
+#   host.py 校验层均强制 https，file:// 等协议无法进入。
+#
+# 新增代码若触发其他规则（含 Medium/High），CI 会失败并需要单独评审。
+skips:
+  - B404
+  - B603
+  - B310

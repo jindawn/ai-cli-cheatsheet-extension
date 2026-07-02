@@ -1632,6 +1632,28 @@ class HostExecutableDiscoveryTests(unittest.TestCase):
         for marker in ("nvm", "fnm", "volta", "scoop"):
             self.assertIn(marker, powershell.lower())
 
+    def test_uninstall_scripts_mirror_install_artifacts(self):
+        # 卸载脚本必须与安装脚本指向同一批产物：host 名、安装目录、
+        # 浏览器注册位置；credentials.env 含密钥，必须是询问式删除。
+        uninstall_sh = (ROOT / "native-host" / "uninstall.sh").read_text(encoding="utf-8")
+        uninstall_ps1 = (ROOT / "native-host" / "uninstall.ps1").read_text(encoding="utf-8")
+        for text in (uninstall_sh, uninstall_ps1):
+            self.assertIn("com.aicli.cheatsheet_updater", text)
+            self.assertIn("aicli-cheatsheet", text)
+            self.assertIn("credentials.env", text)
+            self.assertIn("[y/N]", text)
+        self.assertIn("Google/Chrome/NativeMessagingHosts", uninstall_sh)
+        self.assertIn("Microsoft Edge/NativeMessagingHosts", uninstall_sh)
+        self.assertIn("microsoft-edge/NativeMessagingHosts", uninstall_sh)
+        self.assertIn(r"HKCU:\Software\Google\Chrome\NativeMessagingHosts", uninstall_ps1)
+        self.assertIn(r"HKCU:\Software\Microsoft\Edge\NativeMessagingHosts", uninstall_ps1)
+
+    def test_install_sh_does_not_override_platform_edge_dir(self):
+        # 回归：Linux 上选择 Edge 时曾被硬编码覆盖为 macOS 路径。
+        shell = (ROOT / "native-host" / "install.sh").read_text(encoding="utf-8")
+        register_block = shell[shell.index("同时注册到 Edge"):]
+        self.assertNotIn("Library/Application Support", register_block)
+
 
 class HostDiffEnrichmentTests(unittest.TestCase):
     def _with_id(self, item_id="i1"):

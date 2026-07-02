@@ -107,6 +107,16 @@ powershell -ExecutionPolicy Bypass -File native-host\install.ps1
 
 详细配置、使用限制和常见错误参见 [INSTALL.md](INSTALL.md)。
 
+卸载 Native Host（清理浏览器注册与安装目录；含 API 密钥的 credentials.env 会询问后再删）：
+
+```bash
+bash native-host/uninstall.sh        # macOS / Linux
+```
+
+```powershell
+powershell -ExecutionPolicy Bypass -File native-host\uninstall.ps1   # Windows（含注册表清理）
+```
+
 ## 项目架构
 
 ```text
@@ -129,7 +139,8 @@ background.js               弹窗与 Native Host 的任务桥接（含超时看
 native-host/host.py         模型调用、数据校验、差异计算和原子写入
 tools/validate-data.js      数据文件静态校验
 tools/migrate-built-in-evidence.js  可重复运行的内置数据证据迁移脚本
-tools/verify-source-urls.js  联网检查来源最终 URL、HTTP 状态和页面标题
+tools/promote-tool.py       把生成的工具数据整理为可提交的内置数据（人工核验后使用）
+tools/verify-source-urls.js  联网检查来源最终 URL、HTTP 状态和页面标题（CI 每周定时执行）
 tests/                      弹窗、后台、搜索核心与 Native Host 测试
 ```
 

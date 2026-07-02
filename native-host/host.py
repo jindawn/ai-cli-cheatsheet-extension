@@ -2383,7 +2383,7 @@ def run_shell_aggregate_query(prefer_web=False):
             batch_dataset, dropped = _generate_shell_batch(
                 discovered, batch, web_enabled, use_api, prefer_web
             )
-        except ValidationError as exc:
+        except ValidationError:
             # A batch that yields no usable data (empty output, every item
             # dropped, or still truncated at the floor) must not sink the whole
             # aggregate. Some scopes — notably the abstract syntax batches — are

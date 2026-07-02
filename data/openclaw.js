@@ -9,7 +9,7 @@ window.CHEATSHEET_DATA["openclaw"] = {
     "builtIn": false,
     "sourceUrl": "https://docs.openclaw.ai/tools/slash-commands",
     "updatedAt": "2026-06-20",
-    "contentCheckedAt": "2026-06-20",
+    "contentCheckedAt": "2026-07-02",
     "sourceCheckedAt": "2026-06-21",
     "updatePolicy": "version-driven",
     "verificationStatus": "manual",
@@ -352,15 +352,16 @@ window.CHEATSHEET_DATA["openclaw"] = {
       "en": "Restart OpenClaw",
       "zh": "重启 OpenClaw 服务",
       "id": "327c9a6aff9a5e1a",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "openclaw-slash",
           "claims": [
-            "existence"
+            "existence",
+            "semantics"
           ],
-          "locator": "https://docs.openclaw.ai/tools/slash-commands（页面内检索 /restart）",
-          "checkedAt": "2026-06-21"
+          "locator": "https://docs.openclaw.ai/tools/slash-commands · /restart（原文：\"Restart OpenClaw\"，受 commands.restart 配置项控制，默认启用）",
+          "checkedAt": "2026-07-02"
         }
       ]
     },
@@ -532,15 +533,16 @@ window.CHEATSHEET_DATA["openclaw"] = {
       "en": "Restart the Gateway daemon",
       "zh": "重启 Gateway 守护进程",
       "id": "85c77914045bc98f",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "openclaw-cli",
           "claims": [
-            "existence"
+            "existence",
+            "semantics"
           ],
-          "locator": "https://docs.openclaw.ai/cli（页面内检索 openclaw gateway restart）",
-          "checkedAt": "2026-06-21"
+          "locator": "https://docs.openclaw.ai/cli · gateway 子命令树含 restart（与 stop/start 并列的 Gateway 守护进程生命周期管理动作）",
+          "checkedAt": "2026-07-02"
         }
       ]
     },
@@ -586,15 +588,16 @@ window.CHEATSHEET_DATA["openclaw"] = {
       "en": "Repair/migrate config + health checks",
       "zh": "修复/迁移配置并运行健康检查",
       "id": "b8859b6ce868ca29",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "openclaw-cli",
           "claims": [
-            "existence"
+            "existence",
+            "semantics"
           ],
-          "locator": "https://docs.openclaw.ai/cli（页面内检索 openclaw doctor）",
-          "checkedAt": "2026-06-21"
+          "locator": "https://docs.openclaw.ai/cli · doctor（归类于 Setup and onboarding 区域，与 setup/onboard/configure 并列的诊断工具）",
+          "checkedAt": "2026-07-02"
         }
       ]
     },

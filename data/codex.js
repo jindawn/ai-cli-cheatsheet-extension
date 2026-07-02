@@ -8,7 +8,7 @@ window.CHEATSHEET_DATA["codex"] = {
     "source": "官方文档 developers.openai.com/codex，整理于 2026-06",
     "sourceUrl": "https://developers.openai.com/codex/cli/",
     "updatedAt": "2026-06-20",
-    "contentCheckedAt": "2026-06-20",
+    "contentCheckedAt": "2026-07-02",
     "sourceCheckedAt": "2026-06-21",
     "updatePolicy": "version-driven",
     "verificationStatus": "manual",
@@ -1540,15 +1540,16 @@ window.CHEATSHEET_DATA["codex"] = {
       "cmd": "--yolo / --dangerously-bypass-approvals-and-sandbox",
       "en": "Bypass all safety",
       "zh": "完全跳过审批和沙盒，仅在受控隔离环境中使用",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "codex-cli-reference",
           "claims": [
-            "existence"
+            "existence",
+            "semantics"
           ],
-          "locator": "https://developers.openai.com/codex/cli/reference（页面内检索 --yolo / --dangerously-bypass-approvals-and-sandbox）",
-          "checkedAt": "2026-06-21"
+          "locator": "https://developers.openai.com/codex/cli/reference · --dangerously-bypass-approvals-and-sandbox（原文：\"Run every command without approvals or sandboxing. Only use inside an externally hardened environment.\"，--yolo 为其简写别名）",
+          "checkedAt": "2026-07-02"
         }
       ]
     },

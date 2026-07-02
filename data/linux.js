@@ -368,6 +368,57 @@ window.CHEATSHEET_DATA["linux"] = {
           "command-existence",
           "option-semantics"
         ]
+      },
+      {
+        "id": "linux-rm-man",
+        "registryId": "linux-man7",
+        "title": "rm(1) manual page",
+        "url": "https://man7.org/linux/man-pages/man1/rm.1.html",
+        "kind": "authoritative-reference",
+        "maintainer": "Linux man-pages project / man7.org",
+        "evidenceTier": "authoritative-community",
+        "lastVerifiedAt": "2026-07-02",
+        "resolvedUrl": "https://man7.org/linux/man-pages/man1/rm.1.html",
+        "pageTitle": "rm(1) manual page",
+        "checkedAt": "2026-07-02",
+        "purposes": [
+          "command-existence",
+          "option-semantics"
+        ]
+      },
+      {
+        "id": "linux-chmod-man",
+        "registryId": "linux-man7",
+        "title": "chmod(1) manual page",
+        "url": "https://man7.org/linux/man-pages/man1/chmod.1.html",
+        "kind": "authoritative-reference",
+        "maintainer": "Linux man-pages project / man7.org",
+        "evidenceTier": "authoritative-community",
+        "lastVerifiedAt": "2026-07-02",
+        "resolvedUrl": "https://man7.org/linux/man-pages/man1/chmod.1.html",
+        "pageTitle": "chmod(1) manual page",
+        "checkedAt": "2026-07-02",
+        "purposes": [
+          "command-existence",
+          "option-semantics"
+        ]
+      },
+      {
+        "id": "linux-chown-man",
+        "registryId": "linux-man7",
+        "title": "chown(1) manual page",
+        "url": "https://man7.org/linux/man-pages/man1/chown.1.html",
+        "kind": "authoritative-reference",
+        "maintainer": "Linux man-pages project / man7.org",
+        "evidenceTier": "authoritative-community",
+        "lastVerifiedAt": "2026-07-02",
+        "resolvedUrl": "https://man7.org/linux/man-pages/man1/chown.1.html",
+        "pageTitle": "chown(1) manual page",
+        "checkedAt": "2026-07-02",
+        "purposes": [
+          "command-existence",
+          "option-semantics"
+        ]
       }
     ],
     "references": [
@@ -669,7 +720,7 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-rm",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "gnu-manuals",
@@ -678,6 +729,15 @@ window.CHEATSHEET_DATA["linux"] = {
           ],
           "locator": "GNU manuals（检索 rm）",
           "checkedAt": "2026-06-21"
+        },
+        {
+          "sourceId": "linux-rm-man",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/rm.1.html · NAME/DESCRIPTION（rm - remove files or directories）",
+          "checkedAt": "2026-07-02"
         }
       ]
     },
@@ -691,7 +751,7 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-rm-rf",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "gnu-manuals",
@@ -700,6 +760,15 @@ window.CHEATSHEET_DATA["linux"] = {
           ],
           "locator": "GNU manuals（检索 rm -rf）",
           "checkedAt": "2026-06-21"
+        },
+        {
+          "sourceId": "linux-rm-man",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/rm.1.html · 选项 -r/-R（原文：\"remove directories and their contents recursively\"）、-f（原文：\"ignore nonexistent files and arguments, never prompt\"）",
+          "checkedAt": "2026-07-02"
         }
       ]
     },
@@ -846,7 +915,7 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-chmod",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "gnu-manuals",
@@ -855,6 +924,15 @@ window.CHEATSHEET_DATA["linux"] = {
           ],
           "locator": "GNU manuals（检索 chmod）",
           "checkedAt": "2026-06-21"
+        },
+        {
+          "sourceId": "linux-chmod-man",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/chmod.1.html · NAME（chmod - change file mode bits）",
+          "checkedAt": "2026-07-02"
         }
       ]
     },
@@ -868,7 +946,7 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-chmod-x",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "gnu-manuals",
@@ -877,6 +955,15 @@ window.CHEATSHEET_DATA["linux"] = {
           ],
           "locator": "GNU manuals（检索 chmod +x）",
           "checkedAt": "2026-06-21"
+        },
+        {
+          "sourceId": "linux-chmod-man",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/chmod.1.html · 运算符 + 与权限位 x（原文：\"The operator + causes the selected file mode bits to be added\" · \"execute (or search for directories) (x)\"）",
+          "checkedAt": "2026-07-02"
         }
       ]
     },
@@ -889,7 +976,7 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux"
       ],
       "id": "linux-chown",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "gnu-manuals",
@@ -898,6 +985,15 @@ window.CHEATSHEET_DATA["linux"] = {
           ],
           "locator": "GNU manuals（检索 chown）",
           "checkedAt": "2026-06-21"
+        },
+        {
+          "sourceId": "linux-chown-man",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/chown.1.html · NAME/DESCRIPTION（原文：\"chown - change file owner and group\" · \"chown changes the user and/or group ownership of each given file\"）",
+          "checkedAt": "2026-07-02"
         }
       ]
     },
@@ -977,7 +1073,7 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-kill-9",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "linux-kill-man",
@@ -986,6 +1082,15 @@ window.CHEATSHEET_DATA["linux"] = {
           ],
           "locator": "https://man7.org/linux/man-pages/man1/kill.1.html",
           "checkedAt": "2026-06-21"
+        },
+        {
+          "sourceId": "linux-kill-man",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/kill.1.html · SIGKILL/-9（原文：\"be aware that the latter signal cannot be caught, and so does not give the target process the opportunity to perform any clean-up before terminating\"）",
+          "checkedAt": "2026-07-02"
         }
       ]
     },
@@ -1421,7 +1526,7 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-chmod-755",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "gnu-manuals",
@@ -1430,6 +1535,15 @@ window.CHEATSHEET_DATA["linux"] = {
           ],
           "locator": "GNU manuals（检索 chmod 755）",
           "checkedAt": "2026-06-21"
+        },
+        {
+          "sourceId": "linux-chmod-man",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/chmod.1.html · 数字模式说明（原文：\"A numeric mode is from one to four octal digits...The second digit selects permissions for the user who owns the file\"）",
+          "checkedAt": "2026-07-02"
         }
       ]
     },

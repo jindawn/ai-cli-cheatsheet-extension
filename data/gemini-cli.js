@@ -8,7 +8,7 @@ window.CHEATSHEET_DATA["gemini-cli"] = {
     "source": "官方文档 geminicli.com，整理于 2026-06（⚠️免费层即将被Antigravity CLI取代，详见官方公告）",
     "sourceUrl": "https://geminicli.com/docs/",
     "updatedAt": "2026-06-20",
-    "contentCheckedAt": "2026-06-20",
+    "contentCheckedAt": "2026-07-02",
     "sourceCheckedAt": "2026-06-21",
     "updatePolicy": "version-driven",
     "verificationStatus": "manual",
@@ -1251,15 +1251,16 @@ window.CHEATSHEET_DATA["gemini-cli"] = {
       "en": "Exit and optionally wipe history",
       "zh": "退出CLI，加--delete可同时永久删除本次会话记录",
       "id": "026fadf5fde6300a",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "gemini-commands",
           "claims": [
-            "existence"
+            "existence",
+            "semantics"
           ],
-          "locator": "https://geminicli.com/docs/reference/commands/（页面内检索 /quit --delete（别名/exit））",
-          "checkedAt": "2026-06-21"
+          "locator": "https://geminicli.com/docs/reference/commands/ · \"/quit (or /exit)\" · --delete（原文：\"Exit and permanently delete the current session's history and temporary files (chat recording, tool outputs).\"）",
+          "checkedAt": "2026-07-02"
         }
       ]
     },

@@ -8,7 +8,7 @@ window.CHEATSHEET_DATA["opencode"] = {
     "source": "官方文档 opencode.ai/docs，整理于 2026-06",
     "sourceUrl": "https://opencode.ai/docs/",
     "updatedAt": "2026-06-20",
-    "contentCheckedAt": "2026-06-20",
+    "contentCheckedAt": "2026-07-02",
     "sourceCheckedAt": "2026-06-21",
     "updatePolicy": "version-driven",
     "verificationStatus": "manual",
@@ -962,15 +962,16 @@ window.CHEATSHEET_DATA["opencode"] = {
       "en": "Undo last message",
       "zh": "撤销最后一条消息并恢复相关文件变更（需要 Git 仓库）",
       "id": "8dc0a4a63ab72090",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "opencode-tui",
           "claims": [
-            "existence"
+            "existence",
+            "semantics"
           ],
-          "locator": "https://opencode.ai/docs/tui/（页面内检索 /undo）",
-          "checkedAt": "2026-06-21"
+          "locator": "https://opencode.ai/docs/tui/ · /undo（原文：\"Undo last message in the conversation. Removes the most recent user message, all subsequent responses, and any file changes.\"；\"Internally, this uses Git to manage the file changes. So your project needs to be a Git repository.\"）",
+          "checkedAt": "2026-07-02"
         }
       ]
     },

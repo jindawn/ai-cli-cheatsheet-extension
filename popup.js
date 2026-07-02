@@ -122,11 +122,19 @@ function setStatus(text, kind = "") {
   status.className = text ? `status show ${kind}` : "status";
 }
 
-const setManageButtonsDisabled = window.CHEATSHEET_POPUP_TASKS.createButtonDisabler(
+// 取消按钮与「返回」一样在任务期间保持可用，因此排除在禁用名单外；
+// 它的可见性跟随任务活跃状态。
+const disableManageButtons = window.CHEATSHEET_POPUP_TASKS.createButtonDisabler(
   document,
-  "#manageView button:not(#closeManage)",
+  "#manageView button:not(#closeManage):not(#cancelTask)",
   "#manageView button"
 );
+
+function setManageButtonsDisabled(disabled) {
+  disableManageButtons(disabled);
+  const cancelButton = document.getElementById("cancelTask");
+  if (cancelButton) cancelButton.hidden = !disabled;
+}
 
 const taskController = window.CHEATSHEET_POPUP_TASKS.createTaskController({
   chrome,
@@ -642,6 +650,12 @@ function bindManageEvents() {
     renderManage();
   });
   document.getElementById("aiSuggestBtn").addEventListener("click", requestAiSuggestions);
+  document.getElementById("cancelTask").addEventListener("click", () => {
+    chrome.runtime.sendMessage({ action: "cancelTask" }, (response) => {
+      if (chrome.runtime.lastError) return; // 结果仍会经 taskComplete 广播回来
+      if (!response?.ok && response?.error) setStatus(response.error, "warn");
+    });
+  });
 }
 
 async function initialize() {

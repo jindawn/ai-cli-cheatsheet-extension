@@ -10,6 +10,7 @@ const html = fs.readFileSync(path.join(root, "popup.html"), "utf8");
 const core = require("../product-core.js");
 const state = require("../popup-state.js");
 const render = require("../popup-render.js");
+const toast = require("../popup-toast.js");
 
 assert(!html.includes('id="toolSelect"'), "tool filters should remain directly visible");
 assert(html.includes('id="categoryFilters" class="filters"'), "category filters should remain directly visible");
@@ -24,8 +25,11 @@ assert(html.includes("prefers-reduced-motion"), "motion must respect the reduced
 assert(
   html.includes('<script src="popup-state.js"></script>')
     && html.includes('<script src="popup-render.js"></script>')
+    && html.includes('<script src="popup-toast.js"></script>')
     && html.includes('<script src="popup-tasks.js"></script>')
-    && html.indexOf('popup-state.js') < html.indexOf('popup.js'),
+    && html.indexOf('popup-state.js') < html.indexOf('popup.js')
+    && html.indexOf('popup-render.js') < html.indexOf('popup-toast.js')
+    && html.indexOf('popup-toast.js') < html.indexOf('popup.js'),
   "popup modules must load before popup.js"
 );
 
@@ -481,6 +485,26 @@ assert(pending.html.includes("disabled"), "risky pending updates should disable 
 assert(pending.html.includes("来源冲突") && pending.html.includes("核验状态下降") && pending.html.includes("证据定位被移除"), "pending source risks should be visible");
 
 const taskMessages = require("../popup-tasks.js");
+
+// Toast 工厂：显示/隐藏与计时器行为
+{
+  const toastElement = {
+    textContent: "",
+    classList: {
+      classes: new Set(),
+      add(name) { this.classes.add(name); },
+      remove(name) { this.classes.delete(name); },
+      contains(name) { return this.classes.has(name); },
+    },
+    append() {},
+  };
+  const toastApi = toast.createToast({ getElementById() { return toastElement; }, createElement() { return { addEventListener() {} }; } });
+  toastApi.showToast("已复制");
+  assert.strictEqual(toastElement.textContent, "已复制", "showToast should set the toast text");
+  assert(toastElement.classList.contains("show"), "showToast should reveal the toast");
+  toastApi.hideToast();
+  assert(!toastElement.classList.contains("show"), "hideToast should hide the toast");
+}
 assert(taskMessages.taskBaseMsg("add_tool", { tool: "shell" }).includes("分批生成 Shell"), "Shell add task needs aggregate UX");
 
 const applyButton = { disabled: true, dataset: {} };
@@ -549,6 +573,7 @@ const context = {
     CHEATSHEET_CORE: core,
     CHEATSHEET_POPUP_STATE: state,
     CHEATSHEET_POPUP_RENDER: render,
+    CHEATSHEET_POPUP_TOAST: toast,
     CHEATSHEET_POPUP_TASKS: taskMessages,
     CHEATSHEET_ENABLE_TEST_HOOKS: true,
     CHEATSHEET_DATA: {},
@@ -609,6 +634,7 @@ const dialogContext = {
     CHEATSHEET_CORE: core,
     CHEATSHEET_POPUP_STATE: state,
     CHEATSHEET_POPUP_RENDER: render,
+    CHEATSHEET_POPUP_TOAST: toast,
     CHEATSHEET_POPUP_TASKS: taskMessages,
     CHEATSHEET_ENABLE_TEST_HOOKS: true,
     CHEATSHEET_DATA: {},

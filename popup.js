@@ -24,8 +24,6 @@ const AI_SUGGEST_COUNT = 8;
 const AI_SUGGEST_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 // 与 popup-state.js pruneRecents 的截断上限保持一致。
 const RECENTS_LIMIT = 20;
-const TOAST_DURATION_MS = 1800;
-const UNDO_TOAST_DURATION_MS = 4000;
 // 弹窗重开时，多久以内的任务结果仍值得回放展示。
 const TASK_RESULT_FRESH_MS = 120000;
 // 上次生成的质量告警在管理视图保留展示的时长。
@@ -39,8 +37,9 @@ let entryIndex = { entries: [], byKey: new Map(), validKeys: new Set() };
 let searchLimit = STATE.SEARCH_INITIAL_LIMIT;
 let lastAutoExpandedQuery = "";
 let onboardingReturnFocus = null;
-let toastTimer = null;
 let pendingRiskResolve = null;
+
+const { hideToast, showToast, showUndoToast } = window.CHEATSHEET_POPUP_TOAST.createToast(document);
 
 let _dom = null;
 function getDOM() {
@@ -162,39 +161,6 @@ function requestAiSuggestions() {
     name: data[id].meta?.name || id,
   }));
   taskController.runTask("suggest_tools", { platform, count: AI_SUGGEST_COUNT, exclude, enabled, collected });
-}
-
-function hideToast() {
-  const toast = document.getElementById("toast");
-  toast.classList.remove("show");
-  if (toastTimer) clearTimeout(toastTimer);
-}
-
-function showToast(text) {
-  const toast = document.getElementById("toast");
-  toast.textContent = text;
-  toast.classList.add("show");
-  if (toastTimer) clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => toast.classList.remove("show"), TOAST_DURATION_MS);
-}
-
-function showUndoToast(text, onUndo) {
-  const toast = document.getElementById("toast");
-  toast.textContent = "";
-  const label = document.createElement("span");
-  label.textContent = text;
-  const undo = document.createElement("button");
-  undo.type = "button";
-  undo.className = "toast-undo";
-  undo.textContent = "撤销";
-  undo.addEventListener("click", () => {
-    hideToast();
-    onUndo();
-  });
-  toast.append(label, undo);
-  toast.classList.add("show");
-  if (toastTimer) clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => toast.classList.remove("show"), UNDO_TOAST_DURATION_MS);
 }
 
 async function recordCopy(entry, command) {

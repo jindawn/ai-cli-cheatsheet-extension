@@ -5,12 +5,12 @@ window.CHEATSHEET_DATA["cursor"] = {
     "id": "cursor",
     "name": "Cursor",
     "color": "#8B5CF6",
-    "source": "官方文档 docs.cursor.com/ide/reference/keyboard-shortcuts，整理于 2026-06（⚠️ 仅收录 macOS 默认键位 Cursor AI 功能常用子集；文档站为客户端渲染，快捷键基于产品行为与训练数据核对）",
+    "source": "官方文档 cursor.com/docs/reference/keyboard-shortcuts（原 docs.cursor.com/ide/... 已重定向至此），整理于 2026-06，2026-07-02 复核；⚠️Cursor 发布过一次界面重构（3.0），部分 Composer/Agent 相关快捷键已变化，本次仅修正/核验了可交叉确认的条目，其余保持原状待后续核验",
     "builtIn": false,
-    "sourceUrl": "https://docs.cursor.com/ide/reference/keyboard-shortcuts",
+    "sourceUrl": "https://cursor.com/docs/reference/keyboard-shortcuts",
     "updatedAt": "2026-06-20",
-    "contentCheckedAt": "2026-06-20",
-    "sourceCheckedAt": "2026-06-21",
+    "contentCheckedAt": "2026-07-02",
+    "sourceCheckedAt": "2026-07-02",
     "updatePolicy": "manual-only",
     "verificationStatus": "manual",
     "coverage": "macOS 默认键位 Cursor AI 功能常用子集，Windows/Linux 差异见条目 platformCmds",
@@ -24,14 +24,14 @@ window.CHEATSHEET_DATA["cursor"] = {
       {
         "id": "cursor-shortcuts",
         "title": "Cursor Docs",
-        "url": "https://cursor.com/docs",
+        "url": "https://cursor.com/docs/reference/keyboard-shortcuts",
         "kind": "official-doc",
         "maintainer": "Cursor",
         "evidenceTier": "first-party",
-        "lastVerifiedAt": "2026-06-21",
-        "resolvedUrl": "https://cursor.com/docs",
+        "lastVerifiedAt": "2026-07-02",
+        "resolvedUrl": "https://cursor.com/docs/reference/keyboard-shortcuts",
         "pageTitle": "Cursor Docs",
-        "checkedAt": "2026-06-21",
+        "checkedAt": "2026-07-02",
         "purposes": [
           "command-existence",
           "option-semantics"
@@ -43,23 +43,24 @@ window.CHEATSHEET_DATA["cursor"] = {
     {
       "cat": "shortcut",
       "cmd": "Cmd+I",
-      "en": "Open Composer / Agent",
-      "zh": "打开 Composer（Agent 模式），可让 AI 直接编写和修改代码（Win/Linux 为 Ctrl+I）",
+      "en": "Toggle Sidepanel",
+      "zh": "切换侧边栏显示/隐藏（Cursor 3.0 界面重构后的新行为；原 Composer 已合并入侧边栏，Win/Linux 为 Ctrl+I）",
       "platformCmds": {
         "mac": "Cmd+I",
         "windows": "Ctrl+I",
         "linux": "Ctrl+I"
       },
       "id": "8ff2cda22ea7f208",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "cursor-shortcuts",
           "claims": [
-            "existence"
+            "existence",
+            "semantics"
           ],
-          "locator": "官方快捷键页（页面内检索 Cmd+I）",
-          "checkedAt": "2026-06-21"
+          "locator": "https://cursor.com/docs/reference/keyboard-shortcuts · General 分组 · Cmd I（原文：\"Toggle Sidepanel (unless bound to mode)\"）",
+          "checkedAt": "2026-07-02"
         }
       ]
     },
@@ -74,15 +75,16 @@ window.CHEATSHEET_DATA["cursor"] = {
         "linux": "Ctrl+L"
       },
       "id": "8a3401e170d3a97e",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "cursor-shortcuts",
           "claims": [
-            "existence"
+            "existence",
+            "semantics"
           ],
-          "locator": "官方快捷键页（页面内检索 Cmd+L）",
-          "checkedAt": "2026-06-21"
+          "locator": "https://cursor.com/docs/reference/keyboard-shortcuts · General/Code Selection & Context 分组 · Cmd L（原文：\"Toggle Sidepanel (unless bound to mode)\"，选中代码时为 \"Add selection to new chat\"）",
+          "checkedAt": "2026-07-02"
         }
       ]
     },
@@ -98,15 +100,16 @@ window.CHEATSHEET_DATA["cursor"] = {
         "linux": "Ctrl+K"
       },
       "id": "ac8177dbfb88fc54",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "cursor-shortcuts",
           "claims": [
-            "existence"
+            "existence",
+            "semantics"
           ],
-          "locator": "官方快捷键页（页面内检索 Cmd+K）",
-          "checkedAt": "2026-06-21"
+          "locator": "https://cursor.com/docs/reference/keyboard-shortcuts · Inline Edit 分组 · Cmd K（原文：\"Open\"）",
+          "checkedAt": "2026-07-02"
         }
       ]
     },
@@ -122,15 +125,16 @@ window.CHEATSHEET_DATA["cursor"] = {
         "linux": "Ctrl+K"
       },
       "id": "5743ebc7c497754a",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "cursor-shortcuts",
           "claims": [
-            "existence"
+            "existence",
+            "semantics"
           ],
-          "locator": "官方快捷键页（页面内检索 Cmd+K）",
-          "checkedAt": "2026-06-21"
+          "locator": "https://cursor.com/docs/reference/keyboard-shortcuts · Terminal 分组 · Cmd K（原文：\"Open terminal prompt bar\"）",
+          "checkedAt": "2026-07-02"
         }
       ]
     },
@@ -145,15 +149,16 @@ window.CHEATSHEET_DATA["cursor"] = {
         "linux": "Ctrl+Shift+L"
       },
       "id": "e86466bd23691cc8",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "cursor-shortcuts",
           "claims": [
-            "existence"
+            "existence",
+            "semantics"
           ],
-          "locator": "官方快捷键页（页面内检索 Cmd+Shift+L）",
-          "checkedAt": "2026-06-21"
+          "locator": "https://cursor.com/docs/reference/keyboard-shortcuts · Code Selection & Context 分组 · Cmd Shift L（原文：\"Add selected code as context\"）",
+          "checkedAt": "2026-07-02"
         }
       ]
     },
@@ -161,7 +166,7 @@ window.CHEATSHEET_DATA["cursor"] = {
       "cat": "shortcut",
       "cmd": "Cmd+Shift+I",
       "en": "Open Agent with Full Context",
-      "zh": "以当前文件完整上下文打开 Agent（Win/Linux 为 Ctrl+Shift+I）",
+      "zh": "以当前文件完整上下文打开 Agent（Win/Linux 为 Ctrl+Shift+I；⚠️2026-07-02 复核未在当前官方快捷键表中找到此组合键，可能随 Cursor 3.0 界面重构调整或移除）",
       "platformCmds": {
         "mac": "Cmd+Shift+I",
         "windows": "Ctrl+Shift+I",
@@ -208,7 +213,7 @@ window.CHEATSHEET_DATA["cursor"] = {
       "cat": "shortcut",
       "cmd": "Cmd+Shift+Enter",
       "en": "Submit Without Codebase Search",
-      "zh": "提交消息但不搜索代码库，仅使用当前上下文（Win/Linux 为 Ctrl+Shift+Enter）",
+      "zh": "提交消息但不搜索代码库，仅使用当前上下文（Win/Linux 为 Ctrl+Shift+Enter；⚠️2026-07-02 复核未在当前官方 Chat 快捷键表中找到此组合键）",
       "context": "Chat/Composer",
       "platformCmds": {
         "mac": "Cmd+Shift+Enter",
@@ -230,25 +235,26 @@ window.CHEATSHEET_DATA["cursor"] = {
     },
     {
       "cat": "shortcut",
-      "cmd": "Cmd+Backspace",
-      "en": "Cancel AI Response",
-      "zh": "取消当前正在生成的 AI 回复（Win/Linux 为 Ctrl+Backspace）",
+      "cmd": "Cmd+Shift+Backspace",
+      "en": "Reject All Changes / Cancel",
+      "zh": "拒绝全部改动或取消当前生成（Inline Edit 为 Cancel，Chat 为 Reject all changes；此前误记为 Cmd+Backspace，2026-07-02 核对官方文档更正为 Cmd+Shift+Backspace，Win/Linux 为 Ctrl+Shift+Backspace）",
       "context": "Chat/Composer",
       "platformCmds": {
-        "mac": "Cmd+Backspace",
-        "windows": "Ctrl+Backspace",
-        "linux": "Ctrl+Backspace"
+        "mac": "Cmd+Shift+Backspace",
+        "windows": "Ctrl+Shift+Backspace",
+        "linux": "Ctrl+Shift+Backspace"
       },
       "id": "35a1467c6b6e5316",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "cursor-shortcuts",
           "claims": [
-            "existence"
+            "existence",
+            "semantics"
           ],
-          "locator": "官方快捷键页（页面内检索 Cmd+Backspace）",
-          "checkedAt": "2026-06-21"
+          "locator": "https://cursor.com/docs/reference/keyboard-shortcuts · Chat 分组 · Cmd Shift Backspace（原文：\"Reject all changes\"）；Inline Edit 分组 · Cmd Shift Backspace（原文：\"Cancel\"）",
+          "checkedAt": "2026-07-02"
         }
       ]
     },
@@ -263,15 +269,16 @@ window.CHEATSHEET_DATA["cursor"] = {
         "linux": "Ctrl+Shift+J"
       },
       "id": "7fc91ce6772943c0",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "cursor-shortcuts",
           "claims": [
-            "existence"
+            "existence",
+            "semantics"
           ],
-          "locator": "官方快捷键页（页面内检索 Cmd+Shift+J）",
-          "checkedAt": "2026-06-21"
+          "locator": "https://cursor.com/docs/reference/keyboard-shortcuts · General 分组 · Cmd Shift J（原文：\"Cursor settings\"）",
+          "checkedAt": "2026-07-02"
         }
       ]
     },
@@ -282,15 +289,16 @@ window.CHEATSHEET_DATA["cursor"] = {
       "zh": "接受 Cursor Tab 的整行/整块代码补全建议（所有平台相同）",
       "context": "Cursor Tab",
       "id": "269732e21e794743",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "cursor-shortcuts",
           "claims": [
-            "existence"
+            "existence",
+            "semantics"
           ],
-          "locator": "官方快捷键页（页面内检索 Tab）",
-          "checkedAt": "2026-06-21"
+          "locator": "https://cursor.com/docs/reference/keyboard-shortcuts · Tab 分组 · Tab（原文：\"Accept suggestion\"）",
+          "checkedAt": "2026-07-02"
         }
       ]
     },
@@ -325,15 +333,16 @@ window.CHEATSHEET_DATA["cursor"] = {
         "linux": "Ctrl+Right"
       },
       "id": "be08a175582dd384",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "cursor-shortcuts",
           "claims": [
-            "existence"
+            "existence",
+            "semantics"
           ],
-          "locator": "官方快捷键页（页面内检索 Cmd+Right）",
-          "checkedAt": "2026-06-21"
+          "locator": "https://cursor.com/docs/reference/keyboard-shortcuts · Tab 分组 · Cmd →（原文：\"Accept next word\"）",
+          "checkedAt": "2026-07-02"
         }
       ]
     },
@@ -372,15 +381,16 @@ window.CHEATSHEET_DATA["cursor"] = {
         "linux": "Ctrl+Shift+P"
       },
       "id": "7970689048e3c5af",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "cursor-shortcuts",
           "claims": [
-            "existence"
+            "existence",
+            "semantics"
           ],
-          "locator": "官方快捷键页（页面内检索 Cmd+Shift+P）",
-          "checkedAt": "2026-06-21"
+          "locator": "https://cursor.com/docs/reference/keyboard-shortcuts · General 分组 · Cmd Shift P（原文：\"Command palette\"）",
+          "checkedAt": "2026-07-02"
         }
       ]
     },

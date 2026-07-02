@@ -68,6 +68,10 @@
         stopTaskTimer();
         deps.setManageButtonsDisabled(false);
         if (!response?.ok) {
+          if (response?.cancelled) {
+            deps.setStatus("已取消任务。");
+            return;
+          }
           deps.setStatus(`❌ ${response?.error || "未知错误"}`, "err");
           return;
         }

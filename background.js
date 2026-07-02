@@ -32,17 +32,31 @@ chrome.alarms.onAlarm.addListener((alarm) => {
   }
 });
 
-function handleTaskTimeout(wasActive, status) {
-  if (!wasActive && !status?.running) return; // stale alarm; task already finished
+// Shared teardown for watchdog timeouts and user cancellation: release the
+// slot, drop the port, persist and broadcast the terminal response.
+function finalizeTask(response, mode) {
   taskActive = false;
   stopKeepalive();
+  chrome.alarms.clear('taskTimeout');
   if (nativePort) {
     try { nativePort.disconnect(); } catch (_e) { /* port already gone */ }
     nativePort = null;
   }
-  const response = { ok: false, error: TASK_TIMEOUT_ERROR };
-  setSessionStatus({ running: false, result: response, mode: status?.mode, finishedAt: Date.now() });
+  setSessionStatus({ running: false, result: response, mode, finishedAt: Date.now() });
   broadcastCompletion(response);
+}
+
+function handleTaskTimeout(wasActive, status) {
+  if (!wasActive && !status?.running) return; // stale alarm; task already finished
+  finalizeTask({ ok: false, error: TASK_TIMEOUT_ERROR }, status?.mode);
+}
+
+function cancelActiveTask(wasActive, status) {
+  if (!wasActive && !status?.running) {
+    return { ok: false, error: '没有正在运行的任务。' };
+  }
+  finalizeTask({ ok: false, cancelled: true, error: '任务已取消。' }, status?.mode);
+  return { ok: true, cancelled: true };
 }
 
 function startKeepalive() {
@@ -65,6 +79,15 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
   if (msg.action === 'ping') {
     sendResponse({ ok: true });
     return false;
+  }
+
+  if (msg.action === 'cancelTask') {
+    // 同看门狗：SW 重启后 taskActive 丢失，需结合 session 判断孤儿任务。
+    const wasActive = taskActive;
+    chrome.storage.session.get(['taskStatus'])
+      .then((res) => sendResponse(cancelActiveTask(wasActive, res.taskStatus)))
+      .catch(() => sendResponse(cancelActiveTask(wasActive, null)));
+    return true; // async
   }
 
   if (msg.action === 'getTaskStatus') {

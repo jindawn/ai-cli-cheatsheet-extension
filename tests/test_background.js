@@ -330,6 +330,51 @@ const VALID_TOKEN = "a".repeat(32);
     );
   }
 
+  // cancelTask：取消活动任务——广播取消结果、断开端口、清 alarm、释放槽位
+  {
+    const { chrome, state } = loadBackground();
+    dispatch(chrome, { action: "startTask", mode: "add_tool", tool: "git", display_name: "Git" });
+    const cancel = dispatch(chrome, { action: "cancelTask" });
+    assert.strictEqual(cancel.async_, true, "cancelTask should be handled asynchronously");
+    await flushMicrotasks();
+    assert.deepStrictEqual(cancel.getResponse(), { ok: true, cancelled: true }, "cancelling an active task should ack");
+    assert(
+      state.sentMessages.some((m) => m.action === "taskComplete" && m.response.cancelled === true && m.response.ok === false),
+      "cancellation should broadcast a cancelled taskComplete"
+    );
+    assert.strictEqual(state.ports[0].disconnected, true, "cancellation should disconnect the native port");
+    assert(state.alarmClears.includes("taskTimeout"), "cancellation should clear the watchdog alarm");
+    assert(
+      state.sessionSets.some((s) => s.taskStatus && s.taskStatus.running === false && s.taskStatus.result?.cancelled === true),
+      "cancellation should persist the cancelled status"
+    );
+    const retry = dispatch(chrome, { action: "startTask", mode: "add_tool", tool: "git", display_name: "Git" });
+    assert.strictEqual(retry.getResponse().ok, true, "task slot should be free again after cancellation");
+  }
+
+  // cancelTask：无任务时返回明确提示，不广播
+  {
+    const { chrome, state } = loadBackground();
+    const cancel = dispatch(chrome, { action: "cancelTask" });
+    await flushMicrotasks();
+    assert.strictEqual(cancel.getResponse().ok, false, "cancel with no task should not ack");
+    assert(/没有正在运行的任务/.test(cancel.getResponse().error), "cancel with no task should explain why");
+    assert.strictEqual(state.sentMessages.length, 0, "cancel with no task must not broadcast");
+  }
+
+  // cancelTask 冷启动路径：SW 被回收后 taskActive 丢失，但 session 记录 running 时也能取消
+  {
+    const { chrome, state } = loadBackground();
+    state.sessionGetResult = { taskStatus: { running: true, mode: "add_tool", startedAt: 1 } };
+    const cancel = dispatch(chrome, { action: "cancelTask" });
+    await flushMicrotasks();
+    assert.deepStrictEqual(cancel.getResponse(), { ok: true, cancelled: true }, "cold-start cancel should ack");
+    assert(
+      state.sentMessages.some((m) => m.action === "taskComplete" && m.response.cancelled === true),
+      "cold-start cancel should broadcast the cancelled result"
+    );
+  }
+
   // 看门狗误触发防护：任务已完成后 alarm 再触发必须是 no-op
   {
     const { chrome, state } = loadBackground();

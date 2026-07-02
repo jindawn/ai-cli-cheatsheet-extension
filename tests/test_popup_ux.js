@@ -21,6 +21,8 @@ assert(html.includes("Git / Linux / Shell"), "terminal onboarding preset should 
 assert(html.includes('id="recommendedTools"'), "management view should expose recommended tool additions");
 assert(html.includes('id="recommendSearch"'), "recommended tool additions should be searchable");
 assert(html.includes('id="showDismissedRecommendations"'), "dismissed recommendations should be restorable");
+assert(html.includes('id="cancelTask"'), "management view should expose a cancel-task action");
+assert(/cancelTask[^>]*hidden/.test(html), "the cancel button should stay hidden until a task runs");
 assert(html.includes(":focus-visible"), "interactive controls need visible keyboard focus");
 assert(state.STORAGE_KEYS.includes("dismissedRecommendations"), "dismissed recommendations should be persisted");
 assert(html.includes("prefers-reduced-motion"), "motion must respect the reduced-motion preference");
@@ -771,6 +773,9 @@ const dialogHooks = dialogContext.window.CHEATSHEET_POPUP_TESTS;
   assert.deepStrictEqual(failedButtonCalls, [false], "a failed task must re-enable management buttons");
   await failingController.finishTask({ ok: false });
   assert(failedStatus[1].text.includes("未知错误"), "missing error detail should fall back to a generic message");
+  await failingController.finishTask({ ok: false, cancelled: true, error: "任务已取消。" });
+  assert.strictEqual(failedStatus[2].text, "已取消任务。", "cancelled tasks should show neutral copy, not an error");
+  assert.notStrictEqual(failedStatus[2].kind, "err", "cancelled tasks must not use the error style");
 
   console.log("Popup UX behavior tests passed.");
 })().catch((error) => {

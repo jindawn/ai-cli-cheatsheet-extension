@@ -5,11 +5,11 @@ window.CHEATSHEET_DATA["docker"] = {
     "id": "docker",
     "name": "Docker",
     "color": "#2496ED",
-    "source": "Docker CLI reference, local help, and official repository, 整理于 2026-06-29",
+    "source": "Docker CLI reference (docs.docker.com) and local `docker --help` output; verified 2026-07-02",
     "builtIn": false,
     "updatePolicy": "version-driven",
-    "contentCheckedAt": "2026-06-29",
-    "sourceCheckedAt": "2026-06-29",
+    "contentCheckedAt": "2026-07-02",
+    "sourceCheckedAt": "2026-07-02",
     "sourceUrl": "https://docs.docker.com/reference/cli/docker/",
     "sourceTier": "official",
     "coverage": "核心命令、常用子命令与关键选项",
@@ -33,12 +33,26 @@ window.CHEATSHEET_DATA["docker"] = {
         ],
         "resolvedUrl": "https://docs.docker.com/reference/cli/docker/",
         "pageTitle": "Docker CLI | Docker Docs",
-        "checkedAt": "2026-06-29",
+        "checkedAt": "2026-07-02",
         "url": "https://docs.docker.com/reference/cli/docker/",
-        "lastVerifiedAt": "2026-06-29"
+        "lastVerifiedAt": "2026-07-02"
+      },
+      {
+        "id": "docker-help",
+        "title": "`docker --help` output",
+        "kind": "local-help",
+        "maintainer": "Docker Inc.",
+        "evidenceTier": "first-party",
+        "purposes": [
+          "command-existence",
+          "option-semantics"
+        ],
+        "lastVerifiedAt": "2026-07-02",
+        "version": "29.0.1"
       }
     ],
-    "verificationStatus": "model-knowledge"
+    "verificationStatus": "manual",
+    "verifiedVersion": "29.0.1"
   },
   "items": [
     {
@@ -46,7 +60,7 @@ window.CHEATSHEET_DATA["docker"] = {
       "cmd": "docker run",
       "en": "Run a container",
       "zh": "运行容器",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "container",
         "run",
@@ -72,7 +86,26 @@ window.CHEATSHEET_DATA["docker"] = {
           "prerequisites": "已登录 Docker Hub 或本地无该镜像时会自动拉取"
         }
       ],
-      "id": "docker-run"
+      "id": "docker-run",
+      "evidenceRefs": [
+        {
+          "sourceId": "docker-docs",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://docs.docker.com/reference/cli/docker/container/run/",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "docker-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "docker run --help（本机 Docker 29.0.1）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -80,7 +113,7 @@ window.CHEATSHEET_DATA["docker"] = {
       "en": "Run container in detached mode",
       "zh": "后台运行容器",
       "context": "docker run",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "container",
         "run",
@@ -106,7 +139,26 @@ window.CHEATSHEET_DATA["docker"] = {
           "prerequisites": "本地存在 nginx:latest 镜像或可访问 Docker Hub"
         }
       ],
-      "id": "docker-run-detach"
+      "id": "docker-run-detach",
+      "evidenceRefs": [
+        {
+          "sourceId": "docker-docs",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://docs.docker.com/reference/cli/docker/container/run/ · 选项 -d/--detach",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "docker-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "docker run --help（本机 Docker 29.0.1）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -114,7 +166,7 @@ window.CHEATSHEET_DATA["docker"] = {
       "en": "Publish container ports to host",
       "zh": "将容器端口发布到主机",
       "context": "docker run",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "port",
         "publish",
@@ -140,7 +192,26 @@ window.CHEATSHEET_DATA["docker"] = {
           "caveat": "主机端口可能已被占用；若被占用会直接报错，可更换数字调整。"
         }
       ],
-      "id": "docker-run-publish"
+      "id": "docker-run-publish",
+      "evidenceRefs": [
+        {
+          "sourceId": "docker-docs",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://docs.docker.com/reference/cli/docker/container/run/ · 选项 -p/--publish",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "docker-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "docker run --help（本机 Docker 29.0.1）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -148,7 +219,7 @@ window.CHEATSHEET_DATA["docker"] = {
       "en": "Mount a volume or bind mount",
       "zh": "挂载卷或绑定挂载",
       "context": "docker run",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "volume",
         "mount",
@@ -174,7 +245,26 @@ window.CHEATSHEET_DATA["docker"] = {
           "prerequisites": "在包含文件的目录下执行；Windows PowerShell/CMD 需要用 %cd% 替换 $(pwd)"
         }
       ],
-      "id": "docker-run-volume"
+      "id": "docker-run-volume",
+      "evidenceRefs": [
+        {
+          "sourceId": "docker-docs",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://docs.docker.com/reference/cli/docker/container/run/ · 选项 -v/--volume",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "docker-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "docker run --help（本机 Docker 29.0.1）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -182,7 +272,7 @@ window.CHEATSHEET_DATA["docker"] = {
       "en": "Assign a name to the container",
       "zh": "为容器指定名称",
       "context": "docker run",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "name",
         "container",
@@ -208,7 +298,26 @@ window.CHEATSHEET_DATA["docker"] = {
           "caveat": "容器名称在同一 Docker 引擎上必须唯一；如果重名会报错，需要先删除已有容器或重命名。"
         }
       ],
-      "id": "docker-run-name"
+      "id": "docker-run-name",
+      "evidenceRefs": [
+        {
+          "sourceId": "docker-docs",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://docs.docker.com/reference/cli/docker/container/run/ · 选项 --name",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "docker-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "docker run --help（本机 Docker 29.0.1）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -216,7 +325,7 @@ window.CHEATSHEET_DATA["docker"] = {
       "en": "Set environment variables",
       "zh": "设置环境变量",
       "context": "docker run",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "env",
         "variable",
@@ -242,7 +351,26 @@ window.CHEATSHEET_DATA["docker"] = {
           "caveat": "密码在命令中明文可见，可通过 --env-file 从文件读取以避免泄露。"
         }
       ],
-      "id": "docker-run-env"
+      "id": "docker-run-env",
+      "evidenceRefs": [
+        {
+          "sourceId": "docker-docs",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://docs.docker.com/reference/cli/docker/container/run/ · 选项 -e/--env",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "docker-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "docker run --help（本机 Docker 29.0.1）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -250,7 +378,7 @@ window.CHEATSHEET_DATA["docker"] = {
       "en": "Automatically remove container on exit",
       "zh": "退出后自动删除容器",
       "context": "docker run",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "remove",
         "cleanup",
@@ -277,14 +405,33 @@ window.CHEATSHEET_DATA["docker"] = {
           "warning": "这是高风险操作，执行前请确认目标、先备份或先使用预览/ dry-run 方式验证。"
         }
       ],
-      "id": "docker-run-rm"
+      "id": "docker-run-rm",
+      "evidenceRefs": [
+        {
+          "sourceId": "docker-docs",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://docs.docker.com/reference/cli/docker/container/run/ · 选项 --rm",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "docker-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "docker run --help（本机 Docker 29.0.1）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
       "cmd": "docker build",
       "en": "Build an image from a Dockerfile",
       "zh": "基于 Dockerfile 构建镜像",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "build",
         "image",
@@ -310,7 +457,26 @@ window.CHEATSHEET_DATA["docker"] = {
           "prerequisites": "当前目录存在名为 Dockerfile 的文件"
         }
       ],
-      "id": "docker-build"
+      "id": "docker-build",
+      "evidenceRefs": [
+        {
+          "sourceId": "docker-docs",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://docs.docker.com/reference/cli/docker/image/build/",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "docker-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "docker build --help（本机 Docker 29.0.1）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -318,7 +484,7 @@ window.CHEATSHEET_DATA["docker"] = {
       "en": "Tag the built image",
       "zh": "为构建的镜像添加标签",
       "context": "docker build",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "tag",
         "name",
@@ -343,14 +509,33 @@ window.CHEATSHEET_DATA["docker"] = {
           "expected": "构建成功后可执行 docker images | grep my-app 看到对应镜像记录"
         }
       ],
-      "id": "docker-build-tag"
+      "id": "docker-build-tag",
+      "evidenceRefs": [
+        {
+          "sourceId": "docker-docs",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://docs.docker.com/reference/cli/docker/image/build/ · 选项 -t/--tag",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "docker-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "docker build --help（本机 Docker 29.0.1）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
       "cmd": "docker pull",
       "en": "Pull an image from a registry",
       "zh": "从仓库拉取镜像",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "pull",
         "download",
@@ -376,14 +561,33 @@ window.CHEATSHEET_DATA["docker"] = {
           "caveat": "默认从 Docker Hub 拉取；若使用私有仓库需在镜像名中指定仓库地址。"
         }
       ],
-      "id": "docker-pull"
+      "id": "docker-pull",
+      "evidenceRefs": [
+        {
+          "sourceId": "docker-docs",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://docs.docker.com/reference/cli/docker/image/pull/",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "docker-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "docker pull --help（本机 Docker 29.0.1）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
       "cmd": "docker push",
       "en": "Push an image to a registry",
       "zh": "将镜像推送到注册中心",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "push",
         "upload",
@@ -410,14 +614,33 @@ window.CHEATSHEET_DATA["docker"] = {
           "caveat": "镜像名称必须符合仓库格式；推送大量镜像前建议先使用 docker tag 确认标签。"
         }
       ],
-      "id": "docker-push"
+      "id": "docker-push",
+      "evidenceRefs": [
+        {
+          "sourceId": "docker-docs",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://docs.docker.com/reference/cli/docker/image/push/",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "docker-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "docker push --help（本机 Docker 29.0.1）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
       "cmd": "docker ps",
       "en": "List running containers",
       "zh": "列出运行中的容器",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "list",
         "ps",
@@ -442,7 +665,26 @@ window.CHEATSHEET_DATA["docker"] = {
           "expected": "表格显示所有状态为 Up 的容器信息，若无则返回空表头"
         }
       ],
-      "id": "docker-ps"
+      "id": "docker-ps",
+      "evidenceRefs": [
+        {
+          "sourceId": "docker-docs",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://docs.docker.com/reference/cli/docker/container/ls/",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "docker-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "docker ps --help（本机 Docker 29.0.1）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -450,7 +692,7 @@ window.CHEATSHEET_DATA["docker"] = {
       "en": "List all containers (including stopped)",
       "zh": "列出所有容器（含已停止的）",
       "context": "docker ps",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "all",
         "ps",
@@ -475,14 +717,33 @@ window.CHEATSHEET_DATA["docker"] = {
           "expected": "包含 STATUS 列为 Exited 或其他状态的容器列表"
         }
       ],
-      "id": "docker-ps-all"
+      "id": "docker-ps-all",
+      "evidenceRefs": [
+        {
+          "sourceId": "docker-docs",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://docs.docker.com/reference/cli/docker/container/ls/ · 选项 -a/--all",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "docker-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "docker ps --help（本机 Docker 29.0.1）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
       "cmd": "docker images",
       "en": "List images",
       "zh": "列出本机镜像",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "images",
         "list",
@@ -507,14 +768,33 @@ window.CHEATSHEET_DATA["docker"] = {
           "expected": "镜像列表，若无镜像则仅表头行"
         }
       ],
-      "id": "docker-images"
+      "id": "docker-images",
+      "evidenceRefs": [
+        {
+          "sourceId": "docker-docs",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://docs.docker.com/reference/cli/docker/image/ls/",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "docker-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "docker images --help（本机 Docker 29.0.1）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
       "cmd": "docker stop",
       "en": "Stop a running container",
       "zh": "停止运行中的容器",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "stop",
         "graceful",
@@ -540,14 +820,33 @@ window.CHEATSHEET_DATA["docker"] = {
           "caveat": "若容器不响应 SIGTERM，可考虑使用 docker kill 立即终止，但建议先用 stop 保留数据完整性。"
         }
       ],
-      "id": "docker-stop"
+      "id": "docker-stop",
+      "evidenceRefs": [
+        {
+          "sourceId": "docker-docs",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://docs.docker.com/reference/cli/docker/container/stop/",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "docker-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "docker stop --help（本机 Docker 29.0.1）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
       "cmd": "docker start",
       "en": "Start a stopped container",
       "zh": "启动已停止的容器",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "start",
         "stopped",
@@ -572,14 +871,33 @@ window.CHEATSHEET_DATA["docker"] = {
           "expected": "输出容器名称（web），容器进入运行状态，可通过 docker ps 确认"
         }
       ],
-      "id": "docker-start"
+      "id": "docker-start",
+      "evidenceRefs": [
+        {
+          "sourceId": "docker-docs",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://docs.docker.com/reference/cli/docker/container/start/",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "docker-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "docker start --help（本机 Docker 29.0.1）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
       "cmd": "docker restart",
       "en": "Restart a container",
       "zh": "重启容器",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "restart",
         "reboot",
@@ -606,14 +924,33 @@ window.CHEATSHEET_DATA["docker"] = {
           "warning": "这是高风险操作，执行前请确认目标、先备份或先使用预览/ dry-run 方式验证。"
         }
       ],
-      "id": "docker-restart"
+      "id": "docker-restart",
+      "evidenceRefs": [
+        {
+          "sourceId": "docker-docs",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://docs.docker.com/reference/cli/docker/container/restart/",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "docker-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "docker restart --help（本机 Docker 29.0.1）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
       "cmd": "docker rm",
       "en": "Remove containers",
       "zh": "删除容器",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "remove",
         "delete",
@@ -640,14 +977,33 @@ window.CHEATSHEET_DATA["docker"] = {
           "warning": "这是高风险操作，执行前请确认目标、先备份或先使用预览/ dry-run 方式验证。"
         }
       ],
-      "id": "docker-rm"
+      "id": "docker-rm",
+      "evidenceRefs": [
+        {
+          "sourceId": "docker-docs",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://docs.docker.com/reference/cli/docker/container/rm/",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "docker-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "docker rm --help（本机 Docker 29.0.1）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
       "cmd": "docker rmi",
       "en": "Remove images",
       "zh": "删除镜像",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "remove",
         "delete",
@@ -673,14 +1029,33 @@ window.CHEATSHEET_DATA["docker"] = {
           "caveat": "误删基础镜像可能导致其他依赖镜像出现 dangling 层，建议先 docker images 确认。"
         }
       ],
-      "id": "docker-rmi"
+      "id": "docker-rmi",
+      "evidenceRefs": [
+        {
+          "sourceId": "docker-docs",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://docs.docker.com/reference/cli/docker/image/rm/",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "docker-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "docker rmi --help（本机 Docker 29.0.1）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
       "cmd": "docker exec",
       "en": "Run a command in a running container",
       "zh": "在运行中的容器内执行命令",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "execute",
         "command",
@@ -706,7 +1081,26 @@ window.CHEATSHEET_DATA["docker"] = {
           "prerequisites": "目标容器处于运行状态"
         }
       ],
-      "id": "docker-exec"
+      "id": "docker-exec",
+      "evidenceRefs": [
+        {
+          "sourceId": "docker-docs",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://docs.docker.com/reference/cli/docker/container/exec/",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "docker-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "docker exec --help（本机 Docker 29.0.1）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -714,7 +1108,7 @@ window.CHEATSHEET_DATA["docker"] = {
       "en": "Open an interactive terminal inside container",
       "zh": "在容器内打开交互式终端",
       "context": "docker exec",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "interactive",
         "tty",
@@ -741,14 +1135,33 @@ window.CHEATSHEET_DATA["docker"] = {
           "caveat": "退出终端（exit）时不会停止容器，仅仅是退出 exec 会话。"
         }
       ],
-      "id": "docker-exec-it"
+      "id": "docker-exec-it",
+      "evidenceRefs": [
+        {
+          "sourceId": "docker-docs",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://docs.docker.com/reference/cli/docker/container/exec/ · 选项 -i -t",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "docker-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "docker exec --help（本机 Docker 29.0.1）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
       "cmd": "docker logs",
       "en": "Fetch the logs of a container",
       "zh": "查看容器日志",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "logs",
         "output",
@@ -774,7 +1187,26 @@ window.CHEATSHEET_DATA["docker"] = {
           "caveat": "日志可能非常大量；若只想查看最近行数可结合 --tail 参数。"
         }
       ],
-      "id": "docker-logs"
+      "id": "docker-logs",
+      "evidenceRefs": [
+        {
+          "sourceId": "docker-docs",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://docs.docker.com/reference/cli/docker/container/logs/",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "docker-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "docker logs --help（本机 Docker 29.0.1）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -782,7 +1214,7 @@ window.CHEATSHEET_DATA["docker"] = {
       "en": "Follow container log output",
       "zh": "持续跟踪容器日志",
       "context": "docker logs",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "follow",
         "stream",
@@ -808,14 +1240,33 @@ window.CHEATSHEET_DATA["docker"] = {
           "caveat": "需手动 Ctrl+C 退出；长时间跟踪可能占用终端。"
         }
       ],
-      "id": "docker-logs-follow"
+      "id": "docker-logs-follow",
+      "evidenceRefs": [
+        {
+          "sourceId": "docker-docs",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://docs.docker.com/reference/cli/docker/container/logs/ · 选项 -f/--follow",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "docker-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "docker logs --help（本机 Docker 29.0.1）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
       "cmd": "docker compose up",
       "en": "Create and start services",
       "zh": "创建并启动 Compose 服务",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "compose",
         "up",
@@ -842,7 +1293,26 @@ window.CHEATSHEET_DATA["docker"] = {
           "caveat": "该命令会占用终端前台，若需后台运行可添加 -d。"
         }
       ],
-      "id": "docker-compose-up"
+      "id": "docker-compose-up",
+      "evidenceRefs": [
+        {
+          "sourceId": "docker-docs",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://docs.docker.com/reference/cli/docker/compose/up/",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "docker-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "docker compose up --help（本机 Docker 29.0.1）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -850,7 +1320,7 @@ window.CHEATSHEET_DATA["docker"] = {
       "en": "Start services in detached mode",
       "zh": "后台启动 Compose 服务",
       "context": "docker compose up",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "compose",
         "detached",
@@ -875,14 +1345,33 @@ window.CHEATSHEET_DATA["docker"] = {
           "expected": "返回各容器的启动信息后回到命令提示符，服务在后台运行"
         }
       ],
-      "id": "docker-compose-up-detach"
+      "id": "docker-compose-up-detach",
+      "evidenceRefs": [
+        {
+          "sourceId": "docker-docs",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://docs.docker.com/reference/cli/docker/compose/up/ · 选项 -d/--detach",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "docker-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "docker compose up --help（本机 Docker 29.0.1）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
       "cmd": "docker compose down",
       "en": "Stop and remove containers, networks",
       "zh": "停止并移除 Compose 资源",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "compose",
         "down",
@@ -908,14 +1397,33 @@ window.CHEATSHEET_DATA["docker"] = {
           "caveat": "默认保留卷数据，若希望一并删除旧数据卷请使用 docker compose down -v，但会导致数据不可恢复。"
         }
       ],
-      "id": "docker-compose-down"
+      "id": "docker-compose-down",
+      "evidenceRefs": [
+        {
+          "sourceId": "docker-docs",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://docs.docker.com/reference/cli/docker/compose/down/",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "docker-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "docker compose down --help（本机 Docker 29.0.1）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
       "cmd": "docker network ls",
       "en": "List networks",
       "zh": "列出网络",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "network",
         "ls",
@@ -940,14 +1448,33 @@ window.CHEATSHEET_DATA["docker"] = {
           "expected": "表格列出所有网络，默认至少包含 bridge, host, none"
         }
       ],
-      "id": "docker-network-ls"
+      "id": "docker-network-ls",
+      "evidenceRefs": [
+        {
+          "sourceId": "docker-docs",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://docs.docker.com/reference/cli/docker/network/ls/",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "docker-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "docker network ls --help（本机 Docker 29.0.1）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
       "cmd": "docker volume ls",
       "en": "List volumes",
       "zh": "列出卷",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "volume",
         "ls",
@@ -972,14 +1499,33 @@ window.CHEATSHEET_DATA["docker"] = {
           "expected": "卷列表，若无则仅表头"
         }
       ],
-      "id": "docker-volume-ls"
+      "id": "docker-volume-ls",
+      "evidenceRefs": [
+        {
+          "sourceId": "docker-docs",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://docs.docker.com/reference/cli/docker/volume/ls/",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "docker-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "docker volume ls --help（本机 Docker 29.0.1）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
       "cmd": "docker system prune",
       "en": "Remove unused data",
       "zh": "清理未使用的数据",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "prune",
         "clean",
@@ -1006,7 +1552,26 @@ window.CHEATSHEET_DATA["docker"] = {
           "warning": "此操作不可逆，会删除停止的容器（其文件系统将丢失）。建议先运行 docker system df 查看空间使用。"
         }
       ],
-      "id": "docker-system-prune"
+      "id": "docker-system-prune",
+      "evidenceRefs": [
+        {
+          "sourceId": "docker-docs",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://docs.docker.com/reference/cli/docker/system/prune/",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "docker-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "docker system prune --help（本机 Docker 29.0.1）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -1014,7 +1579,7 @@ window.CHEATSHEET_DATA["docker"] = {
       "en": "Remove all unused data (including images)",
       "zh": "清理所有未使用的数据（含未使用的镜像）",
       "context": "docker system prune",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "prune",
         "all",
@@ -1041,14 +1606,33 @@ window.CHEATSHEET_DATA["docker"] = {
           "warning": "会删除大量本地镜像，下次运行容器时需重新下载；执行前务必确认哪些镜像仍需保留。"
         }
       ],
-      "id": "docker-system-prune-all"
+      "id": "docker-system-prune-all",
+      "evidenceRefs": [
+        {
+          "sourceId": "docker-docs",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://docs.docker.com/reference/cli/docker/system/prune/ · 选项 -a/--all",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "docker-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "docker system prune --help（本机 Docker 29.0.1）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
       "cmd": "docker cp",
       "en": "Copy files between container and host",
       "zh": "在容器和主机之间复制文件",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "copy",
         "file",
@@ -1075,7 +1659,560 @@ window.CHEATSHEET_DATA["docker"] = {
           "caveat": "复制目录时会平铺内容，谨慎使用以避免覆盖同名文件。"
         }
       ],
-      "id": "docker-cp"
+      "id": "docker-cp",
+      "evidenceRefs": [
+        {
+          "sourceId": "docker-docs",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://docs.docker.com/reference/cli/docker/container/cp/",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "docker-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "docker cp --help（本机 Docker 29.0.1）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
+    },
+    {
+      "cat": "flag",
+      "cmd": "docker inspect",
+      "en": "Return low-level object info",
+      "zh": "查看容器/镜像等对象的底层详情",
+      "evidenceStatus": "verified",
+      "keywords": [
+        "inspect",
+        "detail",
+        "json",
+        "config",
+        "debug"
+      ],
+      "examples": [
+        {
+          "value": "docker inspect my-container",
+          "description": "以 JSON 输出对象的完整底层信息（网络、挂载、环境变量、入口命令等），容器和镜像通用",
+          "copyable": true,
+          "authorship": "editorial",
+          "evidenceTier": "first-party",
+          "adaptation": "adapted",
+          "sourceType": "official",
+          "sourceIds": [
+            "docker-docs",
+            "docker-help"
+          ],
+          "scenario": "容器行为异常，需要确认实际生效的挂载和网络配置。",
+          "goal": "查看 my-container 的完整配置。",
+          "expected": "输出该对象的 JSON 详情，可配合 --format 提取字段"
+        }
+      ],
+      "evidenceRefs": [
+        {
+          "sourceId": "docker-docs",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://docs.docker.com/reference/cli/docker/inspect/",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "docker-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "docker inspect --help（本机 Docker 29.0.1）",
+          "checkedAt": "2026-07-02"
+        }
+      ],
+      "id": "docker-inspect"
+    },
+    {
+      "cat": "flag",
+      "cmd": "docker stats",
+      "en": "Live resource usage",
+      "zh": "实时查看容器资源占用",
+      "evidenceStatus": "verified",
+      "keywords": [
+        "stats",
+        "cpu",
+        "memory",
+        "monitor",
+        "usage"
+      ],
+      "examples": [
+        {
+          "value": "docker stats",
+          "description": "实时滚动显示各运行容器的 CPU、内存、网络与磁盘 IO 占用，类似容器版 top；Ctrl+C 退出",
+          "copyable": true,
+          "authorship": "editorial",
+          "evidenceTier": "first-party",
+          "adaptation": "adapted",
+          "sourceType": "official",
+          "sourceIds": [
+            "docker-docs",
+            "docker-help"
+          ],
+          "scenario": "宿主机负载升高，想找出占资源的容器。",
+          "goal": "实时监控全部容器的资源使用。",
+          "expected": "终端持续刷新每个容器的资源占用表格"
+        }
+      ],
+      "evidenceRefs": [
+        {
+          "sourceId": "docker-docs",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://docs.docker.com/reference/cli/docker/container/stats/",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "docker-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "docker stats --help（本机 Docker 29.0.1）",
+          "checkedAt": "2026-07-02"
+        }
+      ],
+      "id": "docker-stats"
+    },
+    {
+      "cat": "flag",
+      "cmd": "docker tag",
+      "en": "Tag an image",
+      "zh": "为镜像打标签",
+      "evidenceStatus": "verified",
+      "keywords": [
+        "tag",
+        "rename",
+        "registry",
+        "version"
+      ],
+      "examples": [
+        {
+          "value": "docker tag myapp:latest registry.example.com/team/myapp:v1.2",
+          "description": "为已有镜像创建一个新标签（不复制数据），推送到私有仓库前通常先按仓库地址打标签",
+          "copyable": true,
+          "authorship": "editorial",
+          "evidenceTier": "first-party",
+          "adaptation": "adapted",
+          "sourceType": "official",
+          "sourceIds": [
+            "docker-docs",
+            "docker-help"
+          ],
+          "scenario": "构建好的本地镜像需要推送到私有 registry。",
+          "goal": "给 myapp:latest 追加带仓库前缀的标签。",
+          "expected": "docker images 中出现同一 IMAGE ID 的两个标签"
+        }
+      ],
+      "evidenceRefs": [
+        {
+          "sourceId": "docker-docs",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://docs.docker.com/reference/cli/docker/image/tag/",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "docker-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "docker tag --help（本机 Docker 29.0.1）",
+          "checkedAt": "2026-07-02"
+        }
+      ],
+      "id": "docker-tag"
+    },
+    {
+      "cat": "flag",
+      "cmd": "docker compose ps",
+      "en": "List Compose containers",
+      "zh": "列出 Compose 项目的容器状态",
+      "evidenceStatus": "verified",
+      "keywords": [
+        "compose",
+        "ps",
+        "status",
+        "services"
+      ],
+      "examples": [
+        {
+          "value": "docker compose ps",
+          "description": "列出当前 Compose 项目各服务容器的状态、端口映射和健康检查结果",
+          "copyable": true,
+          "authorship": "editorial",
+          "evidenceTier": "first-party",
+          "adaptation": "adapted",
+          "sourceType": "official",
+          "sourceIds": [
+            "docker-docs",
+            "docker-help"
+          ],
+          "scenario": "compose up 之后想确认所有服务是否正常运行。",
+          "goal": "查看本项目全部服务的运行状态。",
+          "expected": "输出服务名、状态（running/exited/healthy）与端口的表格",
+          "prerequisites": "需在包含 compose.yaml 的项目目录中执行。"
+        }
+      ],
+      "evidenceRefs": [
+        {
+          "sourceId": "docker-docs",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://docs.docker.com/reference/cli/docker/compose/ps/",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "docker-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "docker compose ps --help（本机 Docker 29.0.1）",
+          "checkedAt": "2026-07-02"
+        }
+      ],
+      "id": "docker-compose-ps"
+    },
+    {
+      "cat": "flag",
+      "cmd": "docker compose logs",
+      "en": "View Compose service logs",
+      "zh": "查看 Compose 服务日志",
+      "evidenceStatus": "verified",
+      "keywords": [
+        "compose",
+        "logs",
+        "follow",
+        "debug",
+        "tail"
+      ],
+      "examples": [
+        {
+          "value": "docker compose logs -f web",
+          "description": "持续跟踪指定服务的日志输出；省略服务名则聚合显示全部服务，-f 表示 follow",
+          "copyable": true,
+          "authorship": "editorial",
+          "evidenceTier": "first-party",
+          "adaptation": "adapted",
+          "sourceType": "official",
+          "sourceIds": [
+            "docker-docs",
+            "docker-help"
+          ],
+          "scenario": "web 服务启动失败，需要边重启边看日志定位原因。",
+          "goal": "实时跟踪 web 服务的日志。",
+          "expected": "终端持续输出该服务的新日志行，Ctrl+C 停止跟踪",
+          "prerequisites": "需在包含 compose.yaml 的项目目录中执行。"
+        }
+      ],
+      "evidenceRefs": [
+        {
+          "sourceId": "docker-docs",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://docs.docker.com/reference/cli/docker/compose/logs/",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "docker-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "docker compose logs --help（本机 Docker 29.0.1）",
+          "checkedAt": "2026-07-02"
+        }
+      ],
+      "id": "docker-compose-logs"
+    },
+    {
+      "cat": "flag",
+      "cmd": "docker image prune",
+      "en": "Remove unused images",
+      "zh": "清理未使用的镜像",
+      "evidenceStatus": "verified",
+      "keywords": [
+        "prune",
+        "image",
+        "dangling",
+        "clean",
+        "space"
+      ],
+      "examples": [
+        {
+          "value": "docker image prune",
+          "description": "删除全部 dangling 镜像（无标签且不被引用）；加 -a 会扩大到所有未被容器使用的镜像",
+          "copyable": true,
+          "authorship": "editorial",
+          "evidenceTier": "first-party",
+          "adaptation": "adapted",
+          "sourceType": "official",
+          "sourceIds": [
+            "docker-docs",
+            "docker-help"
+          ],
+          "scenario": "反复构建后累积了大量 <none> 镜像占用磁盘。",
+          "goal": "清理悬空镜像释放空间。",
+          "expected": "提示确认后删除 dangling 镜像并显示回收的空间",
+          "caveat": "先用 `docker images -f dangling=true` 检查将被删除的清单，再决定是否加 -a。",
+          "warning": "删除的镜像不可恢复；-a 会连带删除当前没有容器使用的全部镜像。",
+          "riskLevels": [
+            "deleteOrOverwrite"
+          ]
+        }
+      ],
+      "evidenceRefs": [
+        {
+          "sourceId": "docker-docs",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://docs.docker.com/reference/cli/docker/image/prune/",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "docker-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "docker image prune --help（本机 Docker 29.0.1）",
+          "checkedAt": "2026-07-02"
+        }
+      ],
+      "id": "docker-image-prune"
+    },
+    {
+      "cat": "flag",
+      "cmd": "docker container prune",
+      "en": "Remove stopped containers",
+      "zh": "清理全部已停止的容器",
+      "evidenceStatus": "verified",
+      "keywords": [
+        "prune",
+        "container",
+        "stopped",
+        "clean"
+      ],
+      "examples": [
+        {
+          "value": "docker container prune",
+          "description": "删除所有处于停止状态的容器；容器可写层里的文件会随之丢失",
+          "copyable": true,
+          "authorship": "editorial",
+          "evidenceTier": "first-party",
+          "adaptation": "adapted",
+          "sourceType": "official",
+          "sourceIds": [
+            "docker-docs",
+            "docker-help"
+          ],
+          "scenario": "调试后残留了大量退出状态的一次性容器。",
+          "goal": "一次清理全部已停止容器。",
+          "expected": "提示确认后删除所有停止的容器并显示回收空间",
+          "caveat": "先用 `docker ps -a` 检查停止容器里是否还有需要 `docker cp` 取出的文件。",
+          "warning": "已停止容器的文件系统内容会一并删除，不可恢复。",
+          "riskLevels": [
+            "deleteOrOverwrite"
+          ]
+        }
+      ],
+      "evidenceRefs": [
+        {
+          "sourceId": "docker-docs",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://docs.docker.com/reference/cli/docker/container/prune/",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "docker-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "docker container prune --help（本机 Docker 29.0.1）",
+          "checkedAt": "2026-07-02"
+        }
+      ],
+      "id": "docker-container-prune"
+    },
+    {
+      "cat": "flag",
+      "cmd": "docker volume prune",
+      "en": "Remove unused volumes",
+      "zh": "清理未被引用的卷",
+      "evidenceStatus": "verified",
+      "keywords": [
+        "prune",
+        "volume",
+        "data",
+        "clean"
+      ],
+      "examples": [
+        {
+          "value": "docker volume prune",
+          "description": "删除所有未被任何容器引用的卷；卷中的数据（数据库文件等）会永久丢失",
+          "copyable": true,
+          "authorship": "editorial",
+          "evidenceTier": "first-party",
+          "adaptation": "adapted",
+          "sourceType": "official",
+          "sourceIds": [
+            "docker-docs",
+            "docker-help"
+          ],
+          "scenario": "反复起停项目后残留了大量匿名卷。",
+          "goal": "清理不再被引用的卷。",
+          "expected": "提示确认后删除未使用的卷并显示回收空间",
+          "caveat": "先用 `docker volume ls` 检查清单，确认没有仍需保留数据的卷（必要时先备份）。",
+          "warning": "卷里的数据会永久删除且无法恢复——数据库卷被误删等同于丢库。",
+          "riskLevels": [
+            "deleteOrOverwrite"
+          ]
+        }
+      ],
+      "evidenceRefs": [
+        {
+          "sourceId": "docker-docs",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://docs.docker.com/reference/cli/docker/volume/prune/",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "docker-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "docker volume prune --help（本机 Docker 29.0.1）",
+          "checkedAt": "2026-07-02"
+        }
+      ],
+      "id": "docker-volume-prune"
+    },
+    {
+      "cat": "flag",
+      "cmd": "docker system df",
+      "en": "Show Docker disk usage",
+      "zh": "查看 Docker 磁盘占用",
+      "evidenceStatus": "verified",
+      "keywords": [
+        "disk",
+        "usage",
+        "space",
+        "df",
+        "size"
+      ],
+      "examples": [
+        {
+          "value": "docker system df",
+          "description": "按镜像、容器、卷、构建缓存分类统计磁盘占用与可回收空间，是执行 prune 前的检查步骤",
+          "copyable": true,
+          "authorship": "editorial",
+          "evidenceTier": "first-party",
+          "adaptation": "adapted",
+          "sourceType": "official",
+          "sourceIds": [
+            "docker-docs",
+            "docker-help"
+          ],
+          "scenario": "磁盘快满了，想先弄清 Docker 各类资源占了多少。",
+          "goal": "查看磁盘占用分布。",
+          "expected": "输出四类资源的总量、活跃量与 RECLAIMABLE 可回收空间"
+        }
+      ],
+      "evidenceRefs": [
+        {
+          "sourceId": "docker-docs",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://docs.docker.com/reference/cli/docker/system/df/",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "docker-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "docker system df --help（本机 Docker 29.0.1）",
+          "checkedAt": "2026-07-02"
+        }
+      ],
+      "id": "docker-system-df"
+    },
+    {
+      "cat": "flag",
+      "cmd": "docker login",
+      "en": "Authenticate to a registry",
+      "zh": "登录镜像仓库",
+      "evidenceStatus": "verified",
+      "keywords": [
+        "login",
+        "registry",
+        "auth",
+        "credential",
+        "push"
+      ],
+      "examples": [
+        {
+          "value": "docker login registry.example.com",
+          "description": "向指定 registry 认证（省略地址则登录 Docker Hub）；推送私有镜像前需要先登录",
+          "copyable": true,
+          "authorship": "editorial",
+          "evidenceTier": "first-party",
+          "adaptation": "adapted",
+          "sourceType": "official",
+          "sourceIds": [
+            "docker-docs",
+            "docker-help"
+          ],
+          "scenario": "要向公司私有 registry 推送镜像。",
+          "goal": "登录 registry.example.com。",
+          "expected": "输入凭据后提示 Login Succeeded，后续 push/pull 携带认证",
+          "caveat": "凭据会保存在本机凭据存储（或 ~/.docker/config.json）；共享机器上用完请检查并执行 docker logout。"
+        }
+      ],
+      "evidenceRefs": [
+        {
+          "sourceId": "docker-docs",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://docs.docker.com/reference/cli/docker/login/",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "docker-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "docker login --help（本机 Docker 29.0.1）",
+          "checkedAt": "2026-07-02"
+        }
+      ],
+      "id": "docker-login"
     }
   ]
 };

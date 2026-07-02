@@ -24,8 +24,6 @@ const AI_SUGGEST_COUNT = 8;
 const AI_SUGGEST_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 // 与 popup-state.js pruneRecents 的截断上限保持一致。
 const RECENTS_LIMIT = 20;
-const TOAST_DURATION_MS = 1800;
-const UNDO_TOAST_DURATION_MS = 4000;
 // 弹窗重开时，多久以内的任务结果仍值得回放展示。
 const TASK_RESULT_FRESH_MS = 120000;
 // 上次生成的质量告警在管理视图保留展示的时长。
@@ -38,9 +36,32 @@ let enrichmentIndex = new Map();
 let entryIndex = { entries: [], byKey: new Map(), validKeys: new Set() };
 let searchLimit = STATE.SEARCH_INITIAL_LIMIT;
 let lastAutoExpandedQuery = "";
-let onboardingReturnFocus = null;
-let toastTimer = null;
-let pendingRiskResolve = null;
+const { hideToast, showToast, showUndoToast } = window.CHEATSHEET_POPUP_TOAST.createToast(document);
+
+const DIALOGS = window.CHEATSHEET_POPUP_DIALOGS;
+const riskDialog = DIALOGS.createRiskDialog({
+  document,
+  core: CORE,
+  render: RENDER,
+  showToast,
+  confirmFallback: (message) => confirm(message),
+});
+const confirmRiskCopy = riskDialog.confirmRiskCopy;
+const closeRiskDialog = riskDialog.closeRiskDialog;
+
+const onboarding = DIALOGS.createOnboarding({
+  document,
+  state: STATE,
+  render: RENDER,
+  getAllData,
+  getEnabledTools: () => enabledTools,
+  setEnabledTools: (value) => { enabledTools = value; },
+  getPlatform: () => platform,
+  setPlatform: (value) => { platform = value; },
+  storageSet,
+  onSaved: () => { renderFilters(); render(); renderManage(); },
+  onSkipped: () => { renderFilters(); render(); },
+});
 
 let _dom = null;
 function getDOM() {
@@ -164,39 +185,6 @@ function requestAiSuggestions() {
   taskController.runTask("suggest_tools", { platform, count: AI_SUGGEST_COUNT, exclude, enabled, collected });
 }
 
-function hideToast() {
-  const toast = document.getElementById("toast");
-  toast.classList.remove("show");
-  if (toastTimer) clearTimeout(toastTimer);
-}
-
-function showToast(text) {
-  const toast = document.getElementById("toast");
-  toast.textContent = text;
-  toast.classList.add("show");
-  if (toastTimer) clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => toast.classList.remove("show"), TOAST_DURATION_MS);
-}
-
-function showUndoToast(text, onUndo) {
-  const toast = document.getElementById("toast");
-  toast.textContent = "";
-  const label = document.createElement("span");
-  label.textContent = text;
-  const undo = document.createElement("button");
-  undo.type = "button";
-  undo.className = "toast-undo";
-  undo.textContent = "撤销";
-  undo.addEventListener("click", () => {
-    hideToast();
-    onUndo();
-  });
-  toast.append(label, undo);
-  toast.classList.add("show");
-  if (toastTimer) clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => toast.classList.remove("show"), UNDO_TOAST_DURATION_MS);
-}
-
 async function recordCopy(entry, command) {
   recents = CORE.updateRecent(recents, { toolId: entry.toolId, itemId: entry.itemId, command }, RECENTS_LIMIT);
   await storageSet({ recentCopies: recents });
@@ -213,48 +201,8 @@ async function copyText(value, successMessage) {
   }
 }
 
-function closeRiskDialog(confirmed) {
-  const dialog = typeof document.getElementById === "function" ? document.getElementById("riskDialog") : null;
-  if (dialog) dialog.classList.remove("show");
-  if (pendingRiskResolve) pendingRiskResolve(Boolean(confirmed));
-  pendingRiskResolve = null;
-}
-
-function confirmRiskCopy(value, risk) {
-  if (!risk.requiresConfirmation) return Promise.resolve(true);
-  const dialog = typeof document.getElementById === "function" ? document.getElementById("riskDialog") : null;
-  if (pendingRiskResolve) {
-    // 已有未决的风险确认：第二次复制请求直接按"未确认"处理，
-    // 前一个 Promise 仍由用户在对话框里的操作决议，不会永久挂起。
-    if (dialog) showToast("请先处理当前的风险确认");
-    return Promise.resolve(false);
-  }
-  if (!dialog) {
-    return Promise.resolve(confirm(`这是高风险命令：${risk.warning}\n\n${value}\n\n确定要复制吗？`));
-  }
-  document.getElementById("riskSummary").textContent = `风险类型：${risk.labels.join("、") || risk.warning || "高风险操作"}`;
-  document.getElementById("riskCommand").textContent = value;
-  const details = CORE.commandRiskDetails(risk);
-  document.getElementById("riskDetails").innerHTML = (details.length ? details : ["复制前请确认命令、路径、目标环境和当前上下文。"])
-    .map((detail) => `<li>${RENDER.escapeHtml(detail)}</li>`)
-    .join("");
-  dialog.classList.add("show");
-  document.getElementById("riskCancel").focus();
-  return new Promise((resolve) => {
-    pendingRiskResolve = resolve;
-  });
-}
-
 function loadCheatsheetData() {
-  const files = Array.isArray(window.CHEATSHEET_FILES) ? window.CHEATSHEET_FILES : [];
-  return Promise.all(files.map((toolId) => new Promise((resolve, reject) => {
-    if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(toolId)) return reject(new Error(`非法数据文件 ID：${toolId}`));
-    const script = document.createElement("script");
-    script.src = `data/${toolId}.js`;
-    script.onload = resolve;
-    script.onerror = () => reject(new Error(`加载 data/${toolId}.js 失败`));
-    document.head.appendChild(script);
-  })));
+  return window.CHEATSHEET_POPUP_LOADER.loadCheatsheetData(document, window.CHEATSHEET_FILES);
 }
 
 function showView(name) {
@@ -672,7 +620,7 @@ function bindManageEvents() {
     setStatus("最近使用已清空", "ok");
     render();
   });
-  document.getElementById("rerunOnboarding").addEventListener("click", () => showOnboarding(true));
+  document.getElementById("rerunOnboarding").addEventListener("click", () => onboarding.showOnboarding(true));
   document.getElementById("addToolBtn").addEventListener("click", () => {
     startAddTool(document.getElementById("addToolName").value);
   });
@@ -687,98 +635,6 @@ function bindManageEvents() {
     renderManage();
   });
   document.getElementById("aiSuggestBtn").addEventListener("click", requestAiSuggestions);
-}
-
-function renderOnboardChoices() {
-  document.getElementById("onboardPlatform").value = platform;
-  document.getElementById("onboardTools").innerHTML = RENDER.renderOnboardChoices(
-    getAllData(),
-    STATE.getToolIds(getAllData()),
-    enabledTools
-  );
-}
-
-function showOnboarding(force = false) {
-  onboardingReturnFocus = document.activeElement;
-  renderOnboardChoices();
-  document.getElementById("onboarding").classList.add("show");
-  if (force) document.getElementById("onboarding").dataset.forced = "true";
-  document.querySelector(".onboard-card").focus();
-}
-
-function hideOnboarding({ focusSearch = false } = {}) {
-  document.getElementById("onboarding").classList.remove("show");
-  delete document.getElementById("onboarding").dataset.forced;
-  const target = focusSearch ? document.getElementById("search") : onboardingReturnFocus;
-  if (target?.isConnected) target.focus();
-  onboardingReturnFocus = null;
-}
-
-function bindOnboarding() {
-  document.querySelectorAll("[data-preset]").forEach((button) => button.addEventListener("click", () => {
-    const preset = button.dataset.preset;
-    const selected = preset === "all" ? new Set(STATE.getToolIds(getAllData())) : new Set(STATE.TOOL_PRESETS[preset] || []);
-    document.querySelectorAll("#onboardTools input").forEach((input) => {
-      input.checked = selected.has(input.value);
-    });
-  }));
-  document.getElementById("saveOnboarding").addEventListener("click", async () => {
-    const selected = [...document.querySelectorAll("#onboardTools input:checked")].map((input) => input.value);
-    enabledTools = new Set(selected.length ? selected : STATE.getToolIds(getAllData()));
-    platform = document.getElementById("onboardPlatform").value;
-    await storageSet({ enabledTools: [...enabledTools], platform, onboarded: true });
-    hideOnboarding({ focusSearch: true });
-    renderFilters();
-    render();
-    renderManage();
-  });
-  document.getElementById("skipOnboarding").addEventListener("click", async () => {
-    enabledTools = new Set(STATE.getToolIds(getAllData()));
-    await storageSet({ enabledTools: [...enabledTools], platform, onboarded: true });
-    hideOnboarding({ focusSearch: true });
-    renderFilters();
-    render();
-  });
-  document.getElementById("onboarding").addEventListener("keydown", (event) => {
-    const dialog = event.currentTarget;
-    if (event.key === "Escape") {
-      if (dialog.dataset.forced === "true") hideOnboarding();
-      else document.getElementById("skipOnboarding").click();
-      event.preventDefault();
-      return;
-    }
-    trapDialogFocus(dialog, event);
-  });
-}
-
-// 对话框内 Tab 焦点循环，onboarding 与 riskDialog 共用。
-function trapDialogFocus(dialog, event) {
-  if (event.key !== "Tab") return;
-  const focusable = [...dialog.querySelectorAll("button, input, select, [tabindex]:not([tabindex='-1'])")]
-    .filter((element) => !element.disabled && !element.hidden);
-  if (!focusable.length) return;
-  const first = focusable[0];
-  const last = focusable[focusable.length - 1];
-  if (event.shiftKey && document.activeElement === first) {
-    last.focus();
-    event.preventDefault();
-  } else if (!event.shiftKey && document.activeElement === last) {
-    first.focus();
-    event.preventDefault();
-  }
-}
-
-function bindRiskDialog() {
-  document.getElementById("riskCancel").addEventListener("click", () => closeRiskDialog(false));
-  document.getElementById("riskConfirm").addEventListener("click", () => closeRiskDialog(true));
-  document.getElementById("riskDialog").addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
-      closeRiskDialog(false);
-      event.preventDefault();
-      return;
-    }
-    trapDialogFocus(event.currentTarget, event);
-  });
 }
 
 async function initialize() {
@@ -822,8 +678,8 @@ async function initialize() {
 
   bindHomeEvents();
   bindManageEvents();
-  bindOnboarding();
-  bindRiskDialog();
+  onboarding.bindOnboarding();
+  riskDialog.bindRiskDialog();
   renderFilters();
   render();
   renderManage();
@@ -848,7 +704,7 @@ async function initialize() {
     }
   });
   if (!stored.onboarded) {
-    showOnboarding();
+    onboarding.showOnboarding();
   } else {
     document.getElementById("search").focus();
   }
@@ -861,7 +717,7 @@ if (window.CHEATSHEET_ENABLE_TEST_HOOKS) {
     tasks: window.CHEATSHEET_POPUP_TASKS,
     confirmRiskCopy,
     closeRiskDialog,
-    trapDialogFocus,
+    trapDialogFocus: (dialog, event) => DIALOGS.trapDialogFocus(document, dialog, event),
     addToolPayload,
     rankVisibleEntries,
   };

@@ -10,8 +10,8 @@ window.CHEATSHEET_DATA["linux"] = {
     "sourceUrl": "https://www.man7.org/linux/man-pages/",
     "sourceTier": "quasi-official",
     "updatedAt": "2026-06-20",
-    "contentCheckedAt": "2026-06-20",
-    "sourceCheckedAt": "2026-06-21",
+    "contentCheckedAt": "2026-07-02",
+    "sourceCheckedAt": "2026-07-02",
     "updatePolicy": "manual-only",
     "verificationStatus": "manual",
     "coverage": "常用命令子集，覆盖 GNU Coreutils、util-linux、procps-ng 及 POSIX 标准，选取开发者高频使用的约 40 条命令",
@@ -46,10 +46,10 @@ window.CHEATSHEET_DATA["linux"] = {
         "kind": "authoritative-reference",
         "maintainer": "Linux man-pages project / man7.org",
         "evidenceTier": "authoritative-community",
-        "lastVerifiedAt": "2026-06-21",
+        "lastVerifiedAt": "2026-07-02",
         "resolvedUrl": "https://man7.org/linux/man-pages/man1/ps.1.html",
         "pageTitle": "ps(1) manual page",
-        "checkedAt": "2026-06-21",
+        "checkedAt": "2026-07-02",
         "purposes": [
           "command-existence",
           "option-semantics",
@@ -64,10 +64,10 @@ window.CHEATSHEET_DATA["linux"] = {
         "kind": "authoritative-reference",
         "maintainer": "Linux man-pages project / man7.org",
         "evidenceTier": "authoritative-community",
-        "lastVerifiedAt": "2026-06-21",
+        "lastVerifiedAt": "2026-07-02",
         "resolvedUrl": "https://man7.org/linux/man-pages/man1/kill.1.html",
         "pageTitle": "kill(1) manual page",
-        "checkedAt": "2026-06-21",
+        "checkedAt": "2026-07-02",
         "purposes": [
           "command-existence",
           "option-semantics",
@@ -82,10 +82,10 @@ window.CHEATSHEET_DATA["linux"] = {
         "kind": "authoritative-reference",
         "maintainer": "Linux man-pages project / man7.org",
         "evidenceTier": "authoritative-community",
-        "lastVerifiedAt": "2026-06-21",
+        "lastVerifiedAt": "2026-07-02",
         "resolvedUrl": "https://man7.org/linux/man-pages/man1/top.1.html",
         "pageTitle": "top(1) manual page",
-        "checkedAt": "2026-06-21",
+        "checkedAt": "2026-07-02",
         "purposes": [
           "command-existence",
           "option-semantics",
@@ -100,10 +100,10 @@ window.CHEATSHEET_DATA["linux"] = {
         "kind": "authoritative-reference",
         "maintainer": "Linux man-pages project / man7.org",
         "evidenceTier": "authoritative-community",
-        "lastVerifiedAt": "2026-06-21",
+        "lastVerifiedAt": "2026-07-02",
         "resolvedUrl": "https://man7.org/linux/man-pages/man1/grep.1.html",
         "pageTitle": "grep(1) manual page",
-        "checkedAt": "2026-06-21",
+        "checkedAt": "2026-07-02",
         "purposes": [
           "command-existence",
           "option-semantics",
@@ -118,10 +118,10 @@ window.CHEATSHEET_DATA["linux"] = {
         "kind": "authoritative-reference",
         "maintainer": "Linux man-pages project / man7.org",
         "evidenceTier": "authoritative-community",
-        "lastVerifiedAt": "2026-06-21",
+        "lastVerifiedAt": "2026-07-02",
         "resolvedUrl": "https://man7.org/linux/man-pages/man1/find.1.html",
         "pageTitle": "find(1) manual page",
-        "checkedAt": "2026-06-21",
+        "checkedAt": "2026-07-02",
         "purposes": [
           "command-existence",
           "option-semantics",
@@ -136,10 +136,10 @@ window.CHEATSHEET_DATA["linux"] = {
         "kind": "authoritative-reference",
         "maintainer": "Linux man-pages project / man7.org",
         "evidenceTier": "authoritative-community",
-        "lastVerifiedAt": "2026-06-21",
+        "lastVerifiedAt": "2026-07-02",
         "resolvedUrl": "https://man7.org/linux/man-pages/man1/diff.1.html",
         "pageTitle": "diff(1) manual page",
-        "checkedAt": "2026-06-21",
+        "checkedAt": "2026-07-02",
         "purposes": [
           "command-existence",
           "option-semantics",
@@ -154,10 +154,10 @@ window.CHEATSHEET_DATA["linux"] = {
         "kind": "authoritative-reference",
         "maintainer": "Linux man-pages project / man7.org",
         "evidenceTier": "authoritative-community",
-        "lastVerifiedAt": "2026-06-21",
+        "lastVerifiedAt": "2026-07-02",
         "resolvedUrl": "https://man7.org/linux/man-pages/man1/free.1.html",
         "pageTitle": "free(1) manual page",
-        "checkedAt": "2026-06-21",
+        "checkedAt": "2026-07-02",
         "purposes": [
           "command-existence",
           "option-semantics",
@@ -172,14 +172,201 @@ window.CHEATSHEET_DATA["linux"] = {
         "kind": "authoritative-reference",
         "maintainer": "Linux man-pages project / man7.org",
         "evidenceTier": "authoritative-community",
-        "lastVerifiedAt": "2026-06-21",
+        "lastVerifiedAt": "2026-07-02",
         "resolvedUrl": "https://man7.org/linux/man-pages/man8/ping.8.html",
         "pageTitle": "ping(8) manual page",
-        "checkedAt": "2026-06-21",
+        "checkedAt": "2026-07-02",
         "purposes": [
           "command-existence",
           "option-semantics",
           "examples"
+        ]
+      },
+      {
+        "id": "linux-bash-man",
+        "registryId": "linux-man7",
+        "title": "bash(1) manual page",
+        "url": "https://man7.org/linux/man-pages/man1/bash.1.html",
+        "kind": "authoritative-reference",
+        "maintainer": "Linux man-pages project / man7.org",
+        "evidenceTier": "authoritative-community",
+        "lastVerifiedAt": "2026-07-02",
+        "resolvedUrl": "https://man7.org/linux/man-pages/man1/bash.1.html",
+        "pageTitle": "bash(1) manual page",
+        "checkedAt": "2026-07-02",
+        "purposes": [
+          "command-existence",
+          "option-semantics"
+        ]
+      },
+      {
+        "id": "linux-termios-man",
+        "registryId": "linux-man7",
+        "title": "termios(3) manual page",
+        "url": "https://man7.org/linux/man-pages/man3/termios.3.html",
+        "kind": "authoritative-reference",
+        "maintainer": "Linux man-pages project / man7.org",
+        "evidenceTier": "authoritative-community",
+        "lastVerifiedAt": "2026-07-02",
+        "resolvedUrl": "https://man7.org/linux/man-pages/man3/termios.3.html",
+        "pageTitle": "termios(3) manual page",
+        "checkedAt": "2026-07-02",
+        "purposes": [
+          "command-existence",
+          "option-semantics"
+        ]
+      },
+      {
+        "id": "linux-less-man",
+        "registryId": "linux-man7",
+        "title": "less(1) manual page",
+        "url": "https://man7.org/linux/man-pages/man1/less.1.html",
+        "kind": "authoritative-reference",
+        "maintainer": "Linux man-pages project / man7.org",
+        "evidenceTier": "authoritative-community",
+        "lastVerifiedAt": "2026-07-02",
+        "resolvedUrl": "https://man7.org/linux/man-pages/man1/less.1.html",
+        "pageTitle": "less(1) manual page",
+        "checkedAt": "2026-07-02",
+        "purposes": [
+          "command-existence",
+          "option-semantics"
+        ]
+      },
+      {
+        "id": "linux-curl-man",
+        "registryId": "linux-man7",
+        "title": "curl(1) manual page",
+        "url": "https://man7.org/linux/man-pages/man1/curl.1.html",
+        "kind": "authoritative-reference",
+        "maintainer": "Linux man-pages project / man7.org",
+        "evidenceTier": "authoritative-community",
+        "lastVerifiedAt": "2026-07-02",
+        "resolvedUrl": "https://man7.org/linux/man-pages/man1/curl.1.html",
+        "pageTitle": "curl(1) manual page",
+        "checkedAt": "2026-07-02",
+        "purposes": [
+          "command-existence",
+          "option-semantics"
+        ]
+      },
+      {
+        "id": "linux-wget-man",
+        "registryId": "linux-man7",
+        "title": "wget(1) manual page",
+        "url": "https://man7.org/linux/man-pages/man1/wget.1.html",
+        "kind": "authoritative-reference",
+        "maintainer": "Linux man-pages project / man7.org",
+        "evidenceTier": "authoritative-community",
+        "lastVerifiedAt": "2026-07-02",
+        "resolvedUrl": "https://man7.org/linux/man-pages/man1/wget.1.html",
+        "pageTitle": "wget(1) manual page",
+        "checkedAt": "2026-07-02",
+        "purposes": [
+          "command-existence",
+          "option-semantics"
+        ]
+      },
+      {
+        "id": "linux-tar-man",
+        "registryId": "linux-man7",
+        "title": "tar(1) manual page",
+        "url": "https://man7.org/linux/man-pages/man1/tar.1.html",
+        "kind": "authoritative-reference",
+        "maintainer": "Linux man-pages project / man7.org",
+        "evidenceTier": "authoritative-community",
+        "lastVerifiedAt": "2026-07-02",
+        "resolvedUrl": "https://man7.org/linux/man-pages/man1/tar.1.html",
+        "pageTitle": "tar(1) manual page",
+        "checkedAt": "2026-07-02",
+        "purposes": [
+          "command-existence",
+          "option-semantics"
+        ]
+      },
+      {
+        "id": "linux-ssh-man",
+        "registryId": "linux-man7",
+        "title": "ssh(1) manual page",
+        "url": "https://man7.org/linux/man-pages/man1/ssh.1.html",
+        "kind": "authoritative-reference",
+        "maintainer": "Linux man-pages project / man7.org",
+        "evidenceTier": "authoritative-community",
+        "lastVerifiedAt": "2026-07-02",
+        "resolvedUrl": "https://man7.org/linux/man-pages/man1/ssh.1.html",
+        "pageTitle": "ssh(1) manual page",
+        "checkedAt": "2026-07-02",
+        "purposes": [
+          "command-existence",
+          "option-semantics"
+        ]
+      },
+      {
+        "id": "linux-scp-man",
+        "registryId": "linux-man7",
+        "title": "scp(1) manual page",
+        "url": "https://man7.org/linux/man-pages/man1/scp.1.html",
+        "kind": "authoritative-reference",
+        "maintainer": "Linux man-pages project / man7.org",
+        "evidenceTier": "authoritative-community",
+        "lastVerifiedAt": "2026-07-02",
+        "resolvedUrl": "https://man7.org/linux/man-pages/man1/scp.1.html",
+        "pageTitle": "scp(1) manual page",
+        "checkedAt": "2026-07-02",
+        "purposes": [
+          "command-existence",
+          "option-semantics"
+        ]
+      },
+      {
+        "id": "linux-sed-man",
+        "registryId": "linux-man7",
+        "title": "sed(1) manual page",
+        "url": "https://man7.org/linux/man-pages/man1/sed.1.html",
+        "kind": "authoritative-reference",
+        "maintainer": "Linux man-pages project / man7.org",
+        "evidenceTier": "authoritative-community",
+        "lastVerifiedAt": "2026-07-02",
+        "resolvedUrl": "https://man7.org/linux/man-pages/man1/sed.1.html",
+        "pageTitle": "sed(1) manual page",
+        "checkedAt": "2026-07-02",
+        "purposes": [
+          "command-existence",
+          "option-semantics"
+        ]
+      },
+      {
+        "id": "linux-gawk-man",
+        "registryId": "linux-man7",
+        "title": "gawk(1) manual page",
+        "url": "https://man7.org/linux/man-pages/man1/gawk.1.html",
+        "kind": "authoritative-reference",
+        "maintainer": "Linux man-pages project / man7.org",
+        "evidenceTier": "authoritative-community",
+        "lastVerifiedAt": "2026-07-02",
+        "resolvedUrl": "https://man7.org/linux/man-pages/man1/gawk.1.html",
+        "pageTitle": "gawk(1) manual page",
+        "checkedAt": "2026-07-02",
+        "purposes": [
+          "command-existence",
+          "option-semantics"
+        ]
+      },
+      {
+        "id": "linux-which-man",
+        "registryId": "debian-manpages",
+        "title": "which(1) — Debian manual page",
+        "url": "https://manpages.debian.org/unstable/debianutils/which.1.en.html",
+        "kind": "authoritative-reference",
+        "maintainer": "Debian project",
+        "evidenceTier": "authoritative-community",
+        "lastVerifiedAt": "2026-07-02",
+        "resolvedUrl": "https://manpages.debian.org/unstable/debianutils/which.1.en.html",
+        "pageTitle": "which(1) — Debian manual page",
+        "checkedAt": "2026-07-02",
+        "purposes": [
+          "command-existence",
+          "option-semantics"
         ]
       }
     ],
@@ -303,7 +490,18 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-cd",
-      "evidenceStatus": "unverified"
+      "evidenceStatus": "verified",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-bash-man",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/bash.1.html · SHELL BUILTIN COMMANDS · cd",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -316,7 +514,18 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-cd-parent",
-      "evidenceStatus": "unverified"
+      "evidenceStatus": "verified",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-bash-man",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/bash.1.html · SHELL BUILTIN COMMANDS · cd（.. 为父目录的相对路径参数）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -548,7 +757,18 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-less",
-      "evidenceStatus": "unverified"
+      "evidenceStatus": "verified",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-less-man",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/less.1.html · NAME/DESCRIPTION",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -1086,7 +1306,18 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-curl",
-      "evidenceStatus": "unverified"
+      "evidenceStatus": "verified",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-curl-man",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/curl.1.html · NAME/DESCRIPTION",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -1098,7 +1329,18 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-wget",
-      "evidenceStatus": "unverified"
+      "evidenceStatus": "verified",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-wget-man",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/wget.1.html · NAME/DESCRIPTION",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -1110,7 +1352,18 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-tar",
-      "evidenceStatus": "unverified"
+      "evidenceStatus": "verified",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-tar-man",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/tar.1.html · NAME/DESCRIPTION",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -1122,7 +1375,18 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-tar-xzf",
-      "evidenceStatus": "unverified"
+      "evidenceStatus": "verified",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-tar-man",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/tar.1.html · 选项 -x -z -f（组合短选项）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -1134,7 +1398,18 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-tar-czf",
-      "evidenceStatus": "unverified"
+      "evidenceStatus": "verified",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-tar-man",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/tar.1.html · 选项 -c -z -f（组合短选项）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -1168,7 +1443,18 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-pipe",
-      "evidenceStatus": "unverified"
+      "evidenceStatus": "verified",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-bash-man",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/bash.1.html · SHELL GRAMMAR · Pipelines",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -1180,7 +1466,18 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-redirect-out",
-      "evidenceStatus": "unverified"
+      "evidenceStatus": "verified",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-bash-man",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/bash.1.html · REDIRECTION（覆盖已存在文件）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -1192,7 +1489,18 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-redirect-append",
-      "evidenceStatus": "unverified"
+      "evidenceStatus": "verified",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-bash-man",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/bash.1.html · REDIRECTION · Appending Redirected Output",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -1204,7 +1512,18 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-ssh",
-      "evidenceStatus": "unverified"
+      "evidenceStatus": "verified",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-ssh-man",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/ssh.1.html · NAME/DESCRIPTION",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -1216,7 +1535,18 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-scp",
-      "evidenceStatus": "unverified"
+      "evidenceStatus": "verified",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-scp-man",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/scp.1.html · NAME/DESCRIPTION",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -1272,7 +1602,18 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-sed",
-      "evidenceStatus": "unverified"
+      "evidenceStatus": "verified",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-sed-man",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/sed.1.html · NAME/DESCRIPTION",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -1284,7 +1625,18 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-awk",
-      "evidenceStatus": "unverified"
+      "evidenceStatus": "verified",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-gawk-man",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/gawk.1.html · NAME/DESCRIPTION",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -1296,7 +1648,18 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-which",
-      "evidenceStatus": "unverified"
+      "evidenceStatus": "verified",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-which-man",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://manpages.debian.org/unstable/debianutils/which.1.en.html · NAME/DESCRIPTION",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -1309,7 +1672,18 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-history",
-      "evidenceStatus": "unverified"
+      "evidenceStatus": "verified",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-bash-man",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/bash.1.html · SHELL BUILTIN COMMANDS · history [n]",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -1322,7 +1696,18 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-ctrl-r",
-      "evidenceStatus": "unverified"
+      "evidenceStatus": "verified",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-bash-man",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/bash.1.html · READLINE · Searching for Commands in the History · reverse-search-history (C-r)",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -1334,7 +1719,18 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-ctrl-c",
-      "evidenceStatus": "unverified"
+      "evidenceStatus": "verified",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-termios-man",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man3/termios.3.html · c_cc characters · VINTR（默认 Ctrl-C，发送 SIGINT）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -1346,7 +1742,18 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-ctrl-z",
-      "evidenceStatus": "unverified"
+      "evidenceStatus": "verified",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-termios-man",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man3/termios.3.html · c_cc characters · VSUSP（默认 Ctrl-Z，发送 SIGTSTP）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -1359,7 +1766,18 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-bg",
-      "evidenceStatus": "unverified"
+      "evidenceStatus": "verified",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-bash-man",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/bash.1.html · SHELL BUILTIN COMMANDS · bg [jobspec ...]",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -1372,7 +1790,18 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-fg",
-      "evidenceStatus": "unverified"
+      "evidenceStatus": "verified",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-bash-man",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/bash.1.html · SHELL BUILTIN COMMANDS · fg [jobspec]",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     }
   ]
 };

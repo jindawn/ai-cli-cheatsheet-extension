@@ -9,8 +9,8 @@ window.CHEATSHEET_DATA["shell"] = {
     "builtIn": false,
     "updatePolicy": "manual-only",
     "verifiedVersion": "POSIX.1-2024 / bash 5.2",
-    "contentCheckedAt": "2026-06-25",
-    "sourceCheckedAt": "2026-06-25",
+    "contentCheckedAt": "2026-07-02",
+    "sourceCheckedAt": "2026-07-02",
     "sourceUrl": "https://www.gnu.org/software/bash/manual/",
     "sourceTier": "official",
     "coverage": "终端命令解释与脚本环境：sh/POSIX、bash、zsh 的内置命令、关键字、快捷键、配置文件、环境变量、PATH、alias、函数、补全、历史命令、脚本语法与排错。外部 CLI 工具（Git、Docker、npm、Claude Code 等）不归入 Shell，仅作关联标签。",
@@ -33,9 +33,9 @@ window.CHEATSHEET_DATA["shell"] = {
         ],
         "resolvedUrl": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html",
         "pageTitle": "POSIX Shell Command Language and Utilities",
-        "checkedAt": "2026-06-25",
+        "checkedAt": "2026-07-02",
         "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html",
-        "lastVerifiedAt": "2026-06-24"
+        "lastVerifiedAt": "2026-07-02"
       },
       {
         "id": "gnu-bash-manual",
@@ -67,9 +67,38 @@ window.CHEATSHEET_DATA["shell"] = {
         ],
         "resolvedUrl": "https://zsh.sourceforge.io/Doc/",
         "pageTitle": "Zsh Documentation",
-        "checkedAt": "2026-06-25",
+        "checkedAt": "2026-07-02",
         "url": "https://zsh.sourceforge.io/Doc/",
-        "lastVerifiedAt": "2026-06-24"
+        "lastVerifiedAt": "2026-07-02"
+      },
+      {
+        "id": "linux-man7",
+        "title": "bash(1) — Linux manual page (man7.org)",
+        "kind": "authoritative-reference",
+        "maintainer": "Michael Kerrisk (man-pages)",
+        "evidenceTier": "authoritative-community",
+        "purposes": [
+          "command-existence",
+          "option-semantics",
+          "cross-check"
+        ],
+        "resolvedUrl": "https://man7.org/linux/man-pages/man1/bash.1.html",
+        "pageTitle": "bash(1) - Linux manual page",
+        "checkedAt": "2026-07-02",
+        "url": "https://man7.org/linux/man-pages/man1/bash.1.html",
+        "lastVerifiedAt": "2026-07-02"
+      },
+      {
+        "id": "bash-local-help",
+        "title": "bash `help` builtin output",
+        "kind": "local-help",
+        "maintainer": "GNU Project",
+        "evidenceTier": "first-party",
+        "purposes": [
+          "command-existence"
+        ],
+        "lastVerifiedAt": "2026-07-02",
+        "version": "bash 3.2.57 (macOS)"
       }
     ],
     "verificationStatus": "manual"
@@ -86,7 +115,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "posix",
         "topic": "builtins"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "目录",
         "切换",
@@ -123,7 +152,18 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "windows"
       ],
-      "id": "posix-cd"
+      "id": "posix-cd",
+      "evidenceRefs": [
+        {
+          "sourceId": "posix-shell-utilities",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/cd.html",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "slash",
@@ -136,7 +176,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "posix",
         "topic": "builtins"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "pwd",
         "当前目录",
@@ -172,7 +212,18 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "windows"
       ],
-      "id": "posix-pwd"
+      "id": "posix-pwd",
+      "evidenceRefs": [
+        {
+          "sourceId": "posix-shell-utilities",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/pwd.html",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "slash",
@@ -185,7 +236,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "posix",
         "topic": "builtins"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "echo",
         "输出",
@@ -222,7 +273,18 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "windows"
       ],
-      "id": "posix-echo"
+      "id": "posix-echo",
+      "evidenceRefs": [
+        {
+          "sourceId": "posix-shell-utilities",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/echo.html",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "slash",
@@ -235,7 +297,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "posix",
         "topic": "builtins"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "printf",
         "格式化输出",
@@ -271,7 +333,18 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "windows"
       ],
-      "id": "posix-printf"
+      "id": "posix-printf",
+      "evidenceRefs": [
+        {
+          "sourceId": "posix-shell-utilities",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/printf.html",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "slash",
@@ -284,7 +357,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "posix",
         "topic": "builtins"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "read",
         "输入",
@@ -321,7 +394,18 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "windows"
       ],
-      "id": "posix-read"
+      "id": "posix-read",
+      "evidenceRefs": [
+        {
+          "sourceId": "posix-shell-utilities",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/read.html",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "slash",
@@ -334,7 +418,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "posix",
         "topic": "builtins"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "test",
         "条件",
@@ -371,7 +455,18 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "windows"
       ],
-      "id": "posix-test"
+      "id": "posix-test",
+      "evidenceRefs": [
+        {
+          "sourceId": "posix-shell-utilities",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/test.html",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "slash",
@@ -384,7 +479,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "posix",
         "topic": "builtins"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "[",
         "test",
@@ -421,7 +516,18 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "windows"
       ],
-      "id": "posix-bracket"
+      "id": "posix-bracket",
+      "evidenceRefs": [
+        {
+          "sourceId": "posix-shell-utilities",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/test.html · test / [ 同页记载",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "slash",
@@ -434,7 +540,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "posix",
         "topic": "builtins"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         ":",
         "空命令",
@@ -447,7 +553,18 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "windows"
       ],
-      "id": "posix-colon"
+      "id": "posix-colon",
+      "evidenceRefs": [
+        {
+          "sourceId": "posix-shell-utilities",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/colon.html",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "slash",
@@ -460,7 +577,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "posix",
         "topic": "builtins"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "true",
         "成功",
@@ -472,7 +589,18 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "windows"
       ],
-      "id": "posix-true"
+      "id": "posix-true",
+      "evidenceRefs": [
+        {
+          "sourceId": "posix-shell-utilities",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/true.html",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "slash",
@@ -485,7 +613,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "posix",
         "topic": "builtins"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "false",
         "失败",
@@ -497,7 +625,18 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "windows"
       ],
-      "id": "posix-false"
+      "id": "posix-false",
+      "evidenceRefs": [
+        {
+          "sourceId": "posix-shell-utilities",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/false.html",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "slash",
@@ -510,7 +649,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "posix",
         "topic": "builtins"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "exit",
         "退出",
@@ -546,7 +685,18 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "windows"
       ],
-      "id": "posix-exit"
+      "id": "posix-exit",
+      "evidenceRefs": [
+        {
+          "sourceId": "posix-shell-utilities",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/exit.html",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "slash",
@@ -559,7 +709,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "posix",
         "topic": "builtins"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "return",
         "函数返回",
@@ -595,7 +745,18 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "windows"
       ],
-      "id": "posix-return"
+      "id": "posix-return",
+      "evidenceRefs": [
+        {
+          "sourceId": "posix-shell-utilities",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/return.html",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "slash",
@@ -608,7 +769,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "posix",
         "topic": "builtins"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "shift",
         "位置参数",
@@ -645,7 +806,18 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "windows"
       ],
-      "id": "posix-shift"
+      "id": "posix-shift",
+      "evidenceRefs": [
+        {
+          "sourceId": "posix-shell-utilities",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/shift.html",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "slash",
@@ -658,7 +830,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "posix",
         "topic": "builtins"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "eval",
         "动态命令",
@@ -696,7 +868,18 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "windows"
       ],
-      "id": "posix-eval"
+      "id": "posix-eval",
+      "evidenceRefs": [
+        {
+          "sourceId": "posix-shell-utilities",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/eval.html",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "slash",
@@ -709,7 +892,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "posix",
         "topic": "builtins"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "exec",
         "替换进程",
@@ -747,7 +930,18 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "windows"
       ],
-      "id": "posix-exec"
+      "id": "posix-exec",
+      "evidenceRefs": [
+        {
+          "sourceId": "posix-shell-utilities",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/exec.html",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "slash",
@@ -760,7 +954,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "posix",
         "topic": "builtins"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "getopts",
         "参数解析",
@@ -796,7 +990,18 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "windows"
       ],
-      "id": "posix-getopts"
+      "id": "posix-getopts",
+      "evidenceRefs": [
+        {
+          "sourceId": "posix-shell-utilities",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/getopts.html",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "slash",
@@ -809,7 +1014,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "posix",
         "topic": "builtins"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "umask",
         "权限",
@@ -845,7 +1050,18 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "windows"
       ],
-      "id": "posix-umask"
+      "id": "posix-umask",
+      "evidenceRefs": [
+        {
+          "sourceId": "posix-shell-utilities",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/umask.html",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -859,7 +1075,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "bash",
         "topic": "builtins"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "命令来源",
         "别名遮蔽",
@@ -890,7 +1106,26 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "windows"
       ],
-      "id": "bash-builtin-type"
+      "id": "bash-builtin-type",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-man7",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/bash.1.html · SHELL BUILTIN COMMANDS · type",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "bash-local-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "help type（本机 bash 3.2.57 (macOS) 实测）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -904,7 +1139,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "bash",
         "topic": "builtins"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "命令查找",
         "别名绕过",
@@ -933,7 +1168,26 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "windows"
       ],
-      "id": "bash-builtin-command"
+      "id": "bash-builtin-command",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-man7",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/bash.1.html · SHELL BUILTIN COMMANDS · command",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "bash-local-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "help command（本机 bash 3.2.57 (macOS) 实测）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -947,7 +1201,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "bash",
         "topic": "builtins"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "哈希表",
         "路径缓存",
@@ -977,7 +1231,26 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "windows"
       ],
-      "id": "bash-builtin-hash"
+      "id": "bash-builtin-hash",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-man7",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/bash.1.html · SHELL BUILTIN COMMANDS · hash",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "bash-local-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "help hash（本机 bash 3.2.57 (macOS) 实测）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -991,7 +1264,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "bash",
         "topic": "builtins"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "帮助",
         "手册",
@@ -1020,7 +1293,26 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "windows"
       ],
-      "id": "bash-builtin-help"
+      "id": "bash-builtin-help",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-man7",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/bash.1.html · SHELL BUILTIN COMMANDS · help",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "bash-local-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "help help（本机 bash 3.2.57 (macOS) 实测）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -1034,7 +1326,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "bash",
         "topic": "builtins"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "绕过函数",
         "内置命令",
@@ -1063,7 +1355,26 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "windows"
       ],
-      "id": "bash-builtin-builtin"
+      "id": "bash-builtin-builtin",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-man7",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/bash.1.html · SHELL BUILTIN COMMANDS · builtin",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "bash-local-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "help builtin（本机 bash 3.2.57 (macOS) 实测）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -1077,7 +1388,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "bash",
         "topic": "builtins"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "禁用内置",
         "外部程序",
@@ -1105,7 +1416,26 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "windows"
       ],
-      "id": "bash-builtin-enable"
+      "id": "bash-builtin-enable",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-man7",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/bash.1.html · SHELL BUILTIN COMMANDS · enable",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "bash-local-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "help enable（本机 bash 3.2.57 (macOS) 实测）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -1119,7 +1449,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "bash",
         "topic": "builtins"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "变量声明",
         "declare",
@@ -1148,7 +1478,26 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "windows"
       ],
-      "id": "bash-builtin-declare"
+      "id": "bash-builtin-declare",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-man7",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/bash.1.html · SHELL BUILTIN COMMANDS · declare",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "bash-local-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "help declare（本机 bash 3.2.57 (macOS) 实测）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -1162,7 +1511,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "bash",
         "topic": "builtins"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "局部变量",
         "整数",
@@ -1191,7 +1540,26 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "windows"
       ],
-      "id": "bash-builtin-local"
+      "id": "bash-builtin-local",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-man7",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/bash.1.html · SHELL BUILTIN COMMANDS · local",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "bash-local-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "help local（本机 bash 3.2.57 (macOS) 实测）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -1205,7 +1573,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "bash",
         "topic": "builtins"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "算术",
         "计算",
@@ -1234,7 +1602,26 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "windows"
       ],
-      "id": "bash-builtin-let"
+      "id": "bash-builtin-let",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-man7",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/bash.1.html · SHELL BUILTIN COMMANDS · let",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "bash-local-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "help let（本机 bash 3.2.57 (macOS) 实测）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -1248,7 +1635,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "bash",
         "topic": "builtins"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "读取文件",
         "数组",
@@ -1278,7 +1665,18 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "windows"
       ],
-      "id": "bash-builtin-mapfile"
+      "id": "bash-builtin-mapfile",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-man7",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/bash.1.html · SHELL BUILTIN COMMANDS · mapfile（bash 4.0+，本机 3.2 不含）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -1292,7 +1690,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "bash",
         "topic": "builtins"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "补全",
         "命令列表",
@@ -1321,7 +1719,26 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "windows"
       ],
-      "id": "bash-builtin-compgen"
+      "id": "bash-builtin-compgen",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-man7",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/bash.1.html · SHELL BUILTIN COMMANDS · Programmable Completion Builtins（compgen）",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "bash-local-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "help compgen（本机 bash 3.2.57 (macOS) 实测）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -1335,7 +1752,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "bash",
         "topic": "builtins"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "自定义补全",
         "complete",
@@ -1364,7 +1781,26 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "windows"
       ],
-      "id": "bash-builtin-complete"
+      "id": "bash-builtin-complete",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-man7",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/bash.1.html · SHELL BUILTIN COMMANDS · Programmable Completion Builtins（complete）",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "bash-local-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "help complete（本机 bash 3.2.57 (macOS) 实测）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -1378,7 +1814,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "bash",
         "topic": "builtins"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "键绑定",
         "快捷键",
@@ -1407,7 +1843,26 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "windows"
       ],
-      "id": "bash-builtin-bind"
+      "id": "bash-builtin-bind",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-man7",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/bash.1.html · SHELL BUILTIN COMMANDS · bind",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "bash-local-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "help bind（本机 bash 3.2.57 (macOS) 实测）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -1421,7 +1876,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "bash",
         "topic": "builtins"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "shell选项",
         "shopt",
@@ -1450,7 +1905,26 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "windows"
       ],
-      "id": "bash-builtin-shopt"
+      "id": "bash-builtin-shopt",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-man7",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/bash.1.html · SHELL BUILTIN COMMANDS · shopt",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "bash-local-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "help shopt（本机 bash 3.2.57 (macOS) 实测）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -1464,7 +1938,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "bash",
         "topic": "builtins"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "调用栈",
         "调试",
@@ -1493,7 +1967,26 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "windows"
       ],
-      "id": "bash-builtin-caller"
+      "id": "bash-builtin-caller",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-man7",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/bash.1.html · SHELL BUILTIN COMMANDS · caller",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "bash-local-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "help caller（本机 bash 3.2.57 (macOS) 实测）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -1506,7 +1999,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "zsh",
         "topic": "builtins"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "autoload",
         "自动加载",
@@ -1533,7 +2026,18 @@ window.CHEATSHEET_DATA["shell"] = {
         "mac",
         "linux"
       ],
-      "id": "zsh-autoload"
+      "id": "zsh-autoload",
+      "evidenceRefs": [
+        {
+          "sourceId": "zsh-manual",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://zsh.sourceforge.io/Doc/Release/Shell-Builtin-Commands.html · autoload",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -1546,7 +2050,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "zsh",
         "topic": "builtins"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "setopt",
         "shell选项",
@@ -1572,7 +2076,18 @@ window.CHEATSHEET_DATA["shell"] = {
         "mac",
         "linux"
       ],
-      "id": "zsh-setopt"
+      "id": "zsh-setopt",
+      "evidenceRefs": [
+        {
+          "sourceId": "zsh-manual",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://zsh.sourceforge.io/Doc/Release/Shell-Builtin-Commands.html · setopt",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -1585,7 +2100,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "zsh",
         "topic": "builtins"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "unsetopt",
         "shell选项",
@@ -1611,7 +2126,18 @@ window.CHEATSHEET_DATA["shell"] = {
         "mac",
         "linux"
       ],
-      "id": "zsh-unsetopt"
+      "id": "zsh-unsetopt",
+      "evidenceRefs": [
+        {
+          "sourceId": "zsh-manual",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://zsh.sourceforge.io/Doc/Release/Shell-Builtin-Commands.html · unsetopt",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -1624,7 +2150,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "zsh",
         "topic": "builtins"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "zstyle",
         "zsh样式",
@@ -1650,7 +2176,18 @@ window.CHEATSHEET_DATA["shell"] = {
         "mac",
         "linux"
       ],
-      "id": "zsh-zstyle"
+      "id": "zsh-zstyle",
+      "evidenceRefs": [
+        {
+          "sourceId": "zsh-manual",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://zsh.sourceforge.io/Doc/Release/Zsh-Modules.html · zsh/zutil 模块 · zstyle",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -1663,7 +2200,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "zsh",
         "topic": "builtins"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "whence",
         "命令来源",
@@ -1689,7 +2226,18 @@ window.CHEATSHEET_DATA["shell"] = {
         "mac",
         "linux"
       ],
-      "id": "zsh-whence"
+      "id": "zsh-whence",
+      "evidenceRefs": [
+        {
+          "sourceId": "zsh-manual",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://zsh.sourceforge.io/Doc/Release/Shell-Builtin-Commands.html · whence",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -1702,7 +2250,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "zsh",
         "topic": "builtins"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "where",
         "查找命令",
@@ -1728,7 +2276,18 @@ window.CHEATSHEET_DATA["shell"] = {
         "mac",
         "linux"
       ],
-      "id": "zsh-where"
+      "id": "zsh-where",
+      "evidenceRefs": [
+        {
+          "sourceId": "zsh-manual",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://zsh.sourceforge.io/Doc/Release/Shell-Builtin-Commands.html · where（等价于 whence -ca）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -1741,7 +2300,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "zsh",
         "topic": "builtins"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "typeset",
         "declare",
@@ -1768,7 +2327,18 @@ window.CHEATSHEET_DATA["shell"] = {
         "mac",
         "linux"
       ],
-      "id": "zsh-typeset"
+      "id": "zsh-typeset",
+      "evidenceRefs": [
+        {
+          "sourceId": "zsh-manual",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://zsh.sourceforge.io/Doc/Release/Shell-Builtin-Commands.html · typeset",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -1781,7 +2351,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "zsh",
         "topic": "builtins"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "print",
         "zsh输出",
@@ -1807,7 +2377,18 @@ window.CHEATSHEET_DATA["shell"] = {
         "mac",
         "linux"
       ],
-      "id": "zsh-print"
+      "id": "zsh-print",
+      "evidenceRefs": [
+        {
+          "sourceId": "zsh-manual",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://zsh.sourceforge.io/Doc/Release/Shell-Builtin-Commands.html · print",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -1820,7 +2401,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "zsh",
         "topic": "builtins"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "vared",
         "编辑变量",
@@ -1847,7 +2428,18 @@ window.CHEATSHEET_DATA["shell"] = {
         "mac",
         "linux"
       ],
-      "id": "zsh-vared"
+      "id": "zsh-vared",
+      "evidenceRefs": [
+        {
+          "sourceId": "zsh-manual",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://zsh.sourceforge.io/Doc/Release/Shell-Builtin-Commands.html · vared",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -1860,7 +2452,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "zsh",
         "topic": "builtins"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "zmodload",
         "模块",
@@ -1886,7 +2478,18 @@ window.CHEATSHEET_DATA["shell"] = {
         "mac",
         "linux"
       ],
-      "id": "zsh-zmodload"
+      "id": "zsh-zmodload",
+      "evidenceRefs": [
+        {
+          "sourceId": "zsh-manual",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://zsh.sourceforge.io/Doc/Release/Shell-Builtin-Commands.html · zmodload",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -1899,7 +2502,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "zsh",
         "topic": "builtins"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "functions",
         "函数定义",
@@ -1925,7 +2528,18 @@ window.CHEATSHEET_DATA["shell"] = {
         "mac",
         "linux"
       ],
-      "id": "zsh-functions"
+      "id": "zsh-functions",
+      "evidenceRefs": [
+        {
+          "sourceId": "zsh-manual",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://zsh.sourceforge.io/Doc/Release/Shell-Builtin-Commands.html · functions",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -1938,7 +2552,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "posix",
         "topic": "scripting"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "shell函数",
         "定义函数",
@@ -1972,7 +2586,18 @@ window.CHEATSHEET_DATA["shell"] = {
           ]
         }
       ],
-      "id": "posix-func-def"
+      "id": "posix-func-def",
+      "evidenceRefs": [
+        {
+          "sourceId": "posix-shell-utilities",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html · 2.9.5 Function Definition Command",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -1986,7 +2611,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "bash",
         "topic": "scripting"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "bash函数",
         "function关键字",
@@ -2017,7 +2642,26 @@ window.CHEATSHEET_DATA["shell"] = {
           ]
         }
       ],
-      "id": "bash-func-keyword"
+      "id": "bash-func-keyword",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-man7",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/bash.1.html · SHELL GRAMMAR · Shell Function Definitions（function fname）",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "bash-local-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "bash -c 'function f { :; }; f'（本机 bash 3.2.57 (macOS) 实测）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -2031,7 +2675,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "zsh",
         "topic": "scripting"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "zsh函数",
         "function关键字",
@@ -2061,7 +2705,18 @@ window.CHEATSHEET_DATA["shell"] = {
           ]
         }
       ],
-      "id": "zsh-func-keyword"
+      "id": "zsh-func-keyword",
+      "evidenceRefs": [
+        {
+          "sourceId": "zsh-manual",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://zsh.sourceforge.io/Doc/Release/Shell-Grammar.html · Complex Commands · function word … { list }",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -2075,7 +2730,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "bash",
         "topic": "scripting"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "local变量",
         "局部变量",
@@ -2106,7 +2761,26 @@ window.CHEATSHEET_DATA["shell"] = {
           ]
         }
       ],
-      "id": "bash-local"
+      "id": "bash-local",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-man7",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/bash.1.html · SHELL BUILTIN COMMANDS · local",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "bash-local-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "help local（本机 bash 3.2.57 (macOS) 实测）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -2120,7 +2794,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "zsh",
         "topic": "scripting"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "zsh local",
         "局部变量",
@@ -2150,7 +2824,18 @@ window.CHEATSHEET_DATA["shell"] = {
           ]
         }
       ],
-      "id": "zsh-local"
+      "id": "zsh-local",
+      "evidenceRefs": [
+        {
+          "sourceId": "zsh-manual",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://zsh.sourceforge.io/Doc/Release/Shell-Builtin-Commands.html · local",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -2163,7 +2848,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "posix",
         "topic": "environment"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "alias",
         "别名",
@@ -2194,7 +2879,18 @@ window.CHEATSHEET_DATA["shell"] = {
           ]
         }
       ],
-      "id": "posix-alias"
+      "id": "posix-alias",
+      "evidenceRefs": [
+        {
+          "sourceId": "posix-shell-utilities",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/alias.html",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -2207,7 +2903,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "posix",
         "topic": "environment"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "unalias",
         "移除别名",
@@ -2238,7 +2934,18 @@ window.CHEATSHEET_DATA["shell"] = {
           ]
         }
       ],
-      "id": "posix-unalias"
+      "id": "posix-unalias",
+      "evidenceRefs": [
+        {
+          "sourceId": "posix-shell-utilities",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/unalias.html",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -2252,7 +2959,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "posix",
         "topic": "scripting"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "source命令",
         "点命令",
@@ -2283,7 +2990,18 @@ window.CHEATSHEET_DATA["shell"] = {
           ]
         }
       ],
-      "id": "posix-source"
+      "id": "posix-source",
+      "evidenceRefs": [
+        {
+          "sourceId": "posix-shell-utilities",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/dot.html · . （dot）特殊内建",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -2296,7 +3014,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "posix",
         "topic": "jobs"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "作业控制",
         "前台任务",
@@ -2330,7 +3048,18 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "mac"
       ],
-      "id": "9f72d802481e6123"
+      "id": "9f72d802481e6123",
+      "evidenceRefs": [
+        {
+          "sourceId": "posix-shell-utilities",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/fg.html",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -2343,7 +3072,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "posix",
         "topic": "jobs"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "作业控制",
         "后台任务",
@@ -2376,7 +3105,18 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "mac"
       ],
-      "id": "a0fea5659995fe20"
+      "id": "a0fea5659995fe20",
+      "evidenceRefs": [
+        {
+          "sourceId": "posix-shell-utilities",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/bg.html",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -2389,7 +3129,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "posix",
         "topic": "jobs"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "作业控制",
         "wait命令",
@@ -2423,7 +3163,18 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "mac"
       ],
-      "id": "eab85ba371a77a11"
+      "id": "eab85ba371a77a11",
+      "evidenceRefs": [
+        {
+          "sourceId": "posix-shell-utilities",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/wait.html",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -2436,7 +3187,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "bash",
         "topic": "jobs"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "作业控制",
         "disown命令",
@@ -2471,7 +3222,26 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "mac"
       ],
-      "id": "1a9020d51556ccfd"
+      "id": "1a9020d51556ccfd",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-man7",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/bash.1.html · SHELL BUILTIN COMMANDS · disown",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "bash-local-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "help disown（本机 bash 3.2.57 (macOS) 实测）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -2484,7 +3254,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "bash",
         "topic": "jobs"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "挂起shell",
         "suspend命令",
@@ -2519,7 +3289,26 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "mac"
       ],
-      "id": "f729c340fc6ad829"
+      "id": "f729c340fc6ad829",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-man7",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/bash.1.html · SHELL BUILTIN COMMANDS · suspend",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "bash-local-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "help suspend（本机 bash 3.2.57 (macOS) 实测）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -2532,7 +3321,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "posix",
         "topic": "jobs"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "信号",
         "kill命令",
@@ -2567,7 +3356,18 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "mac"
       ],
-      "id": "8915ded220bd1495"
+      "id": "8915ded220bd1495",
+      "evidenceRefs": [
+        {
+          "sourceId": "posix-shell-utilities",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/kill.html",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -2580,7 +3380,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "posix",
         "topic": "jobs"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "信号处理",
         "trap命令",
@@ -2616,7 +3416,18 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "mac"
       ],
-      "id": "e9256858d1dbdf32"
+      "id": "e9256858d1dbdf32",
+      "evidenceRefs": [
+        {
+          "sourceId": "posix-shell-utilities",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/trap.html",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -2629,7 +3440,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "posix",
         "topic": "jobs"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "后台运行",
         "&符号",
@@ -2663,7 +3474,18 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "mac"
       ],
-      "id": "abb1567b9fe7ea3e"
+      "id": "abb1567b9fe7ea3e",
+      "evidenceRefs": [
+        {
+          "sourceId": "posix-shell-utilities",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html · 2.9.3 Lists · Asynchronous Lists（&）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "shortcut",
@@ -2676,7 +3498,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "posix",
         "topic": "jobs"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "挂起",
         "Ctrl+Z",
@@ -2710,7 +3532,18 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "mac"
       ],
-      "id": "3999a131cd65c45a"
+      "id": "3999a131cd65c45a",
+      "evidenceRefs": [
+        {
+          "sourceId": "posix-shell-utilities",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/stty.html · susp 控制字符（默认 Ctrl+Z，挂起前台作业）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -2723,7 +3556,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "bash",
         "topic": "completion"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "补全",
         "complete",
@@ -2762,7 +3595,26 @@ window.CHEATSHEET_DATA["shell"] = {
         "windows",
         "linux"
       ],
-      "id": "bash-complete-f"
+      "id": "bash-complete-f",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-man7",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/bash.1.html · Programmable Completion · complete -F function",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "bash-local-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "help complete（本机 bash 3.2.57 (macOS) 实测）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -2775,7 +3627,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "bash",
         "topic": "completion"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "补全",
         "complete",
@@ -2789,7 +3641,26 @@ window.CHEATSHEET_DATA["shell"] = {
         "windows",
         "linux"
       ],
-      "id": "bash-complete-o-default"
+      "id": "bash-complete-o-default",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-man7",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/bash.1.html · Programmable Completion · complete -o default",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "bash-local-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "help complete（本机 bash 3.2.57 (macOS) 实测）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -2802,7 +3673,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "bash",
         "topic": "completion"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "compgen",
         "生成补全",
@@ -2837,7 +3708,26 @@ window.CHEATSHEET_DATA["shell"] = {
         "windows",
         "linux"
       ],
-      "id": "bash-compgen-w"
+      "id": "bash-compgen-w",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-man7",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/bash.1.html · Programmable Completion · compgen -W wordlist",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "bash-local-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "help compgen（本机 bash 3.2.57 (macOS) 实测）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -2850,7 +3740,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "bash",
         "topic": "completion"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "compopt",
         "nospace",
@@ -2863,22 +3753,34 @@ window.CHEATSHEET_DATA["shell"] = {
         "windows",
         "linux"
       ],
-      "id": "bash-compopt-o-nospace"
+      "id": "bash-compopt-o-nospace",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-man7",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/bash.1.html · Programmable Completion Builtins · compopt（bash 4.0+，本机 3.2 不含）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
-      "cmd": "shopt -s show-all-if-ambiguous",
-      "en": "Show all matches on first Tab press without ringing bell",
-      "zh": "在第一次按 Tab 时显示所有匹配项而不会响铃",
+      "cmd": "bind 'set show-all-if-ambiguous on'",
+      "en": "Show all matches on first Tab press (readline variable)",
+      "zh": "第一次按 Tab 就列出全部匹配（readline 变量）",
       "shell": {
         "layer": "config",
         "family": "bash",
         "portability": "bash",
         "topic": "completion"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
-        "shopt",
+        "readline",
+        "inputrc",
         "show-all-if-ambiguous",
         "bash补全",
         "显示所有匹配",
@@ -2889,7 +3791,27 @@ window.CHEATSHEET_DATA["shell"] = {
         "windows",
         "linux"
       ],
-      "id": "bash-shopt-show-all-if-ambiguous"
+      "id": "bash-shopt-show-all-if-ambiguous",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-man7",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/bash.1.html · READLINE · Variables · show-all-if-ambiguous",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "bash-local-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "help bind（本机 bash 3.2.57 (macOS) 实测）",
+          "checkedAt": "2026-07-02"
+        }
+      ],
+      "context": "亦可写入 ~/.inputrc：set show-all-if-ambiguous on"
     },
     {
       "cat": "shortcut",
@@ -2903,7 +3825,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "bash",
         "topic": "completion"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "Tab",
         "补全",
@@ -2916,7 +3838,18 @@ window.CHEATSHEET_DATA["shell"] = {
         "windows",
         "linux"
       ],
-      "id": "bash-tab-complete"
+      "id": "bash-tab-complete",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-man7",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/bash.1.html · READLINE · Completing（默认绑定 Tab）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -2929,7 +3862,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "zsh",
         "topic": "completion"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "compdef",
         "补全函数",
@@ -2964,7 +3897,18 @@ window.CHEATSHEET_DATA["shell"] = {
         "windows",
         "linux"
       ],
-      "id": "zsh-compdef"
+      "id": "zsh-compdef",
+      "evidenceRefs": [
+        {
+          "sourceId": "zsh-manual",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://zsh.sourceforge.io/Doc/Release/Completion-System.html · compdef",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -2977,7 +3921,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "zsh",
         "topic": "completion"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "zstyle",
         "菜单补全",
@@ -3013,7 +3957,18 @@ window.CHEATSHEET_DATA["shell"] = {
         "windows",
         "linux"
       ],
-      "id": "zsh-zstyle-menu-select"
+      "id": "zsh-zstyle-menu-select",
+      "evidenceRefs": [
+        {
+          "sourceId": "zsh-manual",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://zsh.sourceforge.io/Doc/Release/Completion-System.html · Standard Styles · menu（menu select）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -3026,7 +3981,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "zsh",
         "topic": "completion"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "zstyle",
         "描述格式",
@@ -3039,7 +3994,18 @@ window.CHEATSHEET_DATA["shell"] = {
         "windows",
         "linux"
       ],
-      "id": "zsh-zstyle-descriptions-format"
+      "id": "zsh-zstyle-descriptions-format",
+      "evidenceRefs": [
+        {
+          "sourceId": "zsh-manual",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://zsh.sourceforge.io/Doc/Release/Completion-System.html · Standard Styles · format（descriptions 标签）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -3052,7 +4018,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "zsh",
         "topic": "completion"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "setopt",
         "menu_complete",
@@ -3065,7 +4031,18 @@ window.CHEATSHEET_DATA["shell"] = {
         "windows",
         "linux"
       ],
-      "id": "zsh-setopt-menu-complete"
+      "id": "zsh-setopt-menu-complete",
+      "evidenceRefs": [
+        {
+          "sourceId": "zsh-manual",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://zsh.sourceforge.io/Doc/Release/Options.html · MENU_COMPLETE",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "shortcut",
@@ -3079,7 +4056,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "zsh",
         "topic": "completion"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "Tab",
         "zsh补全",
@@ -3091,7 +4068,18 @@ window.CHEATSHEET_DATA["shell"] = {
         "windows",
         "linux"
       ],
-      "id": "zsh-tab-expand-or-complete"
+      "id": "zsh-tab-expand-or-complete",
+      "evidenceRefs": [
+        {
+          "sourceId": "zsh-manual",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://zsh.sourceforge.io/Doc/Release/Zsh-Line-Editor.html · Standard Widgets · expand-or-complete（默认绑定 Tab）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -3104,7 +4092,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "bash",
         "topic": "config"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "bash",
         "登录 shell",
@@ -3138,7 +4126,26 @@ window.CHEATSHEET_DATA["shell"] = {
         "mac",
         "linux"
       ],
-      "id": "bash-login-opt"
+      "id": "bash-login-opt",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-man7",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/bash.1.html · OPTIONS · --login",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "bash-local-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "bash --login -c ':'（本机 bash 3.2.57 (macOS) 实测）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -3151,7 +4158,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "zsh",
         "topic": "config"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "zsh",
         "登录 shell",
@@ -3185,7 +4192,18 @@ window.CHEATSHEET_DATA["shell"] = {
         "mac",
         "linux"
       ],
-      "id": "zsh-login-opt"
+      "id": "zsh-login-opt",
+      "evidenceRefs": [
+        {
+          "sourceId": "zsh-manual",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://zsh.sourceforge.io/Doc/Release/Invocation.html · -l 选项（login shell）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -3199,7 +4217,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "posix",
         "topic": "config"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "set -e",
         "errexit",
@@ -3226,7 +4244,18 @@ window.CHEATSHEET_DATA["shell"] = {
           "caveat": "管道中仅最右侧命令的状态影响 set -e，需配合 set -o pipefail 才能感知管道中任意命令失败"
         }
       ],
-      "id": "set-e"
+      "id": "set-e",
+      "evidenceRefs": [
+        {
+          "sourceId": "posix-shell-utilities",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/set.html · 选项 -e",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -3240,7 +4269,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "posix",
         "topic": "config"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "set -u",
         "nounset",
@@ -3267,7 +4296,18 @@ window.CHEATSHEET_DATA["shell"] = {
           "warning": "切勿直接复制运行该示例；它演示了未定义变量保护，实际使用时确保变量已正确定义"
         }
       ],
-      "id": "set-u"
+      "id": "set-u",
+      "evidenceRefs": [
+        {
+          "sourceId": "posix-shell-utilities",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/set.html · 选项 -u",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -3281,7 +4321,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "posix",
         "topic": "config"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "set -x",
         "xtrace",
@@ -3307,7 +4347,18 @@ window.CHEATSHEET_DATA["shell"] = {
           "expected": "终端输出以 + 开头的命令执行记录，显示赋值和 echo 的执行过程"
         }
       ],
-      "id": "set-x"
+      "id": "set-x",
+      "evidenceRefs": [
+        {
+          "sourceId": "posix-shell-utilities",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/set.html · 选项 -x",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -3321,7 +4372,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "bash",
         "topic": "config"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "globstar",
         "**",
@@ -3347,7 +4398,18 @@ window.CHEATSHEET_DATA["shell"] = {
           "expected": "列出所有子目录下的 .txt 文件"
         }
       ],
-      "id": "shopt-globstar"
+      "id": "shopt-globstar",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-man7",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/bash.1.html · SHELL BUILTIN COMMANDS · shopt · globstar（bash 4.0+，本机 3.2 不含）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -3361,7 +4423,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "bash",
         "topic": "config"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "autocd",
         "目录切换",
@@ -3388,7 +4450,18 @@ window.CHEATSHEET_DATA["shell"] = {
           "caveat": "仅当输入为目录名且无重名命令时才触发，若存在同名命令则执行命令而非切换目录"
         }
       ],
-      "id": "shopt-autocd"
+      "id": "shopt-autocd",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-man7",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/bash.1.html · SHELL BUILTIN COMMANDS · shopt · autocd（bash 4.0+，本机 3.2 不含）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -3402,7 +4475,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "bash",
         "topic": "config"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "histappend",
         "历史追加",
@@ -3428,7 +4501,26 @@ window.CHEATSHEET_DATA["shell"] = {
           "expected": "所有并行会话的命令历史都保留在 HISTFILE 中"
         }
       ],
-      "id": "shopt-histappend"
+      "id": "shopt-histappend",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-man7",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/bash.1.html · SHELL BUILTIN COMMANDS · shopt · histappend",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "bash-local-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "shopt -s histappend（本机 bash 3.2.57 (macOS) 实测）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -3442,7 +4534,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "bash",
         "topic": "config"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "extglob",
         "扩展通配",
@@ -3468,7 +4560,26 @@ window.CHEATSHEET_DATA["shell"] = {
           "expected": "列出当前目录下所有 .jpg 和 .png 文件"
         }
       ],
-      "id": "shopt-extglob"
+      "id": "shopt-extglob",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-man7",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/bash.1.html · SHELL BUILTIN COMMANDS · shopt · extglob",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "bash-local-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "shopt -s extglob（本机 bash 3.2.57 (macOS) 实测）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -3482,7 +4593,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "zsh",
         "topic": "config"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "autocd",
         "目录切换",
@@ -3509,7 +4620,18 @@ window.CHEATSHEET_DATA["shell"] = {
           "caveat": "若存在同名可执行命令，则优先执行命令而非 cd"
         }
       ],
-      "id": "zsh-setopt-autocd"
+      "id": "zsh-setopt-autocd",
+      "evidenceRefs": [
+        {
+          "sourceId": "zsh-manual",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://zsh.sourceforge.io/Doc/Release/Options.html · AUTO_CD",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -3523,7 +4645,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "zsh",
         "topic": "config"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "append_history",
         "历史追加",
@@ -3549,7 +4671,18 @@ window.CHEATSHEET_DATA["shell"] = {
           "expected": "HISTFILE 包含所有会话的命令记录"
         }
       ],
-      "id": "zsh-setopt-appendhistory"
+      "id": "zsh-setopt-appendhistory",
+      "evidenceRefs": [
+        {
+          "sourceId": "zsh-manual",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://zsh.sourceforge.io/Doc/Release/Options.html · APPEND_HISTORY",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -3563,7 +4696,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "zsh",
         "topic": "config"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "extendedglob",
         "扩展通配",
@@ -3589,7 +4722,18 @@ window.CHEATSHEET_DATA["shell"] = {
           "expected": "列出所有 .txt 文件，但不含文件名中包含 backup 的条目"
         }
       ],
-      "id": "zsh-setopt-extendedglob"
+      "id": "zsh-setopt-extendedglob",
+      "evidenceRefs": [
+        {
+          "sourceId": "zsh-manual",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://zsh.sourceforge.io/Doc/Release/Options.html · EXTENDED_GLOB",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -3603,7 +4747,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "zsh",
         "topic": "config"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "share_history",
         "历史共享",
@@ -3629,7 +4773,18 @@ window.CHEATSHEET_DATA["shell"] = {
           "expected": "在一个终端输入的命令，另外的终端按上箭头即可看到"
         }
       ],
-      "id": "zsh-setopt-sharehistory"
+      "id": "zsh-setopt-sharehistory",
+      "evidenceRefs": [
+        {
+          "sourceId": "zsh-manual",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://zsh.sourceforge.io/Doc/Release/Options.html · SHARE_HISTORY",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -3643,7 +4798,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "bash",
         "topic": "troubleshooting"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "type",
         "命令来源",
@@ -3670,7 +4825,26 @@ window.CHEATSHEET_DATA["shell"] = {
           "expected": "输出类似 'echo is a shell builtin' 和 'echo is /bin/echo'"
         }
       ],
-      "id": "shell-type-a-bash"
+      "id": "shell-type-a-bash",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-man7",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/bash.1.html · SHELL BUILTIN COMMANDS · type · 选项 -a",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "bash-local-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "help type（本机 bash 3.2.57 (macOS) 实测）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -3684,7 +4858,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "bash",
         "topic": "troubleshooting"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "command",
         "查找命令",
@@ -3710,7 +4884,26 @@ window.CHEATSHEET_DATA["shell"] = {
           "expected": "输出 'alias grep=...' 或 '/usr/bin/grep'"
         }
       ],
-      "id": "shell-command-v-bash"
+      "id": "shell-command-v-bash",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-man7",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/bash.1.html · SHELL BUILTIN COMMANDS · command · 选项 -v",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "bash-local-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "help command（本机 bash 3.2.57 (macOS) 实测）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -3724,7 +4917,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "bash",
         "topic": "troubleshooting"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "hash",
         "哈希表",
@@ -3733,7 +4926,26 @@ window.CHEATSHEET_DATA["shell"] = {
         "bash",
         "排查"
       ],
-      "id": "shell-hash-r-bash"
+      "id": "shell-hash-r-bash",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-man7",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/bash.1.html · SHELL BUILTIN COMMANDS · hash · 选项 -r",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "bash-local-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "help hash（本机 bash 3.2.57 (macOS) 实测）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -3747,7 +4959,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "zsh",
         "topic": "troubleshooting"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "type",
         "zsh",
@@ -3755,7 +4967,18 @@ window.CHEATSHEET_DATA["shell"] = {
         "命令位置",
         "排查"
       ],
-      "id": "shell-type-a-zsh"
+      "id": "shell-type-a-zsh",
+      "evidenceRefs": [
+        {
+          "sourceId": "zsh-manual",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://zsh.sourceforge.io/Doc/Release/Shell-Builtin-Commands.html · whence 条目下的 type（等价于 whence -v）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -3769,7 +4992,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "zsh",
         "topic": "troubleshooting"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "whence",
         "命令来源",
@@ -3777,7 +5000,18 @@ window.CHEATSHEET_DATA["shell"] = {
         "排查",
         "详细"
       ],
-      "id": "shell-whence-v-zsh"
+      "id": "shell-whence-v-zsh",
+      "evidenceRefs": [
+        {
+          "sourceId": "zsh-manual",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://zsh.sourceforge.io/Doc/Release/Shell-Builtin-Commands.html · whence · 选项 -v",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -3791,7 +5025,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "zsh",
         "topic": "troubleshooting"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "hash",
         "zsh",
@@ -3800,7 +5034,18 @@ window.CHEATSHEET_DATA["shell"] = {
         "命令缓存",
         "排查"
       ],
-      "id": "shell-hash-r-zsh"
+      "id": "shell-hash-r-zsh",
+      "evidenceRefs": [
+        {
+          "sourceId": "zsh-manual",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://zsh.sourceforge.io/Doc/Release/Shell-Builtin-Commands.html · hash",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -3814,7 +5059,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "posix",
         "topic": "troubleshooting"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "set -x",
         "调试",
@@ -3840,7 +5085,18 @@ window.CHEATSHEET_DATA["shell"] = {
           "expected": "终端输出以 '+' 开头的命令行，然后输出命令的实际结果"
         }
       ],
-      "id": "shell-set-x"
+      "id": "shell-set-x",
+      "evidenceRefs": [
+        {
+          "sourceId": "posix-shell-utilities",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/set.html · 选项 -x",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -3854,7 +5110,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "posix",
         "topic": "troubleshooting"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "set -e",
         "错误退出",
@@ -3881,7 +5137,18 @@ window.CHEATSHEET_DATA["shell"] = {
           "caveat": "管道左侧命令失败不一定会触发退出；建议搭配 set -o pipefail。"
         }
       ],
-      "id": "shell-set-e"
+      "id": "shell-set-e",
+      "evidenceRefs": [
+        {
+          "sourceId": "posix-shell-utilities",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/set.html · 选项 -e",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "flag",
@@ -3895,7 +5162,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "bash",
         "topic": "troubleshooting"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "pipefail",
         "管道失败",
@@ -3921,7 +5188,26 @@ window.CHEATSHEET_DATA["shell"] = {
           "expected": "脚本不会打印 echo 的内容"
         }
       ],
-      "id": "shell-pipefail"
+      "id": "shell-pipefail",
+      "evidenceRefs": [
+        {
+          "sourceId": "linux-man7",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://man7.org/linux/man-pages/man1/bash.1.html · SHELL BUILTIN COMMANDS · set · 选项 -o pipefail",
+          "checkedAt": "2026-07-02"
+        },
+        {
+          "sourceId": "bash-local-help",
+          "claims": [
+            "existence"
+          ],
+          "locator": "bash -c 'set -o pipefail'（本机 bash 3.2.57 (macOS) 实测）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     },
     {
       "cat": "shortcut",
@@ -3935,7 +5221,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "portability": "posix",
         "topic": "troubleshooting"
       },
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "别名绕过",
         "反斜杠",
@@ -3960,7 +5246,18 @@ window.CHEATSHEET_DATA["shell"] = {
           "expected": "执行未经过别名包装的原始 ls 命令"
         }
       ],
-      "id": "shell-bypass-alias"
+      "id": "shell-bypass-alias",
+      "evidenceRefs": [
+        {
+          "sourceId": "posix-shell-utilities",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html · 2.3.1 Alias Substitution（对命令词加引用/反斜杠可抑制别名替换）",
+          "checkedAt": "2026-07-02"
+        }
+      ]
     }
   ]
 };

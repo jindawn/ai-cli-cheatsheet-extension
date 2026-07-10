@@ -1,7 +1,12 @@
 {
-  "_comment": "校验规则单一来源。validate-data.js 直接消费；host.py 必须镜像同样的值，由 tests/test_validation_consistency.js 防止漂移。改这里后同步更新 host.py 常量。",
+  "_comment": "浏览器校验器与 Native Host 共同读取的校验契约。",
+  "limits": { "maxItems": 2000, "maxFieldLength": 4000 },
   "keywords": { "min": 3, "max": 8 },
   "examples": { "max": 3 },
+  "categories": ["shortcut", "slash", "flag"],
+  "platforms": ["mac", "windows", "linux"],
+  "updatePolicies": ["version-driven", "release-driven", "manual-only"],
+  "exampleSourceTypes": ["official", "quasi-official", "manual", "ai-derived"],
   "sourceTiers": ["official", "quasi-official", "community"],
   "sourceKinds": ["local-help", "official-doc", "official-repository", "release-notes", "authoritative-reference", "community"],
   "authorships": ["official", "editorial", "generated"],
@@ -9,6 +14,11 @@
   "adaptations": ["verbatim", "adapted", "scenario-derived"],
   "evidenceStatuses": ["verified", "partial", "unverified"],
   "evidenceClaims": ["existence", "semantics", "platform", "example"],
+  "shell": {
+    "layers": ["syntax", "keyword", "builtin", "option", "shortcut", "config"],
+    "portabilities": ["posix", "bash", "zsh", "cross-platform"],
+    "topics": ["builtins", "syntax", "shortcuts", "config", "environment", "history", "completion", "scripting", "jobs", "troubleshooting"]
+  },
   "dangerousExample": {
     "source": "(?:\\brm(?:\\s|$)|\\bdd\\s+(?:if|of|bs|count|conv|status|seek|skip)=|\\b(?:reset\\s+--hard|push\\s+--force|kill\\s+-9|chmod|chown|restart|shutdown|reboot|halt|poweroff|mkfs)\\b|--(?:delete|yolo)\\b|dangerously-bypass\\b|:\\(\\)\\s*\\{\\s*:)|(^|\\s)>(?!>)",
     "flags": "i"

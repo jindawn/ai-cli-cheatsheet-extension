@@ -145,9 +145,13 @@ mkdir -p "$INSTALL_DIR"
 # 开发模式（--symlink 或 AICLI_DEV=1）：软链而非拷贝，改 native-host/host.py 即时生效，无需重新部署。
 if [ "${1:-}" = "--symlink" ] || [ "${AICLI_DEV:-}" = "1" ]; then
   ln -sfn "$SCRIPT_DIR/host.py" "$INSTALL_DIR/host.py"
+  ln -sfn "$SCRIPT_DIR/protocol.py" "$INSTALL_DIR/protocol.py"
+  ln -sfn "$SCRIPT_DIR/catalog.py" "$INSTALL_DIR/catalog.py"
   echo "✅ host.py 已软链到仓库（开发模式：改 native-host/host.py 即时生效）"
 else
   cp "$SCRIPT_DIR/host.py" "$INSTALL_DIR/host.py"
+  cp "$SCRIPT_DIR/protocol.py" "$INSTALL_DIR/protocol.py"
+  cp "$SCRIPT_DIR/catalog.py" "$INSTALL_DIR/catalog.py"
   chmod 700 "$INSTALL_DIR/host.py"
   echo "✅ host.py 已更新"
 fi

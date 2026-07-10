@@ -10,6 +10,7 @@ const path = require("path");
 
 const root = path.resolve(__dirname, "..");
 const rules = require(path.join(root, "shared", "validation-rules.json"));
+const fixtures = require(path.join(root, "shared", "contract-fixtures.json"));
 const registry = require(path.join(root, "shared", "source-registry.json"));
 const core = require(path.join(root, "product-core.js"));
 const hostPy = fs.readFileSync(path.join(root, "native-host", "host.py"), "utf8");
@@ -18,6 +19,10 @@ const validateDataJs = fs.readFileSync(path.join(root, "tools", "validate-data.j
 // 1) JSON 正则可编译且行为正确（基本健全性）。
 const dangerous = new RegExp(rules.dangerousExample.source, rules.dangerousExample.flags);
 const secret = new RegExp(rules.possibleSecret.source, rules.possibleSecret.flags);
+fixtures.dangerous.forEach((value) => assert(dangerous.test(value), `fixture should be dangerous: ${value}`));
+fixtures.safe.forEach((value) => assert(!dangerous.test(value), `fixture should be safe: ${value}`));
+fixtures.secrets.forEach((value) => assert(secret.test(value), `fixture should contain a secret: ${value}`));
+fixtures.nonSecrets.forEach((value) => assert(!secret.test(value), `fixture should not contain a secret: ${value}`));
 assert(dangerous.test("rm -rf ./tmp"), "dangerous regex should match rm -rf");
 assert(dangerous.test("dd if=/dev/zero of=/dev/sda"), "dangerous regex should match dd disk writes");
 assert(dangerous.test("mkfs.ext4 /dev/sdb"), "dangerous regex should match filesystem formatting");
@@ -38,33 +43,15 @@ for (const [name, source] of Object.entries(rules.riskLevels)) {
   assert.doesNotThrow(() => new RegExp(source, "i"), `risk regex should compile: ${name}`);
 }
 
-// 2) host.py 镜像同样的正则 source（host.py 用 raw string，内容应逐字符出现）。
-assert(
-  hostPy.includes(rules.dangerousExample.source),
-  "host.py DANGEROUS_EXAMPLE_RE 与 shared/validation-rules.json 不一致"
-);
-assert(
-  hostPy.includes(rules.possibleSecret.source),
-  "host.py POSSIBLE_SECRET_RE 与 shared/validation-rules.json 不一致"
-);
-
-// 3) host.py 镜像同样的数量上下限常量。
-function hostConstant(name) {
-  const match = hostPy.match(new RegExp(`${name}\\s*=\\s*(\\d+)`));
-  assert(match, `host.py 缺少常量 ${name}`);
-  return Number(match[1]);
-}
-assert.strictEqual(hostConstant("MIN_KEYWORDS"), rules.keywords.min, "MIN_KEYWORDS 不一致");
-assert.strictEqual(hostConstant("MAX_KEYWORDS"), rules.keywords.max, "MAX_KEYWORDS 不一致");
-assert.strictEqual(hostConstant("MAX_EXAMPLES"), rules.examples.max, "MAX_EXAMPLES 不一致");
+// 2-3) Host 必须直接消费共享契约，而不是复制正则、枚举和数量限制。
+assert(hostPy.includes("def load_validation_rules"), "host.py 必须加载 shared/validation-rules.json");
+assert(hostPy.includes('VALIDATION_RULES["dangerousExample"]["source"]'), "危险命令规则必须来自共享契约");
+assert(hostPy.includes('VALIDATION_RULES["keywords"]["min"]'), "关键词限制必须来自共享契约");
+assert(hostPy.includes('VALIDATION_RULES["examples"]["max"]'), "示例限制必须来自共享契约");
 
 // 4) 来源枚举保持一致；URL 范围只允许来自 source-registry.json。
-for (const tier of rules.sourceTiers) {
-  assert(hostPy.includes(`"${tier}"`), `host.py SOURCE_TIERS 缺少档位 ${tier}`);
-}
-for (const claim of rules.evidenceClaims) {
-  assert(hostPy.includes(`"${claim}"`), `host.py EVIDENCE_CLAIMS 缺少 ${claim}`);
-}
+assert(hostPy.includes('set(VALIDATION_RULES["sourceTiers"])'), "来源档位必须来自共享契约");
+assert(hostPy.includes('set(VALIDATION_RULES["evidenceClaims"])'), "证据声明必须来自共享契约");
 assert(!("quasiOfficialDomains" in rules), "来源域名不得在 validation-rules.json 重复维护");
 assert(!("authoritativeSourcePrefixes" in rules), "权威 URL 前缀只能来自 source registry");
 assert(!("officialRepositoryPrefixes" in rules), "官方仓库前缀只能来自 source registry");
@@ -121,21 +108,9 @@ for (const key of Object.keys(rules.riskLevels)) {
   assert(validateDataJs.includes(`"${key}"`), `validate-data.js riskLevels 枚举缺少 ${key}`);
 }
 
-// 7) host.py 镜像剩余的枚举集合（之前只检查了 sourceTiers / evidenceClaims）。
-for (const kind of rules.sourceKinds) {
-  assert(hostPy.includes(`"${kind}"`), `host.py SOURCE_KINDS 缺少 ${kind}`);
-}
-for (const authorship of rules.authorships) {
-  assert(hostPy.includes(`"${authorship}"`), `host.py AUTHORSHIPS 缺少 ${authorship}`);
-}
-for (const tier of rules.evidenceTiers) {
-  assert(hostPy.includes(`"${tier}"`), `host.py EVIDENCE_TIERS 缺少 ${tier}`);
-}
-for (const adaptation of rules.adaptations) {
-  assert(hostPy.includes(`"${adaptation}"`), `host.py ADAPTATIONS 缺少 ${adaptation}`);
-}
-for (const status of rules.evidenceStatuses) {
-  assert(hostPy.includes(`"${status}"`), `host.py EVIDENCE_STATUSES 缺少 ${status}`);
+// 7) 剩余枚举同样直接从共享契约构造。
+for (const key of ["sourceKinds", "authorships", "evidenceTiers", "adaptations", "evidenceStatuses"]) {
+  assert(hostPy.includes(`set(VALIDATION_RULES["${key}"])`), `host.py 必须从共享契约加载 ${key}`);
 }
 
 // 8) 危险/密钥扫描必须同时覆盖 example.value 与 platformValues 的每个平台值，

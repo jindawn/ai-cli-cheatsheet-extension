@@ -11,9 +11,31 @@ window.CHEATSHEET_FILES = [
   "idea",
   "iterm2",
   "linux",
+  "obsidian",
   "openclaw",
   "opencode",
   "shell",
   "typora",
   "vs-code"
+];
+
+// Lightweight metadata used before the full per-tool datasets are loaded.
+window.CHEATSHEET_TOOL_CATALOG = [
+  {"id":"antigravity-cli","name":"Antigravity CLI","color":"#9b6bdf","platforms":["mac","windows","linux"],"updatePolicy":"manual-only","builtIn":true,"order":4},
+  {"id":"claude-code","name":"Claude Code","color":"#d97757","platforms":["mac","windows","linux"],"updatePolicy":"version-driven","builtIn":true,"order":1},
+  {"id":"codex","name":"Codex CLI","color":"#74aa9c","platforms":["mac","windows","linux"],"updatePolicy":"version-driven","builtIn":true,"order":2},
+  {"id":"cursor","name":"Cursor","color":"#8B5CF6","platforms":["mac","windows","linux"],"updatePolicy":"manual-only","builtIn":false,"order":8},
+  {"id":"docker","name":"Docker","color":"#2496ED","platforms":["mac","windows","linux"],"updatePolicy":"version-driven","builtIn":false,"order":999},
+  {"id":"gemini-cli","name":"Gemini CLI","color":"#4c8bf5","platforms":["mac","windows","linux"],"updatePolicy":"version-driven","builtIn":true,"order":3},
+  {"id":"git","name":"Git","color":"#F05032","platforms":["mac","windows","linux"],"updatePolicy":"manual-only","builtIn":false,"order":999},
+  {"id":"homebrew","name":"Homebrew","color":"#FBB040","platforms":["mac","linux"],"updatePolicy":"version-driven","builtIn":false,"order":999},
+  {"id":"idea","name":"IntelliJ IDEA","color":"#F59E0B","platforms":["mac","windows","linux"],"updatePolicy":"manual-only","builtIn":true,"order":6},
+  {"id":"iterm2","name":"iTerm2","color":"#EBBF00","platforms":["mac"],"updatePolicy":"manual-only","builtIn":false,"order":999},
+  {"id":"linux","name":"GNU/Linux CLI","color":"#FCC624","platforms":["linux","mac"],"updatePolicy":"manual-only","builtIn":false,"order":999},
+  {"id":"obsidian","name":"Obsidian","color":"#7C3AED","platforms":["mac","windows","linux"],"updatePolicy":"manual-only","builtIn":false,"order":999},
+  {"id":"openclaw","name":"OpenClaw","color":"#e55934","platforms":["mac","windows","linux"],"updatePolicy":"version-driven","builtIn":false,"order":999},
+  {"id":"opencode","name":"OpenCode","color":"#e8445a","platforms":["mac","windows","linux"],"updatePolicy":"version-driven","builtIn":true,"order":5},
+  {"id":"shell","name":"Shell","color":"#1E1E1E","platforms":["mac","linux"],"updatePolicy":"manual-only","builtIn":false,"order":999},
+  {"id":"typora","name":"Typora","color":"#2a3333","platforms":["mac","windows","linux"],"updatePolicy":"manual-only","builtIn":false,"order":999},
+  {"id":"vs-code","name":"VS Code","color":"#007ACC","platforms":["mac","windows","linux"],"updatePolicy":"manual-only","builtIn":true,"order":7}
 ];

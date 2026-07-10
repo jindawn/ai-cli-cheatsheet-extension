@@ -408,6 +408,7 @@
   function renderManageTools(data, toolIds, state, helpers, entryIndex) {
     return toolIds.map((toolId) => {
       const meta = data[toolId].meta;
+      const catalogOnly = meta.catalogOnly === true;
       const canDelete = !meta.builtIn;
       const policy = helpers.updatePolicy(meta);
       const sources = normalizedSources(meta);
@@ -439,15 +440,15 @@
           evidenceCountsForExamples[example.evidenceTier] += 1;
         }
       }));
-      return `<div class="tool-card"><div class="tool-title"><input type="checkbox" data-enabled="${toolId}" ${state.enabledTools.has(toolId) ? "checked" : ""}><label>${escapeHtml(meta.name)}</label></div>
-      <div class="meta">${escapeHtml(meta.coverage || meta.source)}<br>来源 ${sources.length} 个 · ${escapeHtml(helpers.updateStatusLabel(meta))} · 数据整理方式：<span class="verify">${escapeHtml(verification)}</span></div>
-      <details class="stats-detail"><summary>数据质量明细</summary>
+      return `<div class="tool-card"><div class="tool-title"><input type="checkbox" data-enabled="${toolId}" id="enabled-${toolId}" ${state.enabledTools.has(toolId) ? "checked" : ""}><label for="enabled-${toolId}">${escapeHtml(meta.name)}</label></div>
+      <div class="meta">${catalogOnly ? "启用后按需加载完整数据" : `${escapeHtml(meta.coverage || meta.source)}<br>来源 ${sources.length} 个 · ${escapeHtml(helpers.updateStatusLabel(meta))} · 数据整理方式：<span class="verify">${escapeHtml(verification)}</span>`}</div>
+      ${catalogOnly ? "" : `<details class="stats-detail"><summary>数据质量明细</summary>
         <div class="meta">条目核验：已核验 ${evidenceCounts.verified} / 部分核验 ${evidenceCounts.partial} / 未核验 ${evidenceCounts.unverified}</div>
         <div class="meta">用法覆盖：${exampleItems.length}/${data[toolId].items.length}</div>
         <div class="meta">案例编写：官方原例 ${authorshipCounts.official} / 编辑整理 ${authorshipCounts.editorial} / 自动生成 ${authorshipCounts.generated}</div>
         <div class="meta">案例证据：第一方 ${evidenceCountsForExamples["first-party"]} / 权威社区 ${evidenceCountsForExamples["authoritative-community"]} / 普通社区 ${evidenceCountsForExamples.community} / 无独立证据 ${evidenceCountsForExamples.none}</div>
-      </details>
-      ${policy === "manual-only" ? "" : `<div class="tool-actions"><button class="text-btn" data-update="${toolId}">${escapeHtml(helpers.updateActionLabel(meta))}</button></div>`}
+      </details>`}
+      ${catalogOnly || policy === "manual-only" ? "" : `<div class="tool-actions"><button class="text-btn" data-update="${toolId}">${escapeHtml(helpers.updateActionLabel(meta))}</button></div>`}
       <details class="advanced-actions"><summary>高级操作</summary>
         <div class="meta">强制深度检查会联网重新发现来源并调用模型，耗时更长且会计入模型用量。</div>
         <div class="tool-actions"><button class="text-btn" data-deep-update="${toolId}">重新核验资料</button>${canDelete ? `<button class="text-btn danger" data-remove="${toolId}">删除</button>` : `<span class="meta">内置工具可隐藏，不可删除</span>`}</div>

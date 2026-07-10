@@ -87,6 +87,8 @@ if (-not $ClaudeExe) {
 
 New-Item -ItemType Directory -Force -Path $InstallDir | Out-Null
 Copy-Item (Join-Path $ScriptDir "host.py") (Join-Path $InstallDir "host.py") -Force
+Copy-Item (Join-Path $ScriptDir "protocol.py") (Join-Path $InstallDir "protocol.py") -Force
+Copy-Item (Join-Path $ScriptDir "catalog.py") (Join-Path $InstallDir "catalog.py") -Force
 Write-Host "✅ host.py 已复制到：$InstallDir" -ForegroundColor Green
 
 $RunBat = Join-Path $InstallDir "run.bat"

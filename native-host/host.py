@@ -15,7 +15,6 @@ import secrets
 import shutil
 import signal
 import ssl
-import struct
 import subprocess
 import sys
 import tempfile
@@ -23,6 +22,10 @@ import time
 import urllib.parse
 import urllib.error
 import urllib.request
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from protocol import read_native_message, send_native_message  # noqa: E402
+from catalog import catalog_entry, render_data_index  # noqa: E402
 
 # Track the active claude subprocess so it can be cleaned up if host.py is killed.
 _active_proc = None
@@ -50,6 +53,24 @@ def _sigterm_handler(signum, frame):
 signal.signal(signal.SIGTERM, _sigterm_handler)
 
 
+def _project_base_dir():
+    return os.environ.get("AICLI_PROJECT_DIR") or os.path.dirname(
+        os.path.dirname(os.path.abspath(__file__))
+    )
+
+
+def load_validation_rules():
+    with open(
+        os.path.join(_project_base_dir(), "shared", "validation-rules.json"),
+        "r",
+        encoding="utf-8",
+    ) as handle:
+        return json.load(handle)
+
+
+VALIDATION_RULES = load_validation_rules()
+
+
 HOST_ACTIONS = {
     "ping",
     "add_tool",
@@ -74,7 +95,7 @@ SUGGEST_MAX_COUNT = 12
 SUGGEST_MAX_EXCLUDE = 200
 SUGGEST_MAX_CONTEXT_TOOLS = 80
 COLOR_RE = re.compile(r"^#[0-9a-fA-F]{6}$")
-VALID_CATEGORIES = {"shortcut", "slash", "flag"}
+VALID_CATEGORIES = set(VALIDATION_RULES["categories"])
 RESERVED_TOOL_IDS = {"index"}
 OVERBROAD_ADD_TOOL_IDS = {
     "cli",
@@ -91,16 +112,9 @@ SHELL_TOOL_ALIASES = {"shell", "terminal", "command-line", "commandline", "命�
 # External CLI tools (ls/grep/sed/find/tar/git/docker/npm/claude/codex...) live
 # in their own categories (e.g. "GNU/Linux CLI", Git) and only appear here as
 # related keywords, never as Shell items.
-SHELL_LAYERS = {
-    "syntax", "keyword", "builtin", "option", "shortcut", "config",
-}
-SHELL_PORTABILITIES = {
-    "posix", "bash", "zsh", "cross-platform",
-}
-SHELL_TOPICS = {
-    "builtins", "syntax", "shortcuts", "config", "environment",
-    "history", "completion", "scripting", "jobs", "troubleshooting",
-}
+SHELL_LAYERS = set(VALIDATION_RULES["shell"]["layers"])
+SHELL_PORTABILITIES = set(VALIDATION_RULES["shell"]["portabilities"])
+SHELL_TOPICS = set(VALIDATION_RULES["shell"]["topics"])
 SHELL_BATCH_MAX_ITEMS = 20
 # Floor for the shrink-on-truncation retry: a batch this small reliably fits
 # inside the model output cap. If even this truncates, fail with a clear error.
@@ -126,18 +140,13 @@ SHELL_BATCHES = [
     {"id": "troubleshooting", "label": "命令来源与脚本排错", "topics": ["troubleshooting", "scripting"], "scope": "type -a、command -v、which、hash -r 排查命令来源/别名遮蔽；$?、set -x 调试、|| true、set -e 陷阱"},
 ]
 MAX_MESSAGE_BYTES = 1024 * 1024
-MAX_ITEMS = 2000
-MAX_FIELD_LENGTH = 4000
-MIN_KEYWORDS = 3
-MAX_KEYWORDS = 8
-MAX_EXAMPLES = 3
-DANGEROUS_EXAMPLE_RE = re.compile(
-    r"(?:\brm(?:\s|$)|\bdd\s+(?:if|of|bs|count|conv|status|seek|skip)=|\b(?:reset\s+--hard|push\s+--force|kill\s+-9|chmod|chown|restart|shutdown|reboot|halt|poweroff|mkfs)\b|--(?:delete|yolo)\b|dangerously-bypass\b|:\(\)\s*\{\s*:)|(^|\s)>(?!>)",
-    re.IGNORECASE,
-)
-POSSIBLE_SECRET_RE = re.compile(
-    r"(?:api[_-]?key|secret|token)\s*[=:]\s*[a-z0-9_-]{12,}", re.IGNORECASE
-)
+MAX_ITEMS = VALIDATION_RULES["limits"]["maxItems"]
+MAX_FIELD_LENGTH = VALIDATION_RULES["limits"]["maxFieldLength"]
+MIN_KEYWORDS = VALIDATION_RULES["keywords"]["min"]
+MAX_KEYWORDS = VALIDATION_RULES["keywords"]["max"]
+MAX_EXAMPLES = VALIDATION_RULES["examples"]["max"]
+DANGEROUS_EXAMPLE_RE = re.compile(VALIDATION_RULES["dangerousExample"]["source"], re.IGNORECASE)
+POSSIBLE_SECRET_RE = re.compile(VALIDATION_RULES["possibleSecret"]["source"], re.IGNORECASE)
 DEFAULT_DANGER_WARNING = (
     "这是高风险操作，执行前请确认目标、先备份或先使用预览/ dry-run 方式验证。"
 )
@@ -148,19 +157,15 @@ DEFAULT_DANGER_CAVEAT = "执行前先确认目标，必要时先备份或用预�
 SHELL_DEFAULT_DANGER_WARNING = DEFAULT_DANGER_WARNING
 SHELL_SAFE_PREVIEW_RE = SAFE_PREVIEW_RE
 SHELL_DEFAULT_DANGER_CAVEAT = DEFAULT_DANGER_CAVEAT
-# 镜像 shared/validation-rules.json，由 tests/test_validation_consistency.js 防漂移。
-SOURCE_TIERS = {"official", "quasi-official", "community"}
-EXAMPLE_SOURCE_TYPES = {"official", "quasi-official", "manual", "ai-derived"}
-SOURCE_KINDS = {
-    "local-help", "official-doc", "official-repository", "release-notes",
-    "authoritative-reference", "community",
-}
-AUTHORSHIPS = {"official", "editorial", "generated"}
-EVIDENCE_TIERS = {"first-party", "authoritative-community", "community", "none"}
-ADAPTATIONS = {"verbatim", "adapted", "scenario-derived"}
-EVIDENCE_STATUSES = {"verified", "partial", "unverified"}
-EVIDENCE_CLAIMS = {"existence", "semantics", "platform", "example"}
-UPDATE_POLICIES = {"version-driven", "release-driven", "manual-only"}
+SOURCE_TIERS = set(VALIDATION_RULES["sourceTiers"])
+EXAMPLE_SOURCE_TYPES = set(VALIDATION_RULES["exampleSourceTypes"])
+SOURCE_KINDS = set(VALIDATION_RULES["sourceKinds"])
+AUTHORSHIPS = set(VALIDATION_RULES["authorships"])
+EVIDENCE_TIERS = set(VALIDATION_RULES["evidenceTiers"])
+ADAPTATIONS = set(VALIDATION_RULES["adaptations"])
+EVIDENCE_STATUSES = set(VALIDATION_RULES["evidenceStatuses"])
+EVIDENCE_CLAIMS = set(VALIDATION_RULES["evidenceClaims"])
+UPDATE_POLICIES = set(VALIDATION_RULES["updatePolicies"])
 
 # Only tools with a useful local version command belong here. Stable keymaps and
 # long-lived command references intentionally have no executable probe.
@@ -178,9 +183,7 @@ def load_source_registry():
     # lives in ~/Library/.../aicli-cheatsheet and reads its siblings (data/,
     # shared/) from the repo via AICLI_PROJECT_DIR. Falling back to __file__
     # would look beside the deployed copy where shared/ does not exist.
-    base_dir = os.environ.get("AICLI_PROJECT_DIR") or os.path.dirname(
-        os.path.dirname(os.path.abspath(__file__))
-    )
+    base_dir = _project_base_dir()
     registry_path = os.path.join(
         base_dir,
         "shared",
@@ -499,26 +502,11 @@ class TruncatedGenerationError(ValidationError):
 
 
 def read_message():
-    raw_length = sys.stdin.buffer.read(4)
-    if not raw_length:
-        return None
-    length = struct.unpack("<I", raw_length)[0]
-    if length > MAX_MESSAGE_BYTES:
-        raise ValidationError("请求过大")
-    payload = sys.stdin.buffer.read(length)
-    if len(payload) != length:
-        raise ValidationError("请求数据不完整")
-    try:
-        return json.loads(payload.decode("utf-8"))
-    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
-        raise ValidationError("请求不是有效 JSON") from exc
+    return read_native_message(max_bytes=MAX_MESSAGE_BYTES, error_type=ValidationError)
 
 
 def send_message(obj):
-    encoded = json.dumps(obj, ensure_ascii=False).encode("utf-8")
-    sys.stdout.buffer.write(struct.pack("<I", len(encoded)))
-    sys.stdout.buffer.write(encoded)
-    sys.stdout.buffer.flush()
+    send_native_message(obj)
 
 
 def validate_tool_id(tool_id):
@@ -680,11 +668,17 @@ def write_data_index(tool_ids=None):
     tool_ids = list_tool_ids() if tool_ids is None else sorted(set(tool_ids))
     for tool_id in tool_ids:
         validate_tool_id(tool_id)
-    content = (
-        "// Auto-generated by native-host/host.py. Keep this as the single data-file index.\n"
-        f"window.CHEATSHEET_FILES = {json.dumps(tool_ids, ensure_ascii=False, indent=2)};\n"
-    )
-    atomic_write(DATA_INDEX, content)
+    catalog = []
+    for tool_id in tool_ids:
+        with open(tool_data_path(tool_id), "r", encoding="utf-8") as handle:
+            try:
+                meta = parse_data_file(handle.read(), tool_id).get("meta", {})
+            except ValidationError:
+                # Preserve compatibility with an older hand-maintained index;
+                # the normal add/update paths always write the structured form.
+                meta = {}
+        catalog.append(catalog_entry(tool_id, meta))
+    atomic_write(DATA_INDEX, render_data_index(tool_ids, catalog))
 
 
 def checked_text(value, field, *, required=True):

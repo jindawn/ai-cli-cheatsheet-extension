@@ -38,10 +38,28 @@ jobs:
           node tests/test_usage_examples.js
           node tests/test_popup_ux.js
           node tests/test_background.js
+          node tests/test_search_quality.js
+          node tools/check-release.js
       - name: Python lint and security scan
         run: |
           pip install ruff bandit
           ruff check native-host tools
           bandit -q -c bandit.yaml -r native-host tools
+      - name: Chromium extension smoke test
+        run: |
+          npm install --no-save playwright@1.55.0
+          npx playwright install chromium
+          xvfb-run -a node tests/test_extension_smoke.js
+
+  python-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.14"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
       - name: Run native host tests
         run: python -m unittest discover -s tests -v

@@ -86,6 +86,17 @@ def valid_shell_dataset():
 
 
 class HostValidationTests(unittest.TestCase):
+    def test_shared_contract_fixtures_match_python_validator(self):
+        fixtures = json.loads((ROOT / "shared" / "contract-fixtures.json").read_text(encoding="utf-8"))
+        for value in fixtures["dangerous"]:
+            self.assertRegex(value, host.DANGEROUS_EXAMPLE_RE)
+        for value in fixtures["safe"]:
+            self.assertNotRegex(value, host.DANGEROUS_EXAMPLE_RE)
+        for value in fixtures["secrets"]:
+            self.assertRegex(value, host.POSSIBLE_SECRET_RE)
+        for value in fixtures["nonSecrets"]:
+            self.assertNotRegex(value, host.POSSIBLE_SECRET_RE)
+
     def test_rejects_path_traversal_and_unknown_mode(self):
         with self.assertRaises(host.ValidationError):
             host.validate_tool_id("../secret")
@@ -815,7 +826,8 @@ class HostFileTests(unittest.TestCase):
         )
         with mock.patch.object(host.urllib.request, "urlopen", side_effect=not_found):
             self.assertTrue(host.has_definitively_missing_sources([source]))
-        not_found.close()
+        if not_found.fp:
+            not_found.close()
         with mock.patch.object(
             host.urllib.request, "urlopen", side_effect=host.urllib.error.URLError("offline")
         ):

@@ -21,10 +21,10 @@ const EVIDENCE_TIERS = rules.evidenceTiers;
 const ADAPTATIONS = rules.adaptations;
 const EVIDENCE_STATUSES = rules.evidenceStatuses;
 const EVIDENCE_CLAIMS = rules.evidenceClaims;
-const EXAMPLE_SOURCE_TYPES = ["official", "quasi-official", "manual", "ai-derived"];
-const SHELL_LAYERS = ["syntax", "keyword", "builtin", "option", "shortcut", "config"];
-const SHELL_PORTABILITIES = ["posix", "bash", "zsh", "cross-platform"];
-const SHELL_TOPICS = ["builtins", "syntax", "shortcuts", "config", "environment", "history", "completion", "scripting", "jobs", "troubleshooting"];
+const EXAMPLE_SOURCE_TYPES = rules.exampleSourceTypes;
+const SHELL_LAYERS = rules.shell.layers;
+const SHELL_PORTABILITIES = rules.shell.portabilities;
+const SHELL_TOPICS = rules.shell.topics;
 const REGISTRY_BY_ID = new Map(sourceRegistry.entries.map((entry) => [entry.id, entry]));
 const EXAMPLE_UI_TEXT_FIELDS = ["description", "scenario", "goal", "expected", "prerequisites", "caveat", "warning"];
 
@@ -143,7 +143,9 @@ const data = context.window.CHEATSHEET_DATA || {};
 const enrichmentFile = path.join(root, "usage-examples.js");
 const enrichmentDir = path.join(root, "enrichments");
 vm.runInContext(fs.readFileSync(path.join(root, "product-core.js"), "utf8"), context, { filename: "product-core.js" });
-for (const filename of fs.readdirSync(enrichmentDir).filter((name) => name.endsWith(".js")).sort()) {
+for (const filename of fs.readdirSync(enrichmentDir).filter((name) => name.endsWith(".js")).sort((left, right) =>
+  Number(left.startsWith("migrated-")) - Number(right.startsWith("migrated-")) || left.localeCompare(right)
+)) {
   const fullPath = path.join(enrichmentDir, filename);
   vm.runInContext(fs.readFileSync(fullPath, "utf8"), context, { filename: fullPath });
 }

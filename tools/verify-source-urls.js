@@ -76,7 +76,11 @@ async function main() {
   });
   await Promise.all(workers);
   if (failures.length) {
-    console.error(`Source verification failed (${failures.length}):\n${failures.join("\n")}`);
+    const grouped = Object.groupBy(failures, (failure) => failure.split(":", 1)[0]);
+    const report = Object.entries(grouped).map(([toolId, rows]) =>
+      `\n[${toolId}]\n${rows.map((row) => `- ${row}`).join("\n")}`
+    ).join("");
+    console.error(`Source verification failed (${failures.length}):${report}`);
     process.exitCode = 1;
   }
 }

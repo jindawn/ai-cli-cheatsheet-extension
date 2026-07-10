@@ -706,7 +706,7 @@
     return enriched;
   }
 
-  function createEntryIndex(data, enrichmentIndex) {
+  function createEntryIndex(data, enrichmentIndex, core = globalScope.CHEATSHEET_CORE) {
     const entries = [];
     const byKey = new Map();
     const validKeys = new Set();
@@ -715,14 +715,16 @@
       (tool?.items || []).forEach((rawItem) => {
         const id = itemId(toolId, rawItem);
         const key = `${toolId}::${id}`;
+        const enrichedItem = enrichItem(enrichmentIndex, toolId, rawItem);
         const entry = {
           toolId,
           itemId: id,
           key,
           rawItem,
-          item: enrichItem(enrichmentIndex, toolId, rawItem),
+          item: enrichedItem,
           toolName: tool.meta.name,
           categoryLabel: CAT_LABEL[rawItem.cat],
+          searchIndex: core?.buildSearchIndex ? core.buildSearchIndex(enrichedItem) : null,
         };
         entries.push(entry);
         byKey.set(key, entry);

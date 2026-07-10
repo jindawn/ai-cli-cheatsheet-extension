@@ -1,0 +1,6 @@
+{
+  "dangerous": ["rm -rf ./tmp", "dd if=/dev/zero of=/dev/sda", "git reset --hard HEAD"],
+  "safe": ["git status", "echo done >> run.log", "docker secret create app_secret ./secret.txt"],
+  "secrets": ["api_key=abcdef012345", "token=abcdef012345"],
+  "nonSecrets": ["token=$TOKEN", "docker secret create app_secret ./secret.txt"]
+}

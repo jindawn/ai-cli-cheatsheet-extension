@@ -319,28 +319,50 @@
     return (risk?.types || []).map((type) => RISK_DETAILS[type]).filter(Boolean);
   }
 
+  function buildSearchIndex(item) {
+    return {
+      zh: item.zh || "",
+      en: item.en || "",
+      keywords: (item.keywords || []).join(" "),
+      context: item.context || "",
+      shell: item.shell ? Object.values(item.shell).join(" ") : "",
+      examples: (item.examples || []).flatMap((example) => [
+        example.value,
+        example.description,
+        ...Object.values(example.platformValues || {}),
+      ]).join(" "),
+    };
+  }
+
   function scoreTermGroup(item, terms, options = {}) {
+    const searchIndex = options.searchIndex || buildSearchIndex(item);
     const cmd = normalizeText(options.displayCmd || item.cmd);
     const cmdCompact = compactText(options.displayCmd || item.cmd);
-    const examples = (item.examples || []).flatMap((example) => [
-      example.value,
-      example.description,
-      ...Object.values(example.platformValues || {}),
-    ]).join(" ");
     let score = -1;
+
+    function fieldScore(value, term, exactScore, prefixScore, containsScore) {
+      const matchType = matchTypeInValue(value, term);
+      if (matchType === "exact") return exactScore;
+      if (matchType === "prefix") return prefixScore;
+      if (matchType === "contains") return containsScore;
+      return -1;
+    }
 
     terms.forEach((term) => {
       const termCompact = compactText(term);
       if (cmd === term || cmdCompact === termCompact) score = Math.max(score, SCORE.EXACT);
       else if (matchTypeInValue(options.displayCmd || item.cmd, term) === "prefix") score = Math.max(score, SCORE.PREFIX);
       else if (matchTypeInValue(options.displayCmd || item.cmd, term) === "contains") score = Math.max(score, SCORE.CONTAINS);
-      else if (matchTypeInValue(item.zh, term)) score = Math.max(score, SCORE.ZH);
-      else if (matchTypeInValue(item.en, term)) score = Math.max(score, SCORE.EN);
-      else if (matchTypeInValue((item.keywords || []).join(" "), term)) score = Math.max(score, SCORE.KEYWORDS);
-      else if (matchTypeInValue(item.context, term)) score = Math.max(score, SCORE.CONTEXT);
-      else if (matchTypeInValue(item.shell ? Object.values(item.shell).join(" ") : "", term)) score = Math.max(score, SCORE.CONTEXT);
+      else if (matchTypeInValue(searchIndex.zh, term)) score = Math.max(
+        score,
+        fieldScore(searchIndex.zh, term, SCORE.EXACT - 50, SCORE.PREFIX - 100, SCORE.ZH)
+      );
+      else if (matchTypeInValue(searchIndex.en, term)) score = Math.max(score, SCORE.EN);
+      else if (matchTypeInValue(searchIndex.keywords, term)) score = Math.max(score, SCORE.KEYWORDS);
+      else if (matchTypeInValue(searchIndex.context, term)) score = Math.max(score, SCORE.CONTEXT);
+      else if (matchTypeInValue(searchIndex.shell, term)) score = Math.max(score, SCORE.CONTEXT);
       else if (matchTypeInValue(options.toolName, term)) score = Math.max(score, SCORE.TOOL_NAME);
-      else if (matchTypeInValue(examples, term)) score = Math.max(score, SCORE.EXAMPLES);
+      else if (matchTypeInValue(searchIndex.examples, term)) score = Math.max(score, SCORE.EXAMPLES);
       else if (matchTypeInValue(options.categoryLabel, term)) score = Math.max(score, SCORE.CATEGORY);
       else if (isPinyinInitialQuery(term) && matchesPinyinInitials(item, options, term)) score = Math.max(score, SCORE.PINYIN);
     });
@@ -457,6 +479,7 @@
           recentRank: recentMap.get(key),
           usageCount: usageMap.get(key),
           matchMode: options.matchMode,
+          searchIndex: entry.searchIndex,
         });
         const matchReason = score >= 0 && query.trim()
           ? explainMatch(entry.item, query, {
@@ -485,6 +508,7 @@
     explainMatch,
     classifyCommandRisk,
     commandRiskDetails,
+    buildSearchIndex,
     getPlatformCommand,
     getPlatformExample,
     updateRecent,

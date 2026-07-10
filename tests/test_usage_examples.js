@@ -9,7 +9,9 @@ require("../product-core.js");
 const fs = require("fs");
 const path = require("path");
 for (const filename of fs.readdirSync(path.join(__dirname, "..", "enrichments"))
-  .filter((name) => name.endsWith(".js")).sort()) {
+  .filter((name) => name.endsWith(".js")).sort((left, right) =>
+    Number(left.startsWith("migrated-")) - Number(right.startsWith("migrated-")) || left.localeCompare(right)
+  )) {
   require(`../enrichments/${filename}`);
 }
 require("../usage-examples.js");

@@ -3,6 +3,11 @@
 const CORE = window.CHEATSHEET_CORE;
 const STATE = window.CHEATSHEET_POPUP_STATE;
 const RENDER = window.CHEATSHEET_POPUP_RENDER;
+const TOOL_FILES = Array.isArray(window.CHEATSHEET_FILES) ? window.CHEATSHEET_FILES : [];
+const catalogData = Object.fromEntries((window.CHEATSHEET_TOOL_CATALOG || []).map((meta) => [
+  meta.id,
+  { meta: { ...meta, catalogOnly: true }, items: [] },
+]));
 
 let activeTool = "all";
 let activeCat = null;
@@ -59,8 +64,14 @@ const onboarding = DIALOGS.createOnboarding({
   getPlatform: () => platform,
   setPlatform: (value) => { platform = value; },
   storageSet,
-  onSaved: () => { renderFilters(); render(); renderManage(); },
-  onSkipped: () => { renderFilters(); render(); },
+  onSaved: async () => {
+    await ensureEnabledToolData();
+    renderFilters(); render(); renderManage();
+  },
+  onSkipped: async () => {
+    await ensureEnabledToolData();
+    renderFilters(); render();
+  },
 });
 
 let _dom = null;
@@ -81,6 +92,10 @@ function applyFilter(updateFn) {
 }
 
 function getAllData() {
+  return { ...catalogData, ...(window.CHEATSHEET_DATA || {}) };
+}
+
+function getLoadedData() {
   return window.CHEATSHEET_DATA || {};
 }
 
@@ -113,7 +128,7 @@ function resetResultLimits() {
 }
 
 function rebuildEntryIndex() {
-  entryIndex = STATE.createEntryIndex(getAllData(), enrichmentIndex);
+  entryIndex = STATE.createEntryIndex(getAllData(), enrichmentIndex, CORE);
 }
 
 function setStatus(text, kind = "") {
@@ -209,8 +224,26 @@ async function copyText(value, successMessage) {
   }
 }
 
-function loadCheatsheetData() {
-  return window.CHEATSHEET_POPUP_LOADER.loadCheatsheetData(document, window.CHEATSHEET_FILES);
+async function ensureToolData(toolIds) {
+  const requested = [...new Set(toolIds)].filter((id) => TOOL_FILES.includes(id) && !getLoadedData()[id]);
+  if (!requested.length) return;
+  await window.CHEATSHEET_POPUP_LOADER.loadCheatsheetData(document, requested, TOOL_FILES);
+  enrichmentIndex = STATE.buildEnrichmentIndex(
+    getLoadedData(),
+    window.CHEATSHEET_ENRICHMENTS || {},
+    window.CHEATSHEET_BUILD_FULL_ENRICHMENTS
+  );
+  rebuildEntryIndex();
+}
+
+async function ensureEnabledToolData() {
+  try {
+    await ensureToolData([...enabledTools]);
+  } catch (error) {
+    enabledTools = new Set([...enabledTools].filter((id) => getLoadedData()[id]));
+    await storageSet({ enabledTools: [...enabledTools] });
+    setStatus(`${error.message}；未加载的工具已自动取消启用。`, "warn");
+  }
 }
 
 function showView(name) {
@@ -433,7 +466,19 @@ async function handleMainClick(event) {
 }
 
 async function handleEnabledToolToggle(checkbox) {
-  checkbox.checked ? enabledTools.add(checkbox.dataset.enabled) : enabledTools.delete(checkbox.dataset.enabled);
+  const toolId = checkbox.dataset.enabled;
+  if (checkbox.checked) {
+    try {
+      await ensureToolData([toolId]);
+      enabledTools.add(toolId);
+    } catch (error) {
+      checkbox.checked = false;
+      setStatus(error.message, "warn");
+      return;
+    }
+  } else {
+    enabledTools.delete(toolId);
+  }
   await storageSet({ enabledTools: [...enabledTools] });
   if (activeTool !== "all" && !enabledTools.has(activeTool)) activeTool = "all";
   renderFilters();
@@ -660,41 +705,38 @@ function bindManageEvents() {
 
 async function initialize() {
   document.getElementById("main").innerHTML = `<div class="empty loading">正在加载速查表…</div>`;
+  let stored;
   try {
-    await loadCheatsheetData();
-    enrichmentIndex = STATE.buildEnrichmentIndex(
-      getAllData(),
-      window.CHEATSHEET_ENRICHMENTS || {},
-      window.CHEATSHEET_BUILD_FULL_ENRICHMENTS
-    );
-    rebuildEntryIndex();
+    stored = await storageGet(STATE.STORAGE_KEYS);
+    const knownToolIds = STATE.getToolIds(getAllData());
+    enabledTools = new Set(Array.isArray(stored.enabledTools)
+      ? stored.enabledTools.filter((id) => catalogData[id])
+      : knownToolIds);
+    if (!stored.onboarded) enabledTools = new Set(STATE.TOOL_PRESETS.ai.filter((id) => catalogData[id]));
+    await ensureToolData([...enabledTools]);
+    favourites = STATE.restoreFavourites(stored.favourites);
+    recents = Array.isArray(stored.recentCopies) ? stored.recentCopies : [];
+    dismissedRecommendations = new Set(Array.isArray(stored.dismissedRecommendations) ? stored.dismissedRecommendations : []);
+    const storedAi = Array.isArray(stored.aiRecommendations) ? stored.aiRecommendations : [];
+    aiRecommendations = STATE.pruneExpiredAiSuggestions(storedAi, Date.now(), AI_SUGGEST_TTL_MS);
+    if (aiRecommendations.length !== storedAi.length) storageSet({ aiRecommendations });
+    platform = stored.platform || platform;
+    webVerify = stored.webVerify === true;
+    pendingUpdate = stored.pendingUpdate || null;
+    document.getElementById("search").value = stored.lastQuery || "";
+
+    const migrated = STATE.migrateFavourites(getLoadedData(), favourites);
+    favourites = migrated.favourites;
+    if (migrated.changed) storageSet({ favourites: [...favourites] });
+    const pruned = recents.filter((item) => !getLoadedData()[item.toolId]
+      || entryIndex.validKeys.has(`${item.toolId}::${item.itemId}`)).slice(0, RECENTS_LIMIT);
+    if (pruned.length !== recents.length) {
+      recents = pruned;
+      storageSet({ recentCopies: recents });
+    }
   } catch (error) {
     document.getElementById("main").innerHTML = `<div class="empty">${RENDER.escapeHtml(error.message)}</div>`;
     return;
-  }
-  const stored = await storageGet(STATE.STORAGE_KEYS);
-  favourites = STATE.restoreFavourites(stored.favourites);
-  recents = Array.isArray(stored.recentCopies) ? stored.recentCopies : [];
-  dismissedRecommendations = new Set(Array.isArray(stored.dismissedRecommendations) ? stored.dismissedRecommendations : []);
-  const storedAi = Array.isArray(stored.aiRecommendations) ? stored.aiRecommendations : [];
-  aiRecommendations = STATE.pruneExpiredAiSuggestions(storedAi, Date.now(), AI_SUGGEST_TTL_MS);
-  if (aiRecommendations.length !== storedAi.length) storageSet({ aiRecommendations });
-  platform = stored.platform || platform;
-  webVerify = stored.webVerify === true;
-  enabledTools = new Set(Array.isArray(stored.enabledTools)
-    ? stored.enabledTools.filter((id) => getAllData()[id])
-    : STATE.getToolIds(getAllData()));
-  if (!stored.onboarded) enabledTools = new Set(STATE.TOOL_PRESETS.ai.filter((id) => getAllData()[id]));
-  pendingUpdate = stored.pendingUpdate || null;
-  document.getElementById("search").value = stored.lastQuery || "";
-
-  const migrated = STATE.migrateFavourites(getAllData(), favourites);
-  favourites = migrated.favourites;
-  if (migrated.changed) storageSet({ favourites: [...favourites] });
-  const pruned = STATE.pruneRecents(entryIndex, recents);
-  if (pruned.length !== recents.length) {
-    recents = pruned;
-    storageSet({ recentCopies: recents });
   }
 
   bindHomeEvents();

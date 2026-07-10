@@ -7,6 +7,7 @@ const vm = require("vm");
 
 const root = path.resolve(__dirname, "..");
 const html = fs.readFileSync(path.join(root, "popup.html"), "utf8");
+const css = fs.readFileSync(path.join(root, "popup.css"), "utf8");
 const core = require("../product-core.js");
 const state = require("../popup-state.js");
 const render = require("../popup-render.js");
@@ -23,9 +24,11 @@ assert(html.includes('id="recommendSearch"'), "recommended tool additions should
 assert(html.includes('id="showDismissedRecommendations"'), "dismissed recommendations should be restorable");
 assert(html.includes('id="cancelTask"'), "management view should expose a cancel-task action");
 assert(/cancelTask[^>]*hidden/.test(html), "the cancel button should stay hidden until a task runs");
-assert(html.includes(":focus-visible"), "interactive controls need visible keyboard focus");
+assert(css.includes(":focus-visible"), "interactive controls need visible keyboard focus");
 assert(state.STORAGE_KEYS.includes("dismissedRecommendations"), "dismissed recommendations should be persisted");
-assert(html.includes("prefers-reduced-motion"), "motion must respect the reduced-motion preference");
+assert(css.includes("prefers-reduced-motion"), "motion must respect the reduced-motion preference");
+assert(html.includes('<link rel="stylesheet" href="popup.css">'), "popup styles should live in the external stylesheet");
+assert(!html.includes("<style>"), "popup.html should not retain an inline stylesheet");
 assert(/id="countBar"[^>]*aria-live="polite"/.test(html), "result count must be announced to screen readers");
 assert(/id="countBar"[^>]*role="status"/.test(html), "count bar should be a status region");
 assert(
@@ -506,6 +509,9 @@ const taskMessages = require("../popup-tasks.js");
   loader.loadCheatsheetData(loaderDoc, ["good-tool"]).then(() => {
     assert.strictEqual(appended.length, 1, "valid tool ids should be injected");
     assert.strictEqual(appended[0].src, "data/good-tool.js", "script src should come from the whitelisted id");
+    return loader.loadCheatsheetData(loaderDoc, ["good-tool"]);
+  }).then(() => {
+    assert.strictEqual(appended.length, 1, "already loaded tool data should not be injected twice");
   });
   loader.loadCheatsheetData(loaderDoc, ["../evil"]).then(
     () => { throw new Error("path-traversal ids must be rejected"); },

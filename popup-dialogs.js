@@ -124,13 +124,13 @@
         deps.setPlatform(doc.getElementById("onboardPlatform").value);
         await deps.storageSet({ enabledTools: [...deps.getEnabledTools()], platform: deps.getPlatform(), onboarded: true });
         hideOnboarding({ focusSearch: true });
-        deps.onSaved();
+        await deps.onSaved();
       });
       doc.getElementById("skipOnboarding").addEventListener("click", async () => {
         deps.setEnabledTools(new Set(deps.state.getToolIds(deps.getAllData())));
         await deps.storageSet({ enabledTools: [...deps.getEnabledTools()], platform: deps.getPlatform(), onboarded: true });
         hideOnboarding({ focusSearch: true });
-        deps.onSkipped();
+        await deps.onSkipped();
       });
       doc.getElementById("onboarding").addEventListener("keydown", (event) => {
         const dialog = event.currentTarget;

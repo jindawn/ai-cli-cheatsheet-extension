@@ -16,3 +16,14 @@
   .chip:focus-visible,.act:focus-visible,.text-btn:focus-visible,.icon-btn:focus-visible,.usage-toggle:focus-visible,.source-toggle:focus-visible,.example-copy:focus-visible,#clearSearch:focus-visible,select:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:1px;border-radius:6px}
   .loading{animation:pulse 1.1s ease-in-out infinite}@keyframes pulse{0%,100%{opacity:.5}50%{opacity:1}}
   @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+  /* 搜索优先首页：高频入口常驻，其余筛选渐进展开。 */
+  .header{padding:8px 11px 7px}.title-row{margin-bottom:6px}.brand{font-size:13px}.icon-btn{padding:4px 7px}
+  .search-wrap input{padding-right:55px}.search-shortcut{position:absolute;right:31px;top:8px;padding:1px 5px;border:1px solid var(--line);border-radius:4px;background:var(--panel);color:var(--dim);font:10px var(--mono)}
+  .home-toolbar{display:flex;align-items:center;justify-content:space-between}.home-toolbar .toolbar{padding-top:7px}.filter-trigger{margin-top:7px}.filter-trigger.has-filter{color:var(--accent);border-color:var(--accent)}
+  .filter-panel{margin-top:7px;padding:7px;border:1px solid var(--line);border-radius:8px;background:var(--panel)}.filter-label{margin-top:5px;font-size:10px;color:var(--dim)}.filter-label:first-child{margin-top:0}
+  .filter-summary{display:flex;align-items:center;justify-content:space-between;padding-top:5px;font-size:10.5px;color:var(--accent)}.filter-summary:empty{display:none}.filter-summary-clear{border:0;background:none;color:var(--accent);font-size:10.5px;cursor:pointer}
+  .count-bar{padding:5px 11px}#main{padding:6px 9px 15px}.section-title{padding:3px 2px;margin:2px 0}
+  .entry-wrap.is-selected{background:var(--panel);border-color:var(--line);box-shadow:inset 3px 0 var(--accent)}.entry-wrap.copy-success{border-color:var(--ok)}
+  .empty-welcome strong,.empty-welcome span{display:block}.empty-welcome strong{color:var(--text);font-size:13px}.empty-welcome span{margin:7px 0 12px}.empty .text-btn{display:block;margin:12px auto 0}
+  .result-notice{margin:3px 2px 8px;padding:7px 9px;border:1px solid var(--accent);border-radius:7px;color:var(--accent);font-size:11px}.filter-summary-clear:focus-visible{outline:2px solid var(--accent);outline-offset:1px;border-radius:4px}

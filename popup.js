@@ -41,6 +41,9 @@ let enrichmentIndex = new Map();
 let entryIndex = { entries: [], byKey: new Map(), validKeys: new Set() };
 let searchLimit = STATE.SEARCH_INITIAL_LIMIT;
 let lastAutoExpandedQuery = "";
+let filtersOpen = false;
+let browseAll = false;
+let selectedResultKey = "";
 const { hideToast, showToast, showUndoToast } = window.CHEATSHEET_POPUP_TOAST.createToast(document);
 
 const DIALOGS = window.CHEATSHEET_POPUP_DIALOGS;
@@ -85,8 +88,8 @@ function getDOM() {
 }
 
 function applyFilter(updateFn) {
-  updateFn();
   resetResultLimits();
+  updateFn();
   renderFilters();
   render();
 }
@@ -125,6 +128,16 @@ function currentState() {
 function resetResultLimits() {
   expandedTools = new Set();
   searchLimit = STATE.SEARCH_INITIAL_LIMIT;
+  browseAll = false;
+  selectedResultKey = "";
+}
+
+function clearHomeFilters() {
+  applyFilter(() => {
+    activeTool = "all";
+    activeCat = null;
+    activeShellFilter = null;
+  });
 }
 
 function rebuildEntryIndex() {
@@ -224,6 +237,17 @@ async function copyText(value, successMessage) {
   }
 }
 
+function showRowCopySuccess(entry) {
+  const row = getDOM().main.querySelector(`[data-tool="${entry.toolId}"][data-item="${entry.itemId}"]`);
+  row?.classList.add("copy-success");
+  const copyButton = row?.querySelector(".copy-btn");
+  if (copyButton) copyButton.textContent = "已复制";
+  setTimeout(() => {
+    row?.classList.remove("copy-success");
+    if (copyButton) copyButton.textContent = "复制";
+  }, 1200);
+}
+
 async function ensureToolData(toolIds) {
   const requested = [...new Set(toolIds)].filter((id) => TOOL_FILES.includes(id) && !getLoadedData()[id]);
   if (!requested.length) return;
@@ -263,26 +287,33 @@ function renderFilters() {
     });
   }));
 
+  const tools = document.getElementById("toolFilters");
+  tools.innerHTML = html.toolHtml;
+  tools.querySelectorAll("[data-tool]").forEach((button) => button.addEventListener("click", () => {
+    applyFilter(() => {
+      activeTool = button.dataset.tool;
+      browseAll = activeTool === "all";
+      if (activeTool !== "shell") activeShellFilter = null;
+    });
+  }));
+
   const categories = document.getElementById("categoryFilters");
   categories.innerHTML = html.categoryHtml;
   categories.querySelectorAll("[data-cat]").forEach((button) => button.addEventListener("click", () => {
     applyFilter(() => { activeCat = activeCat === button.dataset.cat ? null : button.dataset.cat; });
   }));
-  document.getElementById("clearFilters").addEventListener("click", () => {
-    applyFilter(() => {
-      activeTool = "all";
-      activeCat = null;
-      activeShellFilter = null;
-      getDOM().search.value = "";
-      storageSet({ lastQuery: "" });
-    });
-  });
+  document.getElementById("clearFilters").addEventListener("click", clearHomeFilters);
 
   const shellFilters = document.getElementById("shellFilters");
   shellFilters.innerHTML = html.shellHtml;
   shellFilters.querySelectorAll("[data-shell-filter]").forEach((button) => button.addEventListener("click", () => {
     applyFilter(() => { activeShellFilter = button.dataset.shellFilter || null; });
   }));
+  const summary = document.getElementById("filterSummary");
+  summary.innerHTML = html.summaryHtml;
+  summary.querySelector("[data-clear-filters]")?.addEventListener("click", clearHomeFilters);
+  const trigger = document.getElementById("toggleFilters");
+  trigger.classList.toggle("has-filter", html.hasFilter);
 }
 
 function rankVisibleEntries(query) {
@@ -298,6 +329,18 @@ function rankVisibleEntries(query) {
   if (activeTool === "recent" && !query.trim()) ranked.sort((a, b) =>
     (recentOrder.get(`${a.toolId}::${a.itemId}`) ?? 99) - (recentOrder.get(`${b.toolId}::${b.itemId}`) ?? 99)
   );
+  if (!query.trim() && activeTool === "all" && !activeCat && !browseAll) {
+    const recentKeys = recents.map((item) => `${item.toolId}::${item.itemId}`);
+    const priority = new Map(recentKeys.map((key, index) => [key, index]));
+    const dashboard = ranked.filter((entry) => priority.has(`${entry.toolId}::${entry.itemId}`)
+      || favourites.has(`${entry.toolId}::${entry.itemId}`));
+    dashboard.sort((a, b) => {
+      const aKey = `${a.toolId}::${a.itemId}`;
+      const bKey = `${b.toolId}::${b.itemId}`;
+      return (priority.get(aKey) ?? RECENTS_LIMIT + 1) - (priority.get(bKey) ?? RECENTS_LIMIT + 1);
+    });
+    return { entries: dashboard, relaxed };
+  }
   return { entries: ranked, relaxed };
 }
 
@@ -336,6 +379,12 @@ function render() {
     dismissedRecommendations,
     aiRecommendations,
   });
+  const rows = [...dom.main.querySelectorAll(".entry-wrap")];
+  if (rows.length && (query.trim() || activeTool === "recent" || activeTool === "favourites")) {
+    const selected = rows.find((row) => `${row.dataset.tool}::${row.dataset.item}` === selectedResultKey) || rows[0];
+    rows.forEach((row) => row.classList.toggle("is-selected", row === selected));
+    selectedResultKey = `${selected.dataset.tool}::${selected.dataset.item}`;
+  }
   updateManageBadge();
 }
 
@@ -345,6 +394,12 @@ function bindHomeEvents() {
     resetResultLimits();
     storageSet({ lastQuery: event.target.value });
     debouncedRender();
+  });
+  document.getElementById("toggleFilters").addEventListener("click", () => {
+    filtersOpen = !filtersOpen;
+    const panel = document.getElementById("filterPanel");
+    panel.hidden = !filtersOpen;
+    document.getElementById("toggleFilters").setAttribute("aria-expanded", String(filtersOpen));
   });
   document.getElementById("search").addEventListener("keydown", (event) => {
     if (event.key !== "ArrowDown") return;
@@ -369,6 +424,11 @@ function bindHomeEvents() {
     if (event.key === "ArrowDown" && index < rows.length - 1) rows[index + 1].focus();
     else if (event.key === "ArrowUp" && index > 0) rows[index - 1].focus();
     else return;
+    const focused = document.activeElement.closest(".entry-wrap");
+    if (focused) {
+      document.querySelectorAll("#main .entry-wrap").forEach((row) => row.classList.toggle("is-selected", row === focused));
+      selectedResultKey = `${focused.dataset.tool}::${focused.dataset.item}`;
+    }
     event.preventDefault();
   });
   document.addEventListener("keydown", (event) => {
@@ -395,6 +455,15 @@ function bindHomeEvents() {
 }
 
 async function handleMainClick(event) {
+  if (event.target.closest("[data-clear-filters]")) {
+    clearHomeFilters();
+    return;
+  }
+  if (event.target.closest("[data-browse-all]")) {
+    browseAll = true;
+    render();
+    return;
+  }
   const sourceButton = event.target.closest("[data-source]");
   if (sourceButton) {
     const card = document.getElementById(`source-${sourceButton.dataset.source}`);
@@ -438,11 +507,14 @@ async function handleMainClick(event) {
     if (!await confirmRiskCopy(value, risk)) return;
     if (!await copyText(value, `已复制用法：${value}`)) return;
     await recordCopy(entry, value);
+    showRowCopySuccess(entry);
     return;
   }
   if (event.target.closest("[data-usage]")) {
+    const scrollTop = getDOM().main.scrollTop;
     expandedExamples.has(key) ? expandedExamples.delete(key) : expandedExamples.add(key);
     render();
+    getDOM().main.scrollTop = scrollTop;
     return;
   }
   if (event.target.closest("[data-copy-command]")) {
@@ -456,6 +528,7 @@ async function handleMainClick(event) {
     if (!await confirmRiskCopy(command, risk)) return;
     if (!await copyText(command, `已复制命令：${command}`)) return;
     await recordCopy(entry, command);
+    showRowCopySuccess(entry);
     return;
   }
   if (event.target.closest(".fav-btn")) {

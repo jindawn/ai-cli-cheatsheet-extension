@@ -18,7 +18,7 @@ const { chromium } = require("playwright");
     const extensionId = new URL(worker.url()).host;
     const page = await context.newPage();
     await page.goto(`chrome-extension://${extensionId}/popup.html`);
-    await page.waitForSelector("#main .entry-wrap");
+    await page.waitForSelector("#main .empty-welcome");
 
     const loadState = await page.evaluate(() => ({
       loadedTools: Object.keys(window.CHEATSHEET_DATA || {}),
@@ -31,7 +31,7 @@ const { chromium } = require("playwright");
 
     await page.evaluate(() => chrome.storage.local.set({ onboarded: true }));
     await page.reload();
-    await page.waitForSelector("#main .entry-wrap");
+    await page.waitForSelector("#main .empty-welcome");
 
     await page.fill("#search", "恢复会话");
     await page.waitForTimeout(250);

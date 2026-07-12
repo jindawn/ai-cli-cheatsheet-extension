@@ -98,6 +98,7 @@ meta：
   contentCheckedAt: "2026-06-20",                      // 内容最后核验日期，仅用于追溯
   sourceCheckedAt: "2026-06-21",                       // 来源可访问性最后检查日期
   coverage: "完整命令列表 / macOS 默认键位常用子集",    // 数据覆盖范围
+  unverifiedPolicy: "未核验条目的保留原因与复核方式",    // 存在 unverified 时必填；禁止无解释保留
   sources: [{
     id: "official-docs",
     registryId: "vendor-docs",                         // 可选；来源 ID 与登记项 ID 不同时填写
@@ -126,6 +127,9 @@ meta：
 - `updatePolicy` 决定更新触发方式：动态 CLI 优先比较本机版本，发布驱动工具比较官方 Release，稳定快捷键和基础命令只允许手动深度核验。
 - 不得根据 `contentCheckedAt` 或 `sourceCheckedAt` 的时间间隔自动判定资料过期。
 - `verified` 必须同时有 `existence` 与 `semantics` 断言和具体 locator；只有宽泛页面或单项断言为 `partial`；无证据为 `unverified`。
+- locator 必须定位到命令、章节锚点或可复现的本机帮助入口；`docs`、`README`、文档首页等宽泛定位不能作为严格核验证据。
+- 条目声明 `platforms` 或 `platformCmds` 时，结构化更新应同时提供 `platform` claim；旧数据缺口由质量审计持续跟踪。
+- 未达到质量阈值的工具只能通过 `qualityGates.temporaryTargetExceptions` 暂时隔离，必须写明无法核验的客观原因；例外仍在 UI 显示“待提升”，不能视为达标。
 - 网页来源记录重定向后的 `resolvedUrl`、实际 `pageTitle` 和 `checkedAt`。
 - `sourceUrl/sourceTier` 保留用于读取旧数据；Native Host 会将旧字段合成来源记录。
 - `authorship` 表示案例由谁编写，`evidenceTier` 表示证据强度，`adaptation` 表示是否改写。

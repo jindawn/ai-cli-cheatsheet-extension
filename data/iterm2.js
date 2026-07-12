@@ -13,6 +13,7 @@ window.CHEATSHEET_DATA["iterm2"] = {
     "sourceUrl": "https://iterm2.com/documentation.html",
     "sourceTier": "official",
     "coverage": "Core keyboard shortcuts, menus, and Shell Integration commands commonly used in iTerm2.",
+    "unverifiedPolicy": "个别菜单快捷键未能绑定到稳定的官方定位，保留为待复核候选",
     "platforms": [
       "mac"
     ],
@@ -173,7 +174,7 @@ window.CHEATSHEET_DATA["iterm2"] = {
       "cmd": "Cmd+Shift+[",
       "en": "Previous Tab",
       "zh": "上一个标签页",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "keywords": [
         "tab",
         "previous",
@@ -211,7 +212,9 @@ window.CHEATSHEET_DATA["iterm2"] = {
         {
           "sourceId": "iterm2-local-help",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "iTerm2 应用菜单 Window > Select Previous Tab（默认快捷键随菜单项显示）",
           "checkedAt": "2026-07-02"
@@ -223,7 +226,7 @@ window.CHEATSHEET_DATA["iterm2"] = {
       "cmd": "Cmd+Shift+]",
       "en": "Next Tab",
       "zh": "下一个标签页",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "keywords": [
         "tab",
         "next",
@@ -261,7 +264,9 @@ window.CHEATSHEET_DATA["iterm2"] = {
         {
           "sourceId": "iterm2-local-help",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "iTerm2 应用菜单 Window > Select Next Tab（默认快捷键随菜单项显示）",
           "checkedAt": "2026-07-02"
@@ -392,7 +397,7 @@ window.CHEATSHEET_DATA["iterm2"] = {
       "en": "Next Pane",
       "zh": "下一个窗格",
       "context": "split panes",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "keywords": [
         "pane",
         "next",
@@ -430,7 +435,9 @@ window.CHEATSHEET_DATA["iterm2"] = {
         {
           "sourceId": "iterm2-local-help",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "iTerm2 应用菜单 Window > Select Split Pane > Next Pane（默认快捷键随菜单项显示）",
           "checkedAt": "2026-07-02"
@@ -443,7 +450,7 @@ window.CHEATSHEET_DATA["iterm2"] = {
       "en": "Previous Pane",
       "zh": "上一个窗格",
       "context": "split panes",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "keywords": [
         "pane",
         "previous",
@@ -481,7 +488,9 @@ window.CHEATSHEET_DATA["iterm2"] = {
         {
           "sourceId": "iterm2-local-help",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "iTerm2 应用菜单 Window > Select Split Pane > Previous Pane（默认快捷键随菜单项显示）",
           "checkedAt": "2026-07-02"
@@ -611,7 +620,7 @@ window.CHEATSHEET_DATA["iterm2"] = {
       "en": "Clear Buffer",
       "zh": "清除当前会话缓冲区",
       "context": "terminal scrollback",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "keywords": [
         "clear",
         "scrollback",
@@ -649,7 +658,9 @@ window.CHEATSHEET_DATA["iterm2"] = {
         {
           "sourceId": "iterm2-local-help",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "iTerm2 应用菜单 Edit > Clear Buffer（默认快捷键随菜单项显示）",
           "checkedAt": "2026-07-02"
@@ -661,7 +672,7 @@ window.CHEATSHEET_DATA["iterm2"] = {
       "cmd": "Cmd+,",
       "en": "Open Preferences",
       "zh": "打开偏好设置",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "keywords": [
         "preferences",
         "settings",
@@ -699,7 +710,9 @@ window.CHEATSHEET_DATA["iterm2"] = {
         {
           "sourceId": "iterm2-local-help",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "iTerm2 应用菜单 iTerm2 > Settings...（默认快捷键随菜单项显示）",
           "checkedAt": "2026-07-02"
@@ -1295,7 +1308,7 @@ window.CHEATSHEET_DATA["iterm2"] = {
       "cmd": "Cmd+G",
       "en": "Find Next",
       "zh": "查找下一个匹配",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "keywords": [
         "search",
         "find",
@@ -1329,7 +1342,9 @@ window.CHEATSHEET_DATA["iterm2"] = {
         {
           "sourceId": "iterm2-local-help",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "iTerm2 应用菜单 Edit > Find > Find Next（默认快捷键随菜单项显示）",
           "checkedAt": "2026-07-02"
@@ -1343,7 +1358,7 @@ window.CHEATSHEET_DATA["iterm2"] = {
       "cmd": "Cmd+1..Cmd+9",
       "en": "Select Tab by Number",
       "zh": "按编号切换标签页",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "keywords": [
         "tab",
         "number",
@@ -1377,7 +1392,9 @@ window.CHEATSHEET_DATA["iterm2"] = {
         {
           "sourceId": "iterm2-local-help",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "iTerm2 应用菜单 Window > 标签页列表（每个标签页显示 ⌘1…⌘9）（默认快捷键随菜单项显示）",
           "checkedAt": "2026-07-02"
@@ -1390,7 +1407,7 @@ window.CHEATSHEET_DATA["iterm2"] = {
       "cmd": "Cmd+Option+Arrow",
       "en": "Select Pane by Direction",
       "zh": "按方向切换窗格",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "keywords": [
         "pane",
         "direction",
@@ -1425,7 +1442,9 @@ window.CHEATSHEET_DATA["iterm2"] = {
         {
           "sourceId": "iterm2-local-help",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "iTerm2 应用菜单 Window > Select Split Pane > Select Pane Above/Below/Left/Right（默认快捷键随菜单项显示）",
           "checkedAt": "2026-07-02"

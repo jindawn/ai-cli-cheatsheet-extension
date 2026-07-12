@@ -146,6 +146,10 @@
     const categoryHtml = Object.entries(helpers.CAT_LABEL).map(([id, label]) =>
       `<button class="chip ${state.activeCat === id ? "active" : ""}" data-cat="${id}">${label}</button>`
     ).join("") + `<button id="clearFilters" class="chip filter-clear">清除筛选</button>`;
+    const evidenceHtml = [["verified", "已核验"], ["partial", "部分核验"], ["unverified", "未核验"]]
+      .map(([id, label]) => `<button class="chip ${state.activeEvidence === id ? "active" : ""}" data-evidence="${id}">${label}</button>`).join("");
+    const exampleHtml = [["with-examples", "有用法"], ["platform-examples", "当前平台用法"]]
+      .map(([id, label]) => `<button class="chip ${state.activeExampleFilter === id ? "active" : ""}" data-example-filter="${id}">${label}</button>`).join("");
     const shellHtml = state.activeTool === "shell" && data.shell
       ? [
         `<button class="chip ${state.activeShellFilter ? "" : "active"}" data-shell-filter="">全部 Shell</button>`,
@@ -155,11 +159,11 @@
       ].join("")
       : "";
     const filterLabel = helpers.activeFilterLabel(data, state);
-    const hasFilter = Boolean(state.activeCat || state.activeShellFilter || !["all", "recent", "favourites"].includes(state.activeTool));
+    const hasFilter = Boolean(state.activeCat || state.activeShellFilter || state.activeEvidence || state.activeExampleFilter || !["all", "recent", "favourites"].includes(state.activeTool));
     const summaryHtml = hasFilter
       ? `<span>当前筛选：${escapeHtml(filterLabel)}</span><button class="filter-summary-clear" data-clear-filters>清除</button>`
       : "";
-    return { quickHtml, toolHtml, categoryHtml, shellHtml, summaryHtml, hasFilter };
+    return { quickHtml, toolHtml, categoryHtml, evidenceHtml, exampleHtml, shellHtml, summaryHtml, hasFilter };
   }
 
   function renderRow(entry, query, ctx, includeBadge = false) {
@@ -425,10 +429,13 @@
       const canDelete = !meta.builtIn;
       const policy = helpers.updatePolicy(meta);
       const sources = normalizedSources(meta);
-      const evidenceCounts = { verified: 0, partial: 0, unverified: 0 };
-      data[toolId].items.forEach((item) => {
-        evidenceCounts[item.evidenceStatus || "unverified"] += 1;
+      const quality = globalScope.CHEATSHEET_QUALITY?.auditTool(toolId, data[toolId], {
+        target: helpers.TOOL_PRESETS.ai.includes(toolId) ? 0.9 : 0.75,
       });
+      const evidenceCounts = quality?.statuses || data[toolId].items.reduce((counts, item) => {
+        counts[item.evidenceStatus || "unverified"] += 1;
+        return counts;
+      }, { verified: 0, partial: 0, unverified: 0 });
       const verification = meta.verificationStatus === "web-assisted"
         ? "联网辅助整理"
         : meta.verificationStatus === "model-knowledge"
@@ -457,6 +464,10 @@
       <div class="meta">${catalogOnly ? "启用后按需加载完整数据" : `${escapeHtml(meta.coverage || meta.source)}<br>来源 ${sources.length} 个 · ${escapeHtml(helpers.updateStatusLabel(meta))} · 数据整理方式：<span class="verify">${escapeHtml(verification)}</span>`}</div>
       ${catalogOnly ? "" : `<details class="stats-detail"><summary>数据质量明细</summary>
         <div class="meta">条目核验：已核验 ${evidenceCounts.verified} / 部分核验 ${evidenceCounts.partial} / 未核验 ${evidenceCounts.unverified}</div>
+        ${quality ? `<div class="meta">准确度：${Math.round(quality.verifiedRatio * 100)}% / 目标 ${Math.round(quality.target * 100)}% · ${quality.targetMet ? "达标" : "待提升"}</div>
+        <div class="meta">类别：快捷键 ${quality.categories.shortcut} / 命令 ${quality.categories.slash} / 参数 ${quality.categories.flag}</div>
+        <div class="meta">平台：macOS ${quality.platforms.mac} / Windows ${quality.platforms.windows} / Linux ${quality.platforms.linux} · 平台专属用法 ${quality.examples.platformSpecific}</div>
+        <div class="meta">证据定位：宽泛 ${quality.broadLocators} / 未解释未核验 ${quality.unexplainedUnverified} / 来源冲突 ${quality.sourceConflicts}</div>` : ""}
         <div class="meta">用法覆盖：${exampleItems.length}/${data[toolId].items.length}</div>
         <div class="meta">案例编写：官方原例 ${authorshipCounts.official} / 编辑整理 ${authorshipCounts.editorial} / 自动生成 ${authorshipCounts.generated}</div>
         <div class="meta">案例证据：第一方 ${evidenceCountsForExamples["first-party"]} / 权威社区 ${evidenceCountsForExamples["authoritative-community"]} / 普通社区 ${evidenceCountsForExamples.community} / 无独立证据 ${evidenceCountsForExamples.none}</div>

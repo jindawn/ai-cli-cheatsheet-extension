@@ -1513,6 +1513,27 @@ def build_quality_warnings(dataset, previous_dataset=None):
     evidenced = sum(1 for item in items if item.get("evidenceRefs"))
     if evidenced < expected:
         warnings.append(f"逐条证据覆盖不足：当前 {evidenced} 条，目标 {expected} 条")
+    verified = sum(1 for item in items if item.get("evidenceStatus") == "verified")
+    tool_id = dataset.get("meta", {}).get("id")
+    gates = VALIDATION_RULES.get("qualityGates", {})
+    target = gates.get("coreVerifiedRatio", 0.9) if tool_id in gates.get("coreTools", []) else gates.get("defaultVerifiedRatio", 0.75)
+    if expected and verified / expected < target:
+        warnings.append(f"严格核验率不足：当前 {verified}/{expected}，目标至少 {target:.0%}")
+    broad_locator = re.compile(r"^(docs?|documentation|reference|readme|homepage|首页|文档|官方文档|help)$", re.I)
+    broad_count = sum(
+        1 for item in items for ref in (item.get("evidenceRefs") or [])
+        if broad_locator.fullmatch(str(ref.get("locator", "")).strip())
+    )
+    if broad_count:
+        warnings.append(f"证据定位过宽：{broad_count} 个 locator 需要细化到命令、章节或本机帮助入口")
+    platform_claim_gaps = sum(
+        1 for item in items
+        if (item.get("platformCmds") or item.get("platforms"))
+        and item.get("evidenceRefs")
+        and not any("platform" in ref.get("claims", []) for ref in item.get("evidenceRefs", []))
+    )
+    if platform_claim_gaps:
+        warnings.append(f"平台证据不足：{platform_claim_gaps} 个带平台结论的条目缺少 platform claim")
     partial = sum(1 for item in items if item.get("evidenceStatus") == "partial")
     unverified_items = sum(1 for item in items if item.get("evidenceStatus") == "unverified")
     if partial:

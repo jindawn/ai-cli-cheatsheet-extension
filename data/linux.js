@@ -452,12 +452,14 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-ls",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "gnu-manuals",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "GNU manuals（检索 ls）",
           "checkedAt": "2026-06-21"
@@ -474,12 +476,14 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-ls-l",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "gnu-manuals",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "GNU manuals（检索 ls -l）",
           "checkedAt": "2026-06-21"
@@ -496,12 +500,14 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-ls-a",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "gnu-manuals",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "GNU manuals（检索 ls -a）",
           "checkedAt": "2026-06-21"
@@ -518,12 +524,14 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-ls-la",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "gnu-manuals",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "GNU manuals（检索 ls -la）",
           "checkedAt": "2026-06-21"
@@ -588,12 +596,14 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-pwd",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "gnu-manuals",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "GNU manuals（检索 pwd）",
           "checkedAt": "2026-06-21"
@@ -610,12 +620,14 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-mkdir",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "gnu-manuals",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "GNU manuals（检索 mkdir）",
           "checkedAt": "2026-06-21"
@@ -632,12 +644,14 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-mkdir-p",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "gnu-manuals",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "GNU manuals（检索 mkdir -p）",
           "checkedAt": "2026-06-21"
@@ -654,12 +668,14 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-cp",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "gnu-manuals",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "GNU manuals（检索 cp）",
           "checkedAt": "2026-06-21"
@@ -676,12 +692,14 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-cp-r",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "gnu-manuals",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "GNU manuals（检索 cp -r）",
           "checkedAt": "2026-06-21"
@@ -698,12 +716,14 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-mv",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "gnu-manuals",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "GNU manuals（检索 mv）",
           "checkedAt": "2026-06-21"
@@ -782,12 +802,14 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-touch",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "gnu-manuals",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "GNU manuals（检索 touch）",
           "checkedAt": "2026-06-21"
@@ -804,12 +826,14 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-cat",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "gnu-manuals",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "GNU manuals（检索 cat）",
           "checkedAt": "2026-06-21"
@@ -849,12 +873,14 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-head",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "gnu-manuals",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "GNU manuals（检索 head）",
           "checkedAt": "2026-06-21"
@@ -871,12 +897,14 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-tail",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "gnu-manuals",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "GNU manuals（检索 tail）",
           "checkedAt": "2026-06-21"
@@ -893,12 +921,14 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-tail-f",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "gnu-manuals",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "GNU manuals（检索 tail -f）",
           "checkedAt": "2026-06-21"
@@ -1007,12 +1037,14 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-ps",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "linux-ps-man",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "https://man7.org/linux/man-pages/man1/ps.1.html",
           "checkedAt": "2026-06-21"
@@ -1029,12 +1061,14 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-ps-aux",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "linux-ps-man",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "https://man7.org/linux/man-pages/man1/ps.1.html",
           "checkedAt": "2026-06-21"
@@ -1051,12 +1085,14 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-kill",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "linux-kill-man",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "https://man7.org/linux/man-pages/man1/kill.1.html",
           "checkedAt": "2026-06-21"
@@ -1104,12 +1140,14 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-top",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "linux-top-man",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "https://man7.org/linux/man-pages/man1/top.1.html",
           "checkedAt": "2026-06-21"
@@ -1126,12 +1164,14 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-grep",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "linux-grep-man",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "https://man7.org/linux/man-pages/man1/grep.1.html",
           "checkedAt": "2026-06-21"
@@ -1148,12 +1188,14 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-grep-r",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "linux-grep-man",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "https://man7.org/linux/man-pages/man1/grep.1.html",
           "checkedAt": "2026-06-21"
@@ -1170,12 +1212,14 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-grep-i",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "linux-grep-man",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "https://man7.org/linux/man-pages/man1/grep.1.html",
           "checkedAt": "2026-06-21"
@@ -1192,12 +1236,14 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-find",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "linux-find-man",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "https://man7.org/linux/man-pages/man1/find.1.html",
           "checkedAt": "2026-06-21"
@@ -1214,12 +1260,14 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-find-name",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "linux-find-man",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "https://man7.org/linux/man-pages/man1/find.1.html",
           "checkedAt": "2026-06-21"
@@ -1236,12 +1284,14 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-sort",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "gnu-manuals",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "GNU manuals（检索 sort）",
           "checkedAt": "2026-06-21"
@@ -1258,12 +1308,14 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-uniq",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "gnu-manuals",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "GNU manuals（检索 uniq）",
           "checkedAt": "2026-06-21"
@@ -1280,12 +1332,14 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-wc",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "gnu-manuals",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "GNU manuals（检索 wc）",
           "checkedAt": "2026-06-21"
@@ -1302,12 +1356,14 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-wc-l",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "gnu-manuals",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "GNU manuals（检索 wc -l）",
           "checkedAt": "2026-06-21"
@@ -1324,12 +1380,14 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-diff",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "linux-diff-man",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "https://man7.org/linux/man-pages/man1/diff.1.html",
           "checkedAt": "2026-06-21"
@@ -1346,12 +1404,14 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-df",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "gnu-manuals",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "GNU manuals（检索 df -h）",
           "checkedAt": "2026-06-21"
@@ -1368,12 +1428,14 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-du",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "gnu-manuals",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "GNU manuals（检索 du -sh）",
           "checkedAt": "2026-06-21"
@@ -1389,12 +1451,14 @@ window.CHEATSHEET_DATA["linux"] = {
         "linux"
       ],
       "id": "linux-free",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "linux-free-man",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "https://man7.org/linux/man-pages/man1/free.1.html",
           "checkedAt": "2026-06-21"
@@ -1672,12 +1736,14 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-ping",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "linux-ping-man",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "https://man7.org/linux/man-pages/man8/ping.8.html",
           "checkedAt": "2026-06-21"
@@ -1694,12 +1760,14 @@ window.CHEATSHEET_DATA["linux"] = {
         "mac"
       ],
       "id": "linux-ln-s",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "gnu-manuals",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "GNU manuals（检索 ln -s）",
           "checkedAt": "2026-06-21"

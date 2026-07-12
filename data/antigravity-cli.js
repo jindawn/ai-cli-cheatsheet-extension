@@ -13,6 +13,7 @@ window.CHEATSHEET_DATA["antigravity-cli"] = {
     "updatePolicy": "manual-only",
     "verificationStatus": "manual",
     "coverage": "官方公告与实测整理的常用子集，非完整官方清单",
+    "unverifiedPolicy": "未核验条目仅作为迁移期候选展示；需以本机帮助或官方仓库逐条确认后才能提升核验等级",
     "platforms": [
       "mac",
       "windows",
@@ -64,7 +65,7 @@ window.CHEATSHEET_DATA["antigravity-cli"] = {
           "option-semantics",
           "examples"
         ],
-        "resolvedUrl": "https://codelabs.developers.google.com/antigravity-cli-hands-on",
+        "resolvedUrl": "https://codelabs.developers.google.com/antigravity-cli-hands-on?hl=hi",
         "pageTitle": "Hands-on with Antigravity CLI",
         "checkedAt": "2026-07-02",
         "url": "https://codelabs.developers.google.com/antigravity-cli-hands-on",
@@ -271,12 +272,13 @@ window.CHEATSHEET_DATA["antigravity-cli"] = {
       "en": "Switch model mid-session",
       "zh": "会话中切换模型",
       "id": "186d0438d19ceaed",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "antigravity-codelab",
           "claims": [
-            "existence"
+            "existence",
+            "semantics"
           ],
           "locator": "https://codelabs.developers.google.com/antigravity-cli-hands-on · 斜杠命令表 · /model | 查看当前会话使用的模型（页面只展示查看，未展示切换用法，语义未完全核实）",
           "checkedAt": "2026-07-02"

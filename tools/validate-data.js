@@ -10,6 +10,7 @@ const dataDir = path.join(root, "data");
 
 const rules = require(path.join(root, "shared", "validation-rules.json"));
 const sourceRegistry = require(path.join(root, "shared", "source-registry.json"));
+const qualityCore = require(path.join(root, "quality-core.js"));
 const { min: MIN_KEYWORDS, max: MAX_KEYWORDS } = rules.keywords;
 const MAX_EXAMPLES = rules.examples.max;
 const DANGEROUS_EXAMPLE_RE = new RegExp(rules.dangerousExample.source, rules.dangerousExample.flags);
@@ -510,4 +511,23 @@ if (firstPartyOnUnverified.size) {
   [...firstPartyOnUnverified.entries()].forEach(([tool, count]) => {
     console.warn(`- ${tool}: ${count} example(s)`);
   });
+}
+const qualityData = Object.fromEntries(files.map((id) => [id, {
+  ...data[id],
+  items: data[id].items.map((item) => enrichedItem(id, item)),
+}]));
+const qualityReport = qualityCore.auditDataset(qualityData, rules);
+const baselinePath = path.join(root, "shared", "quality-baseline.json");
+if (fs.existsSync(baselinePath)) {
+  const baseline = JSON.parse(fs.readFileSync(baselinePath, "utf8"));
+  const regressions = qualityCore.regressionFailures(qualityReport, baseline, rules.qualityGates.maxRegressionPoints);
+  if (regressions.length) fail(`quality regression:\n${regressions.join("\n")}`);
+}
+if (qualityReport.totals.unexplainedUnverified > rules.qualityGates.maxUnexplainedUnverified) {
+  fail(`${qualityReport.totals.unexplainedUnverified} unverified items require item.verificationNote or meta.unverifiedPolicy`);
+}
+const targetExceptions = rules.qualityGates.temporaryTargetExceptions || {};
+const targetFailures = qualityReport.tools.filter((row) => !row.targetMet && !targetExceptions[row.tool]);
+if (targetFailures.length) {
+  fail(`quality target not met: ${targetFailures.map((row) => `${row.tool}=${Math.round(row.verifiedRatio * 100)}%`).join(", ")}`);
 }

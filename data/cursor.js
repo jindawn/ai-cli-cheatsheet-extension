@@ -173,12 +173,14 @@ window.CHEATSHEET_DATA["cursor"] = {
         "linux": "Ctrl+Shift+I"
       },
       "id": "dd119793e31485e8",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "cursor-shortcuts",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "官方快捷键页（页面内检索 Cmd+Shift+I）",
           "checkedAt": "2026-06-21"
@@ -197,12 +199,14 @@ window.CHEATSHEET_DATA["cursor"] = {
         "linux": "Ctrl+Enter"
       },
       "id": "023a6020a0d0428b",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "cursor-shortcuts",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "官方快捷键页（页面内检索 Cmd+Enter）",
           "checkedAt": "2026-06-21"
@@ -221,12 +225,14 @@ window.CHEATSHEET_DATA["cursor"] = {
         "linux": "Ctrl+Shift+Enter"
       },
       "id": "c656c0150f68fc84",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "cursor-shortcuts",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "官方快捷键页（页面内检索 Cmd+Shift+Enter）",
           "checkedAt": "2026-06-21"
@@ -309,12 +315,13 @@ window.CHEATSHEET_DATA["cursor"] = {
       "zh": "拒绝/关闭 Cursor Tab 的代码补全建议（所有平台相同）",
       "context": "Cursor Tab",
       "id": "c0919cfab1bb3bc7",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "cursor-shortcuts",
           "claims": [
-            "existence"
+            "existence",
+            "semantics"
           ],
           "locator": "官方快捷键页（页面内检索 Esc）",
           "checkedAt": "2026-06-21"
@@ -358,12 +365,14 @@ window.CHEATSHEET_DATA["cursor"] = {
         "linux": "Ctrl+Backspace"
       },
       "id": "07f6c79962bea87f",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "cursor-shortcuts",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "官方快捷键页（页面内检索 Option+Backspace）",
           "checkedAt": "2026-06-21"
@@ -405,12 +414,14 @@ window.CHEATSHEET_DATA["cursor"] = {
         "linux": "Ctrl+P"
       },
       "id": "b307c56b96c36a78",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "cursor-shortcuts",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "官方快捷键页（页面内检索 Cmd+P）",
           "checkedAt": "2026-06-21"
@@ -428,12 +439,14 @@ window.CHEATSHEET_DATA["cursor"] = {
         "linux": "Ctrl+W"
       },
       "id": "593e75031ca8145a",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "cursor-shortcuts",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "官方快捷键页（页面内检索 Cmd+W）",
           "checkedAt": "2026-06-21"
@@ -451,12 +464,14 @@ window.CHEATSHEET_DATA["cursor"] = {
         "linux": "Ctrl+B"
       },
       "id": "54b8e968d8bc92e9",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "cursor-shortcuts",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "官方快捷键页（页面内检索 Cmd+B）",
           "checkedAt": "2026-06-21"
@@ -474,12 +489,14 @@ window.CHEATSHEET_DATA["cursor"] = {
         "linux": "Ctrl+J"
       },
       "id": "6c2b6e114b811c5c",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "cursor-shortcuts",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "官方快捷键页（页面内检索 Cmd+J）",
           "checkedAt": "2026-06-21"
@@ -497,12 +514,14 @@ window.CHEATSHEET_DATA["cursor"] = {
         "linux": "Ctrl+`"
       },
       "id": "46ed23f3675ebc37",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "cursor-shortcuts",
           "claims": [
-            "existence"
+            "existence",
+            "semantics",
+            "platform"
           ],
           "locator": "官方快捷键页（页面内检索 Ctrl+`）",
           "checkedAt": "2026-06-21"
@@ -516,12 +535,13 @@ window.CHEATSHEET_DATA["cursor"] = {
       "zh": "在 Chat/Composer 中引用指定文件作为 AI 上下文",
       "context": "Chat/Composer",
       "id": "89aacdb4b19fd234",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "cursor-shortcuts",
           "claims": [
-            "existence"
+            "existence",
+            "semantics"
           ],
           "locator": "官方快捷键页（页面内检索 @Files）",
           "checkedAt": "2026-06-21"
@@ -535,12 +555,13 @@ window.CHEATSHEET_DATA["cursor"] = {
       "zh": "在 Chat/Composer 中引用指定文件夹及其内容作为 AI 上下文",
       "context": "Chat/Composer",
       "id": "5b060591a6ed447e",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "cursor-shortcuts",
           "claims": [
-            "existence"
+            "existence",
+            "semantics"
           ],
           "locator": "官方快捷键页（页面内检索 @Folders）",
           "checkedAt": "2026-06-21"
@@ -554,12 +575,13 @@ window.CHEATSHEET_DATA["cursor"] = {
       "zh": "在 Chat/Composer 中让 AI 搜索互联网获取最新信息作为上下文",
       "context": "Chat/Composer",
       "id": "8e57e4efabb7760d",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "cursor-shortcuts",
           "claims": [
-            "existence"
+            "existence",
+            "semantics"
           ],
           "locator": "官方快捷键页（页面内检索 @Web）",
           "checkedAt": "2026-06-21"
@@ -573,12 +595,13 @@ window.CHEATSHEET_DATA["cursor"] = {
       "zh": "在 Chat/Composer 中引用 Git 提交历史和变更作为 AI 上下文",
       "context": "Chat/Composer",
       "id": "6b6156509180238d",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "cursor-shortcuts",
           "claims": [
-            "existence"
+            "existence",
+            "semantics"
           ],
           "locator": "官方快捷键页（页面内检索 @Git）",
           "checkedAt": "2026-06-21"
@@ -592,12 +615,13 @@ window.CHEATSHEET_DATA["cursor"] = {
       "zh": "在 Chat/Composer 中引用文档源（可添加第三方文档 URL）作为 AI 上下文",
       "context": "Chat/Composer",
       "id": "0d1aba561344300c",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "cursor-shortcuts",
           "claims": [
-            "existence"
+            "existence",
+            "semantics"
           ],
           "locator": "官方快捷键页（页面内检索 @Docs）",
           "checkedAt": "2026-06-21"
@@ -611,12 +635,13 @@ window.CHEATSHEET_DATA["cursor"] = {
       "zh": "在 Chat/Composer 中让 AI 搜索整个代码库作为上下文",
       "context": "Chat/Composer",
       "id": "9d8c54e3fec1f911",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "cursor-shortcuts",
           "claims": [
-            "existence"
+            "existence",
+            "semantics"
           ],
           "locator": "官方快捷键页（页面内检索 @Codebase）",
           "checkedAt": "2026-06-21"
@@ -630,12 +655,13 @@ window.CHEATSHEET_DATA["cursor"] = {
       "zh": "在 Chat/Composer 中引用历史对话内容作为 AI 上下文",
       "context": "Chat/Composer",
       "id": "0e72e96e905147b4",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "cursor-shortcuts",
           "claims": [
-            "existence"
+            "existence",
+            "semantics"
           ],
           "locator": "官方快捷键页（页面内检索 @Chat）",
           "checkedAt": "2026-06-21"
@@ -649,12 +675,13 @@ window.CHEATSHEET_DATA["cursor"] = {
       "zh": "在 Chat/Composer 中引用代码符号（函数/类/类型）定义作为 AI 上下文",
       "context": "Chat/Composer",
       "id": "324e0b652fe86f1a",
-      "evidenceStatus": "partial",
+      "evidenceStatus": "verified",
       "evidenceRefs": [
         {
           "sourceId": "cursor-shortcuts",
           "claims": [
-            "existence"
+            "existence",
+            "semantics"
           ],
           "locator": "官方快捷键页（页面内检索 @Definitions）",
           "checkedAt": "2026-06-21"

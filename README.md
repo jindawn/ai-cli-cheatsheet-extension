@@ -177,6 +177,8 @@ node tests/test_usage_examples.js
 node tests/test_popup_ux.js
 node tests/test_background.js
 node tests/test_search_quality.js
+node tests/test_quality_core.js
+node tools/audit-quality.js --check
 node tools/check-release.js
 python3 -m unittest discover -s tests -v
 ```

@@ -1750,6 +1750,15 @@ class HostDiffEnrichmentTests(unittest.TestCase):
         warnings = host.build_quality_warnings(valid_dataset())
         self.assertTrue(any("语义关键词覆盖不足" in warning for warning in warnings))
 
+    def test_quality_warning_flags_verification_target_and_platform_claim(self):
+        dataset = valid_dataset()
+        dataset["items"][0]["evidenceStatus"] = "partial"
+        dataset["items"][0]["evidenceRefs"][0]["claims"] = ["existence"]
+        dataset["items"][0]["platforms"] = ["mac"]
+        warnings = host.build_quality_warnings(dataset)
+        self.assertTrue(any("严格核验率不足" in warning for warning in warnings))
+        self.assertTrue(any("平台证据不足" in warning for warning in warnings))
+
     def test_quality_warning_flags_example_regression(self):
         previous = valid_dataset()
         previous["items"][0]["examples"] = [

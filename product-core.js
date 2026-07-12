@@ -479,6 +479,7 @@
           recentRank: recentMap.get(key),
           usageCount: usageMap.get(key),
           matchMode: options.matchMode,
+          platform: options.platform,
           searchIndex: entry.searchIndex,
         });
         const matchReason = score >= 0 && query.trim()
@@ -488,10 +489,18 @@
             categoryLabel: entry.categoryLabel,
           })
           : null;
-        return { ...entry, score, originalIndex, matchReason };
+        const platformInfo = options.platform ? getPlatformCommand(entry.item, options.platform) : null;
+        const qualityRank = (entry.item.evidenceStatus === "verified" ? 4 : entry.item.evidenceStatus === "partial" ? 2 : 0)
+          + (entry.item.examples?.length ? 1 : 0)
+          + (platformInfo && !platformInfo.unsupported ? (platformInfo.usedFallback ? 1 : 2) : 0);
+        return { ...entry, score, qualityRank, originalIndex, matchReason };
       })
       .filter((entry) => entry.score >= 0)
-      .sort((a, b) => b.score - a.score || a.originalIndex - b.originalIndex);
+      .sort((a, b) => b.score - a.score
+        || (normalizeText(a.displayCmd || a.item.cmd) === normalizeText(b.displayCmd || b.item.cmd)
+          ? b.qualityRank - a.qualityRank
+          : 0)
+        || a.originalIndex - b.originalIndex);
   }
 
   const api = {

@@ -14,6 +14,11 @@ const baseItem = {
 assert(core.scoreItem(baseItem, "/clear") > core.scoreItem(baseItem, "clear"));
 assert(core.scoreItem(baseItem, "重置") > 0, "Chinese synonym should match clear/reset");
 assert(core.scoreItem(baseItem, "会话") > 0, "Context should be searchable");
+const qualityRanked = core.rankItems([
+  { toolId: "x", itemId: "u", item: { ...baseItem, cmd: "/resume", evidenceStatus: "unverified" } },
+  { toolId: "y", itemId: "v", item: { ...baseItem, cmd: "/resume", evidenceStatus: "verified", examples: [{ value: "x" }] } },
+], "会话", { platform: "mac" });
+assert.deepStrictEqual(qualityRanked.map((entry) => entry.itemId), ["v", "u"], "quality should break otherwise equal search matches");
 assert(core.scoreItem(baseItem, "清空 会话") > 0, "All query tokens should match");
 assert.strictEqual(core.scoreItem(baseItem, "清空 模型"), -1, "Missing query tokens should reject by default");
 assert(core.scoreItem(baseItem, "清空 模型", { matchMode: "any" }) > 0, "Relaxed search should match any token");

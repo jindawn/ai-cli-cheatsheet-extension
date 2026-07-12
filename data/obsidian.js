@@ -9,10 +9,11 @@ window.CHEATSHEET_DATA["obsidian"] = {
     "builtIn": false,
     "updatePolicy": "manual-only",
     "contentCheckedAt": "2026-07-07",
-    "sourceCheckedAt": "2026-07-07",
-    "sourceUrl": "https://help.obsidian.md/",
+    "sourceCheckedAt": "2026-07-12",
+    "sourceUrl": "https://obsidian.md/help",
     "sourceTier": "official",
     "coverage": "Core default keyboard shortcuts from the official help documentation",
+    "unverifiedPolicy": "官方帮助未提供稳定的逐条默认键位定位；这些快捷键保留为待人工复核的常用子集",
     "platforms": [
       "mac",
       "windows",
@@ -32,11 +33,11 @@ window.CHEATSHEET_DATA["obsidian"] = {
           "examples",
           "cross-check"
         ],
-        "resolvedUrl": "https://help.obsidian.md/",
+        "resolvedUrl": "https://obsidian.md/help",
         "pageTitle": "Obsidian Help",
-        "checkedAt": "2025-04-10",
-        "url": "https://help.obsidian.md/",
-        "lastVerifiedAt": "2025-04-10"
+        "checkedAt": "2026-07-12",
+        "url": "https://obsidian.md/help",
+        "lastVerifiedAt": "2026-07-12"
       }
     ],
     "verificationStatus": "model-knowledge"
@@ -60,9 +61,9 @@ window.CHEATSHEET_DATA["obsidian"] = {
           "description": "命令面板打开后显示最近使用的命令，输入关键词可以筛选命令列表，选中后回车执行。",
           "copyable": false,
           "authorship": "editorial",
-          "evidenceTier": "first-party",
+          "evidenceTier": "none",
           "adaptation": "adapted",
-          "sourceType": "official",
+          "sourceType": "manual",
           "sourceIds": [
             "obsidian-help"
           ],
@@ -96,9 +97,9 @@ window.CHEATSHEET_DATA["obsidian"] = {
           "description": "快速切换器会根据输入模糊匹配文件名、路径和别名，支持打开或创建笔记。",
           "copyable": false,
           "authorship": "editorial",
-          "evidenceTier": "first-party",
+          "evidenceTier": "none",
           "adaptation": "adapted",
-          "sourceType": "official",
+          "sourceType": "manual",
           "sourceIds": [
             "obsidian-help"
           ],
@@ -132,9 +133,9 @@ window.CHEATSHEET_DATA["obsidian"] = {
           "description": "Obsidian 会在当前库的默认位置生成未命名新笔记，光标自动进入编辑区域。",
           "copyable": false,
           "authorship": "editorial",
-          "evidenceTier": "first-party",
+          "evidenceTier": "none",
           "adaptation": "adapted",
-          "sourceType": "official",
+          "sourceType": "manual",
           "sourceIds": [
             "obsidian-help"
           ],
@@ -167,9 +168,9 @@ window.CHEATSHEET_DATA["obsidian"] = {
           "description": "Obsidian 虽然具备自动保存，但手动保存可以立即触发同步或备份流程，并确认无写入冲突。",
           "copyable": false,
           "authorship": "editorial",
-          "evidenceTier": "first-party",
+          "evidenceTier": "none",
           "adaptation": "adapted",
-          "sourceType": "official",
+          "sourceType": "manual",
           "sourceIds": [
             "obsidian-help"
           ],
@@ -203,9 +204,9 @@ window.CHEATSHEET_DATA["obsidian"] = {
           "description": "若未选中文本，Obsidian 会在光标两侧插入 **，等待输入粗体文字；选中文本时会将选中内容包裹在 ** 中。",
           "copyable": false,
           "authorship": "editorial",
-          "evidenceTier": "first-party",
+          "evidenceTier": "none",
           "adaptation": "adapted",
-          "sourceType": "official",
+          "sourceType": "manual",
           "sourceIds": [
             "obsidian-help"
           ],
@@ -239,9 +240,9 @@ window.CHEATSHEET_DATA["obsidian"] = {
           "description": "用法与加粗类似，插入单个星号或下划线包裹目标文字。",
           "copyable": false,
           "authorship": "editorial",
-          "evidenceTier": "first-party",
+          "evidenceTier": "none",
           "adaptation": "adapted",
-          "sourceType": "official",
+          "sourceType": "manual",
           "sourceIds": [
             "obsidian-help"
           ],
@@ -275,9 +276,9 @@ window.CHEATSHEET_DATA["obsidian"] = {
           "description": "Obsidian 会自动将选中文字作为链接文本，生成 [官网](光标位置) 并让你填入 URL。",
           "copyable": false,
           "authorship": "editorial",
-          "evidenceTier": "first-party",
+          "evidenceTier": "none",
           "adaptation": "adapted",
-          "sourceType": "official",
+          "sourceType": "manual",
           "sourceIds": [
             "obsidian-help"
           ],
@@ -310,9 +311,9 @@ window.CHEATSHEET_DATA["obsidian"] = {
           "description": "搜索栏出现在编辑区域顶部，实时高亮匹配文字并显示匹配计数。",
           "copyable": false,
           "authorship": "editorial",
-          "evidenceTier": "first-party",
+          "evidenceTier": "none",
           "adaptation": "adapted",
-          "sourceType": "official",
+          "sourceType": "manual",
           "sourceIds": [
             "obsidian-help"
           ],
@@ -345,9 +346,9 @@ window.CHEATSHEET_DATA["obsidian"] = {
           "description": "Obsidian 会打开全局搜索面板，列出所有包含关键词的文件及匹配所在行。",
           "copyable": false,
           "authorship": "editorial",
-          "evidenceTier": "first-party",
+          "evidenceTier": "none",
           "adaptation": "adapted",
-          "sourceType": "official",
+          "sourceType": "manual",
           "sourceIds": [
             "obsidian-help"
           ],
@@ -380,9 +381,9 @@ window.CHEATSHEET_DATA["obsidian"] = {
           "description": "替换功能在搜索栏基础上增加替换输入框，支持逐一或全部替换。",
           "copyable": false,
           "authorship": "editorial",
-          "evidenceTier": "first-party",
+          "evidenceTier": "none",
           "adaptation": "adapted",
-          "sourceType": "official",
+          "sourceType": "manual",
           "sourceIds": [
             "obsidian-help"
           ],
@@ -415,9 +416,9 @@ window.CHEATSHEET_DATA["obsidian"] = {
           "description": "支持多步撤销，也适用于移动、格式化等操作。",
           "copyable": false,
           "authorship": "editorial",
-          "evidenceTier": "first-party",
+          "evidenceTier": "none",
           "adaptation": "adapted",
-          "sourceType": "official",
+          "sourceType": "manual",
           "sourceIds": [
             "obsidian-help"
           ],
@@ -450,9 +451,9 @@ window.CHEATSHEET_DATA["obsidian"] = {
           "description": "与撤销相对应，逐步向前恢复历史状态。部分平台也可能用 Ctrl/Cmd+Y，但 Obsidian 默认使用 Shift+Z。",
           "copyable": false,
           "authorship": "editorial",
-          "evidenceTier": "first-party",
+          "evidenceTier": "none",
           "adaptation": "adapted",
-          "sourceType": "official",
+          "sourceType": "manual",
           "sourceIds": [
             "obsidian-help"
           ],
@@ -486,9 +487,9 @@ window.CHEATSHEET_DATA["obsidian"] = {
           "description": "在实时预览或旧版编辑/预览模式间切换，具体行为取决于 Obsidian 的设置。",
           "copyable": false,
           "authorship": "editorial",
-          "evidenceTier": "first-party",
+          "evidenceTier": "none",
           "adaptation": "adapted",
-          "sourceType": "official",
+          "sourceType": "manual",
           "sourceIds": [
             "obsidian-help"
           ],
@@ -521,9 +522,9 @@ window.CHEATSHEET_DATA["obsidian"] = {
           "description": "整行文本上移，适用于无序列表、有序列表或普通段落。",
           "copyable": false,
           "authorship": "editorial",
-          "evidenceTier": "first-party",
+          "evidenceTier": "none",
           "adaptation": "adapted",
-          "sourceType": "official",
+          "sourceType": "manual",
           "sourceIds": [
             "obsidian-help"
           ],
@@ -556,9 +557,9 @@ window.CHEATSHEET_DATA["obsidian"] = {
           "description": "与向上移动对称，常用于整理结构化内容。",
           "copyable": false,
           "authorship": "editorial",
-          "evidenceTier": "first-party",
+          "evidenceTier": "none",
           "adaptation": "adapted",
-          "sourceType": "official",
+          "sourceType": "manual",
           "sourceIds": [
             "obsidian-help"
           ],

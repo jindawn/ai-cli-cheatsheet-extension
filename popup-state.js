@@ -742,6 +742,11 @@
     return entryIndex.entries.flatMap((base) => {
       if (!ids.has(base.toolId)) return [];
       if (state.activeCat && base.rawItem.cat !== state.activeCat) return [];
+      if (state.activeEvidence && (base.rawItem.evidenceStatus || "unverified") !== state.activeEvidence) return [];
+      if (state.activeExampleFilter === "with-examples" && !base.item.examples?.length) return [];
+      if (state.activeExampleFilter === "platform-examples" && !(base.item.examples || []).some((example) =>
+        example.platforms?.includes(state.platform) || Boolean(example.platformValues?.[state.platform])
+      )) return [];
       if (state.activeShellFilter && base.toolId === "shell") {
         const filter = SHELL_FILTERS.find((candidate) => candidate.key === state.activeShellFilter);
         if (filter && base.rawItem.shell?.[filter.field] !== filter.value) return [];
@@ -796,6 +801,8 @@
     else if (state.activeTool === "favourites") parts.push("收藏");
     else if (state.activeTool !== "all" && data[state.activeTool]) parts.push(data[state.activeTool].meta.name);
     if (state.activeCat) parts.push(CAT_LABEL[state.activeCat]);
+    if (state.activeEvidence) parts.push({ verified: "已核验", partial: "部分核验", unverified: "未核验" }[state.activeEvidence]);
+    if (state.activeExampleFilter) parts.push(state.activeExampleFilter === "platform-examples" ? "当前平台用法" : "有用法");
     const shellFilter = SHELL_FILTERS.find((filter) => filter.key === state.activeShellFilter);
     if (shellFilter) parts.push(shellFilter.label);
     return parts.join(" ＋ ");

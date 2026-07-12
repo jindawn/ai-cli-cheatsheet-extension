@@ -12,6 +12,8 @@ const catalogData = Object.fromEntries((window.CHEATSHEET_TOOL_CATALOG || []).ma
 let activeTool = "all";
 let activeCat = null;
 let activeShellFilter = null;
+let activeEvidence = null;
+let activeExampleFilter = null;
 let favourites = new Set();
 let recents = [];
 let enabledTools = new Set();
@@ -115,6 +117,8 @@ function currentState() {
     activeTool,
     activeCat,
     activeShellFilter,
+    activeEvidence,
+    activeExampleFilter,
     favourites,
     recents,
     enabledTools,
@@ -137,6 +141,8 @@ function clearHomeFilters() {
     activeTool = "all";
     activeCat = null;
     activeShellFilter = null;
+    activeEvidence = null;
+    activeExampleFilter = null;
   });
 }
 
@@ -309,6 +315,16 @@ function renderFilters() {
   shellFilters.querySelectorAll("[data-shell-filter]").forEach((button) => button.addEventListener("click", () => {
     applyFilter(() => { activeShellFilter = button.dataset.shellFilter || null; });
   }));
+  const evidenceFilters = document.getElementById("evidenceFilters");
+  evidenceFilters.innerHTML = html.evidenceHtml;
+  evidenceFilters.querySelectorAll("[data-evidence]").forEach((button) => button.addEventListener("click", () => {
+    applyFilter(() => { activeEvidence = activeEvidence === button.dataset.evidence ? null : button.dataset.evidence; });
+  }));
+  const exampleFilters = document.getElementById("exampleFilters");
+  exampleFilters.innerHTML = html.exampleHtml;
+  exampleFilters.querySelectorAll("[data-example-filter]").forEach((button) => button.addEventListener("click", () => {
+    applyFilter(() => { activeExampleFilter = activeExampleFilter === button.dataset.exampleFilter ? null : button.dataset.exampleFilter; });
+  }));
   const summary = document.getElementById("filterSummary");
   summary.innerHTML = html.summaryHtml;
   summary.querySelector("[data-clear-filters]")?.addEventListener("click", clearHomeFilters);
@@ -320,10 +336,10 @@ function rankVisibleEntries(query) {
   const state = currentState();
   const entries = STATE.collectEntries(entryIndex, getAllData(), CORE, state);
   const recentOrder = new Map(recents.map((item, index) => [`${item.toolId}::${item.itemId}`, index]));
-  const ranked = CORE.rankItems(entries, query, { favourites, recents });
+  const ranked = CORE.rankItems(entries, query, { favourites, recents, platform });
   let relaxed = false;
   if (query.trim() && !ranked.length && CORE.splitQuery(query).length > 1) {
-    ranked.push(...CORE.rankItems(entries, query, { favourites, recents, matchMode: "any" }));
+    ranked.push(...CORE.rankItems(entries, query, { favourites, recents, matchMode: "any", platform }));
     relaxed = ranked.length > 0;
   }
   if (activeTool === "recent" && !query.trim()) ranked.sort((a, b) =>

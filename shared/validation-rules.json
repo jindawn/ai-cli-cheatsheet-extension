@@ -14,6 +14,19 @@
   "adaptations": ["verbatim", "adapted", "scenario-derived"],
   "evidenceStatuses": ["verified", "partial", "unverified"],
   "evidenceClaims": ["existence", "semantics", "platform", "example"],
+  "qualityGates": {
+    "coreTools": ["antigravity-cli", "claude-code", "codex", "gemini-cli", "openclaw", "opencode"],
+    "coreVerifiedRatio": 0.9,
+    "defaultVerifiedRatio": 0.75,
+    "newItemVerifiedRatio": 1,
+    "highRiskVerifiedRatio": 0.9,
+    "maxUnexplainedUnverified": 0,
+    "maxRegressionPoints": 0.02,
+    "temporaryTargetExceptions": {
+      "antigravity-cli": "官方详细命令参考尚未覆盖迁移期候选；仅保留已有明确隔离标记的数据",
+      "obsidian": "官方帮助没有稳定的逐条默认键位定位；快捷键作为待人工复核子集隔离"
+    }
+  },
   "shell": {
     "layers": ["syntax", "keyword", "builtin", "option", "shortcut", "config"],
     "portabilities": ["posix", "bash", "zsh", "cross-platform"],

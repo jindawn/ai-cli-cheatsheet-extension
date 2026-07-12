@@ -18,6 +18,7 @@ const loader = require("../popup-loader.js");
 assert(html.includes('id="toggleFilters"') && html.includes('aria-controls="filterPanel"'), "secondary filters should use an accessible disclosure");
 assert(html.includes('id="toolFilters"'), "the filter panel should retain complete tool filtering");
 assert(html.includes('id="categoryFilters" class="filters"'), "the filter panel should retain category filtering");
+assert(html.includes('id="evidenceFilters"') && html.includes('id="exampleFilters"'), "quality and usage facets should be available");
 assert(html.includes('class="search-shortcut"'), "search should display its keyboard shortcut");
 assert(html.includes('id="shellFilters"'), "Shell-specific filters should have a dedicated container");
 assert(html.includes("Git / Linux / Shell"), "terminal onboarding preset should expose Shell");
@@ -188,6 +189,9 @@ assert(filters.quickHtml.includes('data-tool="recent"') && filters.quickHtml.inc
 assert(filters.toolHtml.includes('data-tool="alpha"') && filters.toolHtml.includes("active"), "active tool chip should render in the filter panel");
 assert(filters.categoryHtml.includes('data-cat="shortcut"') && filters.categoryHtml.includes("active"), "active category chip should render");
 assert(filters.summaryHtml.includes("当前筛选") && filters.summaryHtml.includes("data-clear-filters"), "active filters should render a clearable summary");
+const qualityFilters = render.renderFilters(data, state, { ...baseState, activeEvidence: "verified", activeExampleFilter: "platform-examples" });
+assert(qualityFilters.evidenceHtml.includes('data-evidence="verified"') && qualityFilters.evidenceHtml.includes("active"), "verified facet should render active state");
+assert(qualityFilters.exampleHtml.includes('data-example-filter="platform-examples"'), "platform usage facet should render");
 
 const macRecommendations = state.recommendedTools(data, "mac");
 assert.deepStrictEqual(macRecommendations.slice(0, 3).map((item) => item.tool), ["ghostty", "warp", "wezterm"], "macOS recommendations should sort by priority");
@@ -413,6 +417,10 @@ assert(shellFilters.shellHtml.includes('data-shell-filter="topic:completion"'), 
 assert(shellFilters.shellHtml.includes("补全") && shellFilters.shellHtml.includes("active"), "active Shell facet should be visible");
 
 const platformEntries = state.collectEntries(entryIndex, data, core, baseState);
+const verifiedEntries = state.collectEntries(entryIndex, data, core, { ...baseState, activeEvidence: "verified" });
+assert(verifiedEntries.every((entry) => entry.item.evidenceStatus === "verified"), "evidence facet should filter entries");
+const platformExampleEntries = state.collectEntries(entryIndex, data, core, { ...baseState, activeExampleFilter: "platform-examples" });
+assert(platformExampleEntries.every((entry) => entry.item.examples?.some((example) => example.platforms?.includes("windows") || example.platformValues?.windows)), "platform usage facet should require current-platform examples");
 const openEntry = platformEntries.find((entry) => entry.itemId === "open-item");
 const linuxOnly = platformEntries.find((entry) => entry.itemId === "linux-only");
 assert.strictEqual(openEntry.displayCmd, "Ctrl+P", "platform command should refresh for Windows");

@@ -134,14 +134,15 @@
 
   function renderFilters(data, helpers, state) {
     const quickItems = [
-      ["all", "全部"],
       ["recent", "🕘 最近"],
       ["favourites", "⭐ 收藏"],
-      ...helpers.visibleToolIds(data, state.enabledTools).map((id) => [id, data[id].meta.name]),
     ];
     const quickHtml = quickItems.map(([id, label]) =>
       `<button class="chip ${state.activeTool === id ? "active" : ""}" data-tool="${id}">${escapeHtml(label)}</button>`
     ).join("");
+    const toolHtml = [["all", "全部工具"], ...helpers.visibleToolIds(data, state.enabledTools).map((id) => [id, data[id].meta.name])]
+      .map(([id, label]) => `<button class="chip ${state.activeTool === id ? "active" : ""}" data-tool="${id}">${escapeHtml(label)}</button>`)
+      .join("");
     const categoryHtml = Object.entries(helpers.CAT_LABEL).map(([id, label]) =>
       `<button class="chip ${state.activeCat === id ? "active" : ""}" data-cat="${id}">${label}</button>`
     ).join("") + `<button id="clearFilters" class="chip filter-clear">清除筛选</button>`;
@@ -153,7 +154,12 @@
         ),
       ].join("")
       : "";
-    return { quickHtml, categoryHtml, shellHtml };
+    const filterLabel = helpers.activeFilterLabel(data, state);
+    const hasFilter = Boolean(state.activeCat || state.activeShellFilter || !["all", "recent", "favourites"].includes(state.activeTool));
+    const summaryHtml = hasFilter
+      ? `<span>当前筛选：${escapeHtml(filterLabel)}</span><button class="filter-summary-clear" data-clear-filters>清除</button>`
+      : "";
+    return { quickHtml, toolHtml, categoryHtml, shellHtml, summaryHtml, hasFilter };
   }
 
   function renderRow(entry, query, ctx, includeBadge = false) {
@@ -370,12 +376,19 @@
       const suggestHtml = query.trim() && !hasFilter && state.activeTool !== "recent" && state.activeTool !== "favourites"
         ? renderUninstalledSuggestions(query, ctx)
         : "";
-      return suggestHtml + `<div class="empty">${escapeHtml(emptyMessage)}</div>`;
+      const clear = hasFilter ? `<button class="text-btn" data-clear-filters>清除筛选</button>` : "";
+      const welcome = !query.trim() && state.activeTool === "all" && !hasFilter
+        ? `<div class="empty empty-welcome"><strong>输入用途或命令，立即开始速查</strong><span>例如：提交代码、查看端口、撤销修改</span><button class="text-btn" data-browse-all>浏览全部命令</button></div>`
+        : `<div class="empty">${escapeHtml(emptyMessage)}${clear}</div>`;
+      return suggestHtml + welcome;
     }
 
     if (query.trim() || state.activeTool === "recent" || state.activeTool === "favourites") {
       const visible = entries.slice(0, state.searchLimit);
-      return visible.map((entry) => renderRow(entry, query, ctx, true)).join("")
+      const unsupported = visible.length && visible.every((entry) => entry.platformInfo.unsupported)
+        ? `<div class="result-notice">这些结果在当前平台不可用，可在管理中切换平台。</div>`
+        : "";
+      return unsupported + visible.map((entry) => renderRow(entry, query, ctx, true)).join("")
         + (entries.length > visible.length ? `<button class="text-btn more-btn" data-more-results>继续显示（剩余 ${entries.length - visible.length} 条）</button>` : "");
     }
 
@@ -398,7 +411,7 @@
     const synonyms = query.trim() ? core.expandedSynonyms(query).slice(0, 4) : [];
     return [
       `共 ${entries.length} 条结果`,
-      relaxed ? '<span class="relaxed-note">已放宽为任一关键词匹配</span>' : "",
+      relaxed ? '<span class="relaxed-note">无完全匹配，以下为部分关键词结果</span>' : "",
       filterLabel ? `筛选：${escapeHtml(filterLabel)}` : "",
       synonyms.length ? `同义词：${escapeHtml(synonyms.join("、"))}` : "",
       state.platform === "mac" ? "macOS" : state.platform === "windows" ? "Windows" : "Linux",

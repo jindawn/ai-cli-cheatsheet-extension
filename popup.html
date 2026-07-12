@@ -9,10 +9,14 @@
 <section id="homeView" class="view active">
   <div class="header">
     <div class="title-row"><div class="brand">🗂 AI CLI 速查表</div><button id="openManage" class="icon-btn" title="管理工具和数据">⚙ 管理</button></div>
-    <div class="search-wrap"><span class="search-icon">⌕</span><input id="search" aria-label="搜索命令" placeholder="搜索命令、中文用途或英文说明…" autocomplete="off"><button id="clearSearch" title="清空搜索" aria-label="清空搜索">×</button></div>
-    <div id="quickFilters" class="toolbar"></div>
-    <div id="categoryFilters" class="filters"></div>
-    <div id="shellFilters" class="filters shell-filters" aria-label="Shell 维度筛选"></div>
+    <div class="search-wrap"><span class="search-icon">⌕</span><input id="search" aria-label="搜索命令" placeholder="搜索命令或用途…" autocomplete="off"><kbd class="search-shortcut" aria-hidden="true">/</kbd><button id="clearSearch" title="清空搜索" aria-label="清空搜索">×</button></div>
+    <div class="home-toolbar"><div id="quickFilters" class="toolbar" aria-label="常用视图"></div><button id="toggleFilters" class="chip filter-trigger" aria-expanded="false" aria-controls="filterPanel">筛选</button></div>
+    <div id="filterSummary" class="filter-summary" aria-live="polite"></div>
+    <div id="filterPanel" class="filter-panel" hidden>
+      <div class="filter-label">工具</div><div id="toolFilters" class="filters"></div>
+      <div class="filter-label">类型</div><div id="categoryFilters" class="filters"></div>
+      <div id="shellFilters" class="filters shell-filters" aria-label="Shell 维度筛选"></div>
+    </div>
   </div>
   <div id="countBar" class="count-bar" role="status" aria-live="polite"></div>
   <div id="main"></div>

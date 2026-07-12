@@ -15,8 +15,10 @@ const toast = require("../popup-toast.js");
 const dialogs = require("../popup-dialogs.js");
 const loader = require("../popup-loader.js");
 
-assert(!html.includes('id="toolSelect"'), "tool filters should remain directly visible");
-assert(html.includes('id="categoryFilters" class="filters"'), "category filters should remain directly visible");
+assert(html.includes('id="toggleFilters"') && html.includes('aria-controls="filterPanel"'), "secondary filters should use an accessible disclosure");
+assert(html.includes('id="toolFilters"'), "the filter panel should retain complete tool filtering");
+assert(html.includes('id="categoryFilters" class="filters"'), "the filter panel should retain category filtering");
+assert(html.includes('class="search-shortcut"'), "search should display its keyboard shortcut");
 assert(html.includes('id="shellFilters"'), "Shell-specific filters should have a dedicated container");
 assert(html.includes("Git / Linux / Shell"), "terminal onboarding preset should expose Shell");
 assert(html.includes('id="recommendedTools"'), "management view should expose recommended tool additions");
@@ -182,8 +184,10 @@ const baseState = {
 };
 
 const filters = render.renderFilters(data, state, { ...baseState, activeTool: "alpha", activeCat: "shortcut" });
-assert(filters.quickHtml.includes('data-tool="alpha"') && filters.quickHtml.includes("active"), "active tool chip should render");
+assert(filters.quickHtml.includes('data-tool="recent"') && filters.quickHtml.includes('data-tool="favourites"'), "quick filters should focus on recent and favourites");
+assert(filters.toolHtml.includes('data-tool="alpha"') && filters.toolHtml.includes("active"), "active tool chip should render in the filter panel");
 assert(filters.categoryHtml.includes('data-cat="shortcut"') && filters.categoryHtml.includes("active"), "active category chip should render");
+assert(filters.summaryHtml.includes("当前筛选") && filters.summaryHtml.includes("data-clear-filters"), "active filters should render a clearable summary");
 
 const macRecommendations = state.recommendedTools(data, "mac");
 assert.deepStrictEqual(macRecommendations.slice(0, 3).map((item) => item.tool), ["ghostty", "warp", "wezterm"], "macOS recommendations should sort by priority");
@@ -266,6 +270,7 @@ assert(bridgeEmpty.includes("速查表还没收录"), "the add CTA should explai
 assert(!render.renderResults([], "zzzznotatool", { activeTool: "all", activeCat: null }, bridgeCtx).includes("data-suggest-add-tool"), "no matching uninstalled tool should not render a CTA");
 assert(!render.renderResults([], "ripgrep", { activeTool: "all", activeCat: "shortcut" }, bridgeCtx).includes("data-suggest-add-tool"), "filter-only empty state should not show the add CTA");
 assert(!render.renderResults([], "", { activeTool: "recent", activeCat: null }, bridgeCtx).includes("data-suggest-add-tool"), "the recent tab empty state should not show the add CTA");
+assert(render.renderResults([], "", { activeTool: "all", activeCat: null }, bridgeCtx).includes("data-browse-all"), "an empty dashboard should teach search and offer full browsing");
 // CTA 与管理面板一致：尊重已忽略项、纳入 AI 现荐
 const bridgeDismissed = { ...bridgeCtx, dismissedRecommendations: new Set(["ripgrep"]) };
 assert(!render.renderResults([], "ripgrep", { activeTool: "all", activeCat: null }, bridgeDismissed).includes("data-suggest-add-tool"), "dismissed tools should not be offered by the empty-search CTA");

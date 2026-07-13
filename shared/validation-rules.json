@@ -16,6 +16,24 @@
   "evidenceClaims": ["existence", "semantics", "platform", "example"],
   "officialCoverageStatuses": ["complete", "unconfirmed"],
   "officialCoverageScope": "all-command-entrypoints",
+  "groundingClaims": ["value", "behavior", "expected", "platform", "prerequisite", "caveat"],
+  "scenarioQuality": {
+    "reviewVersion": "scenario-grounding-v2",
+    "requiredFields": ["scenario", "goal", "value", "description", "expected"],
+    "maxRepeatedText": 3,
+    "forbiddenPhrases": [
+      "需要确认当前 Docker 版本是否支持",
+      "需要确认当前版本是否支持",
+      "打开该命令的本机帮助而不执行实际操作",
+      "终端显示 Usage、Options 和命令说明",
+      "当前交互流程中需要",
+      "保留终端中的执行记录",
+      "工具执行“",
+      "若条件不满足",
+      "这一具体操作"
+    ],
+    "placeholderPattern": "\\b(?:CONTAINER|IMAGE|SERVICE|NETWORK|VOLUME|NODE|SECRET|CONFIG|PLUGIN|CONTEXT|COMMAND|FILE)\\b"
+  },
   "qualityGates": {
     "coreTools": ["antigravity-cli", "claude-code", "codex", "gemini-cli", "openclaw", "opencode"],
     "coreVerifiedRatio": 0.9,

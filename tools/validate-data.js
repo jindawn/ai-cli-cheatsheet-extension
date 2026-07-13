@@ -23,12 +23,16 @@ const EVIDENCE_TIERS = rules.evidenceTiers;
 const ADAPTATIONS = rules.adaptations;
 const EVIDENCE_STATUSES = rules.evidenceStatuses;
 const EVIDENCE_CLAIMS = rules.evidenceClaims;
+const GROUNDING_CLAIMS = rules.groundingClaims;
 const EXAMPLE_SOURCE_TYPES = rules.exampleSourceTypes;
 const SHELL_LAYERS = rules.shell.layers;
 const SHELL_PORTABILITIES = rules.shell.portabilities;
 const SHELL_TOPICS = rules.shell.topics;
 const REGISTRY_BY_ID = new Map(sourceRegistry.entries.map((entry) => [entry.id, entry]));
 const EXAMPLE_UI_TEXT_FIELDS = ["description", "scenario", "goal", "expected", "prerequisites", "caveat", "warning"];
+const SCENARIO_REQUIRED_FIELDS = rules.scenarioQuality.requiredFields;
+const FORBIDDEN_SCENARIO_PHRASES = rules.scenarioQuality.forbiddenPhrases;
+const SCENARIO_PLACEHOLDER_RE = new RegExp(rules.scenarioQuality.placeholderPattern);
 
 const context = { window: {} };
 vm.createContext(context);
@@ -150,40 +154,27 @@ if (fs.existsSync(inventoryDir)) {
     officialInventories.set(name.slice(0, -5), inventory);
   }
 }
-const enrichmentFile = path.join(root, "usage-examples.js");
-const enrichmentDir = path.join(root, "enrichments");
+const reviewDir = path.join(root, "shared", "scenario-reviews");
+const scenarioReviews = new Map();
+if (fs.existsSync(reviewDir)) {
+  for (const name of fs.readdirSync(reviewDir).filter((value) => value.endsWith(".json"))) {
+    scenarioReviews.set(name.slice(0, -5), JSON.parse(fs.readFileSync(path.join(reviewDir, name), "utf8")));
+  }
+}
+
+function exampleContentHash(itemId, exampleIndex, example) {
+  const clean = Object.fromEntries(Object.entries(example).filter(([key]) => key !== "review"));
+  return `sha256:${crypto.createHash("sha256").update(JSON.stringify({
+    itemId,
+    index: exampleIndex,
+    example: clean,
+  })).digest("hex")}`;
+}
 vm.runInContext(fs.readFileSync(path.join(root, "product-core.js"), "utf8"), context, { filename: "product-core.js" });
-for (const filename of fs.readdirSync(enrichmentDir).filter((name) => name.endsWith(".js")).sort((left, right) =>
-  Number(left.startsWith("migrated-")) - Number(right.startsWith("migrated-")) || left.localeCompare(right)
-)) {
-  const fullPath = path.join(enrichmentDir, filename);
-  vm.runInContext(fs.readFileSync(fullPath, "utf8"), context, { filename: fullPath });
-}
-vm.runInContext(fs.readFileSync(enrichmentFile, "utf8"), context, { filename: enrichmentFile });
-if (typeof context.window.CHEATSHEET_BUILD_FULL_ENRICHMENTS !== "function") {
-  fail("usage-examples.js must expose CHEATSHEET_BUILD_FULL_ENRICHMENTS");
-}
-context.window.CHEATSHEET_BUILD_FULL_ENRICHMENTS(data);
-const legacyWarnings = context.window.CHEATSHEET_ENRICHMENT_WARNINGS || [];
-if (legacyWarnings.length) {
-  console.warn(`Legacy enrichment lookups (${legacyWarnings.length}):\n${legacyWarnings.join("\n")}`);
-}
-// 把 curated 富化按 item 引用记录到旁路表，校验时按需叠加，不改写共享数据对象。
+// All searchable content is now materialized in data/*.js. Sidecar
+// enrichments remain readable for migration history, but can no longer hide a
+// missing example or bypass the global official/scenario contract.
 const enrichmentByItem = new WeakMap();
-for (const [toolId, enrichments] of Object.entries(context.window.CHEATSHEET_ENRICHMENTS || {})) {
-  if (!data[toolId]) fail(`usage-examples.js: unknown tool ${toolId}`);
-  if (Object.keys(enrichments).length < 10) {
-    fail(`usage-examples.js: ${toolId} must keep at least 10 curated entries`);
-  }
-  for (const [lookup, enrichment] of Object.entries(enrichments)) {
-    const [command, itemContext = ""] = lookup.split("\0");
-    const item = data[toolId].items.find((candidate) =>
-      candidate.cmd === command && (candidate.context || "") === itemContext
-    );
-    if (!item) fail(`usage-examples.js: missing target ${toolId} ${command} (${itemContext})`);
-    enrichmentByItem.set(item, enrichment);
-  }
-}
 
 for (const id of files) {
   const tool = data[id];
@@ -193,6 +184,10 @@ for (const id of files) {
     if (typeof tool.meta?.[field] !== "string" || !tool.meta[field].trim()) {
       fail(`${id}: invalid meta.${field}`);
     }
+  }
+  if (typeof tool.meta.coverage !== "string" || !tool.meta.coverage.trim()
+    || /核心命令|常用子集|尽量完整/.test(tool.meta.coverage)) {
+    fail(`${id}: meta.coverage must declare the exact official inventory scope`);
   }
   if (!/^#[0-9a-fA-F]{6}$/.test(tool.meta?.color || "")) fail(`${id}: invalid color`);
   if (tool.meta.sourceUrl !== undefined && !/^https:\/\/\S+$/.test(tool.meta.sourceUrl)) {
@@ -235,7 +230,8 @@ for (const id of files) {
         fail(`${id}: complete officialCoverage is inconsistent`);
       }
     }
-  }
+  } else fail(`${id}: officialCoverage is required`);
+  if (officialCoverage.status !== "complete") fail(`${id}: officialCoverage must be complete`);
   if (tool.meta.builtIn === true && tool.meta.verificationStatus !== "manual") {
     fail(`${id}: built-in dataset must declare manual maintenance`);
   }
@@ -276,6 +272,7 @@ for (const id of files) {
       }
     }
   } else fail(`${id}: meta.sources required`);
+  for (const sourceId of officialCoverage.sourceIds) usedSourceIds.add(sourceId);
   const sourceById = new Map(tool.meta.sources.map((source) => [source.id, source]));
   if (tool.meta.references !== undefined) {
     if (!Array.isArray(tool.meta.references)) fail(`${id}: invalid references`);
@@ -431,6 +428,31 @@ for (const id of files) {
         if (example.warning !== undefined && (typeof example.warning !== "string" || !example.warning.trim())) {
           fail(`${id}[${index}].examples[${exampleIndex}]: invalid warning`);
         }
+        for (const field of SCENARIO_REQUIRED_FIELDS) {
+          if (typeof example[field] !== "string" || !example[field].trim()) {
+            fail(`${id}[${index}].examples[${exampleIndex}].${field}: scenario field required`);
+          }
+        }
+        const scenarioText = SCENARIO_REQUIRED_FIELDS.map((field) => example[field]).join(" ");
+        if (FORBIDDEN_SCENARIO_PHRASES.some((phrase) => scenarioText.includes(phrase))) {
+          fail(`${id}[${index}].examples[${exampleIndex}]: generic scenario template is forbidden`);
+        }
+        if (SCENARIO_PLACEHOLDER_RE.test(example.value)) {
+          fail(`${id}[${index}].examples[${exampleIndex}]: example contains an unresolved placeholder`);
+        }
+        if (!Array.isArray(example.groundingRefs) || !example.groundingRefs.length) {
+          fail(`${id}[${index}].examples[${exampleIndex}]: groundingRefs required`);
+        }
+        for (const [groundingIndex, grounding] of example.groundingRefs.entries()) {
+          const source = sourceById.get(grounding?.sourceId);
+          if (!source || source.evidenceTier !== "first-party"
+            || !Array.isArray(grounding.claims) || !grounding.claims.length
+            || grounding.claims.some((claim) => !GROUNDING_CLAIMS.includes(claim))
+            || typeof grounding.locator !== "string" || !grounding.locator.trim()) {
+            fail(`${id}[${index}].examples[${exampleIndex}].groundingRefs[${groundingIndex}]: invalid first-party grounding`);
+          }
+          usedSourceIds.add(grounding.sourceId);
+        }
         for (const field of EXAMPLE_UI_TEXT_FIELDS) {
           if (example[field] !== undefined && !containsCjk(example[field])) {
             fail(`${id}[${index}].examples[${exampleIndex}].${field}: example UI text must include Chinese`);
@@ -473,10 +495,7 @@ for (const id of files) {
           firstPartyOnUnverified.set(id, (firstPartyOnUnverified.get(id) || 0) + 1);
         }
       });
-    } else if (id !== "shell") fail(`${id}[${index}]: examples required`);
-    if (id === "shell" && DANGEROUS_EXAMPLE_RE.test(item.cmd) && !examples?.length) {
-      fail(`${id}[${index}]: dangerous shell item requires examples`);
-    }
+    } else fail(`${id}[${index}]: examples required`);
     if (item.platformCmds !== undefined) {
       if (!item.platformCmds || typeof item.platformCmds !== "object" || Array.isArray(item.platformCmds)) {
         fail(`${id}[${index}]: invalid platformCmds`);
@@ -508,26 +527,74 @@ for (const id of files) {
     if (!inventory || !Array.isArray(inventory.entries) || !inventory.entries.length) {
       fail(`${id}: complete coverage requires shared/official-inventories/${id}.json`);
     }
+    if (inventory.schemaVersion !== 2 || inventory.toolId !== id
+      || inventory.scope !== rules.officialCoverageScope
+      || inventory.adapter?.version < 1 || !inventory.adapter?.id || !inventory.adapter?.kind
+      || inventory.closure?.status !== "closed"
+      || inventory.closure?.entryCount !== inventory.entries.length
+      || !Array.isArray(inventory.sourceIds) || !inventory.sourceIds.length) {
+      fail(`${id}: official inventory lacks deterministic adapter closure metadata`);
+    }
     const serialized = JSON.stringify(inventory.entries);
     const inventoryHash = `sha256:${crypto.createHash("sha256").update(serialized).digest("hex")}`;
     if (inventoryHash !== officialCoverage.inventoryHash) fail(`${id}: official inventory hash mismatch`);
     const available = new Map();
     for (const item of tool.items) {
       for (const command of [item.cmd, ...(item.aliases || [])]) {
-        const normalized = command.trim().toLocaleLowerCase();
-        if (available.has(normalized)) fail(`${id}: duplicate official command or alias ${command}`);
+        const normalized = `${command.trim().replace(/\s+/g, " ")}\0${(item.context || "").trim().toLocaleLowerCase()}`;
+        if (available.has(normalized)) fail(`${id}: duplicate official command, alias and context ${command}`);
         available.set(normalized, item);
       }
     }
-    const missing = inventory.entries.filter((entry) => !available.has(entry.command.toLocaleLowerCase()));
+    const missing = inventory.entries.filter((entry) => !available.has(
+      `${entry.command.trim().replace(/\s+/g, " ")}\0${(entry.context || "").toLocaleLowerCase()}`
+    ));
     if (missing.length) fail(`${id}: missing official entries: ${missing.slice(0, 12).map((entry) => entry.command).join(", ")}`);
+    const inventoryCommands = new Set(inventory.entries.map((entry) =>
+      `${entry.command.trim().replace(/\s+/g, " ")}\0${(entry.context || "").toLocaleLowerCase()}`
+    ));
+    const extraCommands = tool.items.filter((item) => !inventoryCommands.has(
+      `${item.cmd.trim().replace(/\s+/g, " ")}\0${(item.context || "").toLocaleLowerCase()}`
+    ));
+    if (extraCommands.length) fail(`${id}: entries outside official inventory: ${extraCommands.slice(0, 12).map((item) => item.cmd).join(", ")}`);
     const allowedAliases = new Set(inventory.entries.flatMap((entry) => entry.aliases || []).map((alias) => alias.toLocaleLowerCase()));
     const unknownAliases = tool.items.flatMap((item) => item.aliases || [])
       .filter((alias) => !allowedAliases.has(alias.toLocaleLowerCase()));
     if (unknownAliases.length) fail(`${id}: aliases not present in official inventory: ${unknownAliases.slice(0, 12).join(", ")}`);
-    const missingAliases = [...allowedAliases].filter((alias) => !available.has(alias));
+    const availableAliases = new Set(tool.items.flatMap((item) => item.aliases || []).map((alias) => alias.toLocaleLowerCase()));
+    const missingAliases = [...allowedAliases].filter((alias) => !availableAliases.has(alias));
     if (missingAliases.length) fail(`${id}: official aliases are not searchable: ${missingAliases.slice(0, 12).join(", ")}`);
     if (inventory.entries.length !== officialCoverage.total) fail(`${id}: officialCoverage total does not match inventory`);
+  }
+  const review = scenarioReviews.get(id);
+  if (!review || review.schemaVersion !== 1 || review.toolId !== id
+    || review.reviewVersion !== rules.scenarioQuality.reviewVersion
+    || review.status !== "passed"
+    || review.inventoryHash !== officialCoverage.inventoryHash
+    || !Array.isArray(review.examples)) {
+    fail(`${id}: valid scenario review snapshot required`);
+  }
+  const expectedReviewHashes = new Set();
+  for (const item of tool.items) {
+    for (const [exampleIndex, example] of item.examples.entries()) {
+      expectedReviewHashes.add(`${item.id}\0${exampleIndex}\0${exampleContentHash(item.id, exampleIndex, example)}`);
+    }
+  }
+  const actualReviewHashes = new Set(review.examples
+    .filter((entry) => entry.status === "passed")
+    .map((entry) => `${entry.itemId}\0${entry.exampleIndex}\0${entry.contentHash}`));
+  const staleReviews = [...expectedReviewHashes].filter((value) => !actualReviewHashes.has(value));
+  if (staleReviews.length || actualReviewHashes.size !== expectedReviewHashes.size) {
+    fail(`${id}: scenario review snapshot is missing or stale`);
+  }
+  for (const field of ["description", "scenario", "goal", "expected"]) {
+    const counts = new Map();
+    for (const item of tool.items) for (const example of item.examples) {
+      const value = example[field].trim().replace(/\s+/g, " ");
+      counts.set(value, (counts.get(value) || 0) + 1);
+    }
+    const repeated = [...counts.entries()].find(([, count]) => count > rules.scenarioQuality.maxRepeatedText);
+    if (repeated) fail(`${id}: ${field} repeated ${repeated[1]} times: ${repeated[0]}`);
   }
   const unusedSources = [...sourceIds].filter((sourceId) => !usedSourceIds.has(sourceId));
   if (unusedSources.length) fail(`${id}: unused evidence sources: ${unusedSources.join(", ")}`);

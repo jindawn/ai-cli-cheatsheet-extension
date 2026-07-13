@@ -1,0 +1,202 @@
+{
+  "schemaVersion": 1,
+  "toolId": "iterm2",
+  "reviewVersion": "scenario-grounding-v2",
+  "reviewedAt": "2026-07-13",
+  "inventoryHash": "sha256:31f9af395cc5062810497d1c78d85ada6390194999a1846d0b40f6c70461f4c9",
+  "status": "passed",
+  "examples": [
+    {
+      "itemId": "iterm2-new-tab",
+      "exampleIndex": 0,
+      "contentHash": "sha256:521cd48ce888a42e9d3b3a5ece8c1d434ee73c4d0e99fa5fda0cb760e74ad806",
+      "status": "passed"
+    },
+    {
+      "itemId": "iterm2-close-tab",
+      "exampleIndex": 0,
+      "contentHash": "sha256:6c0e9a4dc9d52973246c67e745c3395ab257ec57362320f6d8078fec9388409a",
+      "status": "passed"
+    },
+    {
+      "itemId": "iterm2-previous-tab",
+      "exampleIndex": 0,
+      "contentHash": "sha256:351371075e4abea96a39ecf94ad76f78dfa05634cb1eb2c9b1445950bb0a0051",
+      "status": "passed"
+    },
+    {
+      "itemId": "iterm2-next-tab",
+      "exampleIndex": 0,
+      "contentHash": "sha256:c9bf8fbdae3e97426568041e3486c36e54717349015f85a1ccf18704175580a1",
+      "status": "passed"
+    },
+    {
+      "itemId": "iterm2-split-vertical",
+      "exampleIndex": 0,
+      "contentHash": "sha256:5289e02d8bfb307c3f051c997fb87bb498c4bea498e0903108b4c3fff9b88a14",
+      "status": "passed"
+    },
+    {
+      "itemId": "iterm2-split-horizontal",
+      "exampleIndex": 0,
+      "contentHash": "sha256:a4092f387d1c0dbedbfeeafb93beec33b7d649674d9904d6324aace40d8cee2b",
+      "status": "passed"
+    },
+    {
+      "itemId": "iterm2-next-pane",
+      "exampleIndex": 0,
+      "contentHash": "sha256:f0aca1a9749bd734179b645a8b79460fceb980ed3de0dd3a4ab6a043d15467be",
+      "status": "passed"
+    },
+    {
+      "itemId": "iterm2-previous-pane",
+      "exampleIndex": 0,
+      "contentHash": "sha256:c4d11659ce577800131becf194815b6a291e21a4c233083a41d5ce5323e0b0a5",
+      "status": "passed"
+    },
+    {
+      "itemId": "iterm2-toggle-fullscreen",
+      "exampleIndex": 0,
+      "contentHash": "sha256:c4e2351daabeabc216a3b7eb2ce62ec97b524f1f7ef7640fe44d1468d04f425a",
+      "status": "passed"
+    },
+    {
+      "itemId": "iterm2-find",
+      "exampleIndex": 0,
+      "contentHash": "sha256:09d28d320cda18ca7dffb7bd7e0dfce993caffb0376b1afe8b1e6a820017f481",
+      "status": "passed"
+    },
+    {
+      "itemId": "iterm2-clear-buffer",
+      "exampleIndex": 0,
+      "contentHash": "sha256:e118b2021be2ac4379139a92ca5fd3b39e7a2fe8fabf2032873a63064c1c4b2a",
+      "status": "passed"
+    },
+    {
+      "itemId": "iterm2-preferences",
+      "exampleIndex": 0,
+      "contentHash": "sha256:4378d81869f1a64810b1a1ea916f33d43cefe2cb816a93989cc75664c98d904e",
+      "status": "passed"
+    },
+    {
+      "itemId": "iterm2-imgcat",
+      "exampleIndex": 0,
+      "contentHash": "sha256:c341dd48dda06444eaf1b8fe198e4eab13c59e59d825b34771b91431d9112b4e",
+      "status": "passed"
+    },
+    {
+      "itemId": "iterm2-imgls",
+      "exampleIndex": 0,
+      "contentHash": "sha256:a8c73e93585b739c1f56649ce50fb493994b957742e82fa63e264c40003bf1f1",
+      "status": "passed"
+    },
+    {
+      "itemId": "iterm2-it2copy",
+      "exampleIndex": 0,
+      "contentHash": "sha256:48aceae0861da7fb39dbf4a245eb01434b5b0aab8f23e4faec21f8dbeaa15f4d",
+      "status": "passed"
+    },
+    {
+      "itemId": "iterm2-it2profile",
+      "exampleIndex": 0,
+      "contentHash": "sha256:f29420f09b1f6b6661f0c9c385bd41b3bc80eb48dc81a48533fc192831c14545",
+      "status": "passed"
+    },
+    {
+      "itemId": "iterm2-it2check",
+      "exampleIndex": 0,
+      "contentHash": "sha256:c542eddffc79d4f3ff912f9a8f41f7dbdea939ace7d93ece5ddcadf5bdd12ecf",
+      "status": "passed"
+    },
+    {
+      "itemId": "iterm2-new-window",
+      "exampleIndex": 0,
+      "contentHash": "sha256:b410394cff34dcd681da5d36d6c18cf7f395c9bde7fe652d62c0d29b430592e7",
+      "status": "passed"
+    },
+    {
+      "itemId": "iterm2-open-quickly",
+      "exampleIndex": 0,
+      "contentHash": "sha256:c9127bbb59648cf4f17ea72abcc3c865d89a48075edf79242b0af2f6ac6d0302",
+      "status": "passed"
+    },
+    {
+      "itemId": "iterm2-paste-history",
+      "exampleIndex": 0,
+      "contentHash": "sha256:66b6d39776e14d9474234cf457e638503a1936ede65a61434ce93854c3947c14",
+      "status": "passed"
+    },
+    {
+      "itemId": "iterm2-maximize-pane",
+      "exampleIndex": 0,
+      "contentHash": "sha256:7eb0e9d432cd6e9cea063de808769153640ff1725bba2e3edd2319404bd68403",
+      "status": "passed"
+    },
+    {
+      "itemId": "iterm2-find-cursor",
+      "exampleIndex": 0,
+      "contentHash": "sha256:396fdb9c22a57a22f3baf24dc91baad641778d9996d551cd98e73aa6164c6032",
+      "status": "passed"
+    },
+    {
+      "itemId": "iterm2-instant-replay",
+      "exampleIndex": 0,
+      "contentHash": "sha256:dc91ca1d738c020abc6967c9ecb6d2fae8502dabd93d0ac54cff32b4c156772e",
+      "status": "passed"
+    },
+    {
+      "itemId": "iterm2-find-next",
+      "exampleIndex": 0,
+      "contentHash": "sha256:5058146d7417a16cdaf4c69999de6cd208541860539a715a095d745ea41dcad7",
+      "status": "passed"
+    },
+    {
+      "itemId": "iterm2-select-tab-number",
+      "exampleIndex": 0,
+      "contentHash": "sha256:4676f9d1f7b0c87bd209314b6c109a124c69af18eb4385c1cc70c1d80e6848ea",
+      "status": "passed"
+    },
+    {
+      "itemId": "iterm2-select-pane-arrows",
+      "exampleIndex": 0,
+      "contentHash": "sha256:a9c06ef54cff49bf93c0047a2f7c75126c7404f0c79049fa841e6e5913cdfed7",
+      "status": "passed"
+    },
+    {
+      "itemId": "iterm2-navigate-marks",
+      "exampleIndex": 0,
+      "contentHash": "sha256:735085586c2a5dca6f8324599ef15408982f2fe6de5ee4cb4c60e885baebba76",
+      "status": "passed"
+    },
+    {
+      "itemId": "iterm2-install-shell-integration",
+      "exampleIndex": 0,
+      "contentHash": "sha256:088925296b87c07d9b80c7f830efbab67d2a673cf18026e5776f0a0d1bcff5f8",
+      "status": "passed"
+    },
+    {
+      "itemId": "iterm2-it2dl",
+      "exampleIndex": 0,
+      "contentHash": "sha256:39052b86d4056ba2211fd685d758ef2af2a6f72d5a3d36a4c5f3b4ae6c089e2c",
+      "status": "passed"
+    },
+    {
+      "itemId": "iterm2-it2ul",
+      "exampleIndex": 0,
+      "contentHash": "sha256:d04787a30e72cc91ed1e94bb2cb830cc1c105016b365dc7dfd3ae3ae4d586ef5",
+      "status": "passed"
+    },
+    {
+      "itemId": "iterm2-it2setcolor",
+      "exampleIndex": 0,
+      "contentHash": "sha256:6e03d2506aad63b4b507f4067551cdc7d426cc37d8b1cb9045cef296ce78b72e",
+      "status": "passed"
+    },
+    {
+      "itemId": "iterm2-it2attention",
+      "exampleIndex": 0,
+      "contentHash": "sha256:68d77ca43eae3251ddb353ce4e7ec16a3106e9bd1927cdaae9fcd639506885b8",
+      "status": "passed"
+    }
+  ]
+}

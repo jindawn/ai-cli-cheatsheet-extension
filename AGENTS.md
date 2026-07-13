@@ -1,5 +1,9 @@
 # Repository Guidelines
 
+## 不可绕过的数据政策
+
+修改工具数据、官方清单、案例文案或新增/更新流程前，必须先阅读并遵守 [`OFFICIAL_DATA_POLICY.md`](OFFICIAL_DATA_POLICY.md)。该政策适用于人工及任何 AI/脚本修改；数据变更必须同步更新官方清单与场景审校快照，不能以提示词、缓存、版本未变或质量警告绕过 CI 门禁。
+
 ## 项目结构与模块组织
 
 本仓库是一个 Manifest V3 Chrome/Edge 扩展，用于查询 AI CLI、编辑器和开发工具速查数据。核心界面文件位于根目录：`popup.html`、`popup.js`、`background.js` 和 `product-core.js`。工具数据在 `data/*.js`，其中 `data/index.js` 负责加载顺序，`data/SCHEMA.md` 定义数据契约。人工整理示例在 `enrichments/`，由 `usage-examples.js` 组装。共享校验配置在 `shared/`，Native Messaging 支持在 `native-host/`，脚本在 `tools/`，测试在 `tests/`，图标在 `icons/`。

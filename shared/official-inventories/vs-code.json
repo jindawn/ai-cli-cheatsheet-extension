@@ -1,0 +1,2449 @@
+{
+  "schemaVersion": 2,
+  "toolId": "vs-code",
+  "scope": "all-command-entrypoints",
+  "checkedAt": "2026-07-13",
+  "sourceIds": [
+    "vscode-keybindings"
+  ],
+  "adapter": {
+    "id": "vs-code-default-keymap-table",
+    "kind": "default-keymap-table",
+    "version": 1
+  },
+  "closure": {
+    "status": "closed",
+    "entryCount": 121,
+    "components": [
+      "vs-code"
+    ],
+    "platforms": [
+      "mac",
+      "windows",
+      "linux"
+    ],
+    "proof": "deterministic-adapter-snapshot"
+  },
+  "entries": [
+    {
+      "command": "Cmd+-",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Zoom Out",
+      "usage": "Cmd+-",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+-"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Zoom Out）"
+    },
+    {
+      "command": "Cmd+,",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "User Settings",
+      "usage": "Cmd+,",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+,"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 User Settings）"
+    },
+    {
+      "command": "Cmd+.",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Quick Fix",
+      "usage": "Cmd+.",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+."
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Quick Fix）"
+    },
+    {
+      "command": "Cmd+[",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Outdent Line",
+      "usage": "Cmd+[",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+["
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Outdent Line）"
+    },
+    {
+      "command": "Cmd+]",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Indent Line",
+      "usage": "Cmd+]",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+]"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Indent Line）"
+    },
+    {
+      "command": "Cmd+/",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Toggle Line Comment",
+      "usage": "Cmd+/",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+/"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Toggle Line Comment）"
+    },
+    {
+      "command": "Cmd+\\",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Split Editor",
+      "usage": "Cmd+\\",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+\\"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Split Editor）"
+    },
+    {
+      "command": "Cmd+=",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Zoom In",
+      "usage": "Cmd+=",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+="
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Zoom In）"
+    },
+    {
+      "command": "Cmd+1",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Focus into 1st Editor Group",
+      "usage": "Cmd+1",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+1"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Focus into 1st Editor Group）"
+    },
+    {
+      "command": "Cmd+2",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Focus into 2nd Editor Group",
+      "usage": "Cmd+2",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+2"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Focus into 2nd Editor Group）"
+    },
+    {
+      "command": "Cmd+3",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Focus into 3rd Editor Group",
+      "usage": "Cmd+3",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+3"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Focus into 3rd Editor Group）"
+    },
+    {
+      "command": "Cmd+B",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Toggle Sidebar Visibility",
+      "usage": "Cmd+B",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+B"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Toggle Sidebar Visibility）"
+    },
+    {
+      "command": "Cmd+C",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Copy Line (empty selection)",
+      "usage": "Cmd+C",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+C"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Copy Line (empty selection)）"
+    },
+    {
+      "command": "Cmd+D",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Add Selection to Next Find Match",
+      "usage": "Cmd+D",
+      "options": [],
+      "officialExamples": [
+        "选中一个变量名后连续按 Cmd/Ctrl+D"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Add Selection to Next Find Match）"
+    },
+    {
+      "command": "Cmd+Down",
+      "context": "编辑器",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Go to End of File",
+      "usage": "Cmd+Down",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Down（编辑器）"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Go to End of File）"
+    },
+    {
+      "command": "Cmd+Down",
+      "context": "集成终端",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Scroll to Bottom",
+      "usage": "Cmd+Down",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Down（集成终端）"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Scroll to Bottom）"
+    },
+    {
+      "command": "Cmd+End",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Scroll to Bottom (Terminal)",
+      "usage": "Cmd+End",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+End"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Scroll to Bottom (Terminal)）"
+    },
+    {
+      "command": "Cmd+Enter",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Insert Line Below",
+      "usage": "Cmd+Enter",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Enter"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Insert Line Below）"
+    },
+    {
+      "command": "Cmd+F",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Find",
+      "usage": "Cmd+F",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd/Ctrl+F，输入要查找的文本"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Find）"
+    },
+    {
+      "command": "Cmd+F2",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Select All Occurrences of Current Word",
+      "usage": "Cmd+F2",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+F2"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Select All Occurrences of Current Word）"
+    },
+    {
+      "command": "Cmd+G",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Find Next",
+      "usage": "Cmd+G",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+G"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Find Next）"
+    },
+    {
+      "command": "Cmd+Home",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Scroll to Top (Terminal)",
+      "usage": "Cmd+Home",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Home"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Scroll to Top (Terminal)）"
+    },
+    {
+      "command": "Cmd+K Cmd+[",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Fold All Subregions",
+      "usage": "Cmd+K Cmd+[",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+K Cmd+["
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Fold All Subregions）"
+    },
+    {
+      "command": "Cmd+K Cmd+]",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Unfold All Subregions",
+      "usage": "Cmd+K Cmd+]",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+K Cmd+]"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Unfold All Subregions）"
+    },
+    {
+      "command": "Cmd+K Cmd+0",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Fold All Regions",
+      "usage": "Cmd+K Cmd+0",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+K Cmd+0"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Fold All Regions）"
+    },
+    {
+      "command": "Cmd+K Cmd+D",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Move Last Selection to Next Find Match",
+      "usage": "Cmd+K Cmd+D",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+K Cmd+D"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Move Last Selection to Next Find Match）"
+    },
+    {
+      "command": "Cmd+K Cmd+F",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Format Selection",
+      "usage": "Cmd+K Cmd+F",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+K Cmd+F"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Format Selection）"
+    },
+    {
+      "command": "Cmd+K Cmd+I",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Show Hover",
+      "usage": "Cmd+K Cmd+I",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+K Cmd+I"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Show Hover）"
+    },
+    {
+      "command": "Cmd+K Cmd+J",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Unfold All Regions",
+      "usage": "Cmd+K Cmd+J",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+K Cmd+J"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Unfold All Regions）"
+    },
+    {
+      "command": "Cmd+K Cmd+Left",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Focus into Previous Editor Group",
+      "usage": "Cmd+K Cmd+Left",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+K Cmd+Left"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Focus into Previous Editor Group）"
+    },
+    {
+      "command": "Cmd+K Cmd+Right",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Focus into Next Editor Group",
+      "usage": "Cmd+K Cmd+Right",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+K Cmd+Right"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Focus into Next Editor Group）"
+    },
+    {
+      "command": "Cmd+K Cmd+S",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Keyboard Shortcuts",
+      "usage": "Cmd+K Cmd+S",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+K 后再按 Cmd+S（Win/Linux 为 Ctrl+K Ctrl+S）"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Keyboard Shortcuts）"
+    },
+    {
+      "command": "Cmd+K Cmd+W",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Close All",
+      "usage": "Cmd+K Cmd+W",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+K Cmd+W"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Close All）"
+    },
+    {
+      "command": "Cmd+K Cmd+X",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Trim Trailing Whitespace",
+      "usage": "Cmd+K Cmd+X",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+K Cmd+X"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Trim Trailing Whitespace）"
+    },
+    {
+      "command": "Cmd+K Enter",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Keep Preview Mode Editor Open",
+      "usage": "Cmd+K Enter",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+K Enter"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Keep Preview Mode Editor Open）"
+    },
+    {
+      "command": "Cmd+K F12",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Open Definition to the Side",
+      "usage": "Cmd+K F12",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+K F12"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Open Definition to the Side）"
+    },
+    {
+      "command": "Cmd+K Left",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Move Editor Left",
+      "usage": "Cmd+K Left",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+K Left"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Move Editor Left）"
+    },
+    {
+      "command": "Cmd+K M",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Change File Language",
+      "usage": "Cmd+K M",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+K M"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Change File Language）"
+    },
+    {
+      "command": "Cmd+K O",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Show Active File in New Window",
+      "usage": "Cmd+K O",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+K O"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Show Active File in New Window）"
+    },
+    {
+      "command": "Cmd+K P",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Copy Path of Active File",
+      "usage": "Cmd+K P",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+K P"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Copy Path of Active File）"
+    },
+    {
+      "command": "Cmd+K R",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Reveal Active File in Finder",
+      "usage": "Cmd+K R",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+K R"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Reveal Active File in Finder）"
+    },
+    {
+      "command": "Cmd+K Right",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Move Editor Right",
+      "usage": "Cmd+K Right",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+K Right"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Move Editor Right）"
+    },
+    {
+      "command": "Cmd+K V",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Open Markdown Preview to the Side",
+      "usage": "Cmd+K V",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+K V"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Open Markdown Preview to the Side）"
+    },
+    {
+      "command": "Cmd+K Z",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Zen Mode",
+      "usage": "Cmd+K Z",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+K Z"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Zen Mode）"
+    },
+    {
+      "command": "Cmd+L",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Select Current Line",
+      "usage": "Cmd+L",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+L"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Select Current Line）"
+    },
+    {
+      "command": "Cmd+N",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "New File",
+      "usage": "Cmd+N",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+N"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 New File）"
+    },
+    {
+      "command": "Cmd+O",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Open File...",
+      "usage": "Cmd+O",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+O"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Open File...）"
+    },
+    {
+      "command": "Cmd+P",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Quick Open",
+      "usage": "Cmd+P",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd/Ctrl+P，输入文件名的一部分"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Quick Open）"
+    },
+    {
+      "command": "Cmd+PgDn",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Scroll Page Down",
+      "usage": "Cmd+PgDn",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+PgDn"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Scroll Page Down）"
+    },
+    {
+      "command": "Cmd+PgUp",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Scroll Page Up",
+      "usage": "Cmd+PgUp",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+PgUp"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Scroll Page Up）"
+    },
+    {
+      "command": "Cmd+S",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Save",
+      "usage": "Cmd+S",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+S"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Save）"
+    },
+    {
+      "command": "Cmd+Shift+N",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "New Window",
+      "usage": "Cmd+Shift+N",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Shift+N"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 New Window）"
+    },
+    {
+      "command": "Cmd+Shift+P",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Show Command Palette",
+      "usage": "Cmd+Shift+P",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Shift+P（Win/Linux 为 Ctrl+Shift+P），输入“Format Document”"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Show Command Palette）"
+    },
+    {
+      "command": "Cmd+T",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Show All Symbols",
+      "usage": "Cmd+T",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+T"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Show All Symbols）"
+    },
+    {
+      "command": "Cmd+U",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Undo Last Cursor Operation",
+      "usage": "Cmd+U",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+U"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Undo Last Cursor Operation）"
+    },
+    {
+      "command": "Cmd+Up",
+      "context": "编辑器",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Go to Beginning of File",
+      "usage": "Cmd+Up",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Up（编辑器）"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Go to Beginning of File）"
+    },
+    {
+      "command": "Cmd+Up",
+      "context": "集成终端",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Scroll to Top",
+      "usage": "Cmd+Up",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Up（集成终端）"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Scroll to Top）"
+    },
+    {
+      "command": "Cmd+W",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Close Window",
+      "usage": "Cmd+W",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+W"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Close Window）"
+    },
+    {
+      "command": "Cmd+X",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Cut Line (empty selection)",
+      "usage": "Cmd+X",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+X"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Cut Line (empty selection)）"
+    },
+    {
+      "command": "Ctrl+-",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Go Back",
+      "usage": "Ctrl+-",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+-"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Go Back）"
+    },
+    {
+      "command": "Ctrl+`",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Show Integrated Terminal",
+      "usage": "Ctrl+`",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+`"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Show Integrated Terminal）"
+    },
+    {
+      "command": "Ctrl+Cmd+F",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Toggle Full Screen",
+      "usage": "Ctrl+Cmd+F",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+Cmd+F"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Toggle Full Screen）"
+    },
+    {
+      "command": "Ctrl+G",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Go to Line...",
+      "usage": "Ctrl+G",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+G"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Go to Line...）"
+    },
+    {
+      "command": "Ctrl+PgDn",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Scroll Line Down",
+      "usage": "Ctrl+PgDn",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+PgDn"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Scroll Line Down）"
+    },
+    {
+      "command": "Ctrl+PgUp",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Scroll Line Up",
+      "usage": "Ctrl+PgUp",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+PgUp"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Scroll Line Up）"
+    },
+    {
+      "command": "Ctrl+Shift+-",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Go Forward",
+      "usage": "Ctrl+Shift+-",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+Shift+-"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Go Forward）"
+    },
+    {
+      "command": "Ctrl+Shift+`",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Create New Terminal",
+      "usage": "Ctrl+Shift+`",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+Shift+`"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Create New Terminal）"
+    },
+    {
+      "command": "Ctrl+Shift+Cmd+Left",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Shrink Selection",
+      "usage": "Ctrl+Shift+Cmd+Left",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+Shift+Cmd+Left"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Shrink Selection）"
+    },
+    {
+      "command": "Ctrl+Shift+Cmd+Right",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Expand Selection",
+      "usage": "Ctrl+Shift+Cmd+Right",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+Shift+Cmd+Right"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Expand Selection）"
+    },
+    {
+      "command": "Ctrl+Shift+G",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Show Source Control",
+      "usage": "Ctrl+Shift+G",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+Shift+G"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Show Source Control）"
+    },
+    {
+      "command": "Ctrl+Space",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Trigger Suggest",
+      "usage": "Ctrl+Space",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+Space"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Trigger Suggest）"
+    },
+    {
+      "command": "Ctrl+Tab",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Navigate Editor Group History",
+      "usage": "Ctrl+Tab",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+Tab"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Navigate Editor Group History）"
+    },
+    {
+      "command": "End",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Go to End of Line",
+      "usage": "End",
+      "options": [],
+      "officialExamples": [
+        "按 End"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Go to End of Line）"
+    },
+    {
+      "command": "F10",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Step Over",
+      "usage": "F10",
+      "options": [],
+      "officialExamples": [
+        "按 F10"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Step Over）"
+    },
+    {
+      "command": "F11",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Step Into",
+      "usage": "F11",
+      "options": [],
+      "officialExamples": [
+        "按 F11"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Step Into）"
+    },
+    {
+      "command": "F12",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Go to Definition",
+      "usage": "F12",
+      "options": [],
+      "officialExamples": [
+        "按 F12"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Go to Definition）"
+    },
+    {
+      "command": "F2",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Rename Symbol",
+      "usage": "F2",
+      "options": [],
+      "officialExamples": [
+        "按 F2"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Rename Symbol）"
+    },
+    {
+      "command": "F5",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Start / Continue",
+      "usage": "F5",
+      "options": [],
+      "officialExamples": [
+        "按 F5"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Start / Continue）"
+    },
+    {
+      "command": "F8",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Go to Next Error or Warning",
+      "usage": "F8",
+      "options": [],
+      "officialExamples": [
+        "按 F8"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Go to Next Error or Warning）"
+    },
+    {
+      "command": "F9",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Toggle Breakpoint",
+      "usage": "F9",
+      "options": [],
+      "officialExamples": [
+        "按 F9"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Toggle Breakpoint）"
+    },
+    {
+      "command": "Home",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Go to Beginning of Line",
+      "usage": "Home",
+      "options": [],
+      "officialExamples": [
+        "按 Home"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Go to Beginning of Line）"
+    },
+    {
+      "command": "Option+Click",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Insert Cursor",
+      "usage": "Option+Click",
+      "options": [],
+      "officialExamples": [
+        "按 Option+Click"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Insert Cursor）"
+    },
+    {
+      "command": "Option+Cmd+[",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Fold Region",
+      "usage": "Option+Cmd+[",
+      "options": [],
+      "officialExamples": [
+        "按 Option+Cmd+["
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Fold Region）"
+    },
+    {
+      "command": "Option+Cmd+]",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Unfold Region",
+      "usage": "Option+Cmd+]",
+      "options": [],
+      "officialExamples": [
+        "按 Option+Cmd+]"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Unfold Region）"
+    },
+    {
+      "command": "Option+Cmd+0",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Toggle Editor Layout",
+      "usage": "Option+Cmd+0",
+      "options": [],
+      "officialExamples": [
+        "按 Option+Cmd+0"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Toggle Editor Layout）"
+    },
+    {
+      "command": "Option+Cmd+Down",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Insert Cursor Below",
+      "usage": "Option+Cmd+Down",
+      "options": [],
+      "officialExamples": [
+        "按 Option+Cmd+Down"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Insert Cursor Below）"
+    },
+    {
+      "command": "Option+Cmd+F",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Replace",
+      "usage": "Option+Cmd+F",
+      "options": [],
+      "officialExamples": [
+        "按 Option+Cmd+F（Win/Linux 为 Ctrl+H），填写查找和替换内容"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Replace）"
+    },
+    {
+      "command": "Option+Cmd+S",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Save All",
+      "usage": "Option+Cmd+S",
+      "options": [],
+      "officialExamples": [
+        "按 Option+Cmd+S"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Save All）"
+    },
+    {
+      "command": "Option+Cmd+Up",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Insert Cursor Above",
+      "usage": "Option+Cmd+Up",
+      "options": [],
+      "officialExamples": [
+        "按 Option+Cmd+Up"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Insert Cursor Above）"
+    },
+    {
+      "command": "Option+Down",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Move Line Down",
+      "usage": "Option+Down",
+      "options": [],
+      "officialExamples": [
+        "把光标放在一行上，按 Option+Down（Win/Linux 为 Alt+Down）"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Move Line Down）"
+    },
+    {
+      "command": "Option+F12",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Peek Definition",
+      "usage": "Option+F12",
+      "options": [],
+      "officialExamples": [
+        "按 Option+F12"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Peek Definition）"
+    },
+    {
+      "command": "Option+Up",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Move Line Up",
+      "usage": "Option+Up",
+      "options": [],
+      "officialExamples": [
+        "按 Option+Up"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Move Line Up）"
+    },
+    {
+      "command": "Option+Z",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Toggle Word Wrap",
+      "usage": "Option+Z",
+      "options": [],
+      "officialExamples": [
+        "按 Option+Z"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Toggle Word Wrap）"
+    },
+    {
+      "command": "Shift+Cmd+\\",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Jump to Matching Bracket",
+      "usage": "Shift+Cmd+\\",
+      "options": [],
+      "officialExamples": [
+        "按 Shift+Cmd+\\"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Jump to Matching Bracket）"
+    },
+    {
+      "command": "Shift+Cmd+D",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Show Debug",
+      "usage": "Shift+Cmd+D",
+      "options": [],
+      "officialExamples": [
+        "按 Shift+Cmd+D"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Show Debug）"
+    },
+    {
+      "command": "Shift+Cmd+E",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Show Explorer",
+      "usage": "Shift+Cmd+E",
+      "options": [],
+      "officialExamples": [
+        "按 Shift+Cmd+E"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Show Explorer）"
+    },
+    {
+      "command": "Shift+Cmd+Enter",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Insert Line Above",
+      "usage": "Shift+Cmd+Enter",
+      "options": [],
+      "officialExamples": [
+        "按 Shift+Cmd+Enter"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Insert Line Above）"
+    },
+    {
+      "command": "Shift+Cmd+F",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Show Search",
+      "usage": "Shift+Cmd+F",
+      "options": [],
+      "officialExamples": [
+        "按 Shift+Cmd+F（Win/Linux 为 Ctrl+Shift+F），输入关键词"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Show Search）"
+    },
+    {
+      "command": "Shift+Cmd+G",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Find Previous",
+      "usage": "Shift+Cmd+G",
+      "options": [],
+      "officialExamples": [
+        "按 Shift+Cmd+G"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Find Previous）"
+    },
+    {
+      "command": "Shift+Cmd+H",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Replace in Files",
+      "usage": "Shift+Cmd+H",
+      "options": [],
+      "officialExamples": [
+        "按 Shift+Cmd+H"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Replace in Files）"
+    },
+    {
+      "command": "Shift+Cmd+J",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Toggle Search Details",
+      "usage": "Shift+Cmd+J",
+      "options": [],
+      "officialExamples": [
+        "按 Shift+Cmd+J"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Toggle Search Details）"
+    },
+    {
+      "command": "Shift+Cmd+K",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Delete Line",
+      "usage": "Shift+Cmd+K",
+      "options": [],
+      "officialExamples": [
+        "把光标放在要删除的行，按 Shift+Cmd+K（Win/Linux 为 Ctrl+Shift+K）"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Delete Line）"
+    },
+    {
+      "command": "Shift+Cmd+L",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Select All Occurrences of Current Selection",
+      "usage": "Shift+Cmd+L",
+      "options": [],
+      "officialExamples": [
+        "按 Shift+Cmd+L"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Select All Occurrences of Current Selection）"
+    },
+    {
+      "command": "Shift+Cmd+M",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Show Problems Panel",
+      "usage": "Shift+Cmd+M",
+      "options": [],
+      "officialExamples": [
+        "按 Shift+Cmd+M"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Show Problems Panel）"
+    },
+    {
+      "command": "Shift+Cmd+O",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Go to Symbol in File...",
+      "usage": "Shift+Cmd+O",
+      "options": [],
+      "officialExamples": [
+        "按 Shift+Cmd+O"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Go to Symbol in File...）"
+    },
+    {
+      "command": "Shift+Cmd+S",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Save As...",
+      "usage": "Shift+Cmd+S",
+      "options": [],
+      "officialExamples": [
+        "按 Shift+Cmd+S"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Save As...）"
+    },
+    {
+      "command": "Shift+Cmd+Space",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Trigger Parameter Hints",
+      "usage": "Shift+Cmd+Space",
+      "options": [],
+      "officialExamples": [
+        "按 Shift+Cmd+Space"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Trigger Parameter Hints）"
+    },
+    {
+      "command": "Shift+Cmd+T",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Reopen Closed Editor",
+      "usage": "Shift+Cmd+T",
+      "options": [],
+      "officialExamples": [
+        "按 Shift+Cmd+T"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Reopen Closed Editor）"
+    },
+    {
+      "command": "Shift+Cmd+U",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Show Output Panel",
+      "usage": "Shift+Cmd+U",
+      "options": [],
+      "officialExamples": [
+        "按 Shift+Cmd+U"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Show Output Panel）"
+    },
+    {
+      "command": "Shift+Cmd+V",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Open Markdown Preview",
+      "usage": "Shift+Cmd+V",
+      "options": [],
+      "officialExamples": [
+        "按 Shift+Cmd+V"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Open Markdown Preview）"
+    },
+    {
+      "command": "Shift+Cmd+X",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Show Extensions",
+      "usage": "Shift+Cmd+X",
+      "options": [],
+      "officialExamples": [
+        "按 Shift+Cmd+X"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Show Extensions）"
+    },
+    {
+      "command": "Shift+F11",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Step Out",
+      "usage": "Shift+F11",
+      "options": [],
+      "officialExamples": [
+        "按 Shift+F11"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Step Out）"
+    },
+    {
+      "command": "Shift+F12",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Show References",
+      "usage": "Shift+F12",
+      "options": [],
+      "officialExamples": [
+        "按 Shift+F12"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Show References）"
+    },
+    {
+      "command": "Shift+F5",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Stop",
+      "usage": "Shift+F5",
+      "options": [],
+      "officialExamples": [
+        "按 Shift+F5"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Stop）"
+    },
+    {
+      "command": "Shift+F8",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Go to Previous Error or Warning",
+      "usage": "Shift+F8",
+      "options": [],
+      "officialExamples": [
+        "按 Shift+F8"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Go to Previous Error or Warning）"
+    },
+    {
+      "command": "Shift+Option+A",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Toggle Block Comment",
+      "usage": "Shift+Option+A",
+      "options": [],
+      "officialExamples": [
+        "按 Shift+Option+A"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Toggle Block Comment）"
+    },
+    {
+      "command": "Shift+Option+Down",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Copy Line Down",
+      "usage": "Shift+Option+Down",
+      "options": [],
+      "officialExamples": [
+        "按 Shift+Option+Down（Win/Linux 为 Shift+Alt+Down）"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Copy Line Down）"
+    },
+    {
+      "command": "Shift+Option+Drag",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Column (Box) Selection",
+      "usage": "Shift+Option+Drag",
+      "options": [],
+      "officialExamples": [
+        "按 Shift+Option+Drag"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Column (Box) Selection）"
+    },
+    {
+      "command": "Shift+Option+F",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Format Document",
+      "usage": "Shift+Option+F",
+      "options": [],
+      "officialExamples": [
+        "按 Shift+Option+F"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Format Document）"
+    },
+    {
+      "command": "Shift+Option+I",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Insert Cursor at End of Each Line Selected",
+      "usage": "Shift+Option+I",
+      "options": [],
+      "officialExamples": [
+        "按 Shift+Option+I"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Insert Cursor at End of Each Line Selected）"
+    },
+    {
+      "command": "Shift+Option+Up",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "vs-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Copy Line Up",
+      "usage": "Shift+Option+Up",
+      "options": [],
+      "officialExamples": [
+        "按 Shift+Option+Up"
+      ],
+      "url": "官方 Default Keyboard Shortcuts（页面内检索 Copy Line Up）"
+    }
+  ]
+}

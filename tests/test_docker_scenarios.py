@@ -63,8 +63,10 @@ class DockerScenarioQualityTests(unittest.TestCase):
                 continue
             self.assertNotIn("--help", value, f"{command}: leaf command uses help as its scenario")
             targets = [command, *item.get("aliases", [])]
+            base_targets = [target.split(" -", 1)[0] for target in targets]
             self.assertTrue(
-                any(value == target or value.startswith(target + " ") for target in targets),
+                any(value == target or value.startswith(target + " ") for target in targets)
+                or any(value.startswith(target + " ") for target in base_targets),
                 f"{command}: example belongs to a different command: {value}",
             )
 

@@ -1,0 +1,394 @@
+{
+  "schemaVersion": 1,
+  "toolId": "linux",
+  "reviewVersion": "scenario-grounding-v2",
+  "reviewedAt": "2026-07-13",
+  "inventoryHash": "sha256:dcb5903b23794a8a13ebb7eef19b463e01a083782abe8248d0dbb344083a3409",
+  "status": "passed",
+  "examples": [
+    {
+      "itemId": "linux-ls",
+      "exampleIndex": 0,
+      "contentHash": "sha256:263442e87737185835c7c40a6deb69716bf7ecc98d59443e9df8e482556ff553",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-ls-l",
+      "exampleIndex": 0,
+      "contentHash": "sha256:b459da9cc20cc46769e0086315dcb4c08ec4a14b4238bace3c016144939ca022",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-ls-a",
+      "exampleIndex": 0,
+      "contentHash": "sha256:66004260016b650fea2105932c13ed3b6a66c61982e1da222e78fcf0bb07b0f0",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-ls-la",
+      "exampleIndex": 0,
+      "contentHash": "sha256:24ced4a5fb3c06095b71cc513d478507ea9f2a79297d65fed8f2705fc4aaa1d0",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-cd",
+      "exampleIndex": 0,
+      "contentHash": "sha256:16d97a7ba7f17d796fcfab4895ca7b262e27e50e846e7968202ea71b5edfd8f6",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-cd-parent",
+      "exampleIndex": 0,
+      "contentHash": "sha256:17a226a526bb64c0408ae6431bdb599f8789f3409fddefac4c411c8a506af219",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-pwd",
+      "exampleIndex": 0,
+      "contentHash": "sha256:894e726ba91c04924cbd8699808b06d4dae7365e6b64841e54ab585b1cb3c93e",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-mkdir",
+      "exampleIndex": 0,
+      "contentHash": "sha256:400318c6c66e0fa5534c15c468da91dfcac166b3951732740881136bc19a40b8",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-mkdir-p",
+      "exampleIndex": 0,
+      "contentHash": "sha256:9c4a3a6bf179064fc35a2d012522ec2fccc711a30fa186dbb8238f9b3934bdc1",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-cp",
+      "exampleIndex": 0,
+      "contentHash": "sha256:37d1e0bc4b890c02abdcc59e02513bbe7569949c3371b914ff1b0131a6b9662e",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-cp-r",
+      "exampleIndex": 0,
+      "contentHash": "sha256:a91fca915fc158c8fb3f3e5d9b702f828041460d509526bb2a0eeaeac548da26",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-mv",
+      "exampleIndex": 0,
+      "contentHash": "sha256:b41dc09ceed076c2d618ee3e101ed0fb1876960dfe7e752cd7028e42119e5219",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-rm",
+      "exampleIndex": 0,
+      "contentHash": "sha256:cbf14f3cd7ad296b126acb16d86a0498d6c83f9e15620b4bbbde7b498217c28a",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-rm-rf",
+      "exampleIndex": 0,
+      "contentHash": "sha256:d39ba2cdc45c440f22cc1d0e53f0f1fa5ed806e96c29d0b6900a238f1ed36e6a",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-touch",
+      "exampleIndex": 0,
+      "contentHash": "sha256:60242443434fd51fd87c35a76b4e50d527bcc15115617d10f8b3a4c6284ad859",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-cat",
+      "exampleIndex": 0,
+      "contentHash": "sha256:eb8af226c77a856feef5bf0a33bb42b3a45f69930b147f3e3102127396f9edbd",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-less",
+      "exampleIndex": 0,
+      "contentHash": "sha256:10ffe06a2578082d065f530a3846bcbd81865c2a3ff6c43445ff9f98f24b15e0",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-head",
+      "exampleIndex": 0,
+      "contentHash": "sha256:ca3d6321396b143f7e31837bfd100b1efde17e9e066ea9425f91f3314a8b97ab",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-tail",
+      "exampleIndex": 0,
+      "contentHash": "sha256:7826b787daddafc7104096e49cb2a45ba46eab8534b14305710c48529c0b0f90",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-tail-f",
+      "exampleIndex": 0,
+      "contentHash": "sha256:c0622fafef4fd2a88d22e7d98ac3ce04372e5893abed5adfb5cd74cd3c507b54",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-chmod",
+      "exampleIndex": 0,
+      "contentHash": "sha256:e81254ad9115bc473a64f56f82d8f49178b69726c5f84a9f091eaba6dbce01e1",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-chmod-x",
+      "exampleIndex": 0,
+      "contentHash": "sha256:888e4d541a9b7b4ab5c7c6598c27f9ddd04d976b596c6ea3390b292e56efb81a",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-chown",
+      "exampleIndex": 0,
+      "contentHash": "sha256:166d3d05e431327c5825bdf9bd08f08bbcdc2ddeb88bf70ecbc86842deee10d0",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-ps",
+      "exampleIndex": 0,
+      "contentHash": "sha256:80faae1985a38ab5e624ff8328cc674448e7aae13e8675c458173ee11c8bd64e",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-ps-aux",
+      "exampleIndex": 0,
+      "contentHash": "sha256:7ba7f13c2e3a6733d4c28bf95040cdf92b5ca4505566361bdfee63d68230e021",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-kill",
+      "exampleIndex": 0,
+      "contentHash": "sha256:ce89ebf10685ee856517afdacf2382194db140ad9cfc951369e9d1b89f434145",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-kill-9",
+      "exampleIndex": 0,
+      "contentHash": "sha256:d8b5e25eaed964f8bca4fddafa4f0b02ffae2e26d00e70a4f303c17f60001cfd",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-top",
+      "exampleIndex": 0,
+      "contentHash": "sha256:3411247916f86fc739dbed1b83dba5ee6e39815d9d315adc78cd071d0286f4d2",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-grep",
+      "exampleIndex": 0,
+      "contentHash": "sha256:5a91b89a6748acb0fdd5307cbafd262a3a85fd5a124dbf66d6b4f1f1cba692a6",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-grep-r",
+      "exampleIndex": 0,
+      "contentHash": "sha256:5c7a320303368594b013c0a58837e3e04f6aa028984b384f26ec8c6d7370fec2",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-grep-i",
+      "exampleIndex": 0,
+      "contentHash": "sha256:37be037b381f4c2f204dac2861da178e1927b18f9b083b6c0c39ce0dbb3a908b",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-find",
+      "exampleIndex": 0,
+      "contentHash": "sha256:e2d7e12635e72409a835ae93d1c627e4c89abbd1d9cf7bac84201cafa84319a5",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-find-name",
+      "exampleIndex": 0,
+      "contentHash": "sha256:27b20ddf9ce4a3b3448d4ed65a97d05dbd2e8ebc469ad2ae06084b605cc31960",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-sort",
+      "exampleIndex": 0,
+      "contentHash": "sha256:89d2919629c93d1273d830fa99ec3b28d2bb949dce02e53ece9b96da5e4d7edf",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-uniq",
+      "exampleIndex": 0,
+      "contentHash": "sha256:8a126d09a1fd229955f9fa667b457ca4c78a85a91e70e64a8fa323cb2ce386d6",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-wc",
+      "exampleIndex": 0,
+      "contentHash": "sha256:19c38c3234fe1fb12127212630b73e70e38ebb4e12986a6577dcaae1f4e452bd",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-wc-l",
+      "exampleIndex": 0,
+      "contentHash": "sha256:1a8889f04df526b9c820e8ad329588d77cc011fdaf210dc1acba67c3b02cc572",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-diff",
+      "exampleIndex": 0,
+      "contentHash": "sha256:2c0876a632a7946cedaa5aef4f07dda855d56142a13ddbbeef4fe442a9076f73",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-df",
+      "exampleIndex": 0,
+      "contentHash": "sha256:f0ed0a6ec814e8e373561ccb0e5797990ab5da800ce43f9004466c166d010fdb",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-du",
+      "exampleIndex": 0,
+      "contentHash": "sha256:3c0f0260836c25f5c83370fc8d45df3d0cd3d9ef23379a517e9eaa1a5787e44f",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-free",
+      "exampleIndex": 0,
+      "contentHash": "sha256:a11c0684004e4b3151596abac38663828a9f68a1a005a606d846bffc1678c957",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-curl",
+      "exampleIndex": 0,
+      "contentHash": "sha256:c63ec7a0cbfd6e7131bf4401a0d347a743394dc45c032a2a93b183d8c6eb7557",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-wget",
+      "exampleIndex": 0,
+      "contentHash": "sha256:6b180174c4f0af3ec484825152afeca65c95361a73e6de40552fa6f776b74fde",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-tar",
+      "exampleIndex": 0,
+      "contentHash": "sha256:b53c8898abecd0c59b9fa64bf8a085a906f462ea97fbf54f4ad58d28c6e00398",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-tar-xzf",
+      "exampleIndex": 0,
+      "contentHash": "sha256:2ceec705a02cc6de3480d341e514a760e141dc64ca38ddd49b5924ce015d9e7c",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-tar-czf",
+      "exampleIndex": 0,
+      "contentHash": "sha256:9c9544b332bc1b1abec0d940d506abc3a6a9fafeab98b1a1118d9d99058d00ad",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-chmod-755",
+      "exampleIndex": 0,
+      "contentHash": "sha256:873d432b7310835b6ad6b0014207cfbba7ebf5eace30d421e290ee2517667d3f",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-pipe",
+      "exampleIndex": 0,
+      "contentHash": "sha256:05afedfdf18ab5295f032c67e0c8d3959411da22ae5485cc788094fe4bf54086",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-redirect-out",
+      "exampleIndex": 0,
+      "contentHash": "sha256:6d1f092a4d66c959f2ff8f7fad58862606fea6b77165179399b983811f12d0b9",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-redirect-append",
+      "exampleIndex": 0,
+      "contentHash": "sha256:04dd9969d60b6e6e373ecd9c7401c33a414c5b909f0cd473ed79c7548297ce54",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-ssh",
+      "exampleIndex": 0,
+      "contentHash": "sha256:c6ad0d3f3d6cdbc931f5344fc878c384126b43e7ee4642acf93741ecf2747373",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-scp",
+      "exampleIndex": 0,
+      "contentHash": "sha256:ed65b31db594db3d9bef2a4baf583f3a1dc7b57b1d123c19d16c01ad3fad00f4",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-ping",
+      "exampleIndex": 0,
+      "contentHash": "sha256:d208df629fe8c9791abcdc2ba39c70cb50515d62c65743a501e341ab6a3f52f7",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-ln-s",
+      "exampleIndex": 0,
+      "contentHash": "sha256:4ee5686f041fe3d50dca038a5fbdaa2c57b81ae2e5e3c0582f23b61cd191e92d",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-sed",
+      "exampleIndex": 0,
+      "contentHash": "sha256:b53849a270e3b5f1c19716e11934c5f4f0ae125af08a06abdd60500f76403454",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-sed",
+      "exampleIndex": 1,
+      "contentHash": "sha256:6ff84b71d8e13a7beae92f054d061582f64eb8a19d041da4709e11dfcd593b75",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-awk",
+      "exampleIndex": 0,
+      "contentHash": "sha256:90aa068d06800c63a7b149acdfa4e190a830ec7d0820358a3791cdfefbabdfbd",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-which",
+      "exampleIndex": 0,
+      "contentHash": "sha256:5f09ad55fb14b0701db322302c6d7d9e1c68604bae365bf6f568a2996ba68ae1",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-history",
+      "exampleIndex": 0,
+      "contentHash": "sha256:fd7cdda452ec9d85586a2f6ae698ca45988d16937cbd35133b36df0610d0bc3a",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-ctrl-r",
+      "exampleIndex": 0,
+      "contentHash": "sha256:b9814fb2a3297a1c0185edde6f0482e91144cd99797e91bde258a1ebd7a54a6f",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-ctrl-c",
+      "exampleIndex": 0,
+      "contentHash": "sha256:63a6a42997250d8e47467808cbb8ab8b14d40f601638c48a244eeb366584fb78",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-ctrl-z",
+      "exampleIndex": 0,
+      "contentHash": "sha256:12c6cbed3cec106457ab61bf462a38f7cd4abf7dcc345686475c62661ae30fd9",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-bg",
+      "exampleIndex": 0,
+      "contentHash": "sha256:6c15bfa9719efd47f1cc2ce6d6f46ab2578d6eb037148ce3455ba505dbed04d7",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-fg",
+      "exampleIndex": 0,
+      "contentHash": "sha256:7f4f8496d491095569584a06c216d647bb9efd5cfa060e1bcc2a7e3d88e41bae",
+      "status": "passed"
+    }
+  ]
+}

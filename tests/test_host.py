@@ -50,6 +50,7 @@ def valid_dataset(tool_id="sample"):
                 "cmd": "Ctrl+K",
                 "en": "Open command",
                 "zh": "打开命令",
+                "keywords": ["命令面板", "打开命令", "快捷操作"],
                 "evidenceRefs": [{
                     "sourceId": "official-docs",
                     "claims": ["existence", "semantics"],
@@ -57,6 +58,24 @@ def valid_dataset(tool_id="sample"):
                     "checkedAt": "2026-06-20",
                 }],
                 "evidenceStatus": "verified",
+                "examples": [{
+                    "scenario": "需要从当前界面快速打开命令面板。",
+                    "goal": "打开命令面板并选择下一步操作。",
+                    "value": "按 Ctrl+K",
+                    "description": "在当前界面使用默认快捷键打开命令面板。",
+                    "expected": "命令面板显示可用操作。",
+                    "copyable": False,
+                    "sourceType": "manual",
+                    "authorship": "editorial",
+                    "evidenceTier": "first-party",
+                    "adaptation": "adapted",
+                    "sourceIds": ["official-docs"],
+                    "groundingRefs": [{
+                        "sourceId": "official-docs",
+                        "locator": "https://example.com/docs#ctrl-k",
+                        "claims": ["value", "behavior", "expected"],
+                    }],
+                }],
             }
         ],
         "summary": "updated",
@@ -81,6 +100,24 @@ def valid_shell_dataset():
             "portability": "bash",
             "topic": "troubleshooting",
         },
+        "examples": [{
+            "scenario": "需要确认命令是否被别名或函数遮蔽。",
+            "goal": "列出 git 命令名的所有解析来源。",
+            "value": "type -a git",
+            "description": "使用 shell 内建 type 查看命令解析顺序。",
+            "expected": "终端列出 git 的所有可用来源。",
+            "copyable": True,
+            "sourceType": "manual",
+            "authorship": "editorial",
+            "evidenceTier": "first-party",
+            "adaptation": "adapted",
+            "sourceIds": ["official-docs"],
+            "groundingRefs": [{
+                "sourceId": "official-docs",
+                "locator": "https://example.com/docs#type",
+                "claims": ["value", "behavior", "expected"],
+            }],
+        }],
     })
     return dataset
 
@@ -427,6 +464,8 @@ class HostValidationTests(unittest.TestCase):
             dict(payload["items"][0], cmd=f"Ctrl+{index}", en=f"Command {index}")
             for index in range(6)
         ]
+        for item in payload["items"][1:]:
+            item.pop("examples", None)
         dataset = host.validate_dataset(payload, "sample")
         self.assertIn("示例覆盖不足", dataset["qualityWarnings"][0])
 
@@ -610,6 +649,7 @@ class HostFileTests(unittest.TestCase):
             mock.patch.object(host, "DATA_INDEX", str(self.data_dir / "index.js")),
             mock.patch.object(host, "PENDING_DIR", str(self.pending_dir)),
             mock.patch.object(host, "official_inventory_path", return_value=str(pathlib.Path(self.temp.name) / "sample-inventory.json")),
+            mock.patch.object(host, "scenario_review_path", return_value=str(pathlib.Path(self.temp.name) / "sample-review.json")),
             mock.patch.object(host, "fetch_official_inventory", return_value={
                 "toolId": "sample",
                 "scope": "all-command-entrypoints",
@@ -899,6 +939,9 @@ class HostFileTests(unittest.TestCase):
         self.assertIn("default", command)
         self.assertNotIn("plan", command)
         self.assertNotIn("acceptEdits", command)
+        self.assertTrue(result["pendingToken"])
+        self.assertFalse((self.data_dir / "sample.js").exists())
+        host.apply_update(result["pendingToken"])
         self.assertTrue((self.data_dir / "sample.js").exists())
         self.assertTrue((self.data_dir / "index.js").exists())
 
@@ -911,7 +954,8 @@ class HostFileTests(unittest.TestCase):
         self.assertTrue(result["changed"])
         aggregate.assert_called_once()
         normal.assert_not_called()
-        self.assertTrue((self.data_dir / "shell.js").exists())
+        self.assertTrue(result["pendingToken"])
+        self.assertFalse((self.data_dir / "shell.js").exists())
 
     def test_shell_batch_prompt_requires_warning_and_noncopyable_dangerous_examples(self):
         prompt = host.build_shell_batch_prompt(
@@ -1792,7 +1836,9 @@ class HostDiffEnrichmentTests(unittest.TestCase):
         self.assertTrue(any("核验状态下降" in risk for risk in diff["risks"]))
 
     def test_quality_warning_flags_keyword_gap(self):
-        warnings = host.build_quality_warnings(valid_dataset())
+        dataset = valid_dataset()
+        dataset["items"][0].pop("keywords")
+        warnings = host.build_quality_warnings(dataset)
         self.assertTrue(any("语义关键词覆盖不足" in warning for warning in warnings))
 
     def test_quality_warning_flags_verification_target_and_platform_claim(self):
@@ -1809,7 +1855,8 @@ class HostDiffEnrichmentTests(unittest.TestCase):
         previous["items"][0]["examples"] = [
             {"value": "Ctrl+K", "description": "打开命令", "sourceType": "manual"}
         ]
-        current = valid_dataset()  # 当前条目无 examples，覆盖率从 1 降至 0
+        current = valid_dataset()
+        current["items"][0].pop("examples")  # 覆盖率从 1 降至 0
         warnings = host.build_quality_warnings(current, previous)
         self.assertTrue(any("降至" in warning for warning in warnings))
 
@@ -1916,7 +1963,10 @@ class HostSourceTierGenerationTests(unittest.TestCase):
     def test_lenient_contract_accepts_missing_keywords_and_examples(self):
         # 锁定“生成端宽松”契约：缺 keywords/examples 不报错，但两项都产生覆盖告警。
         # 与仓库端 validate-data.js 的严格必填刻意不同（见 data/SCHEMA.md 校验契约）。
-        dataset = host.validate_dataset(valid_dataset(), "sample")
+        payload = valid_dataset()
+        payload["items"][0].pop("keywords")
+        payload["items"][0].pop("examples")
+        dataset = host.validate_dataset(payload, "sample")
         self.assertNotIn("keywords", dataset["items"][0])
         self.assertNotIn("examples", dataset["items"][0])
         self.assertTrue(any("示例覆盖不足" in warning for warning in dataset["qualityWarnings"]))

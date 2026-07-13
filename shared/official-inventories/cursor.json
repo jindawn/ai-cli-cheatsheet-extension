@@ -1,0 +1,557 @@
+{
+  "schemaVersion": 2,
+  "toolId": "cursor",
+  "scope": "all-command-entrypoints",
+  "checkedAt": "2026-07-13",
+  "sourceIds": [
+    "cursor-shortcuts"
+  ],
+  "adapter": {
+    "id": "cursor-default-keymap-table",
+    "kind": "default-keymap-table",
+    "version": 1
+  },
+  "closure": {
+    "status": "closed",
+    "entryCount": 28,
+    "components": [
+      "cursor"
+    ],
+    "platforms": [
+      "mac",
+      "windows",
+      "linux"
+    ],
+    "proof": "deterministic-adapter-snapshot"
+  },
+  "entries": [
+    {
+      "command": "@Chat",
+      "context": "Chat/Composer",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "cursor",
+      "platforms": [],
+      "constraints": [],
+      "description": "Reference chat history",
+      "usage": "@Chat",
+      "options": [],
+      "officialExamples": [
+        "@Chat 总结上一次讨论的决定"
+      ],
+      "url": "官方快捷键页（页面内检索 @Chat）"
+    },
+    {
+      "command": "@Codebase",
+      "context": "Chat/Composer",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "cursor",
+      "platforms": [],
+      "constraints": [],
+      "description": "Search entire codebase for context",
+      "usage": "@Codebase",
+      "options": [],
+      "officialExamples": [
+        "@Codebase 登录状态在哪里保存？"
+      ],
+      "url": "官方快捷键页（页面内检索 @Codebase）"
+    },
+    {
+      "command": "@Definitions",
+      "context": "Chat/Composer",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "cursor",
+      "platforms": [],
+      "constraints": [],
+      "description": "Reference symbol definitions",
+      "usage": "@Definitions",
+      "options": [],
+      "officialExamples": [
+        "@Definitions UserService"
+      ],
+      "url": "官方快捷键页（页面内检索 @Definitions）"
+    },
+    {
+      "command": "@Docs",
+      "context": "Chat/Composer",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "cursor",
+      "platforms": [],
+      "constraints": [],
+      "description": "Reference documentation sources",
+      "usage": "@Docs",
+      "options": [],
+      "officialExamples": [
+        "@Docs https://example.com/docs"
+      ],
+      "url": "官方快捷键页（页面内检索 @Docs）"
+    },
+    {
+      "command": "@Files",
+      "context": "Chat/Composer",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "cursor",
+      "platforms": [],
+      "constraints": [],
+      "description": "Reference files as context",
+      "usage": "@Files",
+      "options": [],
+      "officialExamples": [
+        "@Files src/api.ts"
+      ],
+      "url": "官方快捷键页（页面内检索 @Files）"
+    },
+    {
+      "command": "@Folders",
+      "context": "Chat/Composer",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "cursor",
+      "platforms": [],
+      "constraints": [],
+      "description": "Reference folders as context",
+      "usage": "@Folders",
+      "options": [],
+      "officialExamples": [
+        "@Folders src/components"
+      ],
+      "url": "官方快捷键页（页面内检索 @Folders）"
+    },
+    {
+      "command": "@Git",
+      "context": "Chat/Composer",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "cursor",
+      "platforms": [],
+      "constraints": [],
+      "description": "Reference git history and changes",
+      "usage": "@Git",
+      "options": [],
+      "officialExamples": [
+        "@Git 最近一次提交修改了什么？"
+      ],
+      "url": "官方快捷键页（页面内检索 @Git）"
+    },
+    {
+      "command": "@Web",
+      "context": "Chat/Composer",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "cursor",
+      "platforms": [],
+      "constraints": [],
+      "description": "Search the web for context",
+      "usage": "@Web",
+      "options": [],
+      "officialExamples": [
+        "@Web 查询当前浏览器兼容性"
+      ],
+      "url": "官方快捷键页（页面内检索 @Web）"
+    },
+    {
+      "command": "Cmd+B",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "cursor",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Toggle Sidebar",
+      "usage": "Cmd+B",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+B"
+      ],
+      "url": "官方快捷键页（页面内检索 Cmd+B）"
+    },
+    {
+      "command": "Cmd+Enter",
+      "context": "Chat/Composer",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "cursor",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Submit with Codebase Search",
+      "usage": "Cmd+Enter",
+      "options": [],
+      "officialExamples": [
+        "输入问题后按 Cmd/Ctrl+Enter"
+      ],
+      "url": "官方快捷键页（页面内检索 Cmd+Enter）"
+    },
+    {
+      "command": "Cmd+I",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "cursor",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Toggle Sidepanel",
+      "usage": "Cmd+I",
+      "options": [],
+      "officialExamples": [
+        "选中要修改的代码后按 Cmd/Ctrl+I，输入“提取为可复用函数”"
+      ],
+      "url": "https://cursor.com/docs/reference/keyboard-shortcuts · General 分组 · Cmd I（原文：\"Toggle Sidepanel (unless bound to mode)\"）"
+    },
+    {
+      "command": "Cmd+J",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "cursor",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Toggle Bottom Panel",
+      "usage": "Cmd+J",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+J"
+      ],
+      "url": "官方快捷键页（页面内检索 Cmd+J）"
+    },
+    {
+      "command": "Cmd+K",
+      "context": "编辑器",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "cursor",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Open Inline AI Edit",
+      "usage": "Cmd+K",
+      "options": [],
+      "officialExamples": [
+        "选中一段代码，按 Cmd/Ctrl+K，输入“增加参数校验”"
+      ],
+      "url": "https://cursor.com/docs/reference/keyboard-shortcuts · Inline Edit 分组 · Cmd K（原文：\"Open\"）"
+    },
+    {
+      "command": "Cmd+K",
+      "context": "终端",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "cursor",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Open Terminal AI Command",
+      "usage": "Cmd+K",
+      "options": [],
+      "officialExamples": [
+        "在终端按 Cmd/Ctrl+K，输入“查找占用 3000 端口的进程”"
+      ],
+      "url": "https://cursor.com/docs/reference/keyboard-shortcuts · Terminal 分组 · Cmd K（原文：\"Open terminal prompt bar\"）"
+    },
+    {
+      "command": "Cmd+L",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "cursor",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Open AI Chat",
+      "usage": "Cmd+L",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd/Ctrl+L 后询问“这个函数为什么会重复请求？”"
+      ],
+      "url": "https://cursor.com/docs/reference/keyboard-shortcuts · General/Code Selection & Context 分组 · Cmd L（原文：\"Toggle Sidepanel (unless bound to mode)\"，选中代码时为 \"Add selection to new chat\"）"
+    },
+    {
+      "command": "Cmd+P",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "cursor",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Quick File Open",
+      "usage": "Cmd+P",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+P"
+      ],
+      "url": "官方快捷键页（页面内检索 Cmd+P）"
+    },
+    {
+      "command": "Cmd+Right",
+      "context": "Cursor Tab",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "cursor",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Accept Next Word",
+      "usage": "Cmd+Right",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Right（Cursor Tab）"
+      ],
+      "url": "https://cursor.com/docs/reference/keyboard-shortcuts · Tab 分组 · Cmd →（原文：\"Accept next word\"）"
+    },
+    {
+      "command": "Cmd+Shift+Backspace",
+      "context": "Chat/Composer",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "cursor",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Reject All Changes / Cancel",
+      "usage": "Cmd+Shift+Backspace",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Shift+Backspace（Chat/Composer）"
+      ],
+      "url": "https://cursor.com/docs/reference/keyboard-shortcuts · Chat 分组 · Cmd Shift Backspace（原文：\"Reject all changes\"）；Inline Edit 分组 · Cmd Shift Backspace（原文：\"Cancel\"）"
+    },
+    {
+      "command": "Cmd+Shift+Enter",
+      "context": "Chat/Composer",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "cursor",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Submit Without Codebase Search",
+      "usage": "Cmd+Shift+Enter",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Shift+Enter（Chat/Composer）"
+      ],
+      "url": "官方快捷键页（页面内检索 Cmd+Shift+Enter）"
+    },
+    {
+      "command": "Cmd+Shift+I",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "cursor",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Open Agent with Full Context",
+      "usage": "Cmd+Shift+I",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Shift+I"
+      ],
+      "url": "官方快捷键页（页面内检索 Cmd+Shift+I）"
+    },
+    {
+      "command": "Cmd+Shift+J",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "cursor",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Open Cursor Settings",
+      "usage": "Cmd+Shift+J",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Shift+J"
+      ],
+      "url": "https://cursor.com/docs/reference/keyboard-shortcuts · General 分组 · Cmd Shift J（原文：\"Cursor settings\"）"
+    },
+    {
+      "command": "Cmd+Shift+L",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "cursor",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Add Selection to Chat",
+      "usage": "Cmd+Shift+L",
+      "options": [],
+      "officialExamples": [
+        "选中关键代码后按 Cmd/Ctrl+Shift+L，再到 Chat 中提问"
+      ],
+      "url": "https://cursor.com/docs/reference/keyboard-shortcuts · Code Selection & Context 分组 · Cmd Shift L（原文：\"Add selected code as context\"）"
+    },
+    {
+      "command": "Cmd+Shift+P",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "cursor",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Show Command Palette",
+      "usage": "Cmd+Shift+P",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd/Ctrl+Shift+P，输入命令名称"
+      ],
+      "url": "https://cursor.com/docs/reference/keyboard-shortcuts · General 分组 · Cmd Shift P（原文：\"Command palette\"）"
+    },
+    {
+      "command": "Cmd+W",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "cursor",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Close Current Tab",
+      "usage": "Cmd+W",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+W"
+      ],
+      "url": "官方快捷键页（页面内检索 Cmd+W）"
+    },
+    {
+      "command": "Ctrl+`",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "cursor",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Toggle Terminal",
+      "usage": "Ctrl+`",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+`"
+      ],
+      "url": "官方快捷键页（页面内检索 Ctrl+`）"
+    },
+    {
+      "command": "Esc",
+      "context": "Cursor Tab",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "cursor",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Dismiss Cursor Tab Suggestion",
+      "usage": "Esc",
+      "options": [],
+      "officialExamples": [
+        "按 Esc（Cursor Tab）"
+      ],
+      "url": "官方快捷键页（页面内检索 Esc）"
+    },
+    {
+      "command": "Option+Backspace",
+      "context": "Cursor Tab",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "cursor",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Reject Word by Word",
+      "usage": "Option+Backspace",
+      "options": [],
+      "officialExamples": [
+        "按 Option+Backspace（Cursor Tab）"
+      ],
+      "url": "官方快捷键页（页面内检索 Option+Backspace）"
+    },
+    {
+      "command": "Tab",
+      "context": "Cursor Tab",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "cursor",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Accept Cursor Tab Suggestion",
+      "usage": "Tab",
+      "options": [],
+      "officialExamples": [
+        "出现灰色代码补全时按 Tab"
+      ],
+      "url": "https://cursor.com/docs/reference/keyboard-shortcuts · Tab 分组 · Tab（原文：\"Accept suggestion\"）"
+    }
+  ]
+}

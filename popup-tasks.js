@@ -86,7 +86,7 @@
           deps.setStatus(`❌ ${diagnosticText(response)}`, "err");
           return;
         }
-        if (mode === "preview_update" && response.pendingToken) {
+        if (["add_tool", "preview_update"].includes(mode) && response.pendingToken) {
           deps.setPendingUpdate(response);
           await deps.storageSet({ pendingUpdate: response });
           deps.setStatus(`${response.output || "发现可用更新"}${response.qualityWarnings?.length ? `\n⚠ ${response.qualityWarnings.join("\n⚠ ")}` : ""}`, "ok");

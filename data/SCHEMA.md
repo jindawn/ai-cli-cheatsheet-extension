@@ -20,10 +20,8 @@
 - 没有统一查询入口，快捷键因操作系统（Mac/Win/Linux）和键位方案（默认/Vim/Emacs）不同而不同
 - 去查官方文档里的"默认键位映射"页面（常见关键词：Keymap、Keyboard Shortcuts、Default Keymap）
 - 只用 `cat: "shortcut"`，没有 slash/flag 这两类
-- 默认收录 macOS 键位为主；如果 Windows/Linux 明显不同，在 zh 字段里用括号注明，比如：
-  `zh: "全局搜索（Win/Linux 为 Ctrl+Shift+A）"`
-- **必须在 meta.source 里写清楚**这是默认键位下的常用子集，不是完整列表，比如：
-  `source: "官方文档 xxx，整理于 2026-06（⚠️仅收录macOS默认键位常用子集，完整列表请查官方Keymap文档）"`
+- 必须解析官方默认键位表并覆盖 macOS、Windows、Linux；不支持的平台要明确记录限制，不能用 macOS 子集冒充完整。
+- 插件、自定义键位和第三方扩展不计入默认完整性。
 
 ## 数据格式
 
@@ -51,7 +49,7 @@
     checkedAt: "2026-06-21"
   }],
   evidenceStatus: "verified",               // 由 evidenceRefs 自动推导
-  examples: [                              // 可选；最多 3 个
+  examples: [                              // 必填；至少 1 个，最多 3 个
     {
       scenario: "需要批量替换配置文件中的旧域名", // 面向 UI 展示，必须包含中文
       goal: "先预览替换结果，再决定是否原地修改", // 面向 UI 展示，必须包含中文
@@ -69,6 +67,11 @@
       authorship: "editorial",              // official / editorial / generated
       evidenceTier: "first-party",          // first-party / authoritative-community / community / none
       adaptation: "adapted",                // verbatim / adapted / scenario-derived
+      groundingRefs: [{                    // 必填；逐项绑定第一方依据
+        sourceId: "official-docs",
+        locator: "https://docs.example.com/cli#command",
+        claims: ["value", "behavior", "expected"]
+      }],
       platforms: ["mac", "linux"],          // 可选
       platformValues: {                     // 可选；平台专属示例
         mac: "sed -i '' 's/旧/新/g' file.txt",
@@ -99,7 +102,7 @@ meta：
   verifiedVersion: "1.2.0",                            // 可选；内容最后核验到的产品版本或发布标识
   contentCheckedAt: "2026-06-20",                      // 内容最后核验日期，仅用于追溯
   sourceCheckedAt: "2026-06-21",                       // 来源可访问性最后检查日期
-  coverage: "完整命令列表 / macOS 默认键位常用子集",    // 数据覆盖范围
+  coverage: "官方入口全集；精确范围、组件与平台限制见 shared/official-inventories/<id>.json",
   officialCoverage: {                                  // 官方入口完整性，与条目证据准确率分开
     scope: "all-command-entrypoints",
     status: "complete",                                // complete / unconfirmed
@@ -158,19 +161,17 @@ meta：
 
 来源登记和 URL 范围统一维护在 `shared/source-registry.json`；`shared/validation-rules.json` 不再复制来源白名单。
 
-## 校验契约（生成端宽松，仓库端严格）
+## 校验契约（生成端与仓库端同样严格）
 
-`keywords` 与 `examples` 在两条链路上有意采用不同强度，这是设计而非 bug：
-
-- **生成端（`native-host/host.py`，宽松）**：`keywords`/`examples` 缺失不报错，仅由 `build_quality_warnings` 产生质量警告。目的是不因模型偶发漏填而中断整次生成；用户可在预览里看到覆盖告警。
-- **仓库端（`tools/validate-data.js`，严格）**：提交进仓库的数据，每条目都**必须**带合法的 `keywords`（3..8）与 `examples`（1..3）。CI 会对全量数据执行，缺失即失败。
+- Native Host 和仓库 CI 都要求每条目具备合法的 `keywords`（3..8）、`examples`（1..3）和第一方 `groundingRefs`。缺失、降级或审校失败会终止新增/更新，不再只产生质量警告。
+- 每个工具必须具有 schema v2 官方清单、确定性适配器闭合证明和匹配当前内容哈希的场景审校快照。完整规则以根目录 `OFFICIAL_DATA_POLICY.md` 为准。
 - **示例 UI 文案语言**：`description`、`scenario`、`goal`、`expected`、`prerequisites`、`caveat`、`warning` 必须包含中文；`value`、`cmd`、`en`、URL、产品名和命令参数可以保留英文。
 
 两侧的数量上下限与危险/密钥正则保持一致，统一声明在 `shared/validation-rules.json`，并由 `tests/test_validation_consistency.js` 防止漂移。改任一侧规则前先更新该 JSON。危险/密钥正则同时作用于 `examples[].value` 与 `examples[].platformValues` 的每个平台值：仓库端命中即要求 `warning` + `copyable: false`；生成端命中会自动降级（补 warning、禁复制、补安全预览 caveat）。
 
 另有一条信息级一致性检查（不阻塞 CI）：示例标 `evidenceTier: "first-party"` 但父条目 `evidenceStatus` 为 `unverified` 时，`tools/validate-data.js` 会按工具输出警告计数，UI 也会给该示例的来源标签追加「（命令待核验）」。消除方式是为条目补 `evidenceRefs`，而不是调低示例的证据字段。
 
-含义：本地用 host.py 生成的工具即使个别条目缺 examples 也能正常使用（仅少了示例），但若要回贡献到仓库，需补齐到满足仓库端严格校验。
+含义：任何路径生成的数据在进入预览前就必须达到仓库可提交标准。
 
 ## 给自动化流程（Native Messaging + claude -p）的额外要求
 
@@ -178,8 +179,8 @@ meta：
 - 更新模式：保留原有未变化的条目，不要整份重写丢失细节
 - 新增工具应为所有条目提供 keywords、evidenceRefs 和 examples。CLI 提供可执行命令，IDE 提供操作场景
 - examples 中面向用户展示的说明字段必须写中文；不要把官方英文说明原样放入 description、scenario、goal、expected、prerequisites、caveat 或 warning
-- Shell 聚合工具必须为所有条目提供 `shell` 结构化层次字段和 keywords；普通参数表条目可以省略 examples，但核心、高频、危险、易错或平台差异参数必须提供 examples、caveat 或 warning
-- examples 覆盖不足不会阻止写入，但会产生质量警告；结构错误仍会拒绝
+- Shell 聚合工具必须为所有条目提供 `shell` 结构化层次字段、keywords 和完整 examples；不再豁免长尾条目
+- examples、grounding 或场景审校覆盖不足会直接阻止预览和写入
 - **先查官方入口、再看版本信号**：每次检查更新必须重新读取官方入口清单并与当前数据做集合差异。版本未变只能跳过语义重生成，不能跳过完整性检查；官方目录不可用时必须失败，不得显示“无需更新”。
 - **两阶段生成**：新增工具和深度核验先发现、筛选并解释来源，再依据发现结果生成逐条绑定证据的内容。
 - **来源优先级（新增与更新同样适用）**：本机帮助和第一方资料优先；官方缺失时才使用登记权威第三方。普通社区只能作为线索。永不编造。

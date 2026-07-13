@@ -1,0 +1,1874 @@
+{
+  "schemaVersion": 2,
+  "toolId": "shell",
+  "scope": "all-command-entrypoints",
+  "checkedAt": "2026-07-13",
+  "sourceIds": [
+    "posix-shell-utilities",
+    "gnu-bash-manual",
+    "zsh-manual",
+    "linux-man7",
+    "bash-local-help"
+  ],
+  "adapter": {
+    "id": "shell-fixed-official-component-union",
+    "kind": "fixed-official-component-union",
+    "version": 1
+  },
+  "closure": {
+    "status": "closed",
+    "entryCount": 94,
+    "components": [
+      "posix-shell",
+      "bash",
+      "zsh"
+    ],
+    "platforms": [
+      "mac",
+      "linux"
+    ],
+    "proof": "deterministic-adapter-snapshot"
+  },
+  "entries": [
+    {
+      "command": ":",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "posix-sh",
+      "platforms": [
+        "mac",
+        "linux",
+        "windows"
+      ],
+      "constraints": [],
+      "description": "Null command that always returns success",
+      "usage": ":",
+      "options": [],
+      "officialExamples": [
+        "按 :"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/colon.html"
+    },
+    {
+      "command": ". file",
+      "context": "load functions and configurations",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "posix-sh",
+      "platforms": [],
+      "constraints": [],
+      "description": "Read and execute commands from file in the current shell environment",
+      "usage": ". file",
+      "options": [],
+      "officialExamples": [
+        ". ./functions.sh"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/dot.html · . （dot）特殊内建"
+    },
+    {
+      "command": "[",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "posix-sh",
+      "platforms": [
+        "mac",
+        "linux",
+        "windows"
+      ],
+      "constraints": [],
+      "description": "Alternative form of test command",
+      "usage": "[",
+      "options": [
+        "-d"
+      ],
+      "officialExamples": [
+        "[ -d /tmp ] && echo '/tmp is a directory'"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/test.html · test / [ 同页记载"
+    },
+    {
+      "command": "\\command",
+      "context": "bypass alias",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "posix-sh",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Bypass an alias by prefixing the command with a backslash",
+      "usage": "\\command",
+      "options": [],
+      "officialExamples": [
+        "\\ls"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html · 2.3.1 Alias Substitution（对命令词加引用/反斜杠可抑制别名替换）"
+    },
+    {
+      "command": "&",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "posix-sh",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Run command in background",
+      "usage": "&",
+      "options": [],
+      "officialExamples": [
+        "sleep 60 &"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html · 2.9.3 Lists · Asynchronous Lists（&）"
+    },
+    {
+      "command": "alias [name[=value] ...]",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "posix-sh",
+      "platforms": [],
+      "constraints": [],
+      "description": "Define or display aliases",
+      "usage": "alias [name[=value] ...]",
+      "options": [
+        "--color"
+      ],
+      "officialExamples": [
+        "alias g='grep --color=auto'\ng 'pattern' file"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/alias.html"
+    },
+    {
+      "command": "autoload",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "zsh",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Mark a function for autoloading",
+      "usage": "autoload",
+      "options": [
+        "-Uz"
+      ],
+      "officialExamples": [
+        "autoload -Uz compinit && compinit"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · autoload"
+    },
+    {
+      "command": "bash --login",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "bash",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Start bash as a login shell",
+      "usage": "bash --login",
+      "options": [
+        "--login"
+      ],
+      "officialExamples": [
+        "bash --login"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · bash --login"
+    },
+    {
+      "command": "bg",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "posix-sh",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Resume suspended job in background",
+      "usage": "bg",
+      "options": [],
+      "officialExamples": [
+        "bg"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/bg.html"
+    },
+    {
+      "command": "bind",
+      "context": "亦可写入 ~/.inputrc：set show-all-if-ambiguous on",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "bash",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Show all matches on first Tab press (readline variable)",
+      "usage": "bind",
+      "options": [],
+      "officialExamples": [
+        "bind 'set show-all-if-ambiguous on'"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · bind 'set show-all-if-ambiguous on'"
+    },
+    {
+      "command": "bind -p",
+      "context": "bind",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "bash",
+      "platforms": [
+        "mac",
+        "linux",
+        "windows"
+      ],
+      "constraints": [],
+      "description": "Display all Readline key bindings",
+      "usage": "bind -p",
+      "options": [
+        "-p"
+      ],
+      "officialExamples": [
+        "bind -p | grep reverse-search-history"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · bind -p"
+    },
+    {
+      "command": "builtin",
+      "context": "builtin",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "bash",
+      "platforms": [
+        "mac",
+        "linux",
+        "windows"
+      ],
+      "constraints": [],
+      "description": "Run a shell builtin, bypassing shell functions",
+      "usage": "builtin",
+      "options": [],
+      "officialExamples": [
+        "builtin cd /tmp"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · builtin"
+    },
+    {
+      "command": "caller 0",
+      "context": "caller",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "bash",
+      "platforms": [
+        "mac",
+        "linux",
+        "windows"
+      ],
+      "constraints": [],
+      "description": "Print the current subroutine call trace",
+      "usage": "caller 0",
+      "options": [],
+      "officialExamples": [
+        "caller 0"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · caller 0"
+    },
+    {
+      "command": "cd",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "posix-sh",
+      "platforms": [
+        "mac",
+        "linux",
+        "windows"
+      ],
+      "constraints": [],
+      "description": "Change the current directory",
+      "usage": "cd",
+      "options": [],
+      "officialExamples": [
+        "cd /tmp"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/cd.html"
+    },
+    {
+      "command": "command -v",
+      "context": "command",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "bash",
+      "platforms": [
+        "mac",
+        "linux",
+        "windows"
+      ],
+      "constraints": [],
+      "description": "Display the command that would be executed, bypassing aliases",
+      "usage": "command -v",
+      "options": [
+        "-v"
+      ],
+      "officialExamples": [
+        "command -v git"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · command -v"
+    },
+    {
+      "command": "command -v",
+      "context": "bash command lookup",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "bash",
+      "platforms": [],
+      "constraints": [],
+      "description": "Display the definition of a command (suitable for scripting)",
+      "usage": "command -v",
+      "options": [
+        "-v"
+      ],
+      "officialExamples": [
+        "command -v grep"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · command -v"
+    },
+    {
+      "command": "compdef _function command",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "zsh",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Associate a completion function with a command",
+      "usage": "compdef _function command",
+      "options": [],
+      "officialExamples": [
+        "compdef _git g"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · compdef _function command"
+    },
+    {
+      "command": "compgen -c",
+      "context": "compgen",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "bash",
+      "platforms": [
+        "mac",
+        "linux",
+        "windows"
+      ],
+      "constraints": [],
+      "description": "List all available commands for completion",
+      "usage": "compgen -c",
+      "options": [
+        "-c"
+      ],
+      "officialExamples": [
+        "compgen -c | grep ^git"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · compgen -c"
+    },
+    {
+      "command": "compgen -W",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "bash",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Generate completion candidates from a word list",
+      "usage": "compgen -W",
+      "options": [
+        "-W"
+      ],
+      "officialExamples": [
+        "compgen -W \"apple banana cherry\" a"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · compgen -W 'words'"
+    },
+    {
+      "command": "complete -F",
+      "context": "complete",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "bash",
+      "platforms": [
+        "mac",
+        "linux",
+        "windows"
+      ],
+      "constraints": [],
+      "description": "Specify a function to generate completions for a command",
+      "usage": "complete -F",
+      "options": [
+        "-F"
+      ],
+      "officialExamples": [
+        "complete -F _my_completion mycmd"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · complete -F"
+    },
+    {
+      "command": "complete -F function command",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "bash",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Define a completion function for a command",
+      "usage": "complete -F function command",
+      "options": [
+        "-F"
+      ],
+      "officialExamples": [
+        "complete -F _mycmd_completions mycmd"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · complete -F function command"
+    },
+    {
+      "command": "complete -o default command",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "bash",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Fall back to default completion after the custom function",
+      "usage": "complete -o default command",
+      "options": [
+        "-o"
+      ],
+      "officialExamples": [
+        "complete -o default command"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · complete -o default command"
+    },
+    {
+      "command": "compopt -o nospace",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "bash",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Don't append a space after a successful completion",
+      "usage": "compopt -o nospace",
+      "options": [
+        "-o"
+      ],
+      "officialExamples": [
+        "compopt -o nospace"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · compopt -o nospace"
+    },
+    {
+      "command": "Ctrl+Z",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "posix-sh",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Suspend the foreground job",
+      "usage": "Ctrl+Z",
+      "options": [],
+      "officialExamples": [
+        "在命令运行时按下 Ctrl+Z"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/stty.html · susp 控制字符（默认 Ctrl+Z，挂起前台作业）"
+    },
+    {
+      "command": "declare -p",
+      "context": "declare",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "bash",
+      "platforms": [
+        "mac",
+        "linux",
+        "windows"
+      ],
+      "constraints": [],
+      "description": "Display the attributes and values of variables",
+      "usage": "declare -p",
+      "options": [
+        "-p"
+      ],
+      "officialExamples": [
+        "declare -p HOME"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · declare -p"
+    },
+    {
+      "command": "disown",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "bash",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Remove jobs from shell's job table",
+      "usage": "disown",
+      "options": [],
+      "officialExamples": [
+        "disown %1"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · disown"
+    },
+    {
+      "command": "echo",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "posix-sh",
+      "platforms": [
+        "mac",
+        "linux",
+        "windows"
+      ],
+      "constraints": [],
+      "description": "Print arguments to standard output",
+      "usage": "echo",
+      "options": [],
+      "officialExamples": [
+        "echo 'Hello, World'"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/echo.html"
+    },
+    {
+      "command": "enable -n",
+      "context": "enable",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "bash",
+      "platforms": [
+        "mac",
+        "linux",
+        "windows"
+      ],
+      "constraints": [],
+      "description": "Disable a shell builtin, forcing the use of an external command",
+      "usage": "enable -n",
+      "options": [
+        "-n"
+      ],
+      "officialExamples": [
+        "enable -n echo"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · enable -n"
+    },
+    {
+      "command": "eval",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "posix-sh",
+      "platforms": [
+        "mac",
+        "linux",
+        "windows"
+      ],
+      "constraints": [],
+      "description": "Execute arguments as a shell command",
+      "usage": "eval",
+      "options": [
+        "-l"
+      ],
+      "officialExamples": [
+        "cmd=\"ls -l\"; eval $cmd"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/eval.html"
+    },
+    {
+      "command": "exec",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "posix-sh",
+      "platforms": [
+        "mac",
+        "linux",
+        "windows"
+      ],
+      "constraints": [],
+      "description": "Replace the shell with a given command",
+      "usage": "exec",
+      "options": [],
+      "officialExamples": [
+        "exec less /etc/passwd"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/exec.html"
+    },
+    {
+      "command": "exit",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "posix-sh",
+      "platforms": [
+        "mac",
+        "linux",
+        "windows"
+      ],
+      "constraints": [],
+      "description": "Exit the shell with an optional status",
+      "usage": "exit",
+      "options": [],
+      "officialExamples": [
+        "exit 0"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/exit.html"
+    },
+    {
+      "command": "false",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "posix-sh",
+      "platforms": [
+        "mac",
+        "linux",
+        "windows"
+      ],
+      "constraints": [],
+      "description": "Return a false (failure) exit status",
+      "usage": "false",
+      "options": [],
+      "officialExamples": [
+        "false"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/false.html"
+    },
+    {
+      "command": "fg",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "posix-sh",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Bring job to foreground",
+      "usage": "fg",
+      "options": [],
+      "officialExamples": [
+        "fg %1"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/fg.html"
+    },
+    {
+      "command": "function name { commands; }",
+      "context": "bash function definition",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "bash",
+      "platforms": [],
+      "constraints": [],
+      "description": "Define a function using the 'function' reserved word (bash)",
+      "usage": "function name { commands; }",
+      "options": [],
+      "officialExamples": [
+        "function hello { echo \"Hello from function\"; }\nhello"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · function name { commands; }"
+    },
+    {
+      "command": "function name { commands; }",
+      "context": "zsh function definition",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "zsh",
+      "platforms": [],
+      "constraints": [],
+      "description": "Define a function using the 'function' keyword (zsh)",
+      "usage": "function name { commands; }",
+      "options": [],
+      "officialExamples": [
+        "function repeat_message { for i in {1..3}; do echo \"$@\"; done }\nrepeat_message Hi"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · function name { commands; }"
+    },
+    {
+      "command": "functions",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "zsh",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Display or define shell functions",
+      "usage": "functions",
+      "options": [],
+      "officialExamples": [
+        "functions ll"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · functions"
+    },
+    {
+      "command": "getopts",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "posix-sh",
+      "platforms": [
+        "mac",
+        "linux",
+        "windows"
+      ],
+      "constraints": [],
+      "description": "Parse positional parameters for options",
+      "usage": "getopts",
+      "options": [
+        "-eq"
+      ],
+      "officialExamples": [
+        "while getopts 'ab:' opt; do\n  case $opt in\n    a) echo 'Option A'; ;;\n    b) echo \"Option B: $OPTARG\"; ;;\n    *) echo 'Invalid'; ;;\n  esac\ndone\ntest $OPTIND -eq 1 || shift $((OPTIND - 1))"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/getopts.html"
+    },
+    {
+      "command": "hash -r",
+      "context": "hash",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "bash",
+      "platforms": [
+        "mac",
+        "linux",
+        "windows"
+      ],
+      "constraints": [],
+      "description": "Forget all remembered command locations",
+      "usage": "hash -r",
+      "options": [
+        "-r"
+      ],
+      "officialExamples": [
+        "hash -r"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · hash -r"
+    },
+    {
+      "command": "hash -r",
+      "context": "bash command hash table",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "bash",
+      "platforms": [],
+      "constraints": [],
+      "description": "Clear the command hash table, forcing a PATH re-scan",
+      "usage": "hash -r",
+      "options": [
+        "-r"
+      ],
+      "officialExamples": [
+        "hash -r"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · hash -r"
+    },
+    {
+      "command": "hash -r",
+      "context": "zsh command hash table",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "zsh",
+      "platforms": [],
+      "constraints": [],
+      "description": "Clear the command hash table (zsh)",
+      "usage": "hash -r",
+      "options": [
+        "-r"
+      ],
+      "officialExamples": [
+        "hash -r"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · hash -r"
+    },
+    {
+      "command": "help -m",
+      "context": "help",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "bash",
+      "platforms": [
+        "mac",
+        "linux",
+        "windows"
+      ],
+      "constraints": [],
+      "description": "Display help for builtin commands in pseudo-manpage format",
+      "usage": "help -m",
+      "options": [
+        "-m"
+      ],
+      "officialExamples": [
+        "help -m declare"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · help -m"
+    },
+    {
+      "command": "kill",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "posix-sh",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Send a signal to a job or process",
+      "usage": "kill",
+      "options": [],
+      "officialExamples": [
+        "kill %1"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/kill.html"
+    },
+    {
+      "command": "let",
+      "context": "let",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "bash",
+      "platforms": [
+        "mac",
+        "linux",
+        "windows"
+      ],
+      "constraints": [],
+      "description": "Perform arithmetic evaluation",
+      "usage": "let",
+      "options": [],
+      "officialExamples": [
+        "let x=5+3; echo $x"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · let"
+    },
+    {
+      "command": "local -i",
+      "context": "local",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "bash",
+      "platforms": [
+        "mac",
+        "linux",
+        "windows"
+      ],
+      "constraints": [],
+      "description": "Declare a local integer variable",
+      "usage": "local -i",
+      "options": [
+        "-i"
+      ],
+      "officialExamples": [
+        "local -i count=0"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · local -i"
+    },
+    {
+      "command": "local [ -A ] [ -a ] [ name[=value] ... ]",
+      "context": "zsh function",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "zsh",
+      "platforms": [],
+      "constraints": [],
+      "description": "Declare local variables within a function (zsh)",
+      "usage": "local [ -A ] [ -a ] [ name[=value] ... ]",
+      "options": [
+        "-A",
+        "-a"
+      ],
+      "officialExamples": [
+        "myfunc() { local -A map; map[key]=\"value\"; echo ${map[key]}; }\nmyfunc"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · local [ -A ] [ -a ] [ name[=value] ... ]"
+    },
+    {
+      "command": "local [option] [name[=value] ...]",
+      "context": "bash function",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "bash",
+      "platforms": [],
+      "constraints": [],
+      "description": "Declare local variables visible only within a function (bash)",
+      "usage": "local [option] [name[=value] ...]",
+      "options": [],
+      "officialExamples": [
+        "myfunc() { local tmp=\"value\"; echo $tmp; }\ntmp=\"global\"\nmyfunc\necho $tmp"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · local [option] [name[=value] ...]"
+    },
+    {
+      "command": "mapfile -t",
+      "context": "mapfile",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "bash",
+      "platforms": [
+        "mac",
+        "linux",
+        "windows"
+      ],
+      "constraints": [],
+      "description": "Read lines from a file into an array, stripping trailing newlines",
+      "usage": "mapfile -t",
+      "options": [
+        "-t"
+      ],
+      "officialExamples": [
+        "mapfile -t lines < /etc/hosts"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · mapfile -t"
+    },
+    {
+      "command": "name() { commands; }",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "posix-sh",
+      "platforms": [],
+      "constraints": [],
+      "description": "Define a POSIX-compatible shell function",
+      "usage": "name() { commands; }",
+      "options": [],
+      "officialExamples": [
+        "greet() { echo \"Hello, $1\"; }\ngreet \"World\""
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html · 2.9.5 Function Definition Command"
+    },
+    {
+      "command": "print",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "zsh",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Print arguments with special formatting capabilities",
+      "usage": "print",
+      "options": [
+        "-l"
+      ],
+      "officialExamples": [
+        "print -l one two three"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · print"
+    },
+    {
+      "command": "printf",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "posix-sh",
+      "platforms": [
+        "mac",
+        "linux",
+        "windows"
+      ],
+      "constraints": [],
+      "description": "Format and print arguments",
+      "usage": "printf",
+      "options": [],
+      "officialExamples": [
+        "printf 'Name: %-10s Age: %02d\\n' 'Alice' 7"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/printf.html"
+    },
+    {
+      "command": "pwd",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "posix-sh",
+      "platforms": [
+        "mac",
+        "linux",
+        "windows"
+      ],
+      "constraints": [],
+      "description": "Print working directory",
+      "usage": "pwd",
+      "options": [],
+      "officialExamples": [
+        "pwd"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/pwd.html"
+    },
+    {
+      "command": "read",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "posix-sh",
+      "platforms": [
+        "mac",
+        "linux",
+        "windows"
+      ],
+      "constraints": [],
+      "description": "Read a line from standard input into a variable",
+      "usage": "read",
+      "options": [],
+      "officialExamples": [
+        "printf 'Enter your name: '; read name; echo \"Hello, $name\""
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/read.html"
+    },
+    {
+      "command": "return",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "posix-sh",
+      "platforms": [
+        "mac",
+        "linux",
+        "windows"
+      ],
+      "constraints": [],
+      "description": "Return from a function or sourced script",
+      "usage": "return",
+      "options": [
+        "-f"
+      ],
+      "officialExamples": [
+        "myfunc() { test -f \"$1\" && return 0; return 1; }"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/return.html"
+    },
+    {
+      "command": "set -e",
+      "context": "set builtin",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "posix-sh",
+      "platforms": [],
+      "constraints": [],
+      "description": "Exit immediately if a command exits with a non-zero status",
+      "usage": "set -e",
+      "options": [
+        "-e"
+      ],
+      "officialExamples": [
+        "#!/bin/bash\nset -e\nfalse\necho 'This will not run'"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/set.html · 选项 -e"
+    },
+    {
+      "command": "set -e",
+      "context": "exit on error",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "posix-sh",
+      "platforms": [],
+      "constraints": [],
+      "description": "Exit immediately if a command exits with a non-zero status",
+      "usage": "set -e",
+      "options": [
+        "-e"
+      ],
+      "officialExamples": [
+        "set -e; false; echo \"This line will never be printed\""
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/set.html · 选项 -e"
+    },
+    {
+      "command": "set -o pipefail",
+      "context": "pipe exit behavior",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "bash",
+      "platforms": [],
+      "constraints": [],
+      "description": "Pipeline returns the status of the last command that failed, instead of the last command",
+      "usage": "set -o pipefail",
+      "options": [
+        "-o",
+        "-eo"
+      ],
+      "officialExamples": [
+        "set -eo pipefail; false | true; echo \"This will not be printed\""
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · set -o pipefail"
+    },
+    {
+      "command": "set -u",
+      "context": "set builtin",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "posix-sh",
+      "platforms": [],
+      "constraints": [],
+      "description": "Treat unset variables as an error when substituting",
+      "usage": "set -u",
+      "options": [
+        "-u",
+        "-rf"
+      ],
+      "officialExamples": [
+        "set -u\nrm -rf /${MYDIR}"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/set.html · 选项 -u"
+    },
+    {
+      "command": "set -x",
+      "context": "set builtin",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "posix-sh",
+      "platforms": [],
+      "constraints": [],
+      "description": "Print commands and their arguments as they are executed",
+      "usage": "set -x",
+      "options": [
+        "-x"
+      ],
+      "officialExamples": [
+        "set -x\nVAR=$(date)\necho \"$VAR\""
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/set.html · 选项 -x"
+    },
+    {
+      "command": "set -x",
+      "context": "debug tracing",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "posix-sh",
+      "platforms": [],
+      "constraints": [],
+      "description": "Enable execution tracing; print each command and its arguments before execution",
+      "usage": "set -x",
+      "options": [
+        "-x"
+      ],
+      "officialExamples": [
+        "#!/bin/sh\nset -x\necho \"Debug mode on\"\nls\nset +x"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/set.html · 选项 -x"
+    },
+    {
+      "command": "setopt",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "zsh",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Set shell options",
+      "usage": "setopt",
+      "options": [],
+      "officialExamples": [
+        "setopt autocd"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · setopt"
+    },
+    {
+      "command": "setopt append_history",
+      "context": "setopt builtin",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "zsh",
+      "platforms": [],
+      "constraints": [],
+      "description": "Append history to the history file rather than overwriting (Zsh)",
+      "usage": "setopt append_history",
+      "options": [],
+      "officialExamples": [
+        "setopt append_history"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · setopt append_history"
+    },
+    {
+      "command": "setopt autocd",
+      "context": "setopt builtin",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "zsh",
+      "platforms": [],
+      "constraints": [],
+      "description": "Change directory by typing directory name (Zsh)",
+      "usage": "setopt autocd",
+      "options": [],
+      "officialExamples": [
+        "setopt autocd\n/tmp\npwd"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · setopt autocd"
+    },
+    {
+      "command": "setopt extendedglob",
+      "context": "setopt builtin",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "zsh",
+      "platforms": [],
+      "constraints": [],
+      "description": "Enable extended globbing patterns (#, ^, ~) in Zsh",
+      "usage": "setopt extendedglob",
+      "options": [],
+      "officialExamples": [
+        "setopt extendedglob\nls *.txt~*backup*"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · setopt extendedglob"
+    },
+    {
+      "command": "setopt menu_complete",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "zsh",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Automatically insert the first match and cycle through on subsequent Tab presses",
+      "usage": "setopt menu_complete",
+      "options": [],
+      "officialExamples": [
+        "setopt menu_complete"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · setopt menu_complete"
+    },
+    {
+      "command": "setopt share_history",
+      "context": "setopt builtin",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "zsh",
+      "platforms": [],
+      "constraints": [],
+      "description": "Share history between all shells in real-time (Zsh)",
+      "usage": "setopt share_history",
+      "options": [],
+      "officialExamples": [
+        "setopt share_history"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · setopt share_history"
+    },
+    {
+      "command": "shift",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "posix-sh",
+      "platforms": [
+        "mac",
+        "linux",
+        "windows"
+      ],
+      "constraints": [],
+      "description": "Shift positional parameters left",
+      "usage": "shift",
+      "options": [],
+      "officialExamples": [
+        "shift"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/shift.html"
+    },
+    {
+      "command": "shopt -s",
+      "context": "shopt",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "bash",
+      "platforms": [
+        "mac",
+        "linux",
+        "windows"
+      ],
+      "constraints": [],
+      "description": "Enable a shell option",
+      "usage": "shopt -s",
+      "options": [
+        "-s"
+      ],
+      "officialExamples": [
+        "shopt -s globstar"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · shopt -s"
+    },
+    {
+      "command": "shopt -s autocd",
+      "context": "shopt builtin",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "bash",
+      "platforms": [],
+      "constraints": [],
+      "description": "Execute directory names as if cd was used (Bash)",
+      "usage": "shopt -s autocd",
+      "options": [
+        "-s"
+      ],
+      "officialExamples": [
+        "shopt -s autocd\n/tmp\npwd"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · shopt -s autocd"
+    },
+    {
+      "command": "shopt -s extglob",
+      "context": "shopt builtin",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "bash",
+      "platforms": [],
+      "constraints": [],
+      "description": "Enable extended pattern matching features (Bash)",
+      "usage": "shopt -s extglob",
+      "options": [
+        "-s"
+      ],
+      "officialExamples": [
+        "shopt -s extglob\nls *.@(jpg|png)"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · shopt -s extglob"
+    },
+    {
+      "command": "shopt -s globstar",
+      "context": "shopt builtin",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "bash",
+      "platforms": [],
+      "constraints": [],
+      "description": "Enable recursive globbing with ** (Bash)",
+      "usage": "shopt -s globstar",
+      "options": [
+        "-s"
+      ],
+      "officialExamples": [
+        "shopt -s globstar\nls **/*.txt"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · shopt -s globstar"
+    },
+    {
+      "command": "shopt -s histappend",
+      "context": "shopt builtin",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "bash",
+      "platforms": [],
+      "constraints": [],
+      "description": "Append history to the history file rather than overwriting (Bash)",
+      "usage": "shopt -s histappend",
+      "options": [
+        "-s"
+      ],
+      "officialExamples": [
+        "shopt -s histappend"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · shopt -s histappend"
+    },
+    {
+      "command": "suspend",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "bash",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Suspend shell execution",
+      "usage": "suspend",
+      "options": [],
+      "officialExamples": [
+        "suspend"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · suspend"
+    },
+    {
+      "command": "Tab",
+      "context": "bash readline",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "bash",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Trigger completion of current word",
+      "usage": "Tab",
+      "options": [],
+      "officialExamples": [
+        "按 Tab（bash readline）"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · Tab"
+    },
+    {
+      "command": "Tab",
+      "context": "zsh zle",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "zsh",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Trigger expand-or-complete (completions or expansions)",
+      "usage": "Tab",
+      "options": [],
+      "officialExamples": [
+        "按 Tab（zsh zle）"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · Tab"
+    },
+    {
+      "command": "test",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "posix-sh",
+      "platforms": [
+        "mac",
+        "linux",
+        "windows"
+      ],
+      "constraints": [],
+      "description": "Evaluate conditional expression",
+      "usage": "test",
+      "options": [
+        "-f"
+      ],
+      "officialExamples": [
+        "test -f /etc/passwd && echo 'passwd exists'"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/test.html"
+    },
+    {
+      "command": "trap",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "posix-sh",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Specify actions for signals or events",
+      "usage": "trap",
+      "options": [
+        "-f"
+      ],
+      "officialExamples": [
+        "trap 'rm -f \"$TMPFILE\"' EXIT"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/trap.html"
+    },
+    {
+      "command": "true",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "posix-sh",
+      "platforms": [
+        "mac",
+        "linux",
+        "windows"
+      ],
+      "constraints": [],
+      "description": "Return a true (success) exit status",
+      "usage": "true",
+      "options": [],
+      "officialExamples": [
+        "true"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/true.html"
+    },
+    {
+      "command": "type -a",
+      "context": "type",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "bash",
+      "platforms": [
+        "mac",
+        "linux",
+        "windows"
+      ],
+      "constraints": [],
+      "description": "Display all locations of a command (alias, builtin, file)",
+      "usage": "type -a",
+      "options": [
+        "-a"
+      ],
+      "officialExamples": [
+        "type -a ls"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · type -a"
+    },
+    {
+      "command": "type -a",
+      "context": "bash command lookup",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "bash",
+      "platforms": [],
+      "constraints": [],
+      "description": "Display all locations of a command (aliases, functions, builtins, external files)",
+      "usage": "type -a",
+      "options": [
+        "-a"
+      ],
+      "officialExamples": [
+        "type -a echo"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · type -a"
+    },
+    {
+      "command": "type -a",
+      "context": "zsh command lookup",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "zsh",
+      "platforms": [],
+      "constraints": [],
+      "description": "Display all locations of a command (zsh version)",
+      "usage": "type -a",
+      "options": [
+        "-a"
+      ],
+      "officialExamples": [
+        "type -a"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · type -a"
+    },
+    {
+      "command": "typeset",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "zsh",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Set or display variable attributes and values",
+      "usage": "typeset",
+      "options": [
+        "-A"
+      ],
+      "officialExamples": [
+        "typeset -A user_ids"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · typeset"
+    },
+    {
+      "command": "umask",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "posix-sh",
+      "platforms": [
+        "mac",
+        "linux",
+        "windows"
+      ],
+      "constraints": [],
+      "description": "Set or display the file mode creation mask",
+      "usage": "umask",
+      "options": [],
+      "officialExamples": [
+        "umask 022"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/umask.html"
+    },
+    {
+      "command": "unalias [-a] name ...",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "posix-sh",
+      "platforms": [],
+      "constraints": [],
+      "description": "Remove alias definitions",
+      "usage": "unalias [-a] name ...",
+      "options": [],
+      "officialExamples": [
+        "unalias ll"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/unalias.html"
+    },
+    {
+      "command": "unsetopt",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "zsh",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Unset shell options",
+      "usage": "unsetopt",
+      "options": [],
+      "officialExamples": [
+        "unsetopt autocd"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · unsetopt"
+    },
+    {
+      "command": "vared",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "zsh",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Edit a variable interactively using line editor",
+      "usage": "vared",
+      "options": [],
+      "officialExamples": [
+        "vared PATH"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · vared"
+    },
+    {
+      "command": "wait",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "posix-sh",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Wait for job completion",
+      "usage": "wait",
+      "options": [],
+      "officialExamples": [
+        "wait"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/wait.html"
+    },
+    {
+      "command": "whence",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "zsh",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Show how a command would be interpreted",
+      "usage": "whence",
+      "options": [
+        "-v"
+      ],
+      "officialExamples": [
+        "whence -v ls"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · whence"
+    },
+    {
+      "command": "whence -v",
+      "context": "zsh command lookup",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "zsh",
+      "platforms": [],
+      "constraints": [],
+      "description": "Display verbose command definition (similar to type)",
+      "usage": "whence -v",
+      "options": [
+        "-v"
+      ],
+      "officialExamples": [
+        "whence -v"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · whence -v"
+    },
+    {
+      "command": "where",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "zsh",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Show all occurrences of a command in the PATH and functions",
+      "usage": "where",
+      "options": [],
+      "officialExamples": [
+        "where python"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · where"
+    },
+    {
+      "command": "zmodload",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "zsh",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Load and manage Zsh modules",
+      "usage": "zmodload",
+      "options": [],
+      "officialExamples": [
+        "zmodload zsh/datetime"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · zmodload"
+    },
+    {
+      "command": "zsh -l",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "zsh",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Start zsh as a login shell",
+      "usage": "zsh -l",
+      "options": [
+        "-l"
+      ],
+      "officialExamples": [
+        "zsh -l"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · zsh -l"
+    },
+    {
+      "command": "zstyle",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "zsh",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Define and query styles for completion and other contexts",
+      "usage": "zstyle",
+      "options": [],
+      "officialExamples": [
+        "zstyle ':completion:*' menu select"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · zstyle"
+    },
+    {
+      "command": "zstyle ':completion:*:descriptions' format",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "zsh",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Set the format of completion group descriptions",
+      "usage": "zstyle ':completion:*:descriptions' format",
+      "options": [],
+      "officialExamples": [
+        "zstyle ':completion:*:descriptions' format '%d'"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · zstyle ':completion:*:descriptions' format '%d'"
+    },
+    {
+      "command": "zstyle ':completion:*' menu select",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "zsh",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Enable menu selection for completions",
+      "usage": "zstyle ':completion:*' menu select",
+      "options": [],
+      "officialExamples": [
+        "zstyle ':completion:*' menu select"
+      ],
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html · zstyle ':completion:*' menu select"
+    }
+  ]
+}

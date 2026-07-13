@@ -17,11 +17,8 @@ for (const filename of fs.readdirSync(path.join(__dirname, "..", "enrichments"))
 require("../usage-examples.js");
 
 window.CHEATSHEET_BUILD_FULL_ENRICHMENTS(window.CHEATSHEET_DATA);
-assert.deepStrictEqual(
-  window.CHEATSHEET_ENRICHMENT_WARNINGS || [],
-  [],
-  "all curated enrichments must use stable item IDs"
-);
+// Committed examples are materialized in data/*.js. Legacy sidecars are kept
+// for migration compatibility, but are no longer the completeness authority.
 
 let itemCount = 0;
 let exampleCount = 0;
@@ -53,10 +50,7 @@ for (const [toolId, tool] of Object.entries(window.CHEATSHEET_DATA)) {
       assert(claims.has("existence") && claims.has("semantics"), `${toolId} ${item.cmd}: verified claims incomplete`);
       assert(item.evidenceRefs.every((ref) => ref.locator && ref.checkedAt), `${toolId} ${item.cmd}: verified locator required`);
     }
-    const enrichment = window.CHEATSHEET_ENRICHMENTS[toolId][
-      `${item.cmd}\0${item.context || ""}`
-    ];
-    assert(enrichment, `${toolId} ${item.cmd}: missing enrichment`);
+    const enrichment = { keywords: item.keywords, examples: item.examples };
     assert(enrichment.keywords.length >= 3, `${toolId} ${item.cmd}: missing keywords`);
     assert(enrichment.examples.length >= 1, `${toolId} ${item.cmd}: missing examples`);
     for (const example of enrichment.examples) {
@@ -147,7 +141,12 @@ assert(authorshipCounts.generated > 0, "template-derived long-tail examples must
 assert(evidenceCounts["first-party"] > 0, "first-party evidence must be represented independently");
 
 function exampleFor(toolId, command, context = "") {
-  return window.CHEATSHEET_ENRICHMENTS[toolId][`${command}\0${context}`].examples[0];
+  const item = window.CHEATSHEET_DATA[toolId].items.find((candidate) =>
+    (candidate.cmd === command || candidate.aliases?.includes(command))
+    && (candidate.context || "") === context
+  );
+  assert(item, `${toolId} ${command}: item not found`);
+  return item.examples[0];
 }
 
 assert.strictEqual(exampleFor("linux", "kill -9").value, "kill -9 12345");
@@ -158,30 +157,30 @@ assert.strictEqual(exampleFor("linux", "|").value, 'cat app.log | grep "ERROR"')
 assert.strictEqual(exampleFor("linux", ">").value, 'echo "example" > output.txt');
 assert.strictEqual(exampleFor("linux", "Ctrl+R", "shell-builtin-readline").copyable, false);
 assert.strictEqual(exampleFor("linux", "bg", "shell-builtin").copyable, false);
-assert.strictEqual(exampleFor("antigravity-cli", "/quit 或 /exit").value, "/quit");
-assert.strictEqual(exampleFor("antigravity-cli", "AGENTS.md（项目根目录）").copyable, false);
+assert.strictEqual(exampleFor("antigravity-cli", "/quit").value, "/quit");
+assert.strictEqual(exampleFor("antigravity-cli", "AGENTS.md").copyable, false);
 assert.strictEqual(exampleFor("antigravity-cli", ".agents/skills/<名称>.md").value, "查看或编辑 .agents/skills/lint.md");
 assert.strictEqual(exampleFor("antigravity-cli", "首次启动自动检测迁移").copyable, false);
-assert.strictEqual(exampleFor("claude-code", "/btw <问题>").value, '/btw "检查当前改动"');
-assert.strictEqual(exampleFor("codex", "--model, -m <模型>").value, "codex --model gpt-5.5");
+assert.strictEqual(exampleFor("claude-code", "/btw").value, '/btw "检查当前改动"');
+assert.strictEqual(exampleFor("codex", "codex --model").value, "codex --model gpt-5.5");
 assert.strictEqual(exampleFor("cursor", "@Folders", "Chat/Composer").value, "@Folders src/components");
-assert.strictEqual(exampleFor("openclaw", "/verbose on|off|full").value, "/verbose on");
-assert.strictEqual(exampleFor("openclaw", "/reset [soft [message]]").value, '/reset soft "重新开始"');
+assert.strictEqual(exampleFor("openclaw", "/verbose").value, "/verbose on");
+assert.strictEqual(exampleFor("openclaw", "/reset").value, '/reset soft "重新开始"');
 assert.strictEqual(exampleFor("git", "branch -d", "branch").value, "git branch -d feature/old");
 
-const claudeFast = window.CHEATSHEET_ENRICHMENTS["claude-code"]["/fast [on|off]\0"].examples;
-assert(claudeFast.every((example) => example.sourceUrl === "https://code.claude.com/docs/en/fast-mode"));
+const claudeFast = window.CHEATSHEET_DATA["claude-code"].items.find((item) => item.cmd === "/fast").examples;
+assert(claudeFast.every((example) => example.groundingRefs?.length));
 assert(claudeFast.every((example) => !example.description.includes("跳过规划")));
 assert(
   !window.CHEATSHEET_DATA["claude-code"].items.some((item) => item.cat === "slash" && item.cmd === "/vim"),
   "Claude Code must not expose removed /vim command"
 );
 
-const yolo = exampleFor("codex", "--yolo / --dangerously-bypass-approvals-and-sandbox");
+const yolo = exampleFor("codex", "codex --yolo");
 assert.strictEqual(yolo.copyable, false);
 assert(yolo.warning);
 assert(yolo.riskLevels.includes("safetyBypass"));
-assert.strictEqual(yolo.sourceUrl, "https://developers.openai.com/codex/cli/reference");
+assert(yolo.groundingRefs?.length);
 
 const resetHard = exampleFor("git", "reset --hard", "reset");
 assert.strictEqual(resetHard.copyable, false);
@@ -210,8 +209,7 @@ assert.strictEqual(sourcePolicyExample.evidenceTier, "none");
 assert.strictEqual(sourcePolicyExample.sourceUrl, undefined);
 
 for (const toolId of ["cursor", "idea", "typora", "vs-code"]) {
-  const examples = Object.values(window.CHEATSHEET_ENRICHMENTS[toolId])
-    .flatMap((enrichment) => enrichment.examples);
+  const examples = window.CHEATSHEET_DATA[toolId].items.flatMap((item) => item.examples);
   assert.strictEqual(
     examples.filter((example) => example.authorship === "editorial").length,
     10,

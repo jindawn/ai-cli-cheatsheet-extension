@@ -1,0 +1,562 @@
+{
+  "schemaVersion": 1,
+  "toolId": "git",
+  "reviewVersion": "scenario-grounding-v2",
+  "reviewedAt": "2026-07-13",
+  "inventoryHash": "sha256:5d1cc3c04a4efcd3ee41fd8b4e88c56f598c111cc63ac4d72999b2838b573ee4",
+  "status": "passed",
+  "examples": [
+    {
+      "itemId": "git-init",
+      "exampleIndex": 0,
+      "contentHash": "sha256:e6051d03624252f1fa69ef370213a5be3b4de183f3f5c7ba03f89dbe9bbe4d8e",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-clone",
+      "exampleIndex": 0,
+      "contentHash": "sha256:675185926fc78777ff554837cb710043650edb4bce99c0b256faf845198aa096",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-add",
+      "exampleIndex": 0,
+      "contentHash": "sha256:d7b3a945422653dce184e64cb1580e58fbc4b5ac3bfc13cffe61f45b52e39857",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-commit",
+      "exampleIndex": 0,
+      "contentHash": "sha256:6ba937f02f8bc7d7ef1c58acf385e67f2cd87f5860ecbc84c5e0f9849b6358e7",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-commit-m",
+      "exampleIndex": 0,
+      "contentHash": "sha256:66b82ba71c64d3448f8646c8fd140444f0778c18bd4d14319714d543ee03d385",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-commit-amend",
+      "exampleIndex": 0,
+      "contentHash": "sha256:06cebde2e90972ed1e0ee8ebb33d4c3d247019b6132182fce44e69a2bb584fb9",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-commit-amend-no-edit",
+      "exampleIndex": 0,
+      "contentHash": "sha256:ea3f3ed14cc6b175b33d7686eb8122848f77426bd6b75d29d810474b9517becf",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-status",
+      "exampleIndex": 0,
+      "contentHash": "sha256:79fcb19b7f36fae2e4dd565629e2cdfac5ca996d4047ead3b7c314bcbe1083ea",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-status-s",
+      "exampleIndex": 0,
+      "contentHash": "sha256:4bfd0e837b05c6bef3b46917ed14346d01db74df636bcf9cac5d1d9d2b217146",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-status-b",
+      "exampleIndex": 0,
+      "contentHash": "sha256:872e277b5c2479d430f9f4b168d40c3862fed1d294bfb3cc6382f0cefdfdb1ac",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-diff",
+      "exampleIndex": 0,
+      "contentHash": "sha256:5b0a443fad92c73ca50df0f49687a01961d1d3f8ee87a4fc7aadbfeaa8cc68d0",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-diff-staged",
+      "exampleIndex": 0,
+      "contentHash": "sha256:c5e10b319fecce46c334693d6cd69055d0ba3911ecfaa30f4fc7648760fba2fa",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-diff-head",
+      "exampleIndex": 0,
+      "contentHash": "sha256:80bde4b6032230afccb5651b9309ca1380bda16203c4d07b90c293cb217d6a49",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-reset",
+      "exampleIndex": 0,
+      "contentHash": "sha256:9007d48a504e72444a39ac487377d6f7c180a80f780bbea519c9849ebb89ccb7",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-reset-soft",
+      "exampleIndex": 0,
+      "contentHash": "sha256:28715b36a31fd1a5af858b1457d697c34665e2117f6f36cd0f8327b80170735f",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-reset-hard",
+      "exampleIndex": 0,
+      "contentHash": "sha256:7dda300cd978499175670d298f0b5ede711f3f60e3f23073fe0a84d6b6f9b604",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-reset-file",
+      "exampleIndex": 0,
+      "contentHash": "sha256:902f611433a7e450699650ccb39cb67a1619fcddd08a69bb82991129db69d00d",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-revert",
+      "exampleIndex": 0,
+      "contentHash": "sha256:76d5d7072427a3f6133e7c5a26c9e17ba52a57ea6609672e0d361eaf11c4e5e5",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-revert-no-edit",
+      "exampleIndex": 0,
+      "contentHash": "sha256:38364552d591011a0997e30c4a1e29ed4e604ea40cec1c74e3e4dffc1ed233da",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-revert-no-commit",
+      "exampleIndex": 0,
+      "contentHash": "sha256:e0fe912f31e3c7df56aa433b27b30ace43c90fa546f653abe69e6ffbdd2818b7",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-revert-continue",
+      "exampleIndex": 0,
+      "contentHash": "sha256:948b99b89f4dab2cfa1d793c7488179f62b1c6eabedef0e998103dc184661f68",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-revert-abort",
+      "exampleIndex": 0,
+      "contentHash": "sha256:77c2fd708f1d5003b2ca6eb5ef5160e3406d148e1d6e8f68079ef1a5dd3a8032",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-restore",
+      "exampleIndex": 0,
+      "contentHash": "sha256:c07f5faead3d96755e5aa1d6310c9697a4a13537fafa65e09a354ee57b04875e",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-restore-staged",
+      "exampleIndex": 0,
+      "contentHash": "sha256:a803500f20ab19739eed5f304979861b512ad4080f180d08c76f3de77fe6d2bf",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-restore-source",
+      "exampleIndex": 0,
+      "contentHash": "sha256:30858cf6c81c3f6cfea501882dd9d16bdb887efaa4e92bc8cc72d32cf8da2fdd",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-reflog",
+      "exampleIndex": 0,
+      "contentHash": "sha256:f4f94d55ca817eb6695ec22cf62046af2ba10ada893e4c945f0f37453a2f8412",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-reflog-show",
+      "exampleIndex": 0,
+      "contentHash": "sha256:38b1052911aa44fa3c90d9457a63a64bede2b48394037443ff80fa4dafef5a4f",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-worktree",
+      "exampleIndex": 0,
+      "contentHash": "sha256:d671732becf87b018ff052a0b88142a26a878df3d4c6a984ae5e6da4e85295d9",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-worktree-add",
+      "exampleIndex": 0,
+      "contentHash": "sha256:d68c4f75a70da31008f495ce9798b37342e9831414943b159f8dfed460f210e4",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-worktree-list",
+      "exampleIndex": 0,
+      "contentHash": "sha256:c8db3e4fa4cc35af79f938cc06fdaf8bdd18d66d45eb985b5d4ee407d7ed6668",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-worktree-remove",
+      "exampleIndex": 0,
+      "contentHash": "sha256:e58ae116187835c6a8dea6a3fbe37e625fb6cf0a8e91e5383e407691f89a6bd6",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-rm",
+      "exampleIndex": 0,
+      "contentHash": "sha256:9ca404bf48ac7e381187aac49089db2b77f0bba3a4eb16c3caa5940ce07f0584",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-rm-cached",
+      "exampleIndex": 0,
+      "contentHash": "sha256:70be53925aacface07f4efd4e7efb9e60d7eeb322dfc6d56624d0e5e49b8b835",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-mv",
+      "exampleIndex": 0,
+      "contentHash": "sha256:0481918fd0ac488621e3e313bcbeafa26698d5dd65c6129fc637480d0311fe62",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-branch",
+      "exampleIndex": 0,
+      "contentHash": "sha256:af6d2baa4a35823985b8a2fb74730a6144af45ea330a131de13213fbdb4f8241",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-branch",
+      "exampleIndex": 1,
+      "contentHash": "sha256:965311bdb3cac6edc6db709204edb6b5f71b02ba3df86db183c03b6af9ce22c3",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-branch-d",
+      "exampleIndex": 0,
+      "contentHash": "sha256:4fdee6594dfc6a2dd89c5f3f5cdb03114c44ee637aede08d7d92ec0f74994631",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-branch-a",
+      "exampleIndex": 0,
+      "contentHash": "sha256:ddecdca70ddf67b8c1affccc3a584c1ac209d1ed677a92072c2e0c982cb9e89d",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-branch-r",
+      "exampleIndex": 0,
+      "contentHash": "sha256:eefc6d317a54e293d0a7932482016aba5dddcfca03dc103839e94ec8d0dc4f98",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-checkout",
+      "exampleIndex": 0,
+      "contentHash": "sha256:ff6e86deaa13e69c7534b8cf40e1594aaf552536305ec3e725a2c3d4829847cf",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-checkout-b",
+      "exampleIndex": 0,
+      "contentHash": "sha256:a904c5ad103fd0bb9326a0abaec045ea2b94d451df57390514e91b5668d142ca",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-checkout-file",
+      "exampleIndex": 0,
+      "contentHash": "sha256:428f53530f9bf34005ec13e9da461fa39c58def25e94e9ffbe8c86fc5a6d8cd8",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-switch",
+      "exampleIndex": 0,
+      "contentHash": "sha256:f85d56a7e264a9fe59b831720362eb0949a3fb22ddcdc507bf3fd80a8c941127",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-switch-c",
+      "exampleIndex": 0,
+      "contentHash": "sha256:53c46928009e598c893ac68d2aaec782bbb9476e11027d6c0b8f30040806a75f",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-switch-dash",
+      "exampleIndex": 0,
+      "contentHash": "sha256:284ae9e8d01b1ae10bd168d1ee0f0af180c740b4b275798a4700f23931ef5ee6",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-merge",
+      "exampleIndex": 0,
+      "contentHash": "sha256:18edf3c260b5084e38be264e7594c45271f2115c9fead845570fe22a3202279a",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-merge-no-ff",
+      "exampleIndex": 0,
+      "contentHash": "sha256:6c29ae480c79b98fe42e047746379a729f2111f676653ed92b86400662b38d19",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-merge-abort",
+      "exampleIndex": 0,
+      "contentHash": "sha256:0b86591c2cbc14e85b922e158c72707d2d838ca3c1ff65ade87b40bd7c1f7067",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-rebase",
+      "exampleIndex": 0,
+      "contentHash": "sha256:7280cbd8e1fc17c14eb059b6c76954d6866f8ebec7b27b66293677a26cbf5d0d",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-rebase-i",
+      "exampleIndex": 0,
+      "contentHash": "sha256:bcb3ac8830613444199f7fcdd6b44c9167880ab7c87d6a20da434eb8b8911a4f",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-rebase-continue",
+      "exampleIndex": 0,
+      "contentHash": "sha256:fe2ec95b03b2e6303fe1d3633f29b4fe1423ec16fca0e61a17c14f8a123165b1",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-rebase-abort",
+      "exampleIndex": 0,
+      "contentHash": "sha256:9e76ceca41a1ce1a31ecfedd99c8f5c28c9fa818373f1bf00fc005de9b064b81",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-cherry-pick",
+      "exampleIndex": 0,
+      "contentHash": "sha256:d6fc82b8585aa716b245ecdf0583154c8ea174a1a55c4ca461ae5bdc0e956672",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-cherry-pick-continue",
+      "exampleIndex": 0,
+      "contentHash": "sha256:0bd85f18d96fff671119ea8784d15df757726bb852ff31a9e79d2e219c153586",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-cherry-pick-abort",
+      "exampleIndex": 0,
+      "contentHash": "sha256:90b525f1cb2f57902491f295dda39234581373e5509965e4024caab76f27b632",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-stash",
+      "exampleIndex": 0,
+      "contentHash": "sha256:9d0164e4fceac2afe271be78372285272959478ff5009d6c0c7e0073dabc91fe",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-stash",
+      "exampleIndex": 1,
+      "contentHash": "sha256:0d0b567b7af5f9248759ebd51e4b1546c0b95e57d7645ebbee10a1eff60f95e5",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-stash-pop",
+      "exampleIndex": 0,
+      "contentHash": "sha256:2551b07301ae886ea918e6fc1ff56f9f396f3104db7ed69a98214a1859888b6a",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-stash-list",
+      "exampleIndex": 0,
+      "contentHash": "sha256:8c741a7aa7d1dbad7db5c1c23632d95070d4004d7dd7d866a57da9697d718a05",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-stash-drop",
+      "exampleIndex": 0,
+      "contentHash": "sha256:917499e61e8bcce41ec95d6b4e5c649130402a07bb1872844202290d627b3fc3",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-remote",
+      "exampleIndex": 0,
+      "contentHash": "sha256:dc049c40f344d85f8b7955337373aa82aff2c7c5163bc0799c5a07be7f2f4eda",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-remote-v",
+      "exampleIndex": 0,
+      "contentHash": "sha256:40f722dfac0a7b4c34dee90e44672f377b57d60631dbffca74eb7f9b25b18219",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-remote-add",
+      "exampleIndex": 0,
+      "contentHash": "sha256:2553b4d11db6dbef4e8c758ced88f524ec87765f87d799db3f74fa96cd296958",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-remote-remove",
+      "exampleIndex": 0,
+      "contentHash": "sha256:7017d7462099d6f88453b26ee41f5acea8becbaa777a22f179e5c3024a7a8750",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-fetch",
+      "exampleIndex": 0,
+      "contentHash": "sha256:6d7de6aa9fbad1d376b65061ade6051bb18dec7916c963c34b238f2fe85a6663",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-fetch-all",
+      "exampleIndex": 0,
+      "contentHash": "sha256:7156f627167c90f33b7c673c0290b6930f840205c027c1549deeac1aa290e120",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-pull",
+      "exampleIndex": 0,
+      "contentHash": "sha256:aa80612b35ce70e313ef6a596e2690b744b0e361c5e159929117ad75b9bed50d",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-pull-rebase",
+      "exampleIndex": 0,
+      "contentHash": "sha256:633d3fed6ce69a5a55cd1734f59af3aefc170306d3013b08aa5651f7a1438fe0",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-push",
+      "exampleIndex": 0,
+      "contentHash": "sha256:4121a024c7c03eb137d22745291d42a96d75158b054d9df83868c0724e82aee5",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-push-u",
+      "exampleIndex": 0,
+      "contentHash": "sha256:b7dafa7f4f0004c9abc03b77d88d5cf082053653c199c42c6aea36a68dbf8edb",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-push-force",
+      "exampleIndex": 0,
+      "contentHash": "sha256:44680d10af944aa5aef32fdcaee1f22d7f01ac4d81daff161c11cfa54c96127b",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-push-force-with-lease",
+      "exampleIndex": 0,
+      "contentHash": "sha256:e35f80225f906037b88e9b564d990ade39950dbd27e6b01d1a8e1aebd6152234",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-log",
+      "exampleIndex": 0,
+      "contentHash": "sha256:6f9b1df132cba75d411279d27413dcea18615c6fb01c2df3effb55acc7828925",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-log-oneline",
+      "exampleIndex": 0,
+      "contentHash": "sha256:03abb49537908c43263cfecf7fe4b27394d9666f2e8fce3f86797036338be42c",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-log-graph",
+      "exampleIndex": 0,
+      "contentHash": "sha256:d5be57db9740d07621ebf0177b1fa2a8c5cc472c5c51e3186d2422d8d425be84",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-log-p",
+      "exampleIndex": 0,
+      "contentHash": "sha256:498261832da1cb56d45e838115c0496ce8b38c85108a1596fc8b1b6623b016d2",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-log-author",
+      "exampleIndex": 0,
+      "contentHash": "sha256:12a10711393859e55d10bdf00f8b2e69625b1d8e4fa2e5d2221c4b1d19a547ba",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-show",
+      "exampleIndex": 0,
+      "contentHash": "sha256:371a09bb45da589f0d59dcb2ef91ba191e55a2968919ea1a79067d2f7d7d6d19",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-show-commit",
+      "exampleIndex": 0,
+      "contentHash": "sha256:e52bbf5739e24dc598b742a885cfc64d514386a323974859a8ca4b5e27d97b9d",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-tag",
+      "exampleIndex": 0,
+      "contentHash": "sha256:298065e90224e51fa8c09e1f88eaf1ce8bd3158022757f7afc018dcbc5467176",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-tag-a",
+      "exampleIndex": 0,
+      "contentHash": "sha256:3c16a5a45f01cde61a3fe88a9e871c643b959f7720110f36b52e05a3dcbc347b",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-tag-d",
+      "exampleIndex": 0,
+      "contentHash": "sha256:60896641387a199bfd94a3a32f09f35d906be5b5b9dfac78f06b0c12d33d1e33",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-blame",
+      "exampleIndex": 0,
+      "contentHash": "sha256:52bacd1df286c9213d69bf1576e7f61b3b75c9fcb135620648ad63f5adda0b85",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-blame-L",
+      "exampleIndex": 0,
+      "contentHash": "sha256:f39f6541a7474db0b94f7af2fa21b6e6ec8fade58e195e7a5f149ffc41a1bdbd",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-config",
+      "exampleIndex": 0,
+      "contentHash": "sha256:b02bd9295eecb80cb93b730819416092f68b3d005d2374fea0917f2f308cbfff",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-config-global",
+      "exampleIndex": 0,
+      "contentHash": "sha256:5c84980910ef1e26f4d620bf0947040e1968ff6d3968d00f6f97ac672f671cc0",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-config-list",
+      "exampleIndex": 0,
+      "contentHash": "sha256:bea8f7eeb7c07d88f5419994edd0bbf234f054c9a12eb7ca23de755c042fefec",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-bisect",
+      "exampleIndex": 0,
+      "contentHash": "sha256:b499391dde06c690586a00fb1398ec59361449bb529888f8aff1baf95898ec99",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-bisect-start",
+      "exampleIndex": 0,
+      "contentHash": "sha256:28d4f0356e4fa5b998389a97a2d694601cfc7afb372e1041394cb23f2b6a9f1a",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-clean",
+      "exampleIndex": 0,
+      "contentHash": "sha256:2cbcdac645b5f8f647d5e16bea8d82adeedcfd84a5b51cf21e09aa213b7fdc86",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-clean-n",
+      "exampleIndex": 0,
+      "contentHash": "sha256:32fd49bc91ecf5c55d7a9fd42083b17613ec2168ff5728bdb2454dbd62d9d551",
+      "status": "passed"
+    },
+    {
+      "itemId": "git-grep",
+      "exampleIndex": 0,
+      "contentHash": "sha256:ddebdcbc416a76458790fcaf3335c23c36fa3a8051c3f2798dd017f46041af3b",
+      "status": "passed"
+    }
+  ]
+}

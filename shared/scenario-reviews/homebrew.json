@@ -1,0 +1,262 @@
+{
+  "schemaVersion": 1,
+  "toolId": "homebrew",
+  "reviewVersion": "scenario-grounding-v2",
+  "reviewedAt": "2026-07-13",
+  "inventoryHash": "sha256:11ef8de0b8223f3d9b1f666514c32bd6503a27c169dc1c4abdffe2f55ef3c958",
+  "status": "passed",
+  "examples": [
+    {
+      "itemId": "brew-install",
+      "exampleIndex": 0,
+      "contentHash": "sha256:3126f67ad0a341b2a68731afac48d7176f619e51881d18ce9550622781a15fa3",
+      "status": "passed"
+    },
+    {
+      "itemId": "brew-install",
+      "exampleIndex": 1,
+      "contentHash": "sha256:199d4a64aaea149adb5d6cddc3f69905f3277edf7b76e33ba7f3c68636563a02",
+      "status": "passed"
+    },
+    {
+      "itemId": "brew-install-cask",
+      "exampleIndex": 0,
+      "contentHash": "sha256:1ae5b414a0497904216602cbc9ec0b8876c519690ecddddf072cf7618c6c6daf",
+      "status": "passed"
+    },
+    {
+      "itemId": "brew-install-dry-run",
+      "exampleIndex": 0,
+      "contentHash": "sha256:a11aa2eaf945a038a331822815a2bb6cd908a37fd32141b58c6e4c0edb133a96",
+      "status": "passed"
+    },
+    {
+      "itemId": "brew-uninstall",
+      "exampleIndex": 0,
+      "contentHash": "sha256:3a36740a201074b83425ac6fb36f8db95ed6241ad6981133cbb670359d2b063a",
+      "status": "passed"
+    },
+    {
+      "itemId": "brew-uninstall",
+      "exampleIndex": 1,
+      "contentHash": "sha256:91b99051cd68e52829d2040807f42f852ca224dbc26e979d1bf27dfb83abc353",
+      "status": "passed"
+    },
+    {
+      "itemId": "brew-search",
+      "exampleIndex": 0,
+      "contentHash": "sha256:e273c62a78de07f5fd5bdcfea6079067f9e52c3f6581d759f206c8ca26e62b4c",
+      "status": "passed"
+    },
+    {
+      "itemId": "brew-search-desc",
+      "exampleIndex": 0,
+      "contentHash": "sha256:ea256d9c669f8a58765ce8ae47c8c1e19e5b19ad7891d23cef5540c3ba67e6d8",
+      "status": "passed"
+    },
+    {
+      "itemId": "brew-info",
+      "exampleIndex": 0,
+      "contentHash": "sha256:1f1f5b694a80bc72ff5c7e1873fd62f62a397936b0d2f733b34408ed37a897ec",
+      "status": "passed"
+    },
+    {
+      "itemId": "brew-list",
+      "exampleIndex": 0,
+      "contentHash": "sha256:05870a49d969edb3d1748823d1bca66996eb07654076d7bf0ef0438e2a58c98c",
+      "status": "passed"
+    },
+    {
+      "itemId": "brew-list",
+      "exampleIndex": 1,
+      "contentHash": "sha256:cc4e246bf81d2f3badaa5b7d3d073be251b6010d120f772ef58f8471d44b9893",
+      "status": "passed"
+    },
+    {
+      "itemId": "brew-update",
+      "exampleIndex": 0,
+      "contentHash": "sha256:715c87f7754fe4b4a0a12bfc075a9865586ed93cb35b8d01e71c3749047b1615",
+      "status": "passed"
+    },
+    {
+      "itemId": "brew-upgrade",
+      "exampleIndex": 0,
+      "contentHash": "sha256:5d7481ba701b4441e678d4471ddb416f7bdea4076d8ea64f0791768a55e36d17",
+      "status": "passed"
+    },
+    {
+      "itemId": "brew-upgrade",
+      "exampleIndex": 1,
+      "contentHash": "sha256:8fac89ee0694e2a02c017f3f62b909d752a7367680cb914499f030e443ab2fad",
+      "status": "passed"
+    },
+    {
+      "itemId": "brew-outdated",
+      "exampleIndex": 0,
+      "contentHash": "sha256:4314ac0955538ed4e90e96fb85c0addbc8a59f66729777e301c1560c41c4322e",
+      "status": "passed"
+    },
+    {
+      "itemId": "brew-pin",
+      "exampleIndex": 0,
+      "contentHash": "sha256:c84d2a7e403ad11a5bd7696c38ac1c3131d568f7371a8ca5b4a6d6c703551f7b",
+      "status": "passed"
+    },
+    {
+      "itemId": "brew-unpin",
+      "exampleIndex": 0,
+      "contentHash": "sha256:084ed15d59b5cb4af25930e087b6f00beb6031b9cc0b4948d2172f417cb5e56e",
+      "status": "passed"
+    },
+    {
+      "itemId": "brew-cleanup",
+      "exampleIndex": 0,
+      "contentHash": "sha256:c3b8304c050bdd5e564225ce3fb5f55139a86d839f5c232b8290fa3bbca6747d",
+      "status": "passed"
+    },
+    {
+      "itemId": "brew-cleanup-dry-run",
+      "exampleIndex": 0,
+      "contentHash": "sha256:47c074a391b2efa2d51d22aa18fb14d5a4525d1880ddc37394159b7d581cd75f",
+      "status": "passed"
+    },
+    {
+      "itemId": "brew-doctor",
+      "exampleIndex": 0,
+      "contentHash": "sha256:411c2fd0a8e68ccea6dab36432b76e2ae03ee8022fab6a19438a48e8af0a053e",
+      "status": "passed"
+    },
+    {
+      "itemId": "brew-config",
+      "exampleIndex": 0,
+      "contentHash": "sha256:1dd1a895664ecfd7e39cac1dfa44164cee4436488c808259997aed29d84d150c",
+      "status": "passed"
+    },
+    {
+      "itemId": "brew-version",
+      "exampleIndex": 0,
+      "contentHash": "sha256:6863e9a9069e01d8187dfaf06558fd778a90146d3e92e687a120e1b3ff1dc4eb",
+      "status": "passed"
+    },
+    {
+      "itemId": "brew-help",
+      "exampleIndex": 0,
+      "contentHash": "sha256:9d6feeaab55a3b85a6918184592b1b6087468fdb6ae6160526e3e9c8fd5430e5",
+      "status": "passed"
+    },
+    {
+      "itemId": "brew-services",
+      "exampleIndex": 0,
+      "contentHash": "sha256:48c3735ecf52c4ac25ddeaeeb1754fd31de6b5d801dc6996cf5d1d1e77dbae76",
+      "status": "passed"
+    },
+    {
+      "itemId": "brew-services",
+      "exampleIndex": 1,
+      "contentHash": "sha256:a6514f74fe731365d6cabb3c774939d174626b9f685686f99a40022ef2da83e2",
+      "status": "passed"
+    },
+    {
+      "itemId": "brew-services",
+      "exampleIndex": 2,
+      "contentHash": "sha256:737d9b4316c0c623d5efab253b042ce7b349e4775a0838677cfc6977dab41c20",
+      "status": "passed"
+    },
+    {
+      "itemId": "brew-tap",
+      "exampleIndex": 0,
+      "contentHash": "sha256:974060c21894d192a43f3bc2a974567c90c0bbe7141538858ba546fc6aa9d222",
+      "status": "passed"
+    },
+    {
+      "itemId": "brew-tap",
+      "exampleIndex": 1,
+      "contentHash": "sha256:0acf7520f9a417ad349630783e2c657cee10c84a1bcc7fb564a01c6cf998c353",
+      "status": "passed"
+    },
+    {
+      "itemId": "brew-untap",
+      "exampleIndex": 0,
+      "contentHash": "sha256:223edbf6eba9d10ca342818744baafe0f7720340ec497a7eb450d5d149601ee5",
+      "status": "passed"
+    },
+    {
+      "itemId": "brew-bundle",
+      "exampleIndex": 0,
+      "contentHash": "sha256:a5a2b399659ed01b182290a973a27316b06a1616d0a0fd964f772de994c11e3a",
+      "status": "passed"
+    },
+    {
+      "itemId": "brew-bundle",
+      "exampleIndex": 1,
+      "contentHash": "sha256:1714576f4d7f77bae66e245ac0faa170207fb4937797245e5a9d4ccb4f65f582",
+      "status": "passed"
+    },
+    {
+      "itemId": "brew-autoremove",
+      "exampleIndex": 0,
+      "contentHash": "sha256:dc4ad0fb1c13040b1eb3ffc7627e256f239e72bcf31076892623285a2cad09e8",
+      "status": "passed"
+    },
+    {
+      "itemId": "brew-deps",
+      "exampleIndex": 0,
+      "contentHash": "sha256:7bc58116da93c3d0b7e046f8f6e9a820686aa4cbf40c9f187b1c439a3e032104",
+      "status": "passed"
+    },
+    {
+      "itemId": "brew-uses",
+      "exampleIndex": 0,
+      "contentHash": "sha256:284330b79f76a8ecff1d8f6f569732643ca104e1cf8035ad04805e03fcf0f1fd",
+      "status": "passed"
+    },
+    {
+      "itemId": "brew-leaves",
+      "exampleIndex": 0,
+      "contentHash": "sha256:829d5a47d944434ce62fe1a29999220ea922535b23f1b86d5dbf2509b77b2c87",
+      "status": "passed"
+    },
+    {
+      "itemId": "brew-link",
+      "exampleIndex": 0,
+      "contentHash": "sha256:64894f7c74f94936f67e5eb29f5eebad74b46afb5a7582b7c182b90c095b2364",
+      "status": "passed"
+    },
+    {
+      "itemId": "brew-unlink",
+      "exampleIndex": 0,
+      "contentHash": "sha256:371d65e341b1b5ef2ba9b79a1a2f947e4316418ffefa64b3a81e38b42ae5c796",
+      "status": "passed"
+    },
+    {
+      "itemId": "brew-reinstall",
+      "exampleIndex": 0,
+      "contentHash": "sha256:7fd8b8798c44ec59fd7916628aa40897aee757c20e3bdb41390f91569e0ce751",
+      "status": "passed"
+    },
+    {
+      "itemId": "brew-prefix",
+      "exampleIndex": 0,
+      "contentHash": "sha256:39888ea968de2cebff94232ec013bc338c48d6d0fa50e2da3c68205a6bb96afb",
+      "status": "passed"
+    },
+    {
+      "itemId": "brew-home",
+      "exampleIndex": 0,
+      "contentHash": "sha256:ab061490b03ff9fca847168e40bf85abfef49015146cc30e4b800a3e5074cfb7",
+      "status": "passed"
+    },
+    {
+      "itemId": "brew-uninstall-zap",
+      "exampleIndex": 0,
+      "contentHash": "sha256:f4d123118ff0b32cfe50e6f3be113f27c0f5301d9762a9382e0b8e4c76f79de8",
+      "status": "passed"
+    },
+    {
+      "itemId": "brew-analytics",
+      "exampleIndex": 0,
+      "contentHash": "sha256:a11a77ac9932e15662bf29e806211bb897833be20c3f6e7928583db26908a566",
+      "status": "passed"
+    }
+  ]
+}

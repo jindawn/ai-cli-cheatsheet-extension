@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "toolId": "obsidian",
+  "reviewVersion": "scenario-grounding-v2",
+  "reviewedAt": "2026-07-13",
+  "inventoryHash": "sha256:e45ef0f7527f8b097f2248920bf9119831ceb21f3243c5e765a7f32e9c0c3b47",
+  "status": "passed",
+  "examples": [
+    {
+      "itemId": "cmd-palette",
+      "exampleIndex": 0,
+      "contentHash": "sha256:fe5508982a2c9e6a26d1cbc1ff8168cefaee26014f17ef835a0e218811586ff3",
+      "status": "passed"
+    },
+    {
+      "itemId": "quick-switcher",
+      "exampleIndex": 0,
+      "contentHash": "sha256:8c364553771ea4cd306b0578406a469cc2bf3ae39256de45773d62a64a0213ae",
+      "status": "passed"
+    },
+    {
+      "itemId": "new-note",
+      "exampleIndex": 0,
+      "contentHash": "sha256:8d00b7e021d3bebc6bfe62809fd1ed80f5c44124d7710cbbbd455261829482d7",
+      "status": "passed"
+    },
+    {
+      "itemId": "save-file",
+      "exampleIndex": 0,
+      "contentHash": "sha256:51727c9df891ecbaea5ca0e39c5eaae6867547d14090edeeb53d5836ae205657",
+      "status": "passed"
+    },
+    {
+      "itemId": "bold",
+      "exampleIndex": 0,
+      "contentHash": "sha256:b531e6b9993a06c04a530620be5e82e34e138be291b0c815821d302b5dbd427b",
+      "status": "passed"
+    },
+    {
+      "itemId": "italic",
+      "exampleIndex": 0,
+      "contentHash": "sha256:c918c1ccc79b473b7dfb2b71a9c3b0dc8d9cae1049a138434045d95d7503e042",
+      "status": "passed"
+    },
+    {
+      "itemId": "insert-link",
+      "exampleIndex": 0,
+      "contentHash": "sha256:2585b2dac8a9bf2e1e2e5492ffe866e7b57fa16653e21234bf1ec009662cdcb1",
+      "status": "passed"
+    },
+    {
+      "itemId": "find",
+      "exampleIndex": 0,
+      "contentHash": "sha256:bef23b125a35f422c97282fab1ed7176d0478a4ccabd38f44a6242652c40e07c",
+      "status": "passed"
+    },
+    {
+      "itemId": "find-in-files",
+      "exampleIndex": 0,
+      "contentHash": "sha256:07be1c2cdf6fdc0d88b298491baec44caf0dbed3e0e6527174568d341a8cf1b6",
+      "status": "passed"
+    },
+    {
+      "itemId": "replace",
+      "exampleIndex": 0,
+      "contentHash": "sha256:6b0905ce12aad3881d0a0ed993f7744ebd6c8850411bf8bfda84bece85ff3ba8",
+      "status": "passed"
+    },
+    {
+      "itemId": "undo",
+      "exampleIndex": 0,
+      "contentHash": "sha256:c9ba45a76cf9506290473642a3a79608583ae1c63613f85273c8fa829bf1aee7",
+      "status": "passed"
+    },
+    {
+      "itemId": "redo",
+      "exampleIndex": 0,
+      "contentHash": "sha256:6aabfb97b03fab2331df05aabf3fae47c156466ec18a0e03346b5c33f75b2514",
+      "status": "passed"
+    },
+    {
+      "itemId": "toggle-edit-preview",
+      "exampleIndex": 0,
+      "contentHash": "sha256:81a7fa4963035c980d36b4e30a3f94c056ba79e79cb5bf629681ea5b7002f08b",
+      "status": "passed"
+    },
+    {
+      "itemId": "move-line-up",
+      "exampleIndex": 0,
+      "contentHash": "sha256:6e47be25513e01a203d37747e04fa5b067dee33a1bce3bd2ad4c0b23fccc299e",
+      "status": "passed"
+    },
+    {
+      "itemId": "move-line-down",
+      "exampleIndex": 0,
+      "contentHash": "sha256:4d916462eba7f3d5edb1530d17521b297d02c779ce406639b7108a1a883d4477",
+      "status": "passed"
+    }
+  ]
+}

@@ -1,0 +1,758 @@
+{
+  "schemaVersion": 2,
+  "toolId": "openclaw",
+  "scope": "all-command-entrypoints",
+  "checkedAt": "2026-07-13",
+  "sourceIds": [
+    "openclaw-slash",
+    "openclaw-cli"
+  ],
+  "adapter": {
+    "id": "openclaw-structured-docs-repository",
+    "kind": "structured-docs-repository",
+    "version": 1
+  },
+  "closure": {
+    "status": "closed",
+    "entryCount": 44,
+    "components": [
+      "openclaw"
+    ],
+    "platforms": [
+      "mac",
+      "windows",
+      "linux"
+    ],
+    "proof": "deterministic-adapter-snapshot"
+  },
+  "entries": [
+    {
+      "command": "/activation",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "openclaw",
+      "platforms": [],
+      "constraints": [],
+      "description": "Set group activation mode",
+      "usage": "/activation",
+      "options": [],
+      "officialExamples": [
+        "/activation mention"
+      ],
+      "url": "https://docs.openclaw.ai/tools/slash-commands（页面内检索 /activation mention|always）"
+    },
+    {
+      "command": "/bash",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "openclaw",
+      "platforms": [],
+      "constraints": [],
+      "description": "Run a host shell command",
+      "usage": "/bash",
+      "options": [],
+      "officialExamples": [
+        "/bash git status"
+      ],
+      "url": "https://docs.openclaw.ai/tools/slash-commands（页面内检索 /bash <command>）"
+    },
+    {
+      "command": "/btw",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "openclaw",
+      "platforms": [],
+      "constraints": [],
+      "description": "Ask a side question without changing session context",
+      "usage": "/btw",
+      "options": [],
+      "officialExamples": [
+        "/btw \"检查当前改动\""
+      ],
+      "url": "https://docs.openclaw.ai/tools/slash-commands（页面内检索 /btw <question>）"
+    },
+    {
+      "command": "/commands",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "openclaw",
+      "platforms": [],
+      "constraints": [],
+      "description": "Show the generated command catalog",
+      "usage": "/commands",
+      "options": [],
+      "officialExamples": [
+        "/commands"
+      ],
+      "url": "https://docs.openclaw.ai/tools/slash-commands（页面内检索 /commands）"
+    },
+    {
+      "command": "/compact",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "openclaw",
+      "platforms": [],
+      "constraints": [],
+      "description": "Compact the session context",
+      "usage": "/compact",
+      "options": [],
+      "officialExamples": [
+        "/compact 保留部署步骤和未解决问题"
+      ],
+      "url": "https://docs.openclaw.ai/tools/slash-commands（页面内检索 /compact [instructions]）"
+    },
+    {
+      "command": "/context",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "openclaw",
+      "platforms": [],
+      "constraints": [],
+      "description": "Explain how context is assembled",
+      "usage": "/context",
+      "options": [],
+      "officialExamples": [
+        "/context detail"
+      ],
+      "url": "https://docs.openclaw.ai/tools/slash-commands（页面内检索 /context [list|detail|map|json]）"
+    },
+    {
+      "command": "/fast",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "openclaw",
+      "platforms": [],
+      "constraints": [],
+      "description": "Toggle fast mode",
+      "usage": "/fast",
+      "options": [],
+      "officialExamples": [
+        "/fast on",
+        "/fast default",
+        "/fast off"
+      ],
+      "url": "https://docs.openclaw.ai/tools/slash-commands（页面内检索 /fast [on|off|default]）"
+    },
+    {
+      "command": "/goal",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "openclaw",
+      "platforms": [],
+      "constraints": [],
+      "description": "Manage durable goal for current session",
+      "usage": "/goal",
+      "options": [],
+      "officialExamples": [
+        "/goal start 完成登录页重构并补测试",
+        "/goal status",
+        "/goal clear"
+      ],
+      "url": "https://docs.openclaw.ai/tools/slash-commands（页面内检索 /goal [status|start|pause|resume|complete|block|clear]）"
+    },
+    {
+      "command": "/help",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "openclaw",
+      "platforms": [],
+      "constraints": [],
+      "description": "Show the short help summary",
+      "usage": "/help",
+      "options": [],
+      "officialExamples": [
+        "/help"
+      ],
+      "url": "https://docs.openclaw.ai/tools/slash-commands（页面内检索 /help）"
+    },
+    {
+      "command": "/model",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "openclaw",
+      "platforms": [],
+      "constraints": [],
+      "description": "Show or set the model",
+      "usage": "/model",
+      "options": [],
+      "officialExamples": [
+        "/model status"
+      ],
+      "url": "https://docs.openclaw.ai/tools/slash-commands（页面内检索 /model [name|#|status]）"
+    },
+    {
+      "command": "/name",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "openclaw",
+      "platforms": [],
+      "constraints": [],
+      "description": "Name or rename the current session",
+      "usage": "/name",
+      "options": [],
+      "officialExamples": [
+        "/name 登录重构"
+      ],
+      "url": "https://docs.openclaw.ai/tools/slash-commands（页面内检索 /name <title>）"
+    },
+    {
+      "command": "/new",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "openclaw",
+      "platforms": [],
+      "constraints": [],
+      "description": "Archive current session and start a fresh one",
+      "usage": "/new",
+      "options": [],
+      "officialExamples": [
+        "/new"
+      ],
+      "url": "https://docs.openclaw.ai/tools/slash-commands（页面内检索 /new [model]）"
+    },
+    {
+      "command": "/reset",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "openclaw",
+      "platforms": [],
+      "constraints": [],
+      "description": "Reset current session in place",
+      "usage": "/reset",
+      "options": [],
+      "officialExamples": [
+        "/reset soft \"重新开始\""
+      ],
+      "url": "https://docs.openclaw.ai/tools/slash-commands（页面内检索 /reset [soft [message]]）"
+    },
+    {
+      "command": "/restart",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "openclaw",
+      "platforms": [],
+      "constraints": [],
+      "description": "Restart OpenClaw",
+      "usage": "/restart",
+      "options": [],
+      "officialExamples": [
+        "/restart"
+      ],
+      "url": "https://docs.openclaw.ai/tools/slash-commands · /restart（原文：\"Restart OpenClaw\"，受 commands.restart 配置项控制，默认启用）"
+    },
+    {
+      "command": "/skill",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "openclaw",
+      "platforms": [],
+      "constraints": [],
+      "description": "Run a skill by name",
+      "usage": "/skill",
+      "options": [],
+      "officialExamples": [
+        "/skill commit-helper 生成本次提交信息"
+      ],
+      "url": "https://docs.openclaw.ai/tools/slash-commands（页面内检索 /skill <name> [input]）"
+    },
+    {
+      "command": "/status",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "openclaw",
+      "platforms": [],
+      "constraints": [],
+      "description": "Show execution/runtime status and uptime",
+      "usage": "/status",
+      "options": [],
+      "officialExamples": [
+        "/status"
+      ],
+      "url": "https://docs.openclaw.ai/tools/slash-commands（页面内检索 /status）"
+    },
+    {
+      "command": "/stop",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "openclaw",
+      "platforms": [],
+      "constraints": [],
+      "description": "Abort the current run",
+      "usage": "/stop",
+      "options": [],
+      "officialExamples": [
+        "/stop"
+      ],
+      "url": "https://docs.openclaw.ai/tools/slash-commands（页面内检索 /stop）"
+    },
+    {
+      "command": "/subagents",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "openclaw",
+      "platforms": [],
+      "constraints": [],
+      "description": "Inspect sub-agent runs for current session",
+      "usage": "/subagents",
+      "options": [],
+      "officialExamples": [
+        "/subagents list"
+      ],
+      "url": "https://docs.openclaw.ai/tools/slash-commands（页面内检索 /subagents list|log|info）"
+    },
+    {
+      "command": "/tasks",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "openclaw",
+      "platforms": [],
+      "constraints": [],
+      "description": "List active/recent background tasks",
+      "usage": "/tasks",
+      "options": [],
+      "officialExamples": [
+        "/tasks"
+      ],
+      "url": "https://docs.openclaw.ai/tools/slash-commands（页面内检索 /tasks）"
+    },
+    {
+      "command": "/think",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "openclaw",
+      "platforms": [],
+      "constraints": [],
+      "description": "Set the thinking level",
+      "usage": "/think",
+      "options": [],
+      "officialExamples": [
+        "/think high",
+        "/think default"
+      ],
+      "url": "https://docs.openclaw.ai/tools/slash-commands（页面内检索 /think <level|default>）"
+    },
+    {
+      "command": "/tools",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "openclaw",
+      "platforms": [],
+      "constraints": [],
+      "description": "Show what the current agent can use",
+      "usage": "/tools",
+      "options": [],
+      "officialExamples": [
+        "/tools compact",
+        "/tools verbose"
+      ],
+      "url": "https://docs.openclaw.ai/tools/slash-commands（页面内检索 /tools [compact|verbose]）"
+    },
+    {
+      "command": "/usage",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "openclaw",
+      "platforms": [],
+      "constraints": [],
+      "description": "Control per-response usage footer",
+      "usage": "/usage",
+      "options": [],
+      "officialExamples": [
+        "/usage cost"
+      ],
+      "url": "https://docs.openclaw.ai/tools/slash-commands（页面内检索 /usage off|tokens|full|cost）"
+    },
+    {
+      "command": "/verbose",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "openclaw",
+      "platforms": [],
+      "constraints": [],
+      "description": "Toggle verbose output",
+      "usage": "/verbose",
+      "options": [],
+      "officialExamples": [
+        "/verbose on"
+      ],
+      "url": "https://docs.openclaw.ai/tools/slash-commands（页面内检索 /verbose on|off|full）"
+    },
+    {
+      "command": "/whoami",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "openclaw",
+      "platforms": [],
+      "constraints": [],
+      "description": "Show your sender id",
+      "usage": "/whoami",
+      "options": [],
+      "officialExamples": [
+        "/whoami"
+      ],
+      "url": "https://docs.openclaw.ai/tools/slash-commands（页面内检索 /whoami）"
+    },
+    {
+      "command": "openclaw agent --message <text> --thinking",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "openclaw",
+      "platforms": [],
+      "constraints": [],
+      "description": "Talk to the assistant from CLI",
+      "usage": "openclaw agent --message <text> --thinking",
+      "options": [
+        "--message",
+        "--thinking"
+      ],
+      "officialExamples": [
+        "openclaw agent --message \"检查当前改动\" --thinking medium"
+      ],
+      "url": "https://docs.openclaw.ai/tools/slash-commands · openclaw agent --message <text> --thinking <level>"
+    },
+    {
+      "command": "openclaw channels status --probe",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "openclaw",
+      "platforms": [],
+      "constraints": [],
+      "description": "Live per-channel transport state + probe",
+      "usage": "openclaw channels status --probe",
+      "options": [
+        "--probe"
+      ],
+      "officialExamples": [
+        "openclaw channels status --probe"
+      ],
+      "url": "https://docs.openclaw.ai/tools/slash-commands · openclaw channels status --probe"
+    },
+    {
+      "command": "openclaw config get",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "openclaw",
+      "platforms": [],
+      "constraints": [],
+      "description": "Read a config value by path",
+      "usage": "openclaw config get",
+      "options": [],
+      "officialExamples": [
+        "openclaw config get model.default"
+      ],
+      "url": "https://docs.openclaw.ai/tools/slash-commands · openclaw config get <path>"
+    },
+    {
+      "command": "openclaw config set <path>",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "openclaw",
+      "platforms": [],
+      "constraints": [],
+      "description": "Set a config value by path",
+      "usage": "openclaw config set <path>",
+      "options": [],
+      "officialExamples": [
+        "openclaw config set model.default gpt-5.5"
+      ],
+      "url": "https://docs.openclaw.ai/tools/slash-commands · openclaw config set <path> <value>"
+    },
+    {
+      "command": "openclaw configure",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "openclaw",
+      "platforms": [],
+      "constraints": [],
+      "description": "Interactive config wizard",
+      "usage": "openclaw configure",
+      "options": [],
+      "officialExamples": [
+        "openclaw configure"
+      ],
+      "url": "https://docs.openclaw.ai/tools/slash-commands · openclaw configure"
+    },
+    {
+      "command": "openclaw dashboard",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "openclaw",
+      "platforms": [],
+      "constraints": [],
+      "description": "Open Control UI in browser",
+      "usage": "openclaw dashboard",
+      "options": [],
+      "officialExamples": [
+        "openclaw dashboard"
+      ],
+      "url": "https://docs.openclaw.ai/tools/slash-commands · openclaw dashboard"
+    },
+    {
+      "command": "openclaw doctor",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "openclaw",
+      "platforms": [],
+      "constraints": [],
+      "description": "Repair/migrate config + health checks",
+      "usage": "openclaw doctor",
+      "options": [],
+      "officialExamples": [
+        "openclaw doctor"
+      ],
+      "url": "https://docs.openclaw.ai/tools/slash-commands · openclaw doctor"
+    },
+    {
+      "command": "openclaw gateway restart",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "openclaw",
+      "platforms": [],
+      "constraints": [],
+      "description": "Restart the Gateway daemon",
+      "usage": "openclaw gateway restart",
+      "options": [],
+      "officialExamples": [
+        "openclaw gateway restart"
+      ],
+      "url": "https://docs.openclaw.ai/tools/slash-commands · openclaw gateway restart"
+    },
+    {
+      "command": "openclaw gateway status",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "openclaw",
+      "platforms": [],
+      "constraints": [],
+      "description": "Show Gateway daemon and RPC reachability",
+      "usage": "openclaw gateway status",
+      "options": [],
+      "officialExamples": [
+        "openclaw gateway status"
+      ],
+      "url": "https://docs.openclaw.ai/tools/slash-commands · openclaw gateway status"
+    },
+    {
+      "command": "openclaw health --json",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "openclaw",
+      "platforms": [],
+      "constraints": [],
+      "description": "Gateway snapshot in JSON format",
+      "usage": "openclaw health --json",
+      "options": [
+        "--json"
+      ],
+      "officialExamples": [
+        "openclaw health --json"
+      ],
+      "url": "https://docs.openclaw.ai/tools/slash-commands · openclaw health --json"
+    },
+    {
+      "command": "openclaw logs --follow",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "openclaw",
+      "platforms": [],
+      "constraints": [],
+      "description": "Tail the latest log",
+      "usage": "openclaw logs --follow",
+      "options": [
+        "--follow"
+      ],
+      "officialExamples": [
+        "openclaw logs --follow"
+      ],
+      "url": "https://docs.openclaw.ai/tools/slash-commands · openclaw logs --follow"
+    },
+    {
+      "command": "openclaw message send --target <recipient> --message",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "openclaw",
+      "platforms": [],
+      "constraints": [],
+      "description": "Send a message via connected channel",
+      "usage": "openclaw message send --target <recipient> --message",
+      "options": [
+        "--target",
+        "--message"
+      ],
+      "officialExamples": [
+        "openclaw message send --target user@example.com --message \"检查当前改动\""
+      ],
+      "url": "https://docs.openclaw.ai/tools/slash-commands · openclaw message send --target <recipient> --message <text>"
+    },
+    {
+      "command": "openclaw onboard --install-daemon",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "openclaw",
+      "platforms": [],
+      "constraints": [],
+      "description": "Interactive setup wizard + install daemon",
+      "usage": "openclaw onboard --install-daemon",
+      "options": [
+        "--install-daemon"
+      ],
+      "officialExamples": [
+        "openclaw onboard --install-daemon"
+      ],
+      "url": "https://docs.openclaw.ai/tools/slash-commands · openclaw onboard --install-daemon"
+    },
+    {
+      "command": "openclaw pairing approve <channel>",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "openclaw",
+      "platforms": [],
+      "constraints": [],
+      "description": "Approve a DM pairing code",
+      "usage": "openclaw pairing approve <channel>",
+      "options": [],
+      "officialExamples": [
+        "openclaw pairing approve stable 123456"
+      ],
+      "url": "https://docs.openclaw.ai/tools/slash-commands · openclaw pairing approve <channel> <code>"
+    },
+    {
+      "command": "openclaw plugins install",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "openclaw",
+      "platforms": [],
+      "constraints": [],
+      "description": "Install a plugin by package name",
+      "usage": "openclaw plugins install",
+      "options": [],
+      "officialExamples": [
+        "openclaw plugins install example-plugin"
+      ],
+      "url": "https://docs.openclaw.ai/tools/slash-commands · openclaw plugins install <plugin>"
+    },
+    {
+      "command": "openclaw security audit",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "openclaw",
+      "platforms": [],
+      "constraints": [],
+      "description": "Audit security and DM policies",
+      "usage": "openclaw security audit",
+      "options": [],
+      "officialExamples": [
+        "openclaw security audit"
+      ],
+      "url": "https://docs.openclaw.ai/tools/slash-commands · openclaw security audit"
+    },
+    {
+      "command": "openclaw status",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "openclaw",
+      "platforms": [],
+      "constraints": [],
+      "description": "Fast local summary of OS, gateway, agents, config",
+      "usage": "openclaw status",
+      "options": [],
+      "officialExamples": [
+        "openclaw status"
+      ],
+      "url": "https://docs.openclaw.ai/tools/slash-commands · openclaw status"
+    },
+    {
+      "command": "openclaw status --all",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "openclaw",
+      "platforms": [],
+      "constraints": [],
+      "description": "Full read-only diagnosis report with log tail",
+      "usage": "openclaw status --all",
+      "options": [
+        "--all"
+      ],
+      "officialExamples": [
+        "openclaw status --all"
+      ],
+      "url": "https://docs.openclaw.ai/tools/slash-commands · openclaw status --all"
+    },
+    {
+      "command": "openclaw update",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "openclaw",
+      "platforms": [],
+      "constraints": [],
+      "description": "Update OpenClaw to latest version",
+      "usage": "openclaw update",
+      "options": [],
+      "officialExamples": [
+        "openclaw update"
+      ],
+      "url": "https://docs.openclaw.ai/tools/slash-commands · openclaw update"
+    },
+    {
+      "command": "openclaw update --channel stable|beta|dev",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "openclaw",
+      "platforms": [],
+      "constraints": [],
+      "description": "Switch release channel (stable/beta/dev)",
+      "usage": "openclaw update --channel stable|beta|dev",
+      "options": [
+        "--channel"
+      ],
+      "officialExamples": [
+        "openclaw update --channel stable"
+      ],
+      "url": "https://docs.openclaw.ai/tools/slash-commands · openclaw update --channel stable|beta|dev"
+    }
+  ]
+}

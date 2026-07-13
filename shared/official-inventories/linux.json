@@ -1,0 +1,1307 @@
+{
+  "schemaVersion": 2,
+  "toolId": "linux",
+  "scope": "all-command-entrypoints",
+  "checkedAt": "2026-07-13",
+  "sourceIds": [
+    "gnu-manuals",
+    "linux-ps-man",
+    "linux-kill-man",
+    "linux-top-man",
+    "linux-grep-man",
+    "linux-find-man",
+    "linux-diff-man",
+    "linux-free-man",
+    "linux-ping-man",
+    "linux-bash-man",
+    "linux-termios-man",
+    "linux-less-man",
+    "linux-curl-man",
+    "linux-wget-man",
+    "linux-tar-man",
+    "linux-ssh-man",
+    "linux-scp-man",
+    "linux-sed-man",
+    "linux-gawk-man",
+    "linux-which-man",
+    "linux-rm-man",
+    "linux-chmod-man",
+    "linux-chown-man"
+  ],
+  "adapter": {
+    "id": "linux-fixed-official-component-union",
+    "kind": "fixed-official-component-union",
+    "version": 1
+  },
+  "closure": {
+    "status": "closed",
+    "entryCount": 63,
+    "components": [
+      "gnu-coreutils",
+      "gnu-findutils",
+      "gnu-grep",
+      "gnu-sed",
+      "gnu-gawk",
+      "gnu-diffutils",
+      "gnu-tar",
+      "procps-ng",
+      "util-linux",
+      "iputils",
+      "openssh-client",
+      "curl",
+      "wget",
+      "less"
+    ],
+    "platforms": [
+      "linux",
+      "mac"
+    ],
+    "proof": "deterministic-adapter-snapshot"
+  },
+  "entries": [
+    {
+      "command": ">",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Redirect stdout to file (overwrite)",
+      "usage": ">",
+      "options": [],
+      "officialExamples": [
+        "echo \"example\" > output.txt"
+      ],
+      "url": "https://www.gnu.org/software/coreutils/manual/ · >"
+    },
+    {
+      "command": ">>",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Redirect stdout to file (append)",
+      "usage": ">>",
+      "options": [],
+      "officialExamples": [
+        "echo \"next line\" >> output.txt"
+      ],
+      "url": "https://www.gnu.org/software/coreutils/manual/ · >>"
+    },
+    {
+      "command": "|",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Pipe: pass stdout of one command to stdin of another",
+      "usage": "|",
+      "options": [],
+      "officialExamples": [
+        "cat app.log | grep \"ERROR\""
+      ],
+      "url": "https://www.gnu.org/software/coreutils/manual/ · |"
+    },
+    {
+      "command": "awk",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Pattern scanning and text processing language",
+      "usage": "awk",
+      "options": [],
+      "officialExamples": [
+        "awk '{print $1}' access.log"
+      ],
+      "url": "https://www.gnu.org/software/coreutils/manual/ · awk"
+    },
+    {
+      "command": "bg",
+      "context": "shell-builtin",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Resume a suspended job in the background",
+      "usage": "bg",
+      "options": [],
+      "officialExamples": [
+        "先按 Ctrl+Z 挂起任务，再输入 bg 让任务在后台继续运行"
+      ],
+      "url": "https://www.gnu.org/software/coreutils/manual/ · bg"
+    },
+    {
+      "command": "cat",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Concatenate and print file contents",
+      "usage": "cat",
+      "options": [],
+      "officialExamples": [
+        "cat README.md"
+      ],
+      "url": "GNU manuals（检索 cat）"
+    },
+    {
+      "command": "cd",
+      "context": "shell-builtin",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Change the current working directory",
+      "usage": "cd",
+      "options": [],
+      "officialExamples": [
+        "cd ~/projects/app"
+      ],
+      "url": "https://www.gnu.org/software/coreutils/manual/ · cd"
+    },
+    {
+      "command": "cd ..",
+      "context": "shell-builtin",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Go to parent directory",
+      "usage": "cd ..",
+      "options": [],
+      "officialExamples": [
+        "cd .."
+      ],
+      "url": "https://www.gnu.org/software/coreutils/manual/ · cd .."
+    },
+    {
+      "command": "chmod",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Change file mode bits (permissions)",
+      "usage": "chmod",
+      "options": [],
+      "officialExamples": [
+        "chmod 644 notes.txt"
+      ],
+      "url": "GNU manuals（检索 chmod）"
+    },
+    {
+      "command": "chmod +x",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Add execute permission",
+      "usage": "chmod +x",
+      "options": [],
+      "officialExamples": [
+        "chmod +x scripts/deploy.sh"
+      ],
+      "url": "GNU manuals（检索 chmod +x）"
+    },
+    {
+      "command": "chmod 755",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Set rwx for owner, rx for group/others",
+      "usage": "chmod 755",
+      "options": [],
+      "officialExamples": [
+        "chmod 755 scripts/deploy.sh"
+      ],
+      "url": "GNU manuals（检索 chmod 755）"
+    },
+    {
+      "command": "chown",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Change file owner and group",
+      "usage": "chown",
+      "options": [],
+      "officialExamples": [
+        "chown user:group notes.txt"
+      ],
+      "url": "GNU manuals（检索 chown）"
+    },
+    {
+      "command": "cp",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Copy files and directories",
+      "usage": "cp",
+      "options": [],
+      "officialExamples": [
+        "cp source.txt copy.txt"
+      ],
+      "url": "GNU manuals（检索 cp）"
+    },
+    {
+      "command": "cp -r",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Copy directories recursively",
+      "usage": "cp -r",
+      "options": [
+        "-r"
+      ],
+      "officialExamples": [
+        "cp -r src-dir backup-dir"
+      ],
+      "url": "GNU manuals（检索 cp -r）"
+    },
+    {
+      "command": "Ctrl+C",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Interrupt (terminate) the foreground process",
+      "usage": "Ctrl+C",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+C"
+      ],
+      "url": "https://www.gnu.org/software/coreutils/manual/ · Ctrl+C"
+    },
+    {
+      "command": "Ctrl+R",
+      "context": "shell-builtin-readline",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Reverse search through command history",
+      "usage": "Ctrl+R",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+R（shell-builtin-readline）"
+      ],
+      "url": "https://www.gnu.org/software/coreutils/manual/ · Ctrl+R"
+    },
+    {
+      "command": "Ctrl+Z",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Suspend the foreground process",
+      "usage": "Ctrl+Z",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+Z"
+      ],
+      "url": "https://www.gnu.org/software/coreutils/manual/ · Ctrl+Z"
+    },
+    {
+      "command": "curl",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Transfer data from or to a server",
+      "usage": "curl",
+      "options": [
+        "-i"
+      ],
+      "officialExamples": [
+        "curl -i https://example.com/health"
+      ],
+      "url": "https://www.gnu.org/software/coreutils/manual/ · curl"
+    },
+    {
+      "command": "df -h",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Show disk space usage in human-readable format",
+      "usage": "df -h",
+      "options": [
+        "-h"
+      ],
+      "officialExamples": [
+        "df -h"
+      ],
+      "url": "GNU manuals（检索 df -h）"
+    },
+    {
+      "command": "diff",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Compare files line by line",
+      "usage": "diff",
+      "options": [],
+      "officialExamples": [
+        "diff old.txt new.txt"
+      ],
+      "url": "https://www.gnu.org/software/coreutils/manual/ · diff"
+    },
+    {
+      "command": "du -sh",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Show directory size summary",
+      "usage": "du -sh",
+      "options": [
+        "-sh"
+      ],
+      "officialExamples": [
+        "du -sh ./node_modules"
+      ],
+      "url": "GNU manuals（检索 du -sh）"
+    },
+    {
+      "command": "fg",
+      "context": "shell-builtin",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Bring a background job to the foreground",
+      "usage": "fg",
+      "options": [],
+      "officialExamples": [
+        "输入 fg，把最近的后台任务切回前台"
+      ],
+      "url": "https://www.gnu.org/software/coreutils/manual/ · fg"
+    },
+    {
+      "command": "find",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Search for files in a directory hierarchy",
+      "usage": "find",
+      "options": [
+        "-name"
+      ],
+      "officialExamples": [
+        "find . -name \"*.log\""
+      ],
+      "url": "https://www.gnu.org/software/coreutils/manual/ · find"
+    },
+    {
+      "command": "find . -name",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Find files by name pattern",
+      "usage": "find . -name",
+      "options": [
+        "-name"
+      ],
+      "officialExamples": [
+        "find . -name \"*.log\""
+      ],
+      "url": "https://www.gnu.org/software/coreutils/manual/ · find . -name"
+    },
+    {
+      "command": "free -h",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Display memory usage in human-readable format",
+      "usage": "free -h",
+      "options": [
+        "-h"
+      ],
+      "officialExamples": [
+        "free -h"
+      ],
+      "url": "https://www.gnu.org/software/coreutils/manual/ · free -h"
+    },
+    {
+      "command": "grep",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Search text patterns in files",
+      "usage": "grep",
+      "options": [],
+      "officialExamples": [
+        "grep \"TODO\" README.md"
+      ],
+      "url": "https://www.gnu.org/software/coreutils/manual/ · grep"
+    },
+    {
+      "command": "grep -i",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Case-insensitive search",
+      "usage": "grep -i",
+      "options": [
+        "-i"
+      ],
+      "officialExamples": [
+        "grep -i \"error\" app.log"
+      ],
+      "url": "https://www.gnu.org/software/coreutils/manual/ · grep -i"
+    },
+    {
+      "command": "grep -r",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Recursively search in directory",
+      "usage": "grep -r",
+      "options": [
+        "-r"
+      ],
+      "officialExamples": [
+        "grep -r \"TODO\" ./src"
+      ],
+      "url": "https://www.gnu.org/software/coreutils/manual/ · grep -r"
+    },
+    {
+      "command": "head",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Output the first part of files",
+      "usage": "head",
+      "options": [
+        "-n"
+      ],
+      "officialExamples": [
+        "head -n 20 README.md"
+      ],
+      "url": "GNU manuals（检索 head）"
+    },
+    {
+      "command": "history",
+      "context": "shell-builtin",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Display command history list",
+      "usage": "history",
+      "options": [],
+      "officialExamples": [
+        "history"
+      ],
+      "url": "https://www.gnu.org/software/coreutils/manual/ · history"
+    },
+    {
+      "command": "kill",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Send a signal to a process",
+      "usage": "kill",
+      "options": [],
+      "officialExamples": [
+        "kill 12345"
+      ],
+      "url": "https://www.gnu.org/software/coreutils/manual/ · kill"
+    },
+    {
+      "command": "kill -9",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Force kill a process (SIGKILL)",
+      "usage": "kill -9",
+      "options": [
+        "-9"
+      ],
+      "officialExamples": [
+        "kill -9 12345"
+      ],
+      "url": "https://www.gnu.org/software/coreutils/manual/ · kill -9"
+    },
+    {
+      "command": "less",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "View file contents page by page",
+      "usage": "less",
+      "options": [],
+      "officialExamples": [
+        "less app.log"
+      ],
+      "url": "https://www.gnu.org/software/coreutils/manual/ · less"
+    },
+    {
+      "command": "ln -s",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Create a symbolic link",
+      "usage": "ln -s",
+      "options": [
+        "-s"
+      ],
+      "officialExamples": [
+        "ln -s target.txt shortcut.txt"
+      ],
+      "url": "GNU manuals（检索 ln -s）"
+    },
+    {
+      "command": "ls",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "List directory contents",
+      "usage": "ls",
+      "options": [],
+      "officialExamples": [
+        "ls"
+      ],
+      "url": "GNU manuals（检索 ls）"
+    },
+    {
+      "command": "ls -a",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "List all entries including hidden files",
+      "usage": "ls -a",
+      "options": [
+        "-a"
+      ],
+      "officialExamples": [
+        "ls -a"
+      ],
+      "url": "GNU manuals（检索 ls -a）"
+    },
+    {
+      "command": "ls -l",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "List with long format (permissions, size, date)",
+      "usage": "ls -l",
+      "options": [
+        "-l"
+      ],
+      "officialExamples": [
+        "ls -l"
+      ],
+      "url": "GNU manuals（检索 ls -l）"
+    },
+    {
+      "command": "ls -la",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Long format listing including hidden files",
+      "usage": "ls -la",
+      "options": [
+        "-la"
+      ],
+      "officialExamples": [
+        "ls -la"
+      ],
+      "url": "GNU manuals（检索 ls -la）"
+    },
+    {
+      "command": "mkdir",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Create directories",
+      "usage": "mkdir",
+      "options": [],
+      "officialExamples": [
+        "mkdir example-dir"
+      ],
+      "url": "GNU manuals（检索 mkdir）"
+    },
+    {
+      "command": "mkdir -p",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Create parent directories as needed",
+      "usage": "mkdir -p",
+      "options": [
+        "-p"
+      ],
+      "officialExamples": [
+        "mkdir -p parent/example-dir"
+      ],
+      "url": "GNU manuals（检索 mkdir -p）"
+    },
+    {
+      "command": "mv",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Move or rename files and directories",
+      "usage": "mv",
+      "options": [],
+      "officialExamples": [
+        "mv old.txt new.txt"
+      ],
+      "url": "GNU manuals（检索 mv）"
+    },
+    {
+      "command": "ping",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Test network connectivity to a host",
+      "usage": "ping",
+      "options": [],
+      "officialExamples": [
+        "ping example.com"
+      ],
+      "url": "https://www.gnu.org/software/coreutils/manual/ · ping"
+    },
+    {
+      "command": "ps",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Report process status",
+      "usage": "ps",
+      "options": [],
+      "officialExamples": [
+        "ps"
+      ],
+      "url": "https://www.gnu.org/software/coreutils/manual/ · ps"
+    },
+    {
+      "command": "ps aux",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "List all running processes with details",
+      "usage": "ps aux",
+      "options": [],
+      "officialExamples": [
+        "ps aux | grep node"
+      ],
+      "url": "https://www.gnu.org/software/coreutils/manual/ · ps aux"
+    },
+    {
+      "command": "pwd",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Print working directory",
+      "usage": "pwd",
+      "options": [],
+      "officialExamples": [
+        "pwd"
+      ],
+      "url": "GNU manuals（检索 pwd）"
+    },
+    {
+      "command": "rm",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Remove files or directories",
+      "usage": "rm",
+      "options": [],
+      "officialExamples": [
+        "rm temp.log"
+      ],
+      "url": "GNU manuals（检索 rm）"
+    },
+    {
+      "command": "rm -rf",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Force remove directories recursively (use with caution)",
+      "usage": "rm -rf",
+      "options": [
+        "-rf"
+      ],
+      "officialExamples": [
+        "rm -rf ./build-temp"
+      ],
+      "url": "GNU manuals（检索 rm -rf）"
+    },
+    {
+      "command": "scp",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Secure copy between hosts",
+      "usage": "scp",
+      "options": [],
+      "officialExamples": [
+        "scp file.txt user@example.com:/tmp/"
+      ],
+      "url": "https://www.gnu.org/software/coreutils/manual/ · scp"
+    },
+    {
+      "command": "sed",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Stream editor for filtering and transforming text",
+      "usage": "sed",
+      "options": [
+        "-i"
+      ],
+      "officialExamples": [
+        "sed 's/旧文本/新文本/g' file.txt",
+        "sed -i 's/旧文本/新文本/g' file.txt"
+      ],
+      "url": "https://www.gnu.org/software/coreutils/manual/ · sed"
+    },
+    {
+      "command": "sort",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Sort lines of text",
+      "usage": "sort",
+      "options": [],
+      "officialExamples": [
+        "sort names.txt"
+      ],
+      "url": "GNU manuals（检索 sort）"
+    },
+    {
+      "command": "ssh",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "OpenSSH remote login client",
+      "usage": "ssh",
+      "options": [],
+      "officialExamples": [
+        "ssh user@example.com"
+      ],
+      "url": "https://www.gnu.org/software/coreutils/manual/ · ssh"
+    },
+    {
+      "command": "tail",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Output the last part of files",
+      "usage": "tail",
+      "options": [
+        "-n"
+      ],
+      "officialExamples": [
+        "tail -n 50 app.log"
+      ],
+      "url": "GNU manuals（检索 tail）"
+    },
+    {
+      "command": "tail -f",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Follow file growth in real time",
+      "usage": "tail -f",
+      "options": [
+        "-f"
+      ],
+      "officialExamples": [
+        "tail -f app.log"
+      ],
+      "url": "GNU manuals（检索 tail -f）"
+    },
+    {
+      "command": "tar",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Create or extract archive files",
+      "usage": "tar",
+      "options": [
+        "-czf"
+      ],
+      "officialExamples": [
+        "tar -czf backup.tar.gz ./src"
+      ],
+      "url": "https://www.gnu.org/software/coreutils/manual/ · tar"
+    },
+    {
+      "command": "tar -czf",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Create a gzipped tar archive",
+      "usage": "tar -czf",
+      "options": [
+        "-czf"
+      ],
+      "officialExamples": [
+        "tar -czf archive.tar.gz example-dir"
+      ],
+      "url": "https://www.gnu.org/software/coreutils/manual/ · tar -czf"
+    },
+    {
+      "command": "tar -xzf",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Extract a gzipped tar archive",
+      "usage": "tar -xzf",
+      "options": [
+        "-xzf"
+      ],
+      "officialExamples": [
+        "tar -xzf archive.tar.gz"
+      ],
+      "url": "https://www.gnu.org/software/coreutils/manual/ · tar -xzf"
+    },
+    {
+      "command": "top",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Display real-time process activity",
+      "usage": "top",
+      "options": [],
+      "officialExamples": [
+        "top"
+      ],
+      "url": "https://www.gnu.org/software/coreutils/manual/ · top"
+    },
+    {
+      "command": "touch",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Create empty file or update timestamp",
+      "usage": "touch",
+      "options": [],
+      "officialExamples": [
+        "touch notes.txt"
+      ],
+      "url": "GNU manuals（检索 touch）"
+    },
+    {
+      "command": "uniq",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Report or omit repeated lines",
+      "usage": "uniq",
+      "options": [],
+      "officialExamples": [
+        "uniq sorted-names.txt"
+      ],
+      "url": "GNU manuals（检索 uniq）"
+    },
+    {
+      "command": "wc",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Count lines, words, and characters",
+      "usage": "wc",
+      "options": [],
+      "officialExamples": [
+        "wc README.md"
+      ],
+      "url": "GNU manuals（检索 wc）"
+    },
+    {
+      "command": "wc -l",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Count lines",
+      "usage": "wc -l",
+      "options": [
+        "-l"
+      ],
+      "officialExamples": [
+        "wc -l"
+      ],
+      "url": "GNU manuals（检索 wc -l）"
+    },
+    {
+      "command": "wget",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Non-interactive network downloader",
+      "usage": "wget",
+      "options": [],
+      "officialExamples": [
+        "wget https://example.com/archive.zip"
+      ],
+      "url": "https://www.gnu.org/software/coreutils/manual/ · wget"
+    },
+    {
+      "command": "which",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "gnu-coreutils",
+      "platforms": [
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Show the full path of a command",
+      "usage": "which",
+      "options": [],
+      "officialExamples": [
+        "which node"
+      ],
+      "url": "https://www.gnu.org/software/coreutils/manual/ · which"
+    }
+  ]
+}

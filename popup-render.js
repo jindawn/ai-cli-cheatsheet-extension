@@ -495,6 +495,11 @@
     const qualityWarnings = pendingUpdate.qualityWarnings || pendingUpdate.diff?.qualityWarnings || [];
     const sourceChanges = pendingUpdate.diff?.sourceChanges || {};
     const detailRows = [
+      ...(pendingUpdate.officialCoverage ? [`官方覆盖：${pendingUpdate.officialCoverage.covered}/${pendingUpdate.officialCoverage.total}`] : []),
+      ...(pendingUpdate.officialInventorySummary?.adapter?.id ? [`确定性适配器：${pendingUpdate.officialInventorySummary.adapter.id} v${pendingUpdate.officialInventorySummary.adapter.version}`] : []),
+      ...(pendingUpdate.officialInventorySummary?.components?.length ? [`组件范围：${pendingUpdate.officialInventorySummary.components.join("、")}`] : []),
+      ...(pendingUpdate.officialInventorySummary?.platforms?.length ? [`平台范围：${pendingUpdate.officialInventorySummary.platforms.join("、")}`] : []),
+      ...(pendingUpdate.scenarioReviewSummary ? [`场景审校：通过 ${pendingUpdate.scenarioReviewSummary.examples} 个案例`] : []),
       ...(pendingUpdate.updateSignal?.marker ? [`版本信号：${pendingUpdate.updateSignal.marker}（${pendingUpdate.updateSignal.detail || pendingUpdate.updateSignal.signalType}）`] : []),
       ...(pendingUpdate.diff?.added || []).map((item) => `＋ ${item.cmd} · ${item.zh}`),
       ...(pendingUpdate.diff?.modified || []).map((item) => `≈ ${item.before} → ${item.after}`),
@@ -509,12 +514,12 @@
     return {
       hidden: false,
       risks,
-      html: `<h2>发现 ${escapeHtml(data[pendingUpdate.toolId]?.meta.name || pendingUpdate.toolId)} 更新</h2>
+      html: `<h2>${data[pendingUpdate.toolId] ? "发现更新" : "新增工具预览"} · ${escapeHtml(data[pendingUpdate.toolId]?.meta.name || pendingUpdate.toolId)}</h2>
     <div class="diff-summary"><div class="diff-stat"><strong>${counts.added || 0}</strong>新增</div><div class="diff-stat"><strong>${counts.modified || 0}</strong>修改</div><div class="diff-stat"><strong>${counts.removed || 0}</strong>删除</div><div class="diff-stat"><strong>${counts.meta || 0}</strong>元数据</div></div>
     <div class="diff-list">${detailRows.length ? detailRows.map((row) => `<div>${escapeHtml(row)}</div>`).join("") : "<div>仅来源或更新时间发生变化</div>"}</div>
     ${qualityWarnings.length ? `<div class="quality-warning">${qualityWarnings.map(escapeHtml).join("<br>")}</div>` : ""}
     ${risks.length ? `<label class="warning">${risks.map(escapeHtml).join("<br>")}<br><input id="confirmRisk" type="checkbox"> 我已核对上述高风险变化</label>` : ""}
-    <div class="diff-actions"><button id="applyPending" class="text-btn primary" ${risks.length ? "disabled" : ""}>应用更新</button><button id="discardPending" class="text-btn">放弃</button></div>`,
+    <div class="diff-actions"><button id="applyPending" class="text-btn primary" ${risks.length ? "disabled" : ""}>确认并应用</button><button id="discardPending" class="text-btn">放弃</button></div>`,
     };
   }
 

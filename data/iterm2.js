@@ -5,15 +5,14 @@ window.CHEATSHEET_DATA["iterm2"] = {
     "id": "iterm2",
     "name": "iTerm2",
     "color": "#EBBF00",
-    "source": "Official iTerm2 documentation, local help, and release notes, 2025-04-08",
+    "source": "第一方来源与确定性官方入口清单，核验于 2026-07-14",
     "builtIn": false,
     "updatePolicy": "manual-only",
     "contentCheckedAt": "2026-07-02",
     "sourceCheckedAt": "2026-07-02",
     "sourceUrl": "https://iterm2.com/documentation.html",
     "sourceTier": "official",
-    "coverage": "Core keyboard shortcuts, menus, and Shell Integration commands commonly used in iTerm2.",
-    "unverifiedPolicy": "个别菜单快捷键未能绑定到稳定的官方定位，保留为待复核候选",
+    "coverage": "官方入口全集；精确范围、组件与平台限制见 shared/official-inventories/iterm2.json",
     "platforms": [
       "mac"
     ],
@@ -52,14 +51,15 @@ window.CHEATSHEET_DATA["iterm2"] = {
     "verificationStatus": "manual",
     "officialCoverage": {
       "scope": "all-command-entrypoints",
-      "status": "unconfirmed",
-      "total": 0,
-      "covered": 0,
-      "checkedAt": "2026-07-02",
+      "status": "complete",
+      "total": 32,
+      "covered": 32,
+      "checkedAt": "2026-07-13",
       "sourceIds": [
         "iterm2-docs",
         "iterm2-local-help"
-      ]
+      ],
+      "inventoryHash": "sha256:31f9af395cc5062810497d1c78d85ada6390194999a1846d0b40f6c70461f4c9"
     }
   },
   "items": [
@@ -92,6 +92,17 @@ window.CHEATSHEET_DATA["iterm2"] = {
           "expected": "新的空白标签页出现在现有标签页右侧，并获得焦点。",
           "platforms": [
             "mac"
+          ],
+          "groundingRefs": [
+            {
+              "sourceId": "iterm2-docs",
+              "locator": "https://iterm2.com/documentation-menu-items.html · Shell > New Window/Tab",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
           ]
         }
       ],
@@ -151,6 +162,17 @@ window.CHEATSHEET_DATA["iterm2"] = {
           "expected": "当前标签页或窗格消失，焦点移动到剩余的标签页或窗格。",
           "platforms": [
             "mac"
+          ],
+          "groundingRefs": [
+            {
+              "sourceId": "iterm2-docs",
+              "locator": "https://iterm2.com/documentation-menu-items.html · Shell > Close",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
           ]
         }
       ],
@@ -209,6 +231,17 @@ window.CHEATSHEET_DATA["iterm2"] = {
           "expected": "左侧标签页变为活动状态，标题栏高亮显示新选中的标签页。",
           "platforms": [
             "mac"
+          ],
+          "groundingRefs": [
+            {
+              "sourceId": "iterm2-docs",
+              "locator": "https://iterm2.com/documentation.html · Cmd+Shift+[",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
           ]
         }
       ],
@@ -221,14 +254,13 @@ window.CHEATSHEET_DATA["iterm2"] = {
       "id": "iterm2-previous-tab",
       "evidenceRefs": [
         {
-          "sourceId": "iterm2-local-help",
+          "sourceId": "iterm2-docs",
           "claims": [
             "existence",
-            "semantics",
-            "platform"
+            "semantics"
           ],
-          "locator": "iTerm2 应用菜单 Window > Select Previous Tab（默认快捷键随菜单项显示）",
-          "checkedAt": "2026-07-02"
+          "locator": "https://iterm2.com/documentation.html · Cmd+Shift+[",
+          "checkedAt": "2026-07-13"
         }
       ]
     },
@@ -261,6 +293,17 @@ window.CHEATSHEET_DATA["iterm2"] = {
           "expected": "右侧标签页变为活动状态。",
           "platforms": [
             "mac"
+          ],
+          "groundingRefs": [
+            {
+              "sourceId": "iterm2-docs",
+              "locator": "https://iterm2.com/documentation.html · Cmd+Shift+]",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
           ]
         }
       ],
@@ -273,14 +316,13 @@ window.CHEATSHEET_DATA["iterm2"] = {
       "id": "iterm2-next-tab",
       "evidenceRefs": [
         {
-          "sourceId": "iterm2-local-help",
+          "sourceId": "iterm2-docs",
           "claims": [
             "existence",
-            "semantics",
-            "platform"
+            "semantics"
           ],
-          "locator": "iTerm2 应用菜单 Window > Select Next Tab（默认快捷键随菜单项显示）",
-          "checkedAt": "2026-07-02"
+          "locator": "https://iterm2.com/documentation.html · Cmd+Shift+]",
+          "checkedAt": "2026-07-13"
         }
       ]
     },
@@ -314,6 +356,17 @@ window.CHEATSHEET_DATA["iterm2"] = {
           "expected": "当前会话缩到左半边，右半边出现新的 Shell 会话。",
           "platforms": [
             "mac"
+          ],
+          "groundingRefs": [
+            {
+              "sourceId": "iterm2-docs",
+              "locator": "https://iterm2.com/documentation-menu-items.html · Shell > Split Vertically/Horizontally",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
           ]
         }
       ],
@@ -373,6 +426,17 @@ window.CHEATSHEET_DATA["iterm2"] = {
           "expected": "会话分成上下两个窗格，下半部分打开新的 Shell。",
           "platforms": [
             "mac"
+          ],
+          "groundingRefs": [
+            {
+              "sourceId": "iterm2-docs",
+              "locator": "https://iterm2.com/documentation-menu-items.html · Shell > Split Vertically/Horizontally",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
           ]
         }
       ],
@@ -432,6 +496,17 @@ window.CHEATSHEET_DATA["iterm2"] = {
           "expected": "光标移动到下一个窗格，标题栏更新为当前活动会话。",
           "platforms": [
             "mac"
+          ],
+          "groundingRefs": [
+            {
+              "sourceId": "iterm2-docs",
+              "locator": "https://iterm2.com/documentation.html · Cmd+]",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
           ]
         }
       ],
@@ -444,14 +519,13 @@ window.CHEATSHEET_DATA["iterm2"] = {
       "id": "iterm2-next-pane",
       "evidenceRefs": [
         {
-          "sourceId": "iterm2-local-help",
+          "sourceId": "iterm2-docs",
           "claims": [
             "existence",
-            "semantics",
-            "platform"
+            "semantics"
           ],
-          "locator": "iTerm2 应用菜单 Window > Select Split Pane > Next Pane（默认快捷键随菜单项显示）",
-          "checkedAt": "2026-07-02"
+          "locator": "https://iterm2.com/documentation.html · Cmd+]",
+          "checkedAt": "2026-07-13"
         }
       ]
     },
@@ -485,6 +559,17 @@ window.CHEATSHEET_DATA["iterm2"] = {
           "expected": "之前获得焦点的窗格重新变为活动状态。",
           "platforms": [
             "mac"
+          ],
+          "groundingRefs": [
+            {
+              "sourceId": "iterm2-docs",
+              "locator": "https://iterm2.com/documentation.html · Cmd+[",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
           ]
         }
       ],
@@ -497,14 +582,13 @@ window.CHEATSHEET_DATA["iterm2"] = {
       "id": "iterm2-previous-pane",
       "evidenceRefs": [
         {
-          "sourceId": "iterm2-local-help",
+          "sourceId": "iterm2-docs",
           "claims": [
             "existence",
-            "semantics",
-            "platform"
+            "semantics"
           ],
-          "locator": "iTerm2 应用菜单 Window > Select Split Pane > Previous Pane（默认快捷键随菜单项显示）",
-          "checkedAt": "2026-07-02"
+          "locator": "https://iterm2.com/documentation.html · Cmd+[",
+          "checkedAt": "2026-07-13"
         }
       ]
     },
@@ -537,6 +621,17 @@ window.CHEATSHEET_DATA["iterm2"] = {
           "expected": "窗口扩展到整个屏幕并隐藏菜单栏；再次按快捷键会恢复到原来的窗口大小。",
           "platforms": [
             "mac"
+          ],
+          "groundingRefs": [
+            {
+              "sourceId": "iterm2-docs",
+              "locator": "https://iterm2.com/documentation-menu-items.html · View > Toggle Full Screen",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
           ]
         }
       ],
@@ -596,6 +691,17 @@ window.CHEATSHEET_DATA["iterm2"] = {
           "expected": "查找栏出现，输入时匹配文本会在终端中高亮。",
           "platforms": [
             "mac"
+          ],
+          "groundingRefs": [
+            {
+              "sourceId": "iterm2-docs",
+              "locator": "https://iterm2.com/documentation-menu-items.html · Edit > Find",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
           ]
         }
       ],
@@ -655,6 +761,17 @@ window.CHEATSHEET_DATA["iterm2"] = {
           "expected": "窗格变为空白，提示符出现在顶部；向上滚动也看不到旧输出。",
           "platforms": [
             "mac"
+          ],
+          "groundingRefs": [
+            {
+              "sourceId": "iterm2-docs",
+              "locator": "https://iterm2.com/documentation.html · Cmd+K",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
           ]
         }
       ],
@@ -667,14 +784,13 @@ window.CHEATSHEET_DATA["iterm2"] = {
       "id": "iterm2-clear-buffer",
       "evidenceRefs": [
         {
-          "sourceId": "iterm2-local-help",
+          "sourceId": "iterm2-docs",
           "claims": [
             "existence",
-            "semantics",
-            "platform"
+            "semantics"
           ],
-          "locator": "iTerm2 应用菜单 Edit > Clear Buffer（默认快捷键随菜单项显示）",
-          "checkedAt": "2026-07-02"
+          "locator": "https://iterm2.com/documentation.html · Cmd+K",
+          "checkedAt": "2026-07-13"
         }
       ]
     },
@@ -707,6 +823,17 @@ window.CHEATSHEET_DATA["iterm2"] = {
           "expected": "Preferences 窗口出现，可以在各设置标签页之间切换。",
           "platforms": [
             "mac"
+          ],
+          "groundingRefs": [
+            {
+              "sourceId": "iterm2-docs",
+              "locator": "https://iterm2.com/documentation.html · Cmd+,",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
           ]
         }
       ],
@@ -719,14 +846,13 @@ window.CHEATSHEET_DATA["iterm2"] = {
       "id": "iterm2-preferences",
       "evidenceRefs": [
         {
-          "sourceId": "iterm2-local-help",
+          "sourceId": "iterm2-docs",
           "claims": [
             "existence",
-            "semantics",
-            "platform"
+            "semantics"
           ],
-          "locator": "iTerm2 应用菜单 iTerm2 > Settings...（默认快捷键随菜单项显示）",
-          "checkedAt": "2026-07-02"
+          "locator": "https://iterm2.com/documentation.html · Cmd+,",
+          "checkedAt": "2026-07-13"
         }
       ]
     },
@@ -762,6 +888,17 @@ window.CHEATSHEET_DATA["iterm2"] = {
           "prerequisites": "需要安装 iTerm2 Shell Integration，并在当前 Shell 中加载。",
           "platforms": [
             "mac"
+          ],
+          "groundingRefs": [
+            {
+              "sourceId": "iterm2-docs",
+              "locator": "https://iterm2.com/documentation-utilities.html · imgcat",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
           ]
         }
       ],
@@ -813,6 +950,17 @@ window.CHEATSHEET_DATA["iterm2"] = {
           "prerequisites": "需要安装 iTerm2 Shell Integration。",
           "platforms": [
             "mac"
+          ],
+          "groundingRefs": [
+            {
+              "sourceId": "iterm2-docs",
+              "locator": "https://iterm2.com/documentation-utilities.html · imgls",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
           ]
         }
       ],
@@ -864,6 +1012,17 @@ window.CHEATSHEET_DATA["iterm2"] = {
           "caveat": "建议使用 `command | it2copy` 处理文本输出，避免把大量二进制内容写入剪贴板。",
           "platforms": [
             "mac"
+          ],
+          "groundingRefs": [
+            {
+              "sourceId": "iterm2-docs",
+              "locator": "https://iterm2.com/documentation-utilities.html · it2copy",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
           ]
         }
       ],
@@ -888,7 +1047,7 @@ window.CHEATSHEET_DATA["iterm2"] = {
       "cmd": "it2profile",
       "en": "Switch iTerm2 profile",
       "zh": "切换 iTerm2 会话配置文件",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "profile",
         "switch",
@@ -911,13 +1070,35 @@ window.CHEATSHEET_DATA["iterm2"] = {
           "platforms": [
             "mac"
           ],
-          "caveat": "该工具随 Shell Integration 一起分发，但未收录进官方 utilities 文档页；用法以本机 `it2profile -h` 输出为准。"
+          "caveat": "该工具随 Shell Integration 一起分发，但未收录进官方 utilities 文档页；用法以本机 `it2profile -h` 输出为准。",
+          "groundingRefs": [
+            {
+              "sourceId": "iterm2-docs",
+              "locator": "https://iterm2.com/documentation.html · it2profile",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
         "mac"
       ],
-      "id": "iterm2-it2profile"
+      "id": "iterm2-it2profile",
+      "evidenceRefs": [
+        {
+          "sourceId": "iterm2-docs",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://iterm2.com/documentation.html · it2profile",
+          "checkedAt": "2026-07-13"
+        }
+      ]
     },
     {
       "cat": "slash",
@@ -937,7 +1118,6 @@ window.CHEATSHEET_DATA["iterm2"] = {
           "value": "it2check",
           "description": "检查当前终端模拟器是否为 iTerm2；是则以退出码 0 结束，适合在脚本里守卫仅 iTerm2 可用的功能。",
           "copyable": true,
-          "sourceUrl": "https://iterm2.com/documentation-shell-integration.html",
           "authorship": "editorial",
           "evidenceTier": "first-party",
           "adaptation": "scenario-derived",
@@ -950,6 +1130,17 @@ window.CHEATSHEET_DATA["iterm2"] = {
           "expected": "在 iTerm2 中运行时退出码为 0；在其他终端中为非 0。",
           "platforms": [
             "mac"
+          ],
+          "groundingRefs": [
+            {
+              "sourceId": "iterm2-docs",
+              "locator": "https://iterm2.com/documentation-utilities.html · it2check",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
           ]
         }
       ],
@@ -998,6 +1189,17 @@ window.CHEATSHEET_DATA["iterm2"] = {
           ],
           "sourceIds": [
             "iterm2-docs"
+          ],
+          "groundingRefs": [
+            {
+              "sourceId": "iterm2-docs",
+              "locator": "https://iterm2.com/documentation-menu-items.html · Shell > New Window/Tab",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
           ]
         }
       ],
@@ -1057,6 +1259,17 @@ window.CHEATSHEET_DATA["iterm2"] = {
           ],
           "sourceIds": [
             "iterm2-docs"
+          ],
+          "groundingRefs": [
+            {
+              "sourceId": "iterm2-docs",
+              "locator": "https://iterm2.com/documentation-menu-items.html · View > Open Quickly（页面注明快捷键 Cmd-Shift-O）",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
           ]
         }
       ],
@@ -1108,6 +1321,17 @@ window.CHEATSHEET_DATA["iterm2"] = {
           ],
           "sourceIds": [
             "iterm2-docs"
+          ],
+          "groundingRefs": [
+            {
+              "sourceId": "iterm2-docs",
+              "locator": "https://iterm2.com/documentation-menu-items.html · Edit > Open Paste History",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
           ]
         }
       ],
@@ -1167,6 +1391,17 @@ window.CHEATSHEET_DATA["iterm2"] = {
           ],
           "sourceIds": [
             "iterm2-docs"
+          ],
+          "groundingRefs": [
+            {
+              "sourceId": "iterm2-docs",
+              "locator": "https://iterm2.com/documentation-menu-items.html · View > Maximize Active Pane",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
           ]
         }
       ],
@@ -1226,6 +1461,17 @@ window.CHEATSHEET_DATA["iterm2"] = {
           ],
           "sourceIds": [
             "iterm2-docs"
+          ],
+          "groundingRefs": [
+            {
+              "sourceId": "iterm2-docs",
+              "locator": "https://iterm2.com/documentation-menu-items.html · View > Find Cursor",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
           ]
         }
       ],
@@ -1285,6 +1531,17 @@ window.CHEATSHEET_DATA["iterm2"] = {
           ],
           "sourceIds": [
             "iterm2-docs"
+          ],
+          "groundingRefs": [
+            {
+              "sourceId": "iterm2-docs",
+              "locator": "https://iterm2.com/documentation-menu-items.html · View > Start Instant Replay",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
           ]
         }
       ],
@@ -1340,6 +1597,17 @@ window.CHEATSHEET_DATA["iterm2"] = {
           "expected": "视图滚动到下一个匹配项并高亮。",
           "platforms": [
             "mac"
+          ],
+          "groundingRefs": [
+            {
+              "sourceId": "iterm2-docs",
+              "locator": "https://iterm2.com/documentation.html · Cmd+G",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
           ]
         }
       ],
@@ -1351,14 +1619,13 @@ window.CHEATSHEET_DATA["iterm2"] = {
       },
       "evidenceRefs": [
         {
-          "sourceId": "iterm2-local-help",
+          "sourceId": "iterm2-docs",
           "claims": [
             "existence",
-            "semantics",
-            "platform"
+            "semantics"
           ],
-          "locator": "iTerm2 应用菜单 Edit > Find > Find Next（默认快捷键随菜单项显示）",
-          "checkedAt": "2026-07-02"
+          "locator": "https://iterm2.com/documentation.html · Cmd+G",
+          "checkedAt": "2026-07-13"
         }
       ],
       "id": "iterm2-find-next",
@@ -1390,6 +1657,17 @@ window.CHEATSHEET_DATA["iterm2"] = {
           "expected": "对应编号的标签页立即变为活动状态。",
           "platforms": [
             "mac"
+          ],
+          "groundingRefs": [
+            {
+              "sourceId": "iterm2-docs",
+              "locator": "https://iterm2.com/documentation.html · Cmd+1..Cmd+9",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
           ]
         }
       ],
@@ -1401,14 +1679,13 @@ window.CHEATSHEET_DATA["iterm2"] = {
       },
       "evidenceRefs": [
         {
-          "sourceId": "iterm2-local-help",
+          "sourceId": "iterm2-docs",
           "claims": [
             "existence",
-            "semantics",
-            "platform"
+            "semantics"
           ],
-          "locator": "iTerm2 应用菜单 Window > 标签页列表（每个标签页显示 ⌘1…⌘9）（默认快捷键随菜单项显示）",
-          "checkedAt": "2026-07-02"
+          "locator": "https://iterm2.com/documentation.html · Cmd+1..Cmd+9",
+          "checkedAt": "2026-07-13"
         }
       ],
       "id": "iterm2-select-tab-number"
@@ -1440,6 +1717,17 @@ window.CHEATSHEET_DATA["iterm2"] = {
           "expected": "对应方向的窗格获得焦点。",
           "platforms": [
             "mac"
+          ],
+          "groundingRefs": [
+            {
+              "sourceId": "iterm2-docs",
+              "locator": "https://iterm2.com/documentation.html · Cmd+Option+Arrow",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
           ]
         }
       ],
@@ -1451,14 +1739,13 @@ window.CHEATSHEET_DATA["iterm2"] = {
       },
       "evidenceRefs": [
         {
-          "sourceId": "iterm2-local-help",
+          "sourceId": "iterm2-docs",
           "claims": [
             "existence",
-            "semantics",
-            "platform"
+            "semantics"
           ],
-          "locator": "iTerm2 应用菜单 Window > Select Split Pane > Select Pane Above/Below/Left/Right（默认快捷键随菜单项显示）",
-          "checkedAt": "2026-07-02"
+          "locator": "https://iterm2.com/documentation.html · Cmd+Option+Arrow",
+          "checkedAt": "2026-07-13"
         }
       ],
       "id": "iterm2-select-pane-arrows",
@@ -1495,7 +1782,18 @@ window.CHEATSHEET_DATA["iterm2"] = {
           "sourceIds": [
             "iterm2-docs"
           ],
-          "prerequisites": "需要安装 iTerm2 Shell Integration。"
+          "prerequisites": "需要安装 iTerm2 Shell Integration。",
+          "groundingRefs": [
+            {
+              "sourceId": "iterm2-docs",
+              "locator": "https://iterm2.com/documentation-shell-integration.html · How it works > Marks（原文：You can navigate marks with Cmd-Shift-Up and Down-arrow keys.）",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -1553,6 +1851,17 @@ window.CHEATSHEET_DATA["iterm2"] = {
           "warning": "该命令会从网络下载脚本并直接执行，还会修改 Shell 启动文件。",
           "riskLevels": [
             "remoteExecution"
+          ],
+          "groundingRefs": [
+            {
+              "sourceId": "iterm2-docs",
+              "locator": "https://iterm2.com/documentation-utilities.html · curl -L https://iterm2.com/shell_integration/install_shell_integration.sh | bash",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
           ]
         }
       ],
@@ -1603,7 +1912,18 @@ window.CHEATSHEET_DATA["iterm2"] = {
           "platforms": [
             "mac"
           ],
-          "prerequisites": "本机与远程主机都需要安装 iTerm2 Shell Integration。"
+          "prerequisites": "本机与远程主机都需要安装 iTerm2 Shell Integration。",
+          "groundingRefs": [
+            {
+              "sourceId": "iterm2-docs",
+              "locator": "https://iterm2.com/documentation-utilities.html · it2dl",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -1653,7 +1973,18 @@ window.CHEATSHEET_DATA["iterm2"] = {
           "platforms": [
             "mac"
           ],
-          "prerequisites": "本机与远程主机都需要安装 iTerm2 Shell Integration。"
+          "prerequisites": "本机与远程主机都需要安装 iTerm2 Shell Integration。",
+          "groundingRefs": [
+            {
+              "sourceId": "iterm2-docs",
+              "locator": "https://iterm2.com/documentation-utilities.html · it2ul",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -1703,7 +2034,18 @@ window.CHEATSHEET_DATA["iterm2"] = {
           "platforms": [
             "mac"
           ],
-          "prerequisites": "需要安装 iTerm2 Shell Integration；预设名须已存在于设置中。"
+          "prerequisites": "需要安装 iTerm2 Shell Integration；预设名须已存在于设置中。",
+          "groundingRefs": [
+            {
+              "sourceId": "iterm2-docs",
+              "locator": "https://iterm2.com/documentation-utilities.html · it2setcolor",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -1753,7 +2095,18 @@ window.CHEATSHEET_DATA["iterm2"] = {
           "platforms": [
             "mac"
           ],
-          "prerequisites": "需要安装 iTerm2 Shell Integration。"
+          "prerequisites": "需要安装 iTerm2 Shell Integration。",
+          "groundingRefs": [
+            {
+              "sourceId": "iterm2-docs",
+              "locator": "https://iterm2.com/documentation-utilities.html · it2attention",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [

@@ -1,0 +1,1269 @@
+{
+  "schemaVersion": 2,
+  "toolId": "typora",
+  "scope": "all-command-entrypoints",
+  "checkedAt": "2026-07-13",
+  "sourceIds": [
+    "typora-shortcuts"
+  ],
+  "adapter": {
+    "id": "typora-default-keymap-table",
+    "kind": "default-keymap-table",
+    "version": 1
+  },
+  "closure": {
+    "status": "closed",
+    "entryCount": 62,
+    "components": [
+      "typora"
+    ],
+    "platforms": [
+      "mac",
+      "windows",
+      "linux"
+    ],
+    "proof": "deterministic-adapter-snapshot"
+  },
+  "entries": [
+    {
+      "command": "Cmd+-",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Decrease Heading Level",
+      "usage": "Cmd+-",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+-"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Decrease Heading Level）"
+    },
+    {
+      "command": "Cmd+,",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Preferences",
+      "usage": "Cmd+,",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+,"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Preferences）"
+    },
+    {
+      "command": "Cmd+[",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Indent",
+      "usage": "Cmd+[",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+["
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Indent）"
+    },
+    {
+      "command": "Cmd+]",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Outdent",
+      "usage": "Cmd+]",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+]"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Outdent）"
+    },
+    {
+      "command": "Cmd+/",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Source Code Mode",
+      "usage": "Cmd+/",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+/（Win/Linux 为 Ctrl+/）"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Source Code Mode）"
+    },
+    {
+      "command": "Cmd+\\",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Clear Format",
+      "usage": "Cmd+\\",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+\\"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Clear Format）"
+    },
+    {
+      "command": "Cmd+`",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Switch Between Documents",
+      "usage": "Cmd+`",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+`"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Switch Between Documents）"
+    },
+    {
+      "command": "Cmd+=",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Increase Heading Level",
+      "usage": "Cmd+=",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+="
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Increase Heading Level）"
+    },
+    {
+      "command": "Cmd+0",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Paragraph",
+      "usage": "Cmd+0",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+0"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Paragraph）"
+    },
+    {
+      "command": "Cmd+1",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Heading 1",
+      "usage": "Cmd+1",
+      "options": [],
+      "officialExamples": [
+        "# 一级标题"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Heading 1）"
+    },
+    {
+      "command": "Cmd+A",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Select All",
+      "usage": "Cmd+A",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+A"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Select All）"
+    },
+    {
+      "command": "Cmd+B",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Bold",
+      "usage": "Cmd+B",
+      "options": [],
+      "officialExamples": [
+        "**重要内容**"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Bold）"
+    },
+    {
+      "command": "Cmd+C",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Copy",
+      "usage": "Cmd+C",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+C"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Copy）"
+    },
+    {
+      "command": "Cmd+Ctrl+1",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Outline Panel",
+      "usage": "Cmd+Ctrl+1",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Ctrl+1"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Outline Panel）"
+    },
+    {
+      "command": "Cmd+Ctrl+2",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Articles Panel",
+      "usage": "Cmd+Ctrl+2",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Ctrl+2"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Articles Panel）"
+    },
+    {
+      "command": "Cmd+Ctrl+3",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "File Tree Panel",
+      "usage": "Cmd+Ctrl+3",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Ctrl+3"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 File Tree Panel）"
+    },
+    {
+      "command": "Cmd+Ctrl+I",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Image",
+      "usage": "Cmd+Ctrl+I",
+      "options": [],
+      "officialExamples": [
+        "![替代文字](./images/example.png)"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Image）"
+    },
+    {
+      "command": "Cmd+D",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Select Word",
+      "usage": "Cmd+D",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+D"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Select Word）"
+    },
+    {
+      "command": "Cmd+Down",
+      "context": "编辑器",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Jump to Bottom",
+      "usage": "Cmd+Down",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Down（编辑器）"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Jump to Bottom）"
+    },
+    {
+      "command": "Cmd+E",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Select Style Scope / Cell",
+      "usage": "Cmd+E",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+E"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Select Style Scope / Cell）"
+    },
+    {
+      "command": "Cmd+F",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Find",
+      "usage": "Cmd+F",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+F"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Find）"
+    },
+    {
+      "command": "Cmd+G",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Find Next",
+      "usage": "Cmd+G",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+G"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Find Next）"
+    },
+    {
+      "command": "Cmd+H",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Replace",
+      "usage": "Cmd+H",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+H"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Replace）"
+    },
+    {
+      "command": "Cmd+I",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Italic",
+      "usage": "Cmd+I",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+I"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Italic）"
+    },
+    {
+      "command": "Cmd+J",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Jump to Selection",
+      "usage": "Cmd+J",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+J"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Jump to Selection）"
+    },
+    {
+      "command": "Cmd+K",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Hyperlink",
+      "usage": "Cmd+K",
+      "options": [],
+      "officialExamples": [
+        "[项目主页](https://example.com)"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Hyperlink）"
+    },
+    {
+      "command": "Cmd+L",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Select Line / Sentence / Row",
+      "usage": "Cmd+L",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+L"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Select Line / Sentence / Row）"
+    },
+    {
+      "command": "Cmd+N",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "New File",
+      "usage": "Cmd+N",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+N"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 New File）"
+    },
+    {
+      "command": "Cmd+O",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Open",
+      "usage": "Cmd+O",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+O"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Open）"
+    },
+    {
+      "command": "Cmd+Option+B",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Math Block",
+      "usage": "Cmd+Option+B",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Option+B"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Math Block）"
+    },
+    {
+      "command": "Cmd+Option+C",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Code Fences",
+      "usage": "Cmd+Option+C",
+      "options": [],
+      "officialExamples": [
+        "```js\nconsole.log('hello');\n```"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Code Fences）"
+    },
+    {
+      "command": "Cmd+Option+F",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Toggle Fullscreen",
+      "usage": "Cmd+Option+F",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Option+F"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Toggle Fullscreen）"
+    },
+    {
+      "command": "Cmd+Option+O",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Ordered List",
+      "usage": "Cmd+Option+O",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Option+O"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Ordered List）"
+    },
+    {
+      "command": "Cmd+Option+Q",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Quote",
+      "usage": "Cmd+Option+Q",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Option+Q"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Quote）"
+    },
+    {
+      "command": "Cmd+Option+T",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Insert Table",
+      "usage": "Cmd+Option+T",
+      "options": [],
+      "officialExamples": [
+        "| 名称 | 状态 |\n| --- | --- |\n| 示例 | 完成 |"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Insert Table）"
+    },
+    {
+      "command": "Cmd+Option+U",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Unordered List",
+      "usage": "Cmd+Option+U",
+      "options": [],
+      "officialExamples": [
+        "- 第一项\n- 第二项"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Unordered List）"
+    },
+    {
+      "command": "Cmd+S",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Save",
+      "usage": "Cmd+S",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+S"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Save）"
+    },
+    {
+      "command": "Cmd+Shift+`",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Inline Code",
+      "usage": "Cmd+Shift+`",
+      "options": [],
+      "officialExamples": [
+        "`npm test`"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Inline Code）"
+    },
+    {
+      "command": "Cmd+Shift+Backspace",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Delete Row (in table)",
+      "usage": "Cmd+Shift+Backspace",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Shift+Backspace"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Delete Row (in table)）"
+    },
+    {
+      "command": "Cmd+Shift+C",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Copy as Markdown",
+      "usage": "Cmd+Shift+C",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Shift+C"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Copy as Markdown）"
+    },
+    {
+      "command": "Cmd+Shift+D",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Delete Word",
+      "usage": "Cmd+Shift+D",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Shift+D"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Delete Word）"
+    },
+    {
+      "command": "Cmd+Shift+G",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Find Previous",
+      "usage": "Cmd+Shift+G",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Shift+G"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Find Previous）"
+    },
+    {
+      "command": "Cmd+Shift+L",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Toggle Sidebar",
+      "usage": "Cmd+Shift+L",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Shift+L"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Toggle Sidebar）"
+    },
+    {
+      "command": "Cmd+Shift+N",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "New Window",
+      "usage": "Cmd+Shift+N",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Shift+N"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 New Window）"
+    },
+    {
+      "command": "Cmd+Shift+O",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Open Quickly",
+      "usage": "Cmd+Shift+O",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Shift+O"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Open Quickly）"
+    },
+    {
+      "command": "Cmd+Shift+S",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Save As / Duplicate",
+      "usage": "Cmd+Shift+S",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Shift+S"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Save As / Duplicate）"
+    },
+    {
+      "command": "Cmd+Shift+T",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Reopen Closed File",
+      "usage": "Cmd+Shift+T",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Shift+T"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Reopen Closed File）"
+    },
+    {
+      "command": "Cmd+Shift+V",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Paste as Plain Text",
+      "usage": "Cmd+Shift+V",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Shift+V（Win/Linux 为 Ctrl+Shift+V）"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Paste as Plain Text）"
+    },
+    {
+      "command": "Cmd+U",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Underline",
+      "usage": "Cmd+U",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+U"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Underline）"
+    },
+    {
+      "command": "Cmd+Up",
+      "context": "编辑器",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Jump to Top",
+      "usage": "Cmd+Up",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Up（编辑器）"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Jump to Top）"
+    },
+    {
+      "command": "Cmd+V",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Paste",
+      "usage": "Cmd+V",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+V"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Paste）"
+    },
+    {
+      "command": "Cmd+W",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Close",
+      "usage": "Cmd+W",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+W"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Close）"
+    },
+    {
+      "command": "Cmd+X",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Cut",
+      "usage": "Cmd+X",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+X"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Cut）"
+    },
+    {
+      "command": "Ctrl+Shift+-",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "windows",
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Zoom Out",
+      "usage": "Ctrl+Shift+-",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+Shift+-"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Zoom Out）"
+    },
+    {
+      "command": "Ctrl+Shift+`",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Strikethrough",
+      "usage": "Ctrl+Shift+`",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+Shift+`"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Strikethrough）"
+    },
+    {
+      "command": "Ctrl+Shift+=",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "windows",
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Zoom In",
+      "usage": "Ctrl+Shift+=",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+Shift+="
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Zoom In）"
+    },
+    {
+      "command": "Ctrl+Shift+0",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "windows",
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Actual Size",
+      "usage": "Ctrl+Shift+0",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+Shift+0"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Actual Size）"
+    },
+    {
+      "command": "Enter",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "New Paragraph",
+      "usage": "Enter",
+      "options": [],
+      "officialExamples": [
+        "按 Enter"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 New Paragraph）"
+    },
+    {
+      "command": "F8",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Focus Mode",
+      "usage": "F8",
+      "options": [],
+      "officialExamples": [
+        "按 F8"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Focus Mode）"
+    },
+    {
+      "command": "F9",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Typewriter Mode",
+      "usage": "F9",
+      "options": [],
+      "officialExamples": [
+        "按 F9"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Typewriter Mode）"
+    },
+    {
+      "command": "Shift+Enter",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "New Line",
+      "usage": "Shift+Enter",
+      "options": [],
+      "officialExamples": [
+        "按 Shift+Enter"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 New Line）"
+    },
+    {
+      "command": "Shift+F12",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "typora",
+      "platforms": [
+        "windows",
+        "linux",
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Toggle DevTools",
+      "usage": "Shift+F12",
+      "options": [],
+      "officialExamples": [
+        "按 Shift+F12"
+      ],
+      "url": "官方 Shortcut Keys（页面内检索 Toggle DevTools）"
+    }
+  ]
+}

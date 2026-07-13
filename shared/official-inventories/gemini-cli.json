@@ -1,0 +1,1521 @@
+{
+  "schemaVersion": 2,
+  "toolId": "gemini-cli",
+  "scope": "all-command-entrypoints",
+  "checkedAt": "2026-07-13",
+  "sourceIds": [
+    "gemini-commands",
+    "gemini-keyboard"
+  ],
+  "adapter": {
+    "id": "gemini-cli-structured-docs-repository",
+    "kind": "structured-docs-repository",
+    "version": 1
+  },
+  "closure": {
+    "status": "closed",
+    "entryCount": 81,
+    "components": [
+      "gemini-cli"
+    ],
+    "platforms": [
+      "mac",
+      "windows",
+      "linux"
+    ],
+    "proof": "deterministic-adapter-snapshot"
+  },
+  "entries": [
+    {
+      "command": "!（单独输入）",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "gemini-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Toggle shell mode",
+      "usage": "!（单独输入）",
+      "options": [],
+      "officialExamples": [
+        "按 !（单独输入）"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/ · !（单独输入）"
+    },
+    {
+      "command": "!命令",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "gemini-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Execute shell command",
+      "usage": "!命令",
+      "options": [],
+      "officialExamples": [
+        "!git status"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/ · !命令"
+    },
+    {
+      "command": "? （空提示符下）",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "gemini-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Toggle shortcuts panel",
+      "usage": "? （空提示符下）",
+      "options": [],
+      "officialExamples": [
+        "按 ? （空提示符下）"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/ · ? （空提示符下）"
+    },
+    {
+      "command": "@路径",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "gemini-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Inject file/dir content",
+      "usage": "@路径",
+      "options": [],
+      "officialExamples": [
+        "@src/auth.ts 解释登录流程"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/ · @路径"
+    },
+    {
+      "command": "/about",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "gemini-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Show version info",
+      "usage": "/about",
+      "options": [],
+      "officialExamples": [
+        "/about"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/（页面内检索 /about）"
+    },
+    {
+      "command": "/agents",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "gemini-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Manage subagents",
+      "usage": "/agents",
+      "options": [],
+      "officialExamples": [
+        "/agents list",
+        "/agents enable",
+        "/agents config"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/（页面内检索 /agents [list|reload|enable|disable|config]）"
+    },
+    {
+      "command": "/auth",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "gemini-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Change auth method",
+      "usage": "/auth",
+      "options": [],
+      "officialExamples": [
+        "/auth"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/（页面内检索 /auth）"
+    },
+    {
+      "command": "/bug",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "gemini-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "File a GitHub issue",
+      "usage": "/bug",
+      "options": [],
+      "officialExamples": [
+        "/bug"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/（页面内检索 /bug）"
+    },
+    {
+      "command": "/chat",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "gemini-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Session browser & checkpoints",
+      "usage": "/chat",
+      "options": [],
+      "officialExamples": [
+        "/chat"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/（页面内检索 /chat（/resume别名））"
+    },
+    {
+      "command": "/clear",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "gemini-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Clear terminal screen",
+      "usage": "/clear",
+      "options": [],
+      "officialExamples": [
+        "/clear"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/（页面内检索 /clear）"
+    },
+    {
+      "command": "/commands",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "gemini-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Manage custom commands",
+      "usage": "/commands",
+      "options": [],
+      "officialExamples": [
+        "/commands list",
+        "/commands reload"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/（页面内检索 /commands [list|reload]）"
+    },
+    {
+      "command": "/compress",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "gemini-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Summarize chat context",
+      "usage": "/compress",
+      "options": [],
+      "officialExamples": [
+        "/compress"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/（页面内检索 /compress）"
+    },
+    {
+      "command": "/copy",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "gemini-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Copy last output",
+      "usage": "/copy",
+      "options": [],
+      "officialExamples": [
+        "/copy"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/（页面内检索 /copy）"
+    },
+    {
+      "command": "/directory",
+      "context": "",
+      "aliases": [
+        "/dir"
+      ],
+      "entryType": "slash-command",
+      "component": "gemini-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Manage workspace directories",
+      "usage": "/directory",
+      "options": [],
+      "officialExamples": [
+        "/directory add"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/（页面内检索 /directory add|show（别名/dir））"
+    },
+    {
+      "command": "/docs",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "gemini-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Open documentation",
+      "usage": "/docs",
+      "options": [],
+      "officialExamples": [
+        "/docs"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/（页面内检索 /docs）"
+    },
+    {
+      "command": "/editor",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "gemini-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Select supported editor",
+      "usage": "/editor",
+      "options": [],
+      "officialExamples": [
+        "/editor"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/（页面内检索 /editor）"
+    },
+    {
+      "command": "/extensions",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "gemini-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Manage extensions",
+      "usage": "/extensions",
+      "options": [],
+      "officialExamples": [
+        "/extensions list",
+        "/extensions install",
+        "/extensions update"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/（页面内检索 /extensions [install|list|update|...]）"
+    },
+    {
+      "command": "/help",
+      "context": "",
+      "aliases": [
+        "/?"
+      ],
+      "entryType": "slash-command",
+      "component": "gemini-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Show help",
+      "usage": "/help",
+      "options": [],
+      "officialExamples": [
+        "/help"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/（页面内检索 /help（别名/?））"
+    },
+    {
+      "command": "/hooks",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "gemini-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Manage hooks",
+      "usage": "/hooks",
+      "options": [],
+      "officialExamples": [
+        "/hooks list",
+        "/hooks enable",
+        "/hooks disable"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/（页面内检索 /hooks [enable|disable|list]）"
+    },
+    {
+      "command": "/ide",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "gemini-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Manage IDE integration",
+      "usage": "/ide",
+      "options": [],
+      "officialExamples": [
+        "/ide status",
+        "/ide install",
+        "/ide enable"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/（页面内检索 /ide [enable|disable|install|status]）"
+    },
+    {
+      "command": "/init",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "gemini-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Generate GEMINI.md",
+      "usage": "/init",
+      "options": [],
+      "officialExamples": [
+        "/init"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/（页面内检索 /init）"
+    },
+    {
+      "command": "/mcp",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "gemini-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Manage MCP servers",
+      "usage": "/mcp",
+      "options": [],
+      "officialExamples": [
+        "/mcp list",
+        "/mcp auth",
+        "/mcp reload"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/（页面内检索 /mcp [list|auth|reload|schema]）"
+    },
+    {
+      "command": "/memory",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "gemini-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Manage hierarchical memory",
+      "usage": "/memory",
+      "options": [],
+      "officialExamples": [
+        "/memory show"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/（页面内检索 /memory [show|refresh|list]）"
+    },
+    {
+      "command": "/model",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "gemini-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Manage model config",
+      "usage": "/model",
+      "options": [],
+      "officialExamples": [
+        "/model set"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/（页面内检索 /model [manage|set]）"
+    },
+    {
+      "command": "/permissions",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "gemini-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Manage folder trust",
+      "usage": "/permissions",
+      "options": [],
+      "officialExamples": [
+        "/permissions trust"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/（页面内检索 /permissions trust）"
+    },
+    {
+      "command": "/plan",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "gemini-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Switch to Plan Mode",
+      "usage": "/plan",
+      "options": [],
+      "officialExamples": [
+        "/plan copy"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/（页面内检索 /plan [copy]）"
+    },
+    {
+      "command": "/policies",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "gemini-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "List active policies",
+      "usage": "/policies",
+      "options": [],
+      "officialExamples": [
+        "/policies list"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/（页面内检索 /policies list）"
+    },
+    {
+      "command": "/privacy",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "gemini-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Privacy notice & consent",
+      "usage": "/privacy",
+      "options": [],
+      "officialExamples": [
+        "/privacy"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/（页面内检索 /privacy）"
+    },
+    {
+      "command": "/quit",
+      "context": "",
+      "aliases": [
+        "/exit"
+      ],
+      "entryType": "slash-command",
+      "component": "gemini-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Exit and optionally wipe history",
+      "usage": "/quit",
+      "options": [
+        "--delete"
+      ],
+      "officialExamples": [
+        "/quit --delete"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/ · \"/quit (or /exit)\" · --delete（原文：\"Exit and permanently delete the current session's history and temporary files (chat recording, tool outputs).\"）"
+    },
+    {
+      "command": "/restore",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "gemini-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Restore files before a tool ran",
+      "usage": "/restore",
+      "options": [],
+      "officialExamples": [
+        "/restore"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/（页面内检索 /restore [tool_call_id]）"
+    },
+    {
+      "command": "/resume",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "gemini-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Browse/resume sessions",
+      "usage": "/resume",
+      "options": [],
+      "officialExamples": [
+        "/resume"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/（页面内检索 /resume）"
+    },
+    {
+      "command": "/rewind",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "gemini-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Navigate back through history",
+      "usage": "/rewind",
+      "options": [],
+      "officialExamples": [
+        "/rewind"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/（页面内检索 /rewind）"
+    },
+    {
+      "command": "/settings",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "gemini-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Open settings editor",
+      "usage": "/settings",
+      "options": [],
+      "officialExamples": [
+        "/settings"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/（页面内检索 /settings）"
+    },
+    {
+      "command": "/setup-github",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "gemini-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Set up GitHub Actions",
+      "usage": "/setup-github",
+      "options": [],
+      "officialExamples": [
+        "/setup-github"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/（页面内检索 /setup-github）"
+    },
+    {
+      "command": "/shells",
+      "context": "",
+      "aliases": [
+        "/bashes"
+      ],
+      "entryType": "slash-command",
+      "component": "gemini-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Toggle background shells view",
+      "usage": "/shells",
+      "options": [],
+      "officialExamples": [
+        "/shells"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/（页面内检索 /shells（别名/bashes））"
+    },
+    {
+      "command": "/skills",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "gemini-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Manage Agent Skills",
+      "usage": "/skills",
+      "options": [],
+      "officialExamples": [
+        "/skills list",
+        "/skills enable",
+        "/skills reload"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/（页面内检索 /skills [enable|disable|list|reload]）"
+    },
+    {
+      "command": "/stats",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "gemini-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Show usage statistics",
+      "usage": "/stats",
+      "options": [],
+      "officialExamples": [
+        "/stats model"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/（页面内检索 /stats [session|model|tools]）"
+    },
+    {
+      "command": "/terminal-setup",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "gemini-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Configure multiline keybindings",
+      "usage": "/terminal-setup",
+      "options": [],
+      "officialExamples": [
+        "/terminal-setup"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/（页面内检索 /terminal-setup）"
+    },
+    {
+      "command": "/theme",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "gemini-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Change visual theme",
+      "usage": "/theme",
+      "options": [],
+      "officialExamples": [
+        "/theme"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/（页面内检索 /theme）"
+    },
+    {
+      "command": "/tools",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "gemini-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "List available tools",
+      "usage": "/tools",
+      "options": [],
+      "officialExamples": [
+        "/tools desc"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/（页面内检索 /tools [desc|nodesc]）"
+    },
+    {
+      "command": "/upgrade",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "gemini-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Upgrade tier",
+      "usage": "/upgrade",
+      "options": [],
+      "officialExamples": [
+        "/upgrade"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/（页面内检索 /upgrade）"
+    },
+    {
+      "command": "/vim",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "gemini-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Toggle vim mode",
+      "usage": "/vim",
+      "options": [],
+      "officialExamples": [
+        "/vim"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/（页面内检索 /vim）"
+    },
+    {
+      "command": "\\ + Enter（行末）",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "gemini-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Newline in single-line mode",
+      "usage": "\\ + Enter（行末）",
+      "options": [],
+      "officialExamples": [
+        "按 \\ + Enter（行末）"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/ · \\ + Enter（行末）"
+    },
+    {
+      "command": "Alt+D / Ctrl+Delete",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "gemini-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Delete next word",
+      "usage": "Alt+D / Ctrl+Delete",
+      "options": [],
+      "officialExamples": [
+        "按 Alt+D / Ctrl+Delete"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/ · Alt+D / Ctrl+Delete"
+    },
+    {
+      "command": "Alt+M",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "gemini-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Toggle Markdown rendering",
+      "usage": "Alt+M",
+      "options": [],
+      "officialExamples": [
+        "按 Alt+M"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/ · Alt+M"
+    },
+    {
+      "command": "Ctrl+A / Home",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "gemini-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Move to line start",
+      "usage": "Ctrl+A / Home",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+A / Home"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/ · Ctrl+A / Home"
+    },
+    {
+      "command": "Ctrl+B",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "gemini-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Toggle background shell",
+      "usage": "Ctrl+B",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+B"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/ · Ctrl+B"
+    },
+    {
+      "command": "Ctrl+C",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "gemini-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Cancel request / quit",
+      "usage": "Ctrl+C",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+C"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/ · Ctrl+C"
+    },
+    {
+      "command": "Ctrl+D",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "gemini-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Exit when input empty",
+      "usage": "Ctrl+D",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+D"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/ · Ctrl+D"
+    },
+    {
+      "command": "Ctrl+E / End",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "gemini-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Move to line end",
+      "usage": "Ctrl+E / End",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+E / End"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/ · Ctrl+E / End"
+    },
+    {
+      "command": "Ctrl+Enter / Alt+Enter / Shift+Enter / Ctrl+J",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "gemini-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Newline without submit",
+      "usage": "Ctrl+Enter / Alt+Enter / Shift+Enter / Ctrl+J",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+Enter / Alt+Enter / Shift+Enter / Ctrl+J"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/ · Ctrl+Enter / Alt+Enter / Shift+Enter / Ctrl+J"
+    },
+    {
+      "command": "Ctrl+G / Ctrl+Shift+G",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "gemini-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Open external editor",
+      "usage": "Ctrl+G / Ctrl+Shift+G",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+G / Ctrl+Shift+G"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/ · Ctrl+G / Ctrl+Shift+G"
+    },
+    {
+      "command": "Ctrl+K",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "gemini-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Delete to line end",
+      "usage": "Ctrl+K",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+K"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/ · Ctrl+K"
+    },
+    {
+      "command": "Ctrl+K（后台shell列表）",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "gemini-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Kill active background shell",
+      "usage": "Ctrl+K（后台shell列表）",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+K（后台shell列表）"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/ · Ctrl+K（后台shell列表）"
+    },
+    {
+      "command": "Ctrl+L",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "gemini-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Clear screen and redraw",
+      "usage": "Ctrl+L",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+L"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/ · Ctrl+L"
+    },
+    {
+      "command": "Ctrl+Left/Right / Alt+B/F",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "gemini-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Move by word",
+      "usage": "Ctrl+Left/Right / Alt+B/F",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+Left/Right / Alt+B/F"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/ · Ctrl+Left/Right / Alt+B/F"
+    },
+    {
+      "command": "Ctrl+O",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "gemini-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Expand/collapse paste or output",
+      "usage": "Ctrl+O",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+O"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/ · Ctrl+O"
+    },
+    {
+      "command": "Ctrl+P / Ctrl+N",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "gemini-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Previous/next history",
+      "usage": "Ctrl+P / Ctrl+N",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+P / Ctrl+N"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/ · Ctrl+P / Ctrl+N"
+    },
+    {
+      "command": "Ctrl+R",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "gemini-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Reverse search history",
+      "usage": "Ctrl+R",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+R"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/ · Ctrl+R"
+    },
+    {
+      "command": "Ctrl+S",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "gemini-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Toggle mouse mode",
+      "usage": "Ctrl+S",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+S"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/ · Ctrl+S"
+    },
+    {
+      "command": "Ctrl+Shift+Z / Shift+Cmd+Z",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "gemini-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Redo",
+      "usage": "Ctrl+Shift+Z / Shift+Cmd+Z",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+Shift+Z / Shift+Cmd+Z"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/ · Ctrl+Shift+Z / Shift+Cmd+Z"
+    },
+    {
+      "command": "Ctrl+T",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "gemini-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Toggle full TODO list",
+      "usage": "Ctrl+T",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+T"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/ · Ctrl+T"
+    },
+    {
+      "command": "Ctrl+U",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "gemini-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Delete to line start",
+      "usage": "Ctrl+U",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+U"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/ · Ctrl+U"
+    },
+    {
+      "command": "Ctrl+V / Cmd+V / Alt+V",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "gemini-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Paste from clipboard",
+      "usage": "Ctrl+V / Cmd+V / Alt+V",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+V / Cmd+V / Alt+V"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/ · Ctrl+V / Cmd+V / Alt+V"
+    },
+    {
+      "command": "Ctrl+W / Alt+Backspace",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "gemini-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Delete previous word",
+      "usage": "Ctrl+W / Alt+Backspace",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+W / Alt+Backspace"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/ · Ctrl+W / Alt+Backspace"
+    },
+    {
+      "command": "Ctrl+X（计划展示时）",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "gemini-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Open plan in external editor",
+      "usage": "Ctrl+X（计划展示时）",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+X（计划展示时）"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/ · Ctrl+X（计划展示时）"
+    },
+    {
+      "command": "Ctrl+Y",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "gemini-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Toggle YOLO mode",
+      "usage": "Ctrl+Y",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+Y"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/ · Ctrl+Y"
+    },
+    {
+      "command": "Ctrl+Z / Cmd+Z / Alt+Z",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "gemini-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Undo",
+      "usage": "Ctrl+Z / Cmd+Z / Alt+Z",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+Z / Cmd+Z / Alt+Z"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/ · Ctrl+Z / Cmd+Z / Alt+Z"
+    },
+    {
+      "command": "Ctrl+Z（应用层）",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "gemini-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Suspend CLI to background",
+      "usage": "Ctrl+Z（应用层）",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+Z（应用层）"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/ · Ctrl+Z（应用层）"
+    },
+    {
+      "command": "Enter",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "gemini-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Confirm / submit",
+      "usage": "Enter",
+      "options": [],
+      "officialExamples": [
+        "按 Enter"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/ · Enter"
+    },
+    {
+      "command": "Esc / Ctrl+[",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "gemini-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Cancel / dismiss",
+      "usage": "Esc / Ctrl+[",
+      "options": [],
+      "officialExamples": [
+        "按 Esc / Ctrl+["
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/ · Esc / Ctrl+["
+    },
+    {
+      "command": "Esc Esc（快速两次）",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "gemini-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Clear input / rewind",
+      "usage": "Esc Esc（快速两次）",
+      "options": [],
+      "officialExamples": [
+        "按 Esc Esc（快速两次）"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/ · Esc Esc（快速两次）"
+    },
+    {
+      "command": "F12",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "gemini-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Toggle debug console",
+      "usage": "F12",
+      "options": [],
+      "officialExamples": [
+        "按 F12"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/ · F12"
+    },
+    {
+      "command": "F4",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "gemini-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Show IDE context detail",
+      "usage": "F4",
+      "options": [],
+      "officialExamples": [
+        "按 F4"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/ · F4"
+    },
+    {
+      "command": "Page Up/Down",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "gemini-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Scroll by page",
+      "usage": "Page Up/Down",
+      "options": [],
+      "officialExamples": [
+        "按 Page Up/Down"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/ · Page Up/Down"
+    },
+    {
+      "command": "R / Shift+R",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "gemini-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Restart application",
+      "usage": "R / Shift+R",
+      "options": [],
+      "officialExamples": [
+        "按 R / Shift+R"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/ · R / Shift+R"
+    },
+    {
+      "command": "Shift+Tab",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "gemini-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Cycle approval modes",
+      "usage": "Shift+Tab",
+      "options": [],
+      "officialExamples": [
+        "按 Shift+Tab"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/ · Shift+Tab"
+    },
+    {
+      "command": "Shift+Up/Down",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "gemini-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Scroll content",
+      "usage": "Shift+Up/Down",
+      "options": [],
+      "officialExamples": [
+        "按 Shift+Up/Down"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/ · Shift+Up/Down"
+    },
+    {
+      "command": "Space（按住）",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "gemini-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Push-to-talk voice mode",
+      "usage": "Space（按住）",
+      "options": [],
+      "officialExamples": [
+        "按 Space（按住）"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/ · Space（按住）"
+    },
+    {
+      "command": "Tab + Tab（输入中）",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "gemini-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Toggle minimal/full UI",
+      "usage": "Tab + Tab（输入中）",
+      "options": [],
+      "officialExamples": [
+        "按 Tab + Tab（输入中）"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/ · Tab + Tab（输入中）"
+    },
+    {
+      "command": "Tab（任务运行时）",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "gemini-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Queue message",
+      "usage": "Tab（任务运行时）",
+      "options": [],
+      "officialExamples": [
+        "按 Tab（任务运行时）"
+      ],
+      "url": "https://geminicli.com/docs/reference/commands/ · Tab（任务运行时）"
+    }
+  ]
+}

@@ -1,0 +1,1594 @@
+{
+  "schemaVersion": 2,
+  "toolId": "git",
+  "scope": "all-command-entrypoints",
+  "checkedAt": "2026-07-13",
+  "sourceIds": [
+    "git-init",
+    "git-clone",
+    "git-add",
+    "git-commit",
+    "git-status",
+    "git-diff",
+    "git-reset",
+    "git-revert",
+    "git-restore",
+    "git-reflog",
+    "git-worktree",
+    "git-rm",
+    "git-mv",
+    "git-branch",
+    "git-checkout",
+    "git-switch",
+    "git-merge",
+    "git-rebase",
+    "git-cherry-pick",
+    "git-stash",
+    "git-remote",
+    "git-fetch",
+    "git-pull",
+    "git-push",
+    "git-log",
+    "git-show",
+    "git-tag",
+    "git-blame",
+    "git-config",
+    "git-bisect",
+    "git-clean",
+    "git-grep"
+  ],
+  "adapter": {
+    "id": "git-recursive-help-docs",
+    "kind": "recursive-help-docs",
+    "version": 1
+  },
+  "closure": {
+    "status": "closed",
+    "entryCount": 90,
+    "components": [
+      "git"
+    ],
+    "platforms": [
+      "mac",
+      "windows",
+      "linux"
+    ],
+    "proof": "deterministic-adapter-snapshot"
+  },
+  "entries": [
+    {
+      "command": "add",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Add file contents to the index",
+      "usage": "add",
+      "options": [],
+      "officialExamples": [
+        "git add src/app.js"
+      ],
+      "url": "https://git-scm.com/docs/git-init · add"
+    },
+    {
+      "command": "bisect",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Use binary search to find the commit that introduced a bug",
+      "usage": "bisect",
+      "options": [],
+      "officialExamples": [
+        "git bisect start"
+      ],
+      "url": "https://git-scm.com/docs/git-init · bisect"
+    },
+    {
+      "command": "bisect start",
+      "context": "bisect",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Start a bisect session",
+      "usage": "bisect start",
+      "options": [],
+      "officialExamples": [
+        "git bisect start"
+      ],
+      "url": "https://git-scm.com/docs/git-init · bisect start"
+    },
+    {
+      "command": "blame",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Show what revision and author last modified each line of a file",
+      "usage": "blame",
+      "options": [],
+      "officialExamples": [
+        "git blame src/app.js"
+      ],
+      "url": "https://git-scm.com/docs/git-init · blame"
+    },
+    {
+      "command": "blame -L",
+      "context": "blame",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Annotate only the given line range",
+      "usage": "blame -L",
+      "options": [
+        "-L"
+      ],
+      "officialExamples": [
+        "git blame -L 10,30 src/app.js"
+      ],
+      "url": "https://git-scm.com/docs/git-init · blame -L"
+    },
+    {
+      "command": "branch",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "List, create, or delete branches",
+      "usage": "branch",
+      "options": [],
+      "officialExamples": [
+        "git branch",
+        "git branch feature/login"
+      ],
+      "url": "https://git-scm.com/docs/git-init · branch"
+    },
+    {
+      "command": "branch -a",
+      "context": "branch",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "List all branches (local and remote)",
+      "usage": "branch -a",
+      "options": [
+        "-a"
+      ],
+      "officialExamples": [
+        "git branch -a"
+      ],
+      "url": "https://git-scm.com/docs/git-init · branch -a"
+    },
+    {
+      "command": "branch -d",
+      "context": "branch",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Delete a branch",
+      "usage": "branch -d",
+      "options": [
+        "-d"
+      ],
+      "officialExamples": [
+        "git branch -d feature/old"
+      ],
+      "url": "https://git-scm.com/docs/git-init · branch -d"
+    },
+    {
+      "command": "branch -r",
+      "context": "branch",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "List remote-tracking branches",
+      "usage": "branch -r",
+      "options": [
+        "-r"
+      ],
+      "officialExamples": [
+        "git branch -r"
+      ],
+      "url": "https://git-scm.com/docs/git-init · branch -r"
+    },
+    {
+      "command": "checkout",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Switch branches or restore working tree files",
+      "usage": "checkout",
+      "options": [],
+      "officialExamples": [
+        "git checkout main"
+      ],
+      "url": "https://git-scm.com/docs/git-init · checkout"
+    },
+    {
+      "command": "checkout --",
+      "context": "checkout",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Discard changes in working directory",
+      "usage": "checkout --",
+      "options": [],
+      "officialExamples": [
+        "git checkout -- src/app.js"
+      ],
+      "url": "https://git-scm.com/docs/git-init · checkout -- <file>"
+    },
+    {
+      "command": "checkout -b",
+      "context": "checkout",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Create and switch to a new branch",
+      "usage": "checkout -b",
+      "options": [
+        "-b"
+      ],
+      "officialExamples": [
+        "git checkout -b feature/login"
+      ],
+      "url": "https://git-scm.com/docs/git-init · checkout -b"
+    },
+    {
+      "command": "cherry-pick",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Apply changes from existing commits",
+      "usage": "cherry-pick",
+      "options": [],
+      "officialExamples": [
+        "git cherry-pick abc1234"
+      ],
+      "url": "https://git-scm.com/docs/git-init · cherry-pick"
+    },
+    {
+      "command": "cherry-pick --abort",
+      "context": "cherry-pick",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Abort the cherry-pick and return to previous state",
+      "usage": "cherry-pick --abort",
+      "options": [
+        "--abort"
+      ],
+      "officialExamples": [
+        "git cherry-pick --abort"
+      ],
+      "url": "https://git-scm.com/docs/git-init · cherry-pick --abort"
+    },
+    {
+      "command": "cherry-pick --continue",
+      "context": "cherry-pick",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Continue cherry-pick after resolving conflicts",
+      "usage": "cherry-pick --continue",
+      "options": [
+        "--continue"
+      ],
+      "officialExamples": [
+        "git cherry-pick --continue"
+      ],
+      "url": "https://git-scm.com/docs/git-init · cherry-pick --continue"
+    },
+    {
+      "command": "clean",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Remove untracked files from the working tree",
+      "usage": "clean",
+      "options": [],
+      "officialExamples": [
+        "git clean"
+      ],
+      "url": "https://git-scm.com/docs/git-init · clean"
+    },
+    {
+      "command": "clean -n",
+      "context": "clean",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Dry run: show what would be removed",
+      "usage": "clean -n",
+      "options": [
+        "-n"
+      ],
+      "officialExamples": [
+        "git clean -n"
+      ],
+      "url": "https://git-scm.com/docs/git-init · clean -n"
+    },
+    {
+      "command": "clone",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Clone a repository into a new directory",
+      "usage": "clone",
+      "options": [],
+      "officialExamples": [
+        "git clone https://github.com/example/project.git"
+      ],
+      "url": "https://git-scm.com/docs/git-init · clone"
+    },
+    {
+      "command": "commit",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Record changes to the repository",
+      "usage": "commit",
+      "options": [],
+      "officialExamples": [
+        "git commit"
+      ],
+      "url": "https://git-scm.com/docs/git-init · commit"
+    },
+    {
+      "command": "commit --amend",
+      "context": "commit",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Amend the last commit",
+      "usage": "commit --amend",
+      "options": [
+        "--amend"
+      ],
+      "officialExamples": [
+        "git commit --amend"
+      ],
+      "url": "https://git-scm.com/docs/git-init · commit --amend"
+    },
+    {
+      "command": "commit --amend --no-edit",
+      "context": "commit",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Amend the last commit without changing its message",
+      "usage": "commit --amend --no-edit",
+      "options": [
+        "--amend",
+        "--no-edit"
+      ],
+      "officialExamples": [
+        "git commit --amend --no-edit"
+      ],
+      "url": "https://git-scm.com/docs/git-init · commit --amend --no-edit"
+    },
+    {
+      "command": "commit -m",
+      "context": "commit",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Commit with a message",
+      "usage": "commit -m",
+      "options": [
+        "-m"
+      ],
+      "officialExamples": [
+        "git commit -m \"fix: handle empty input\""
+      ],
+      "url": "https://git-scm.com/docs/git-init · commit -m"
+    },
+    {
+      "command": "config",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Get and set repository or global options",
+      "usage": "config",
+      "options": [],
+      "officialExamples": [
+        "git config user.name"
+      ],
+      "url": "https://git-scm.com/docs/git-init · config"
+    },
+    {
+      "command": "config --global",
+      "context": "config",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Set a global configuration value",
+      "usage": "config --global",
+      "options": [
+        "--global"
+      ],
+      "officialExamples": [
+        "git config --global user.name \"Alice\""
+      ],
+      "url": "https://git-scm.com/docs/git-init · config --global"
+    },
+    {
+      "command": "config --list",
+      "context": "config",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "List all current configuration",
+      "usage": "config --list",
+      "options": [
+        "--list"
+      ],
+      "officialExamples": [
+        "git config --list"
+      ],
+      "url": "https://git-scm.com/docs/git-init · config --list"
+    },
+    {
+      "command": "diff",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Show changes between commits, commit and working tree, etc.",
+      "usage": "diff",
+      "options": [],
+      "officialExamples": [
+        "git diff"
+      ],
+      "url": "https://git-scm.com/docs/git-init · diff"
+    },
+    {
+      "command": "diff --staged",
+      "context": "diff",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Show changes between the index and the last commit",
+      "usage": "diff --staged",
+      "options": [
+        "--staged"
+      ],
+      "officialExamples": [
+        "git diff --staged"
+      ],
+      "url": "https://git-scm.com/docs/git-init · diff --staged"
+    },
+    {
+      "command": "diff HEAD",
+      "context": "diff",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Show changes between the working tree and the last commit",
+      "usage": "diff HEAD",
+      "options": [],
+      "officialExamples": [
+        "git diff HEAD"
+      ],
+      "url": "https://git-scm.com/docs/git-init · diff HEAD"
+    },
+    {
+      "command": "fetch",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Download objects and refs from another repository",
+      "usage": "fetch",
+      "options": [],
+      "officialExamples": [
+        "git fetch"
+      ],
+      "url": "https://git-scm.com/docs/git-init · fetch"
+    },
+    {
+      "command": "fetch --all",
+      "context": "fetch",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Fetch all remotes",
+      "usage": "fetch --all",
+      "options": [
+        "--all"
+      ],
+      "officialExamples": [
+        "git fetch --all"
+      ],
+      "url": "https://git-scm.com/docs/git-init · fetch --all"
+    },
+    {
+      "command": "grep",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Print lines matching a pattern",
+      "usage": "grep",
+      "options": [],
+      "officialExamples": [
+        "git grep \"TODO\""
+      ],
+      "url": "https://git-scm.com/docs/git-init · grep"
+    },
+    {
+      "command": "init",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Initialize a new Git repository",
+      "usage": "init",
+      "options": [],
+      "officialExamples": [
+        "git init"
+      ],
+      "url": "https://git-scm.com/docs/git-init"
+    },
+    {
+      "command": "log",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Show commit logs",
+      "usage": "log",
+      "options": [],
+      "officialExamples": [
+        "git log"
+      ],
+      "url": "https://git-scm.com/docs/git-init · log"
+    },
+    {
+      "command": "log --author",
+      "context": "log",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Filter commits by author",
+      "usage": "log --author",
+      "options": [
+        "--author"
+      ],
+      "officialExamples": [
+        "git log --author=\"Alice\""
+      ],
+      "url": "https://git-scm.com/docs/git-init · log --author"
+    },
+    {
+      "command": "log --graph",
+      "context": "log",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Show commit history with an ASCII graph",
+      "usage": "log --graph",
+      "options": [
+        "--graph",
+        "--oneline",
+        "--all"
+      ],
+      "officialExamples": [
+        "git log --oneline --graph --all"
+      ],
+      "url": "https://git-scm.com/docs/git-init · log --graph"
+    },
+    {
+      "command": "log --oneline",
+      "context": "log",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Show each commit on a single line",
+      "usage": "log --oneline",
+      "options": [
+        "--oneline"
+      ],
+      "officialExamples": [
+        "git log --oneline"
+      ],
+      "url": "https://git-scm.com/docs/git-init · log --oneline"
+    },
+    {
+      "command": "log -p",
+      "context": "log",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Show patch output with commits",
+      "usage": "log -p",
+      "options": [
+        "-p"
+      ],
+      "officialExamples": [
+        "git log -p"
+      ],
+      "url": "https://git-scm.com/docs/git-init · log -p"
+    },
+    {
+      "command": "merge",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Join two or more development histories together",
+      "usage": "merge",
+      "options": [],
+      "officialExamples": [
+        "git merge feature/login"
+      ],
+      "url": "https://git-scm.com/docs/git-init · merge"
+    },
+    {
+      "command": "merge --abort",
+      "context": "merge",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Abort the current conflict resolution process",
+      "usage": "merge --abort",
+      "options": [
+        "--abort"
+      ],
+      "officialExamples": [
+        "git merge --abort"
+      ],
+      "url": "https://git-scm.com/docs/git-init · merge --abort"
+    },
+    {
+      "command": "merge --no-ff",
+      "context": "merge",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Create a merge commit even if a fast-forward is possible",
+      "usage": "merge --no-ff",
+      "options": [
+        "--no-ff"
+      ],
+      "officialExamples": [
+        "git merge --no-ff feature/search"
+      ],
+      "url": "https://git-scm.com/docs/git-init · merge --no-ff"
+    },
+    {
+      "command": "mv",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Move or rename a file, a directory, or a symlink",
+      "usage": "mv",
+      "options": [],
+      "officialExamples": [
+        "git mv old-name.js new-name.js"
+      ],
+      "url": "https://git-scm.com/docs/git-init · mv"
+    },
+    {
+      "command": "pull",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Fetch from and integrate with another repository",
+      "usage": "pull",
+      "options": [],
+      "officialExamples": [
+        "git pull"
+      ],
+      "url": "https://git-scm.com/docs/git-init · pull"
+    },
+    {
+      "command": "pull --rebase",
+      "context": "pull",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Fetch and rebase instead of merge",
+      "usage": "pull --rebase",
+      "options": [
+        "--rebase"
+      ],
+      "officialExamples": [
+        "git pull --rebase"
+      ],
+      "url": "https://git-scm.com/docs/git-init · pull --rebase"
+    },
+    {
+      "command": "push",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Update remote refs along with associated objects",
+      "usage": "push",
+      "options": [],
+      "officialExamples": [
+        "git push"
+      ],
+      "url": "https://git-scm.com/docs/git-init · push"
+    },
+    {
+      "command": "push --force",
+      "context": "push",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Force push, overwriting remote history",
+      "usage": "push --force",
+      "options": [
+        "--force"
+      ],
+      "officialExamples": [
+        "git push --force origin feature/search"
+      ],
+      "url": "https://git-scm.com/docs/git-init · push --force"
+    },
+    {
+      "command": "push --force-with-lease",
+      "context": "push",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Force push, but only if remote ref is as expected",
+      "usage": "push --force-with-lease",
+      "options": [
+        "--force-with-lease"
+      ],
+      "officialExamples": [
+        "git push --force-with-lease origin feature/search"
+      ],
+      "url": "https://git-scm.com/docs/git-init · push --force-with-lease"
+    },
+    {
+      "command": "push -u",
+      "context": "push",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Push and set upstream tracking",
+      "usage": "push -u",
+      "options": [
+        "-u"
+      ],
+      "officialExamples": [
+        "git push -u origin feature/login"
+      ],
+      "url": "https://git-scm.com/docs/git-init · push -u"
+    },
+    {
+      "command": "rebase",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Reapply commits on top of another base tip",
+      "usage": "rebase",
+      "options": [],
+      "officialExamples": [
+        "git rebase main"
+      ],
+      "url": "https://git-scm.com/docs/git-init · rebase"
+    },
+    {
+      "command": "rebase --abort",
+      "context": "rebase",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Abort the rebase and reset to the original branch",
+      "usage": "rebase --abort",
+      "options": [
+        "--abort"
+      ],
+      "officialExamples": [
+        "git rebase --abort"
+      ],
+      "url": "https://git-scm.com/docs/git-init · rebase --abort"
+    },
+    {
+      "command": "rebase --continue",
+      "context": "rebase",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Continue the rebase after resolving conflicts",
+      "usage": "rebase --continue",
+      "options": [
+        "--continue"
+      ],
+      "officialExamples": [
+        "git rebase --continue"
+      ],
+      "url": "https://git-scm.com/docs/git-init · rebase --continue"
+    },
+    {
+      "command": "rebase -i",
+      "context": "rebase",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Interactive rebase",
+      "usage": "rebase -i",
+      "options": [
+        "-i"
+      ],
+      "officialExamples": [
+        "git rebase -i HEAD~3"
+      ],
+      "url": "https://git-scm.com/docs/git-init · rebase -i"
+    },
+    {
+      "command": "reflog",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Show the reference logs of HEAD and branches",
+      "usage": "reflog",
+      "options": [],
+      "officialExamples": [
+        "git reflog"
+      ],
+      "url": "https://git-scm.com/docs/git-init · reflog"
+    },
+    {
+      "command": "reflog show",
+      "context": "reflog",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Show the reflog for a specific reference",
+      "usage": "reflog show",
+      "options": [],
+      "officialExamples": [
+        "git reflog show"
+      ],
+      "url": "https://git-scm.com/docs/git-init · reflog show"
+    },
+    {
+      "command": "remote",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Manage set of tracked repositories",
+      "usage": "remote",
+      "options": [],
+      "officialExamples": [
+        "git remote"
+      ],
+      "url": "https://git-scm.com/docs/git-init · remote"
+    },
+    {
+      "command": "remote -v",
+      "context": "remote",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Show remote URLs",
+      "usage": "remote -v",
+      "options": [
+        "-v"
+      ],
+      "officialExamples": [
+        "git remote -v"
+      ],
+      "url": "https://git-scm.com/docs/git-init · remote -v"
+    },
+    {
+      "command": "remote add",
+      "context": "remote",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Add a new remote",
+      "usage": "remote add",
+      "options": [],
+      "officialExamples": [
+        "git remote add origin https://github.com/example/project.git"
+      ],
+      "url": "https://git-scm.com/docs/git-init · remote add"
+    },
+    {
+      "command": "remote remove",
+      "context": "remote",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Remove a remote",
+      "usage": "remote remove",
+      "options": [],
+      "officialExamples": [
+        "git remote remove upstream"
+      ],
+      "url": "https://git-scm.com/docs/git-init · remote remove"
+    },
+    {
+      "command": "reset",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Reset current HEAD to the specified state",
+      "usage": "reset",
+      "options": [],
+      "officialExamples": [
+        "git reset"
+      ],
+      "url": "https://git-scm.com/docs/git-init · reset"
+    },
+    {
+      "command": "reset",
+      "context": "reset",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Unstage a file",
+      "usage": "reset",
+      "options": [],
+      "officialExamples": [
+        "git reset src/app.js"
+      ],
+      "url": "https://git-scm.com/docs/git-init · reset <file>"
+    },
+    {
+      "command": "reset --hard",
+      "context": "reset",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Reset index and working tree, discarding all changes",
+      "usage": "reset --hard",
+      "options": [
+        "--hard"
+      ],
+      "officialExamples": [
+        "git reset --hard HEAD"
+      ],
+      "url": "https://git-scm.com/docs/git-init · reset --hard"
+    },
+    {
+      "command": "reset --soft HEAD~1",
+      "context": "reset",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Undo the last commit, keeping changes staged",
+      "usage": "reset --soft HEAD~1",
+      "options": [
+        "--soft"
+      ],
+      "officialExamples": [
+        "git reset --soft HEAD~1"
+      ],
+      "url": "https://git-scm.com/docs/git-init · reset --soft HEAD~1"
+    },
+    {
+      "command": "restore",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Restore working tree files",
+      "usage": "restore",
+      "options": [],
+      "officialExamples": [
+        "git restore src/app.js"
+      ],
+      "url": "https://git-scm.com/docs/git-init · restore"
+    },
+    {
+      "command": "restore --source",
+      "context": "restore",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Restore files from a specific commit or source",
+      "usage": "restore --source",
+      "options": [
+        "--source"
+      ],
+      "officialExamples": [
+        "git restore --source"
+      ],
+      "url": "https://git-scm.com/docs/git-init · restore --source"
+    },
+    {
+      "command": "restore --staged",
+      "context": "restore",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Unstage files, keeping working tree changes",
+      "usage": "restore --staged",
+      "options": [
+        "--staged"
+      ],
+      "officialExamples": [
+        "git restore --staged src/app.js"
+      ],
+      "url": "https://git-scm.com/docs/git-init · restore --staged"
+    },
+    {
+      "command": "revert",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Revert some existing commits",
+      "usage": "revert",
+      "options": [],
+      "officialExamples": [
+        "git revert abc1234"
+      ],
+      "url": "https://git-scm.com/docs/git-init · revert"
+    },
+    {
+      "command": "revert --abort",
+      "context": "revert",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Cancel the revert and restore the original state",
+      "usage": "revert --abort",
+      "options": [
+        "--abort"
+      ],
+      "officialExamples": [
+        "git revert --abort"
+      ],
+      "url": "https://git-scm.com/docs/git-init · revert --abort"
+    },
+    {
+      "command": "revert --continue",
+      "context": "revert",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Continue the revert after resolving conflicts",
+      "usage": "revert --continue",
+      "options": [
+        "--continue"
+      ],
+      "officialExamples": [
+        "git revert --continue"
+      ],
+      "url": "https://git-scm.com/docs/git-init · revert --continue"
+    },
+    {
+      "command": "revert --no-commit",
+      "context": "revert",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Apply the revert to the working tree without committing",
+      "usage": "revert --no-commit",
+      "options": [
+        "--no-commit"
+      ],
+      "officialExamples": [
+        "git revert --no-commit abc1234"
+      ],
+      "url": "https://git-scm.com/docs/git-init · revert --no-commit"
+    },
+    {
+      "command": "revert --no-edit",
+      "context": "revert",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Revert without opening the commit message editor",
+      "usage": "revert --no-edit",
+      "options": [
+        "--no-edit"
+      ],
+      "officialExamples": [
+        "git revert --no-edit"
+      ],
+      "url": "https://git-scm.com/docs/git-init · revert --no-edit"
+    },
+    {
+      "command": "rm",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Remove files from the working tree and from the index",
+      "usage": "rm",
+      "options": [],
+      "officialExamples": [
+        "git rm obsolete.txt"
+      ],
+      "url": "https://git-scm.com/docs/git-init · rm"
+    },
+    {
+      "command": "rm --cached",
+      "context": "rm",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Remove files from the index only",
+      "usage": "rm --cached",
+      "options": [
+        "--cached"
+      ],
+      "officialExamples": [
+        "git rm --cached .env"
+      ],
+      "url": "https://git-scm.com/docs/git-init · rm --cached"
+    },
+    {
+      "command": "show",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Show various types of objects",
+      "usage": "show",
+      "options": [],
+      "officialExamples": [
+        "git show"
+      ],
+      "url": "https://git-scm.com/docs/git-init · show"
+    },
+    {
+      "command": "show",
+      "context": "show",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Show details of a specific commit",
+      "usage": "show",
+      "options": [],
+      "officialExamples": [
+        "git show abc1234"
+      ],
+      "url": "https://git-scm.com/docs/git-init · show <commit>"
+    },
+    {
+      "command": "stash",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Stash changes in a dirty working directory",
+      "usage": "stash",
+      "options": [
+        "-m"
+      ],
+      "officialExamples": [
+        "git stash",
+        "git stash push -m \"调试登录\""
+      ],
+      "url": "https://git-scm.com/docs/git-init · stash"
+    },
+    {
+      "command": "stash drop",
+      "context": "stash",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Remove a single stash entry",
+      "usage": "stash drop",
+      "options": [],
+      "officialExamples": [
+        "git stash drop stash@{0}"
+      ],
+      "url": "https://git-scm.com/docs/git-init · stash drop"
+    },
+    {
+      "command": "stash list",
+      "context": "stash",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "List all stashes",
+      "usage": "stash list",
+      "options": [],
+      "officialExamples": [
+        "git stash list"
+      ],
+      "url": "https://git-scm.com/docs/git-init · stash list"
+    },
+    {
+      "command": "stash pop",
+      "context": "stash",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Apply and remove the latest stash",
+      "usage": "stash pop",
+      "options": [],
+      "officialExamples": [
+        "git stash pop"
+      ],
+      "url": "https://git-scm.com/docs/git-init · stash pop"
+    },
+    {
+      "command": "status",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Show the working tree status",
+      "usage": "status",
+      "options": [],
+      "officialExamples": [
+        "git status"
+      ],
+      "url": "https://git-scm.com/docs/git-init · status"
+    },
+    {
+      "command": "status -b",
+      "context": "status",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Show branch information in short format",
+      "usage": "status -b",
+      "options": [
+        "-b"
+      ],
+      "officialExamples": [
+        "git status -b"
+      ],
+      "url": "https://git-scm.com/docs/git-init · status -b"
+    },
+    {
+      "command": "status -s",
+      "context": "status",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Show status in short format",
+      "usage": "status -s",
+      "options": [
+        "-s"
+      ],
+      "officialExamples": [
+        "git status -s"
+      ],
+      "url": "https://git-scm.com/docs/git-init · status -s"
+    },
+    {
+      "command": "switch",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Switch branches",
+      "usage": "switch",
+      "options": [],
+      "officialExamples": [
+        "git switch main"
+      ],
+      "url": "https://git-scm.com/docs/git-init · switch"
+    },
+    {
+      "command": "switch -",
+      "context": "switch",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Switch to the previous branch",
+      "usage": "switch -",
+      "options": [],
+      "officialExamples": [
+        "git switch -"
+      ],
+      "url": "https://git-scm.com/docs/git-init · switch -"
+    },
+    {
+      "command": "switch -c",
+      "context": "switch",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Create and switch to a new branch",
+      "usage": "switch -c",
+      "options": [
+        "-c"
+      ],
+      "officialExamples": [
+        "git switch -c feature/search"
+      ],
+      "url": "https://git-scm.com/docs/git-init · switch -c"
+    },
+    {
+      "command": "tag",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Create, list, delete or verify a tag object",
+      "usage": "tag",
+      "options": [],
+      "officialExamples": [
+        "git tag v1.0.0"
+      ],
+      "url": "https://git-scm.com/docs/git-init · tag"
+    },
+    {
+      "command": "tag -a",
+      "context": "tag",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Create an annotated tag",
+      "usage": "tag -a",
+      "options": [
+        "-a",
+        "-m"
+      ],
+      "officialExamples": [
+        "git tag -a v1.0.0 -m \"Release v1.0.0\""
+      ],
+      "url": "https://git-scm.com/docs/git-init · tag -a"
+    },
+    {
+      "command": "tag -d",
+      "context": "tag",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Delete a tag",
+      "usage": "tag -d",
+      "options": [
+        "-d"
+      ],
+      "officialExamples": [
+        "git tag -d v1.0.0"
+      ],
+      "url": "https://git-scm.com/docs/git-init · tag -d"
+    },
+    {
+      "command": "worktree",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Manage multiple working trees",
+      "usage": "worktree",
+      "options": [],
+      "officialExamples": [
+        "git worktree"
+      ],
+      "url": "https://git-scm.com/docs/git-init · worktree"
+    },
+    {
+      "command": "worktree add",
+      "context": "worktree",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Create a new working tree linked to the repository",
+      "usage": "worktree add",
+      "options": [],
+      "officialExamples": [
+        "git worktree add ../hotfix main"
+      ],
+      "url": "https://git-scm.com/docs/git-init · worktree add"
+    },
+    {
+      "command": "worktree list",
+      "context": "worktree",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "List the working trees attached to the repository",
+      "usage": "worktree list",
+      "options": [],
+      "officialExamples": [
+        "git worktree list"
+      ],
+      "url": "https://git-scm.com/docs/git-init · worktree list"
+    },
+    {
+      "command": "worktree remove",
+      "context": "worktree",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "git",
+      "platforms": [],
+      "constraints": [],
+      "description": "Remove a linked working tree",
+      "usage": "worktree remove",
+      "options": [],
+      "officialExamples": [
+        "git worktree remove"
+      ],
+      "url": "https://git-scm.com/docs/git-init · worktree remove"
+    }
+  ]
+}

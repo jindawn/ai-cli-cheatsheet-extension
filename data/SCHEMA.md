@@ -13,7 +13,8 @@
 
 **CLI / 终端类工具**（有统一的 `/help` 或 `--help` 入口，官方文档列出完整命令清单，比如 Claude Code、Codex CLI、OpenCode）：
 - 三个 cat 都可能用到：shortcut（按键）、slash（斜杠命令）、flag（启动参数）
-- 尽量收录完整，可以逐条核对官方文档
+- 官方列出的命令、子命令、斜杠命令和默认快捷键入口必须全部收录，并由官方入口清单逐条核对；官方别名必须可搜索
+- 每个命令收录常用关键选项，不要求把所有冷门选项拆成独立条目
 
 **IDE / 图形界面类工具**（比如 IntelliJ IDEA、VS Code、Sublime Text）：
 - 没有统一查询入口，快捷键因操作系统（Mac/Win/Linux）和键位方案（默认/Vim/Emacs）不同而不同
@@ -32,6 +33,7 @@
   id: "稳定条目ID",                         // 可选；自动流程会生成，更新时必须保留
   cat: "shortcut" | "slash" | "flag",  // 类型：快捷键 / 斜杠命令 / 启动参数
   cmd: "实际命令或快捷键文本",
+  aliases: ["官方短别名", "等价入口"],       // 可选；不得与其它 cmd/alias 重复，且必须来自官方清单
   en: "英文官方说明（简短）",
   zh: "中文说明（讲清楚用途，不是字面翻译）",
   context: "编辑器 / 集成终端",            // 可选；相同 cmd 在不同场景出现时必填
@@ -98,6 +100,15 @@ meta：
   contentCheckedAt: "2026-06-20",                      // 内容最后核验日期，仅用于追溯
   sourceCheckedAt: "2026-06-21",                       // 来源可访问性最后检查日期
   coverage: "完整命令列表 / macOS 默认键位常用子集",    // 数据覆盖范围
+  officialCoverage: {                                  // 官方入口完整性，与条目证据准确率分开
+    scope: "all-command-entrypoints",
+    status: "complete",                                // complete / unconfirmed
+    total: 440,
+    covered: 440,
+    checkedAt: "2026-07-13",
+    sourceIds: ["official-docs"],
+    inventoryHash: "sha256:..."                        // complete 时必填
+  },
   unverifiedPolicy: "未核验条目的保留原因与复核方式",    // 存在 unverified 时必填；禁止无解释保留
   sources: [{
     id: "official-docs",
@@ -169,11 +180,11 @@ meta：
 - examples 中面向用户展示的说明字段必须写中文；不要把官方英文说明原样放入 description、scenario、goal、expected、prerequisites、caveat 或 warning
 - Shell 聚合工具必须为所有条目提供 `shell` 结构化层次字段和 keywords；普通参数表条目可以省略 examples，但核心、高频、危险、易错或平台差异参数必须提供 examples、caveat 或 warning
 - examples 覆盖不足不会阻止写入，但会产生质量警告；结构错误仍会拒绝
-- **按信号更新**：动态 CLI 先比较本机版本，未安装时再查询已登记官方 Release；版本未变时不调用模型。普通更新复用已登记来源，只有来源明确返回 404/410 或用户主动深度核验时重新执行来源发现。
+- **先查官方入口、再看版本信号**：每次检查更新必须重新读取官方入口清单并与当前数据做集合差异。版本未变只能跳过语义重生成，不能跳过完整性检查；官方目录不可用时必须失败，不得显示“无需更新”。
 - **两阶段生成**：新增工具和深度核验先发现、筛选并解释来源，再依据发现结果生成逐条绑定证据的内容。
 - **来源优先级（新增与更新同样适用）**：本机帮助和第一方资料优先；官方缺失时才使用登记权威第三方。普通社区只能作为线索。永不编造。
 - **类官方仅联网时生成**：只有可联网的 `claude -p` 路径（`web-assisted`）能产出 quasi-official；有 API token 的离线路径（`model-knowledge`）由 `host.py` 的 `_demote_quasi_official` 强制把 quasi-official 降级（meta→community、example→ai-derived 并去 URL），避免编造未经核实的白名单 URL。
-- **联网核对（`prefer_web`）**：版本变化后的更新和强制深度核验固定使用联网 `claude -p`，保证能够核对官方资料；版本未变时不启动模型。管理页开关只控制新增工具是否强制联网。
+- **联网核对（`prefer_web`）**：检查更新固定联网读取官方目录；只有发现缺项、版本变化或用户要求重新核验内容时才启动模型。管理页开关只控制新增工具是否强制联网。
 - prompt 的白名单域名由 `host.py` 的 `QUASI_OFFICIAL_DOMAINS` 常量动态注入，不要在 prompt 里硬编码域名列表。
 - 官方逐字原例使用 `authorship=official`；人工编写场景使用 `editorial`；模板派生长尾使用 `generated`。
 - 第一方或权威社区案例证据必须绑定 `sourceIds`；只有官方逐字原例必须同时填写具体 `sourceUrl`，编辑场景不得伪装成官方原例。

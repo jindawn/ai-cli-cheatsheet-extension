@@ -37,7 +37,17 @@ window.CHEATSHEET_DATA["cursor"] = {
           "option-semantics"
         ]
       }
-    ]
+    ],
+    "officialCoverage": {
+      "scope": "all-command-entrypoints",
+      "status": "unconfirmed",
+      "total": 0,
+      "covered": 0,
+      "checkedAt": "2026-07-02",
+      "sourceIds": [
+        "cursor-shortcuts"
+      ]
+    }
   },
   "items": [
     {

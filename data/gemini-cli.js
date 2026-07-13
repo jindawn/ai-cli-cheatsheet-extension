@@ -90,7 +90,18 @@ window.CHEATSHEET_DATA["gemini-cli"] = {
           "examples"
         ]
       }
-    ]
+    ],
+    "officialCoverage": {
+      "scope": "all-command-entrypoints",
+      "status": "unconfirmed",
+      "total": 0,
+      "covered": 0,
+      "checkedAt": "2026-06-21",
+      "sourceIds": [
+        "gemini-commands",
+        "gemini-keyboard"
+      ]
+    }
   },
   "items": [
     {

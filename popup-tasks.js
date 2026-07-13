@@ -6,11 +6,22 @@
   const RELOAD_DELAY_MS = 900;
 
   function taskBaseMsg(mode, payload = {}) {
-    if (mode === "preview_update") return "正在检查实际版本变化；如需生成预览会继续核对资料，关闭面板不会中断";
+    if (mode === "preview_update") return "正在检查环境并读取官方目录，随后比较完整性；关闭面板不会中断";
     if (mode === "add_tool" && payload.tool === "shell") return "正在分批生成 Shell 聚合数据，关闭面板不会中断";
     if (mode === "add_tool") return "正在整理并生成工具数据，关闭面板不会中断";
     if (mode === "suggest_tools") return "正在让 AI 推荐一批工具，关闭面板不会中断";
     return "正在执行，请稍候";
+  }
+
+  function diagnosticText(response) {
+    const diagnostic = response?.diagnostic;
+    if (!diagnostic) return response?.error || "未知错误";
+    return [
+      response.error || diagnostic.reason || "检查失败",
+      diagnostic.stage ? `失败阶段：${diagnostic.stage}` : "",
+      ...(diagnostic.completedChecks || []).map((item) => `已完成：${item}`),
+      ...(diagnostic.actions || []).map((item) => `建议：${item}`),
+    ].filter(Boolean).join("\n");
   }
 
   function createButtonDisabler(documentLike, disableSelector, restoreSelector = disableSelector) {
@@ -72,7 +83,7 @@
             deps.setStatus("已取消任务。");
             return;
           }
-          deps.setStatus(`❌ ${response?.error || "未知错误"}`, "err");
+          deps.setStatus(`❌ ${diagnosticText(response)}`, "err");
           return;
         }
         if (mode === "preview_update" && response.pendingToken) {
@@ -110,7 +121,7 @@
     return { startTaskTimer, stopTaskTimer, runTask, finishTask };
   }
 
-  const api = { taskBaseMsg, createButtonDisabler, createTaskController };
+  const api = { taskBaseMsg, diagnosticText, createButtonDisabler, createTaskController };
 
   globalScope.CHEATSHEET_POPUP_TASKS = api;
   if (typeof module !== "undefined" && module.exports) module.exports = api;

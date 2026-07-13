@@ -439,7 +439,17 @@ window.CHEATSHEET_DATA["linux"] = {
           "examples"
         ]
       }
-    ]
+    ],
+    "officialCoverage": {
+      "scope": "all-command-entrypoints",
+      "status": "unconfirmed",
+      "total": 0,
+      "covered": 0,
+      "checkedAt": "2026-07-02",
+      "sourceIds": [
+        "gnu-manuals"
+      ]
+    }
   },
   "items": [
     {

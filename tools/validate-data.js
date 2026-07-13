@@ -2,6 +2,7 @@
 "use strict";
 
 const fs = require("fs");
+const crypto = require("crypto");
 const path = require("path");
 const vm = require("vm");
 
@@ -141,6 +142,14 @@ for (const id of files) {
 }
 
 const data = context.window.CHEATSHEET_DATA || {};
+const inventoryDir = path.join(root, "shared", "official-inventories");
+const officialInventories = new Map();
+if (fs.existsSync(inventoryDir)) {
+  for (const name of fs.readdirSync(inventoryDir).filter((value) => value.endsWith(".json"))) {
+    const inventory = JSON.parse(fs.readFileSync(path.join(inventoryDir, name), "utf8"));
+    officialInventories.set(name.slice(0, -5), inventory);
+  }
+}
 const enrichmentFile = path.join(root, "usage-examples.js");
 const enrichmentDir = path.join(root, "enrichments");
 vm.runInContext(fs.readFileSync(path.join(root, "product-core.js"), "utf8"), context, { filename: "product-core.js" });
@@ -207,6 +216,25 @@ for (const id of files) {
   if (tool.meta.verificationStatus !== undefined
     && !["web-assisted", "model-knowledge", "manual"].includes(tool.meta.verificationStatus)) {
     fail(`${id}: invalid verificationStatus`);
+  }
+  const officialCoverage = tool.meta.officialCoverage;
+  if (officialCoverage !== undefined) {
+    if (!officialCoverage || typeof officialCoverage !== "object"
+      || officialCoverage.scope !== rules.officialCoverageScope
+      || !rules.officialCoverageStatuses.includes(officialCoverage.status)
+      || !Number.isInteger(officialCoverage.total) || officialCoverage.total < 0
+      || !Number.isInteger(officialCoverage.covered) || officialCoverage.covered < 0
+      || officialCoverage.covered > officialCoverage.total
+      || !Array.isArray(officialCoverage.sourceIds) || !officialCoverage.sourceIds.length) {
+      fail(`${id}: invalid officialCoverage`);
+    }
+    if (officialCoverage.status === "complete") {
+      if (officialCoverage.covered !== officialCoverage.total
+        || !/^\d{4}-\d{2}-\d{2}$/.test(officialCoverage.checkedAt || "")
+        || !/^sha256:[a-f0-9]{64}$/.test(officialCoverage.inventoryHash || "")) {
+        fail(`${id}: complete officialCoverage is inconsistent`);
+      }
+    }
   }
   if (tool.meta.builtIn === true && tool.meta.verificationStatus !== "manual") {
     fail(`${id}: built-in dataset must declare manual maintenance`);
@@ -279,6 +307,12 @@ for (const id of files) {
     if (item.context !== undefined && (typeof item.context !== "string" || !item.context.trim())) {
       fail(`${id}[${index}]: invalid context`);
     }
+    if (item.aliases !== undefined && (
+      !Array.isArray(item.aliases) || !item.aliases.length
+      || item.aliases.some((alias) => typeof alias !== "string" || !alias.trim())
+      || new Set(item.aliases.map((alias) => alias.toLocaleLowerCase())).size !== item.aliases.length
+      || item.aliases.some((alias) => alias.toLocaleLowerCase() === item.cmd.toLocaleLowerCase())
+    )) fail(`${id}[${index}]: invalid aliases`);
     if (item.shell !== undefined) {
       if (id !== "shell") fail(`${id}[${index}]: shell metadata is only allowed for shell`);
       if (!item.shell || typeof item.shell !== "object" || Array.isArray(item.shell)) {
@@ -468,6 +502,33 @@ for (const id of files) {
       itemIds.add(item.id);
     }
   });
+
+  if (officialCoverage?.status === "complete") {
+    const inventory = officialInventories.get(id);
+    if (!inventory || !Array.isArray(inventory.entries) || !inventory.entries.length) {
+      fail(`${id}: complete coverage requires shared/official-inventories/${id}.json`);
+    }
+    const serialized = JSON.stringify(inventory.entries);
+    const inventoryHash = `sha256:${crypto.createHash("sha256").update(serialized).digest("hex")}`;
+    if (inventoryHash !== officialCoverage.inventoryHash) fail(`${id}: official inventory hash mismatch`);
+    const available = new Map();
+    for (const item of tool.items) {
+      for (const command of [item.cmd, ...(item.aliases || [])]) {
+        const normalized = command.trim().toLocaleLowerCase();
+        if (available.has(normalized)) fail(`${id}: duplicate official command or alias ${command}`);
+        available.set(normalized, item);
+      }
+    }
+    const missing = inventory.entries.filter((entry) => !available.has(entry.command.toLocaleLowerCase()));
+    if (missing.length) fail(`${id}: missing official entries: ${missing.slice(0, 12).map((entry) => entry.command).join(", ")}`);
+    const allowedAliases = new Set(inventory.entries.flatMap((entry) => entry.aliases || []).map((alias) => alias.toLocaleLowerCase()));
+    const unknownAliases = tool.items.flatMap((item) => item.aliases || [])
+      .filter((alias) => !allowedAliases.has(alias.toLocaleLowerCase()));
+    if (unknownAliases.length) fail(`${id}: aliases not present in official inventory: ${unknownAliases.slice(0, 12).join(", ")}`);
+    const missingAliases = [...allowedAliases].filter((alias) => !available.has(alias));
+    if (missingAliases.length) fail(`${id}: official aliases are not searchable: ${missingAliases.slice(0, 12).join(", ")}`);
+    if (inventory.entries.length !== officialCoverage.total) fail(`${id}: officialCoverage total does not match inventory`);
+  }
   const unusedSources = [...sourceIds].filter((sourceId) => !usedSourceIds.has(sourceId));
   if (unusedSources.length) fail(`${id}: unused evidence sources: ${unusedSources.join(", ")}`);
 }

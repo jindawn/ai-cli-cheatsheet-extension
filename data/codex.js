@@ -91,7 +91,19 @@ window.CHEATSHEET_DATA["codex"] = {
           "examples"
         ]
       }
-    ]
+    ],
+    "officialCoverage": {
+      "scope": "all-command-entrypoints",
+      "status": "unconfirmed",
+      "total": 0,
+      "covered": 0,
+      "checkedAt": "2026-07-12",
+      "sourceIds": [
+        "codex-slash-commands",
+        "codex-cli-reference",
+        "codex-features"
+      ]
+    }
   },
   "items": [
     {

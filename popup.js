@@ -652,16 +652,6 @@ function renderManage() {
       prefer_web: true,
     });
   }));
-  tools.querySelectorAll("[data-deep-update]").forEach((button) => button.addEventListener("click", () => {
-    const toolId = button.dataset.deepUpdate;
-    if (!confirm("强制深度检查会重新发现来源并调用模型，可能需要数分钟。继续吗？")) return;
-    taskController.runTask("preview_update", {
-      tool: toolId,
-      display_name: getAllData()[toolId].meta.name,
-      prefer_web: true,
-      deep_check: true,
-    });
-  }));
   tools.querySelectorAll("[data-remove]").forEach((button) => button.addEventListener("click", () => {
     const toolId = button.dataset.remove;
     if (confirm(`确定删除 ${getAllData()[toolId].meta.name}？此操作会删除本地数据文件。`)) {

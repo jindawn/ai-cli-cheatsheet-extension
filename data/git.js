@@ -617,7 +617,48 @@ window.CHEATSHEET_DATA["git"] = {
           "examples"
         ]
       }
-    ]
+    ],
+    "officialCoverage": {
+      "scope": "all-command-entrypoints",
+      "status": "unconfirmed",
+      "total": 0,
+      "covered": 0,
+      "checkedAt": "2026-06-21",
+      "sourceIds": [
+        "git-init",
+        "git-clone",
+        "git-add",
+        "git-commit",
+        "git-status",
+        "git-diff",
+        "git-reset",
+        "git-revert",
+        "git-restore",
+        "git-reflog",
+        "git-worktree",
+        "git-rm",
+        "git-mv",
+        "git-branch",
+        "git-checkout",
+        "git-switch",
+        "git-merge",
+        "git-rebase",
+        "git-cherry-pick",
+        "git-stash",
+        "git-remote",
+        "git-fetch",
+        "git-pull",
+        "git-push",
+        "git-log",
+        "git-show",
+        "git-tag",
+        "git-blame",
+        "git-config",
+        "git-bisect",
+        "git-clean",
+        "git-grep"
+      ]
+    }
   },
   "items": [
     {

@@ -2,6 +2,7 @@
 """Native Messaging host for safe, schema-validated cheatsheet updates."""
 
 import atexit
+import copy
 import datetime
 import glob
 import hashlib
@@ -26,6 +27,11 @@ import urllib.request
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from protocol import read_native_message, send_native_message  # noqa: E402
 from catalog import catalog_entry, render_data_index  # noqa: E402
+from official_inventory import (  # noqa: E402
+    OfficialInventoryError,
+    fetch_official_inventory,
+    inventory_hash,
+)
 
 # Track the active claude subprocess so it can be cleaned up if host.py is killed.
 _active_proc = None
@@ -166,6 +172,8 @@ ADAPTATIONS = set(VALIDATION_RULES["adaptations"])
 EVIDENCE_STATUSES = set(VALIDATION_RULES["evidenceStatuses"])
 EVIDENCE_CLAIMS = set(VALIDATION_RULES["evidenceClaims"])
 UPDATE_POLICIES = set(VALIDATION_RULES["updatePolicies"])
+OFFICIAL_COVERAGE_STATUSES = set(VALIDATION_RULES["officialCoverageStatuses"])
+OFFICIAL_COVERAGE_SCOPE = VALIDATION_RULES["officialCoverageScope"]
 
 # Only tools with a useful local version command belong here. Stable keymaps and
 # long-lived command references intentionally have no executable probe.
@@ -826,6 +834,50 @@ def _validate_meta(meta, expected_tool_id, require_structured_source):
         if verification_status not in {"web-assisted", "model-knowledge", "manual"}:
             raise ValidationError("meta.verificationStatus 非法")
         clean_meta["verificationStatus"] = verification_status
+    official_coverage = meta.get("officialCoverage")
+    if official_coverage is not None:
+        if not isinstance(official_coverage, dict):
+            raise ValidationError("meta.officialCoverage 必须是对象")
+        status = official_coverage.get("status")
+        if status not in OFFICIAL_COVERAGE_STATUSES:
+            raise ValidationError("meta.officialCoverage.status 非法")
+        scope = official_coverage.get("scope")
+        if scope != OFFICIAL_COVERAGE_SCOPE:
+            raise ValidationError("meta.officialCoverage.scope 非法")
+        checked_at = checked_text(
+            official_coverage.get("checkedAt"), "meta.officialCoverage.checkedAt",
+            required=status == "complete",
+        )
+        if checked_at and not re.fullmatch(r"\d{4}-\d{2}-\d{2}", checked_at):
+            raise ValidationError("meta.officialCoverage.checkedAt 必须是 YYYY-MM-DD")
+        total = official_coverage.get("total")
+        covered = official_coverage.get("covered")
+        if not all(isinstance(value, int) and not isinstance(value, bool) and value >= 0
+                   for value in (total, covered)):
+            raise ValidationError("meta.officialCoverage total/covered 必须是非负整数")
+        if covered > total or (status == "complete" and covered != total):
+            raise ValidationError("meta.officialCoverage 覆盖计数不一致")
+        source_ids = official_coverage.get("sourceIds")
+        if not isinstance(source_ids, list) or not source_ids or any(
+            not isinstance(source_id, str) or not source_id for source_id in source_ids
+        ):
+            raise ValidationError("meta.officialCoverage.sourceIds 必须是非空字符串数组")
+        clean_meta["officialCoverage"] = {
+            "scope": scope,
+            "status": status,
+            "total": total,
+            "covered": covered,
+            "checkedAt": checked_at or "",
+            "sourceIds": list(dict.fromkeys(source_ids)),
+        }
+        inventory_hash = checked_text(
+            official_coverage.get("inventoryHash"),
+            "meta.officialCoverage.inventoryHash", required=False,
+        )
+        if inventory_hash:
+            if not re.fullmatch(r"sha256:[a-f0-9]{64}", inventory_hash):
+                raise ValidationError("meta.officialCoverage.inventoryHash 非法")
+            clean_meta["officialCoverage"]["inventoryHash"] = inventory_hash
     update_policy = meta.get("updatePolicy")
     if update_policy is not None:
         if update_policy not in UPDATE_POLICIES:
@@ -1290,6 +1342,9 @@ def validate_dataset(payload, expected_tool_id, require_structured_source=True):
 
     clean_meta, raw_sources, updated_at = _validate_meta(meta, expected_tool_id, require_structured_source)
     clean_sources, source_ids, unregistered_official_repositories = _validate_sources(raw_sources, expected_tool_id, require_structured_source)
+    coverage_source_ids = set((clean_meta.get("officialCoverage") or {}).get("sourceIds", []))
+    if coverage_source_ids - source_ids:
+        raise ValidationError("meta.officialCoverage.sourceIds 必须引用 meta.sources")
     if clean_sources:
         clean_meta["sources"] = clean_sources
     source_by_id = {source["id"]: source for source in clean_sources}
@@ -1341,6 +1396,18 @@ def validate_dataset(payload, expected_tool_id, require_structured_source=True):
         context = checked_text(item.get("context"), f"items[{index}].context", required=False)
         if context:
             clean_item["context"] = context
+        aliases = item.get("aliases")
+        if aliases is not None:
+            if not isinstance(aliases, list) or not aliases:
+                raise ValidationError(f"items[{index}].aliases 必须是非空数组")
+            clean_aliases = []
+            for alias_index, alias in enumerate(aliases):
+                alias = checked_text(alias, f"items[{index}].aliases[{alias_index}]")
+                if alias.casefold() == clean_item["cmd"].casefold():
+                    raise ValidationError(f"items[{index}].aliases 不得重复 cmd")
+                if alias.casefold() not in {value.casefold() for value in clean_aliases}:
+                    clean_aliases.append(alias)
+            clean_item["aliases"] = clean_aliases
         shell_meta = validate_shell_meta(item, expected_tool_id, f"items[{index}]")
         if shell_meta:
             clean_item["shell"] = shell_meta
@@ -1470,6 +1537,14 @@ def validate_dataset(payload, expected_tool_id, require_structured_source=True):
 
     if not clean_items:
         raise ValidationError("items 不能为空")
+    command_names = {normalized_command(item["cmd"]) for item in clean_items}
+    alias_names = set()
+    for item in clean_items:
+        for alias in item.get("aliases", []):
+            normalized = normalized_command(alias)
+            if normalized in command_names or normalized in alias_names:
+                raise ValidationError(f"官方别名重复或与命令冲突：{alias}")
+            alias_names.add(normalized)
     summary = checked_text(payload.get("summary", ""), "summary", required=False) or ""
     if dropped > 0:
         summary = (summary + f"（已自动去重 {dropped} 条）").strip()
@@ -1675,11 +1750,17 @@ def build_prompt(
     )
     update_signal_section = ""
     if update_context:
+        missing_commands = update_context.get("officialMissing") or []
+        missing_section = (
+            "\n- 官方入口总数：" + str(update_context.get("officialTotal"))
+            + "\n- 当前缺少的官方入口：" + ("、".join(missing_commands) if missing_commands else "无")
+        )
         update_signal_section = (
             "\n本次更新由实际变化信号触发：\n"
             f"- 更新策略：{update_context.get('policy')}\n"
             f"- 信号类型：{update_context.get('signalType')}\n"
             f"- 当前版本或发布标识：{update_context.get('marker')}\n"
+            f"{missing_section}\n"
             "只修改被该版本实际影响的命令、参数、快捷键和证据。"
             "若发布内容未改变命令界面，保持 items 不变，仅更新核验版本元数据；"
             "不要因页面排版、发布日期或措辞变化重写条目。\n"
@@ -1765,6 +1846,7 @@ JSON 格式：
       "id": "可选；已有条目应保留原 ID",
       "cat": "shortcut|slash|flag",
       "cmd": "实际命令或快捷键",
+      "aliases": ["可选；官方短别名或等价入口"],
       "en": "简短英文说明",
       "zh": "清晰中文说明",
       "context": "可选；相同 cmd 在不同场景出现时必须填写",
@@ -1813,7 +1895,7 @@ JSON 格式：
 
 要求：
 1. {source_policy}
-2. 按功能区覆盖核心能力，不设凑数目标。CLI 应覆盖交互命令、重要子命令及关键选项；IDE 只收录默认快捷键的实用子集，并明确平台和限制。
+2. CLI、终端和交互式工具必须覆盖官方清单中的全部命令入口、子命令、斜杠命令及默认快捷键；官方别名写入 aliases。不得以“核心能力”或“常用子集”为由漏掉官方入口。每个命令只需精选常用关键选项。IDE 只核对官方默认键位，不包含用户自定义或第三方插件键位。
 2a. 若目标工具是 Shell 聚合工具，必须为每个 item 填写 shell.layer、shell.family、shell.portability、shell.topic；Shell 按手册级参数表方向覆盖主要命令族和常见参数，但不要复刻极冷门历史参数。
 3. flag 类条目的 cmd 写成「子命令 + 选项」的完整形式（例如 git commit -m、git log --oneline），并用 context 标注所属子命令。
 4. 同一 cat、cmd、context 组合不得重复。
@@ -2659,6 +2741,148 @@ def file_sha256(path):
     return digest.hexdigest()
 
 
+def official_inventory_path(tool_id):
+    tool_id = validate_tool_id(tool_id)
+    directory = os.path.realpath(os.path.join(PROJECT_DIR, "shared", "official-inventories"))
+    path = os.path.realpath(os.path.join(directory, f"{tool_id}.json"))
+    if os.path.dirname(path) != directory:
+        raise ValidationError("官方清单路径非法")
+    return path
+
+
+def normalized_command(value):
+    return re.sub(r"\s+", " ", str(value or "")).strip().casefold()
+
+
+def dataset_commands(dataset):
+    commands = set()
+    for item in dataset.get("items", []):
+        commands.add(normalized_command(item.get("cmd")))
+        commands.update(normalized_command(alias) for alias in item.get("aliases", []))
+    return commands
+
+
+def official_inventory_missing(dataset, inventory):
+    available = dataset_commands(dataset)
+    return [
+        entry for entry in inventory.get("entries", [])
+        if normalized_command(entry.get("command")) not in available
+    ]
+
+
+def official_coverage(inventory, covered):
+    total = len(inventory["entries"])
+    return {
+        "scope": OFFICIAL_COVERAGE_SCOPE,
+        "status": "complete" if covered == total else "unconfirmed",
+        "total": total,
+        "covered": covered,
+        "checkedAt": inventory["checkedAt"],
+        "sourceIds": inventory["sourceIds"],
+        "inventoryHash": inventory_hash(inventory["entries"]),
+    }
+
+
+def fetch_generic_official_inventory(tool_id, display_name, dataset):
+    sources = [
+        source for source in dataset.get("meta", {}).get("sources", [])
+        if source.get("evidenceTier") == "first-party"
+        and source.get("kind") in {"official-doc", "local-help", "official-repository"}
+    ]
+    if not sources:
+        raise OfficialInventoryError(
+            "official_source_missing",
+            f"{display_name} 没有可用于完整性核验的第一方来源",
+            ["登记工具维护方的官方文档或官方帮助来源", "不要把社区资料标为完整官方清单"],
+        )
+    source_text = json.dumps([
+        {key: source.get(key) for key in ("id", "title", "url", "resolvedUrl", "kind", "version") if source.get(key)}
+        for source in sources
+    ], ensure_ascii=False, indent=2)
+    prompt = f"""
+你正在为 {display_name}（工具 ID：{tool_id}）建立可计算的官方入口清单。
+必须实际读取下列第一方来源，只返回 JSON，不要 Markdown：
+{source_text}
+
+完整性口径：
+- CLI/终端：官方列出的全部命令、子命令、交互命令、斜杠命令和默认快捷键入口。
+- IDE/编辑器：官方默认键位表中的入口；排除第三方插件、自定义键位和未公开内部命令。
+- 实验性、平台专属、版本专属和官方可选组件仍收录，并在 description 说明限制。
+- aliases 只写官方明确声明的短别名或等价入口，不得推测。
+- url 必须是能够定位该入口的第一方 HTTPS 页面；没有精确页面时使用对应官方章节。
+
+JSON 格式：
+{{
+  "sourceIds": ["上方来源 ID"],
+  "entries": [
+    {{"command":"规范入口", "aliases":["官方别名"], "description":"官方英文简述", "usage":"官方用法或入口", "url":"https://第一方精确地址"}}
+  ]
+}}
+""".strip()
+    raw = _run_generation_prompt(prompt, use_api=False, prefer_web=True)
+    if not isinstance(raw, dict) or not isinstance(raw.get("entries"), list) or not raw["entries"]:
+        raise OfficialInventoryError(
+            "official_inventory_invalid", "官方入口发现没有返回非空 entries",
+            ["重试官方检查", "若反复出现，请检查模型输出和官方页面结构"],
+        )
+    allowed_source_ids = {source["id"] for source in sources}
+    allowed_url_prefixes = [
+        prefix
+        for source in sources
+        for prefix in SOURCE_REGISTRY_BY_ID.get(source.get("registryId") or source["id"], {}).get("urlPrefixes", [])
+    ]
+    source_ids = raw.get("sourceIds")
+    if not isinstance(source_ids, list) or not source_ids or set(source_ids) - allowed_source_ids:
+        raise OfficialInventoryError(
+            "official_inventory_invalid", "官方入口清单引用了未登记来源",
+            ["仅使用已登记的第一方来源重新生成清单"],
+        )
+    clean_entries = []
+    seen_commands = set()
+    for index, entry in enumerate(raw["entries"]):
+        if not isinstance(entry, dict):
+            raise OfficialInventoryError("official_inventory_invalid", f"官方入口 {index} 不是对象", ["重新检查更新"])
+        command = checked_text(entry.get("command"), f"officialInventory.entries[{index}].command")
+        normalized = normalized_command(command)
+        if normalized in seen_commands:
+            raise OfficialInventoryError("official_inventory_invalid", f"官方入口重复：{command}", ["重新检查更新"])
+        seen_commands.add(normalized)
+        aliases = entry.get("aliases") or []
+        if not isinstance(aliases, list) or any(not isinstance(alias, str) or not alias.strip() for alias in aliases):
+            raise OfficialInventoryError("official_inventory_invalid", f"{command} 的 aliases 非法", ["重新检查更新"])
+        url = checked_text(entry.get("url"), f"officialInventory.entries[{index}].url")
+        if not re.fullmatch(r"https://[^\s]+", url):
+            raise OfficialInventoryError("official_inventory_invalid", f"{command} 缺少第一方 HTTPS 定位", ["重新检查更新"])
+        if not any(url.startswith(prefix) for prefix in allowed_url_prefixes):
+            raise OfficialInventoryError(
+                "official_inventory_untrusted_url", f"{command} 的定位不属于已登记第一方来源：{url}",
+                ["更新来源登记或仅使用已登记的第一方页面"],
+            )
+        clean_entries.append({
+            "command": command,
+            "aliases": list(dict.fromkeys(alias.strip() for alias in aliases if alias.strip() != command)),
+            "description": checked_text(entry.get("description"), f"officialInventory.entries[{index}].description"),
+            "usage": checked_text(entry.get("usage") or command, f"officialInventory.entries[{index}].usage"),
+            "url": url,
+        })
+    return {
+        "toolId": tool_id,
+        "scope": OFFICIAL_COVERAGE_SCOPE,
+        "checkedAt": datetime.date.today().isoformat(),
+        "sourceIds": list(dict.fromkeys(source_ids)),
+        "entries": sorted(clean_entries, key=lambda entry: normalized_command(entry["command"])),
+    }
+
+
+def refresh_official_inventory(tool_id, display_name, dataset):
+    try:
+        return fetch_official_inventory(tool_id)
+    except OfficialInventoryError as exc:
+        if exc.code != "official_adapter_missing":
+            raise
+        return fetch_generic_official_inventory(tool_id, display_name, dataset)
+
+
 def pending_path(token):
     if not isinstance(token, str) or not re.fullmatch(r"[a-f0-9]{32}", token):
         raise ValidationError("待处理更新 token 无效")
@@ -2715,7 +2939,7 @@ def item_signature(item):
         key: item.get(key)
         for key in (
             "cat", "cmd", "en", "zh", "context", "keywords", "examples",
-            "evidenceRefs", "evidenceStatus", "platforms", "platformCmds",
+            "aliases", "evidenceRefs", "evidenceStatus", "platforms", "platformCmds",
         )
         if key in item
     }
@@ -2980,46 +3204,64 @@ def add_tool(tool_id, display_name, prefer_web=False):
 def preview_update(tool_id, display_name, prefer_web=False, deep_check=False):
     old_dataset = load_existing_dataset(tool_id)
     policy = old_dataset.get("meta", {}).get("updatePolicy")
+    inventory = refresh_official_inventory(tool_id, display_name, old_dataset)
+    if not isinstance(inventory.get("entries"), list) or not inventory["entries"]:
+        raise OfficialInventoryError(
+            "official_inventory_empty", "官方入口清单为空，不能判断数据是否最新",
+            ["检查官方目录解析器", "不要应用本次结果"],
+        )
+    missing_before = official_inventory_missing(old_dataset, inventory)
     signal = None
-    if not deep_check and policy == "manual-only":
-        return {
-            "ok": True,
-            "changed": False,
-            "output": "该工具使用稳定资料策略，不按时间检查。需要时可使用“强制深度检查”。",
-        }
     if not deep_check and policy in {"version-driven", "release-driven"}:
         signal = detect_update_signal(tool_id, old_dataset)
-        if not signal:
-            return {
-                "ok": True,
-                "changed": False,
-                "output": "未找到可用的本机版本或官方发布信号；未调用模型。需要时可使用“强制深度检查”。",
-            }
-        if normalize_version_marker(old_dataset["meta"].get("verifiedVersion")) == signal["marker"]:
-            return {
-                "ok": True,
-                "changed": False,
-                "output": f"当前为 {signal['marker']}，与已核验版本一致，无需更新。",
-                "updateSignal": signal,
-            }
-    web_for_update = True if (signal or deep_check) else prefer_web
-    if is_shell_add_request(tool_id, display_name):
+    version_changed = bool(
+        signal and normalize_version_marker(old_dataset["meta"].get("verifiedVersion")) != signal["marker"]
+    )
+    needs_content_update = bool(missing_before or version_changed or deep_check)
+    if not needs_content_update:
+        new_dataset = copy.deepcopy(old_dataset)
+    elif is_shell_add_request(tool_id, display_name):
         # Shell is a batch-aggregated tool; regenerate via the same pipeline as
         # add_tool so a (deep-check) update keeps the interpreter-only scope and
         # batch structure instead of the generic single-prompt path.
-        new_dataset = run_shell_aggregate_query(web_for_update)
+        new_dataset = run_shell_aggregate_query(True)
     else:
+        update_context = dict(signal or {"policy": policy or "manual-only", "signalType": "official-inventory", "marker": inventory["checkedAt"]})
+        update_context["officialMissing"] = [entry["command"] for entry in missing_before]
+        update_context["officialTotal"] = len(inventory["entries"])
         new_dataset = run_claude_query(
             tool_id,
             display_name,
             "update",
-            web_for_update,
-            update_context=signal,
-            deep_check=deep_check,
+            True,
+            update_context=update_context,
+            deep_check=True,
         )
     new_dataset["meta"]["builtIn"] = old_dataset["meta"].get("builtIn", False)
     if policy:
         new_dataset["meta"]["updatePolicy"] = policy
+    missing_after = official_inventory_missing(new_dataset, inventory)
+    if missing_after:
+        raise OfficialInventoryError(
+            "generated_inventory_incomplete",
+            f"生成结果仍缺少 {len(missing_after)} 个官方入口："
+            + "、".join(entry["command"] for entry in missing_after[:12]),
+            ["重新检查更新", "若反复出现，请检查模型输出上限和本地日志"],
+            completed=[f"已读取 {len(inventory['entries'])} 个官方入口"],
+        )
+    refreshed_coverage = official_coverage(inventory, len(inventory["entries"]))
+    previous_coverage = old_dataset.get("meta", {}).get("officialCoverage") or {}
+    # A successful live scan with an unchanged inventory should report success
+    # without staging a metadata-only update every day. checkedAt on the stored
+    # snapshot changes only when the official inventory content changes.
+    if (
+        previous_coverage.get("status") == "complete"
+        and previous_coverage.get("inventoryHash") == refreshed_coverage["inventoryHash"]
+        and previous_coverage.get("total") == refreshed_coverage["total"]
+    ):
+        new_dataset["meta"]["officialCoverage"] = previous_coverage
+    else:
+        new_dataset["meta"]["officialCoverage"] = refreshed_coverage
     new_dataset = preserve_existing_enrichment(old_dataset, new_dataset)
     diff = build_dataset_diff(old_dataset, new_dataset)
     diff["qualityWarnings"] = new_dataset.get("qualityWarnings", [])
@@ -3032,9 +3274,9 @@ def preview_update(tool_id, display_name, prefer_web=False, deep_check=False):
             "qualityWarnings": new_dataset.get("qualityWarnings", []),
             "updateSignal": signal,
             "output": (
-                f"已核对 {signal['marker']}，命令集没有变化"
-                if signal else "数据没有变化"
+                f"已比对官方目录：{len(inventory['entries'])}/{len(inventory['entries'])} 个入口均已覆盖，暂无更新"
             ),
+            "officialCoverage": new_dataset["meta"]["officialCoverage"],
         }
     token = secrets.token_hex(16)
     payload = {
@@ -3042,6 +3284,7 @@ def preview_update(tool_id, display_name, prefer_web=False, deep_check=False):
         "toolId": tool_id,
         "oldHash": file_sha256(tool_data_path(tool_id)),
         "dataset": new_dataset,
+        "officialInventory": inventory,
         "diff": diff,
     }
     atomic_write(pending_path(token), json.dumps(payload, ensure_ascii=False, indent=2))
@@ -3054,6 +3297,7 @@ def preview_update(tool_id, display_name, prefer_web=False, deep_check=False):
         "diff": diff,
         "qualityWarnings": new_dataset.get("qualityWarnings", []),
         "updateSignal": signal,
+        "officialCoverage": new_dataset["meta"]["officialCoverage"],
         "output": new_dataset["summary"] or (
             f"检测到 {signal['marker']}，发现可用更新" if signal else "发现可用更新"
         ),
@@ -3080,9 +3324,33 @@ def apply_update(token, confirm_risk=False):
     if file_sha256(data_path) != payload.get("oldHash"):
         raise ValidationError("原数据已发生变化，请重新检查更新")
     dataset = validate_dataset(payload.get("dataset"), payload["toolId"])
+    inventory = payload.get("officialInventory")
+    if not isinstance(inventory, dict) or not isinstance(inventory.get("entries"), list):
+        raise ValidationError("待处理更新缺少官方入口清单")
+    if official_inventory_missing(dataset, inventory):
+        raise ValidationError("待处理更新未覆盖全部官方入口")
+    coverage = dataset.get("meta", {}).get("officialCoverage") or {}
+    if coverage.get("inventoryHash") != inventory_hash(inventory["entries"]):
+        raise ValidationError("待处理更新的官方清单哈希不一致")
     if payload.get("diff", {}).get("risks") and not confirm_risk:
         raise ValidationError("该更新包含高风险变化，请核对并确认后再应用")
-    atomic_write(data_path, render_data_file(dataset))
+    inventory_path = official_inventory_path(payload["toolId"])
+    previous_inventory = None
+    if os.path.exists(inventory_path):
+        with open(inventory_path, "r", encoding="utf-8") as handle:
+            previous_inventory = handle.read()
+    atomic_write(inventory_path, json.dumps(inventory, ensure_ascii=False, indent=2) + "\n")
+    try:
+        atomic_write(data_path, render_data_file(dataset))
+    except Exception:
+        if previous_inventory is None:
+            try:
+                os.unlink(inventory_path)
+            except OSError:
+                pass
+        else:
+            atomic_write(inventory_path, previous_inventory)
+        raise
     os.unlink(path)
     return {
         "ok": True,
@@ -3151,14 +3419,48 @@ def handle_message(message):
     raise ValidationError(f"未知的 action: {request['action']}")
 
 
+def validation_diagnostic(exc):
+    reason = str(exc)
+    mappings = [
+        ("node_runtime_missing", "runtime", ("Node.js", "node"),
+         ["安装 Node.js", "重新运行 Native Host 安装脚本刷新运行路径", "完全重启浏览器"]),
+        ("claude_missing", "model-runtime", ("找不到 claude", "需要 Claude Code"),
+         ["安装 Claude Code", "重新运行 Native Host 安装脚本", "完全重启浏览器"]),
+        ("model_timeout", "model-generation", ("执行超时", "超过 15 分钟"),
+         ["直接重试", "检查模型服务、网络和输出上限"]),
+        ("api_error", "model-api", ("API 错误", "API 调用失败"),
+         ["检查 API 地址、Token、额度和网络", "修复配置后重新检查"]),
+        ("permission_error", "filesystem", ("Permission", "权限"),
+         ["确认项目目录和 Native Host 数据目录可写", "重新运行安装脚本"]),
+    ]
+    for code, stage, needles, actions in mappings:
+        if any(needle.casefold() in reason.casefold() for needle in needles):
+            return {
+                "stage": stage,
+                "code": code,
+                "reason": reason,
+                "completedChecks": [],
+                "actions": actions,
+            }
+    return {
+        "stage": "validation",
+        "code": "update_validation_failed",
+        "reason": reason,
+        "completedChecks": [],
+        "actions": ["根据错误修正环境或数据后重试", "若反复出现，请查看本地 host.log"],
+    }
+
+
 def main():
     try:
         message = read_message()
         if message is None:
             return
         send_message(handle_message(message))
+    except OfficialInventoryError as exc:
+        send_message({"ok": False, "error": exc.reason, "diagnostic": exc.diagnostic()})
     except ValidationError as exc:
-        send_message({"ok": False, "error": str(exc)})
+        send_message({"ok": False, "error": str(exc), "diagnostic": validation_diagnostic(exc)})
     except Exception as exc:  # Native hosts must always return a protocol response.
         LOGGER.exception("Unhandled error while processing native message")
         send_message({"ok": False, "error": f"本地更新程序异常：{sanitize_error_text(exc)}（详情见本地日志）"})

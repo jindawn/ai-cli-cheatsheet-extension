@@ -554,6 +554,12 @@ const taskMessages = require("../popup-tasks.js");
   assert(!toastElement.classList.contains("show"), "hideToast should hide the toast");
 }
 assert(taskMessages.taskBaseMsg("add_tool", { tool: "shell" }).includes("分批生成 Shell"), "Shell add task needs aggregate UX");
+const diagnosticCopy = taskMessages.diagnosticText({
+  error: "无法读取官方资料",
+  diagnostic: { stage: "official-inventory", completedChecks: ["已连接 Native Host"], actions: ["检查网络"] },
+});
+assert(diagnosticCopy.includes("失败阶段：official-inventory"), "structured failures should show their stage");
+assert(diagnosticCopy.includes("建议：检查网络"), "structured failures should show actionable repair advice");
 
 const applyButton = { disabled: true, dataset: {} };
 const updateButton = { disabled: false, dataset: {} };

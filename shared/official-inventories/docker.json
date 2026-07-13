@@ -1,0 +1,3454 @@
+{
+  "toolId": "docker",
+  "scope": "all-command-entrypoints",
+  "checkedAt": "2026-07-13",
+  "sourceIds": [
+    "docker-docs"
+  ],
+  "entries": [
+    {
+      "command": "docker",
+      "aliases": [],
+      "description": "The base command for the Docker CLI.",
+      "usage": "docker",
+      "url": "https://docs.docker.com/reference/cli/docker/",
+      "officialExample": "docker -H tcp://174.17.0.1:2376 ps"
+    },
+    {
+      "command": "docker builder",
+      "aliases": [],
+      "description": "Manage builds",
+      "usage": "docker builder",
+      "url": "https://docs.docker.com/reference/cli/docker/builder/"
+    },
+    {
+      "command": "docker buildx",
+      "aliases": [],
+      "description": "Docker Buildx",
+      "usage": "docker buildx",
+      "url": "https://docs.docker.com/reference/cli/docker/buildx/"
+    },
+    {
+      "command": "docker checkpoint",
+      "aliases": [],
+      "description": "Manage checkpoints",
+      "usage": "docker checkpoint",
+      "url": "https://docs.docker.com/reference/cli/docker/checkpoint/"
+    },
+    {
+      "command": "docker compose",
+      "aliases": [],
+      "description": "Docker Compose",
+      "usage": "docker compose",
+      "url": "https://docs.docker.com/reference/cli/docker/compose/",
+      "officialExample": "docker compose -f compose.yaml -f compose.admin.yaml run backup_db"
+    },
+    {
+      "command": "docker config",
+      "aliases": [],
+      "description": "Manage Swarm configs",
+      "usage": "docker config",
+      "url": "https://docs.docker.com/reference/cli/docker/config/"
+    },
+    {
+      "command": "docker container",
+      "aliases": [],
+      "description": "Manage containers",
+      "usage": "docker container",
+      "url": "https://docs.docker.com/reference/cli/docker/container/"
+    },
+    {
+      "command": "docker context",
+      "aliases": [],
+      "description": "Manage contexts",
+      "usage": "docker context",
+      "url": "https://docs.docker.com/reference/cli/docker/context/"
+    },
+    {
+      "command": "docker debug",
+      "aliases": [],
+      "description": "Get a shell into any container or image. An alternative to debugging with `docker exec`.",
+      "usage": "debug [OPTIONS] {CONTAINER|IMAGE}",
+      "url": "https://docs.docker.com/reference/cli/docker/debug/",
+      "officialExample": "docker debug my-app"
+    },
+    {
+      "command": "docker desktop",
+      "aliases": [],
+      "description": "Docker Desktop",
+      "usage": "docker desktop",
+      "url": "https://docs.docker.com/reference/cli/docker/desktop/"
+    },
+    {
+      "command": "docker dhi",
+      "aliases": [],
+      "description": "CLI for managing Docker Hardened Images",
+      "usage": "docker dhi",
+      "url": "https://docs.docker.com/reference/cli/docker/dhi/"
+    },
+    {
+      "command": "docker image",
+      "aliases": [],
+      "description": "Manage images",
+      "usage": "docker image",
+      "url": "https://docs.docker.com/reference/cli/docker/image/"
+    },
+    {
+      "command": "docker init",
+      "aliases": [],
+      "description": "Creates Docker-related starter files for your project",
+      "usage": "docker init [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/init/",
+      "officialExample": "docker init"
+    },
+    {
+      "command": "docker inspect",
+      "aliases": [],
+      "description": "Return low-level information on Docker objects",
+      "usage": "docker inspect [OPTIONS] NAME|ID [NAME|ID...]",
+      "url": "https://docs.docker.com/reference/cli/docker/inspect/",
+      "officialExample": "docker inspect --type=volume myvolume"
+    },
+    {
+      "command": "docker login",
+      "aliases": [],
+      "description": "Authenticate to a registry",
+      "usage": "docker login [OPTIONS] [SERVER]",
+      "url": "https://docs.docker.com/reference/cli/docker/login/",
+      "officialExample": "docker login"
+    },
+    {
+      "command": "docker logout",
+      "aliases": [],
+      "description": "Log out from a registry",
+      "usage": "docker logout [SERVER]",
+      "url": "https://docs.docker.com/reference/cli/docker/logout/",
+      "officialExample": "docker logout localhost:8080"
+    },
+    {
+      "command": "docker manifest",
+      "aliases": [],
+      "description": "Manage Docker image manifests and manifest lists",
+      "usage": "docker manifest COMMAND",
+      "url": "https://docs.docker.com/reference/cli/docker/manifest/",
+      "officialExample": "docker manifest inspect hello-world"
+    },
+    {
+      "command": "docker mcp",
+      "aliases": [],
+      "description": "Manage MCP servers and clients",
+      "usage": "docker mcp",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/"
+    },
+    {
+      "command": "docker model",
+      "aliases": [],
+      "description": "Docker Model Runner",
+      "usage": "docker model",
+      "url": "https://docs.docker.com/reference/cli/docker/model/"
+    },
+    {
+      "command": "docker network",
+      "aliases": [],
+      "description": "Manage networks",
+      "usage": "docker network",
+      "url": "https://docs.docker.com/reference/cli/docker/network/"
+    },
+    {
+      "command": "docker node",
+      "aliases": [],
+      "description": "Manage Swarm nodes",
+      "usage": "docker node",
+      "url": "https://docs.docker.com/reference/cli/docker/node/"
+    },
+    {
+      "command": "docker offload",
+      "aliases": [],
+      "description": "Control Docker Offload from the CLI",
+      "usage": "docker offload",
+      "url": "https://docs.docker.com/reference/cli/docker/offload/"
+    },
+    {
+      "command": "docker pass",
+      "aliases": [],
+      "description": "Manage your local OS keychain secrets.",
+      "usage": "docker pass set|get|ls|rm|run",
+      "url": "https://docs.docker.com/reference/cli/docker/pass/",
+      "officialExample": "docker pass set GH_TOKEN=123456789"
+    },
+    {
+      "command": "docker plugin",
+      "aliases": [],
+      "description": "Manage plugins",
+      "usage": "docker plugin",
+      "url": "https://docs.docker.com/reference/cli/docker/plugin/"
+    },
+    {
+      "command": "docker sandbox",
+      "aliases": [],
+      "description": "Docker Sandbox",
+      "usage": "docker sandbox",
+      "url": "https://docs.docker.com/reference/cli/docker/sandbox/"
+    },
+    {
+      "command": "docker scout",
+      "aliases": [],
+      "description": "Command line tool for Docker Scout",
+      "usage": "docker scout [command]",
+      "url": "https://docs.docker.com/reference/cli/docker/scout/"
+    },
+    {
+      "command": "docker search",
+      "aliases": [],
+      "description": "Search Docker Hub for images",
+      "usage": "docker search [OPTIONS] TERM",
+      "url": "https://docs.docker.com/reference/cli/docker/search/",
+      "officialExample": "docker search busybox"
+    },
+    {
+      "command": "docker secret",
+      "aliases": [],
+      "description": "Manage Swarm secrets",
+      "usage": "docker secret",
+      "url": "https://docs.docker.com/reference/cli/docker/secret/"
+    },
+    {
+      "command": "docker service",
+      "aliases": [],
+      "description": "Manage Swarm services",
+      "usage": "docker service",
+      "url": "https://docs.docker.com/reference/cli/docker/service/"
+    },
+    {
+      "command": "docker stack",
+      "aliases": [],
+      "description": "Manage Swarm stacks",
+      "usage": "docker stack [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/stack/"
+    },
+    {
+      "command": "docker swarm",
+      "aliases": [],
+      "description": "Manage Swarm",
+      "usage": "docker swarm",
+      "url": "https://docs.docker.com/reference/cli/docker/swarm/"
+    },
+    {
+      "command": "docker system",
+      "aliases": [],
+      "description": "Manage Docker",
+      "usage": "docker system",
+      "url": "https://docs.docker.com/reference/cli/docker/system/"
+    },
+    {
+      "command": "docker trust",
+      "aliases": [],
+      "description": "Manage trust on Docker images",
+      "usage": "docker trust",
+      "url": "https://docs.docker.com/reference/cli/docker/trust/"
+    },
+    {
+      "command": "docker version",
+      "aliases": [],
+      "description": "Show the Docker version information",
+      "usage": "docker version [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/version/",
+      "officialExample": "docker version --format '{{.Server.Version}}'"
+    },
+    {
+      "command": "docker volume",
+      "aliases": [],
+      "description": "Manage volumes",
+      "usage": "docker volume COMMAND",
+      "url": "https://docs.docker.com/reference/cli/docker/volume/"
+    },
+    {
+      "command": "docker builder build",
+      "aliases": [
+        "docker image build",
+        "docker build"
+      ],
+      "description": "Build an image from a Dockerfile",
+      "usage": "docker builder build [OPTIONS] PATH | URL | -",
+      "url": "https://docs.docker.com/reference/cli/docker/builder/build/"
+    },
+    {
+      "command": "docker builder prune",
+      "aliases": [],
+      "description": "Remove build cache",
+      "usage": "docker builder prune",
+      "url": "https://docs.docker.com/reference/cli/docker/builder/prune/"
+    },
+    {
+      "command": "docker buildx bake",
+      "aliases": [
+        "docker buildx f"
+      ],
+      "description": "Build from a file",
+      "usage": "docker buildx bake [OPTIONS] [TARGET...]",
+      "url": "https://docs.docker.com/reference/cli/docker/buildx/bake/"
+    },
+    {
+      "command": "docker buildx build",
+      "aliases": [
+        "docker build",
+        "docker builder build",
+        "docker image build",
+        "docker buildx b"
+      ],
+      "description": "Start a build",
+      "usage": "docker buildx build [OPTIONS] PATH | URL | -",
+      "url": "https://docs.docker.com/reference/cli/docker/buildx/build/",
+      "officialExample": "docker buildx build --add-host my_hostname=8.8.8.8 --add-host my_hostname_v6=2001:4860:4860::8888 ."
+    },
+    {
+      "command": "docker buildx create",
+      "aliases": [],
+      "description": "Create a new builder instance",
+      "usage": "docker buildx create [OPTIONS] [CONTEXT|ENDPOINT]",
+      "url": "https://docs.docker.com/reference/cli/docker/buildx/create/",
+      "officialExample": "docker buildx create mycontext1"
+    },
+    {
+      "command": "docker buildx dap",
+      "aliases": [],
+      "description": "Start debug adapter protocol compatible debugger",
+      "usage": "docker buildx dap",
+      "url": "https://docs.docker.com/reference/cli/docker/buildx/dap/"
+    },
+    {
+      "command": "docker buildx debug",
+      "aliases": [],
+      "description": "Start debugger",
+      "usage": "docker buildx debug",
+      "url": "https://docs.docker.com/reference/cli/docker/buildx/debug/"
+    },
+    {
+      "command": "docker buildx dial-stdio",
+      "aliases": [],
+      "description": "Proxy current stdio streams to builder instance",
+      "usage": "docker buildx dial-stdio",
+      "url": "https://docs.docker.com/reference/cli/docker/buildx/dial-stdio/"
+    },
+    {
+      "command": "docker buildx du",
+      "aliases": [],
+      "description": "Disk usage",
+      "usage": "docker buildx du",
+      "url": "https://docs.docker.com/reference/cli/docker/buildx/du/",
+      "officialExample": "docker buildx du"
+    },
+    {
+      "command": "docker buildx history",
+      "aliases": [],
+      "description": "Commands to work on build records",
+      "usage": "docker buildx history",
+      "url": "https://docs.docker.com/reference/cli/docker/buildx/history/"
+    },
+    {
+      "command": "docker buildx imagetools",
+      "aliases": [],
+      "description": "Commands to work on images in registry",
+      "usage": "docker buildx imagetools",
+      "url": "https://docs.docker.com/reference/cli/docker/buildx/imagetools/"
+    },
+    {
+      "command": "docker buildx inspect",
+      "aliases": [],
+      "description": "Inspect current builder instance",
+      "usage": "docker buildx inspect [NAME]",
+      "url": "https://docs.docker.com/reference/cli/docker/buildx/inspect/",
+      "officialExample": "docker buildx inspect elated_tesla"
+    },
+    {
+      "command": "docker buildx ls",
+      "aliases": [],
+      "description": "List builder instances",
+      "usage": "docker buildx ls",
+      "url": "https://docs.docker.com/reference/cli/docker/buildx/ls/",
+      "officialExample": "docker buildx ls --format \"{{.Name}}: {{.DriverEndpoint}}\""
+    },
+    {
+      "command": "docker buildx policy",
+      "aliases": [],
+      "description": "Commands for working with build policies",
+      "usage": "docker buildx policy",
+      "url": "https://docs.docker.com/reference/cli/docker/buildx/policy/"
+    },
+    {
+      "command": "docker buildx prune",
+      "aliases": [],
+      "description": "Remove build cache",
+      "usage": "docker buildx prune",
+      "url": "https://docs.docker.com/reference/cli/docker/buildx/prune/"
+    },
+    {
+      "command": "docker buildx rm",
+      "aliases": [],
+      "description": "Remove one or more builder instances",
+      "usage": "docker buildx rm [OPTIONS] [NAME...]",
+      "url": "https://docs.docker.com/reference/cli/docker/buildx/rm/",
+      "officialExample": "docker buildx rm --all-inactive"
+    },
+    {
+      "command": "docker buildx stop",
+      "aliases": [],
+      "description": "Stop builder instance",
+      "usage": "docker buildx stop [NAME]",
+      "url": "https://docs.docker.com/reference/cli/docker/buildx/stop/"
+    },
+    {
+      "command": "docker buildx use",
+      "aliases": [],
+      "description": "Set the current builder instance",
+      "usage": "docker buildx use [OPTIONS] NAME",
+      "url": "https://docs.docker.com/reference/cli/docker/buildx/use/"
+    },
+    {
+      "command": "docker buildx version",
+      "aliases": [],
+      "description": "Show buildx version information",
+      "usage": "docker buildx version",
+      "url": "https://docs.docker.com/reference/cli/docker/buildx/version/"
+    },
+    {
+      "command": "docker checkpoint create",
+      "aliases": [],
+      "description": "Create a checkpoint from a running container",
+      "usage": "docker checkpoint create [OPTIONS] CONTAINER CHECKPOINT",
+      "url": "https://docs.docker.com/reference/cli/docker/checkpoint/create/"
+    },
+    {
+      "command": "docker checkpoint ls",
+      "aliases": [
+        "docker checkpoint list"
+      ],
+      "description": "List checkpoints for a container",
+      "usage": "docker checkpoint ls [OPTIONS] CONTAINER",
+      "url": "https://docs.docker.com/reference/cli/docker/checkpoint/ls/"
+    },
+    {
+      "command": "docker checkpoint rm",
+      "aliases": [
+        "docker checkpoint remove"
+      ],
+      "description": "Remove a checkpoint",
+      "usage": "docker checkpoint rm [OPTIONS] CONTAINER CHECKPOINT",
+      "url": "https://docs.docker.com/reference/cli/docker/checkpoint/rm/"
+    },
+    {
+      "command": "docker compose attach",
+      "aliases": [],
+      "description": "Attach local standard input, output, and error streams to a service's running container",
+      "usage": "docker compose attach [OPTIONS] SERVICE",
+      "url": "https://docs.docker.com/reference/cli/docker/compose/attach/"
+    },
+    {
+      "command": "docker compose bridge",
+      "aliases": [],
+      "description": "Convert compose files into another model",
+      "usage": "docker compose bridge",
+      "url": "https://docs.docker.com/reference/cli/docker/compose/bridge/"
+    },
+    {
+      "command": "docker compose build",
+      "aliases": [],
+      "description": "Build or rebuild services",
+      "usage": "docker compose build [OPTIONS] [SERVICE...]",
+      "url": "https://docs.docker.com/reference/cli/docker/compose/build/"
+    },
+    {
+      "command": "docker compose commit",
+      "aliases": [],
+      "description": "Create a new image from a service container's changes",
+      "usage": "docker compose commit [OPTIONS] SERVICE [REPOSITORY[:TAG]]",
+      "url": "https://docs.docker.com/reference/cli/docker/compose/commit/"
+    },
+    {
+      "command": "docker compose config",
+      "aliases": [],
+      "description": "Parse, resolve and render compose file in canonical format",
+      "usage": "docker compose config [OPTIONS] [SERVICE...]",
+      "url": "https://docs.docker.com/reference/cli/docker/compose/config/"
+    },
+    {
+      "command": "docker compose convert",
+      "aliases": [
+        "docker compose config"
+      ],
+      "description": "Converts the compose file to platform's canonical format",
+      "usage": "docker compose convert [OPTIONS] [SERVICE...]",
+      "url": "https://docs.docker.com/reference/cli/docker/compose/convert/"
+    },
+    {
+      "command": "docker compose cp",
+      "aliases": [],
+      "description": "Copy files/folders between a service container and the local filesystem",
+      "usage": "docker compose cp [OPTIONS] SERVICE:SRC_PATH DEST_PATH|-\n\tdocker compose cp [OPTIONS] SRC_PATH|- SERVICE:DEST_PATH",
+      "url": "https://docs.docker.com/reference/cli/docker/compose/cp/"
+    },
+    {
+      "command": "docker compose create",
+      "aliases": [],
+      "description": "Creates containers for a service",
+      "usage": "docker compose create [OPTIONS] [SERVICE...]",
+      "url": "https://docs.docker.com/reference/cli/docker/compose/create/"
+    },
+    {
+      "command": "docker compose down",
+      "aliases": [],
+      "description": "Stop and remove containers, networks",
+      "usage": "docker compose down [OPTIONS] [SERVICES]",
+      "url": "https://docs.docker.com/reference/cli/docker/compose/down/"
+    },
+    {
+      "command": "docker compose events",
+      "aliases": [],
+      "description": "Receive real time events from containers",
+      "usage": "docker compose events [OPTIONS] [SERVICE...]",
+      "url": "https://docs.docker.com/reference/cli/docker/compose/events/"
+    },
+    {
+      "command": "docker compose exec",
+      "aliases": [],
+      "description": "Execute a command in a running container",
+      "usage": "docker compose exec [OPTIONS] SERVICE COMMAND [ARGS...]",
+      "url": "https://docs.docker.com/reference/cli/docker/compose/exec/"
+    },
+    {
+      "command": "docker compose export",
+      "aliases": [],
+      "description": "Export a service container's filesystem as a tar archive",
+      "usage": "docker compose export [OPTIONS] SERVICE",
+      "url": "https://docs.docker.com/reference/cli/docker/compose/export/"
+    },
+    {
+      "command": "docker compose images",
+      "aliases": [],
+      "description": "List images used by the created containers",
+      "usage": "docker compose images [OPTIONS] [SERVICE...]",
+      "url": "https://docs.docker.com/reference/cli/docker/compose/images/"
+    },
+    {
+      "command": "docker compose kill",
+      "aliases": [],
+      "description": "Force stop service containers",
+      "usage": "docker compose kill [OPTIONS] [SERVICE...]",
+      "url": "https://docs.docker.com/reference/cli/docker/compose/kill/"
+    },
+    {
+      "command": "docker compose logs",
+      "aliases": [],
+      "description": "View output from containers",
+      "usage": "docker compose logs [OPTIONS] [SERVICE...]",
+      "url": "https://docs.docker.com/reference/cli/docker/compose/logs/"
+    },
+    {
+      "command": "docker compose ls",
+      "aliases": [],
+      "description": "List running compose projects",
+      "usage": "docker compose ls [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/compose/ls/"
+    },
+    {
+      "command": "docker compose pause",
+      "aliases": [],
+      "description": "Pause services",
+      "usage": "docker compose pause [SERVICE...]",
+      "url": "https://docs.docker.com/reference/cli/docker/compose/pause/"
+    },
+    {
+      "command": "docker compose port",
+      "aliases": [],
+      "description": "Print the public port for a port binding",
+      "usage": "docker compose port [OPTIONS] SERVICE PRIVATE_PORT",
+      "url": "https://docs.docker.com/reference/cli/docker/compose/port/"
+    },
+    {
+      "command": "docker compose ps",
+      "aliases": [],
+      "description": "List containers",
+      "usage": "docker compose ps [OPTIONS] [SERVICE...]",
+      "url": "https://docs.docker.com/reference/cli/docker/compose/ps/",
+      "officialExample": "docker compose ps --format json"
+    },
+    {
+      "command": "docker compose publish",
+      "aliases": [],
+      "description": "Publish compose application",
+      "usage": "docker compose publish [OPTIONS] REPOSITORY[:TAG]",
+      "url": "https://docs.docker.com/reference/cli/docker/compose/publish/"
+    },
+    {
+      "command": "docker compose pull",
+      "aliases": [],
+      "description": "Pull service images",
+      "usage": "docker compose pull [OPTIONS] [SERVICE...]",
+      "url": "https://docs.docker.com/reference/cli/docker/compose/pull/"
+    },
+    {
+      "command": "docker compose push",
+      "aliases": [],
+      "description": "Push service images",
+      "usage": "docker compose push [OPTIONS] [SERVICE...]",
+      "url": "https://docs.docker.com/reference/cli/docker/compose/push/"
+    },
+    {
+      "command": "docker compose restart",
+      "aliases": [],
+      "description": "Restart service containers",
+      "usage": "docker compose restart [OPTIONS] [SERVICE...]",
+      "url": "https://docs.docker.com/reference/cli/docker/compose/restart/"
+    },
+    {
+      "command": "docker compose rm",
+      "aliases": [],
+      "description": "Removes stopped service containers",
+      "usage": "docker compose rm [OPTIONS] [SERVICE...]",
+      "url": "https://docs.docker.com/reference/cli/docker/compose/rm/"
+    },
+    {
+      "command": "docker compose run",
+      "aliases": [],
+      "description": "Run a one-off command on a service",
+      "usage": "docker compose run [OPTIONS] SERVICE [COMMAND] [ARGS...]",
+      "url": "https://docs.docker.com/reference/cli/docker/compose/run/"
+    },
+    {
+      "command": "docker compose scale",
+      "aliases": [],
+      "description": "Scale services",
+      "usage": "docker compose scale [SERVICE=REPLICAS...]",
+      "url": "https://docs.docker.com/reference/cli/docker/compose/scale/"
+    },
+    {
+      "command": "docker compose start",
+      "aliases": [],
+      "description": "Start services",
+      "usage": "docker compose start [SERVICE...]",
+      "url": "https://docs.docker.com/reference/cli/docker/compose/start/"
+    },
+    {
+      "command": "docker compose stats",
+      "aliases": [],
+      "description": "Display a live stream of container(s) resource usage statistics",
+      "usage": "docker compose stats [OPTIONS] [SERVICE]",
+      "url": "https://docs.docker.com/reference/cli/docker/compose/stats/"
+    },
+    {
+      "command": "docker compose stop",
+      "aliases": [],
+      "description": "Stop services",
+      "usage": "docker compose stop [OPTIONS] [SERVICE...]",
+      "url": "https://docs.docker.com/reference/cli/docker/compose/stop/"
+    },
+    {
+      "command": "docker compose top",
+      "aliases": [],
+      "description": "Display the running processes",
+      "usage": "docker compose top [SERVICES...]",
+      "url": "https://docs.docker.com/reference/cli/docker/compose/top/",
+      "officialExample": "docker compose top"
+    },
+    {
+      "command": "docker compose unpause",
+      "aliases": [],
+      "description": "Unpause services",
+      "usage": "docker compose unpause [SERVICE...]",
+      "url": "https://docs.docker.com/reference/cli/docker/compose/unpause/"
+    },
+    {
+      "command": "docker compose up",
+      "aliases": [],
+      "description": "Create and start containers",
+      "usage": "docker compose up [OPTIONS] [SERVICE...]",
+      "url": "https://docs.docker.com/reference/cli/docker/compose/up/"
+    },
+    {
+      "command": "docker compose version",
+      "aliases": [],
+      "description": "Show the Docker Compose version information",
+      "usage": "docker compose version [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/compose/version/"
+    },
+    {
+      "command": "docker compose volumes",
+      "aliases": [],
+      "description": "List volumes",
+      "usage": "docker compose volumes [OPTIONS] [SERVICE...]",
+      "url": "https://docs.docker.com/reference/cli/docker/compose/volumes/"
+    },
+    {
+      "command": "docker compose wait",
+      "aliases": [],
+      "description": "Block until containers of all (or specified) services stop.",
+      "usage": "docker compose wait SERVICE [SERVICE...] [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/compose/wait/"
+    },
+    {
+      "command": "docker compose watch",
+      "aliases": [],
+      "description": "Watch build context for service and rebuild/refresh containers when files are updated",
+      "usage": "docker compose watch [SERVICE...]",
+      "url": "https://docs.docker.com/reference/cli/docker/compose/watch/"
+    },
+    {
+      "command": "docker config create",
+      "aliases": [],
+      "description": "Create a config from a file or STDIN",
+      "usage": "docker config create [OPTIONS] CONFIG file|-",
+      "url": "https://docs.docker.com/reference/cli/docker/config/create/",
+      "officialExample": "docker config create my_config ./config.json"
+    },
+    {
+      "command": "docker config inspect",
+      "aliases": [],
+      "description": "Display detailed information on one or more configs",
+      "usage": "docker config inspect [OPTIONS] CONFIG [CONFIG...]",
+      "url": "https://docs.docker.com/reference/cli/docker/config/inspect/",
+      "officialExample": "docker config inspect config.json"
+    },
+    {
+      "command": "docker config ls",
+      "aliases": [
+        "docker config list"
+      ],
+      "description": "List configs",
+      "usage": "docker config ls [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/config/ls/",
+      "officialExample": "docker config ls"
+    },
+    {
+      "command": "docker config rm",
+      "aliases": [
+        "docker config remove"
+      ],
+      "description": "Remove one or more configs",
+      "usage": "docker config rm CONFIG [CONFIG...]",
+      "url": "https://docs.docker.com/reference/cli/docker/config/rm/",
+      "officialExample": "docker config rm my_config"
+    },
+    {
+      "command": "docker container attach",
+      "aliases": [
+        "docker attach"
+      ],
+      "description": "Attach local standard input, output, and error streams to a running container",
+      "usage": "docker container attach [OPTIONS] CONTAINER",
+      "url": "https://docs.docker.com/reference/cli/docker/container/attach/",
+      "officialExample": "docker attach topdemo"
+    },
+    {
+      "command": "docker container commit",
+      "aliases": [
+        "docker commit"
+      ],
+      "description": "Create a new image from a container's changes",
+      "usage": "docker container commit [OPTIONS] CONTAINER [REPOSITORY[:TAG]]",
+      "url": "https://docs.docker.com/reference/cli/docker/container/commit/",
+      "officialExample": "docker commit c3f279d17e0a  svendowideit/testimage:version3"
+    },
+    {
+      "command": "docker container cp",
+      "aliases": [
+        "docker cp"
+      ],
+      "description": "Copy files/folders between a container and the local filesystem",
+      "usage": "docker container cp [OPTIONS] CONTAINER:SRC_PATH DEST_PATH|-\n\tdocker cp [OPTIONS] SRC_PATH|- CONTAINER:DEST_PATH",
+      "url": "https://docs.docker.com/reference/cli/docker/container/cp/",
+      "officialExample": "docker cp ./some_file CONTAINER:/work"
+    },
+    {
+      "command": "docker container create",
+      "aliases": [
+        "docker create"
+      ],
+      "description": "Create a new container",
+      "usage": "docker container create [OPTIONS] IMAGE [COMMAND] [ARG...]",
+      "url": "https://docs.docker.com/reference/cli/docker/container/create/",
+      "officialExample": "docker container create -i -t --name mycontainer alpine"
+    },
+    {
+      "command": "docker container diff",
+      "aliases": [
+        "docker diff"
+      ],
+      "description": "Inspect changes to files or directories on a container's filesystem",
+      "usage": "docker container diff CONTAINER",
+      "url": "https://docs.docker.com/reference/cli/docker/container/diff/",
+      "officialExample": "docker diff 1fdfd1f54c1b"
+    },
+    {
+      "command": "docker container exec",
+      "aliases": [
+        "docker exec"
+      ],
+      "description": "Execute a command in a running container",
+      "usage": "docker container exec [OPTIONS] CONTAINER COMMAND [ARG...]",
+      "url": "https://docs.docker.com/reference/cli/docker/container/exec/",
+      "officialExample": "docker exec -d mycontainer touch /tmp/execWorks"
+    },
+    {
+      "command": "docker container export",
+      "aliases": [
+        "docker export"
+      ],
+      "description": "Export a container's filesystem as a tar archive",
+      "usage": "docker container export [OPTIONS] CONTAINER",
+      "url": "https://docs.docker.com/reference/cli/docker/container/export/",
+      "officialExample": "docker export red_panda > latest.tar"
+    },
+    {
+      "command": "docker container inspect",
+      "aliases": [],
+      "description": "Display detailed information on one or more containers",
+      "usage": "docker container inspect [OPTIONS] CONTAINER [CONTAINER...]",
+      "url": "https://docs.docker.com/reference/cli/docker/container/inspect/"
+    },
+    {
+      "command": "docker container kill",
+      "aliases": [
+        "docker kill"
+      ],
+      "description": "Kill one or more running containers",
+      "usage": "docker container kill [OPTIONS] CONTAINER [CONTAINER...]",
+      "url": "https://docs.docker.com/reference/cli/docker/container/kill/",
+      "officialExample": "docker kill my_container"
+    },
+    {
+      "command": "docker container logs",
+      "aliases": [
+        "docker logs"
+      ],
+      "description": "Fetch the logs of a container",
+      "usage": "docker container logs [OPTIONS] CONTAINER",
+      "url": "https://docs.docker.com/reference/cli/docker/container/logs/",
+      "officialExample": "docker logs -f --until=2s test"
+    },
+    {
+      "command": "docker container ls",
+      "aliases": [
+        "docker container list",
+        "docker container ps",
+        "docker ps"
+      ],
+      "description": "List containers",
+      "usage": "docker container ls [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/container/ls/",
+      "officialExample": "docker ps --no-trunc"
+    },
+    {
+      "command": "docker container pause",
+      "aliases": [
+        "docker pause"
+      ],
+      "description": "Pause all processes within one or more containers",
+      "usage": "docker container pause CONTAINER [CONTAINER...]",
+      "url": "https://docs.docker.com/reference/cli/docker/container/pause/",
+      "officialExample": "docker pause my_container"
+    },
+    {
+      "command": "docker container port",
+      "aliases": [
+        "docker port"
+      ],
+      "description": "List port mappings or a specific mapping for the container",
+      "usage": "docker container port CONTAINER [PRIVATE_PORT[/PROTO]]",
+      "url": "https://docs.docker.com/reference/cli/docker/container/port/",
+      "officialExample": "docker port test"
+    },
+    {
+      "command": "docker container prune",
+      "aliases": [],
+      "description": "Remove all stopped containers",
+      "usage": "docker container prune [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/container/prune/",
+      "officialExample": "docker container prune"
+    },
+    {
+      "command": "docker container rename",
+      "aliases": [
+        "docker rename"
+      ],
+      "description": "Rename a container",
+      "usage": "docker container rename CONTAINER NEW_NAME",
+      "url": "https://docs.docker.com/reference/cli/docker/container/rename/",
+      "officialExample": "docker rename my_container my_new_container"
+    },
+    {
+      "command": "docker container restart",
+      "aliases": [
+        "docker restart"
+      ],
+      "description": "Restart one or more containers",
+      "usage": "docker container restart [OPTIONS] CONTAINER [CONTAINER...]",
+      "url": "https://docs.docker.com/reference/cli/docker/container/restart/",
+      "officialExample": "docker restart my_container"
+    },
+    {
+      "command": "docker container rm",
+      "aliases": [
+        "docker container remove",
+        "docker rm"
+      ],
+      "description": "Remove one or more containers",
+      "usage": "docker container rm [OPTIONS] CONTAINER [CONTAINER...]",
+      "url": "https://docs.docker.com/reference/cli/docker/container/rm/",
+      "officialExample": "docker rm /redis"
+    },
+    {
+      "command": "docker container run",
+      "aliases": [
+        "docker run"
+      ],
+      "description": "Create and run a new container from an image",
+      "usage": "docker container run [OPTIONS] IMAGE [COMMAND] [ARG...]",
+      "url": "https://docs.docker.com/reference/cli/docker/container/run/",
+      "officialExample": "docker run --name test -d nginx:alpine"
+    },
+    {
+      "command": "docker container start",
+      "aliases": [
+        "docker start"
+      ],
+      "description": "Start one or more stopped containers",
+      "usage": "docker container start [OPTIONS] CONTAINER [CONTAINER...]",
+      "url": "https://docs.docker.com/reference/cli/docker/container/start/",
+      "officialExample": "docker start my_container"
+    },
+    {
+      "command": "docker container stats",
+      "aliases": [
+        "docker stats"
+      ],
+      "description": "Display a live stream of container(s) resource usage statistics",
+      "usage": "docker container stats [OPTIONS] [CONTAINER...]",
+      "url": "https://docs.docker.com/reference/cli/docker/container/stats/",
+      "officialExample": "docker stats"
+    },
+    {
+      "command": "docker container stop",
+      "aliases": [
+        "docker stop"
+      ],
+      "description": "Stop one or more running containers",
+      "usage": "docker container stop [OPTIONS] CONTAINER [CONTAINER...]",
+      "url": "https://docs.docker.com/reference/cli/docker/container/stop/",
+      "officialExample": "docker stop my_container"
+    },
+    {
+      "command": "docker container top",
+      "aliases": [
+        "docker top"
+      ],
+      "description": "Display the running processes of a container",
+      "usage": "docker container top CONTAINER [ps OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/container/top/"
+    },
+    {
+      "command": "docker container unpause",
+      "aliases": [
+        "docker unpause"
+      ],
+      "description": "Unpause all processes within one or more containers",
+      "usage": "docker container unpause CONTAINER [CONTAINER...]",
+      "url": "https://docs.docker.com/reference/cli/docker/container/unpause/",
+      "officialExample": "docker unpause my_container"
+    },
+    {
+      "command": "docker container update",
+      "aliases": [
+        "docker update"
+      ],
+      "description": "Update configuration of one or more containers",
+      "usage": "docker container update [OPTIONS] CONTAINER [CONTAINER...]",
+      "url": "https://docs.docker.com/reference/cli/docker/container/update/",
+      "officialExample": "docker update --cpu-shares 512 abebf7571666"
+    },
+    {
+      "command": "docker container wait",
+      "aliases": [
+        "docker wait"
+      ],
+      "description": "Block until one or more containers stop, then print their exit codes",
+      "usage": "docker container wait CONTAINER [CONTAINER...]",
+      "url": "https://docs.docker.com/reference/cli/docker/container/wait/",
+      "officialExample": "docker wait my_container"
+    },
+    {
+      "command": "docker context create",
+      "aliases": [],
+      "description": "Create a context",
+      "usage": "docker context create [OPTIONS] CONTEXT",
+      "url": "https://docs.docker.com/reference/cli/docker/context/create/",
+      "officialExample": "docker context create \\ --docker host=unix:///var/run/docker.sock"
+    },
+    {
+      "command": "docker context export",
+      "aliases": [],
+      "description": "Export a context to a tar archive FILE or a tar stream on STDOUT.",
+      "usage": "docker context export [OPTIONS] CONTEXT [FILE|-]",
+      "url": "https://docs.docker.com/reference/cli/docker/context/export/"
+    },
+    {
+      "command": "docker context import",
+      "aliases": [],
+      "description": "Import a context from a tar or zip file",
+      "usage": "docker context import CONTEXT FILE|-",
+      "url": "https://docs.docker.com/reference/cli/docker/context/import/"
+    },
+    {
+      "command": "docker context inspect",
+      "aliases": [],
+      "description": "Display detailed information on one or more contexts",
+      "usage": "docker context inspect [OPTIONS] [CONTEXT] [CONTEXT...]",
+      "url": "https://docs.docker.com/reference/cli/docker/context/inspect/",
+      "officialExample": "docker context inspect \"local+aks\""
+    },
+    {
+      "command": "docker context ls",
+      "aliases": [
+        "docker context list"
+      ],
+      "description": "List contexts",
+      "usage": "docker context ls [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/context/ls/",
+      "officialExample": "docker context ls"
+    },
+    {
+      "command": "docker context rm",
+      "aliases": [
+        "docker context remove"
+      ],
+      "description": "Remove one or more contexts",
+      "usage": "docker context rm CONTEXT [CONTEXT...]",
+      "url": "https://docs.docker.com/reference/cli/docker/context/rm/"
+    },
+    {
+      "command": "docker context show",
+      "aliases": [],
+      "description": "Print the name of the current context",
+      "usage": "docker context show",
+      "url": "https://docs.docker.com/reference/cli/docker/context/show/"
+    },
+    {
+      "command": "docker context update",
+      "aliases": [],
+      "description": "Update a context",
+      "usage": "docker context update [OPTIONS] CONTEXT",
+      "url": "https://docs.docker.com/reference/cli/docker/context/update/",
+      "officialExample": "docker context update \\ --description \"some description\" --docker \"host=tcp://myserver:2376,ca=~/ca-file,cert=~/cert-file,key=~/key-file\""
+    },
+    {
+      "command": "docker context use",
+      "aliases": [],
+      "description": "Set the default docker context",
+      "usage": "docker context use CONTEXT",
+      "url": "https://docs.docker.com/reference/cli/docker/context/use/",
+      "officialExample": "docker context use my-context"
+    },
+    {
+      "command": "docker desktop diagnose",
+      "aliases": [],
+      "description": "Diagnose Docker Desktop issues",
+      "usage": "docker desktop diagnose [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/desktop/diagnose/"
+    },
+    {
+      "command": "docker desktop disable",
+      "aliases": [],
+      "description": "Disable a feature",
+      "usage": "docker desktop disable",
+      "url": "https://docs.docker.com/reference/cli/docker/desktop/disable/"
+    },
+    {
+      "command": "docker desktop enable",
+      "aliases": [],
+      "description": "Enable a feature",
+      "usage": "docker desktop enable",
+      "url": "https://docs.docker.com/reference/cli/docker/desktop/enable/"
+    },
+    {
+      "command": "docker desktop engine",
+      "aliases": [],
+      "description": "Commands to list and switch containers (Windows only)",
+      "usage": "docker desktop engine",
+      "url": "https://docs.docker.com/reference/cli/docker/desktop/engine/"
+    },
+    {
+      "command": "docker desktop kubernetes",
+      "aliases": [],
+      "description": "Manage Kubernetes settings",
+      "usage": "docker desktop kubernetes",
+      "url": "https://docs.docker.com/reference/cli/docker/desktop/kubernetes/"
+    },
+    {
+      "command": "docker desktop logs",
+      "aliases": [],
+      "description": "Print log entries for Docker Desktop",
+      "usage": "docker desktop logs [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/desktop/logs/"
+    },
+    {
+      "command": "docker desktop restart",
+      "aliases": [],
+      "description": "Restart Docker Desktop",
+      "usage": "docker desktop restart",
+      "url": "https://docs.docker.com/reference/cli/docker/desktop/restart/"
+    },
+    {
+      "command": "docker desktop start",
+      "aliases": [],
+      "description": "Start Docker Desktop",
+      "usage": "docker desktop start [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/desktop/start/"
+    },
+    {
+      "command": "docker desktop status",
+      "aliases": [],
+      "description": "Display Docker Desktop's status",
+      "usage": "docker desktop status",
+      "url": "https://docs.docker.com/reference/cli/docker/desktop/status/"
+    },
+    {
+      "command": "docker desktop stop",
+      "aliases": [],
+      "description": "Stop Docker Desktop",
+      "usage": "docker desktop stop [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/desktop/stop/"
+    },
+    {
+      "command": "docker desktop update",
+      "aliases": [],
+      "description": "Manage Docker Desktop updates",
+      "usage": "docker desktop update [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/desktop/update/"
+    },
+    {
+      "command": "docker desktop version",
+      "aliases": [],
+      "description": "Show the Docker Desktop CLI plugin version information",
+      "usage": "docker desktop version [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/desktop/version/"
+    },
+    {
+      "command": "docker dhi attestation",
+      "aliases": [
+        "docker dhi attest",
+        "docker dhi a"
+      ],
+      "description": "View attestations for Docker Hardened Images",
+      "usage": "docker dhi attestation",
+      "url": "https://docs.docker.com/reference/cli/docker/dhi/attestation/"
+    },
+    {
+      "command": "docker dhi auth",
+      "aliases": [],
+      "description": "Authenticate with Docker Hub",
+      "usage": "docker dhi auth",
+      "url": "https://docs.docker.com/reference/cli/docker/dhi/auth/"
+    },
+    {
+      "command": "docker dhi catalog",
+      "aliases": [],
+      "description": "Browse the Docker Hardened Images catalog",
+      "usage": "docker dhi catalog",
+      "url": "https://docs.docker.com/reference/cli/docker/dhi/catalog/"
+    },
+    {
+      "command": "docker dhi customization",
+      "aliases": [
+        "docker dhi c",
+        "docker dhi custo"
+      ],
+      "description": "Manage Docker Hardened Images customizations",
+      "usage": "docker dhi customization",
+      "url": "https://docs.docker.com/reference/cli/docker/dhi/customization/"
+    },
+    {
+      "command": "docker dhi mirror",
+      "aliases": [],
+      "description": "Mirror Docker Hardened Images to your organization",
+      "usage": "docker dhi mirror",
+      "url": "https://docs.docker.com/reference/cli/docker/dhi/mirror/"
+    },
+    {
+      "command": "docker image build",
+      "aliases": [
+        "docker build",
+        "docker builder build"
+      ],
+      "description": "Build an image from a Dockerfile",
+      "usage": "docker image build [OPTIONS] PATH | URL | -",
+      "url": "https://docs.docker.com/reference/cli/docker/image/build/"
+    },
+    {
+      "command": "docker image history",
+      "aliases": [
+        "docker history"
+      ],
+      "description": "Show the history of an image",
+      "usage": "docker image history [OPTIONS] IMAGE",
+      "url": "https://docs.docker.com/reference/cli/docker/image/history/",
+      "officialExample": "docker history docker"
+    },
+    {
+      "command": "docker image import",
+      "aliases": [
+        "docker import"
+      ],
+      "description": "Import the contents from a tarball to create a filesystem image",
+      "usage": "docker image import [OPTIONS] file|URL|- [REPOSITORY[:TAG]]",
+      "url": "https://docs.docker.com/reference/cli/docker/image/import/",
+      "officialExample": "docker import https://example.com/exampleimage.tgz"
+    },
+    {
+      "command": "docker image inspect",
+      "aliases": [],
+      "description": "Display detailed information on one or more images",
+      "usage": "docker image inspect [OPTIONS] IMAGE [IMAGE...]",
+      "url": "https://docs.docker.com/reference/cli/docker/image/inspect/"
+    },
+    {
+      "command": "docker image load",
+      "aliases": [
+        "docker load"
+      ],
+      "description": "Load an image from a tar archive or STDIN",
+      "usage": "docker image load [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/image/load/",
+      "officialExample": "docker load < busybox.tar.gz"
+    },
+    {
+      "command": "docker image ls",
+      "aliases": [
+        "docker image list",
+        "docker images"
+      ],
+      "description": "List images",
+      "usage": "docker image ls [OPTIONS] [REPOSITORY[:TAG]]",
+      "url": "https://docs.docker.com/reference/cli/docker/image/ls/",
+      "officialExample": "docker images"
+    },
+    {
+      "command": "docker image prune",
+      "aliases": [],
+      "description": "Remove unused images",
+      "usage": "docker image prune [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/image/prune/",
+      "officialExample": "docker image prune -a"
+    },
+    {
+      "command": "docker image pull",
+      "aliases": [
+        "docker pull"
+      ],
+      "description": "Download an image from a registry",
+      "usage": "docker image pull [OPTIONS] NAME[:TAG|@DIGEST]",
+      "url": "https://docs.docker.com/reference/cli/docker/image/pull/",
+      "officialExample": "docker image pull debian"
+    },
+    {
+      "command": "docker image push",
+      "aliases": [
+        "docker push"
+      ],
+      "description": "Upload an image to a registry",
+      "usage": "docker image push [OPTIONS] NAME[:TAG]",
+      "url": "https://docs.docker.com/reference/cli/docker/image/push/",
+      "officialExample": "docker image push registry-host:5000/myadmin/rhel-httpd:latest"
+    },
+    {
+      "command": "docker image rm",
+      "aliases": [
+        "docker image remove",
+        "docker rmi"
+      ],
+      "description": "Remove one or more images",
+      "usage": "docker image rm [OPTIONS] IMAGE [IMAGE...]",
+      "url": "https://docs.docker.com/reference/cli/docker/image/rm/",
+      "officialExample": "docker rmi fd484f19954f"
+    },
+    {
+      "command": "docker image save",
+      "aliases": [
+        "docker save"
+      ],
+      "description": "Save one or more images to a tar archive (streamed to STDOUT by default)",
+      "usage": "docker image save [OPTIONS] IMAGE [IMAGE...]",
+      "url": "https://docs.docker.com/reference/cli/docker/image/save/",
+      "officialExample": "docker save busybox > busybox.tar"
+    },
+    {
+      "command": "docker image tag",
+      "aliases": [
+        "docker tag"
+      ],
+      "description": "Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE",
+      "usage": "docker image tag SOURCE_IMAGE[:TAG] TARGET_IMAGE[:TAG]",
+      "url": "https://docs.docker.com/reference/cli/docker/image/tag/",
+      "officialExample": "docker tag 0e5574283393 fedora/httpd:version1.0"
+    },
+    {
+      "command": "docker manifest annotate",
+      "aliases": [],
+      "description": "Add additional information to a local image manifest",
+      "usage": "docker manifest annotate [OPTIONS] MANIFEST_LIST MANIFEST",
+      "url": "https://docs.docker.com/reference/cli/docker/manifest/annotate/"
+    },
+    {
+      "command": "docker manifest create",
+      "aliases": [],
+      "description": "Create a local manifest list for annotating and pushing to a registry",
+      "usage": "docker manifest create MANIFEST_LIST MANIFEST [MANIFEST...]",
+      "url": "https://docs.docker.com/reference/cli/docker/manifest/create/"
+    },
+    {
+      "command": "docker manifest inspect",
+      "aliases": [],
+      "description": "Display an image manifest, or manifest list",
+      "usage": "docker manifest inspect [OPTIONS] [MANIFEST_LIST] MANIFEST",
+      "url": "https://docs.docker.com/reference/cli/docker/manifest/inspect/"
+    },
+    {
+      "command": "docker manifest push",
+      "aliases": [],
+      "description": "Push a manifest list to a repository",
+      "usage": "docker manifest push [OPTIONS] MANIFEST_LIST",
+      "url": "https://docs.docker.com/reference/cli/docker/manifest/push/"
+    },
+    {
+      "command": "docker manifest rm",
+      "aliases": [],
+      "description": "Delete one or more manifest lists from local storage",
+      "usage": "docker manifest rm MANIFEST_LIST [MANIFEST_LIST...]",
+      "url": "https://docs.docker.com/reference/cli/docker/manifest/rm/"
+    },
+    {
+      "command": "docker mcp catalog",
+      "aliases": [
+        "docker mcp catalogs",
+        "docker mcp catalog-next"
+      ],
+      "description": "Manage MCP server OCI catalogs",
+      "usage": "docker mcp catalog",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/catalog/"
+    },
+    {
+      "command": "docker mcp client",
+      "aliases": [],
+      "description": "Manage MCP clients",
+      "usage": "docker mcp client",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/client/"
+    },
+    {
+      "command": "docker mcp feature",
+      "aliases": [],
+      "description": "Manage experimental features",
+      "usage": "docker mcp feature",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/feature/"
+    },
+    {
+      "command": "docker mcp gateway",
+      "aliases": [],
+      "description": "Manage the MCP Server gateway",
+      "usage": "docker mcp gateway",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/gateway/"
+    },
+    {
+      "command": "docker mcp profile",
+      "aliases": [],
+      "description": "Manage profiles",
+      "usage": "docker mcp profile",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/profile/"
+    },
+    {
+      "command": "docker mcp secret",
+      "aliases": [],
+      "description": "Manage secrets in the local OS Keychain",
+      "usage": "docker mcp secret",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/secret/"
+    },
+    {
+      "command": "docker mcp server",
+      "aliases": [],
+      "description": "Manage servers",
+      "usage": "docker mcp server",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/server/"
+    },
+    {
+      "command": "docker mcp tools",
+      "aliases": [],
+      "description": "Manage tools",
+      "usage": "docker mcp tools",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/tools/"
+    },
+    {
+      "command": "docker mcp version",
+      "aliases": [],
+      "description": "Show the version information",
+      "usage": "docker mcp version",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/version/"
+    },
+    {
+      "command": "docker model bench",
+      "aliases": [],
+      "description": "Benchmark a model's performance at different concurrency levels",
+      "usage": "docker model bench MODEL",
+      "url": "https://docs.docker.com/reference/cli/docker/model/bench/"
+    },
+    {
+      "command": "docker model context",
+      "aliases": [],
+      "description": "Manage Docker Model Runner contexts",
+      "usage": "docker model context",
+      "url": "https://docs.docker.com/reference/cli/docker/model/context/"
+    },
+    {
+      "command": "docker model df",
+      "aliases": [],
+      "description": "Show Docker Model Runner disk usage",
+      "usage": "docker model df",
+      "url": "https://docs.docker.com/reference/cli/docker/model/df/"
+    },
+    {
+      "command": "docker model gateway",
+      "aliases": [],
+      "description": "Run an OpenAI-compatible LLM gateway",
+      "usage": "docker model gateway",
+      "url": "https://docs.docker.com/reference/cli/docker/model/gateway/"
+    },
+    {
+      "command": "docker model inspect",
+      "aliases": [],
+      "description": "Display detailed information on one model",
+      "usage": "docker model inspect MODEL",
+      "url": "https://docs.docker.com/reference/cli/docker/model/inspect/"
+    },
+    {
+      "command": "docker model install-runner",
+      "aliases": [],
+      "description": "Install Docker Model Runner (Docker Engine only)",
+      "usage": "docker model install-runner",
+      "url": "https://docs.docker.com/reference/cli/docker/model/install-runner/"
+    },
+    {
+      "command": "docker model launch",
+      "aliases": [],
+      "description": "Launch an app configured to use Docker Model Runner",
+      "usage": "docker model launch [APP] [-- APP_ARGS...]",
+      "url": "https://docs.docker.com/reference/cli/docker/model/launch/"
+    },
+    {
+      "command": "docker model list",
+      "aliases": [
+        "docker model ls"
+      ],
+      "description": "List the models pulled to your local environment",
+      "usage": "docker model list [OPTIONS] [MODEL]",
+      "url": "https://docs.docker.com/reference/cli/docker/model/list/"
+    },
+    {
+      "command": "docker model logs",
+      "aliases": [],
+      "description": "Fetch the Docker Model Runner logs",
+      "usage": "docker model logs [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/model/logs/"
+    },
+    {
+      "command": "docker model package",
+      "aliases": [],
+      "description": "Package a model into a Docker Model OCI artifact",
+      "usage": "docker model package (--gguf <path> | --safetensors-dir <path> | --dduf <path> | --from <model>) [--license <path>...] [--mmproj <path>] [--context-size <tokens>] [--push] MODEL",
+      "url": "https://docs.docker.com/reference/cli/docker/model/package/"
+    },
+    {
+      "command": "docker model ps",
+      "aliases": [],
+      "description": "List running models",
+      "usage": "docker model ps",
+      "url": "https://docs.docker.com/reference/cli/docker/model/ps/"
+    },
+    {
+      "command": "docker model pull",
+      "aliases": [],
+      "description": "Pull a model from Docker Hub or HuggingFace to your local environment",
+      "usage": "docker model pull MODEL",
+      "url": "https://docs.docker.com/reference/cli/docker/model/pull/"
+    },
+    {
+      "command": "docker model purge",
+      "aliases": [],
+      "description": "Remove all models",
+      "usage": "docker model purge [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/model/purge/"
+    },
+    {
+      "command": "docker model push",
+      "aliases": [],
+      "description": "Push a model to Docker Hub or Hugging Face",
+      "usage": "docker model push MODEL",
+      "url": "https://docs.docker.com/reference/cli/docker/model/push/"
+    },
+    {
+      "command": "docker model reinstall-runner",
+      "aliases": [],
+      "description": "Reinstall Docker Model Runner (Docker Engine only)",
+      "usage": "docker model reinstall-runner",
+      "url": "https://docs.docker.com/reference/cli/docker/model/reinstall-runner/"
+    },
+    {
+      "command": "docker model requests",
+      "aliases": [],
+      "description": "Fetch requests+responses from Docker Model Runner",
+      "usage": "docker model requests [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/model/requests/"
+    },
+    {
+      "command": "docker model restart-runner",
+      "aliases": [],
+      "description": "Restart Docker Model Runner (Docker Engine only)",
+      "usage": "docker model restart-runner",
+      "url": "https://docs.docker.com/reference/cli/docker/model/restart-runner/"
+    },
+    {
+      "command": "docker model rm",
+      "aliases": [],
+      "description": "Remove local models downloaded from Docker Hub",
+      "usage": "docker model rm [MODEL...]",
+      "url": "https://docs.docker.com/reference/cli/docker/model/rm/"
+    },
+    {
+      "command": "docker model run",
+      "aliases": [],
+      "description": "Run a model and interact with it using a submitted prompt or chat mode",
+      "usage": "docker model run MODEL [PROMPT]",
+      "url": "https://docs.docker.com/reference/cli/docker/model/run/"
+    },
+    {
+      "command": "docker model search",
+      "aliases": [],
+      "description": "Search for models on Docker Hub and HuggingFace",
+      "usage": "docker model search [OPTIONS] [TERM]",
+      "url": "https://docs.docker.com/reference/cli/docker/model/search/"
+    },
+    {
+      "command": "docker model show",
+      "aliases": [],
+      "description": "Show information for a model",
+      "usage": "docker model show MODEL",
+      "url": "https://docs.docker.com/reference/cli/docker/model/show/"
+    },
+    {
+      "command": "docker model skills",
+      "aliases": [],
+      "description": "Install Docker Model Runner skills for AI coding assistants",
+      "usage": "docker model skills",
+      "url": "https://docs.docker.com/reference/cli/docker/model/skills/"
+    },
+    {
+      "command": "docker model start-runner",
+      "aliases": [],
+      "description": "Start Docker Model Runner (Docker Engine only)",
+      "usage": "docker model start-runner",
+      "url": "https://docs.docker.com/reference/cli/docker/model/start-runner/"
+    },
+    {
+      "command": "docker model status",
+      "aliases": [],
+      "description": "Check if the Docker Model Runner is running",
+      "usage": "docker model status",
+      "url": "https://docs.docker.com/reference/cli/docker/model/status/"
+    },
+    {
+      "command": "docker model stop-runner",
+      "aliases": [],
+      "description": "Stop Docker Model Runner (Docker Engine only)",
+      "usage": "docker model stop-runner",
+      "url": "https://docs.docker.com/reference/cli/docker/model/stop-runner/"
+    },
+    {
+      "command": "docker model tag",
+      "aliases": [],
+      "description": "Tag a model",
+      "usage": "docker model tag SOURCE TARGET",
+      "url": "https://docs.docker.com/reference/cli/docker/model/tag/"
+    },
+    {
+      "command": "docker model uninstall-runner",
+      "aliases": [],
+      "description": "Uninstall Docker Model Runner (Docker Engine only)",
+      "usage": "docker model uninstall-runner",
+      "url": "https://docs.docker.com/reference/cli/docker/model/uninstall-runner/"
+    },
+    {
+      "command": "docker model unload",
+      "aliases": [
+        "docker model stop"
+      ],
+      "description": "Unload running models",
+      "usage": "docker model unload (MODEL [MODEL ...] [--backend BACKEND] | --all)",
+      "url": "https://docs.docker.com/reference/cli/docker/model/unload/"
+    },
+    {
+      "command": "docker model version",
+      "aliases": [],
+      "description": "Show the Docker Model Runner version",
+      "usage": "docker model version",
+      "url": "https://docs.docker.com/reference/cli/docker/model/version/"
+    },
+    {
+      "command": "docker network connect",
+      "aliases": [],
+      "description": "Connect a container to a network",
+      "usage": "docker network connect [OPTIONS] NETWORK CONTAINER",
+      "url": "https://docs.docker.com/reference/cli/docker/network/connect/",
+      "officialExample": "docker network connect multi-host-network container1"
+    },
+    {
+      "command": "docker network create",
+      "aliases": [],
+      "description": "Create a network",
+      "usage": "docker network create [OPTIONS] NETWORK",
+      "url": "https://docs.docker.com/reference/cli/docker/network/create/",
+      "officialExample": "docker network create --driver=bridge --subnet=192.168.0.0/16 br0"
+    },
+    {
+      "command": "docker network disconnect",
+      "aliases": [],
+      "description": "Disconnect a container from a network",
+      "usage": "docker network disconnect [OPTIONS] NETWORK CONTAINER",
+      "url": "https://docs.docker.com/reference/cli/docker/network/disconnect/",
+      "officialExample": "docker network disconnect multi-host-network container1"
+    },
+    {
+      "command": "docker network inspect",
+      "aliases": [],
+      "description": "Display detailed information on one or more networks",
+      "usage": "docker network inspect [OPTIONS] NETWORK [NETWORK...]",
+      "url": "https://docs.docker.com/reference/cli/docker/network/inspect/"
+    },
+    {
+      "command": "docker network ls",
+      "aliases": [
+        "docker network list"
+      ],
+      "description": "List networks",
+      "usage": "docker network ls [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/network/ls/",
+      "officialExample": "docker network ls"
+    },
+    {
+      "command": "docker network prune",
+      "aliases": [],
+      "description": "Remove all unused networks",
+      "usage": "docker network prune [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/network/prune/",
+      "officialExample": "docker network prune"
+    },
+    {
+      "command": "docker network rm",
+      "aliases": [
+        "docker network remove"
+      ],
+      "description": "Remove one or more networks",
+      "usage": "docker network rm NETWORK [NETWORK...]",
+      "url": "https://docs.docker.com/reference/cli/docker/network/rm/",
+      "officialExample": "docker network rm my-network"
+    },
+    {
+      "command": "docker node demote",
+      "aliases": [],
+      "description": "Demote one or more nodes from manager in the swarm",
+      "usage": "docker node demote NODE [NODE...]",
+      "url": "https://docs.docker.com/reference/cli/docker/node/demote/",
+      "officialExample": "docker node demote <node name>"
+    },
+    {
+      "command": "docker node inspect",
+      "aliases": [],
+      "description": "Display detailed information on one or more nodes",
+      "usage": "docker node inspect [OPTIONS] self|NODE [NODE...]",
+      "url": "https://docs.docker.com/reference/cli/docker/node/inspect/",
+      "officialExample": "docker node inspect swarm-manager"
+    },
+    {
+      "command": "docker node ls",
+      "aliases": [
+        "docker node list"
+      ],
+      "description": "List nodes in the swarm",
+      "usage": "docker node ls [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/node/ls/",
+      "officialExample": "docker node ls"
+    },
+    {
+      "command": "docker node promote",
+      "aliases": [],
+      "description": "Promote one or more nodes to manager in the swarm",
+      "usage": "docker node promote NODE [NODE...]",
+      "url": "https://docs.docker.com/reference/cli/docker/node/promote/",
+      "officialExample": "docker node promote <node name>"
+    },
+    {
+      "command": "docker node ps",
+      "aliases": [],
+      "description": "List tasks running on one or more nodes, defaults to current node",
+      "usage": "docker node ps [OPTIONS] [NODE...]",
+      "url": "https://docs.docker.com/reference/cli/docker/node/ps/",
+      "officialExample": "docker node ps swarm-manager1"
+    },
+    {
+      "command": "docker node rm",
+      "aliases": [
+        "docker node remove"
+      ],
+      "description": "Remove one or more nodes from the swarm",
+      "usage": "docker node rm [OPTIONS] NODE [NODE...]",
+      "url": "https://docs.docker.com/reference/cli/docker/node/rm/",
+      "officialExample": "docker node rm swarm-node-02"
+    },
+    {
+      "command": "docker node update",
+      "aliases": [],
+      "description": "Update a node",
+      "usage": "docker node update [OPTIONS] NODE",
+      "url": "https://docs.docker.com/reference/cli/docker/node/update/"
+    },
+    {
+      "command": "docker offload diagnose",
+      "aliases": [],
+      "description": "Print diagnostic information for Docker Offload",
+      "usage": "docker offload diagnose",
+      "url": "https://docs.docker.com/reference/cli/docker/offload/diagnose/"
+    },
+    {
+      "command": "docker offload start",
+      "aliases": [],
+      "description": "Start a Docker Offload session",
+      "usage": "docker offload start",
+      "url": "https://docs.docker.com/reference/cli/docker/offload/start/"
+    },
+    {
+      "command": "docker offload status",
+      "aliases": [],
+      "description": "Show the status of the Docker Offload connection",
+      "usage": "docker offload status [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/offload/status/"
+    },
+    {
+      "command": "docker offload stop",
+      "aliases": [],
+      "description": "Stop a Docker Offload session",
+      "usage": "docker offload stop [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/offload/stop/"
+    },
+    {
+      "command": "docker offload version",
+      "aliases": [],
+      "description": "Prints the version",
+      "usage": "docker offload version [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/offload/version/"
+    },
+    {
+      "command": "docker pass get",
+      "aliases": [],
+      "description": "Get a secret from a keystore.",
+      "usage": "docker pass get NAME",
+      "url": "https://docs.docker.com/reference/cli/docker/pass/get/"
+    },
+    {
+      "command": "docker pass ls",
+      "aliases": [],
+      "description": "List all secrets from local keychain.",
+      "usage": "docker pass ls",
+      "url": "https://docs.docker.com/reference/cli/docker/pass/ls/"
+    },
+    {
+      "command": "docker pass plugins",
+      "aliases": [],
+      "description": "Manage secrets engine plugins.",
+      "usage": "docker pass plugins",
+      "url": "https://docs.docker.com/reference/cli/docker/pass/plugins/"
+    },
+    {
+      "command": "docker pass rm",
+      "aliases": [],
+      "description": "Remove secrets from local keychain.",
+      "usage": "docker pass rm name1 name2 ... [flags]",
+      "url": "https://docs.docker.com/reference/cli/docker/pass/rm/",
+      "officialExample": "docker pass rm GH_TOKEN"
+    },
+    {
+      "command": "docker pass run",
+      "aliases": [],
+      "description": "Run a command with `se://` environment references resolved.",
+      "usage": "docker pass run -- CMD [ARGS...] [flags]",
+      "url": "https://docs.docker.com/reference/cli/docker/pass/run/",
+      "officialExample": "docker pass run --env-file .env -- ./my-binary"
+    },
+    {
+      "command": "docker pass set",
+      "aliases": [],
+      "description": "Set a secret",
+      "usage": "docker pass set id[=value] [flags]",
+      "url": "https://docs.docker.com/reference/cli/docker/pass/set/",
+      "officialExample": "docker pass set POSTGRES_PASSWORD=my-secret-password"
+    },
+    {
+      "command": "docker plugin create",
+      "aliases": [],
+      "description": "Create a plugin from a rootfs and configuration. Plugin data directory must contain config.json and rootfs directory.",
+      "usage": "docker plugin create [OPTIONS] PLUGIN PLUGIN-DATA-DIR",
+      "url": "https://docs.docker.com/reference/cli/docker/plugin/create/",
+      "officialExample": "docker plugin create plugin /home/pluginDir"
+    },
+    {
+      "command": "docker plugin disable",
+      "aliases": [],
+      "description": "Disable a plugin",
+      "usage": "docker plugin disable [OPTIONS] PLUGIN",
+      "url": "https://docs.docker.com/reference/cli/docker/plugin/disable/",
+      "officialExample": "docker plugin disable tiborvass/sample-volume-plugin"
+    },
+    {
+      "command": "docker plugin enable",
+      "aliases": [],
+      "description": "Enable a plugin",
+      "usage": "docker plugin enable [OPTIONS] PLUGIN",
+      "url": "https://docs.docker.com/reference/cli/docker/plugin/enable/",
+      "officialExample": "docker plugin enable tiborvass/sample-volume-plugin"
+    },
+    {
+      "command": "docker plugin inspect",
+      "aliases": [],
+      "description": "Display detailed information on one or more plugins",
+      "usage": "docker plugin inspect [OPTIONS] PLUGIN [PLUGIN...]",
+      "url": "https://docs.docker.com/reference/cli/docker/plugin/inspect/",
+      "officialExample": "docker plugin inspect tiborvass/sample-volume-plugin:latest"
+    },
+    {
+      "command": "docker plugin install",
+      "aliases": [],
+      "description": "Install a plugin",
+      "usage": "docker plugin install [OPTIONS] PLUGIN [KEY=VALUE...]",
+      "url": "https://docs.docker.com/reference/cli/docker/plugin/install/",
+      "officialExample": "docker plugin install vieux/sshfs DEBUG=1"
+    },
+    {
+      "command": "docker plugin ls",
+      "aliases": [
+        "docker plugin list"
+      ],
+      "description": "List plugins",
+      "usage": "docker plugin ls [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/plugin/ls/",
+      "officialExample": "docker plugin ls"
+    },
+    {
+      "command": "docker plugin push",
+      "aliases": [],
+      "description": "Push a plugin to a registry",
+      "usage": "docker plugin push [OPTIONS] PLUGIN[:TAG]",
+      "url": "https://docs.docker.com/reference/cli/docker/plugin/push/",
+      "officialExample": "docker plugin push user/plugin"
+    },
+    {
+      "command": "docker plugin rm",
+      "aliases": [
+        "docker plugin remove"
+      ],
+      "description": "Remove one or more plugins",
+      "usage": "docker plugin rm [OPTIONS] PLUGIN [PLUGIN...]",
+      "url": "https://docs.docker.com/reference/cli/docker/plugin/rm/",
+      "officialExample": "docker plugin rm tiborvass/sample-volume-plugin:latest"
+    },
+    {
+      "command": "docker plugin set",
+      "aliases": [],
+      "description": "Change settings for a plugin",
+      "usage": "docker plugin set PLUGIN KEY=VALUE [KEY=VALUE...]",
+      "url": "https://docs.docker.com/reference/cli/docker/plugin/set/",
+      "officialExample": "docker plugin set tiborvass/sample-volume-plugin DEBUG=1"
+    },
+    {
+      "command": "docker plugin upgrade",
+      "aliases": [],
+      "description": "Upgrade an existing plugin",
+      "usage": "docker plugin upgrade [OPTIONS] PLUGIN [REMOTE]",
+      "url": "https://docs.docker.com/reference/cli/docker/plugin/upgrade/",
+      "officialExample": "docker plugin upgrade vieux/sshfs:next vieux/sshfs:next"
+    },
+    {
+      "command": "docker sandbox create",
+      "aliases": [],
+      "description": "Create a sandbox for an agent",
+      "usage": "docker sandbox create [OPTIONS] AGENT WORKSPACE",
+      "url": "https://docs.docker.com/reference/cli/docker/sandbox/create/",
+      "officialExample": "docker sandbox create claude ~/my-project"
+    },
+    {
+      "command": "docker sandbox exec",
+      "aliases": [],
+      "description": "Execute a command inside a sandbox",
+      "usage": "docker sandbox exec [OPTIONS] SANDBOX COMMAND [ARG...]",
+      "url": "https://docs.docker.com/reference/cli/docker/sandbox/exec/",
+      "officialExample": "docker sandbox exec my-sandbox ls -la"
+    },
+    {
+      "command": "docker sandbox inspect",
+      "aliases": [],
+      "description": "Display detailed information on one or more sandboxes",
+      "usage": "docker sandbox inspect [OPTIONS] SANDBOX [SANDBOX...]",
+      "url": "https://docs.docker.com/reference/cli/docker/sandbox/inspect/",
+      "officialExample": "docker sandbox inspect abc123def"
+    },
+    {
+      "command": "docker sandbox ls",
+      "aliases": [
+        "docker sandbox list"
+      ],
+      "description": "List VMs",
+      "usage": "docker sandbox ls [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/sandbox/ls/",
+      "officialExample": "docker sandbox ls"
+    },
+    {
+      "command": "docker sandbox network",
+      "aliases": [],
+      "description": "Manage sandbox networking",
+      "usage": "docker sandbox network",
+      "url": "https://docs.docker.com/reference/cli/docker/sandbox/network/",
+      "officialExample": "docker sandbox network log"
+    },
+    {
+      "command": "docker sandbox reset",
+      "aliases": [],
+      "description": "Reset all VM sandboxes and clean up state",
+      "usage": "docker sandbox reset [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/sandbox/reset/",
+      "officialExample": "docker sandbox reset"
+    },
+    {
+      "command": "docker sandbox rm",
+      "aliases": [
+        "docker sandbox remove"
+      ],
+      "description": "Remove one or more sandboxes",
+      "usage": "docker sandbox rm SANDBOX [SANDBOX...]",
+      "url": "https://docs.docker.com/reference/cli/docker/sandbox/rm/",
+      "officialExample": "docker sandbox rm abc123def"
+    },
+    {
+      "command": "docker sandbox run",
+      "aliases": [],
+      "description": "Run an agent in a sandbox",
+      "usage": "docker sandbox run SANDBOX [-- AGENT_ARGS...] | AGENT [WORKSPACE] [EXTRA_WORKSPACE...] [-- AGENT_ARGS...]",
+      "url": "https://docs.docker.com/reference/cli/docker/sandbox/run/",
+      "officialExample": "docker sandbox run claude ."
+    },
+    {
+      "command": "docker sandbox save",
+      "aliases": [],
+      "description": "Save a snapshot of the sandbox as a template",
+      "usage": "docker sandbox save SANDBOX TAG",
+      "url": "https://docs.docker.com/reference/cli/docker/sandbox/save/"
+    },
+    {
+      "command": "docker sandbox stop",
+      "aliases": [],
+      "description": "Stop one or more sandboxes without removing them",
+      "usage": "docker sandbox stop SANDBOX [SANDBOX...]",
+      "url": "https://docs.docker.com/reference/cli/docker/sandbox/stop/",
+      "officialExample": "docker sandbox stop my-sandbox"
+    },
+    {
+      "command": "docker sandbox version",
+      "aliases": [],
+      "description": "Show sandbox version information",
+      "usage": "docker sandbox version",
+      "url": "https://docs.docker.com/reference/cli/docker/sandbox/version/",
+      "officialExample": "docker sandbox version"
+    },
+    {
+      "command": "docker scout attestation",
+      "aliases": [
+        "docker scout attest"
+      ],
+      "description": "Manage attestations on images",
+      "usage": "docker scout attestation",
+      "url": "https://docs.docker.com/reference/cli/docker/scout/attestation/"
+    },
+    {
+      "command": "docker scout cache",
+      "aliases": [],
+      "description": "Manage Docker Scout cache and temporary files",
+      "usage": "docker scout cache",
+      "url": "https://docs.docker.com/reference/cli/docker/scout/cache/"
+    },
+    {
+      "command": "docker scout compare",
+      "aliases": [
+        "docker scout diff"
+      ],
+      "description": "Compare two images and display differences (experimental)",
+      "usage": "docker scout compare --to IMAGE|DIRECTORY|ARCHIVE [IMAGE|DIRECTORY|ARCHIVE]",
+      "url": "https://docs.docker.com/reference/cli/docker/scout/compare/",
+      "officialExample": "docker scout compare --to namespace/repo:latest"
+    },
+    {
+      "command": "docker scout config",
+      "aliases": [],
+      "description": "Manage Docker Scout configuration",
+      "usage": "docker scout config [KEY] [VALUE]",
+      "url": "https://docs.docker.com/reference/cli/docker/scout/config/",
+      "officialExample": "docker scout config"
+    },
+    {
+      "command": "docker scout cves",
+      "aliases": [],
+      "description": "Display CVEs identified in a software artifact",
+      "usage": "docker scout cves [OPTIONS] [IMAGE|DIRECTORY|ARCHIVE]",
+      "url": "https://docs.docker.com/reference/cli/docker/scout/cves/",
+      "officialExample": "docker scout cves alpine"
+    },
+    {
+      "command": "docker scout enroll",
+      "aliases": [],
+      "description": "Enroll an organization with Docker Scout",
+      "usage": "docker scout enroll ORG",
+      "url": "https://docs.docker.com/reference/cli/docker/scout/enroll/"
+    },
+    {
+      "command": "docker scout environment",
+      "aliases": [
+        "docker scout env"
+      ],
+      "description": "Manage environments (experimental)",
+      "usage": "docker scout environment [ENVIRONMENT] [IMAGE]",
+      "url": "https://docs.docker.com/reference/cli/docker/scout/environment/",
+      "officialExample": "docker scout environment"
+    },
+    {
+      "command": "docker scout help",
+      "aliases": [],
+      "description": "Display information about the available commands",
+      "usage": "docker scout help",
+      "url": "https://docs.docker.com/reference/cli/docker/scout/help/"
+    },
+    {
+      "command": "docker scout integration",
+      "aliases": [],
+      "description": "Commands to list, configure, and delete Docker Scout integrations",
+      "usage": "docker scout integration",
+      "url": "https://docs.docker.com/reference/cli/docker/scout/integration/"
+    },
+    {
+      "command": "docker scout policy",
+      "aliases": [],
+      "description": "Evaluate local Rego policies against an image and display the results (experimental)",
+      "usage": "docker scout policy [IMAGE | REPO]",
+      "url": "https://docs.docker.com/reference/cli/docker/scout/policy/",
+      "officialExample": "docker scout policy dockerscoutpolicy/customers-api-service:0.0.1"
+    },
+    {
+      "command": "docker scout push",
+      "aliases": [],
+      "description": "Push an image or image index to Docker Scout",
+      "usage": "docker scout push IMAGE",
+      "url": "https://docs.docker.com/reference/cli/docker/scout/push/",
+      "officialExample": "docker scout push --org my-org registry.example.com/repo:tag"
+    },
+    {
+      "command": "docker scout quickview",
+      "aliases": [
+        "docker scout qv"
+      ],
+      "description": "Quick overview of an image",
+      "usage": "docker scout quickview [IMAGE|DIRECTORY|ARCHIVE]",
+      "url": "https://docs.docker.com/reference/cli/docker/scout/quickview/",
+      "officialExample": "docker scout quickview golang:1.19.4"
+    },
+    {
+      "command": "docker scout recommendations",
+      "aliases": [],
+      "description": "Display available base image updates and remediation recommendations",
+      "usage": "docker scout recommendations [IMAGE|DIRECTORY|ARCHIVE]",
+      "url": "https://docs.docker.com/reference/cli/docker/scout/recommendations/",
+      "officialExample": "docker scout recommendations golang:1.19.4"
+    },
+    {
+      "command": "docker scout repo",
+      "aliases": [],
+      "description": "Commands to list, enable, and disable Docker Scout on repositories",
+      "usage": "docker scout repo",
+      "url": "https://docs.docker.com/reference/cli/docker/scout/repo/"
+    },
+    {
+      "command": "docker scout sbom",
+      "aliases": [],
+      "description": "Generate or display SBOM of an image",
+      "usage": "docker scout sbom [IMAGE|DIRECTORY|ARCHIVE]",
+      "url": "https://docs.docker.com/reference/cli/docker/scout/sbom/",
+      "officialExample": "docker scout sbom --format list alpine"
+    },
+    {
+      "command": "docker scout stream",
+      "aliases": [],
+      "description": "Manage streams (experimental)",
+      "usage": "docker scout stream [STREAM] [IMAGE]",
+      "url": "https://docs.docker.com/reference/cli/docker/scout/stream/"
+    },
+    {
+      "command": "docker scout version",
+      "aliases": [],
+      "description": "Show Docker Scout version information",
+      "usage": "docker scout version",
+      "url": "https://docs.docker.com/reference/cli/docker/scout/version/",
+      "officialExample": "docker scout version"
+    },
+    {
+      "command": "docker scout vex",
+      "aliases": [],
+      "description": "Manage VEX attestations on images",
+      "usage": "docker scout vex",
+      "url": "https://docs.docker.com/reference/cli/docker/scout/vex/"
+    },
+    {
+      "command": "docker scout watch",
+      "aliases": [],
+      "description": "Watch repositories in a registry and push images and indexes to Docker Scout",
+      "usage": "docker scout watch",
+      "url": "https://docs.docker.com/reference/cli/docker/scout/watch/",
+      "officialExample": "docker scout watch --org my-org --repository registry-1.example.com/repo-1 --repository registry-2.example.com/repo-2"
+    },
+    {
+      "command": "docker secret create",
+      "aliases": [],
+      "description": "Create a secret from a file or STDIN as content",
+      "usage": "docker secret create [OPTIONS] SECRET [file|-]",
+      "url": "https://docs.docker.com/reference/cli/docker/secret/create/",
+      "officialExample": "docker secret create my_secret ./secret.json"
+    },
+    {
+      "command": "docker secret inspect",
+      "aliases": [],
+      "description": "Display detailed information on one or more secrets",
+      "usage": "docker secret inspect [OPTIONS] SECRET [SECRET...]",
+      "url": "https://docs.docker.com/reference/cli/docker/secret/inspect/",
+      "officialExample": "docker secret inspect secret.json"
+    },
+    {
+      "command": "docker secret ls",
+      "aliases": [
+        "docker secret list"
+      ],
+      "description": "List secrets",
+      "usage": "docker secret ls [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/secret/ls/",
+      "officialExample": "docker secret ls"
+    },
+    {
+      "command": "docker secret rm",
+      "aliases": [
+        "docker secret remove"
+      ],
+      "description": "Remove one or more secrets",
+      "usage": "docker secret rm SECRET [SECRET...]",
+      "url": "https://docs.docker.com/reference/cli/docker/secret/rm/",
+      "officialExample": "docker secret rm secret.json"
+    },
+    {
+      "command": "docker service create",
+      "aliases": [],
+      "description": "Create a new service",
+      "usage": "docker service create [OPTIONS] IMAGE [COMMAND] [ARG...]",
+      "url": "https://docs.docker.com/reference/cli/docker/service/create/",
+      "officialExample": "docker service create --name redis redis:7.4.1"
+    },
+    {
+      "command": "docker service inspect",
+      "aliases": [],
+      "description": "Display detailed information on one or more services",
+      "usage": "docker service inspect [OPTIONS] SERVICE [SERVICE...]",
+      "url": "https://docs.docker.com/reference/cli/docker/service/inspect/",
+      "officialExample": "docker service inspect redis"
+    },
+    {
+      "command": "docker service logs",
+      "aliases": [],
+      "description": "Fetch the logs of a service or task",
+      "usage": "docker service logs [OPTIONS] SERVICE|TASK",
+      "url": "https://docs.docker.com/reference/cli/docker/service/logs/"
+    },
+    {
+      "command": "docker service ls",
+      "aliases": [
+        "docker service list"
+      ],
+      "description": "List services",
+      "usage": "docker service ls [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/service/ls/",
+      "officialExample": "docker service ls"
+    },
+    {
+      "command": "docker service ps",
+      "aliases": [],
+      "description": "List the tasks of one or more services",
+      "usage": "docker service ps [OPTIONS] SERVICE [SERVICE...]",
+      "url": "https://docs.docker.com/reference/cli/docker/service/ps/",
+      "officialExample": "docker service ps redis"
+    },
+    {
+      "command": "docker service rm",
+      "aliases": [
+        "docker service remove"
+      ],
+      "description": "Remove one or more services",
+      "usage": "docker service rm SERVICE [SERVICE...]",
+      "url": "https://docs.docker.com/reference/cli/docker/service/rm/",
+      "officialExample": "docker service rm redis"
+    },
+    {
+      "command": "docker service rollback",
+      "aliases": [],
+      "description": "Revert changes to a service's configuration",
+      "usage": "docker service rollback [OPTIONS] SERVICE",
+      "url": "https://docs.docker.com/reference/cli/docker/service/rollback/",
+      "officialExample": "docker service rollback my-service"
+    },
+    {
+      "command": "docker service scale",
+      "aliases": [],
+      "description": "Scale one or multiple replicated services",
+      "usage": "docker service scale SERVICE=REPLICAS [SERVICE=REPLICAS...]",
+      "url": "https://docs.docker.com/reference/cli/docker/service/scale/",
+      "officialExample": "docker service scale frontend=50"
+    },
+    {
+      "command": "docker service update",
+      "aliases": [],
+      "description": "Update a service",
+      "usage": "docker service update [OPTIONS] SERVICE",
+      "url": "https://docs.docker.com/reference/cli/docker/service/update/",
+      "officialExample": "docker service update --limit-cpu 2 redis"
+    },
+    {
+      "command": "docker stack config",
+      "aliases": [],
+      "description": "Outputs the final config file, after doing merges and interpolations",
+      "usage": "docker stack config [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/stack/config/",
+      "officialExample": "docker stack config --compose-file docker-compose.yml --compose-file docker-compose.prod.yml"
+    },
+    {
+      "command": "docker stack deploy",
+      "aliases": [
+        "docker stack up"
+      ],
+      "description": "Deploy a new stack or update an existing stack",
+      "usage": "docker stack deploy [OPTIONS] STACK",
+      "url": "https://docs.docker.com/reference/cli/docker/stack/deploy/",
+      "officialExample": "docker stack deploy --compose-file docker-compose.yml vossibility"
+    },
+    {
+      "command": "docker stack ls",
+      "aliases": [
+        "docker stack list"
+      ],
+      "description": "List stacks",
+      "usage": "docker stack ls [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/stack/ls/",
+      "officialExample": "docker stack ls"
+    },
+    {
+      "command": "docker stack ps",
+      "aliases": [],
+      "description": "List the tasks in the stack",
+      "usage": "docker stack ps [OPTIONS] STACK",
+      "url": "https://docs.docker.com/reference/cli/docker/stack/ps/",
+      "officialExample": "docker stack ps voting"
+    },
+    {
+      "command": "docker stack rm",
+      "aliases": [
+        "docker stack remove",
+        "docker stack down"
+      ],
+      "description": "Remove one or more stacks",
+      "usage": "docker stack rm [OPTIONS] STACK [STACK...]",
+      "url": "https://docs.docker.com/reference/cli/docker/stack/rm/",
+      "officialExample": "docker stack rm myapp"
+    },
+    {
+      "command": "docker stack services",
+      "aliases": [],
+      "description": "List the services in the stack",
+      "usage": "docker stack services [OPTIONS] STACK",
+      "url": "https://docs.docker.com/reference/cli/docker/stack/services/",
+      "officialExample": "docker stack services myapp"
+    },
+    {
+      "command": "docker swarm ca",
+      "aliases": [],
+      "description": "Display and rotate the root CA",
+      "usage": "docker swarm ca [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/swarm/ca/",
+      "officialExample": "docker swarm ca"
+    },
+    {
+      "command": "docker swarm init",
+      "aliases": [],
+      "description": "Initialize a swarm",
+      "usage": "docker swarm init [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/swarm/init/",
+      "officialExample": "docker swarm init --advertise-addr 192.168.99.121"
+    },
+    {
+      "command": "docker swarm join",
+      "aliases": [],
+      "description": "Join a swarm as a node and/or manager",
+      "usage": "docker swarm join [OPTIONS] HOST:PORT",
+      "url": "https://docs.docker.com/reference/cli/docker/swarm/join/",
+      "officialExample": "docker swarm join --token SWMTKN-1-aabbccdd00112233aabbccdd00112233aabbccdd00112233aa-aabbccdd00112233... 192.168.99.121:2377"
+    },
+    {
+      "command": "docker swarm join-token",
+      "aliases": [],
+      "description": "Manage join tokens",
+      "usage": "docker swarm join-token [OPTIONS] (worker|manager)",
+      "url": "https://docs.docker.com/reference/cli/docker/swarm/join-token/",
+      "officialExample": "docker swarm join-token worker"
+    },
+    {
+      "command": "docker swarm leave",
+      "aliases": [],
+      "description": "Leave the swarm",
+      "usage": "docker swarm leave [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/swarm/leave/",
+      "officialExample": "docker swarm leave"
+    },
+    {
+      "command": "docker swarm unlock",
+      "aliases": [],
+      "description": "Unlock swarm",
+      "usage": "docker swarm unlock",
+      "url": "https://docs.docker.com/reference/cli/docker/swarm/unlock/",
+      "officialExample": "docker swarm unlock"
+    },
+    {
+      "command": "docker swarm unlock-key",
+      "aliases": [],
+      "description": "Manage the unlock key",
+      "usage": "docker swarm unlock-key [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/swarm/unlock-key/",
+      "officialExample": "docker swarm unlock-key"
+    },
+    {
+      "command": "docker swarm update",
+      "aliases": [],
+      "description": "Update the swarm",
+      "usage": "docker swarm update [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/swarm/update/",
+      "officialExample": "docker swarm update --cert-expiry 720h"
+    },
+    {
+      "command": "docker system df",
+      "aliases": [],
+      "description": "Show docker disk usage",
+      "usage": "docker system df [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/system/df/",
+      "officialExample": "docker system df"
+    },
+    {
+      "command": "docker system events",
+      "aliases": [
+        "docker events"
+      ],
+      "description": "Get real time events from the server",
+      "usage": "docker system events [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/system/events/",
+      "officialExample": "docker events"
+    },
+    {
+      "command": "docker system info",
+      "aliases": [
+        "docker info"
+      ],
+      "description": "Display system-wide information",
+      "usage": "docker system info [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/system/info/",
+      "officialExample": "docker info"
+    },
+    {
+      "command": "docker system prune",
+      "aliases": [],
+      "description": "Remove unused data",
+      "usage": "docker system prune [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/system/prune/",
+      "officialExample": "docker system prune"
+    },
+    {
+      "command": "docker trust inspect",
+      "aliases": [],
+      "description": "Return low-level information about keys and signatures",
+      "usage": "docker trust inspect IMAGE[:TAG] [IMAGE[:TAG]...]",
+      "url": "https://docs.docker.com/reference/cli/docker/trust/inspect/",
+      "officialExample": "docker trust inspect alpine:latest"
+    },
+    {
+      "command": "docker trust key",
+      "aliases": [],
+      "description": "Manage keys for signing Docker images",
+      "usage": "docker trust key",
+      "url": "https://docs.docker.com/reference/cli/docker/trust/key/"
+    },
+    {
+      "command": "docker trust revoke",
+      "aliases": [],
+      "description": "Remove trust for an image",
+      "usage": "docker trust revoke [OPTIONS] IMAGE[:TAG]",
+      "url": "https://docs.docker.com/reference/cli/docker/trust/revoke/",
+      "officialExample": "docker trust revoke example/trust-demo:red"
+    },
+    {
+      "command": "docker trust sign",
+      "aliases": [],
+      "description": "Sign an image",
+      "usage": "docker trust sign IMAGE:TAG",
+      "url": "https://docs.docker.com/reference/cli/docker/trust/sign/",
+      "officialExample": "docker trust sign example/trust-demo:v2"
+    },
+    {
+      "command": "docker trust signer",
+      "aliases": [],
+      "description": "Manage entities who can sign Docker images",
+      "usage": "docker trust signer",
+      "url": "https://docs.docker.com/reference/cli/docker/trust/signer/"
+    },
+    {
+      "command": "docker volume create",
+      "aliases": [],
+      "description": "Create a volume",
+      "usage": "docker volume create [OPTIONS] [VOLUME]",
+      "url": "https://docs.docker.com/reference/cli/docker/volume/create/",
+      "officialExample": "docker volume create hello"
+    },
+    {
+      "command": "docker volume inspect",
+      "aliases": [],
+      "description": "Display detailed information on one or more volumes",
+      "usage": "docker volume inspect [OPTIONS] VOLUME [VOLUME...]",
+      "url": "https://docs.docker.com/reference/cli/docker/volume/inspect/",
+      "officialExample": "docker volume inspect myvolume"
+    },
+    {
+      "command": "docker volume ls",
+      "aliases": [
+        "docker volume list"
+      ],
+      "description": "List volumes",
+      "usage": "docker volume ls [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/volume/ls/",
+      "officialExample": "docker volume ls"
+    },
+    {
+      "command": "docker volume prune",
+      "aliases": [],
+      "description": "Remove unused local volumes",
+      "usage": "docker volume prune [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/volume/prune/",
+      "officialExample": "docker volume prune"
+    },
+    {
+      "command": "docker volume rm",
+      "aliases": [
+        "docker volume remove"
+      ],
+      "description": "Remove one or more volumes",
+      "usage": "docker volume rm [OPTIONS] VOLUME [VOLUME...]",
+      "url": "https://docs.docker.com/reference/cli/docker/volume/rm/",
+      "officialExample": "docker volume rm hello"
+    },
+    {
+      "command": "docker volume update",
+      "aliases": [],
+      "description": "Update a volume (cluster volumes only)",
+      "usage": "docker volume update [OPTIONS] [VOLUME]",
+      "url": "https://docs.docker.com/reference/cli/docker/volume/update/"
+    },
+    {
+      "command": "docker buildx dap build",
+      "aliases": [],
+      "description": "Start a build",
+      "usage": "docker buildx dap build [OPTIONS] PATH | URL | -",
+      "url": "https://docs.docker.com/reference/cli/docker/buildx/dap/build/"
+    },
+    {
+      "command": "docker buildx debug build",
+      "aliases": [
+        "docker build",
+        "docker builder build",
+        "docker image build",
+        "docker buildx b"
+      ],
+      "description": "Start a build",
+      "usage": "docker buildx debug build [OPTIONS] PATH | URL | -",
+      "url": "https://docs.docker.com/reference/cli/docker/buildx/debug/build/"
+    },
+    {
+      "command": "docker buildx history export",
+      "aliases": [],
+      "description": "Export build records into Docker Desktop bundle",
+      "usage": "docker buildx history export [OPTIONS] [REF...]",
+      "url": "https://docs.docker.com/reference/cli/docker/buildx/history/export/"
+    },
+    {
+      "command": "docker buildx history import",
+      "aliases": [],
+      "description": "Import build records into Docker Desktop",
+      "usage": "docker buildx history import [OPTIONS] -",
+      "url": "https://docs.docker.com/reference/cli/docker/buildx/history/import/"
+    },
+    {
+      "command": "docker buildx history inspect",
+      "aliases": [],
+      "description": "Inspect a build record",
+      "usage": "docker buildx history inspect [OPTIONS] [REF]",
+      "url": "https://docs.docker.com/reference/cli/docker/buildx/history/inspect/",
+      "officialExample": "docker buildx history inspect"
+    },
+    {
+      "command": "docker buildx history logs",
+      "aliases": [],
+      "description": "Print the logs of a build record",
+      "usage": "docker buildx history logs [OPTIONS] [REF]",
+      "url": "https://docs.docker.com/reference/cli/docker/buildx/history/logs/",
+      "officialExample": "docker buildx history logs"
+    },
+    {
+      "command": "docker buildx history ls",
+      "aliases": [],
+      "description": "List build records",
+      "usage": "docker buildx history ls [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/buildx/history/ls/",
+      "officialExample": "docker buildx history ls"
+    },
+    {
+      "command": "docker buildx history open",
+      "aliases": [],
+      "description": "Open a build record in Docker Desktop",
+      "usage": "docker buildx history open [OPTIONS] [REF]",
+      "url": "https://docs.docker.com/reference/cli/docker/buildx/history/open/"
+    },
+    {
+      "command": "docker buildx history rm",
+      "aliases": [],
+      "description": "Remove build records",
+      "usage": "docker buildx history rm [OPTIONS] [REF...]",
+      "url": "https://docs.docker.com/reference/cli/docker/buildx/history/rm/"
+    },
+    {
+      "command": "docker buildx history trace",
+      "aliases": [],
+      "description": "Show the OpenTelemetry trace of a build record",
+      "usage": "docker buildx history trace [OPTIONS] [REF]",
+      "url": "https://docs.docker.com/reference/cli/docker/buildx/history/trace/"
+    },
+    {
+      "command": "docker buildx imagetools create",
+      "aliases": [],
+      "description": "Create a new image based on source images",
+      "usage": "docker buildx imagetools create [OPTIONS] [SOURCE...]",
+      "url": "https://docs.docker.com/reference/cli/docker/buildx/imagetools/create/",
+      "officialExample": "docker buildx imagetools create \\ --annotation \"index:org.opencontainers.image.authors=dvdksn\" --tag foo/bar:latest"
+    },
+    {
+      "command": "docker buildx imagetools inspect",
+      "aliases": [],
+      "description": "Show details of an image in the registry",
+      "usage": "docker buildx imagetools inspect [OPTIONS] NAME",
+      "url": "https://docs.docker.com/reference/cli/docker/buildx/imagetools/inspect/",
+      "officialExample": "docker buildx imagetools inspect alpine --format \"{{.Name}}\""
+    },
+    {
+      "command": "docker buildx policy eval",
+      "aliases": [],
+      "description": "Evaluate policy for a source",
+      "usage": "docker buildx policy eval [OPTIONS] source",
+      "url": "https://docs.docker.com/reference/cli/docker/buildx/policy/eval/"
+    },
+    {
+      "command": "docker buildx policy test",
+      "aliases": [],
+      "description": "Run policy tests",
+      "usage": "docker buildx policy test <path>",
+      "url": "https://docs.docker.com/reference/cli/docker/buildx/policy/test/"
+    },
+    {
+      "command": "docker compose alpha dry-run",
+      "aliases": [],
+      "description": "EXPERIMENTAL - Dry run command allow you to test a command without applying changes",
+      "usage": "docker compose alpha dry-run -- [COMMAND...]",
+      "url": "https://docs.docker.com/reference/cli/docker/compose/alpha/dry-run/"
+    },
+    {
+      "command": "docker compose alpha scale",
+      "aliases": [],
+      "description": "Scale services",
+      "usage": "docker compose alpha scale [SERVICE=REPLICAS...]",
+      "url": "https://docs.docker.com/reference/cli/docker/compose/alpha/scale/"
+    },
+    {
+      "command": "docker compose alpha watch",
+      "aliases": [],
+      "description": "Watch build context for service and rebuild/refresh containers when files are updated",
+      "usage": "docker compose alpha watch [SERVICE...]",
+      "url": "https://docs.docker.com/reference/cli/docker/compose/alpha/watch/"
+    },
+    {
+      "command": "docker compose bridge convert",
+      "aliases": [],
+      "description": "Convert compose files to Kubernetes manifests, Helm charts, or another model",
+      "usage": "docker compose bridge convert",
+      "url": "https://docs.docker.com/reference/cli/docker/compose/bridge/convert/"
+    },
+    {
+      "command": "docker compose bridge transformations",
+      "aliases": [],
+      "description": "Manage transformation images",
+      "usage": "docker compose bridge transformations",
+      "url": "https://docs.docker.com/reference/cli/docker/compose/bridge/transformations/"
+    },
+    {
+      "command": "docker desktop disable model-runner",
+      "aliases": [],
+      "description": "Disable Docker Model Runner",
+      "usage": "docker desktop disable model-runner",
+      "url": "https://docs.docker.com/reference/cli/docker/desktop/disable/model-runner/"
+    },
+    {
+      "command": "docker desktop enable model-runner",
+      "aliases": [],
+      "description": "Manage Docker Model Runner settings",
+      "usage": "docker desktop enable model-runner [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/desktop/enable/model-runner/"
+    },
+    {
+      "command": "docker desktop engine ls",
+      "aliases": [],
+      "description": "List available engines (Windows only)",
+      "usage": "docker desktop engine ls",
+      "url": "https://docs.docker.com/reference/cli/docker/desktop/engine/ls/"
+    },
+    {
+      "command": "docker desktop engine use",
+      "aliases": [],
+      "description": "Switch to Windows or Linux containers (Windows only)",
+      "usage": "docker desktop engine use NAME",
+      "url": "https://docs.docker.com/reference/cli/docker/desktop/engine/use/"
+    },
+    {
+      "command": "docker desktop kubernetes images",
+      "aliases": [],
+      "description": "List Kubernetes images used by Docker Desktop",
+      "usage": "docker desktop kubernetes images",
+      "url": "https://docs.docker.com/reference/cli/docker/desktop/kubernetes/images/"
+    },
+    {
+      "command": "docker dhi attestation get",
+      "aliases": [],
+      "description": "Get attestation for a Docker Hardened Image",
+      "usage": "docker dhi attestation get <image> <digest>",
+      "url": "https://docs.docker.com/reference/cli/docker/dhi/attestation/get/"
+    },
+    {
+      "command": "docker dhi attestation list",
+      "aliases": [],
+      "description": "List attestations for a Docker Hardened Image",
+      "usage": "docker dhi attestation list <image>",
+      "url": "https://docs.docker.com/reference/cli/docker/dhi/attestation/list/"
+    },
+    {
+      "command": "docker dhi attestation sbom",
+      "aliases": [],
+      "description": "Display the SPDX SBOM for a Docker Hardened Image",
+      "usage": "docker dhi attestation sbom <image>",
+      "url": "https://docs.docker.com/reference/cli/docker/dhi/attestation/sbom/"
+    },
+    {
+      "command": "docker dhi auth apk",
+      "aliases": [],
+      "description": "Create authentication details for DHI APK repositories",
+      "usage": "docker dhi auth apk",
+      "url": "https://docs.docker.com/reference/cli/docker/dhi/auth/apk/"
+    },
+    {
+      "command": "docker dhi auth deb",
+      "aliases": [],
+      "description": "Create authentication details for DHI DEB repositories",
+      "usage": "docker dhi auth deb",
+      "url": "https://docs.docker.com/reference/cli/docker/dhi/auth/deb/"
+    },
+    {
+      "command": "docker dhi catalog get",
+      "aliases": [],
+      "description": "Get details of a Docker Hardened Image",
+      "usage": "docker dhi catalog get <name>",
+      "url": "https://docs.docker.com/reference/cli/docker/dhi/catalog/get/"
+    },
+    {
+      "command": "docker dhi catalog list",
+      "aliases": [],
+      "description": "List available Docker Hardened Images",
+      "usage": "docker dhi catalog list",
+      "url": "https://docs.docker.com/reference/cli/docker/dhi/catalog/list/"
+    },
+    {
+      "command": "docker dhi customization build",
+      "aliases": [],
+      "description": "Manage customization builds",
+      "usage": "docker dhi customization build",
+      "url": "https://docs.docker.com/reference/cli/docker/dhi/customization/build/"
+    },
+    {
+      "command": "docker dhi customization create",
+      "aliases": [],
+      "description": "Create a new customization from YAML file",
+      "usage": "docker dhi customization create <file>",
+      "url": "https://docs.docker.com/reference/cli/docker/dhi/customization/create/"
+    },
+    {
+      "command": "docker dhi customization delete",
+      "aliases": [],
+      "description": "Delete one or more customizations",
+      "usage": "docker dhi customization delete <id> [id...]",
+      "url": "https://docs.docker.com/reference/cli/docker/dhi/customization/delete/"
+    },
+    {
+      "command": "docker dhi customization edit",
+      "aliases": [
+        "docker dhi customization update"
+      ],
+      "description": "Edit an existing customization from YAML file",
+      "usage": "docker dhi customization edit <file>",
+      "url": "https://docs.docker.com/reference/cli/docker/dhi/customization/edit/"
+    },
+    {
+      "command": "docker dhi customization get",
+      "aliases": [],
+      "description": "Get details of a specific customization",
+      "usage": "docker dhi customization get <id>",
+      "url": "https://docs.docker.com/reference/cli/docker/dhi/customization/get/"
+    },
+    {
+      "command": "docker dhi customization list",
+      "aliases": [],
+      "description": "List all customizations",
+      "usage": "docker dhi customization list",
+      "url": "https://docs.docker.com/reference/cli/docker/dhi/customization/list/"
+    },
+    {
+      "command": "docker dhi customization prepare",
+      "aliases": [],
+      "description": "Prepare a new customization YAML file from a DHI base image tag",
+      "usage": "docker dhi customization prepare <dhi-repository> <tag>",
+      "url": "https://docs.docker.com/reference/cli/docker/dhi/customization/prepare/"
+    },
+    {
+      "command": "docker dhi mirror list",
+      "aliases": [],
+      "description": "List all mirrored Docker Hardened Images",
+      "usage": "docker dhi mirror list",
+      "url": "https://docs.docker.com/reference/cli/docker/dhi/mirror/list/"
+    },
+    {
+      "command": "docker dhi mirror start",
+      "aliases": [],
+      "description": "Start mirroring Docker Hardened Images",
+      "usage": "docker dhi mirror start",
+      "url": "https://docs.docker.com/reference/cli/docker/dhi/mirror/start/"
+    },
+    {
+      "command": "docker dhi mirror stop",
+      "aliases": [],
+      "description": "Stop mirroring one or more Docker Hardened Images",
+      "usage": "docker dhi mirror stop <repository> [repository...]",
+      "url": "https://docs.docker.com/reference/cli/docker/dhi/mirror/stop/"
+    },
+    {
+      "command": "docker mcp catalog create",
+      "aliases": [],
+      "description": "Create a new catalog from a profile, legacy catalog, or community registry",
+      "usage": "docker mcp catalog create <oci-reference> [--server <ref1> --server <ref2> ...] [--from-profile <profile-id>] [--from-legacy-catalog <url>] [--from-community-registry <hostname>] [--title <title>]",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/catalog/create/"
+    },
+    {
+      "command": "docker mcp catalog list",
+      "aliases": [
+        "docker mcp catalog ls"
+      ],
+      "description": "List catalogs",
+      "usage": "docker mcp catalog list",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/catalog/list/"
+    },
+    {
+      "command": "docker mcp catalog ls",
+      "aliases": [],
+      "description": "List all configured catalogs",
+      "usage": "docker mcp catalog ls",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/catalog/ls/"
+    },
+    {
+      "command": "docker mcp catalog pull",
+      "aliases": [],
+      "description": "Pull a catalog from an OCI registry",
+      "usage": "docker mcp catalog pull <oci-reference>",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/catalog/pull/"
+    },
+    {
+      "command": "docker mcp catalog push",
+      "aliases": [],
+      "description": "Push a catalog to an OCI registry",
+      "usage": "docker mcp catalog push <oci-reference>",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/catalog/push/"
+    },
+    {
+      "command": "docker mcp catalog remove",
+      "aliases": [
+        "docker mcp catalog rm"
+      ],
+      "description": "Remove a catalog",
+      "usage": "docker mcp catalog remove <oci-reference>",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/catalog/remove/"
+    },
+    {
+      "command": "docker mcp catalog rm",
+      "aliases": [],
+      "description": "Remove a catalog",
+      "usage": "docker mcp catalog rm <name>",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/catalog/rm/"
+    },
+    {
+      "command": "docker mcp catalog server",
+      "aliases": [],
+      "description": "Manage servers in catalogs",
+      "usage": "docker mcp catalog server",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/catalog/server/"
+    },
+    {
+      "command": "docker mcp catalog show",
+      "aliases": [],
+      "description": "Show a catalog",
+      "usage": "docker mcp catalog show <oci-reference> [--pull <pull-option>]",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/catalog/show/"
+    },
+    {
+      "command": "docker mcp catalog tag",
+      "aliases": [],
+      "description": "Create a tagged copy of a catalog",
+      "usage": "docker mcp catalog tag SOURCE_IMAGE[:TAG] TARGET_IMAGE[:TAG]",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/catalog/tag/"
+    },
+    {
+      "command": "docker mcp client connect",
+      "aliases": [],
+      "description": "Connect the Docker MCP Toolkit to a client. Supported clients: claude-code claude-desktop cline codex continue crush cursor gemini goose gordon kiro lmstudio opencode sema4 vscode zed",
+      "usage": "docker mcp client connect [OPTIONS] <mcp-client>\n\nSupported clients: claude-code claude-desktop cline codex continue crush cursor gemini goose gordon kiro lmstudio opencode sema4 vscode zed",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/client/connect/"
+    },
+    {
+      "command": "docker mcp client disconnect",
+      "aliases": [],
+      "description": "Disconnect the Docker MCP Toolkit from a client. Supported clients: claude-code claude-desktop cline codex continue crush cursor gemini goose gordon kiro lmstudio opencode sema4 vscode zed",
+      "usage": "docker mcp client disconnect [OPTIONS] <mcp-client>\n\nSupported clients: claude-code claude-desktop cline codex continue crush cursor gemini goose gordon kiro lmstudio opencode sema4 vscode zed",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/client/disconnect/"
+    },
+    {
+      "command": "docker mcp client ls",
+      "aliases": [],
+      "description": "List client configurations",
+      "usage": "docker mcp client ls",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/client/ls/"
+    },
+    {
+      "command": "docker mcp feature disable",
+      "aliases": [],
+      "description": "Disable an experimental feature",
+      "usage": "docker mcp feature disable <feature-name>",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/feature/disable/"
+    },
+    {
+      "command": "docker mcp feature enable",
+      "aliases": [],
+      "description": "Enable an experimental feature",
+      "usage": "docker mcp feature enable <feature-name>",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/feature/enable/"
+    },
+    {
+      "command": "docker mcp feature list",
+      "aliases": [],
+      "description": "List all available features and their status",
+      "usage": "docker mcp feature list",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/feature/list/"
+    },
+    {
+      "command": "docker mcp feature ls",
+      "aliases": [
+        "docker mcp feature list"
+      ],
+      "description": "List all available features and their status",
+      "usage": "docker mcp feature ls",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/feature/ls/"
+    },
+    {
+      "command": "docker mcp gateway run",
+      "aliases": [],
+      "description": "Run the gateway",
+      "usage": "docker mcp gateway run",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/gateway/run/"
+    },
+    {
+      "command": "docker mcp profile config",
+      "aliases": [],
+      "description": "Update the configuration of a profile",
+      "usage": "docker mcp profile config <profile-id> [--set <config-arg1> <config-arg2> ...] [--get <config-key1> <config-key2> ...] [--del <config-arg1> <config-arg2> ...]",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/profile/config/"
+    },
+    {
+      "command": "docker mcp profile create",
+      "aliases": [],
+      "description": "Create a new profile of MCP servers",
+      "usage": "docker mcp profile create --name <name> [--id <id>] --server <ref1> --server <ref2> ... [--connect <client1> --connect <client2> ...]",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/profile/create/"
+    },
+    {
+      "command": "docker mcp profile export",
+      "aliases": [],
+      "description": "Export profile to file",
+      "usage": "docker mcp profile export <profile-id> <output-file>",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/profile/export/"
+    },
+    {
+      "command": "docker mcp profile import",
+      "aliases": [],
+      "description": "Import profile from file",
+      "usage": "docker mcp profile import <input-file>",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/profile/import/"
+    },
+    {
+      "command": "docker mcp profile list",
+      "aliases": [
+        "docker mcp profile ls"
+      ],
+      "description": "List profiles",
+      "usage": "docker mcp profile list",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/profile/list/"
+    },
+    {
+      "command": "docker mcp profile pull",
+      "aliases": [],
+      "description": "Pull profile from OCI registry",
+      "usage": "docker mcp profile pull <oci-reference>",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/profile/pull/"
+    },
+    {
+      "command": "docker mcp profile push",
+      "aliases": [],
+      "description": "Push profile to OCI registry",
+      "usage": "docker mcp profile push <profile-id> <oci-reference>",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/profile/push/"
+    },
+    {
+      "command": "docker mcp profile remove",
+      "aliases": [
+        "docker mcp profile rm"
+      ],
+      "description": "Remove a profile",
+      "usage": "docker mcp profile remove <profile-id>",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/profile/remove/"
+    },
+    {
+      "command": "docker mcp profile server",
+      "aliases": [],
+      "description": "Manage servers in profiles",
+      "usage": "docker mcp profile server",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/profile/server/"
+    },
+    {
+      "command": "docker mcp profile show",
+      "aliases": [],
+      "description": "Show profile",
+      "usage": "docker mcp profile show <profile-id>",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/profile/show/"
+    },
+    {
+      "command": "docker mcp profile tools",
+      "aliases": [],
+      "description": "Manage tool allowlist for servers in a profile",
+      "usage": "docker mcp profile tools <profile-id> [--enable <tool> ...] [--disable <tool> ...] [--enable-all <server> ...] [--disable-all <server> ...]",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/profile/tools/"
+    },
+    {
+      "command": "docker mcp secret ls",
+      "aliases": [],
+      "description": "List all secrets from the local OS Keychain as well as any active Secrets Engine provider",
+      "usage": "docker mcp secret ls",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/secret/ls/"
+    },
+    {
+      "command": "docker mcp secret rm",
+      "aliases": [],
+      "description": "Remove secrets from the local OS Keychain",
+      "usage": "docker mcp secret rm name1 name2 ...",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/secret/rm/"
+    },
+    {
+      "command": "docker mcp secret set",
+      "aliases": [],
+      "description": "Set a secret in the local OS Keychain",
+      "usage": "docker mcp secret set key[=value]",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/secret/set/"
+    },
+    {
+      "command": "docker mcp server init",
+      "aliases": [],
+      "description": "Initialize a new MCP server project",
+      "usage": "docker mcp server init <directory>",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/server/init/"
+    },
+    {
+      "command": "docker mcp tools call",
+      "aliases": [],
+      "description": "Call a tool",
+      "usage": "docker mcp tools call",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/tools/call/"
+    },
+    {
+      "command": "docker mcp tools count",
+      "aliases": [],
+      "description": "Count tools",
+      "usage": "docker mcp tools count",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/tools/count/"
+    },
+    {
+      "command": "docker mcp tools inspect",
+      "aliases": [],
+      "description": "Inspect a tool",
+      "usage": "docker mcp tools inspect",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/tools/inspect/"
+    },
+    {
+      "command": "docker mcp tools list",
+      "aliases": [
+        "docker mcp tools ls"
+      ],
+      "description": "List tools",
+      "usage": "docker mcp tools list",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/tools/list/"
+    },
+    {
+      "command": "docker mcp tools ls",
+      "aliases": [
+        "docker mcp tools list"
+      ],
+      "description": "List tools",
+      "usage": "docker mcp tools ls",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/tools/ls/"
+    },
+    {
+      "command": "docker model context create",
+      "aliases": [],
+      "description": "Create a named Model Runner context",
+      "usage": "docker model context create NAME",
+      "url": "https://docs.docker.com/reference/cli/docker/model/context/create/"
+    },
+    {
+      "command": "docker model context inspect",
+      "aliases": [],
+      "description": "Display detailed information about one or more contexts",
+      "usage": "docker model context inspect NAME [NAME...]",
+      "url": "https://docs.docker.com/reference/cli/docker/model/context/inspect/"
+    },
+    {
+      "command": "docker model context ls",
+      "aliases": [
+        "docker model context list"
+      ],
+      "description": "List Model Runner contexts",
+      "usage": "docker model context ls",
+      "url": "https://docs.docker.com/reference/cli/docker/model/context/ls/"
+    },
+    {
+      "command": "docker model context rm",
+      "aliases": [
+        "docker model context remove"
+      ],
+      "description": "Remove one or more Model Runner contexts",
+      "usage": "docker model context rm NAME [NAME...]",
+      "url": "https://docs.docker.com/reference/cli/docker/model/context/rm/"
+    },
+    {
+      "command": "docker model context use",
+      "aliases": [],
+      "description": "Set the active Model Runner context",
+      "usage": "docker model context use NAME",
+      "url": "https://docs.docker.com/reference/cli/docker/model/context/use/"
+    },
+    {
+      "command": "docker pass plugins 1password",
+      "aliases": [],
+      "description": "Manage the 1Password SDK plugin.",
+      "usage": "docker pass plugins 1password",
+      "url": "https://docs.docker.com/reference/cli/docker/pass/plugins/1password/"
+    },
+    {
+      "command": "docker pass plugins disable",
+      "aliases": [],
+      "description": "Disable a secrets engine plugin.",
+      "usage": "docker pass plugins disable <name>",
+      "url": "https://docs.docker.com/reference/cli/docker/pass/plugins/disable/"
+    },
+    {
+      "command": "docker pass plugins enable",
+      "aliases": [],
+      "description": "Enable a secrets engine plugin.",
+      "usage": "docker pass plugins enable <name>",
+      "url": "https://docs.docker.com/reference/cli/docker/pass/plugins/enable/"
+    },
+    {
+      "command": "docker pass plugins ls",
+      "aliases": [],
+      "description": "List registered secrets engine plugins.",
+      "usage": "docker pass plugins ls",
+      "url": "https://docs.docker.com/reference/cli/docker/pass/plugins/ls/"
+    },
+    {
+      "command": "docker sandbox create cagent",
+      "aliases": [],
+      "description": "Create a sandbox for cagent",
+      "usage": "docker sandbox create cagent WORKSPACE [EXTRA_WORKSPACE...]",
+      "url": "https://docs.docker.com/reference/cli/docker/sandbox/create/cagent/",
+      "officialExample": "docker sandbox create cagent ."
+    },
+    {
+      "command": "docker sandbox create claude",
+      "aliases": [],
+      "description": "Create a sandbox for claude",
+      "usage": "docker sandbox create claude WORKSPACE [EXTRA_WORKSPACE...]",
+      "url": "https://docs.docker.com/reference/cli/docker/sandbox/create/claude/",
+      "officialExample": "docker sandbox create claude ."
+    },
+    {
+      "command": "docker sandbox create codex",
+      "aliases": [],
+      "description": "Create a sandbox for codex",
+      "usage": "docker sandbox create codex WORKSPACE [EXTRA_WORKSPACE...]",
+      "url": "https://docs.docker.com/reference/cli/docker/sandbox/create/codex/",
+      "officialExample": "docker sandbox create codex ."
+    },
+    {
+      "command": "docker sandbox create copilot",
+      "aliases": [],
+      "description": "Create a sandbox for copilot",
+      "usage": "docker sandbox create copilot WORKSPACE [EXTRA_WORKSPACE...]",
+      "url": "https://docs.docker.com/reference/cli/docker/sandbox/create/copilot/"
+    },
+    {
+      "command": "docker sandbox create gemini",
+      "aliases": [],
+      "description": "Create a sandbox for gemini",
+      "usage": "docker sandbox create gemini WORKSPACE [EXTRA_WORKSPACE...]",
+      "url": "https://docs.docker.com/reference/cli/docker/sandbox/create/gemini/",
+      "officialExample": "docker sandbox create gemini ."
+    },
+    {
+      "command": "docker sandbox create kiro",
+      "aliases": [],
+      "description": "Create a sandbox for kiro",
+      "usage": "docker sandbox create kiro WORKSPACE [EXTRA_WORKSPACE...]",
+      "url": "https://docs.docker.com/reference/cli/docker/sandbox/create/kiro/",
+      "officialExample": "docker sandbox create kiro ."
+    },
+    {
+      "command": "docker sandbox create opencode",
+      "aliases": [],
+      "description": "Create a sandbox for opencode",
+      "usage": "docker sandbox create opencode WORKSPACE [EXTRA_WORKSPACE...]",
+      "url": "https://docs.docker.com/reference/cli/docker/sandbox/create/opencode/",
+      "officialExample": "docker sandbox create opencode ."
+    },
+    {
+      "command": "docker sandbox create shell",
+      "aliases": [],
+      "description": "Create a sandbox for shell",
+      "usage": "docker sandbox create shell WORKSPACE [EXTRA_WORKSPACE...]",
+      "url": "https://docs.docker.com/reference/cli/docker/sandbox/create/shell/"
+    },
+    {
+      "command": "docker sandbox network log",
+      "aliases": [],
+      "description": "Show network logs",
+      "usage": "docker sandbox network log",
+      "url": "https://docs.docker.com/reference/cli/docker/sandbox/network/log/",
+      "officialExample": "docker sandbox network log"
+    },
+    {
+      "command": "docker sandbox network proxy",
+      "aliases": [],
+      "description": "Manage proxy configuration for a sandbox",
+      "usage": "docker sandbox network proxy <sandbox> [OPTIONS]",
+      "url": "https://docs.docker.com/reference/cli/docker/sandbox/network/proxy/",
+      "officialExample": "docker sandbox network proxy my-sandbox --block-host example.com"
+    },
+    {
+      "command": "docker scout attestation add",
+      "aliases": [
+        "docker scout attest add"
+      ],
+      "description": "Add attestation to image",
+      "usage": "docker scout attestation add OPTIONS IMAGE [IMAGE...]",
+      "url": "https://docs.docker.com/reference/cli/docker/scout/attestation/add/"
+    },
+    {
+      "command": "docker scout attestation get",
+      "aliases": [
+        "docker scout attest get"
+      ],
+      "description": "Get attestation for image",
+      "usage": "docker scout attestation get OPTIONS IMAGE [DIGEST]",
+      "url": "https://docs.docker.com/reference/cli/docker/scout/attestation/get/"
+    },
+    {
+      "command": "docker scout attestation list",
+      "aliases": [
+        "docker scout attest list"
+      ],
+      "description": "List attestations for image",
+      "usage": "docker scout attestation list OPTIONS IMAGE",
+      "url": "https://docs.docker.com/reference/cli/docker/scout/attestation/list/"
+    },
+    {
+      "command": "docker scout cache df",
+      "aliases": [],
+      "description": "Show Docker Scout disk usage",
+      "usage": "docker scout cache df",
+      "url": "https://docs.docker.com/reference/cli/docker/scout/cache/df/",
+      "officialExample": "docker scout cache df"
+    },
+    {
+      "command": "docker scout cache prune",
+      "aliases": [],
+      "description": "Remove temporary or cached data",
+      "usage": "docker scout cache prune",
+      "url": "https://docs.docker.com/reference/cli/docker/scout/cache/prune/",
+      "officialExample": "docker scout cache prune"
+    },
+    {
+      "command": "docker scout integration configure",
+      "aliases": [],
+      "description": "Configure or update a new integration configuration",
+      "usage": "docker scout integration configure INTEGRATION",
+      "url": "https://docs.docker.com/reference/cli/docker/scout/integration/configure/"
+    },
+    {
+      "command": "docker scout integration delete",
+      "aliases": [],
+      "description": "Delete a new integration configuration",
+      "usage": "docker scout integration delete INTEGRATION",
+      "url": "https://docs.docker.com/reference/cli/docker/scout/integration/delete/"
+    },
+    {
+      "command": "docker scout integration list",
+      "aliases": [],
+      "description": "List integrations which can be installed",
+      "usage": "docker scout integration list [INTEGRATION]",
+      "url": "https://docs.docker.com/reference/cli/docker/scout/integration/list/"
+    },
+    {
+      "command": "docker scout policy publish",
+      "aliases": [],
+      "description": "Package local Rego policies into an OCI bundle and push it to a registry (experimental)",
+      "usage": "docker scout policy publish [OPTIONS] REFERENCE",
+      "url": "https://docs.docker.com/reference/cli/docker/scout/policy/publish/"
+    },
+    {
+      "command": "docker scout repo disable",
+      "aliases": [],
+      "description": "Disable Docker Scout",
+      "usage": "docker scout repo disable [REPOSITORY]",
+      "url": "https://docs.docker.com/reference/cli/docker/scout/repo/disable/",
+      "officialExample": "docker scout repo disable my/repository"
+    },
+    {
+      "command": "docker scout repo enable",
+      "aliases": [],
+      "description": "Enable Docker Scout",
+      "usage": "docker scout repo enable [REPOSITORY]",
+      "url": "https://docs.docker.com/reference/cli/docker/scout/repo/enable/",
+      "officialExample": "docker scout repo enable my/repository"
+    },
+    {
+      "command": "docker scout repo list",
+      "aliases": [],
+      "description": "List Docker Scout repositories",
+      "usage": "docker scout repo list",
+      "url": "https://docs.docker.com/reference/cli/docker/scout/repo/list/"
+    },
+    {
+      "command": "docker scout vex get",
+      "aliases": [],
+      "description": "Get VEX attestation for image",
+      "usage": "docker scout vex get OPTIONS IMAGE",
+      "url": "https://docs.docker.com/reference/cli/docker/scout/vex/get/"
+    },
+    {
+      "command": "docker trust key generate",
+      "aliases": [],
+      "description": "Generate and load a signing key-pair",
+      "usage": "docker trust key generate NAME",
+      "url": "https://docs.docker.com/reference/cli/docker/trust/key/generate/",
+      "officialExample": "docker trust key generate alice"
+    },
+    {
+      "command": "docker trust key load",
+      "aliases": [],
+      "description": "Load a private key file for signing",
+      "usage": "docker trust key load [OPTIONS] KEYFILE",
+      "url": "https://docs.docker.com/reference/cli/docker/trust/key/load/",
+      "officialExample": "docker trust key load alice.pem"
+    },
+    {
+      "command": "docker trust signer add",
+      "aliases": [],
+      "description": "Add a signer",
+      "usage": "docker trust signer add OPTIONS NAME REPOSITORY [REPOSITORY...]",
+      "url": "https://docs.docker.com/reference/cli/docker/trust/signer/add/",
+      "officialExample": "docker trust signer add alice example/trust-demo --key alice.crt"
+    },
+    {
+      "command": "docker trust signer remove",
+      "aliases": [],
+      "description": "Remove a signer",
+      "usage": "docker trust signer remove [OPTIONS] NAME REPOSITORY [REPOSITORY...]",
+      "url": "https://docs.docker.com/reference/cli/docker/trust/signer/remove/",
+      "officialExample": "docker trust signer remove alice example/trust-demo"
+    },
+    {
+      "command": "docker buildx history inspect attachment",
+      "aliases": [],
+      "description": "Inspect a build record attachment",
+      "usage": "docker buildx history inspect attachment [OPTIONS] [REF [DIGEST]]",
+      "url": "https://docs.docker.com/reference/cli/docker/buildx/history/inspect/attachment/",
+      "officialExample": "docker buildx history inspect attachment --platform linux/amd64"
+    },
+    {
+      "command": "docker compose bridge transformations create",
+      "aliases": [],
+      "description": "Create a new transformation",
+      "usage": "docker compose bridge transformations create [OPTION] PATH",
+      "url": "https://docs.docker.com/reference/cli/docker/compose/bridge/transformations/create/"
+    },
+    {
+      "command": "docker compose bridge transformations list",
+      "aliases": [
+        "docker compose bridge transformations ls"
+      ],
+      "description": "List available transformations",
+      "usage": "docker compose bridge transformations list",
+      "url": "https://docs.docker.com/reference/cli/docker/compose/bridge/transformations/list/"
+    },
+    {
+      "command": "docker dhi customization build get",
+      "aliases": [],
+      "description": "Get details of a build",
+      "usage": "docker dhi customization build get <repository> <name> <build-id>",
+      "url": "https://docs.docker.com/reference/cli/docker/dhi/customization/build/get/"
+    },
+    {
+      "command": "docker dhi customization build list",
+      "aliases": [],
+      "description": "List builds of a customization",
+      "usage": "docker dhi customization build list <repository> <name>",
+      "url": "https://docs.docker.com/reference/cli/docker/dhi/customization/build/list/"
+    },
+    {
+      "command": "docker dhi customization build logs",
+      "aliases": [],
+      "description": "Get logs of a build",
+      "usage": "docker dhi customization build logs <repository> <name> <build-id>",
+      "url": "https://docs.docker.com/reference/cli/docker/dhi/customization/build/logs/"
+    },
+    {
+      "command": "docker mcp catalog server add",
+      "aliases": [],
+      "description": "Add MCP servers to a catalog",
+      "usage": "docker mcp catalog server add <oci-reference> [--server <ref1> --server <ref2> ...]",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/catalog/server/add/"
+    },
+    {
+      "command": "docker mcp catalog server inspect",
+      "aliases": [],
+      "description": "Inspect a server in a catalog",
+      "usage": "docker mcp catalog server inspect <oci-reference> <server-name>",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/catalog/server/inspect/"
+    },
+    {
+      "command": "docker mcp catalog server ls",
+      "aliases": [
+        "docker mcp catalog server list"
+      ],
+      "description": "List servers in a catalog",
+      "usage": "docker mcp catalog server ls <oci-reference>",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/catalog/server/ls/"
+    },
+    {
+      "command": "docker mcp catalog server remove",
+      "aliases": [
+        "docker mcp catalog server rm"
+      ],
+      "description": "Remove MCP servers from a catalog",
+      "usage": "docker mcp catalog server remove <oci-reference> --name <name1> --name <name2> ...",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/catalog/server/remove/"
+    },
+    {
+      "command": "docker mcp profile server add",
+      "aliases": [],
+      "description": "Add MCP servers to a profile",
+      "usage": "docker mcp profile server add <profile-id> [--server <ref1> --server <ref2> ...]",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/profile/server/add/"
+    },
+    {
+      "command": "docker mcp profile server ls",
+      "aliases": [
+        "docker mcp profile server list"
+      ],
+      "description": "List servers across profiles",
+      "usage": "docker mcp profile server ls",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/profile/server/ls/"
+    },
+    {
+      "command": "docker mcp profile server remove",
+      "aliases": [
+        "docker mcp profile server rm"
+      ],
+      "description": "Remove MCP servers from a profile",
+      "usage": "docker mcp profile server remove <profile-id> --name <name1> --name <name2> ...",
+      "url": "https://docs.docker.com/reference/cli/docker/mcp/profile/server/remove/"
+    },
+    {
+      "command": "docker pass plugins 1password purge",
+      "aliases": [],
+      "description": "Disable the plugin and remove the stored 1Password service account token.",
+      "usage": "docker pass plugins 1password purge",
+      "url": "https://docs.docker.com/reference/cli/docker/pass/plugins/1password/purge/"
+    },
+    {
+      "command": "docker pass plugins 1password setup",
+      "aliases": [],
+      "description": "Set the 1Password service account token and enable the plugin.",
+      "usage": "docker pass plugins 1password setup",
+      "url": "https://docs.docker.com/reference/cli/docker/pass/plugins/1password/setup/"
+    }
+  ]
+}

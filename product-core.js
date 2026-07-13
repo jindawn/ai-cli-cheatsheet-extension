@@ -236,6 +236,7 @@
 
   const MATCH_FIELDS = [
     ["command", "命令", (item, options) => options.displayCmd || item.cmd],
+    ["aliases", "官方别名", (item) => (item.aliases || []).join(" ")],
     ["zh", "中文说明", (item) => item.zh],
     ["en", "英文说明", (item) => item.en],
     ["keywords", "关键词", (item) => (item.keywords || []).join(" ")],
@@ -262,6 +263,11 @@
   function explainMatch(item, query, options = {}) {
     const groups = splitQuery(query);
     if (!groups.length) return null;
+    const normalizedQuery = normalizeText(query);
+    const exactAlias = (item.aliases || []).find((alias) => normalizeText(alias) === normalizedQuery);
+    if (exactAlias) {
+      return { field: "aliases", term: normalizedQuery, value: exactAlias, label: "官方别名", matchType: "exact" };
+    }
     for (const [field, label, getValue] of MATCH_FIELDS) {
       const value = String(getValue(item, options) || "");
       for (const terms of groups) {
@@ -321,6 +327,7 @@
 
   function buildSearchIndex(item) {
     return {
+      aliases: (item.aliases || []).join(" "),
       zh: item.zh || "",
       en: item.en || "",
       keywords: (item.keywords || []).join(" "),
@@ -338,6 +345,7 @@
     const searchIndex = options.searchIndex || buildSearchIndex(item);
     const cmd = normalizeText(options.displayCmd || item.cmd);
     const cmdCompact = compactText(options.displayCmd || item.cmd);
+    const aliases = searchIndex.aliases || (item.aliases || []).join(" ");
     let score = -1;
 
     function fieldScore(value, term, exactScore, prefixScore, containsScore) {
@@ -353,6 +361,10 @@
       if (cmd === term || cmdCompact === termCompact) score = Math.max(score, SCORE.EXACT);
       else if (matchTypeInValue(options.displayCmd || item.cmd, term) === "prefix") score = Math.max(score, SCORE.PREFIX);
       else if (matchTypeInValue(options.displayCmd || item.cmd, term) === "contains") score = Math.max(score, SCORE.CONTAINS);
+      else if (matchTypeInValue(aliases, term)) score = Math.max(
+        score,
+        fieldScore(aliases, term, SCORE.EXACT - 25, SCORE.PREFIX - 50, SCORE.CONTAINS)
+      );
       else if (matchTypeInValue(searchIndex.zh, term)) score = Math.max(
         score,
         fieldScore(searchIndex.zh, term, SCORE.EXACT - 50, SCORE.PREFIX - 100, SCORE.ZH)

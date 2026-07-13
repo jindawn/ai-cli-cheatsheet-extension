@@ -101,7 +101,20 @@ window.CHEATSHEET_DATA["shell"] = {
         "version": "bash 3.2.57 (macOS)"
       }
     ],
-    "verificationStatus": "manual"
+    "verificationStatus": "manual",
+    "officialCoverage": {
+      "scope": "all-command-entrypoints",
+      "status": "unconfirmed",
+      "total": 0,
+      "covered": 0,
+      "checkedAt": "2026-07-02",
+      "sourceIds": [
+        "posix-shell-utilities",
+        "gnu-bash-manual",
+        "zsh-manual",
+        "bash-local-help"
+      ]
+    }
   },
   "items": [
     {

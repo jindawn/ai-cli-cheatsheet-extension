@@ -71,7 +71,19 @@ window.CHEATSHEET_DATA["opencode"] = {
           "examples"
         ]
       }
-    ]
+    ],
+    "officialCoverage": {
+      "scope": "all-command-entrypoints",
+      "status": "unconfirmed",
+      "total": 0,
+      "covered": 0,
+      "checkedAt": "2026-06-21",
+      "sourceIds": [
+        "opencode-tui",
+        "opencode-keybinds",
+        "opencode-cli"
+      ]
+    }
   },
   "items": [
     {

@@ -49,7 +49,18 @@ window.CHEATSHEET_DATA["iterm2"] = {
         ]
       }
     ],
-    "verificationStatus": "manual"
+    "verificationStatus": "manual",
+    "officialCoverage": {
+      "scope": "all-command-entrypoints",
+      "status": "unconfirmed",
+      "total": 0,
+      "covered": 0,
+      "checkedAt": "2026-07-02",
+      "sourceIds": [
+        "iterm2-docs",
+        "iterm2-local-help"
+      ]
+    }
   },
   "items": [
     {

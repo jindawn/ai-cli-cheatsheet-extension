@@ -37,7 +37,17 @@ window.CHEATSHEET_DATA["idea"] = {
           "option-semantics"
         ]
       }
-    ]
+    ],
+    "officialCoverage": {
+      "scope": "all-command-entrypoints",
+      "status": "unconfirmed",
+      "total": 0,
+      "covered": 0,
+      "checkedAt": "2026-06-21",
+      "sourceIds": [
+        "idea-macos-keymap"
+      ]
+    }
   },
   "items": [
     {

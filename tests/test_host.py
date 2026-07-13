@@ -609,6 +609,18 @@ class HostFileTests(unittest.TestCase):
             mock.patch.object(host, "DATA_DIR", str(self.data_dir)),
             mock.patch.object(host, "DATA_INDEX", str(self.data_dir / "index.js")),
             mock.patch.object(host, "PENDING_DIR", str(self.pending_dir)),
+            mock.patch.object(host, "official_inventory_path", return_value=str(pathlib.Path(self.temp.name) / "sample-inventory.json")),
+            mock.patch.object(host, "fetch_official_inventory", return_value={
+                "toolId": "sample",
+                "scope": "all-command-entrypoints",
+                "checkedAt": "2026-07-13",
+                "sourceIds": ["official-docs"],
+                "entries": [{
+                    "command": "sample", "aliases": [], "description": "Sample",
+                    "usage": "sample", "url": "https://example.com/docs/sample",
+                }],
+            }),
+            mock.patch.object(host, "official_inventory_missing", return_value=[]),
         ]
         for patcher in self.patchers:
             patcher.start()
@@ -625,6 +637,38 @@ class HostFileTests(unittest.TestCase):
             with self.assertRaises(OSError):
                 host.atomic_write(str(target), "new")
         self.assertEqual(target.read_text(encoding="utf-8"), "old")
+
+    def test_version_unchanged_still_checks_official_inventory(self):
+        dataset = valid_dataset()
+        dataset["meta"].update({"updatePolicy": "version-driven", "verifiedVersion": "1.2.3"})
+        (self.data_dir / "sample.js").write_text(host.render_data_file(dataset), encoding="utf-8")
+        signal = {"policy": "version-driven", "signalType": "local-version", "marker": "1.2.3", "detail": "sample --version"}
+        inventory = host.fetch_official_inventory.return_value
+        with mock.patch.object(host, "fetch_official_inventory", return_value=inventory) as inventory_probe, mock.patch.object(
+            host, "detect_update_signal", return_value=signal
+        ), mock.patch.object(host, "run_claude_query") as generate:
+            result = host.preview_update("sample", "Sample Tool")
+        inventory_probe.assert_called_once_with("sample")
+        generate.assert_not_called()
+        self.assertEqual(result["officialCoverage"]["status"], "complete")
+
+    def test_generic_inventory_uses_registered_first_party_urls(self):
+        dataset = valid_dataset()
+        generated = {
+            "sourceIds": ["official-docs"],
+            "entries": [{
+                "command": "sample run", "aliases": ["sample r"],
+                "description": "Run sample", "usage": "sample run",
+                "url": "https://example.com/docs/run",
+            }],
+        }
+        with mock.patch.dict(host.SOURCE_REGISTRY_BY_ID, {
+            "official-docs": {"urlPrefixes": ["https://example.com/docs"]},
+        }), mock.patch.object(host, "_run_generation_prompt", return_value=generated) as generate:
+            result = host.fetch_generic_official_inventory("sample", "Sample Tool", dataset)
+        generate.assert_called_once()
+        self.assertEqual(result["entries"][0]["aliases"], ["sample r"])
+        self.assertEqual(result["sourceIds"], ["official-docs"])
 
     def _stage_pending(self, token, tool_id, age_seconds=0):
         path = host.pending_path(token)
@@ -727,15 +771,15 @@ class HostFileTests(unittest.TestCase):
                 )
                 self.assertEqual(parsed["meta"]["id"], tool_id)
 
-    def test_manual_only_update_skips_model_without_deep_check(self):
+    def test_manual_only_update_checks_inventory_without_model_when_complete(self):
         dataset = valid_dataset()
         target = self.data_dir / "sample.js"
         target.write_text(host.render_data_file(dataset), encoding="utf-8")
         with mock.patch.object(host, "run_claude_query") as generate:
             result = host.preview_update("sample", "Sample Tool")
         generate.assert_not_called()
-        self.assertFalse(result["changed"])
-        self.assertIn("稳定资料策略", result["output"])
+        self.assertTrue(result["changed"])
+        self.assertEqual(result["officialCoverage"]["status"], "complete")
 
     def test_deep_check_update_of_shell_uses_aggregate_pipeline(self):
         # A force-deep-check update of Shell must regenerate via the batch
@@ -770,8 +814,8 @@ class HostFileTests(unittest.TestCase):
         ) as generate:
             result = host.preview_update("sample", "Sample Tool")
         generate.assert_not_called()
-        self.assertFalse(result["changed"])
-        self.assertIn("无需更新", result["output"])
+        self.assertTrue(result["changed"], "first inventory check should stage coverage metadata")
+        self.assertEqual(result["updateSignal"]["marker"], "1.2.3")
 
     def test_version_change_reuses_signal_for_generation(self):
         old_dataset = valid_dataset()
@@ -799,7 +843,8 @@ class HostFileTests(unittest.TestCase):
         self.assertTrue(result["changed"])
         self.assertEqual(result["updateSignal"]["marker"], "1.3.0")
         self.assertTrue(generate.call_args.args[3])
-        self.assertEqual(generate.call_args.kwargs["update_context"], signal)
+        self.assertEqual(generate.call_args.kwargs["update_context"]["marker"], signal["marker"])
+        self.assertEqual(generate.call_args.kwargs["update_context"]["officialMissing"], [])
 
     def test_uninstalled_version_driven_tool_falls_back_to_official_release(self):
         dataset = valid_dataset()

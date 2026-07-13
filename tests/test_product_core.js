@@ -14,6 +14,9 @@ const baseItem = {
 assert(core.scoreItem(baseItem, "/clear") > core.scoreItem(baseItem, "clear"));
 assert(core.scoreItem(baseItem, "重置") > 0, "Chinese synonym should match clear/reset");
 assert(core.scoreItem(baseItem, "会话") > 0, "Context should be searchable");
+const dockerPause = { cmd: "docker container pause", aliases: ["docker pause"], zh: "暂停容器", en: "Pause containers" };
+assert(core.scoreItem(dockerPause, "docker pause") > 0, "Official aliases should be searchable");
+assert.strictEqual(core.explainMatch(dockerPause, "docker pause").field, "aliases", "Alias matches should be explained");
 const qualityRanked = core.rankItems([
   { toolId: "x", itemId: "u", item: { ...baseItem, cmd: "/resume", evidenceStatus: "unverified" } },
   { toolId: "y", itemId: "v", item: { ...baseItem, cmd: "/resume", evidenceStatus: "verified", examples: [{ value: "x" }] } },

@@ -71,7 +71,18 @@ window.CHEATSHEET_DATA["antigravity-cli"] = {
         "url": "https://codelabs.developers.google.com/antigravity-cli-hands-on",
         "lastVerifiedAt": "2026-07-02"
       }
-    ]
+    ],
+    "officialCoverage": {
+      "scope": "all-command-entrypoints",
+      "status": "unconfirmed",
+      "total": 0,
+      "covered": 0,
+      "checkedAt": "2026-07-02",
+      "sourceIds": [
+        "antigravity-announcement",
+        "antigravity-repository"
+      ]
+    }
   },
   "items": [
     {

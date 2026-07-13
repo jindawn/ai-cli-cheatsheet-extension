@@ -40,7 +40,17 @@ window.CHEATSHEET_DATA["obsidian"] = {
         "lastVerifiedAt": "2026-07-12"
       }
     ],
-    "verificationStatus": "model-knowledge"
+    "verificationStatus": "model-knowledge",
+    "officialCoverage": {
+      "scope": "all-command-entrypoints",
+      "status": "unconfirmed",
+      "total": 0,
+      "covered": 0,
+      "checkedAt": "2026-07-12",
+      "sourceIds": [
+        "obsidian-help"
+      ]
+    }
   },
   "items": [
     {

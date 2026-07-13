@@ -9,7 +9,7 @@ const NATIVE_HOST = 'com.aicli.cheatsheet_updater';
 // headroom for that plus retries. Uses alarms (not setTimeout) so the deadline
 // survives service-worker recycling.
 const TASK_TIMEOUT_MINUTES = 20;
-const TASK_TIMEOUT_ERROR = `任务超过 ${TASK_TIMEOUT_MINUTES} 分钟无响应，已自动终止。可直接重试；若反复出现，请重新运行 native-host 安装脚本并完全重启浏览器。`;
+const TASK_TIMEOUT_ERROR = `任务超过 ${TASK_TIMEOUT_MINUTES} 分钟无响应，已自动终止。`;
 
 let nativePort = null;
 let taskActive = false;
@@ -48,7 +48,11 @@ function finalizeTask(response, mode) {
 
 function handleTaskTimeout(wasActive, status) {
   if (!wasActive && !status?.running) return; // stale alarm; task already finished
-  finalizeTask({ ok: false, error: TASK_TIMEOUT_ERROR }, status?.mode);
+  finalizeTask({ ok: false, error: TASK_TIMEOUT_ERROR, diagnostic: {
+    stage: 'update-task', code: 'task_timeout', reason: TASK_TIMEOUT_ERROR,
+    completedChecks: [],
+    actions: ['直接重试', '若反复出现，请重新运行 Native Host 安装脚本并完全重启浏览器'],
+  } }, status?.mode);
 }
 
 function cancelActiveTask(wasActive, status) {
@@ -167,7 +171,11 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
       nativePort = null;
       const errMsg = chrome.runtime.lastError?.message
         ?? '连接本地更新程序失败。请确认已运行安装脚本并完全重启浏览器。';
-      const response = { ok: false, error: errMsg };
+      const response = { ok: false, error: errMsg, diagnostic: {
+        stage: 'native-host', code: 'native_host_unavailable', reason: errMsg,
+        completedChecks: [],
+        actions: ['运行 native-host 安装脚本', '确认扩展 ID 与 Native Host 清单一致', '完全退出并重启浏览器'],
+      } };
       setSessionStatus({ running: false, result: response, mode, finishedAt: Date.now() });
       broadcastCompletion(response);
     });

@@ -27,6 +27,7 @@ const entries = Object.entries(window.CHEATSHEET_DATA).flatMap(([toolId, tool]) 
 const goldenQueries = [
   { query: "恢复会话", expected: { cmd: "/resume" } },
   { query: "查看容器", expected: { toolId: "docker" } },
+  { query: "docker pause", expected: { toolId: "docker", cmd: "docker container pause" } },
   { query: "撤销提交", expected: { toolId: "git", cmd: "revert" } },
   { query: "命令面板", expected: { cmd: "Cmd+Shift+P" } },
   { query: "安装软件包", expected: { toolId: "homebrew", cmd: "brew install" } },

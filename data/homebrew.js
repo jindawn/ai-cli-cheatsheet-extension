@@ -52,7 +52,18 @@ window.CHEATSHEET_DATA["homebrew"] = {
         "lastVerifiedAt": "2026-07-02"
       }
     ],
-    "verificationStatus": "manual"
+    "verificationStatus": "manual",
+    "officialCoverage": {
+      "scope": "all-command-entrypoints",
+      "status": "unconfirmed",
+      "total": 0,
+      "covered": 0,
+      "checkedAt": "2026-07-02",
+      "sourceIds": [
+        "brew-help",
+        "brew-docs"
+      ]
+    }
   },
   "items": [
     {

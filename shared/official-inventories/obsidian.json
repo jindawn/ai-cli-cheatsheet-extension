@@ -1,0 +1,329 @@
+{
+  "schemaVersion": 2,
+  "toolId": "obsidian",
+  "scope": "all-command-entrypoints",
+  "checkedAt": "2026-07-13",
+  "sourceIds": [
+    "obsidian-help"
+  ],
+  "adapter": {
+    "id": "obsidian-default-keymap-table",
+    "kind": "default-keymap-table",
+    "version": 1
+  },
+  "closure": {
+    "status": "closed",
+    "entryCount": 15,
+    "components": [
+      "obsidian"
+    ],
+    "platforms": [
+      "mac",
+      "windows",
+      "linux"
+    ],
+    "proof": "deterministic-adapter-snapshot"
+  },
+  "entries": [
+    {
+      "command": "Alt+Down",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "obsidian",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Move line down",
+      "usage": "Alt+Down",
+      "options": [],
+      "officialExamples": [
+        "光标放在行内，按下 Alt+Down"
+      ],
+      "url": "https://obsidian.md/help · Alt+Down"
+    },
+    {
+      "command": "Alt+Up",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "obsidian",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Move line up",
+      "usage": "Alt+Up",
+      "options": [],
+      "officialExamples": [
+        "在编辑模式下，光标置于某行，按下 Alt+Up"
+      ],
+      "url": "https://obsidian.md/help · Alt+Up"
+    },
+    {
+      "command": "Ctrl/Cmd+B",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "obsidian",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Bold",
+      "usage": "Ctrl/Cmd+B",
+      "options": [],
+      "officialExamples": [
+        "选中文字后按下 Ctrl/Cmd+B，或直接按 Ctrl/Cmd+B 并输入内容"
+      ],
+      "url": "https://obsidian.md/help · Ctrl/Cmd+B"
+    },
+    {
+      "command": "Ctrl/Cmd+E",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "obsidian",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Toggle edit/view mode",
+      "usage": "Ctrl/Cmd+E",
+      "options": [],
+      "officialExamples": [
+        "按下 Ctrl/Cmd+E"
+      ],
+      "url": "https://obsidian.md/help · Ctrl/Cmd+E"
+    },
+    {
+      "command": "Ctrl/Cmd+F",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "obsidian",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Search current file",
+      "usage": "Ctrl/Cmd+F",
+      "options": [],
+      "officialExamples": [
+        "按下 Ctrl/Cmd+F 并输入关键词"
+      ],
+      "url": "https://obsidian.md/help · Ctrl/Cmd+F"
+    },
+    {
+      "command": "Ctrl/Cmd+H",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "obsidian",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Find and replace in current file",
+      "usage": "Ctrl/Cmd+H",
+      "options": [],
+      "officialExamples": [
+        "按下 Ctrl/Cmd+H，输入查找词和替换词，然后选择“全部替换”"
+      ],
+      "url": "https://obsidian.md/help · Ctrl/Cmd+H"
+    },
+    {
+      "command": "Ctrl/Cmd+I",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "obsidian",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Italic",
+      "usage": "Ctrl/Cmd+I",
+      "options": [],
+      "officialExamples": [
+        "选中文字后按下 Ctrl/Cmd+I，或光标后直接按 Ctrl/Cmd+I 输入"
+      ],
+      "url": "https://obsidian.md/help · Ctrl/Cmd+I"
+    },
+    {
+      "command": "Ctrl/Cmd+K",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "obsidian",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Insert markdown link",
+      "usage": "Ctrl/Cmd+K",
+      "options": [],
+      "officialExamples": [
+        "选中文字（如“官网”）后按下 Ctrl/Cmd+K，再输入 URL"
+      ],
+      "url": "https://obsidian.md/help · Ctrl/Cmd+K"
+    },
+    {
+      "command": "Ctrl/Cmd+N",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "obsidian",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Create new note",
+      "usage": "Ctrl/Cmd+N",
+      "options": [],
+      "officialExamples": [
+        "按下 Ctrl/Cmd+N"
+      ],
+      "url": "https://obsidian.md/help · Ctrl/Cmd+N"
+    },
+    {
+      "command": "Ctrl/Cmd+O",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "obsidian",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Open quick switcher",
+      "usage": "Ctrl/Cmd+O",
+      "options": [],
+      "officialExamples": [
+        "按下 Ctrl/Cmd+O，输入笔记标题片段后回车"
+      ],
+      "url": "https://obsidian.md/help · Ctrl/Cmd+O"
+    },
+    {
+      "command": "Ctrl/Cmd+P",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "obsidian",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Open command palette",
+      "usage": "Ctrl/Cmd+P",
+      "options": [],
+      "officialExamples": [
+        "按下 Ctrl/Cmd+P"
+      ],
+      "url": "https://obsidian.md/help · Ctrl/Cmd+P"
+    },
+    {
+      "command": "Ctrl/Cmd+S",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "obsidian",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Save current file",
+      "usage": "Ctrl/Cmd+S",
+      "options": [],
+      "officialExamples": [
+        "按下 Ctrl/Cmd+S"
+      ],
+      "url": "https://obsidian.md/help · Ctrl/Cmd+S"
+    },
+    {
+      "command": "Ctrl/Cmd+Shift+F",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "obsidian",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Search in all files",
+      "usage": "Ctrl/Cmd+Shift+F",
+      "options": [],
+      "officialExamples": [
+        "按下 Ctrl/Cmd+Shift+F 输入关键词"
+      ],
+      "url": "https://obsidian.md/help · Ctrl/Cmd+Shift+F"
+    },
+    {
+      "command": "Ctrl/Cmd+Shift+Z",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "obsidian",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Redo",
+      "usage": "Ctrl/Cmd+Shift+Z",
+      "options": [],
+      "officialExamples": [
+        "按下 Ctrl/Cmd+Shift+Z"
+      ],
+      "url": "https://obsidian.md/help · Ctrl/Cmd+Shift+Z"
+    },
+    {
+      "command": "Ctrl/Cmd+Z",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "obsidian",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Undo",
+      "usage": "Ctrl/Cmd+Z",
+      "options": [],
+      "officialExamples": [
+        "按下 Ctrl/Cmd+Z"
+      ],
+      "url": "https://obsidian.md/help · Ctrl/Cmd+Z"
+    }
+  ]
+}

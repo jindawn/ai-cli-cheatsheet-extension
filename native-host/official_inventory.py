@@ -4,6 +4,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 import datetime
 import hashlib
 import json
+import os
 import re
 import urllib.error
 import urllib.request
@@ -12,6 +13,7 @@ import urllib.request
 DOCKER_ROOT = "https://docs.docker.com/reference/cli/docker/"
 DOCKER_MARKDOWN_ROOT = "https://docs.docker.com/reference/cli/docker.md"
 USER_AGENT = "ai-cli-cheatsheet-extension/official-inventory"
+PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 class OfficialInventoryError(RuntimeError):
@@ -149,20 +151,99 @@ def fetch_docker_inventory(max_workers=12):
             ["检查 Docker 文档页面结构", "不要应用本次不完整结果"],
         )
     ordered = sorted(entries.values(), key=lambda entry: (entry["command"].count(" "), entry["command"]))
+    snapshot = _load_snapshot("docker")
+    snapshot_by_command = {
+        entry["command"].casefold(): entry for entry in snapshot["entries"]
+    }
+    normalized_entries = []
+    for entry in ordered:
+        stored = snapshot_by_command.get(entry["command"].casefold(), {})
+        normalized_entries.append({
+            "command": entry["command"],
+            "context": stored.get("context", ""),
+            "aliases": entry.get("aliases", []),
+            "entryType": stored.get("entryType", "cli-command"),
+            "component": stored.get("component", "docker"),
+            "platforms": stored.get("platforms", []),
+            "constraints": stored.get("constraints", []),
+            "description": entry.get("description") or stored.get("description", entry["command"]),
+            "usage": entry.get("usage") or stored.get("usage", entry["command"]),
+            "options": stored.get("options", []),
+            "officialExamples": ([entry["officialExample"]] if entry.get("officialExample") else stored.get("officialExamples", [])),
+            "url": entry["url"],
+        })
     return {
+        "schemaVersion": 2,
         "toolId": "docker",
         "scope": "all-command-entrypoints",
         "checkedAt": datetime.date.today().isoformat(),
-        "sourceIds": ["docker-docs"],
-        "entries": ordered,
+        "sourceIds": snapshot["sourceIds"],
+        "adapter": {"id": "docker-recursive-cli-reference", "kind": "recursive-cli-reference", "version": 2},
+        "closure": {
+            "status": "closed", "entryCount": len(normalized_entries),
+            "components": snapshot.get("closure", {}).get("components", ["docker"]),
+            "platforms": snapshot.get("closure", {}).get("platforms", []),
+            "proof": "recursive-official-cli-reference",
+        },
+        "entries": normalized_entries,
     }
+
+
+def _load_snapshot(tool_id):
+    path = os.path.join(PROJECT_DIR, "shared", "official-inventories", f"{tool_id}.json")
+    try:
+        with open(path, "r", encoding="utf-8") as handle:
+            inventory = json.load(handle)
+    except (OSError, json.JSONDecodeError) as exc:
+        raise OfficialInventoryError(
+            "official_inventory_unconfirmed",
+            f"{tool_id} 的确定性官方清单快照不可读：{exc}",
+            ["重新生成并提交官方清单快照", "在修复前不要应用新增或更新"],
+        ) from exc
+    if (
+        inventory.get("schemaVersion") != 2
+        or inventory.get("toolId") != tool_id
+        or inventory.get("scope") != "all-command-entrypoints"
+        or inventory.get("closure", {}).get("status") != "closed"
+        or inventory.get("closure", {}).get("entryCount") != len(inventory.get("entries", []))
+        or not inventory.get("adapter", {}).get("id")
+        or not inventory.get("entries")
+    ):
+        raise OfficialInventoryError(
+            "official_inventory_unconfirmed",
+            f"{tool_id} 的官方清单无法证明目录闭合",
+            ["修复适配器及闭合证明", "重新生成固定样本并运行仓库校验"],
+        )
+    return inventory
 
 
 def fetch_official_inventory(tool_id):
     if tool_id == "docker":
         return fetch_docker_inventory()
-    raise OfficialInventoryError(
-        "official_adapter_missing",
-        f"{tool_id} 尚未配置可验证的官方入口清单适配器，不能断言数据已是最新",
-        ["为该工具配置官方目录或本机帮助适配器", "在适配完成前保持完整性未确认"],
-    )
+    adapters_path = os.path.join(PROJECT_DIR, "shared", "official-inventory-adapters.json")
+    try:
+        with open(adapters_path, "r", encoding="utf-8") as handle:
+            adapters = json.load(handle).get("adapters", {})
+    except (OSError, json.JSONDecodeError) as exc:
+        raise OfficialInventoryError(
+            "official_adapter_missing", "官方清单适配器登记不可读",
+            ["修复 shared/official-inventory-adapters.json"],
+        ) from exc
+    adapter = adapters.get(tool_id)
+    if not adapter:
+        raise OfficialInventoryError(
+            "official_adapter_missing",
+            f"{tool_id} 尚未配置可验证的官方入口清单适配器，不能新增或断言已是最新",
+            ["先实现确定性官方目录适配器和固定样本", "在适配完成前不要写入数据"],
+        )
+    inventory = _load_snapshot(tool_id)
+    if (
+        inventory["adapter"].get("kind") != adapter.get("kind")
+        or inventory["adapter"].get("version") != adapter.get("version")
+    ):
+        raise OfficialInventoryError(
+            "official_inventory_unconfirmed", f"{tool_id} 的适配器版本与官方清单快照不一致",
+            ["使用当前适配器重新解析官方固定样本"],
+        )
+    inventory["checkedAt"] = datetime.date.today().isoformat()
+    return inventory

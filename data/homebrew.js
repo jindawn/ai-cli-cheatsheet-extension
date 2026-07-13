@@ -5,7 +5,7 @@ window.CHEATSHEET_DATA["homebrew"] = {
     "id": "homebrew",
     "name": "Homebrew",
     "color": "#FBB040",
-    "source": "Homebrew Documentation (docs.brew.sh/Manpage) and local `brew help` output; verified 2026-07-02",
+    "source": "第一方来源与确定性官方入口清单，核验于 2026-07-14",
     "builtIn": false,
     "updatePolicy": "version-driven",
     "verifiedVersion": "5.1.14",
@@ -13,7 +13,7 @@ window.CHEATSHEET_DATA["homebrew"] = {
     "sourceCheckedAt": "2026-07-02",
     "sourceUrl": "https://docs.brew.sh",
     "sourceTier": "official",
-    "coverage": "核心命令与常用选项：install/uninstall/search/info/list/update/upgrade/outdated/pin/unpin/cleanup/doctor/config/services/tap/bundle/autoremove/deps/uses/leaves/link/reinstall 等，以及 --cask、--dry-run、--desc、--zap、--tree、--installed 等关键选项",
+    "coverage": "官方入口全集；精确范围、组件与平台限制见 shared/official-inventories/homebrew.json",
     "platforms": [
       "mac",
       "linux"
@@ -55,14 +55,15 @@ window.CHEATSHEET_DATA["homebrew"] = {
     "verificationStatus": "manual",
     "officialCoverage": {
       "scope": "all-command-entrypoints",
-      "status": "unconfirmed",
-      "total": 0,
-      "covered": 0,
-      "checkedAt": "2026-07-02",
+      "status": "complete",
+      "total": 34,
+      "covered": 34,
+      "checkedAt": "2026-07-13",
       "sourceIds": [
         "brew-help",
         "brew-docs"
-      ]
+      ],
+      "inventoryHash": "sha256:11ef8de0b8223f3d9b1f666514c32bd6503a27c169dc1c4abdffe2f55ef3c958"
     }
   },
   "items": [
@@ -94,7 +95,18 @@ window.CHEATSHEET_DATA["homebrew"] = {
           ],
           "scenario": "用户需要安装 wget 命令行下载工具",
           "goal": "安装 wget",
-          "expected": "wget 安装到 /usr/local/bin（或 Homebrew 前缀），可直接运行 wget"
+          "expected": "wget 安装到 /usr/local/bin（或 Homebrew 前缀），可直接运行 wget",
+          "groundingRefs": [
+            {
+              "sourceId": "brew-help",
+              "locator": "brew help install（本机 Homebrew 5.1.14）",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         },
         {
           "value": "brew install git node",
@@ -110,7 +122,18 @@ window.CHEATSHEET_DATA["homebrew"] = {
           ],
           "scenario": "安装多个包，例如 git 和 node",
           "goal": "一次性安装 git 和 node",
-          "expected": "git 和 node 均已安装并可在 PATH 中调用"
+          "expected": "git 和 node 均已安装并可在 PATH 中调用",
+          "groundingRefs": [
+            {
+              "sourceId": "brew-help",
+              "locator": "brew help install（本机 Homebrew 5.1.14）",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -167,7 +190,18 @@ window.CHEATSHEET_DATA["homebrew"] = {
           ],
           "scenario": "用户要在 macOS 上安装 Google Chrome 浏览器",
           "goal": "安装 Chrome cask",
-          "expected": "Google Chrome 出现在 /Applications 中，可从启动台打开"
+          "expected": "Google Chrome 出现在 /Applications 中，可从启动台打开",
+          "groundingRefs": [
+            {
+              "sourceId": "brew-help",
+              "locator": "brew help install（本机 Homebrew 5.1.14）",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -222,7 +256,18 @@ window.CHEATSHEET_DATA["homebrew"] = {
           ],
           "scenario": "不确定安装 wget 会引入哪些依赖，想提前查看",
           "goal": "预览安装影响",
-          "expected": "终端输出一系列将要安装的 formula 列表，不改变系统"
+          "expected": "终端输出一系列将要安装的 formula 列表，不改变系统",
+          "groundingRefs": [
+            {
+              "sourceId": "brew-help",
+              "locator": "brew help install（本机 Homebrew 5.1.14）",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -277,7 +322,18 @@ window.CHEATSHEET_DATA["homebrew"] = {
           ],
           "scenario": "不再需要 wget，要彻底移除",
           "goal": "卸载 wget",
-          "expected": "wget 被移除，终端可能提示 orphan 依赖可用 brew autoremove 清理"
+          "expected": "wget 被移除，终端可能提示 orphan 依赖可用 brew autoremove 清理",
+          "groundingRefs": [
+            {
+              "sourceId": "brew-help",
+              "locator": "brew help uninstall（本机 Homebrew 5.1.14）",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         },
         {
           "value": "brew uninstall node python",
@@ -293,7 +349,18 @@ window.CHEATSHEET_DATA["homebrew"] = {
           ],
           "scenario": "同时卸载多个包",
           "goal": "卸载 node 和 python",
-          "expected": "node 和 python 均被移除"
+          "expected": "node 和 python 均被移除",
+          "groundingRefs": [
+            {
+              "sourceId": "brew-help",
+              "locator": "brew help uninstall（本机 Homebrew 5.1.14）",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -349,7 +416,18 @@ window.CHEATSHEET_DATA["homebrew"] = {
           ],
           "scenario": "想知道是否有 python 相关的包",
           "goal": "查找 python 相关的 formula",
-          "expected": "打印一系列名称，如 python@3.9, python@3.10 等"
+          "expected": "打印一系列名称，如 python@3.9, python@3.10 等",
+          "groundingRefs": [
+            {
+              "sourceId": "brew-help",
+              "locator": "brew help search（本机 Homebrew 5.1.14）",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -405,7 +483,18 @@ window.CHEATSHEET_DATA["homebrew"] = {
           ],
           "scenario": "想找处理 JSON 的工具，但不记得确切名称",
           "goal": "搜索描述中包含 JSON 的包",
-          "expected": "返回名称或描述包含 json 的包列表，如 jq、jsonpp 等"
+          "expected": "返回名称或描述包含 json 的包列表，如 jq、jsonpp 等",
+          "groundingRefs": [
+            {
+              "sourceId": "brew-help",
+              "locator": "brew help search（本机 Homebrew 5.1.14）",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -461,7 +550,18 @@ window.CHEATSHEET_DATA["homebrew"] = {
           ],
           "scenario": "安装前想查看 wget 的版本、依赖和描述",
           "goal": "查看 wget 的详细信息",
-          "expected": "输出包括稳定版版本、头部版本、是否有 bottle、安装大小等"
+          "expected": "输出包括稳定版版本、头部版本、是否有 bottle、安装大小等",
+          "groundingRefs": [
+            {
+              "sourceId": "brew-help",
+              "locator": "brew help info（本机 Homebrew 5.1.14）",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -516,7 +616,18 @@ window.CHEATSHEET_DATA["homebrew"] = {
           ],
           "scenario": "想看看系统上通过 Homebrew 安装了哪些软件",
           "goal": "列出所有已安装的 formula",
-          "expected": "输出包括 git, node, wget 等已装包"
+          "expected": "输出包括 git, node, wget 等已装包",
+          "groundingRefs": [
+            {
+              "sourceId": "brew-help",
+              "locator": "brew help list（本机 Homebrew 5.1.14）",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         },
         {
           "value": "brew list git",
@@ -532,7 +643,18 @@ window.CHEATSHEET_DATA["homebrew"] = {
           ],
           "scenario": "需要知道某个特定包安装了哪些文件",
           "goal": "列出 git 安装的所有文件路径",
-          "expected": "列出 git 相关的可执行文件、补全脚本等路径"
+          "expected": "列出 git 相关的可执行文件、补全脚本等路径",
+          "groundingRefs": [
+            {
+              "sourceId": "brew-help",
+              "locator": "brew help list（本机 Homebrew 5.1.14）",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -587,7 +709,18 @@ window.CHEATSHEET_DATA["homebrew"] = {
           ],
           "scenario": "在安装新软件或升级前，同步最新的仓库信息",
           "goal": "更新 Homebrew 仓库索引",
-          "expected": "输出 updated 的 tap 列表，可能提示哪些 tap 有更新"
+          "expected": "输出 updated 的 tap 列表，可能提示哪些 tap 有更新",
+          "groundingRefs": [
+            {
+              "sourceId": "brew-help",
+              "locator": "brew help update（本机 Homebrew 5.1.14）",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -642,7 +775,18 @@ window.CHEATSHEET_DATA["homebrew"] = {
           ],
           "scenario": "更新所有已过时的包到最新版本",
           "goal": "批量升级所有 formula",
-          "expected": "依次下载并安装每个包的最新版，可能包含编译或 bottle"
+          "expected": "依次下载并安装每个包的最新版，可能包含编译或 bottle",
+          "groundingRefs": [
+            {
+              "sourceId": "brew-help",
+              "locator": "brew help upgrade（本机 Homebrew 5.1.14）",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         },
         {
           "value": "brew upgrade git",
@@ -658,7 +802,18 @@ window.CHEATSHEET_DATA["homebrew"] = {
           ],
           "scenario": "只想升级 git 这一个包",
           "goal": "仅升级 git",
-          "expected": "git 升级到最新版本，其他包保持不变"
+          "expected": "git 升级到最新版本，其他包保持不变",
+          "groundingRefs": [
+            {
+              "sourceId": "brew-help",
+              "locator": "brew help upgrade（本机 Homebrew 5.1.14）",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -713,7 +868,18 @@ window.CHEATSHEET_DATA["homebrew"] = {
           ],
           "scenario": "在决定是否升级前，先检查哪些包可以更新",
           "goal": "查看可更新的软件列表",
-          "expected": "输出过时包的名称，如 git (2.39.0) < 2.40.0"
+          "expected": "输出过时包的名称，如 git (2.39.0) < 2.40.0",
+          "groundingRefs": [
+            {
+              "sourceId": "brew-help",
+              "locator": "brew help outdated（本机 Homebrew 5.1.14）",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -768,7 +934,18 @@ window.CHEATSHEET_DATA["homebrew"] = {
           ],
           "scenario": "某个项目依赖 Node.js 14，不希望在全局升级时意外升到 16",
           "goal": "固定 node@14 版本",
-          "expected": "执行后无直接输出；下次 brew upgrade 时该包不会被更新"
+          "expected": "执行后无直接输出；下次 brew upgrade 时该包不会被更新",
+          "groundingRefs": [
+            {
+              "sourceId": "brew-help",
+              "locator": "brew help pin（本机 Homebrew 5.1.14）",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -823,7 +1000,18 @@ window.CHEATSHEET_DATA["homebrew"] = {
           ],
           "scenario": "Node.js 项目升级到 16 后，可以让 node@14 正常升级",
           "goal": "解除对 node@14 的固定",
-          "expected": "命令无输出，但之后 brew outdated 会重新显示该包（如有更新）"
+          "expected": "命令无输出，但之后 brew outdated 会重新显示该包（如有更新）",
+          "groundingRefs": [
+            {
+              "sourceId": "brew-help",
+              "locator": "brew help unpin（本机 Homebrew 5.1.14）",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -879,7 +1067,18 @@ window.CHEATSHEET_DATA["homebrew"] = {
           ],
           "scenario": "磁盘空间不足，想清理 Homebrew 留存的旧版本和下载缓存",
           "goal": "清理所有旧版本和缓存",
-          "expected": "Terminal 输出移除的旧版本信息，并提示释放了多少空间"
+          "expected": "Terminal 输出移除的旧版本信息，并提示释放了多少空间",
+          "groundingRefs": [
+            {
+              "sourceId": "brew-help",
+              "locator": "brew help cleanup（本机 Homebrew 5.1.14）",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -935,7 +1134,18 @@ window.CHEATSHEET_DATA["homebrew"] = {
           ],
           "scenario": "不确定清理会删除多少数据，想先预览",
           "goal": "查看将被清理的文件列表",
-          "expected": "打印出将删除的文件路径和总大小"
+          "expected": "打印出将删除的文件路径和总大小",
+          "groundingRefs": [
+            {
+              "sourceId": "brew-help",
+              "locator": "brew help cleanup（本机 Homebrew 5.1.14）",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -990,7 +1200,18 @@ window.CHEATSHEET_DATA["homebrew"] = {
           ],
           "scenario": "brew 命令执行异常或安装后提示权限警告",
           "goal": "诊断 Homebrew 配置和环境",
-          "expected": "可能输出 warnings，如权限问题、Xcode 缺失等，如果没有问题会显示 Your system is ready to brew."
+          "expected": "可能输出 warnings，如权限问题、Xcode 缺失等，如果没有问题会显示 Your system is ready to brew.",
+          "groundingRefs": [
+            {
+              "sourceId": "brew-help",
+              "locator": "brew help doctor（本机 Homebrew 5.1.14）",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -1045,7 +1266,18 @@ window.CHEATSHEET_DATA["homebrew"] = {
           ],
           "scenario": "需要了解 Homebrew 的前缀路径或使用的 Ruby 版本",
           "goal": "查看 Homebrew 当前配置",
-          "expected": "输出环境变量和系统信息，可用于上报问题"
+          "expected": "输出环境变量和系统信息，可用于上报问题",
+          "groundingRefs": [
+            {
+              "sourceId": "brew-help",
+              "locator": "brew help config（本机 Homebrew 5.1.14）",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -1099,7 +1331,18 @@ window.CHEATSHEET_DATA["homebrew"] = {
           ],
           "scenario": "确认当前安装的 Homebrew 版本，以便报告 bug 或确认是否支持某个特性",
           "goal": "检查 Homebrew 版本",
-          "expected": "终端显示一行类似 Homebrew 4.2.0 的版本信息"
+          "expected": "终端显示一行类似 Homebrew 4.2.0 的版本信息",
+          "groundingRefs": [
+            {
+              "sourceId": "brew-help",
+              "locator": "brew --version（本机 Homebrew 5.1.14 实际执行）",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -1153,7 +1396,18 @@ window.CHEATSHEET_DATA["homebrew"] = {
           ],
           "scenario": "忘记某个子命令的用法，想查看概览",
           "goal": "获取全部命令列表",
-          "expected": "输出包括 install, uninstall, search 等命令的简要说明"
+          "expected": "输出包括 install, uninstall, search 等命令的简要说明",
+          "groundingRefs": [
+            {
+              "sourceId": "brew-help",
+              "locator": "brew help help（本机 Homebrew 5.1.14）",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -1209,7 +1463,18 @@ window.CHEATSHEET_DATA["homebrew"] = {
           ],
           "scenario": "想确认 postgresql、redis 等服务是否在运行。",
           "goal": "查看全部服务状态。",
-          "expected": "输出服务名、状态、用户和配置文件路径的表格"
+          "expected": "输出服务名、状态、用户和配置文件路径的表格",
+          "groundingRefs": [
+            {
+              "sourceId": "brew-help",
+              "locator": "brew help services（本机 Homebrew 5.1.14）",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         },
         {
           "value": "brew services start postgresql@16",
@@ -1225,7 +1490,18 @@ window.CHEATSHEET_DATA["homebrew"] = {
           ],
           "scenario": "本地开发需要一个常驻的 PostgreSQL。",
           "goal": "启动 postgresql@16 并设置自启。",
-          "expected": "服务开始运行，`brew services list` 显示 started"
+          "expected": "服务开始运行，`brew services list` 显示 started",
+          "groundingRefs": [
+            {
+              "sourceId": "brew-help",
+              "locator": "brew help services（本机 Homebrew 5.1.14）",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         },
         {
           "value": "brew services stop postgresql@16",
@@ -1241,7 +1517,18 @@ window.CHEATSHEET_DATA["homebrew"] = {
           ],
           "scenario": "暂时不需要数据库服务，想释放资源。",
           "goal": "停止 postgresql@16。",
-          "expected": "服务停止，状态变为 stopped（none）"
+          "expected": "服务停止，状态变为 stopped（none）",
+          "groundingRefs": [
+            {
+              "sourceId": "brew-help",
+              "locator": "brew help services（本机 Homebrew 5.1.14）",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -1296,7 +1583,18 @@ window.CHEATSHEET_DATA["homebrew"] = {
           ],
           "scenario": "要安装的工具不在官方仓库，而在厂商自己的 tap 里。",
           "goal": "添加 hashicorp/tap 仓库。",
-          "expected": "tap 被克隆到本地，`brew install hashicorp/tap/terraform` 可用"
+          "expected": "tap 被克隆到本地，`brew install hashicorp/tap/terraform` 可用",
+          "groundingRefs": [
+            {
+              "sourceId": "brew-help",
+              "locator": "brew help tap（本机 Homebrew 5.1.14）",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         },
         {
           "value": "brew tap",
@@ -1312,7 +1610,18 @@ window.CHEATSHEET_DATA["homebrew"] = {
           ],
           "scenario": "想检查本机添加过哪些第三方仓库。",
           "goal": "列出全部 tap。",
-          "expected": "输出已 tap 的仓库列表"
+          "expected": "输出已 tap 的仓库列表",
+          "groundingRefs": [
+            {
+              "sourceId": "brew-help",
+              "locator": "brew help tap（本机 Homebrew 5.1.14）",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -1367,7 +1676,18 @@ window.CHEATSHEET_DATA["homebrew"] = {
           ],
           "scenario": "不再使用某个第三方仓库，想保持 tap 列表干净。",
           "goal": "移除 hashicorp/tap。",
-          "expected": "该 tap 从本地删除，`brew tap` 不再列出它"
+          "expected": "该 tap 从本地删除，`brew tap` 不再列出它",
+          "groundingRefs": [
+            {
+              "sourceId": "brew-help",
+              "locator": "brew help untap（本机 Homebrew 5.1.14）",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -1423,7 +1743,18 @@ window.CHEATSHEET_DATA["homebrew"] = {
           ],
           "scenario": "换新电脑前想记录现在装过的全部软件。",
           "goal": "导出安装清单到 ~/Brewfile。",
-          "expected": "生成包含 tap/brew/cask 条目的 Brewfile 文本文件"
+          "expected": "生成包含 tap/brew/cask 条目的 Brewfile 文本文件",
+          "groundingRefs": [
+            {
+              "sourceId": "brew-help",
+              "locator": "brew help bundle（本机 Homebrew 5.1.14）",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         },
         {
           "value": "brew bundle install --file=~/Brewfile",
@@ -1439,7 +1770,18 @@ window.CHEATSHEET_DATA["homebrew"] = {
           ],
           "scenario": "在新机器上按备份清单一次性恢复所有软件。",
           "goal": "按 Brewfile 批量安装。",
-          "expected": "清单中缺失的 formula/cask 被依次安装"
+          "expected": "清单中缺失的 formula/cask 被依次安装",
+          "groundingRefs": [
+            {
+              "sourceId": "brew-help",
+              "locator": "brew help bundle（本机 Homebrew 5.1.14）",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -1495,7 +1837,18 @@ window.CHEATSHEET_DATA["homebrew"] = {
           "scenario": "卸载过一些软件后想清理它们残留的依赖。",
           "goal": "找出并移除孤儿依赖。",
           "expected": "列出将被卸载的 formula；去掉 --dry-run 后实际卸载",
-          "caveat": "建议先用 --dry-run 检查清单，避免误删自己直接使用但未显式安装的工具。"
+          "caveat": "建议先用 --dry-run 检查清单，避免误删自己直接使用但未显式安装的工具。",
+          "groundingRefs": [
+            {
+              "sourceId": "brew-help",
+              "locator": "brew help autoremove（本机 Homebrew 5.1.14）",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -1550,7 +1903,18 @@ window.CHEATSHEET_DATA["homebrew"] = {
           ],
           "scenario": "安装 ffmpeg 前想了解它会连带装多少东西。",
           "goal": "查看 ffmpeg 的依赖树。",
-          "expected": "输出缩进树形的依赖列表"
+          "expected": "输出缩进树形的依赖列表",
+          "groundingRefs": [
+            {
+              "sourceId": "brew-help",
+              "locator": "brew help deps（本机 Homebrew 5.1.14）",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -1605,7 +1969,18 @@ window.CHEATSHEET_DATA["homebrew"] = {
           ],
           "scenario": "想卸载 openssl@3，但不确定会不会破坏其他软件。",
           "goal": "查看 openssl@3 的已安装反向依赖。",
-          "expected": "输出依赖它的已安装 formula 列表"
+          "expected": "输出依赖它的已安装 formula 列表",
+          "groundingRefs": [
+            {
+              "sourceId": "brew-help",
+              "locator": "brew help uses（本机 Homebrew 5.1.14）",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -1660,7 +2035,18 @@ window.CHEATSHEET_DATA["homebrew"] = {
           ],
           "scenario": "想回顾自己到底主动装过哪些工具。",
           "goal": "列出顶层安装的 formula。",
-          "expected": "输出不被任何已安装包依赖的 formula 名单"
+          "expected": "输出不被任何已安装包依赖的 formula 名单",
+          "groundingRefs": [
+            {
+              "sourceId": "brew-help",
+              "locator": "brew help leaves（本机 Homebrew 5.1.14）",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -1716,7 +2102,18 @@ window.CHEATSHEET_DATA["homebrew"] = {
           "scenario": "装了 keg-only 版本或此前 unlink 过，现在想让它可直接调用。",
           "goal": "把 python@3.12 链接进 PATH。",
           "expected": "python3.12 等命令出现在 Homebrew bin 目录",
-          "caveat": "遇到链接冲突时先用 `brew link --dry-run` 检查将要覆盖的文件，再决定是否加 --overwrite。"
+          "caveat": "遇到链接冲突时先用 `brew link --dry-run` 检查将要覆盖的文件，再决定是否加 --overwrite。",
+          "groundingRefs": [
+            {
+              "sourceId": "brew-help",
+              "locator": "brew help link（本机 Homebrew 5.1.14）",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -1771,7 +2168,18 @@ window.CHEATSHEET_DATA["homebrew"] = {
           ],
           "scenario": "想临时改用另一个版本的 node。",
           "goal": "把当前 node 从 PATH 中摘除。",
-          "expected": "node 命令不再指向该 formula；`brew link` 可随时恢复"
+          "expected": "node 命令不再指向该 formula；`brew link` 可随时恢复",
+          "groundingRefs": [
+            {
+              "sourceId": "brew-help",
+              "locator": "brew help unlink（本机 Homebrew 5.1.14）",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -1826,7 +2234,18 @@ window.CHEATSHEET_DATA["homebrew"] = {
           ],
           "scenario": "某个工具运行异常，怀疑安装文件损坏。",
           "goal": "重装 wget。",
-          "expected": "wget 被重新安装为同一版本，文件恢复完整"
+          "expected": "wget 被重新安装为同一版本，文件恢复完整",
+          "groundingRefs": [
+            {
+              "sourceId": "brew-help",
+              "locator": "brew help reinstall（本机 Homebrew 5.1.14）",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -1881,7 +2300,18 @@ window.CHEATSHEET_DATA["homebrew"] = {
           ],
           "scenario": "编译项目时需要引用 openssl 的头文件和库路径。",
           "goal": "取得 openssl@3 的安装路径。",
-          "expected": "输出类似 /opt/homebrew/opt/openssl@3 的路径"
+          "expected": "输出类似 /opt/homebrew/opt/openssl@3 的路径",
+          "groundingRefs": [
+            {
+              "sourceId": "brew-help",
+              "locator": "brew help --prefix（本机 Homebrew 5.1.14）",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -1936,7 +2366,18 @@ window.CHEATSHEET_DATA["homebrew"] = {
           ],
           "scenario": "想看某个工具的官方文档和用法说明。",
           "goal": "打开 jq 的官网。",
-          "expected": "浏览器打开 jq 的项目主页"
+          "expected": "浏览器打开 jq 的项目主页",
+          "groundingRefs": [
+            {
+              "sourceId": "brew-help",
+              "locator": "brew help home（本机 Homebrew 5.1.14）",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -1997,6 +2438,17 @@ window.CHEATSHEET_DATA["homebrew"] = {
           "warning": "会删除应用的全部相关数据（偏好设置、缓存、可能包含用户数据），且不可恢复。",
           "riskLevels": [
             "deleteOrOverwrite"
+          ],
+          "groundingRefs": [
+            {
+              "sourceId": "brew-help",
+              "locator": "brew help uninstall（本机 Homebrew 5.1.14）",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
           ]
         }
       ],
@@ -2052,7 +2504,18 @@ window.CHEATSHEET_DATA["homebrew"] = {
           ],
           "scenario": "不希望本机的安装行为被匿名统计上报。",
           "goal": "关闭 analytics。",
-          "expected": "统计被关闭，`brew analytics` 显示 disabled"
+          "expected": "统计被关闭，`brew analytics` 显示 disabled",
+          "groundingRefs": [
+            {
+              "sourceId": "brew-help",
+              "locator": "brew help analytics（本机 Homebrew 5.1.14）",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [

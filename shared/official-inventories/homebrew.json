@@ -1,0 +1,707 @@
+{
+  "schemaVersion": 2,
+  "toolId": "homebrew",
+  "scope": "all-command-entrypoints",
+  "checkedAt": "2026-07-13",
+  "sourceIds": [
+    "brew-help",
+    "brew-docs"
+  ],
+  "adapter": {
+    "id": "homebrew-recursive-help-docs",
+    "kind": "recursive-help-docs",
+    "version": 1
+  },
+  "closure": {
+    "status": "closed",
+    "entryCount": 34,
+    "components": [
+      "homebrew"
+    ],
+    "platforms": [
+      "mac",
+      "linux"
+    ],
+    "proof": "deterministic-adapter-snapshot"
+  },
+  "entries": [
+    {
+      "command": "brew --help",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "homebrew",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Show help for brew commands",
+      "usage": "brew --help",
+      "options": [
+        "--help"
+      ],
+      "officialExamples": [
+        "brew --help"
+      ],
+      "url": "brew help help（本机 Homebrew 5.1.14）"
+    },
+    {
+      "command": "brew --prefix",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "homebrew",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Print Homebrew install prefix",
+      "usage": "brew --prefix",
+      "options": [
+        "--prefix"
+      ],
+      "officialExamples": [
+        "brew --prefix openssl@3"
+      ],
+      "url": "brew help --prefix（本机 Homebrew 5.1.14）"
+    },
+    {
+      "command": "brew --version",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "homebrew",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Print the version number of Homebrew",
+      "usage": "brew --version",
+      "options": [
+        "--version"
+      ],
+      "officialExamples": [
+        "brew --version"
+      ],
+      "url": "brew --version（本机 Homebrew 5.1.14 实际执行）"
+    },
+    {
+      "command": "brew analytics",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "homebrew",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Control anonymous analytics",
+      "usage": "brew analytics",
+      "options": [],
+      "officialExamples": [
+        "brew analytics off"
+      ],
+      "url": "brew help analytics（本机 Homebrew 5.1.14）"
+    },
+    {
+      "command": "brew autoremove",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "homebrew",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Remove unneeded dependencies",
+      "usage": "brew autoremove",
+      "options": [
+        "--dry-run"
+      ],
+      "officialExamples": [
+        "brew autoremove --dry-run"
+      ],
+      "url": "brew help autoremove（本机 Homebrew 5.1.14）"
+    },
+    {
+      "command": "brew bundle",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "homebrew",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Install or dump packages from a Brewfile",
+      "usage": "brew bundle",
+      "options": [
+        "--file"
+      ],
+      "officialExamples": [
+        "brew bundle dump --file=~/Brewfile",
+        "brew bundle install --file=~/Brewfile"
+      ],
+      "url": "brew help bundle（本机 Homebrew 5.1.14）"
+    },
+    {
+      "command": "brew cleanup",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "homebrew",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Remove old versions of installed formulas and clean caches",
+      "usage": "brew cleanup",
+      "options": [],
+      "officialExamples": [
+        "brew cleanup"
+      ],
+      "url": "brew help cleanup（本机 Homebrew 5.1.14）"
+    },
+    {
+      "command": "brew cleanup --dry-run",
+      "context": "cleanup",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "homebrew",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Show what would be removed without actually deleting",
+      "usage": "brew cleanup --dry-run",
+      "options": [
+        "--dry-run"
+      ],
+      "officialExamples": [
+        "brew cleanup --dry-run"
+      ],
+      "url": "brew help cleanup（本机 Homebrew 5.1.14）"
+    },
+    {
+      "command": "brew config",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "homebrew",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Display Homebrew and system configuration",
+      "usage": "brew config",
+      "options": [],
+      "officialExamples": [
+        "brew config"
+      ],
+      "url": "brew help config（本机 Homebrew 5.1.14）"
+    },
+    {
+      "command": "brew deps",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "homebrew",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Show dependencies for a formula",
+      "usage": "brew deps",
+      "options": [
+        "--tree"
+      ],
+      "officialExamples": [
+        "brew deps --tree ffmpeg"
+      ],
+      "url": "brew help deps（本机 Homebrew 5.1.14）"
+    },
+    {
+      "command": "brew doctor",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "homebrew",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Check your Homebrew installation for potential problems",
+      "usage": "brew doctor",
+      "options": [],
+      "officialExamples": [
+        "brew doctor"
+      ],
+      "url": "brew help doctor（本机 Homebrew 5.1.14）"
+    },
+    {
+      "command": "brew home",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "homebrew",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Open a formula's homepage",
+      "usage": "brew home",
+      "options": [],
+      "officialExamples": [
+        "brew home jq"
+      ],
+      "url": "brew help home（本机 Homebrew 5.1.14）"
+    },
+    {
+      "command": "brew info",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "homebrew",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Display information about a formula or cask",
+      "usage": "brew info",
+      "options": [],
+      "officialExamples": [
+        "brew info wget"
+      ],
+      "url": "brew help info（本机 Homebrew 5.1.14）"
+    },
+    {
+      "command": "brew install",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "homebrew",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Install a formula or cask",
+      "usage": "brew install",
+      "options": [],
+      "officialExamples": [
+        "brew install wget",
+        "brew install git node"
+      ],
+      "url": "brew help install（本机 Homebrew 5.1.14）"
+    },
+    {
+      "command": "brew install --cask",
+      "context": "install",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "homebrew",
+      "platforms": [
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Install a GUI application via cask",
+      "usage": "brew install --cask",
+      "options": [
+        "--cask"
+      ],
+      "officialExamples": [
+        "brew install --cask google-chrome"
+      ],
+      "url": "brew help install（本机 Homebrew 5.1.14）"
+    },
+    {
+      "command": "brew install --dry-run",
+      "context": "install",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "homebrew",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Show what would be installed without actually installing",
+      "usage": "brew install --dry-run",
+      "options": [
+        "--dry-run"
+      ],
+      "officialExamples": [
+        "brew install --dry-run wget"
+      ],
+      "url": "brew help install（本机 Homebrew 5.1.14）"
+    },
+    {
+      "command": "brew leaves",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "homebrew",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "List top-level installed formulae",
+      "usage": "brew leaves",
+      "options": [],
+      "officialExamples": [
+        "brew leaves"
+      ],
+      "url": "brew help leaves（本机 Homebrew 5.1.14）"
+    },
+    {
+      "command": "brew link",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "homebrew",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Symlink a formula into the prefix",
+      "usage": "brew link",
+      "options": [],
+      "officialExamples": [
+        "brew link python@3.12"
+      ],
+      "url": "brew help link（本机 Homebrew 5.1.14）"
+    },
+    {
+      "command": "brew list",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "homebrew",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "List installed formulas and casks",
+      "usage": "brew list",
+      "options": [],
+      "officialExamples": [
+        "brew list",
+        "brew list git"
+      ],
+      "url": "brew help list（本机 Homebrew 5.1.14）"
+    },
+    {
+      "command": "brew outdated",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "homebrew",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "List formulas and casks that have an updated version available",
+      "usage": "brew outdated",
+      "options": [],
+      "officialExamples": [
+        "brew outdated"
+      ],
+      "url": "brew help outdated（本机 Homebrew 5.1.14）"
+    },
+    {
+      "command": "brew pin",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "homebrew",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Pin a formula to prevent it from being upgraded",
+      "usage": "brew pin",
+      "options": [],
+      "officialExamples": [
+        "brew pin node@14"
+      ],
+      "url": "brew help pin（本机 Homebrew 5.1.14）"
+    },
+    {
+      "command": "brew reinstall",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "homebrew",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Uninstall then install again",
+      "usage": "brew reinstall",
+      "options": [],
+      "officialExamples": [
+        "brew reinstall wget"
+      ],
+      "url": "brew help reinstall（本机 Homebrew 5.1.14）"
+    },
+    {
+      "command": "brew search",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "homebrew",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Search for formulas and casks",
+      "usage": "brew search",
+      "options": [],
+      "officialExamples": [
+        "brew search python"
+      ],
+      "url": "brew help search（本机 Homebrew 5.1.14）"
+    },
+    {
+      "command": "brew search --desc",
+      "context": "search",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "homebrew",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Search descriptions in addition to names",
+      "usage": "brew search --desc",
+      "options": [
+        "--desc"
+      ],
+      "officialExamples": [
+        "brew search --desc json"
+      ],
+      "url": "brew help search（本机 Homebrew 5.1.14）"
+    },
+    {
+      "command": "brew services",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "homebrew",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Manage background services",
+      "usage": "brew services",
+      "options": [],
+      "officialExamples": [
+        "brew services list",
+        "brew services start postgresql@16",
+        "brew services stop postgresql@16"
+      ],
+      "url": "brew help services（本机 Homebrew 5.1.14）"
+    },
+    {
+      "command": "brew tap",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "homebrew",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Add a formula repository",
+      "usage": "brew tap",
+      "options": [],
+      "officialExamples": [
+        "brew tap hashicorp/tap",
+        "brew tap"
+      ],
+      "url": "brew help tap（本机 Homebrew 5.1.14）"
+    },
+    {
+      "command": "brew uninstall",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "homebrew",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Uninstall a formula or cask",
+      "usage": "brew uninstall",
+      "options": [],
+      "officialExamples": [
+        "brew uninstall wget",
+        "brew uninstall node python"
+      ],
+      "url": "brew help uninstall（本机 Homebrew 5.1.14）"
+    },
+    {
+      "command": "brew uninstall --zap",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "homebrew",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Uninstall a cask and all its files",
+      "usage": "brew uninstall --zap",
+      "options": [
+        "--zap",
+        "--cask"
+      ],
+      "officialExamples": [
+        "brew uninstall --cask --zap some-app"
+      ],
+      "url": "brew help uninstall（本机 Homebrew 5.1.14）"
+    },
+    {
+      "command": "brew unlink",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "homebrew",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Remove symlinks for a formula",
+      "usage": "brew unlink",
+      "options": [],
+      "officialExamples": [
+        "brew unlink node"
+      ],
+      "url": "brew help unlink（本机 Homebrew 5.1.14）"
+    },
+    {
+      "command": "brew unpin",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "homebrew",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Unpin a formula to allow upgrades again",
+      "usage": "brew unpin",
+      "options": [],
+      "officialExamples": [
+        "brew unpin node@14"
+      ],
+      "url": "brew help unpin（本机 Homebrew 5.1.14）"
+    },
+    {
+      "command": "brew untap",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "homebrew",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Remove a tapped repository",
+      "usage": "brew untap",
+      "options": [],
+      "officialExamples": [
+        "brew untap hashicorp/tap"
+      ],
+      "url": "brew help untap（本机 Homebrew 5.1.14）"
+    },
+    {
+      "command": "brew update",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "homebrew",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Fetch the newest version of Homebrew and all formulae",
+      "usage": "brew update",
+      "options": [],
+      "officialExamples": [
+        "brew update"
+      ],
+      "url": "brew help update（本机 Homebrew 5.1.14）"
+    },
+    {
+      "command": "brew upgrade",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "homebrew",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Upgrade outdated formulas and casks",
+      "usage": "brew upgrade",
+      "options": [],
+      "officialExamples": [
+        "brew upgrade",
+        "brew upgrade git"
+      ],
+      "url": "brew help upgrade（本机 Homebrew 5.1.14）"
+    },
+    {
+      "command": "brew uses",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "homebrew",
+      "platforms": [
+        "mac",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Show packages that depend on a formula",
+      "usage": "brew uses",
+      "options": [
+        "--installed"
+      ],
+      "officialExamples": [
+        "brew uses --installed openssl@3"
+      ],
+      "url": "brew help uses（本机 Homebrew 5.1.14）"
+    }
+  ]
+}

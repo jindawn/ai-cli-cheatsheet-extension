@@ -1,0 +1,1729 @@
+{
+  "schemaVersion": 2,
+  "toolId": "idea",
+  "scope": "all-command-entrypoints",
+  "checkedAt": "2026-07-13",
+  "sourceIds": [
+    "idea-macos-keymap"
+  ],
+  "adapter": {
+    "id": "idea-default-keymap-table",
+    "kind": "default-keymap-table",
+    "version": 1
+  },
+  "closure": {
+    "status": "closed",
+    "entryCount": 85,
+    "components": [
+      "idea"
+    ],
+    "platforms": [
+      "mac",
+      "windows",
+      "linux"
+    ],
+    "proof": "deterministic-adapter-snapshot"
+  },
+  "entries": [
+    {
+      "command": "Alt+`",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "VCS Operations Popup",
+      "usage": "Alt+`",
+      "options": [],
+      "officialExamples": [
+        "按 Alt+`"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 VCS Operations Popup）"
+    },
+    {
+      "command": "Alt+Enter",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Show Intention Actions / Quick Fix",
+      "usage": "Alt+Enter",
+      "options": [],
+      "officialExamples": [
+        "把光标放在报错位置，按 Alt+Enter"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Show Intention Actions / Quick Fix）"
+    },
+    {
+      "command": "Alt+F1",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Select In...",
+      "usage": "Alt+F1",
+      "options": [],
+      "officialExamples": [
+        "按 Alt+F1"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Select In...）"
+    },
+    {
+      "command": "Alt+F7",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Find Usages",
+      "usage": "Alt+F7",
+      "options": [],
+      "officialExamples": [
+        "把光标放在符号上按 Alt+F7"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Find Usages）"
+    },
+    {
+      "command": "Alt+F8",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Evaluate Expression",
+      "usage": "Alt+F8",
+      "options": [],
+      "officialExamples": [
+        "按 Alt+F8"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Evaluate Expression）"
+    },
+    {
+      "command": "Alt+F9",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Run to Cursor",
+      "usage": "Alt+F9",
+      "options": [],
+      "officialExamples": [
+        "按 Alt+F9"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Run to Cursor）"
+    },
+    {
+      "command": "Alt+Shift+Down",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Move Line Down",
+      "usage": "Alt+Shift+Down",
+      "options": [],
+      "officialExamples": [
+        "按 Alt+Shift+Down"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Move Line Down）"
+    },
+    {
+      "command": "Alt+Shift+Up",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Move Line Up",
+      "usage": "Alt+Shift+Up",
+      "options": [],
+      "officialExamples": [
+        "按 Alt+Shift+Up"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Move Line Up）"
+    },
+    {
+      "command": "Cmd+[",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Navigate Back",
+      "usage": "Cmd+[",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+["
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Navigate Back）"
+    },
+    {
+      "command": "Cmd+]",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Navigate Forward",
+      "usage": "Cmd+]",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+]"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Navigate Forward）"
+    },
+    {
+      "command": "Cmd+/",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Comment/Uncomment Line",
+      "usage": "Cmd+/",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+/"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Comment/Uncomment Line）"
+    },
+    {
+      "command": "Cmd+1",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Project Tool Window",
+      "usage": "Cmd+1",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+1"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Project Tool Window）"
+    },
+    {
+      "command": "Cmd+4",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Run Tool Window",
+      "usage": "Cmd+4",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+4"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Run Tool Window）"
+    },
+    {
+      "command": "Cmd+5",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Debug Tool Window",
+      "usage": "Cmd+5",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+5"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Debug Tool Window）"
+    },
+    {
+      "command": "Cmd+9",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Git Tool Window",
+      "usage": "Cmd+9",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+9"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Git Tool Window）"
+    },
+    {
+      "command": "Cmd+Alt+B",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Go to Implementations",
+      "usage": "Cmd+Alt+B",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Alt+B"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Go to Implementations）"
+    },
+    {
+      "command": "Cmd+Alt+C",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Extract Constant",
+      "usage": "Cmd+Alt+C",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Alt+C"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Extract Constant）"
+    },
+    {
+      "command": "Cmd+Alt+F",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Extract Field",
+      "usage": "Cmd+Alt+F",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Alt+F"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Extract Field）"
+    },
+    {
+      "command": "Cmd+Alt+L",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Reformat Code",
+      "usage": "Cmd+Alt+L",
+      "options": [],
+      "officialExamples": [
+        "选中代码后按 Cmd+Alt+L（Win/Linux 为 Ctrl+Alt+L）"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Reformat Code）"
+    },
+    {
+      "command": "Cmd+Alt+M",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Extract Method",
+      "usage": "Cmd+Alt+M",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Alt+M"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Extract Method）"
+    },
+    {
+      "command": "Cmd+Alt+O",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Go to Symbol",
+      "usage": "Cmd+Alt+O",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Alt+O"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Go to Symbol）"
+    },
+    {
+      "command": "Cmd+Alt+T",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Surround With",
+      "usage": "Cmd+Alt+T",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Alt+T"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Surround With）"
+    },
+    {
+      "command": "Cmd+Alt+V",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Extract Variable",
+      "usage": "Cmd+Alt+V",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Alt+V"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Extract Variable）"
+    },
+    {
+      "command": "Cmd+Alt+Z",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Revert Changes in File",
+      "usage": "Cmd+Alt+Z",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Alt+Z"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Revert Changes in File）"
+    },
+    {
+      "command": "Cmd+B",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Go to Declaration or Usages",
+      "usage": "Cmd+B",
+      "options": [],
+      "officialExamples": [
+        "把光标放在方法调用上，按 Cmd/Ctrl+B"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Go to Declaration or Usages）"
+    },
+    {
+      "command": "Cmd+Backspace",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Delete Line",
+      "usage": "Cmd+Backspace",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Backspace"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Delete Line）"
+    },
+    {
+      "command": "Cmd+D",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Duplicate Line/Selection",
+      "usage": "Cmd+D",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+D"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Duplicate Line/Selection）"
+    },
+    {
+      "command": "Cmd+E",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Recent Files",
+      "usage": "Cmd+E",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+E"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Recent Files）"
+    },
+    {
+      "command": "Cmd+F",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Find in File",
+      "usage": "Cmd+F",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd/Ctrl+F，输入要查找的文本"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Find in File）"
+    },
+    {
+      "command": "Cmd+F12",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "File Structure Popup",
+      "usage": "Cmd+F12",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+F12"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 File Structure Popup）"
+    },
+    {
+      "command": "Cmd+F2",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Stop Process",
+      "usage": "Cmd+F2",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+F2"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Stop Process）"
+    },
+    {
+      "command": "Cmd+F3",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Find Next Occurrence",
+      "usage": "Cmd+F3",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+F3"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Find Next Occurrence）"
+    },
+    {
+      "command": "Cmd+F6",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Change Signature",
+      "usage": "Cmd+F6",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+F6"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Change Signature）"
+    },
+    {
+      "command": "Cmd+F7",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Highlight Usages in File",
+      "usage": "Cmd+F7",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+F7"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Highlight Usages in File）"
+    },
+    {
+      "command": "Cmd+F8",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Toggle Line Breakpoint",
+      "usage": "Cmd+F8",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+F8"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Toggle Line Breakpoint）"
+    },
+    {
+      "command": "Cmd+K",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Commit",
+      "usage": "Cmd+K",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+K"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Commit）"
+    },
+    {
+      "command": "Cmd+N",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Generate Code",
+      "usage": "Cmd+N",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+N"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Generate Code）"
+    },
+    {
+      "command": "Cmd+O",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Go to Class",
+      "usage": "Cmd+O",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+O（Win/Linux 为 Ctrl+N），输入类名"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Go to Class）"
+    },
+    {
+      "command": "Cmd+P",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Parameter Info",
+      "usage": "Cmd+P",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+P"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Parameter Info）"
+    },
+    {
+      "command": "Cmd+Q",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Quick Documentation",
+      "usage": "Cmd+Q",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Q"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Quick Documentation）"
+    },
+    {
+      "command": "Cmd+R",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Replace in File",
+      "usage": "Cmd+R",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+R"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Replace in File）"
+    },
+    {
+      "command": "Cmd+Shift+/",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Comment/Uncomment Block",
+      "usage": "Cmd+Shift+/",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Shift+/"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Comment/Uncomment Block）"
+    },
+    {
+      "command": "Cmd+Shift+A",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Find Action",
+      "usage": "Cmd+Shift+A",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Shift+A（Win/Linux 为 Ctrl+Shift+A），输入“Reformat Code”"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Find Action）"
+    },
+    {
+      "command": "Cmd+Shift+Down",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Move Statement Down",
+      "usage": "Cmd+Shift+Down",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Shift+Down"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Move Statement Down）"
+    },
+    {
+      "command": "Cmd+Shift+E",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Recent Locations",
+      "usage": "Cmd+Shift+E",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Shift+E"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Recent Locations）"
+    },
+    {
+      "command": "Cmd+Shift+Enter",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Complete Current Statement",
+      "usage": "Cmd+Shift+Enter",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Shift+Enter"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Complete Current Statement）"
+    },
+    {
+      "command": "Cmd+Shift+F",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Find in Files (Path)",
+      "usage": "Cmd+Shift+F",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Shift+F（Win/Linux 为 Ctrl+Shift+F），输入关键词"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Find in Files (Path)）"
+    },
+    {
+      "command": "Cmd+Shift+F8",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "View Breakpoints",
+      "usage": "Cmd+Shift+F8",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Shift+F8"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 View Breakpoints）"
+    },
+    {
+      "command": "Cmd+Shift+I",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Quick Definition Lookup",
+      "usage": "Cmd+Shift+I",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Shift+I"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Quick Definition Lookup）"
+    },
+    {
+      "command": "Cmd+Shift+K",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Push Commits",
+      "usage": "Cmd+Shift+K",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Shift+K"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Push Commits）"
+    },
+    {
+      "command": "Cmd+Shift+O",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Go to File",
+      "usage": "Cmd+Shift+O",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Shift+O"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Go to File）"
+    },
+    {
+      "command": "Cmd+Shift+R",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Replace in Files (Path)",
+      "usage": "Cmd+Shift+R",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Shift+R"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Replace in Files (Path)）"
+    },
+    {
+      "command": "Cmd+Shift+U",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Toggle Case",
+      "usage": "Cmd+Shift+U",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Shift+U"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Toggle Case）"
+    },
+    {
+      "command": "Cmd+Shift+Up",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Move Statement Up",
+      "usage": "Cmd+Shift+Up",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+Shift+Up"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Move Statement Up）"
+    },
+    {
+      "command": "Cmd+T",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Update Project (Pull)",
+      "usage": "Cmd+T",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+T"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Update Project (Pull)）"
+    },
+    {
+      "command": "Cmd+U",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Go to Super Method/Class",
+      "usage": "Cmd+U",
+      "options": [],
+      "officialExamples": [
+        "按 Cmd+U"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Go to Super Method/Class）"
+    },
+    {
+      "command": "Ctrl+Alt+O",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Optimize Imports",
+      "usage": "Ctrl+Alt+O",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+Alt+O"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Optimize Imports）"
+    },
+    {
+      "command": "Ctrl+D",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Debug",
+      "usage": "Ctrl+D",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+D"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Debug）"
+    },
+    {
+      "command": "Ctrl+H",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Type Hierarchy",
+      "usage": "Ctrl+H",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+H"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Type Hierarchy）"
+    },
+    {
+      "command": "Ctrl+I",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Implement Methods",
+      "usage": "Ctrl+I",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+I"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Implement Methods）"
+    },
+    {
+      "command": "Ctrl+J",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Insert Live Template",
+      "usage": "Ctrl+J",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+J"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Insert Live Template）"
+    },
+    {
+      "command": "Ctrl+O",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Override Methods",
+      "usage": "Ctrl+O",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+O"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Override Methods）"
+    },
+    {
+      "command": "Ctrl+R",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Run",
+      "usage": "Ctrl+R",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+R"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Run）"
+    },
+    {
+      "command": "Ctrl+Shift+D",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Debug Context Configuration",
+      "usage": "Ctrl+Shift+D",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+Shift+D"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Debug Context Configuration）"
+    },
+    {
+      "command": "Ctrl+Shift+R",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Run Context Configuration",
+      "usage": "Ctrl+Shift+R",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+Shift+R"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Run Context Configuration）"
+    },
+    {
+      "command": "Ctrl+Shift+Space",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Smart Type Completion",
+      "usage": "Ctrl+Shift+Space",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+Shift+Space"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Smart Type Completion）"
+    },
+    {
+      "command": "Ctrl+Space",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Basic Code Completion",
+      "usage": "Ctrl+Space",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+Space"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Basic Code Completion）"
+    },
+    {
+      "command": "Ctrl+T",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Refactor This...",
+      "usage": "Ctrl+T",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+T"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Refactor This...）"
+    },
+    {
+      "command": "Ctrl+Tab",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Switcher",
+      "usage": "Ctrl+Tab",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+Tab"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Switcher）"
+    },
+    {
+      "command": "Double Shift",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Search Everywhere",
+      "usage": "Double Shift",
+      "options": [],
+      "officialExamples": [
+        "连续按两次 Shift，输入类名、文件名或动作名称"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Search Everywhere）"
+    },
+    {
+      "command": "Esc",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Return Focus to Editor",
+      "usage": "Esc",
+      "options": [],
+      "officialExamples": [
+        "按 Esc"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Return Focus to Editor）"
+    },
+    {
+      "command": "F12",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Open Last Tool Window",
+      "usage": "F12",
+      "options": [],
+      "officialExamples": [
+        "按 F12"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Open Last Tool Window）"
+    },
+    {
+      "command": "F2",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Next Highlighted Error/Warning",
+      "usage": "F2",
+      "options": [],
+      "officialExamples": [
+        "按 F2"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Next Highlighted Error/Warning）"
+    },
+    {
+      "command": "F6",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Move",
+      "usage": "F6",
+      "options": [],
+      "officialExamples": [
+        "按 F6"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Move）"
+    },
+    {
+      "command": "F7",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Step Into",
+      "usage": "F7",
+      "options": [],
+      "officialExamples": [
+        "按 F7"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Step Into）"
+    },
+    {
+      "command": "F8",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Step Over",
+      "usage": "F8",
+      "options": [],
+      "officialExamples": [
+        "按 F8"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Step Over）"
+    },
+    {
+      "command": "F9",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Resume Program",
+      "usage": "F9",
+      "options": [],
+      "officialExamples": [
+        "按 F9"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Resume Program）"
+    },
+    {
+      "command": "Option+Down",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Shrink Selection",
+      "usage": "Option+Down",
+      "options": [],
+      "officialExamples": [
+        "按 Option+Down"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Shrink Selection）"
+    },
+    {
+      "command": "Option+Up",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Extend Selection",
+      "usage": "Option+Up",
+      "options": [],
+      "officialExamples": [
+        "按 Option+Up"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Extend Selection）"
+    },
+    {
+      "command": "Shift+Esc",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Hide Tool Window",
+      "usage": "Shift+Esc",
+      "options": [],
+      "officialExamples": [
+        "按 Shift+Esc"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Hide Tool Window）"
+    },
+    {
+      "command": "Shift+F2",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Previous Highlighted Error/Warning",
+      "usage": "Shift+F2",
+      "options": [],
+      "officialExamples": [
+        "按 Shift+F2"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Previous Highlighted Error/Warning）"
+    },
+    {
+      "command": "Shift+F3",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Find Previous Occurrence",
+      "usage": "Shift+F3",
+      "options": [],
+      "officialExamples": [
+        "按 Shift+F3"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Find Previous Occurrence）"
+    },
+    {
+      "command": "Shift+F6",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Rename",
+      "usage": "Shift+F6",
+      "options": [],
+      "officialExamples": [
+        "选中变量或方法名后按 Shift+F6，输入新名称"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Rename）"
+    },
+    {
+      "command": "Shift+F7",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Smart Step Into",
+      "usage": "Shift+F7",
+      "options": [],
+      "officialExamples": [
+        "按 Shift+F7"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Smart Step Into）"
+    },
+    {
+      "command": "Shift+F8",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "idea",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Step Out",
+      "usage": "Shift+F8",
+      "options": [],
+      "officialExamples": [
+        "按 Shift+F8"
+      ],
+      "url": "官方 macOS Keymap（页面内检索 Step Out）"
+    }
+  ]
+}

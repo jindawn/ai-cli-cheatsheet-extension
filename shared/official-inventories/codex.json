@@ -1,0 +1,1522 @@
+{
+  "schemaVersion": 2,
+  "toolId": "codex",
+  "scope": "all-command-entrypoints",
+  "checkedAt": "2026-07-13",
+  "sourceIds": [
+    "codex-slash-commands",
+    "codex-cli-reference",
+    "codex-features"
+  ],
+  "adapter": {
+    "id": "codex-structured-docs-repository",
+    "kind": "structured-docs-repository",
+    "version": 1
+  },
+  "closure": {
+    "status": "closed",
+    "entryCount": 85,
+    "components": [
+      "codex"
+    ],
+    "platforms": [
+      "mac",
+      "windows",
+      "linux"
+    ],
+    "proof": "deterministic-adapter-snapshot"
+  },
+  "entries": [
+    {
+      "command": "!（前缀）",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "codex",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Run local shell command",
+      "usage": "!（前缀）",
+      "options": [
+        "--stat"
+      ],
+      "officialExamples": [
+        "!git diff --stat"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli · !（前缀）"
+    },
+    {
+      "command": "@（前缀）",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "codex",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Fuzzy file search",
+      "usage": "@（前缀）",
+      "options": [],
+      "officialExamples": [
+        "@src/auth.ts 检查这个文件的权限处理"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli · @（前缀）"
+    },
+    {
+      "command": "/agent",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Switch agent thread",
+      "usage": "/agent",
+      "options": [],
+      "officialExamples": [
+        "/agent"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli（页面内检索 /agent）"
+    },
+    {
+      "command": "/approve",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Retry a denied action once",
+      "usage": "/approve",
+      "options": [],
+      "officialExamples": [
+        "/approve"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli（页面内检索 /approve）"
+    },
+    {
+      "command": "/apps",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Browse connector apps",
+      "usage": "/apps",
+      "options": [],
+      "officialExamples": [
+        "/apps"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli（页面内检索 /apps）"
+    },
+    {
+      "command": "/archive",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Archive session and exit",
+      "usage": "/archive",
+      "options": [],
+      "officialExamples": [
+        "/archive"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli（页面内检索 /archive）"
+    },
+    {
+      "command": "/clear",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Clear terminal & new chat",
+      "usage": "/clear",
+      "options": [],
+      "officialExamples": [
+        "/clear"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli（页面内检索 /clear）"
+    },
+    {
+      "command": "/compact",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Summarize to free tokens",
+      "usage": "/compact",
+      "options": [],
+      "officialExamples": [
+        "/compact"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli（页面内检索 /compact）"
+    },
+    {
+      "command": "/copy",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Copy latest response",
+      "usage": "/copy",
+      "options": [],
+      "officialExamples": [
+        "/copy"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli（页面内检索 /copy）"
+    },
+    {
+      "command": "/debug-config",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Inspect config layers",
+      "usage": "/debug-config",
+      "options": [],
+      "officialExamples": [
+        "/debug-config"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli（页面内检索 /debug-config）"
+    },
+    {
+      "command": "/diff",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Show Git diff",
+      "usage": "/diff",
+      "options": [],
+      "officialExamples": [
+        "/diff"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli（页面内检索 /diff）"
+    },
+    {
+      "command": "/experimental",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Toggle experimental features",
+      "usage": "/experimental",
+      "options": [],
+      "officialExamples": [
+        "/experimental"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli（页面内检索 /experimental）"
+    },
+    {
+      "command": "/fast",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Toggle Fast service tier",
+      "usage": "/fast",
+      "options": [],
+      "officialExamples": [
+        "/fast on",
+        "/fast status",
+        "/fast off"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli（页面内检索 /fast [on|off|status]）"
+    },
+    {
+      "command": "/feedback",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Send logs to maintainers",
+      "usage": "/feedback",
+      "options": [],
+      "officialExamples": [
+        "/feedback"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli（页面内检索 /feedback）"
+    },
+    {
+      "command": "/fork",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Fork conversation to new thread",
+      "usage": "/fork",
+      "options": [],
+      "officialExamples": [
+        "/fork"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli（页面内检索 /fork）"
+    },
+    {
+      "command": "/goal",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Set/view/pause a task goal",
+      "usage": "/goal",
+      "options": [],
+      "officialExamples": [
+        "/goal \"检查当前改动\""
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli（页面内检索 /goal <目标>）"
+    },
+    {
+      "command": "/hooks",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "View lifecycle hooks",
+      "usage": "/hooks",
+      "options": [],
+      "officialExamples": [
+        "/hooks"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli（页面内检索 /hooks）"
+    },
+    {
+      "command": "/ide",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Include IDE context",
+      "usage": "/ide",
+      "options": [],
+      "officialExamples": [
+        "/ide"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli（页面内检索 /ide）"
+    },
+    {
+      "command": "/init",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Generate AGENTS.md",
+      "usage": "/init",
+      "options": [],
+      "officialExamples": [
+        "/init"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli（页面内检索 /init）"
+    },
+    {
+      "command": "/keymap",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Remap TUI shortcuts",
+      "usage": "/keymap",
+      "options": [],
+      "officialExamples": [
+        "/keymap"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli（页面内检索 /keymap）"
+    },
+    {
+      "command": "/logout",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Sign out",
+      "usage": "/logout",
+      "options": [],
+      "officialExamples": [
+        "/logout"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli（页面内检索 /logout）"
+    },
+    {
+      "command": "/mcp",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "List MCP tools",
+      "usage": "/mcp",
+      "options": [],
+      "officialExamples": [
+        "/mcp",
+        "/mcp verbose"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli（页面内检索 /mcp [verbose]）"
+    },
+    {
+      "command": "/memories",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Configure memory use",
+      "usage": "/memories",
+      "options": [],
+      "officialExamples": [
+        "/memories"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli（页面内检索 /memories）"
+    },
+    {
+      "command": "/mention",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Attach a file",
+      "usage": "/mention",
+      "options": [],
+      "officialExamples": [
+        "/mention src/auth.ts"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli（页面内检索 /mention <路径>）"
+    },
+    {
+      "command": "/model",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Set active model",
+      "usage": "/model",
+      "options": [],
+      "officialExamples": [
+        "/model"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli（页面内检索 /model）"
+    },
+    {
+      "command": "/new",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Start new chat in same session",
+      "usage": "/new",
+      "options": [],
+      "officialExamples": [
+        "/new"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli（页面内检索 /new）"
+    },
+    {
+      "command": "/permissions",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Update approval policy",
+      "usage": "/permissions",
+      "options": [],
+      "officialExamples": [
+        "/permissions"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli（页面内检索 /permissions）"
+    },
+    {
+      "command": "/personality",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Set communication style",
+      "usage": "/personality",
+      "options": [],
+      "officialExamples": [
+        "/personality"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli（页面内检索 /personality）"
+    },
+    {
+      "command": "/plan",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Switch to plan mode",
+      "usage": "/plan",
+      "options": [],
+      "officialExamples": [
+        "/plan 为缓存模块设计迁移方案"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli（页面内检索 /plan [提示]）"
+    },
+    {
+      "command": "/plugins",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Browse plugins",
+      "usage": "/plugins",
+      "options": [],
+      "officialExamples": [
+        "/plugins"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli（页面内检索 /plugins）"
+    },
+    {
+      "command": "/ps",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Check background terminals",
+      "usage": "/ps",
+      "options": [],
+      "officialExamples": [
+        "/ps"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli（页面内检索 /ps）"
+    },
+    {
+      "command": "/quit",
+      "context": "",
+      "aliases": [
+        "/exit"
+      ],
+      "entryType": "slash-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Exit the CLI",
+      "usage": "/quit",
+      "options": [],
+      "officialExamples": [
+        "/quit"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli（页面内检索 /quit /exit）"
+    },
+    {
+      "command": "/raw",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Toggle raw scrollback mode",
+      "usage": "/raw",
+      "options": [],
+      "officialExamples": [
+        "/raw on",
+        "/raw off"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli（页面内检索 /raw [on|off]）"
+    },
+    {
+      "command": "/resume",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Resume a saved conversation",
+      "usage": "/resume",
+      "options": [],
+      "officialExamples": [
+        "/resume"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli（页面内检索 /resume）"
+    },
+    {
+      "command": "/review",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Review working tree",
+      "usage": "/review",
+      "options": [],
+      "officialExamples": [
+        "/review"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli（页面内检索 /review）"
+    },
+    {
+      "command": "/sandbox-add-read-dir",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Grant sandbox read access (Win)",
+      "usage": "/sandbox-add-read-dir",
+      "options": [],
+      "officialExamples": [
+        "/sandbox-add-read-dir"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli（页面内检索 /sandbox-add-read-dir）"
+    },
+    {
+      "command": "/side",
+      "context": "",
+      "aliases": [
+        "/btw"
+      ],
+      "entryType": "slash-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Start ephemeral side chat",
+      "usage": "/side",
+      "options": [],
+      "officialExamples": [
+        "/side"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli（页面内检索 /side（或/btw））"
+    },
+    {
+      "command": "/skills",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Browse and use skills",
+      "usage": "/skills",
+      "options": [],
+      "officialExamples": [
+        "/skills"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli（页面内检索 /skills）"
+    },
+    {
+      "command": "/status",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Inspect session config",
+      "usage": "/status",
+      "options": [],
+      "officialExamples": [
+        "/status"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli（页面内检索 /status）"
+    },
+    {
+      "command": "/statusline",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Configure footer items",
+      "usage": "/statusline",
+      "options": [],
+      "officialExamples": [
+        "/statusline"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli（页面内检索 /statusline）"
+    },
+    {
+      "command": "/stop",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Stop background terminals",
+      "usage": "/stop",
+      "options": [],
+      "officialExamples": [
+        "/stop"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli（页面内检索 /stop）"
+    },
+    {
+      "command": "/theme",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Choose syntax theme",
+      "usage": "/theme",
+      "options": [],
+      "officialExamples": [
+        "/theme"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli（页面内检索 /theme）"
+    },
+    {
+      "command": "/title",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Configure terminal title",
+      "usage": "/title",
+      "options": [],
+      "officialExamples": [
+        "/title"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli（页面内检索 /title）"
+    },
+    {
+      "command": "/vim",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Toggle Vim mode",
+      "usage": "/vim",
+      "options": [],
+      "officialExamples": [
+        "/vim"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli（页面内检索 /vim）"
+    },
+    {
+      "command": "Alt+R",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "codex",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Toggle raw scrollback",
+      "usage": "Alt+R",
+      "options": [],
+      "officialExamples": [
+        "按 Alt+R"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli · Alt+R"
+    },
+    {
+      "command": "codex --add-dir",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Grant extra writable dir",
+      "usage": "codex --add-dir",
+      "options": [
+        "--add-dir"
+      ],
+      "officialExamples": [
+        "codex --add-dir src/app.js"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli · --add-dir <路径>"
+    },
+    {
+      "command": "codex --ask-for-approval",
+      "context": "",
+      "aliases": [
+        "codex -a"
+      ],
+      "entryType": "cli-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Approval policy",
+      "usage": "codex --ask-for-approval",
+      "options": [
+        "--ask-for-approval"
+      ],
+      "officialExamples": [
+        "codex --ask-for-approval workspace-write"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli · --ask-for-approval, -a <模式>"
+    },
+    {
+      "command": "codex --cd",
+      "context": "",
+      "aliases": [
+        "codex -C"
+      ],
+      "entryType": "cli-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Set working directory",
+      "usage": "codex --cd",
+      "options": [
+        "--cd"
+      ],
+      "officialExamples": [
+        "codex --cd src/app.js"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli · --cd, -C <路径>"
+    },
+    {
+      "command": "codex --config",
+      "context": "",
+      "aliases": [
+        "codex -c"
+      ],
+      "entryType": "cli-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Inline config override",
+      "usage": "codex --config",
+      "options": [
+        "--config"
+      ],
+      "officialExamples": [
+        "codex --config key=value"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli · --config, -c key=value"
+    },
+    {
+      "command": "codex --enable",
+      "context": "",
+      "aliases": [
+        "codex --disable"
+      ],
+      "entryType": "cli-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Toggle feature flag",
+      "usage": "codex --enable",
+      "options": [
+        "--enable"
+      ],
+      "officialExamples": [
+        "codex --enable"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli · --enable / --disable <feature>"
+    },
+    {
+      "command": "codex --full-auto",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Auto-approve in sandbox (deprecated)",
+      "usage": "codex --full-auto",
+      "options": [
+        "--full-auto"
+      ],
+      "officialExamples": [
+        "codex --full-auto"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli · --full-auto"
+    },
+    {
+      "command": "codex --image",
+      "context": "",
+      "aliases": [
+        "codex -i"
+      ],
+      "entryType": "cli-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Attach image(s)",
+      "usage": "codex --image",
+      "options": [
+        "--image"
+      ],
+      "officialExamples": [
+        "codex --image src/app.js"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli · --image, -i <路径>"
+    },
+    {
+      "command": "codex --model",
+      "context": "",
+      "aliases": [
+        "codex -m"
+      ],
+      "entryType": "cli-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Override model",
+      "usage": "codex --model",
+      "options": [
+        "--model"
+      ],
+      "officialExamples": [
+        "codex --model gpt-5.5"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli · --model, -m <模型>"
+    },
+    {
+      "command": "codex --oss",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Use local OSS model",
+      "usage": "codex --oss",
+      "options": [
+        "--oss"
+      ],
+      "officialExamples": [
+        "codex --oss"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli · --oss"
+    },
+    {
+      "command": "codex --profile",
+      "context": "",
+      "aliases": [
+        "codex -p"
+      ],
+      "entryType": "cli-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Load named config profile",
+      "usage": "codex --profile",
+      "options": [
+        "--profile"
+      ],
+      "officialExamples": [
+        "codex --profile work"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli · --profile, -p <名称>"
+    },
+    {
+      "command": "codex --remote ws://host:port",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Connect to remote app-server",
+      "usage": "codex --remote ws://host:port",
+      "options": [
+        "--remote"
+      ],
+      "officialExamples": [
+        "codex --remote ws://host:port"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli · codex --remote ws://host:port"
+    },
+    {
+      "command": "codex --sandbox",
+      "context": "",
+      "aliases": [
+        "codex -s"
+      ],
+      "entryType": "cli-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Sandbox policy",
+      "usage": "codex --sandbox",
+      "options": [
+        "--sandbox"
+      ],
+      "officialExamples": [
+        "codex --sandbox workspace-write"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli · --sandbox, -s <模式>"
+    },
+    {
+      "command": "codex --search",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Enable live web search",
+      "usage": "codex --search",
+      "options": [
+        "--search"
+      ],
+      "officialExamples": [
+        "codex --search"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli · --search"
+    },
+    {
+      "command": "codex --yolo",
+      "context": "",
+      "aliases": [
+        "codex --dangerously-bypass-approvals-and-sandbox"
+      ],
+      "entryType": "cli-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Bypass all safety",
+      "usage": "codex --yolo",
+      "options": [
+        "--yolo"
+      ],
+      "officialExamples": [
+        "codex --yolo"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli · --yolo / --dangerously-bypass-approvals-and-sandbox"
+    },
+    {
+      "command": "codex app",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Launch desktop app",
+      "usage": "codex app",
+      "options": [],
+      "officialExamples": [
+        "codex app"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli · codex app"
+    },
+    {
+      "command": "codex app-server --listen",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Run app server",
+      "usage": "codex app-server --listen",
+      "options": [
+        "--listen"
+      ],
+      "officialExamples": [
+        "codex app-server --listen"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli · codex app-server --listen"
+    },
+    {
+      "command": "codex apply",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Apply cloud task diff",
+      "usage": "codex apply",
+      "options": [],
+      "officialExamples": [
+        "codex apply \"检查当前改动\""
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli · codex apply <任务ID>"
+    },
+    {
+      "command": "codex cloud",
+      "context": "",
+      "aliases": [
+        "codex cloud exec"
+      ],
+      "entryType": "cli-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Browse/run cloud tasks",
+      "usage": "codex cloud",
+      "options": [],
+      "officialExamples": [
+        "codex cloud"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli · codex cloud / codex cloud exec"
+    },
+    {
+      "command": "codex completion",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Generate shell completions",
+      "usage": "codex completion",
+      "options": [],
+      "officialExamples": [
+        "codex completion zsh"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli · codex completion <shell>"
+    },
+    {
+      "command": "codex exec",
+      "context": "",
+      "aliases": [
+        "codex e"
+      ],
+      "entryType": "cli-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Non-interactive run",
+      "usage": "codex exec",
+      "options": [],
+      "officialExamples": [
+        "codex exec \"运行测试并解释失败原因\""
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli · codex exec \"任务\"（别名 codex e）"
+    },
+    {
+      "command": "codex exec --json",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "JSON event stream",
+      "usage": "codex exec --json",
+      "options": [
+        "--json"
+      ],
+      "officialExamples": [
+        "codex exec --json \"检查依赖安全问题\""
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli · codex exec --json"
+    },
+    {
+      "command": "codex exec resume --last",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Resume last exec session",
+      "usage": "codex exec resume --last",
+      "options": [
+        "--last"
+      ],
+      "officialExamples": [
+        "codex exec resume --last"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli · codex exec resume --last"
+    },
+    {
+      "command": "codex features list/enable/disable",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Manage feature flags",
+      "usage": "codex features list/enable/disable",
+      "options": [],
+      "officialExamples": [
+        "codex features list/enable/disable"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli · codex features list/enable/disable"
+    },
+    {
+      "command": "codex fork",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Fork a previous session",
+      "usage": "codex fork",
+      "options": [
+        "--last"
+      ],
+      "officialExamples": [
+        "codex fork --last"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli · codex fork [--last]"
+    },
+    {
+      "command": "codex login",
+      "context": "",
+      "aliases": [
+        "codex logout"
+      ],
+      "entryType": "cli-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Manage authentication",
+      "usage": "codex login",
+      "options": [],
+      "officialExamples": [
+        "codex login"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli · codex login / logout"
+    },
+    {
+      "command": "codex mcp add/list/remove",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Manage MCP servers",
+      "usage": "codex mcp add/list/remove",
+      "options": [],
+      "officialExamples": [
+        "codex mcp add/list/remove"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli · codex mcp add/list/remove"
+    },
+    {
+      "command": "codex mcp-server",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Run Codex as MCP server",
+      "usage": "codex mcp-server",
+      "options": [],
+      "officialExamples": [
+        "codex mcp-server"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli · codex mcp-server"
+    },
+    {
+      "command": "codex resume",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Resume interactive session",
+      "usage": "codex resume",
+      "options": [
+        "--last",
+        "--all"
+      ],
+      "officialExamples": [
+        "codex resume",
+        "codex resume --last",
+        "codex resume --all"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli · codex resume [--last|--all]"
+    },
+    {
+      "command": "codex sandbox",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "codex",
+      "platforms": [],
+      "constraints": [],
+      "description": "Run command in sandbox",
+      "usage": "codex sandbox",
+      "options": [],
+      "officialExamples": [
+        "codex sandbox"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli · codex sandbox"
+    },
+    {
+      "command": "Ctrl+C",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "codex",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Cancel / exit on empty input",
+      "usage": "Ctrl+C",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+C"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli · Ctrl+C"
+    },
+    {
+      "command": "Ctrl+D",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "codex",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Exit (EOF)",
+      "usage": "Ctrl+D",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+D"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli · Ctrl+D"
+    },
+    {
+      "command": "Ctrl+G",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "codex",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Open external editor",
+      "usage": "Ctrl+G",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+G"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli · Ctrl+G"
+    },
+    {
+      "command": "Ctrl+L",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "codex",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Clear terminal",
+      "usage": "Ctrl+L",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+L"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli · Ctrl+L"
+    },
+    {
+      "command": "Ctrl+O",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "codex",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Copy latest response",
+      "usage": "Ctrl+O",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+O"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli · Ctrl+O"
+    },
+    {
+      "command": "Ctrl+R",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "codex",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Search prompt history",
+      "usage": "Ctrl+R",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+R"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli · Ctrl+R"
+    },
+    {
+      "command": "Ctrl+T",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "codex",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Open transcript",
+      "usage": "Ctrl+T",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+T"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli · Ctrl+T"
+    },
+    {
+      "command": "Enter（任务运行中）",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "codex",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Inject new instructions",
+      "usage": "Enter（任务运行中）",
+      "options": [],
+      "officialExamples": [
+        "按 Enter（任务运行中）"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli · Enter（任务运行中）"
+    },
+    {
+      "command": "Esc Esc（输入框为空时）",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "codex",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Edit previous message",
+      "usage": "Esc Esc（输入框为空时）",
+      "options": [],
+      "officialExamples": [
+        "按 Esc Esc（输入框为空时）"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli · Esc Esc（输入框为空时）"
+    },
+    {
+      "command": "Tab（任务运行中）",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "codex",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Queue follow-up for next turn",
+      "usage": "Tab（任务运行中）",
+      "options": [],
+      "officialExamples": [
+        "按 Tab（任务运行中）"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli · Tab（任务运行中）"
+    },
+    {
+      "command": "Up / Down",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "codex",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Navigate draft history",
+      "usage": "Up / Down",
+      "options": [],
+      "officialExamples": [
+        "按 Up / Down"
+      ],
+      "url": "https://learn.chatgpt.com/docs/developer-commands?surface=cli · Up / Down"
+    }
+  ]
+}

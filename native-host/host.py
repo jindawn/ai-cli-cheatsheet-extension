@@ -174,6 +174,9 @@ EVIDENCE_CLAIMS = set(VALIDATION_RULES["evidenceClaims"])
 UPDATE_POLICIES = set(VALIDATION_RULES["updatePolicies"])
 OFFICIAL_COVERAGE_STATUSES = set(VALIDATION_RULES["officialCoverageStatuses"])
 OFFICIAL_COVERAGE_SCOPE = VALIDATION_RULES["officialCoverageScope"]
+GROUNDING_CLAIMS = set(VALIDATION_RULES["groundingClaims"])
+SCENARIO_RULES = VALIDATION_RULES["scenarioQuality"]
+SCENARIO_PLACEHOLDER_RE = re.compile(SCENARIO_RULES["placeholderPattern"])
 
 # Only tools with a useful local version command belong here. Stable keymaps and
 # long-lived command references intentionally have no executable probe.
@@ -807,6 +810,9 @@ def prune_unused_sources(dataset):
         for example in item.get("examples", []) or []:
             for source_id in example.get("sourceIds", []) or []:
                 used.add(source_id)
+            for grounding in example.get("groundingRefs", []) or []:
+                if grounding.get("sourceId"):
+                    used.add(grounding["sourceId"])
     pruned = [source for source in sources if source.get("id") in used]
     if pruned and len(pruned) != len(sources):
         meta["sources"] = pruned
@@ -900,6 +906,8 @@ def _validate_meta(meta, expected_tool_id, require_structured_source):
     source_url = checked_text(meta.get("sourceUrl"), "meta.sourceUrl", required=False)
     updated_at = checked_text(meta.get("updatedAt"), "meta.updatedAt", required=False)
     coverage = checked_text(meta.get("coverage"), "meta.coverage", required=False)
+    if coverage and re.search(r"核心命令|常用子集|尽量完整", coverage):
+        raise ValidationError("meta.coverage 不得用核心命令、常用子集或尽量完整冒充官方覆盖")
     platforms = meta.get("platforms")
     if require_structured_source and (
         not coverage
@@ -1068,7 +1076,8 @@ def _validate_sources(raw_sources, expected_tool_id, require_structured_source):
 
 
 def _validate_example(example, item_index, example_index, expected_tool_id,
-                       require_structured_source, source_ids, source_by_id, clean_sources):
+                       require_structured_source, source_ids, source_by_id, clean_sources,
+                       enforce_global_contract=False):
     """Validate and normalize one items[].examples[] entry.
 
     Reconciles authorship/evidenceTier/adaptation/sourceIds and downgrades
@@ -1267,7 +1276,15 @@ def _validate_example(example, item_index, example_index, expected_tool_id,
             raise ValidationError(
                 f"items[{item_index}].examples[{example_index}] 的 official URL 不是第一方来源"
             )
-    for optional_field in ("scenario", "goal", "expected", "prerequisites", "caveat"):
+    for scenario_field in ("scenario", "goal", "expected"):
+        scenario_value = checked_text(
+            example.get(scenario_field),
+            f"items[{item_index}].examples[{example_index}].{scenario_field}",
+            required=enforce_global_contract,
+        )
+        if scenario_value:
+            clean_example[scenario_field] = scenario_value
+    for optional_field in ("prerequisites", "caveat"):
         optional_value = checked_text(
             example.get(optional_field),
             f"items[{item_index}].examples[{example_index}].{optional_field}",
@@ -1275,6 +1292,54 @@ def _validate_example(example, item_index, example_index, expected_tool_id,
         )
         if optional_value:
             clean_example[optional_field] = optional_value
+    if enforce_global_contract:
+        quality_text = "\n".join(
+            clean_example[field] for field in ("value", "description", "scenario", "goal", "expected")
+        )
+        for phrase in SCENARIO_RULES["forbiddenPhrases"]:
+            if phrase in quality_text:
+                raise ValidationError(
+                    f"items[{item_index}].examples[{example_index}] 包含禁用的空泛模板：{phrase}"
+                )
+        if SCENARIO_PLACEHOLDER_RE.search(clean_example["value"]):
+            raise ValidationError(
+                f"items[{item_index}].examples[{example_index}] 包含未解析占位符"
+            )
+    grounding_refs = example.get("groundingRefs")
+    if enforce_global_contract and (not isinstance(grounding_refs, list) or not grounding_refs):
+        raise ValidationError(
+            f"items[{item_index}].examples[{example_index}].groundingRefs 必须引用第一方依据"
+        )
+    clean_grounding_refs = []
+    grounded_claims = set()
+    for grounding_index, grounding in enumerate(grounding_refs or []):
+        field = f"items[{item_index}].examples[{example_index}].groundingRefs[{grounding_index}]"
+        if not isinstance(grounding, dict):
+            raise ValidationError(f"{field} 必须是对象")
+        source_id = checked_text(grounding.get("sourceId"), f"{field}.sourceId")
+        source = source_by_id.get(source_id)
+        if enforce_global_contract and (not source or source.get("evidenceTier") != "first-party"):
+            raise ValidationError(f"{field}.sourceId 必须引用第一方来源")
+        locator = checked_text(grounding.get("locator"), f"{field}.locator")
+        claims = grounding.get("claims")
+        if not isinstance(claims, list) or not claims or any(
+            claim not in GROUNDING_CLAIMS for claim in claims
+        ):
+            raise ValidationError(f"{field}.claims 非法")
+        claims = list(dict.fromkeys(claims))
+        grounded_claims.update(claims)
+        clean_grounding_refs.append({
+            "sourceId": source_id,
+            "locator": locator,
+            "claims": claims,
+        })
+    required_grounding = {"value", "behavior", "expected"}
+    if enforce_global_contract and not required_grounding.issubset(grounded_claims):
+        raise ValidationError(
+            f"items[{item_index}].examples[{example_index}] 缺少命令、行为或结果依据"
+        )
+    if clean_grounding_refs:
+        clean_example["groundingRefs"] = clean_grounding_refs
     warning = checked_text(
         example.get("warning"),
         f"items[{item_index}].examples[{example_index}].warning",
@@ -1330,7 +1395,8 @@ def _validate_example(example, item_index, example_index, expected_tool_id,
     return clean_example, was_downgraded
 
 
-def validate_dataset(payload, expected_tool_id, require_structured_source=True):
+def validate_dataset(payload, expected_tool_id, require_structured_source=True,
+                     enforce_global_contract=False):
     if not isinstance(payload, dict):
         raise ValidationError("Claude 返回的数据必须是 JSON 对象")
     meta = payload.get("meta")
@@ -1455,23 +1521,23 @@ def validate_dataset(payload, expected_tool_id, require_structured_source=True):
         if expected_tool_id == "shell" and "keywords" not in clean_item:
             raise ValidationError(f"items[{index}].keywords 是 Shell 聚合工具必填字段")
         examples = item.get("examples")
-        # An empty list means "no examples"; examples are optional, so normalize
-        # it to absent instead of failing. Models routinely emit [] rather than
-        # omitting the field, and one such item must not sink a whole batch.
+        if enforce_global_contract and (not isinstance(examples, list) or not examples):
+            raise ValidationError(f"items[{index}].examples 必须包含 1 到 {MAX_EXAMPLES} 个示例")
         if isinstance(examples, list) and not examples:
             examples = None
-        if examples is not None:
-            if not isinstance(examples, list) or len(examples) > MAX_EXAMPLES:
-                raise ValidationError(f"items[{index}].examples 必须包含 1 到 {MAX_EXAMPLES} 个示例")
-            clean_examples = []
-            for example_index, example in enumerate(examples):
-                clean_example, was_downgraded = _validate_example(
-                    example, index, example_index, expected_tool_id,
-                    require_structured_source, source_ids, source_by_id, clean_sources,
-                )
-                if was_downgraded:
-                    downgraded_example_evidence += 1
-                clean_examples.append(clean_example)
+        if examples is not None and (not isinstance(examples, list) or len(examples) > MAX_EXAMPLES):
+            raise ValidationError(f"items[{index}].examples 必须包含 1 到 {MAX_EXAMPLES} 个示例")
+        clean_examples = []
+        for example_index, example in enumerate(examples or []):
+            clean_example, was_downgraded = _validate_example(
+                example, index, example_index, expected_tool_id,
+                require_structured_source, source_ids, source_by_id, clean_sources,
+                enforce_global_contract,
+            )
+            if was_downgraded:
+                downgraded_example_evidence += 1
+            clean_examples.append(clean_example)
+        if clean_examples:
             clean_item["examples"] = clean_examples
         if expected_tool_id == "shell" and DANGEROUS_EXAMPLE_RE.search(clean_item["cmd"]) and not clean_item.get("examples"):
             raise ValidationError(f"items[{index}] 高风险 Shell 条目必须提供示例和 warning")
@@ -1822,7 +1888,7 @@ JSON 格式：
     "verifiedVersion": "可选；已核验的产品版本或发布标识",
     "contentCheckedAt": "YYYY-MM-DD",
     "sourceCheckedAt": "YYYY-MM-DD",
-    "coverage": "完整命令列表或常用子集说明",
+    "coverage": "官方入口全集；精确范围、组件与平台限制见官方清单",
     "sources": [{{
       "id": "稳定来源ID",
       "title": "来源名称",
@@ -1881,6 +1947,11 @@ JSON 格式：
           "authorship": "official|editorial|generated",
           "evidenceTier": "first-party|authoritative-community|community|none",
           "adaptation": "verbatim|adapted|scenario-derived",
+          "groundingRefs": [{{
+            "sourceId": "第一方来源ID",
+            "locator": "支持该命令、行为和结果的精确页面或帮助位置",
+            "claims": ["value", "behavior", "expected"]
+          }}],
           "platforms": ["可选；mac/windows/linux"],
           "platformValues": {{"mac": "可选的平台专属示例"}}
         }}
@@ -1903,10 +1974,11 @@ JSON 格式：
 6. 所有字符串必须是有效 JSON 字符串。
 7. sources、updatePolicy、contentCheckedAt、sourceCheckedAt、coverage 必须填写；updatedAt 仅为旧数据兼容字段，新数据可省略。网页来源必须记录 resolvedUrl、pageTitle、checkedAt。每个 item 必须提供 evidenceRefs，evidenceStatus 由系统根据 claims 自动推导，不要臆测；平台快捷键应尽量使用 platformCmds 表达。可选数组/对象没有内容时直接省略，不要输出空数组或空对象；没有平台差异时省略 platforms、platformValues、platformCmds。
 8. verified 必须同时有 existence 与 semantics 断言且 locator 可具体定位；只有宽泛首页或只确认命令存在时只能是 partial；无证据为 unverified。
-9. 每个条目都必须提供 keywords；除 Shell 聚合工具的非核心参数表条目外，每个条目都必须提供 examples；每条最多 3 个示例。Shell 的核心、高频、危险、易错或平台差异参数必须提供 examples、caveat 或 warning。
+9. 每个条目都必须提供 keywords 和至少一个完整 examples；每条最多 3 个示例，不得以 --help 代替叶子命令的真实用法。
 9a. examples 中面向 UI 展示的说明字段必须使用中文：description、scenario、goal、expected、prerequisites、caveat、warning。命令值 value、cmd、官方英文 en、URL、产品名和命令参数可保留英文。
 10. updatePolicy 按实际变化方式选择：可读取本机版本的动态 CLI 用 version-driven；有明确官方 Release/Changelog 但无可靠本机版本的工具用 release-driven；稳定快捷键、键位表和基础命令参考用 manual-only。不得因为核验日期较早选择更激进的策略。
-11. CLI 示例必须是完整可执行命令；IDE/快捷键示例写具体操作场景并设 copyable=false；案例应包含 scenario、goal、expected，说明何时用、结果是什么以及不要与什么混淆。
+11. CLI 示例必须是完整可执行命令；IDE/快捷键示例写具体操作场景并设 copyable=false；案例必须包含具体且互不重复的 scenario、goal、description、expected。
+11a. 每个示例必须提供 groundingRefs，逐项用第一方来源支持 value、behavior、expected；不能把编辑推断伪装为官方原例，不能写版本确认、查看帮助等通用套话。
 12. 更新时保留已有 keywords 和 examples，并为所有新增条目补充关键词和示例。
 13. 只有官方文档逐字给出的示例才能标记 authorship=official、adaptation=verbatim、sourceType=official；你根据官方行为整理的使用场景必须标记 authorship=editorial、adaptation=adapted、sourceType=manual。
 13. {tier_rule}
@@ -2626,7 +2698,7 @@ def run_claude_query(
         raw["meta"]["verifiedVersion"] = update_context["marker"]
     elif current and current.get("meta", {}).get("verifiedVersion"):
         raw["meta"]["verifiedVersion"] = current["meta"]["verifiedVersion"]
-    dataset = validate_dataset(raw, tool_id)
+    dataset = validate_dataset(raw, tool_id, enforce_global_contract=True)
     prune_unused_sources(dataset)
     dataset["meta"]["verificationStatus"] = (
         "model-knowledge" if use_api else "web-assisted"
@@ -2751,7 +2823,8 @@ def official_inventory_path(tool_id):
 
 
 def normalized_command(value):
-    return re.sub(r"\s+", " ", str(value or "")).strip().casefold()
+    # CLI options are case-sensitive (`-C` and `-c` may be different flags).
+    return re.sub(r"\s+", " ", str(value or "")).strip()
 
 
 def dataset_commands(dataset):
@@ -2762,12 +2835,172 @@ def dataset_commands(dataset):
     return commands
 
 
+def inventory_key(command, context=""):
+    return (normalized_command(command), normalized_command(context))
+
+
 def official_inventory_missing(dataset, inventory):
-    available = dataset_commands(dataset)
+    available = {
+        inventory_key(item.get("cmd"), item.get("context"))
+        for item in dataset.get("items", [])
+    }
     return [
         entry for entry in inventory.get("entries", [])
-        if normalized_command(entry.get("command")) not in available
+        if inventory_key(entry.get("command"), entry.get("context")) not in available
     ]
+
+
+def validate_inventory_dataset_exact(dataset, inventory):
+    entries = {
+        inventory_key(entry.get("command"), entry.get("context")): entry
+        for entry in inventory.get("entries", [])
+    }
+    items = {
+        inventory_key(item.get("cmd"), item.get("context")): item
+        for item in dataset.get("items", [])
+    }
+    missing = sorted(set(entries) - set(items))
+    extra = sorted(set(items) - set(entries))
+    if missing or extra:
+        details = []
+        if missing:
+            details.append("缺少：" + "、".join(command for command, _ in missing[:12]))
+        if extra:
+            details.append("清单外入口：" + "、".join(command for command, _ in extra[:12]))
+        raise OfficialInventoryError(
+            "generated_inventory_incomplete", "；".join(details),
+            ["重新读取官方目录并只补齐差异", "不要应用未闭合的数据"],
+        )
+    for key, entry in entries.items():
+        expected_aliases = {normalized_command(alias) for alias in entry.get("aliases", [])}
+        actual_aliases = {normalized_command(alias) for alias in items[key].get("aliases", [])}
+        if expected_aliases != actual_aliases:
+            raise OfficialInventoryError(
+                "official_alias_mismatch", f"{entry['command']} 的官方别名集合不一致",
+                ["按官方清单修复 aliases 后重新审校"],
+            )
+
+
+def scenario_review_path(tool_id):
+    tool_id = validate_tool_id(tool_id)
+    directory = os.path.realpath(os.path.join(PROJECT_DIR, "shared", "scenario-reviews"))
+    path = os.path.realpath(os.path.join(directory, f"{tool_id}.json"))
+    if os.path.dirname(path) != directory:
+        raise ValidationError("场景审校路径非法")
+    return path
+
+
+def example_content_hash(item_id, index, example):
+    payload = {
+        "itemId": item_id,
+        "index": index,
+        "example": {key: value for key, value in example.items() if key != "review"},
+    }
+    serialized = json.dumps(payload, ensure_ascii=False, separators=(",", ":"))
+    return "sha256:" + hashlib.sha256(serialized.encode("utf-8")).hexdigest()
+
+
+def build_scenario_review(dataset, inventory):
+    strict_inventory = inventory.get("schemaVersion") == 2
+    if strict_inventory:
+        validate_inventory_dataset_exact(dataset, inventory)
+    review_entries = inventory["entries"] if strict_inventory else [{
+        "command": item["cmd"], "context": item.get("context", ""),
+        "aliases": item.get("aliases", []),
+        "options": list({option for example in item.get("examples", [])
+                         for option in re.findall(r"(?:^|\s)(--?[A-Za-z0-9][\w-]*)", example["value"])}),
+        "officialExamples": [example["value"] for example in item.get("examples", [])],
+    } for item in dataset["items"]]
+    inventory_by_key = {
+        inventory_key(entry.get("command"), entry.get("context")): entry
+        for entry in review_entries
+    }
+    all_commands = [normalized_command(entry["command"]) for entry in review_entries]
+    repeated = {field: {} for field in ("description", "scenario", "goal", "expected")}
+    reviews = []
+    for item in dataset["items"]:
+        entry = inventory_by_key[inventory_key(item.get("cmd"), item.get("context"))]
+        is_namespace = any(
+            command.startswith(normalized_command(entry["command"]) + " ")
+            for command in all_commands
+        )
+        allowed_options = set(entry.get("options", []))
+        allowed_options.update(
+            re.findall(r"(?:^|\s)(--?[A-Za-z0-9][\w-]*)", " ".join(entry.get("officialExamples", [])))
+        )
+        for index, example in enumerate(item.get("examples", [])):
+            value = example["value"]
+            if (item.get("cat") != "shortcut" and example.get("copyable") is not False
+                    and item.get("shell", {}).get("layer") != "syntax"):
+                accepted = [entry["command"], *entry.get("aliases", [])]
+                normalized_value = normalized_command(value)
+                executable_forms = []
+                for command in accepted:
+                    command = re.split(r"\s+(?=[\"']?[\[<])", command, maxsplit=1)[0].strip()
+                    executable_forms.append(normalized_command(command))
+                    base_command = re.split(r"\s+(?=--?[A-Za-z0-9])", command, maxsplit=1)[0]
+                    executable_forms.append(normalized_command(base_command))
+                    if item.get("shell"):
+                        executable_forms.append(normalized_command(command.split()[0]))
+                if not any(
+                    normalized_value == command
+                    or normalized_value.startswith(command + " ")
+                    or re.search(rf"(?:^|[;&|]\s*|\s){re.escape(command)}(?:\s|;|$)", normalized_value)
+                    for command in executable_forms
+                ):
+                    raise ValidationError(f"{item['cmd']} 的案例没有执行对应官方入口")
+                if (not is_namespace and "--help" not in entry["command"]
+                        and re.search(r"(?:^|\s)--help(?:\s|$)", value)):
+                    raise ValidationError(f"{item['cmd']} 是叶子入口，不能用 --help 充数")
+                used_options = set(re.findall(r"(?:^|\s)(--?[A-Za-z0-9][\w-]*)", value))
+                unknown = used_options - allowed_options
+                if unknown:
+                    raise ValidationError(f"{item['cmd']} 的案例使用未知选项：{'、'.join(sorted(unknown))}")
+            for field, counts in repeated.items():
+                if field not in example:
+                    continue
+                text = re.sub(r"\s+", " ", example[field]).strip()
+                counts[text] = counts.get(text, 0) + 1
+            reviews.append({
+                "itemId": item["id"], "exampleIndex": index,
+                "contentHash": example_content_hash(item["id"], index, example),
+                "status": "passed",
+            })
+    for field, counts in repeated.items():
+        duplicated = next(((text, count) for text, count in counts.items()
+                           if count > SCENARIO_RULES["maxRepeatedText"]), None)
+        if duplicated:
+            raise ValidationError(f"场景审校失败：{field} 重复 {duplicated[1]} 次：{duplicated[0]}")
+    return {
+        "schemaVersion": 1,
+        "toolId": dataset["meta"]["id"],
+        "reviewVersion": SCENARIO_RULES["reviewVersion"],
+        "reviewedAt": datetime.date.today().isoformat(),
+        "inventoryHash": inventory_hash(inventory["entries"]),
+        "status": "passed",
+        "examples": reviews,
+    }
+
+
+def scenario_review_matches(actual, expected):
+    if not isinstance(actual, dict):
+        return False
+    ignored = {"reviewedAt"}
+    return (
+        {key: value for key, value in actual.items() if key not in ignored}
+        == {key: value for key, value in expected.items() if key not in ignored}
+    )
+
+
+def require_current_scenario_review(tool_id, expected):
+    path = scenario_review_path(tool_id)
+    try:
+        with open(path, "r", encoding="utf-8") as handle:
+            actual = json.load(handle)
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ValidationError("场景审校快照不可读，不能显示已是最新") from exc
+    if not scenario_review_matches(actual, expected):
+        raise ValidationError("场景内容已变化或审校版本过期，请重新审校后再检查更新")
 
 
 def official_coverage(inventory, covered):
@@ -2780,6 +3013,17 @@ def official_coverage(inventory, covered):
         "checkedAt": inventory["checkedAt"],
         "sourceIds": inventory["sourceIds"],
         "inventoryHash": inventory_hash(inventory["entries"]),
+    }
+
+
+def inventory_preview_summary(inventory):
+    return {
+        "total": len(inventory["entries"]),
+        "adapter": inventory.get("adapter", {}),
+        "sourceIds": inventory.get("sourceIds", []),
+        "components": inventory.get("closure", {}).get("components", []),
+        "platforms": inventory.get("closure", {}).get("platforms", []),
+        "closure": inventory.get("closure", {}).get("status"),
     }
 
 
@@ -2875,12 +3119,9 @@ JSON 格式：
 
 
 def refresh_official_inventory(tool_id, display_name, dataset):
-    try:
-        return fetch_official_inventory(tool_id)
-    except OfficialInventoryError as exc:
-        if exc.code != "official_adapter_missing":
-            raise
-        return fetch_generic_official_inventory(tool_id, display_name, dataset)
+    # Completeness is never delegated to a model. Unknown tools and adapters
+    # without a deterministic closure proof fail closed in official_inventory.
+    return fetch_official_inventory(tool_id)
 
 
 def pending_path(token):
@@ -3012,7 +3253,8 @@ def build_dataset_diff(old_dataset, new_dataset):
     new_host = urllib.parse.urlparse(new_dataset.get("meta", {}).get("sourceUrl", "")).hostname
     if old_host and new_host and old_host != new_host:
         risks.append(f"官方来源域名从 {old_host} 变为 {new_host}")
-    if old_dataset.get("meta", {}).get("builtIn") != new_dataset.get("meta", {}).get("builtIn"):
+    if ("builtIn" in old_dataset.get("meta", {})
+            and old_dataset.get("meta", {}).get("builtIn") != new_dataset.get("meta", {}).get("builtIn")):
         risks.append("内置工具标记发生变化")
 
     old_sources = {
@@ -3134,6 +3376,7 @@ def load_existing_dataset(tool_id):
         parse_data_file(content, tool_id),
         tool_id,
         require_structured_source=False,
+        enforce_global_contract=False,
     )
 
 
@@ -3179,24 +3422,43 @@ def add_tool(tool_id, display_name, prefer_web=False):
         display_name = "Shell"
     if os.path.exists(tool_data_path(tool_id)):
         raise ValidationError(f"data/{tool_id}.js 已存在，请使用更新模式")
+    inventory = refresh_official_inventory(tool_id, display_name, {"meta": {}, "items": []})
     dataset = (
         run_shell_aggregate_query(prefer_web)
         if tool_id == "shell"
-        else run_claude_query(tool_id, display_name, "add", prefer_web)
+        else run_claude_query(
+            tool_id, display_name, "add", prefer_web,
+            update_context={
+                "policy": "release-driven",
+                "signalType": "official-inventory",
+                "marker": inventory["checkedAt"],
+                "officialMissing": [entry["command"] for entry in inventory["entries"]],
+                "officialTotal": len(inventory["entries"]),
+            },
+        )
     )
-    data_path = tool_data_path(tool_id)
-    new_content = render_data_file(dataset)
-    atomic_write(data_path, new_content)
-    try:
-        write_data_index()
-    except Exception:
-        LOGGER.warning("add_tool: rolling back %s after write_data_index failure", data_path, exc_info=True)
-        os.unlink(data_path)
-        raise
+    dataset["meta"]["officialCoverage"] = official_coverage(inventory, len(inventory["entries"]))
+    dataset = validate_dataset(dataset, tool_id, enforce_global_contract=True)
+    review = build_scenario_review(dataset, inventory)
+    diff = build_dataset_diff({"meta": {}, "items": []}, dataset)
+    token = secrets.token_hex(16)
+    payload = {
+        "token": token, "mode": "add", "toolId": tool_id, "oldHash": None,
+        "dataset": dataset, "officialInventory": inventory,
+        "scenarioReview": review, "diff": diff,
+    }
+    atomic_write(pending_path(token), json.dumps(payload, ensure_ascii=False, indent=2))
+    prune_pending_files(current_tool_id=tool_id, keep_token=token)
     return {
         "ok": True,
         "changed": True,
-        "output": dataset["summary"] or f"已校验 {len(dataset['items'])} 条数据",
+        "pendingToken": token,
+        "toolId": tool_id,
+        "diff": diff,
+        "officialCoverage": dataset["meta"]["officialCoverage"],
+        "officialInventorySummary": inventory_preview_summary(inventory),
+        "scenarioReviewSummary": {"status": review["status"], "examples": len(review["examples"])},
+        "output": dataset["summary"] or f"已校验 {len(dataset['items'])} 条数据，请确认预览后应用",
         "qualityWarnings": dataset.get("qualityWarnings", []),
     }
 
@@ -3263,10 +3525,16 @@ def preview_update(tool_id, display_name, prefer_web=False, deep_check=False):
     else:
         new_dataset["meta"]["officialCoverage"] = refreshed_coverage
     new_dataset = preserve_existing_enrichment(old_dataset, new_dataset)
+    new_dataset = validate_dataset(
+        new_dataset, tool_id,
+        enforce_global_contract=inventory.get("schemaVersion") == 2,
+    )
+    scenario_review = build_scenario_review(new_dataset, inventory)
     diff = build_dataset_diff(old_dataset, new_dataset)
     diff["qualityWarnings"] = new_dataset.get("qualityWarnings", [])
     changed = any(diff["counts"].values())
     if not changed:
+        require_current_scenario_review(tool_id, scenario_review)
         return {
             "ok": True,
             "changed": False,
@@ -3277,6 +3545,8 @@ def preview_update(tool_id, display_name, prefer_web=False, deep_check=False):
                 f"已比对官方目录：{len(inventory['entries'])}/{len(inventory['entries'])} 个入口均已覆盖，暂无更新"
             ),
             "officialCoverage": new_dataset["meta"]["officialCoverage"],
+            "officialInventorySummary": inventory_preview_summary(inventory),
+            "scenarioReview": scenario_review,
         }
     token = secrets.token_hex(16)
     payload = {
@@ -3285,6 +3555,7 @@ def preview_update(tool_id, display_name, prefer_web=False, deep_check=False):
         "oldHash": file_sha256(tool_data_path(tool_id)),
         "dataset": new_dataset,
         "officialInventory": inventory,
+        "scenarioReview": scenario_review,
         "diff": diff,
     }
     atomic_write(pending_path(token), json.dumps(payload, ensure_ascii=False, indent=2))
@@ -3298,6 +3569,8 @@ def preview_update(tool_id, display_name, prefer_web=False, deep_check=False):
         "qualityWarnings": new_dataset.get("qualityWarnings", []),
         "updateSignal": signal,
         "officialCoverage": new_dataset["meta"]["officialCoverage"],
+        "officialInventorySummary": inventory_preview_summary(inventory),
+        "scenarioReviewSummary": {"status": scenario_review["status"], "examples": len(scenario_review["examples"])},
         "output": new_dataset["summary"] or (
             f"检测到 {signal['marker']}，发现可用更新" if signal else "发现可用更新"
         ),
@@ -3323,25 +3596,40 @@ def apply_update(token, confirm_risk=False):
     data_path = tool_data_path(payload["toolId"])
     if file_sha256(data_path) != payload.get("oldHash"):
         raise ValidationError("原数据已发生变化，请重新检查更新")
-    dataset = validate_dataset(payload.get("dataset"), payload["toolId"])
     inventory = payload.get("officialInventory")
+    dataset = validate_dataset(
+        payload.get("dataset"), payload["toolId"],
+        enforce_global_contract=isinstance(inventory, dict) and inventory.get("schemaVersion") == 2,
+    )
     if not isinstance(inventory, dict) or not isinstance(inventory.get("entries"), list):
         raise ValidationError("待处理更新缺少官方入口清单")
-    if official_inventory_missing(dataset, inventory):
-        raise ValidationError("待处理更新未覆盖全部官方入口")
+    if inventory.get("schemaVersion") == 2:
+        validate_inventory_dataset_exact(dataset, inventory)
     coverage = dataset.get("meta", {}).get("officialCoverage") or {}
     if coverage.get("inventoryHash") != inventory_hash(inventory["entries"]):
         raise ValidationError("待处理更新的官方清单哈希不一致")
+    review = payload.get("scenarioReview")
+    expected_review = build_scenario_review(dataset, inventory)
+    if not scenario_review_matches(review, expected_review):
+        raise ValidationError("待处理更新的场景审校快照缺失、失效或内容已变化")
     if payload.get("diff", {}).get("risks") and not confirm_risk:
         raise ValidationError("该更新包含高风险变化，请核对并确认后再应用")
     inventory_path = official_inventory_path(payload["toolId"])
+    review_path = scenario_review_path(payload["toolId"])
     previous_inventory = None
     if os.path.exists(inventory_path):
         with open(inventory_path, "r", encoding="utf-8") as handle:
             previous_inventory = handle.read()
-    atomic_write(inventory_path, json.dumps(inventory, ensure_ascii=False, indent=2) + "\n")
+    previous_review = None
+    if os.path.exists(review_path):
+        with open(review_path, "r", encoding="utf-8") as handle:
+            previous_review = handle.read()
     try:
+        atomic_write(inventory_path, json.dumps(inventory, ensure_ascii=False, indent=2) + "\n")
+        atomic_write(review_path, json.dumps(review, ensure_ascii=False, indent=2) + "\n")
         atomic_write(data_path, render_data_file(dataset))
+        if payload.get("mode") == "add":
+            write_data_index()
     except Exception:
         if previous_inventory is None:
             try:
@@ -3350,12 +3638,25 @@ def apply_update(token, confirm_risk=False):
                 pass
         else:
             atomic_write(inventory_path, previous_inventory)
+        if previous_review is None:
+            try:
+                os.unlink(review_path)
+            except OSError:
+                pass
+        else:
+            atomic_write(review_path, previous_review)
+        if payload.get("mode") == "add" and os.path.exists(data_path):
+            try:
+                os.unlink(data_path)
+                write_data_index()
+            except OSError:
+                pass
         raise
     os.unlink(path)
     return {
         "ok": True,
         "changed": True,
-        "output": "更新已应用",
+        "output": "新增已应用" if payload.get("mode") == "add" else "更新已应用",
         "toolId": payload["toolId"],
         "qualityWarnings": dataset.get("qualityWarnings", []),
     }
@@ -3463,7 +3764,18 @@ def main():
         send_message({"ok": False, "error": str(exc), "diagnostic": validation_diagnostic(exc)})
     except Exception as exc:  # Native hosts must always return a protocol response.
         LOGGER.exception("Unhandled error while processing native message")
-        send_message({"ok": False, "error": f"本地更新程序异常：{sanitize_error_text(exc)}（详情见本地日志）"})
+        reason = f"本地更新程序异常：{sanitize_error_text(exc)}（详情见本地日志）"
+        send_message({
+            "ok": False,
+            "error": reason,
+            "diagnostic": {
+                "stage": "native-host",
+                "code": "native_host_internal_error",
+                "reason": reason,
+                "completedChecks": [],
+                "actions": ["查看本地 host.log", "重新安装 Native Host 后完全重启浏览器", "若反复出现请提交日志中的错误类型"],
+            },
+        })
 
 
 if __name__ == "__main__":

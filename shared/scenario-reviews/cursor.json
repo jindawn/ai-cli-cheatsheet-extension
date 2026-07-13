@@ -1,0 +1,178 @@
+{
+  "schemaVersion": 1,
+  "toolId": "cursor",
+  "reviewVersion": "scenario-grounding-v2",
+  "reviewedAt": "2026-07-13",
+  "inventoryHash": "sha256:df9ca5acdbe76dc12e6fbbaec5afd8225afa365becb09e47aaf50521ec6032d7",
+  "status": "passed",
+  "examples": [
+    {
+      "itemId": "8ff2cda22ea7f208",
+      "exampleIndex": 0,
+      "contentHash": "sha256:8b8069285e205178caced60da0c8c5d0b22e93d3ed22de1d3a7913a554c5abcd",
+      "status": "passed"
+    },
+    {
+      "itemId": "8a3401e170d3a97e",
+      "exampleIndex": 0,
+      "contentHash": "sha256:7cba3c631c3451fb16ea0bdf0eb2d0b6cf0319f4697aea800a34514419b3bfc9",
+      "status": "passed"
+    },
+    {
+      "itemId": "ac8177dbfb88fc54",
+      "exampleIndex": 0,
+      "contentHash": "sha256:df01b80ab4d7d03cd200a33fd4f56edb3125c7a7b9cd19427e34d7720fae5aaf",
+      "status": "passed"
+    },
+    {
+      "itemId": "5743ebc7c497754a",
+      "exampleIndex": 0,
+      "contentHash": "sha256:eeba830c6248a927fb2777fa646c25c2e03d69536e41e6be1b7f278a053c5b5d",
+      "status": "passed"
+    },
+    {
+      "itemId": "e86466bd23691cc8",
+      "exampleIndex": 0,
+      "contentHash": "sha256:6c4fbfbe97c22bed66e4735002c47d5ee2f0494015447805762bc3da74c055d6",
+      "status": "passed"
+    },
+    {
+      "itemId": "dd119793e31485e8",
+      "exampleIndex": 0,
+      "contentHash": "sha256:ef792fa3783910ab6f968d09bcc3f21878f16dfb153cec68f669b9839f9eb186",
+      "status": "passed"
+    },
+    {
+      "itemId": "023a6020a0d0428b",
+      "exampleIndex": 0,
+      "contentHash": "sha256:045dbe0559dd7717eca7e241bb9fa37373e554238b641f3fb1d17f60db708486",
+      "status": "passed"
+    },
+    {
+      "itemId": "c656c0150f68fc84",
+      "exampleIndex": 0,
+      "contentHash": "sha256:510e52e0774f5b58331a17f5eb0e40835886903929a041b32fd39056b04bd32f",
+      "status": "passed"
+    },
+    {
+      "itemId": "35a1467c6b6e5316",
+      "exampleIndex": 0,
+      "contentHash": "sha256:18b4beebc06f4805e0ffb2ddb2a4bc314bdb6c3829ff6e6b9286b431b478b360",
+      "status": "passed"
+    },
+    {
+      "itemId": "7fc91ce6772943c0",
+      "exampleIndex": 0,
+      "contentHash": "sha256:428958e8c045a4954c457baa6f72079a92e6e33fae2f1cbd1030482d9b6e0294",
+      "status": "passed"
+    },
+    {
+      "itemId": "269732e21e794743",
+      "exampleIndex": 0,
+      "contentHash": "sha256:fc4fad6c4d526278a073202aa13aa28620f93e0dceded1a09193ae82fcc7ecf6",
+      "status": "passed"
+    },
+    {
+      "itemId": "c0919cfab1bb3bc7",
+      "exampleIndex": 0,
+      "contentHash": "sha256:b6e4ddd9c54810e5c23bd955743dfda96c603ec5751f757cf2ff43b9db915fc8",
+      "status": "passed"
+    },
+    {
+      "itemId": "be08a175582dd384",
+      "exampleIndex": 0,
+      "contentHash": "sha256:d7b772f1b19e80fc550fdef15b2cba2b49f000ace627ce7cafdd9c52a8d4e222",
+      "status": "passed"
+    },
+    {
+      "itemId": "07f6c79962bea87f",
+      "exampleIndex": 0,
+      "contentHash": "sha256:d014f1da3c61b557ee3f53b5063c70105cf54dc39f3bbbfe895dc7079fb9048b",
+      "status": "passed"
+    },
+    {
+      "itemId": "7970689048e3c5af",
+      "exampleIndex": 0,
+      "contentHash": "sha256:6024906c141ed162d237aceb53a1e39f94e3d8ab7b2f6069683d9f1065171ebd",
+      "status": "passed"
+    },
+    {
+      "itemId": "b307c56b96c36a78",
+      "exampleIndex": 0,
+      "contentHash": "sha256:2a1d0d3522c175cb6063cc8d254fccf83dc73df32a91fff1698b151b1b70d2bc",
+      "status": "passed"
+    },
+    {
+      "itemId": "593e75031ca8145a",
+      "exampleIndex": 0,
+      "contentHash": "sha256:e1f59a94682dd10c85e151d56ba9903ce8af68b98f187a9a9275beffa0ab7095",
+      "status": "passed"
+    },
+    {
+      "itemId": "54b8e968d8bc92e9",
+      "exampleIndex": 0,
+      "contentHash": "sha256:a7b9d22910a29b71eea3a3fcc8fcaa1e5d27f736559eb1f94dae75d299c6c992",
+      "status": "passed"
+    },
+    {
+      "itemId": "6c2b6e114b811c5c",
+      "exampleIndex": 0,
+      "contentHash": "sha256:987ff9700b722b6e2315131fb77cf2f5a50902fcf8e75a351ceacb2c426088a3",
+      "status": "passed"
+    },
+    {
+      "itemId": "46ed23f3675ebc37",
+      "exampleIndex": 0,
+      "contentHash": "sha256:7b6151e7e9b874773b93c31c987a9215a19329cfec6f0459c0d38168d0c6c013",
+      "status": "passed"
+    },
+    {
+      "itemId": "89aacdb4b19fd234",
+      "exampleIndex": 0,
+      "contentHash": "sha256:36f9a749ae009d9d32abee6e5109406a2e96c5eb8ee4727bdbc5aabeda5b0b23",
+      "status": "passed"
+    },
+    {
+      "itemId": "5b060591a6ed447e",
+      "exampleIndex": 0,
+      "contentHash": "sha256:7481fc5189b09027168664ddb192b9a6b22c4c80fce17d295b96a8397caa6222",
+      "status": "passed"
+    },
+    {
+      "itemId": "8e57e4efabb7760d",
+      "exampleIndex": 0,
+      "contentHash": "sha256:88a834d3ae650b6c5f7f95c856f68ed941888dc8166c60854c1b9bc468244cfd",
+      "status": "passed"
+    },
+    {
+      "itemId": "6b6156509180238d",
+      "exampleIndex": 0,
+      "contentHash": "sha256:724c0a74e9a5578c453f13afb68523d2df16146e19b4080609659dbfd87069ee",
+      "status": "passed"
+    },
+    {
+      "itemId": "0d1aba561344300c",
+      "exampleIndex": 0,
+      "contentHash": "sha256:4aa03c54b18d4677cfbb757a32b8dbceed3dee9014c44dd8b7b577d670a03318",
+      "status": "passed"
+    },
+    {
+      "itemId": "9d8c54e3fec1f911",
+      "exampleIndex": 0,
+      "contentHash": "sha256:703c46afc7aa70f61b594e2836080cf7a3b04201f0d415321ab4e57201dd79c6",
+      "status": "passed"
+    },
+    {
+      "itemId": "0e72e96e905147b4",
+      "exampleIndex": 0,
+      "contentHash": "sha256:fa78c4d521de866f59ce85f7b21f4096858d9156a977fe2b3a627256b3f21db3",
+      "status": "passed"
+    },
+    {
+      "itemId": "324e0b652fe86f1a",
+      "exampleIndex": 0,
+      "contentHash": "sha256:fedf5411eb4fb01d9c56a7f690cfa5c3a5dce0f45e05a7bbced40cec6bc66de6",
+      "status": "passed"
+    }
+  ]
+}

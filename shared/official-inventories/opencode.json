@@ -1,0 +1,1872 @@
+{
+  "schemaVersion": 2,
+  "toolId": "opencode",
+  "scope": "all-command-entrypoints",
+  "checkedAt": "2026-07-13",
+  "sourceIds": [
+    "opencode-tui",
+    "opencode-keybinds",
+    "opencode-cli"
+  ],
+  "adapter": {
+    "id": "opencode-structured-docs-repository",
+    "kind": "structured-docs-repository",
+    "version": 1
+  },
+  "closure": {
+    "status": "closed",
+    "entryCount": 101,
+    "components": [
+      "opencode"
+    ],
+    "platforms": [
+      "mac",
+      "windows",
+      "linux"
+    ],
+    "proof": "deterministic-adapter-snapshot"
+  },
+  "entries": [
+    {
+      "command": "!（输入中）",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Run shell command",
+      "usage": "!（输入中）",
+      "options": [],
+      "officialExamples": [
+        "按 !（输入中）"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · !（输入中）"
+    },
+    {
+      "command": "@（输入中）",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "File reference",
+      "usage": "@（输入中）",
+      "options": [],
+      "officialExamples": [
+        "按 @（输入中）"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · @（输入中）"
+    },
+    {
+      "command": "/（输入中）",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Slash command",
+      "usage": "/（输入中）",
+      "options": [],
+      "officialExamples": [
+        "按 /（输入中）"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · /（输入中）"
+    },
+    {
+      "command": "/compact",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "Compact session context",
+      "usage": "/compact",
+      "options": [],
+      "officialExamples": [
+        "/compact"
+      ],
+      "url": "https://opencode.ai/docs/tui/（页面内检索 /compact）"
+    },
+    {
+      "command": "/connect",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "Add AI provider",
+      "usage": "/connect",
+      "options": [],
+      "officialExamples": [
+        "/connect"
+      ],
+      "url": "https://opencode.ai/docs/tui/（页面内检索 /connect）"
+    },
+    {
+      "command": "/details",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "Toggle tool details",
+      "usage": "/details",
+      "options": [],
+      "officialExamples": [
+        "/details"
+      ],
+      "url": "https://opencode.ai/docs/tui/（页面内检索 /details）"
+    },
+    {
+      "command": "/editor",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "Open external editor",
+      "usage": "/editor",
+      "options": [],
+      "officialExamples": [
+        "/editor"
+      ],
+      "url": "https://opencode.ai/docs/tui/（页面内检索 /editor）"
+    },
+    {
+      "command": "/exit",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "Exit OpenCode",
+      "usage": "/exit",
+      "options": [],
+      "officialExamples": [
+        "/exit"
+      ],
+      "url": "https://opencode.ai/docs/tui/（页面内检索 /exit）"
+    },
+    {
+      "command": "/export",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "Export session to Markdown",
+      "usage": "/export",
+      "options": [],
+      "officialExamples": [
+        "/export"
+      ],
+      "url": "https://opencode.ai/docs/tui/（页面内检索 /export）"
+    },
+    {
+      "command": "/help",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "Show help dialog",
+      "usage": "/help",
+      "options": [],
+      "officialExamples": [
+        "/help"
+      ],
+      "url": "https://opencode.ai/docs/tui/（页面内检索 /help）"
+    },
+    {
+      "command": "/init",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "Create/update AGENTS.md",
+      "usage": "/init",
+      "options": [],
+      "officialExamples": [
+        "/init"
+      ],
+      "url": "https://opencode.ai/docs/tui/（页面内检索 /init）"
+    },
+    {
+      "command": "/models",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "List available models",
+      "usage": "/models",
+      "options": [],
+      "officialExamples": [
+        "/models"
+      ],
+      "url": "https://opencode.ai/docs/tui/（页面内检索 /models）"
+    },
+    {
+      "command": "/new",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "Start new session",
+      "usage": "/new",
+      "options": [],
+      "officialExamples": [
+        "/new"
+      ],
+      "url": "https://opencode.ai/docs/tui/（页面内检索 /new）"
+    },
+    {
+      "command": "/redo",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "Redo undone message",
+      "usage": "/redo",
+      "options": [],
+      "officialExamples": [
+        "/redo"
+      ],
+      "url": "https://opencode.ai/docs/tui/（页面内检索 /redo）"
+    },
+    {
+      "command": "/sessions",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "List and switch sessions",
+      "usage": "/sessions",
+      "options": [],
+      "officialExamples": [
+        "/sessions"
+      ],
+      "url": "https://opencode.ai/docs/tui/（页面内检索 /sessions）"
+    },
+    {
+      "command": "/share",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "Share current session",
+      "usage": "/share",
+      "options": [],
+      "officialExamples": [
+        "/share"
+      ],
+      "url": "https://opencode.ai/docs/tui/（页面内检索 /share）"
+    },
+    {
+      "command": "/themes",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "List and switch themes",
+      "usage": "/themes",
+      "options": [],
+      "officialExamples": [
+        "/themes"
+      ],
+      "url": "https://opencode.ai/docs/tui/（页面内检索 /themes）"
+    },
+    {
+      "command": "/thinking",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "Toggle thinking display",
+      "usage": "/thinking",
+      "options": [],
+      "officialExamples": [
+        "/thinking"
+      ],
+      "url": "https://opencode.ai/docs/tui/（页面内检索 /thinking）"
+    },
+    {
+      "command": "/undo",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "Undo last message",
+      "usage": "/undo",
+      "options": [],
+      "officialExamples": [
+        "/undo"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · /undo（原文：\"Undo last message in the conversation. Removes the most recent user message, all subsequent responses, and any file changes.\"；\"Internally, this uses Git to manage the file changes. So your project needs to be a Git repository.\"）"
+    },
+    {
+      "command": "/unshare",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "Unshare session",
+      "usage": "/unshare",
+      "options": [],
+      "officialExamples": [
+        "/unshare"
+      ],
+      "url": "https://opencode.ai/docs/tui/（页面内检索 /unshare）"
+    },
+    {
+      "command": "alt+b / alt+left",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Move word backward",
+      "usage": "alt+b / alt+left",
+      "options": [],
+      "officialExamples": [
+        "按 alt+b / alt+left"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · alt+b / alt+left"
+    },
+    {
+      "command": "alt+d",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Delete word forward",
+      "usage": "alt+d",
+      "options": [],
+      "officialExamples": [
+        "按 alt+d"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · alt+d"
+    },
+    {
+      "command": "alt+f / alt+right",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Move word forward",
+      "usage": "alt+f / alt+right",
+      "options": [],
+      "officialExamples": [
+        "按 alt+f / alt+right"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · alt+f / alt+right"
+    },
+    {
+      "command": "ctrl+a（输入框内）",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Move to line start",
+      "usage": "ctrl+a（输入框内）",
+      "options": [],
+      "officialExamples": [
+        "按 ctrl+a（输入框内）"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · ctrl+a（输入框内）"
+    },
+    {
+      "command": "ctrl+a（非输入框内）",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Open provider list",
+      "usage": "ctrl+a（非输入框内）",
+      "options": [],
+      "officialExamples": [
+        "按 ctrl+a（非输入框内）"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · ctrl+a（非输入框内）"
+    },
+    {
+      "command": "ctrl+alt+d",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Scroll messages down (half page)",
+      "usage": "ctrl+alt+d",
+      "options": [],
+      "officialExamples": [
+        "按 ctrl+alt+d"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · ctrl+alt+d"
+    },
+    {
+      "command": "ctrl+alt+g / End",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Jump to last message",
+      "usage": "ctrl+alt+g / End",
+      "options": [],
+      "officialExamples": [
+        "按 ctrl+alt+g / End"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · ctrl+alt+g / End"
+    },
+    {
+      "command": "ctrl+alt+u",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Scroll messages up (half page)",
+      "usage": "ctrl+alt+u",
+      "options": [],
+      "officialExamples": [
+        "按 ctrl+alt+u"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · ctrl+alt+u"
+    },
+    {
+      "command": "ctrl+alt+y / ctrl+alt+e",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Scroll messages one line",
+      "usage": "ctrl+alt+y / ctrl+alt+e",
+      "options": [],
+      "officialExamples": [
+        "按 ctrl+alt+y / ctrl+alt+e"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · ctrl+alt+y / ctrl+alt+e"
+    },
+    {
+      "command": "ctrl+c / ctrl+d",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Clear input or exit",
+      "usage": "ctrl+c / ctrl+d",
+      "options": [],
+      "officialExamples": [
+        "按 ctrl+c / ctrl+d"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · ctrl+c / ctrl+d"
+    },
+    {
+      "command": "ctrl+e",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Move to line end",
+      "usage": "ctrl+e",
+      "options": [],
+      "officialExamples": [
+        "按 ctrl+e"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · ctrl+e"
+    },
+    {
+      "command": "ctrl+g / Home",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Jump to first message",
+      "usage": "ctrl+g / Home",
+      "options": [],
+      "officialExamples": [
+        "按 ctrl+g / Home"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · ctrl+g / Home"
+    },
+    {
+      "command": "ctrl+k",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Delete to line end",
+      "usage": "ctrl+k",
+      "options": [],
+      "officialExamples": [
+        "按 ctrl+k"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · ctrl+k"
+    },
+    {
+      "command": "ctrl+p",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Open command palette",
+      "usage": "ctrl+p",
+      "options": [],
+      "officialExamples": [
+        "按 ctrl+p"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · ctrl+p"
+    },
+    {
+      "command": "ctrl+r",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Rename session",
+      "usage": "ctrl+r",
+      "options": [],
+      "officialExamples": [
+        "按 ctrl+r"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · ctrl+r"
+    },
+    {
+      "command": "ctrl+t",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Cycle model variant",
+      "usage": "ctrl+t",
+      "options": [],
+      "officialExamples": [
+        "按 ctrl+t"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · ctrl+t"
+    },
+    {
+      "command": "ctrl+u",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Delete to line start",
+      "usage": "ctrl+u",
+      "options": [],
+      "officialExamples": [
+        "按 ctrl+u"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · ctrl+u"
+    },
+    {
+      "command": "ctrl+v",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Paste",
+      "usage": "ctrl+v",
+      "options": [],
+      "officialExamples": [
+        "按 ctrl+v"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · ctrl+v"
+    },
+    {
+      "command": "ctrl+w / ctrl+backspace",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Delete word backward",
+      "usage": "ctrl+w / ctrl+backspace",
+      "options": [],
+      "officialExamples": [
+        "按 ctrl+w / ctrl+backspace"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · ctrl+w / ctrl+backspace"
+    },
+    {
+      "command": "ctrl+x a",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Agent list",
+      "usage": "ctrl+x a",
+      "options": [],
+      "officialExamples": [
+        "按 ctrl+x a"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · ctrl+x a"
+    },
+    {
+      "command": "ctrl+x b",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Toggle sidebar",
+      "usage": "ctrl+x b",
+      "options": [],
+      "officialExamples": [
+        "按 ctrl+x b"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · ctrl+x b"
+    },
+    {
+      "command": "ctrl+x c",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Compact session",
+      "usage": "ctrl+x c",
+      "options": [],
+      "officialExamples": [
+        "按 ctrl+x c"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · ctrl+x c"
+    },
+    {
+      "command": "ctrl+x e",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Open external editor",
+      "usage": "ctrl+x e",
+      "options": [],
+      "officialExamples": [
+        "按 ctrl+x e"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · ctrl+x e"
+    },
+    {
+      "command": "ctrl+x g",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Session timeline",
+      "usage": "ctrl+x g",
+      "options": [],
+      "officialExamples": [
+        "按 ctrl+x g"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · ctrl+x g"
+    },
+    {
+      "command": "ctrl+x h",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Toggle conceal",
+      "usage": "ctrl+x h",
+      "options": [],
+      "officialExamples": [
+        "按 ctrl+x h"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · ctrl+x h"
+    },
+    {
+      "command": "ctrl+x l",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Session list",
+      "usage": "ctrl+x l",
+      "options": [],
+      "officialExamples": [
+        "按 ctrl+x l"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · ctrl+x l"
+    },
+    {
+      "command": "ctrl+x m",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Model list",
+      "usage": "ctrl+x m",
+      "options": [],
+      "officialExamples": [
+        "按 ctrl+x m"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · ctrl+x m"
+    },
+    {
+      "command": "ctrl+x n",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "New session",
+      "usage": "ctrl+x n",
+      "options": [],
+      "officialExamples": [
+        "按 ctrl+x n"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · ctrl+x n"
+    },
+    {
+      "command": "ctrl+x q",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Quit",
+      "usage": "ctrl+x q",
+      "options": [],
+      "officialExamples": [
+        "按 ctrl+x q"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · ctrl+x q"
+    },
+    {
+      "command": "ctrl+x r",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Redo undone message",
+      "usage": "ctrl+x r",
+      "options": [],
+      "officialExamples": [
+        "按 ctrl+x r"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · ctrl+x r"
+    },
+    {
+      "command": "ctrl+x s",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Status view",
+      "usage": "ctrl+x s",
+      "options": [],
+      "officialExamples": [
+        "按 ctrl+x s"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · ctrl+x s"
+    },
+    {
+      "command": "ctrl+x t",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Theme list",
+      "usage": "ctrl+x t",
+      "options": [],
+      "officialExamples": [
+        "按 ctrl+x t"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · ctrl+x t"
+    },
+    {
+      "command": "ctrl+x u",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Undo last message",
+      "usage": "ctrl+x u",
+      "options": [],
+      "officialExamples": [
+        "按 ctrl+x u"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · ctrl+x u"
+    },
+    {
+      "command": "ctrl+x x",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Export session",
+      "usage": "ctrl+x x",
+      "options": [],
+      "officialExamples": [
+        "按 ctrl+x x"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · ctrl+x x"
+    },
+    {
+      "command": "ctrl+x y",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Copy messages",
+      "usage": "ctrl+x y",
+      "options": [],
+      "officialExamples": [
+        "按 ctrl+x y"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · ctrl+x y"
+    },
+    {
+      "command": "ctrl+x（Leader 键）",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Leader key prefix",
+      "usage": "ctrl+x（Leader 键）",
+      "options": [],
+      "officialExamples": [
+        "按 ctrl+x（Leader 键）"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · ctrl+x（Leader 键）"
+    },
+    {
+      "command": "Esc",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Interrupt running session",
+      "usage": "Esc",
+      "options": [],
+      "officialExamples": [
+        "按 Esc"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · Esc"
+    },
+    {
+      "command": "f2",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Cycle recent models",
+      "usage": "f2",
+      "options": [],
+      "officialExamples": [
+        "按 f2"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · f2"
+    },
+    {
+      "command": "opencode",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "Start TUI in current directory",
+      "usage": "opencode",
+      "options": [],
+      "officialExamples": [
+        "opencode",
+        "opencode src/app.js"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · opencode"
+    },
+    {
+      "command": "opencode --agent",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "Specify agent",
+      "usage": "opencode --agent",
+      "options": [
+        "--agent"
+      ],
+      "officialExamples": [
+        "opencode --agent build"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · --agent [name]"
+    },
+    {
+      "command": "opencode --help",
+      "context": "",
+      "aliases": [
+        "opencode -h"
+      ],
+      "entryType": "cli-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "Show help",
+      "usage": "opencode --help",
+      "options": [
+        "--help"
+      ],
+      "officialExamples": [
+        "opencode --help"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · --help / -h"
+    },
+    {
+      "command": "opencode --log-level",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "Set log level",
+      "usage": "opencode --log-level",
+      "options": [
+        "--log-level"
+      ],
+      "officialExamples": [
+        "opencode --log-level medium"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · --log-level [level]"
+    },
+    {
+      "command": "opencode --model",
+      "context": "",
+      "aliases": [
+        "opencode -m"
+      ],
+      "entryType": "cli-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "Specify model",
+      "usage": "opencode --model",
+      "options": [
+        "--model"
+      ],
+      "officialExamples": [
+        "opencode --model anthropic/claude-sonnet"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · --model / -m [provider/model]"
+    },
+    {
+      "command": "opencode --print-logs",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "Print logs to stderr",
+      "usage": "opencode --print-logs",
+      "options": [
+        "--print-logs"
+      ],
+      "officialExamples": [
+        "opencode --print-logs"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · --print-logs"
+    },
+    {
+      "command": "opencode --pure",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "Run without external plugins",
+      "usage": "opencode --pure",
+      "options": [
+        "--pure"
+      ],
+      "officialExamples": [
+        "opencode --pure"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · --pure"
+    },
+    {
+      "command": "opencode --version",
+      "context": "",
+      "aliases": [
+        "opencode -v"
+      ],
+      "entryType": "cli-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "Print version number",
+      "usage": "opencode --version",
+      "options": [
+        "--version"
+      ],
+      "officialExamples": [
+        "opencode --version"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · --version / -v"
+    },
+    {
+      "command": "opencode agent create",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "Create custom agent",
+      "usage": "opencode agent create",
+      "options": [],
+      "officialExamples": [
+        "opencode agent create"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · opencode agent create"
+    },
+    {
+      "command": "opencode agent list",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "List agents",
+      "usage": "opencode agent list",
+      "options": [],
+      "officialExamples": [
+        "opencode agent list"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · opencode agent list"
+    },
+    {
+      "command": "opencode attach",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "Attach TUI to remote server",
+      "usage": "opencode attach",
+      "options": [],
+      "officialExamples": [
+        "opencode attach https://example.com"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · opencode attach [url]"
+    },
+    {
+      "command": "opencode auth list",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "List authenticated providers",
+      "usage": "opencode auth list",
+      "options": [],
+      "officialExamples": [
+        "opencode auth list"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · opencode auth list"
+    },
+    {
+      "command": "opencode auth login",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "Add provider credentials",
+      "usage": "opencode auth login",
+      "options": [],
+      "officialExamples": [
+        "opencode auth login"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · opencode auth login"
+    },
+    {
+      "command": "opencode auth logout",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "Remove provider credentials",
+      "usage": "opencode auth logout",
+      "options": [],
+      "officialExamples": [
+        "opencode auth logout"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · opencode auth logout"
+    },
+    {
+      "command": "opencode export",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "Export session as JSON",
+      "usage": "opencode export",
+      "options": [],
+      "officialExamples": [
+        "opencode export session-id"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · opencode export [sessionID]"
+    },
+    {
+      "command": "opencode import",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "Import session",
+      "usage": "opencode import",
+      "options": [],
+      "officialExamples": [
+        "opencode import https://example.com"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · opencode import [file/url]"
+    },
+    {
+      "command": "opencode mcp add",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "Add MCP server",
+      "usage": "opencode mcp add",
+      "options": [],
+      "officialExamples": [
+        "opencode mcp add"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · opencode mcp add"
+    },
+    {
+      "command": "opencode mcp auth",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "Authenticate OAuth MCP server",
+      "usage": "opencode mcp auth",
+      "options": [],
+      "officialExamples": [
+        "opencode mcp auth github"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · opencode mcp auth [name]"
+    },
+    {
+      "command": "opencode mcp list",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "List MCP servers",
+      "usage": "opencode mcp list",
+      "options": [],
+      "officialExamples": [
+        "opencode mcp list"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · opencode mcp list"
+    },
+    {
+      "command": "opencode models",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "List all models",
+      "usage": "opencode models",
+      "options": [],
+      "officialExamples": [
+        "opencode models"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · opencode models"
+    },
+    {
+      "command": "opencode models --refresh",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "Refresh models cache",
+      "usage": "opencode models --refresh",
+      "options": [
+        "--refresh"
+      ],
+      "officialExamples": [
+        "opencode models --refresh"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · opencode models --refresh"
+    },
+    {
+      "command": "opencode plugin",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "Install plugin",
+      "usage": "opencode plugin",
+      "options": [],
+      "officialExamples": [
+        "opencode plugin @opencode/git"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · opencode plugin [module]"
+    },
+    {
+      "command": "opencode pr",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "Checkout PR and run",
+      "usage": "opencode pr",
+      "options": [],
+      "officialExamples": [
+        "opencode pr 123"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · opencode pr [number]"
+    },
+    {
+      "command": "opencode run",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "Non-interactive one-shot run",
+      "usage": "opencode run",
+      "options": [],
+      "officialExamples": [
+        "opencode run \"检查测试失败的原因\""
+      ],
+      "url": "https://opencode.ai/docs/tui/ · opencode run \"[prompt]\""
+    },
+    {
+      "command": "opencode run --attach",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "Attach to running server",
+      "usage": "opencode run --attach",
+      "options": [
+        "--attach"
+      ],
+      "officialExamples": [
+        "opencode run --attach https://example.com"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · opencode run --attach [url]"
+    },
+    {
+      "command": "opencode run --share",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "Auto-share session",
+      "usage": "opencode run --share",
+      "options": [
+        "--share"
+      ],
+      "officialExamples": [
+        "opencode run --share"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · opencode run --share"
+    },
+    {
+      "command": "opencode run -c",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "Continue last session",
+      "usage": "opencode run -c",
+      "options": [
+        "-c"
+      ],
+      "officialExamples": [
+        "opencode run -c"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · opencode run -c"
+    },
+    {
+      "command": "opencode run -f",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "Attach file to message",
+      "usage": "opencode run -f",
+      "options": [
+        "-f"
+      ],
+      "officialExamples": [
+        "opencode run -f src/app.js"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · opencode run -f [file]"
+    },
+    {
+      "command": "opencode run -m",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "Run with specific model",
+      "usage": "opencode run -m",
+      "options": [
+        "-m"
+      ],
+      "officialExamples": [
+        "opencode run -m anthropic/claude-sonnet \"总结改动\""
+      ],
+      "url": "https://opencode.ai/docs/tui/ · opencode run -m [provider/model]"
+    },
+    {
+      "command": "opencode run -s",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "Continue specific session",
+      "usage": "opencode run -s",
+      "options": [
+        "-s"
+      ],
+      "officialExamples": [
+        "opencode run -s session-id"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · opencode run -s [sessionID]"
+    },
+    {
+      "command": "opencode serve",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "Start headless API server",
+      "usage": "opencode serve",
+      "options": [],
+      "officialExamples": [
+        "opencode serve"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · opencode serve"
+    },
+    {
+      "command": "opencode session delete",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "Delete a session",
+      "usage": "opencode session delete",
+      "options": [],
+      "officialExamples": [
+        "opencode session delete session-id"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · opencode session delete [id]"
+    },
+    {
+      "command": "opencode session list",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "List all sessions",
+      "usage": "opencode session list",
+      "options": [],
+      "officialExamples": [
+        "opencode session list"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · opencode session list"
+    },
+    {
+      "command": "opencode stats",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "Show usage statistics",
+      "usage": "opencode stats",
+      "options": [
+        "--days"
+      ],
+      "officialExamples": [
+        "opencode stats --days 7"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · opencode stats"
+    },
+    {
+      "command": "opencode uninstall",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "Uninstall OpenCode",
+      "usage": "opencode uninstall",
+      "options": [],
+      "officialExamples": [
+        "opencode uninstall"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · opencode uninstall"
+    },
+    {
+      "command": "opencode upgrade",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "Upgrade to latest version",
+      "usage": "opencode upgrade",
+      "options": [],
+      "officialExamples": [
+        "opencode upgrade"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · opencode upgrade"
+    },
+    {
+      "command": "opencode web",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "opencode",
+      "platforms": [],
+      "constraints": [],
+      "description": "Start server with web UI",
+      "usage": "opencode web",
+      "options": [],
+      "officialExamples": [
+        "opencode web"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · opencode web"
+    },
+    {
+      "command": "PageDown / ctrl+alt+f",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Scroll messages down (page)",
+      "usage": "PageDown / ctrl+alt+f",
+      "options": [],
+      "officialExamples": [
+        "按 PageDown / ctrl+alt+f"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · PageDown / ctrl+alt+f"
+    },
+    {
+      "command": "PageUp / ctrl+alt+b",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Scroll messages up (page)",
+      "usage": "PageUp / ctrl+alt+b",
+      "options": [],
+      "officialExamples": [
+        "按 PageUp / ctrl+alt+b"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · PageUp / ctrl+alt+b"
+    },
+    {
+      "command": "Shift+Enter / ctrl+j",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Newline (don't submit)",
+      "usage": "Shift+Enter / ctrl+j",
+      "options": [],
+      "officialExamples": [
+        "按 Shift+Enter / ctrl+j"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · Shift+Enter / ctrl+j"
+    },
+    {
+      "command": "shift+f2",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Cycle recent models (reverse)",
+      "usage": "shift+f2",
+      "options": [],
+      "officialExamples": [
+        "按 shift+f2"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · shift+f2"
+    },
+    {
+      "command": "Shift+Tab",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Previous agent",
+      "usage": "Shift+Tab",
+      "options": [],
+      "officialExamples": [
+        "按 Shift+Tab"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · Shift+Tab"
+    },
+    {
+      "command": "Tab",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "opencode",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Next agent",
+      "usage": "Tab",
+      "options": [],
+      "officialExamples": [
+        "按 Tab"
+      ],
+      "url": "https://opencode.ai/docs/tui/ · Tab"
+    }
+  ]
+}

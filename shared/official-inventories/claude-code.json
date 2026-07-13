@@ -1,0 +1,1497 @@
+{
+  "schemaVersion": 2,
+  "toolId": "claude-code",
+  "scope": "all-command-entrypoints",
+  "checkedAt": "2026-07-13",
+  "sourceIds": [
+    "claude-interactive",
+    "claude-commands"
+  ],
+  "adapter": {
+    "id": "claude-code-structured-docs-repository",
+    "kind": "structured-docs-repository",
+    "version": 1
+  },
+  "closure": {
+    "status": "closed",
+    "entryCount": 82,
+    "components": [
+      "claude-code"
+    ],
+    "platforms": [
+      "mac",
+      "windows",
+      "linux"
+    ],
+    "proof": "deterministic-adapter-snapshot"
+  },
+  "entries": [
+    {
+      "command": "!（行首）",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "claude-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Shell mode",
+      "usage": "!（行首）",
+      "options": [],
+      "officialExamples": [
+        "!git status"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode（页面内检索 !（行首））"
+    },
+    {
+      "command": "?（transcript内）",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "claude-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Toggle shortcut help",
+      "usage": "?（transcript内）",
+      "options": [],
+      "officialExamples": [
+        "按 ?（transcript内）"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode（页面内检索 ?（transcript内））"
+    },
+    {
+      "command": "{ / }（transcript内）",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "claude-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Jump between prompts",
+      "usage": "{ / }（transcript内）",
+      "options": [],
+      "officialExamples": [
+        "按 { / }（transcript内）"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode（页面内检索 { / }（transcript内））"
+    },
+    {
+      "command": "@",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "claude-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "File path mention",
+      "usage": "@",
+      "options": [],
+      "officialExamples": [
+        "按 @"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode（页面内检索 @）"
+    },
+    {
+      "command": "/（Vim NORMAL模式）",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "claude-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "History search",
+      "usage": "/（Vim NORMAL模式）",
+      "options": [],
+      "officialExamples": [
+        "按 /（Vim NORMAL模式）"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode（页面内检索 /（Vim NORMAL模式））"
+    },
+    {
+      "command": "/（行首）",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "claude-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Command or skill",
+      "usage": "/（行首）",
+      "options": [],
+      "officialExamples": [
+        "按 /（行首）"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode（页面内检索 /（行首））"
+    },
+    {
+      "command": "/add-dir",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "claude-code",
+      "platforms": [],
+      "constraints": [],
+      "description": "Add working directory",
+      "usage": "/add-dir",
+      "options": [],
+      "officialExamples": [
+        "/add-dir ../shared-lib"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode · /add-dir <路径>"
+    },
+    {
+      "command": "/agents",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "claude-code",
+      "platforms": [],
+      "constraints": [],
+      "description": "Manage subagents",
+      "usage": "/agents",
+      "options": [],
+      "officialExamples": [
+        "/agents"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode · /agents"
+    },
+    {
+      "command": "/background",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "claude-code",
+      "platforms": [],
+      "constraints": [],
+      "description": "Detach as background agent",
+      "usage": "/background",
+      "options": [],
+      "officialExamples": [
+        "/background 检查当前改动"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode · /background [提示]"
+    },
+    {
+      "command": "/batch",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "claude-code",
+      "platforms": [],
+      "constraints": [],
+      "description": "Parallel multi-unit changes",
+      "usage": "/batch",
+      "options": [],
+      "officialExamples": [
+        "/batch \"检查当前改动\""
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode · /batch <指令>"
+    },
+    {
+      "command": "/branch",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "claude-code",
+      "platforms": [],
+      "constraints": [],
+      "description": "Branch the conversation",
+      "usage": "/branch",
+      "options": [],
+      "officialExamples": [
+        "/branch experiment-auth"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode · /branch [名称]"
+    },
+    {
+      "command": "/btw",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "claude-code",
+      "platforms": [],
+      "constraints": [],
+      "description": "Quick side question",
+      "usage": "/btw",
+      "options": [],
+      "officialExamples": [
+        "/btw \"检查当前改动\""
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode · /btw <问题>"
+    },
+    {
+      "command": "/cd",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "claude-code",
+      "platforms": [],
+      "constraints": [],
+      "description": "Move session to new dir",
+      "usage": "/cd",
+      "options": [],
+      "officialExamples": [
+        "/cd src/app.js"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode · /cd <路径>"
+    },
+    {
+      "command": "/clear",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "claude-code",
+      "platforms": [],
+      "constraints": [],
+      "description": "Start fresh conversation",
+      "usage": "/clear",
+      "options": [],
+      "officialExamples": [
+        "/clear"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode · /clear [名称]"
+    },
+    {
+      "command": "/code-review",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "claude-code",
+      "platforms": [],
+      "constraints": [],
+      "description": "Review diff for bugs",
+      "usage": "/code-review",
+      "options": [
+        "--fix"
+      ],
+      "officialExamples": [
+        "/code-review",
+        "/code-review --fix"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode · /code-review [级别] [--fix]"
+    },
+    {
+      "command": "/compact",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "claude-code",
+      "platforms": [],
+      "constraints": [],
+      "description": "Summarize to free context",
+      "usage": "/compact",
+      "options": [],
+      "officialExamples": [
+        "/compact 保留当前实现决策和未完成任务"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode · /compact [指令]"
+    },
+    {
+      "command": "/config",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "claude-code",
+      "platforms": [],
+      "constraints": [],
+      "description": "Open settings UI",
+      "usage": "/config",
+      "options": [],
+      "officialExamples": [
+        "/config"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode · /config [key=value]"
+    },
+    {
+      "command": "/context",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "claude-code",
+      "platforms": [],
+      "constraints": [],
+      "description": "Visualize context usage",
+      "usage": "/context",
+      "options": [],
+      "officialExamples": [
+        "/context all"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode · /context [all]"
+    },
+    {
+      "command": "/copy",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "claude-code",
+      "platforms": [],
+      "constraints": [],
+      "description": "Copy last response",
+      "usage": "/copy",
+      "options": [],
+      "officialExamples": [
+        "/copy 1"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode · /copy [N]"
+    },
+    {
+      "command": "/cost",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "claude-code",
+      "platforms": [],
+      "constraints": [],
+      "description": "Show usage/cost",
+      "usage": "/cost",
+      "options": [],
+      "officialExamples": [
+        "/cost"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode · /cost"
+    },
+    {
+      "command": "/debug",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "claude-code",
+      "platforms": [],
+      "constraints": [],
+      "description": "Enable debug logging",
+      "usage": "/debug",
+      "options": [],
+      "officialExamples": [
+        "/debug 检查当前改动"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode · /debug [描述]"
+    },
+    {
+      "command": "/desktop",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "claude-code",
+      "platforms": [],
+      "constraints": [],
+      "description": "Continue in Desktop app",
+      "usage": "/desktop",
+      "options": [],
+      "officialExamples": [
+        "/desktop"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode · /desktop"
+    },
+    {
+      "command": "/diff",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "claude-code",
+      "platforms": [],
+      "constraints": [],
+      "description": "Interactive diff viewer",
+      "usage": "/diff",
+      "options": [],
+      "officialExamples": [
+        "/diff"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode · /diff"
+    },
+    {
+      "command": "/doctor",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "claude-code",
+      "platforms": [],
+      "constraints": [],
+      "description": "Diagnose installation",
+      "usage": "/doctor",
+      "options": [],
+      "officialExamples": [
+        "/doctor"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode · /doctor"
+    },
+    {
+      "command": "/effort",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "claude-code",
+      "platforms": [],
+      "constraints": [],
+      "description": "Set reasoning effort",
+      "usage": "/effort",
+      "options": [],
+      "officialExamples": [
+        "/effort high",
+        "/effort low",
+        "/effort auto"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode · /effort [级别|auto]"
+    },
+    {
+      "command": "/exit",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "claude-code",
+      "platforms": [],
+      "constraints": [],
+      "description": "Exit the CLI",
+      "usage": "/exit",
+      "options": [],
+      "officialExamples": [
+        "/exit"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode · /exit"
+    },
+    {
+      "command": "/export",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "claude-code",
+      "platforms": [],
+      "constraints": [],
+      "description": "Export conversation as text",
+      "usage": "/export",
+      "options": [],
+      "officialExamples": [
+        "/export session.md"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode · /export [文件名]"
+    },
+    {
+      "command": "/fast",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "claude-code",
+      "platforms": [],
+      "constraints": [],
+      "description": "Toggle fast mode",
+      "usage": "/fast",
+      "options": [],
+      "officialExamples": [
+        "/fast on",
+        "/fast off"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode · /fast [on|off]"
+    },
+    {
+      "command": "/feedback",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "claude-code",
+      "platforms": [],
+      "constraints": [],
+      "description": "Submit feedback / report bug",
+      "usage": "/feedback",
+      "options": [],
+      "officialExamples": [
+        "/feedback 检查当前改动"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode · /feedback [报告]"
+    },
+    {
+      "command": "/fork",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "claude-code",
+      "platforms": [],
+      "constraints": [],
+      "description": "Spawn forked subagent",
+      "usage": "/fork",
+      "options": [],
+      "officialExamples": [
+        "/fork \"检查当前改动\""
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode · /fork <指令>"
+    },
+    {
+      "command": "/goal",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "claude-code",
+      "platforms": [],
+      "constraints": [],
+      "description": "Set a persistent goal",
+      "usage": "/goal",
+      "options": [],
+      "officialExamples": [
+        "/goal 通过所有单元测试再停止",
+        "/goal clear"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode · /goal [条件|clear]"
+    },
+    {
+      "command": "/help",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "claude-code",
+      "platforms": [],
+      "constraints": [],
+      "description": "Show help",
+      "usage": "/help",
+      "options": [],
+      "officialExamples": [
+        "/help"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode · /help"
+    },
+    {
+      "command": "/hooks",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "claude-code",
+      "platforms": [],
+      "constraints": [],
+      "description": "View hook configurations",
+      "usage": "/hooks",
+      "options": [],
+      "officialExamples": [
+        "/hooks"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode · /hooks"
+    },
+    {
+      "command": "/ide",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "claude-code",
+      "platforms": [],
+      "constraints": [],
+      "description": "Manage IDE integration",
+      "usage": "/ide",
+      "options": [],
+      "officialExamples": [
+        "/ide"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode · /ide"
+    },
+    {
+      "command": "/init",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "claude-code",
+      "platforms": [],
+      "constraints": [],
+      "description": "Generate starter CLAUDE.md",
+      "usage": "/init",
+      "options": [],
+      "officialExamples": [
+        "/init"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode · /init"
+    },
+    {
+      "command": "/keybindings",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "claude-code",
+      "platforms": [],
+      "constraints": [],
+      "description": "Open keybindings file",
+      "usage": "/keybindings",
+      "options": [],
+      "officialExamples": [
+        "/keybindings"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode · /keybindings"
+    },
+    {
+      "command": "/mcp",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "claude-code",
+      "platforms": [],
+      "constraints": [],
+      "description": "Manage MCP servers",
+      "usage": "/mcp",
+      "options": [],
+      "officialExamples": [
+        "/mcp"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode · /mcp"
+    },
+    {
+      "command": "/memory",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "claude-code",
+      "platforms": [],
+      "constraints": [],
+      "description": "Edit CLAUDE.md",
+      "usage": "/memory",
+      "options": [],
+      "officialExamples": [
+        "/memory"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode · /memory"
+    },
+    {
+      "command": "/model",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "claude-code",
+      "platforms": [],
+      "constraints": [],
+      "description": "Switch model",
+      "usage": "/model",
+      "options": [],
+      "officialExamples": [
+        "/model"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode · /model [模型]"
+    },
+    {
+      "command": "/permissions",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "claude-code",
+      "platforms": [],
+      "constraints": [],
+      "description": "Manage tool permissions",
+      "usage": "/permissions",
+      "options": [],
+      "officialExamples": [
+        "/permissions"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode · /permissions"
+    },
+    {
+      "command": "/plan",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "claude-code",
+      "platforms": [],
+      "constraints": [],
+      "description": "Enter plan mode",
+      "usage": "/plan",
+      "options": [],
+      "officialExamples": [
+        "/plan 重构登录模块并补充测试"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode · /plan [描述]"
+    },
+    {
+      "command": "/remote-control",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "claude-code",
+      "platforms": [],
+      "constraints": [],
+      "description": "Enable remote control",
+      "usage": "/remote-control",
+      "options": [],
+      "officialExamples": [
+        "/remote-control"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode · /remote-control"
+    },
+    {
+      "command": "/resume",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "claude-code",
+      "platforms": [],
+      "constraints": [],
+      "description": "Resume a conversation",
+      "usage": "/resume",
+      "options": [],
+      "officialExamples": [
+        "/resume"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode · /resume [会话]"
+    },
+    {
+      "command": "/review",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "claude-code",
+      "platforms": [],
+      "constraints": [],
+      "description": "Review a pull request",
+      "usage": "/review",
+      "options": [],
+      "officialExamples": [
+        "/review 123"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode · /review [PR]"
+    },
+    {
+      "command": "/rewind",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "claude-code",
+      "platforms": [],
+      "constraints": [],
+      "description": "Rewind code/conversation",
+      "usage": "/rewind",
+      "options": [],
+      "officialExamples": [
+        "/rewind"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode · /rewind"
+    },
+    {
+      "command": "/security-review",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "claude-code",
+      "platforms": [],
+      "constraints": [],
+      "description": "Security vulnerability scan",
+      "usage": "/security-review",
+      "options": [],
+      "officialExamples": [
+        "/security-review"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode · /security-review"
+    },
+    {
+      "command": "/skills",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "claude-code",
+      "platforms": [],
+      "constraints": [],
+      "description": "List available skills",
+      "usage": "/skills",
+      "options": [],
+      "officialExamples": [
+        "/skills"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode · /skills"
+    },
+    {
+      "command": "/status",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "claude-code",
+      "platforms": [],
+      "constraints": [],
+      "description": "Show version/model/account",
+      "usage": "/status",
+      "options": [],
+      "officialExamples": [
+        "/status"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode · /status"
+    },
+    {
+      "command": "/tasks",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "claude-code",
+      "platforms": [],
+      "constraints": [],
+      "description": "View background tasks",
+      "usage": "/tasks",
+      "options": [],
+      "officialExamples": [
+        "/tasks"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode · /tasks"
+    },
+    {
+      "command": "/teleport",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "claude-code",
+      "platforms": [],
+      "constraints": [],
+      "description": "Pull web session to terminal",
+      "usage": "/teleport",
+      "options": [],
+      "officialExamples": [
+        "/teleport"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode · /teleport"
+    },
+    {
+      "command": "/theme",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "claude-code",
+      "platforms": [],
+      "constraints": [],
+      "description": "Change color theme",
+      "usage": "/theme",
+      "options": [],
+      "officialExamples": [
+        "/theme"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode · /theme"
+    },
+    {
+      "command": "\\ + Enter",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "claude-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Newline (works everywhere)",
+      "usage": "\\ + Enter",
+      "options": [],
+      "officialExamples": [
+        "按 \\ + Enter"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode（页面内检索 \\ + Enter）"
+    },
+    {
+      "command": "Alt+B / Alt+F",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "claude-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Move by word",
+      "usage": "Alt+B / Alt+F",
+      "options": [],
+      "officialExamples": [
+        "按 Alt+B / Alt+F"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode（页面内检索 Alt+B / Alt+F）"
+    },
+    {
+      "command": "Alt+Y（粘贴后）",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "claude-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Cycle paste history",
+      "usage": "Alt+Y（粘贴后）",
+      "options": [],
+      "officialExamples": [
+        "按 Alt+Y（粘贴后）"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode（页面内检索 Alt+Y（粘贴后））"
+    },
+    {
+      "command": "Ctrl+A",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "claude-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Move to line start",
+      "usage": "Ctrl+A",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+A"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode（页面内检索 Ctrl+A）"
+    },
+    {
+      "command": "Ctrl+B",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "claude-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Background running tasks",
+      "usage": "Ctrl+B",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+B"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode（页面内检索 Ctrl+B）"
+    },
+    {
+      "command": "Ctrl+C",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "claude-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Interrupt, or clear input",
+      "usage": "Ctrl+C",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+C"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode（页面内检索 Ctrl+C）"
+    },
+    {
+      "command": "Ctrl+D",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "claude-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Exit session",
+      "usage": "Ctrl+D",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+D"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode（页面内检索 Ctrl+D）"
+    },
+    {
+      "command": "Ctrl+E",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "claude-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Move to line end",
+      "usage": "Ctrl+E",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+E"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode（页面内检索 Ctrl+E）"
+    },
+    {
+      "command": "Ctrl+G",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "claude-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Open in external editor",
+      "usage": "Ctrl+G",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+G"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode（页面内检索 Ctrl+G）"
+    },
+    {
+      "command": "Ctrl+J",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "claude-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Newline (universal)",
+      "usage": "Ctrl+J",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+J"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode（页面内检索 Ctrl+J）"
+    },
+    {
+      "command": "Ctrl+K",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "claude-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Delete to end of line",
+      "usage": "Ctrl+K",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+K"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode（页面内检索 Ctrl+K）"
+    },
+    {
+      "command": "Ctrl+L",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "claude-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Redraw screen",
+      "usage": "Ctrl+L",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+L"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode（页面内检索 Ctrl+L）"
+    },
+    {
+      "command": "Ctrl+O",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "claude-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Toggle transcript viewer",
+      "usage": "Ctrl+O",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+O"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode（页面内检索 Ctrl+O）"
+    },
+    {
+      "command": "Ctrl+R",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "claude-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Reverse search history",
+      "usage": "Ctrl+R",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+R"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode（页面内检索 Ctrl+R）"
+    },
+    {
+      "command": "Ctrl+T",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "claude-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Toggle task list",
+      "usage": "Ctrl+T",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+T"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode（页面内检索 Ctrl+T）"
+    },
+    {
+      "command": "Ctrl+U",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "claude-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Delete to line start",
+      "usage": "Ctrl+U",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+U"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode（页面内检索 Ctrl+U）"
+    },
+    {
+      "command": "Ctrl+V / Cmd+V / Alt+V",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "claude-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Paste image from clipboard",
+      "usage": "Ctrl+V / Cmd+V / Alt+V",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+V / Cmd+V / Alt+V"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode（页面内检索 Ctrl+V / Cmd+V / Alt+V）"
+    },
+    {
+      "command": "Ctrl+W",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "claude-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Delete previous word",
+      "usage": "Ctrl+W",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+W"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode（页面内检索 Ctrl+W）"
+    },
+    {
+      "command": "Ctrl+X Ctrl+K",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "claude-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Stop background subagents",
+      "usage": "Ctrl+X Ctrl+K",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+X Ctrl+K"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode（页面内检索 Ctrl+X Ctrl+K）"
+    },
+    {
+      "command": "Ctrl+Y",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "claude-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Paste deleted text",
+      "usage": "Ctrl+Y",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+Y"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode（页面内检索 Ctrl+Y）"
+    },
+    {
+      "command": "dd / yy / p（Vim模式）",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "claude-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Delete/yank/paste line",
+      "usage": "dd / yy / p（Vim模式）",
+      "options": [],
+      "officialExamples": [
+        "按 dd / yy / p（Vim模式）"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode（页面内检索 dd / yy / p（Vim模式））"
+    },
+    {
+      "command": "Esc",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "claude-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Interrupt Claude",
+      "usage": "Esc",
+      "options": [],
+      "officialExamples": [
+        "按 Esc"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode（页面内检索 Esc）"
+    },
+    {
+      "command": "Esc Esc",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "claude-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Clear draft / rewind",
+      "usage": "Esc Esc",
+      "options": [],
+      "officialExamples": [
+        "按 Esc Esc"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode（页面内检索 Esc Esc）"
+    },
+    {
+      "command": "i / a / I / A（Vim模式）",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "claude-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Insert variants",
+      "usage": "i / a / I / A（Vim模式）",
+      "options": [],
+      "officialExamples": [
+        "按 i / a / I / A（Vim模式）"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode（页面内检索 i / a / I / A（Vim模式））"
+    },
+    {
+      "command": "Option+O (Mac) / Alt+O",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "claude-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Toggle fast mode",
+      "usage": "Option+O (Mac) / Alt+O",
+      "options": [],
+      "officialExamples": [
+        "按 Option+O (Mac) / Alt+O"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode（页面内检索 Option+O (Mac) / Alt+O）"
+    },
+    {
+      "command": "Option+P (Mac) / Alt+P",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "claude-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Switch model",
+      "usage": "Option+P (Mac) / Alt+P",
+      "options": [],
+      "officialExamples": [
+        "按 Option+P (Mac) / Alt+P"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode（页面内检索 Option+P (Mac) / Alt+P）"
+    },
+    {
+      "command": "Option+T (Mac) / Alt+T",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "claude-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Toggle extended thinking",
+      "usage": "Option+T (Mac) / Alt+T",
+      "options": [],
+      "officialExamples": [
+        "按 Option+T (Mac) / Alt+T"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode（页面内检索 Option+T (Mac) / Alt+T）"
+    },
+    {
+      "command": "q / Ctrl+C / Esc",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "claude-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Exit transcript view",
+      "usage": "q / Ctrl+C / Esc",
+      "options": [],
+      "officialExamples": [
+        "按 q / Ctrl+C / Esc"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode（页面内检索 q / Ctrl+C / Esc）"
+    },
+    {
+      "command": "Shift+Enter",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "claude-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Newline (most terminals)",
+      "usage": "Shift+Enter",
+      "options": [],
+      "officialExamples": [
+        "按 Shift+Enter"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode（页面内检索 Shift+Enter）"
+    },
+    {
+      "command": "Shift+Tab",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "claude-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Cycle permission modes",
+      "usage": "Shift+Tab",
+      "options": [],
+      "officialExamples": [
+        "按 Shift+Tab"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode（页面内检索 Shift+Tab）"
+    },
+    {
+      "command": "Up/Down 或 Ctrl+P/Ctrl+N",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "claude-code",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Navigate history",
+      "usage": "Up/Down 或 Ctrl+P/Ctrl+N",
+      "options": [],
+      "officialExamples": [
+        "按 Up/Down 或 Ctrl+P/Ctrl+N"
+      ],
+      "url": "https://code.claude.com/docs/en/interactive-mode（页面内检索 Up/Down 或 Ctrl+P/Ctrl+N）"
+    }
+  ]
+}

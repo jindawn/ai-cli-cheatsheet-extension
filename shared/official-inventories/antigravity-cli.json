@@ -1,0 +1,771 @@
+{
+  "schemaVersion": 2,
+  "toolId": "antigravity-cli",
+  "scope": "all-command-entrypoints",
+  "checkedAt": "2026-07-13",
+  "sourceIds": [
+    "antigravity-announcement",
+    "antigravity-repository",
+    "antigravity-codelab"
+  ],
+  "adapter": {
+    "id": "antigravity-cli-structured-docs-repository",
+    "kind": "structured-docs-repository",
+    "version": 1
+  },
+  "closure": {
+    "status": "closed",
+    "entryCount": 44,
+    "components": [
+      "antigravity-cli"
+    ],
+    "platforms": [
+      "mac",
+      "windows",
+      "linux"
+    ],
+    "proof": "deterministic-adapter-snapshot"
+  },
+  "entries": [
+    {
+      "command": ".agents/skills/<名称>.md",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "antigravity-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Define a custom skill",
+      "usage": ".agents/skills/<名称>.md",
+      "options": [],
+      "officialExamples": [
+        "查看或编辑 .agents/skills/lint.md"
+      ],
+      "url": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/ · .agents/skills/<名称>.md"
+    },
+    {
+      "command": "@路径 或 @目录 或 @**/*.ts",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "antigravity-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Pull file/glob into context",
+      "usage": "@路径 或 @目录 或 @**/*.ts",
+      "options": [],
+      "officialExamples": [
+        "输入 @src/app.js，把示例文件加入当前对话上下文"
+      ],
+      "url": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/ · @路径 或 @目录 或 @**/*.ts"
+    },
+    {
+      "command": "/agents",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "antigravity-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Open Agent Manager panel",
+      "usage": "/agents",
+      "options": [],
+      "officialExamples": [
+        "/agents"
+      ],
+      "url": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/ · /agents"
+    },
+    {
+      "command": "/artifacts",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "antigravity-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Manage implementation plan",
+      "usage": "/artifacts",
+      "options": [],
+      "officialExamples": [
+        "/artifacts"
+      ],
+      "url": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/ · /artifacts"
+    },
+    {
+      "command": "/btw",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "antigravity-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Side question",
+      "usage": "/btw",
+      "options": [],
+      "officialExamples": [
+        "/btw"
+      ],
+      "url": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/ · /btw"
+    },
+    {
+      "command": "/config",
+      "context": "",
+      "aliases": [
+        "/settings"
+      ],
+      "entryType": "slash-command",
+      "component": "antigravity-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Open configuration",
+      "usage": "/config",
+      "options": [],
+      "officialExamples": [
+        "/config"
+      ],
+      "url": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/ · /config 或 /settings"
+    },
+    {
+      "command": "/diff",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "antigravity-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Inspect modified files",
+      "usage": "/diff",
+      "options": [],
+      "officialExamples": [
+        "/diff"
+      ],
+      "url": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/ · /diff"
+    },
+    {
+      "command": "/export",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "antigravity-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Push to desktop GUI",
+      "usage": "/export",
+      "options": [],
+      "officialExamples": [
+        "/export"
+      ],
+      "url": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/ · /export"
+    },
+    {
+      "command": "/fast",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "antigravity-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Skip plan, execute directly",
+      "usage": "/fast",
+      "options": [],
+      "officialExamples": [
+        "/fast"
+      ],
+      "url": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/ · /fast"
+    },
+    {
+      "command": "/fork",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "antigravity-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Explore alt approach",
+      "usage": "/fork",
+      "options": [],
+      "officialExamples": [
+        "/fork"
+      ],
+      "url": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/ · /fork"
+    },
+    {
+      "command": "/help",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "antigravity-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Show help (3 tabs)",
+      "usage": "/help",
+      "options": [],
+      "officialExamples": [
+        "/help"
+      ],
+      "url": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/ · /help 或 ?"
+    },
+    {
+      "command": "/hooks",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "antigravity-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Inspect active hooks",
+      "usage": "/hooks",
+      "options": [],
+      "officialExamples": [
+        "/hooks"
+      ],
+      "url": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/ · /hooks"
+    },
+    {
+      "command": "/mcp",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "antigravity-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Manage MCP servers",
+      "usage": "/mcp",
+      "options": [],
+      "officialExamples": [
+        "/mcp"
+      ],
+      "url": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/ · /mcp"
+    },
+    {
+      "command": "/model",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "antigravity-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Switch model mid-session",
+      "usage": "/model",
+      "options": [],
+      "officialExamples": [
+        "/model"
+      ],
+      "url": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/ · /model"
+    },
+    {
+      "command": "/permissions",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "antigravity-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Manage permission rules",
+      "usage": "/permissions",
+      "options": [],
+      "officialExamples": [
+        "/permissions"
+      ],
+      "url": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/ · /permissions"
+    },
+    {
+      "command": "/quit",
+      "context": "",
+      "aliases": [
+        "/exit"
+      ],
+      "entryType": "slash-command",
+      "component": "antigravity-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Exit the session",
+      "usage": "/quit",
+      "options": [],
+      "officialExamples": [
+        "/quit"
+      ],
+      "url": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/ · /quit 或 /exit"
+    },
+    {
+      "command": "/resume",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "antigravity-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Reopen previous logs",
+      "usage": "/resume",
+      "options": [],
+      "officialExamples": [
+        "/resume"
+      ],
+      "url": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/ · /resume"
+    },
+    {
+      "command": "/rewind",
+      "context": "",
+      "aliases": [
+        "/undo"
+      ],
+      "entryType": "slash-command",
+      "component": "antigravity-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Roll back conversation",
+      "usage": "/rewind",
+      "options": [],
+      "officialExamples": [
+        "/rewind"
+      ],
+      "url": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/ · /rewind 或 /undo"
+    },
+    {
+      "command": "/skills",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "antigravity-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Browse loaded skills",
+      "usage": "/skills",
+      "options": [],
+      "officialExamples": [
+        "/skills"
+      ],
+      "url": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/ · /skills"
+    },
+    {
+      "command": "/task",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "antigravity-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Task status",
+      "usage": "/task",
+      "options": [],
+      "officialExamples": [
+        "/task"
+      ],
+      "url": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/ · /task"
+    },
+    {
+      "command": "/tasks",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "antigravity-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Shell execution logs",
+      "usage": "/tasks",
+      "options": [],
+      "officialExamples": [
+        "/tasks"
+      ],
+      "url": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/ · /tasks"
+    },
+    {
+      "command": "/usage",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "antigravity-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Offline developer manual",
+      "usage": "/usage",
+      "options": [],
+      "officialExamples": [
+        "/usage"
+      ],
+      "url": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/ · /usage"
+    },
+    {
+      "command": "~/.gemini/antigravity-cli/cache/projects.json",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "antigravity-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Workspace-project mapping",
+      "usage": "~/.gemini/antigravity-cli/cache/projects.json",
+      "options": [],
+      "officialExamples": [
+        "查看或编辑 ~/.gemini/antigravity-cli/cache/projects.json"
+      ],
+      "url": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/ · ~/.gemini/antigravity-cli/cache/projects.json"
+    },
+    {
+      "command": "~/.gemini/antigravity-cli/keybindings.json",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "antigravity-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Custom keybindings",
+      "usage": "~/.gemini/antigravity-cli/keybindings.json",
+      "options": [],
+      "officialExamples": [
+        "查看或编辑 ~/.gemini/antigravity-cli/keybindings.json"
+      ],
+      "url": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/ · ~/.gemini/antigravity-cli/keybindings.json"
+    },
+    {
+      "command": "~/.gemini/antigravity-cli/log/cli-*.log",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "antigravity-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Log files",
+      "usage": "~/.gemini/antigravity-cli/log/cli-*.log",
+      "options": [],
+      "officialExamples": [
+        "查看或编辑 ~/.gemini/antigravity-cli/log/cli-*.log"
+      ],
+      "url": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/ · ~/.gemini/antigravity-cli/log/cli-*.log"
+    },
+    {
+      "command": "~/.gemini/antigravity-cli/settings.json",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "antigravity-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Main settings file",
+      "usage": "~/.gemini/antigravity-cli/settings.json",
+      "options": [],
+      "officialExamples": [
+        "查看或编辑 ~/.gemini/antigravity-cli/settings.json"
+      ],
+      "url": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/ · ~/.gemini/antigravity-cli/settings.json"
+    },
+    {
+      "command": "~/.gemini/antigravity-cli/skills/",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "antigravity-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Global skills location",
+      "usage": "~/.gemini/antigravity-cli/skills/",
+      "options": [],
+      "officialExamples": [
+        "查看或编辑 ~/.gemini/antigravity-cli/skills/"
+      ],
+      "url": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/ · ~/.gemini/antigravity-cli/skills/"
+    },
+    {
+      "command": "AGENTS.md",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "antigravity-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Plain-English project instructions",
+      "usage": "AGENTS.md",
+      "options": [],
+      "officialExamples": [
+        "查看或编辑 AGENTS.md（项目根目录）"
+      ],
+      "url": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/ · AGENTS.md（项目根目录）"
+    },
+    {
+      "command": "agy",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "antigravity-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Launch interactive TUI",
+      "usage": "agy",
+      "options": [],
+      "officialExamples": [
+        "agy"
+      ],
+      "url": "官方迁移公告中的 Antigravity CLI 产品入口"
+    },
+    {
+      "command": "agy --model",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "antigravity-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Set model at launch",
+      "usage": "agy --model",
+      "options": [
+        "--model"
+      ],
+      "officialExamples": [
+        "agy --model \"Gemini 3.1 Pro\""
+      ],
+      "url": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/ · agy --model \"模型名\""
+    },
+    {
+      "command": "agy --version",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "antigravity-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Check version (safe)",
+      "usage": "agy --version",
+      "options": [
+        "--version"
+      ],
+      "officialExamples": [
+        "agy --version"
+      ],
+      "url": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/ · agy --version"
+    },
+    {
+      "command": "agy -p",
+      "context": "",
+      "aliases": [
+        "agy --print"
+      ],
+      "entryType": "cli-command",
+      "component": "antigravity-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Non-interactive one-shot",
+      "usage": "agy -p",
+      "options": [
+        "-p"
+      ],
+      "officialExamples": [
+        "agy -p \"解释这个项目的目录结构\""
+      ],
+      "url": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/ · agy -p / --print"
+    },
+    {
+      "command": "agy changelog",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "antigravity-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "View version changelog",
+      "usage": "agy changelog",
+      "options": [],
+      "officialExamples": [
+        "agy changelog"
+      ],
+      "url": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/ · agy changelog"
+    },
+    {
+      "command": "agy help",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "antigravity-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Show wrapper commands",
+      "usage": "agy help",
+      "options": [],
+      "officialExamples": [
+        "agy help"
+      ],
+      "url": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/ · agy help"
+    },
+    {
+      "command": "agy install",
+      "context": "",
+      "aliases": [
+        "agy update"
+      ],
+      "entryType": "cli-command",
+      "component": "antigravity-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Install or update agy",
+      "usage": "agy install",
+      "options": [],
+      "officialExamples": [
+        "agy update"
+      ],
+      "url": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/ · agy install / agy update"
+    },
+    {
+      "command": "agy models",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "antigravity-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "List available models",
+      "usage": "agy models",
+      "options": [],
+      "officialExamples": [
+        "agy models"
+      ],
+      "url": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/ · agy models"
+    },
+    {
+      "command": "agy plugin",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "antigravity-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Manage plugins",
+      "usage": "agy plugin",
+      "options": [],
+      "officialExamples": [
+        "agy plugin"
+      ],
+      "url": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/ · agy plugin"
+    },
+    {
+      "command": "Ctrl+D（连按两次）",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "antigravity-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Exit / close TUI",
+      "usage": "Ctrl+D（连按两次）",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+D（连按两次）"
+      ],
+      "url": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/ · Ctrl+D（连按两次）"
+    },
+    {
+      "command": "Ctrl+K",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "antigravity-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Fast-approve pending action",
+      "usage": "Ctrl+K",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+K"
+      ],
+      "url": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/ · Ctrl+K"
+    },
+    {
+      "command": "Ctrl+R",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "antigravity-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Open Artifact Review panel",
+      "usage": "Ctrl+R",
+      "options": [],
+      "officialExamples": [
+        "按 Ctrl+R"
+      ],
+      "url": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/ · Ctrl+R"
+    },
+    {
+      "command": "y",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "antigravity-cli",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Confirm proposed command",
+      "usage": "y",
+      "options": [],
+      "officialExamples": [
+        "按 y"
+      ],
+      "url": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/ · y"
+    },
+    {
+      "command": "安装命令（macOS/Linux）",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "antigravity-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "curl install script",
+      "usage": "安装命令（macOS/Linux）",
+      "options": [],
+      "officialExamples": [
+        "通过 curl 拉取安装脚本并在 macOS 或 Linux 上安装 Antigravity CLI"
+      ],
+      "url": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/ · 安装命令（macOS/Linux）"
+    },
+    {
+      "command": "安装命令（Windows PowerShell）",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "antigravity-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "irm install script",
+      "usage": "安装命令（Windows PowerShell）",
+      "options": [],
+      "officialExamples": [
+        "通过 PowerShell 拉取安装脚本并在 Windows 上安装 Antigravity CLI"
+      ],
+      "url": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/ · 安装命令（Windows PowerShell）"
+    },
+    {
+      "command": "首次启动自动检测迁移",
+      "context": "",
+      "aliases": [],
+      "entryType": "cli-command",
+      "component": "antigravity-cli",
+      "platforms": [],
+      "constraints": [],
+      "description": "Auto-detects legacy Gemini CLI profile",
+      "usage": "首次启动自动检测迁移",
+      "options": [],
+      "officialExamples": [
+        "首次启动 agy，按界面提示选择要迁移的 Gemini CLI 配置"
+      ],
+      "url": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/ · 首次启动自动检测迁移"
+    }
+  ]
+}

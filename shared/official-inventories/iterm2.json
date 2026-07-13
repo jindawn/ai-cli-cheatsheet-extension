@@ -1,0 +1,652 @@
+{
+  "schemaVersion": 2,
+  "toolId": "iterm2",
+  "scope": "all-command-entrypoints",
+  "checkedAt": "2026-07-13",
+  "sourceIds": [
+    "iterm2-docs",
+    "iterm2-local-help"
+  ],
+  "adapter": {
+    "id": "iterm2-terminal-reference-keymap",
+    "kind": "terminal-reference-keymap",
+    "version": 1
+  },
+  "closure": {
+    "status": "closed",
+    "entryCount": 32,
+    "components": [
+      "iterm2"
+    ],
+    "platforms": [
+      "mac",
+      "windows",
+      "linux"
+    ],
+    "proof": "deterministic-adapter-snapshot"
+  },
+  "entries": [
+    {
+      "command": "Cmd+,",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "iterm2",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Open Preferences",
+      "usage": "Cmd+,",
+      "options": [],
+      "officialExamples": [
+        "Cmd+,"
+      ],
+      "url": "https://iterm2.com/documentation.html · Cmd+,"
+    },
+    {
+      "command": "Cmd+[",
+      "context": "split panes",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "iterm2",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Previous Pane",
+      "usage": "Cmd+[",
+      "options": [],
+      "officialExamples": [
+        "Cmd+["
+      ],
+      "url": "https://iterm2.com/documentation.html · Cmd+["
+    },
+    {
+      "command": "Cmd+]",
+      "context": "split panes",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "iterm2",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Next Pane",
+      "usage": "Cmd+]",
+      "options": [],
+      "officialExamples": [
+        "Cmd+]"
+      ],
+      "url": "https://iterm2.com/documentation.html · Cmd+]"
+    },
+    {
+      "command": "Cmd+/",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "iterm2",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Find Cursor",
+      "usage": "Cmd+/",
+      "options": [],
+      "officialExamples": [
+        "Cmd+/"
+      ],
+      "url": "https://iterm2.com/documentation-menu-items.html · View > Find Cursor"
+    },
+    {
+      "command": "Cmd+1..Cmd+9",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "iterm2",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Select Tab by Number",
+      "usage": "Cmd+1..Cmd+9",
+      "options": [],
+      "officialExamples": [
+        "Cmd+1..Cmd+9"
+      ],
+      "url": "https://iterm2.com/documentation.html · Cmd+1..Cmd+9"
+    },
+    {
+      "command": "Cmd+D",
+      "context": "session pane",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "iterm2",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Split Vertically",
+      "usage": "Cmd+D",
+      "options": [],
+      "officialExamples": [
+        "Cmd+D"
+      ],
+      "url": "https://iterm2.com/documentation-menu-items.html · Shell > Split Vertically/Horizontally"
+    },
+    {
+      "command": "Cmd+Enter",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "iterm2",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Toggle Full Screen",
+      "usage": "Cmd+Enter",
+      "options": [],
+      "officialExamples": [
+        "Cmd+Enter"
+      ],
+      "url": "https://iterm2.com/documentation-menu-items.html · View > Toggle Full Screen"
+    },
+    {
+      "command": "Cmd+F",
+      "context": "search within terminal buffer",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "iterm2",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Find",
+      "usage": "Cmd+F",
+      "options": [],
+      "officialExamples": [
+        "Cmd+F"
+      ],
+      "url": "https://iterm2.com/documentation-menu-items.html · Edit > Find"
+    },
+    {
+      "command": "Cmd+G",
+      "context": "find bar",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "iterm2",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Find Next",
+      "usage": "Cmd+G",
+      "options": [],
+      "officialExamples": [
+        "Cmd+G"
+      ],
+      "url": "https://iterm2.com/documentation.html · Cmd+G"
+    },
+    {
+      "command": "Cmd+K",
+      "context": "terminal scrollback",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "iterm2",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Clear Buffer",
+      "usage": "Cmd+K",
+      "options": [],
+      "officialExamples": [
+        "Cmd+K"
+      ],
+      "url": "https://iterm2.com/documentation.html · Cmd+K"
+    },
+    {
+      "command": "Cmd+N",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "iterm2",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "New Window",
+      "usage": "Cmd+N",
+      "options": [],
+      "officialExamples": [
+        "Cmd+N"
+      ],
+      "url": "https://iterm2.com/documentation-menu-items.html · Shell > New Window/Tab"
+    },
+    {
+      "command": "Cmd+Option+Arrow",
+      "context": "split panes",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "iterm2",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Select Pane by Direction",
+      "usage": "Cmd+Option+Arrow",
+      "options": [],
+      "officialExamples": [
+        "Cmd+Option+Arrow"
+      ],
+      "url": "https://iterm2.com/documentation.html · Cmd+Option+Arrow"
+    },
+    {
+      "command": "Cmd+Option+B",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "iterm2",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Start Instant Replay",
+      "usage": "Cmd+Option+B",
+      "options": [],
+      "officialExamples": [
+        "Cmd+Option+B"
+      ],
+      "url": "https://iterm2.com/documentation-menu-items.html · View > Start Instant Replay"
+    },
+    {
+      "command": "Cmd+Shift+[",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "iterm2",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Previous Tab",
+      "usage": "Cmd+Shift+[",
+      "options": [],
+      "officialExamples": [
+        "Cmd+Shift+["
+      ],
+      "url": "https://iterm2.com/documentation.html · Cmd+Shift+["
+    },
+    {
+      "command": "Cmd+Shift+]",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "iterm2",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Next Tab",
+      "usage": "Cmd+Shift+]",
+      "options": [],
+      "officialExamples": [
+        "Cmd+Shift+]"
+      ],
+      "url": "https://iterm2.com/documentation.html · Cmd+Shift+]"
+    },
+    {
+      "command": "Cmd+Shift+D",
+      "context": "session pane",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "iterm2",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Split Horizontally",
+      "usage": "Cmd+Shift+D",
+      "options": [],
+      "officialExamples": [
+        "Cmd+Shift+D"
+      ],
+      "url": "https://iterm2.com/documentation-menu-items.html · Shell > Split Vertically/Horizontally"
+    },
+    {
+      "command": "Cmd+Shift+Enter",
+      "context": "split panes",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "iterm2",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Maximize Active Pane",
+      "usage": "Cmd+Shift+Enter",
+      "options": [],
+      "officialExamples": [
+        "Cmd+Shift+Enter"
+      ],
+      "url": "https://iterm2.com/documentation-menu-items.html · View > Maximize Active Pane"
+    },
+    {
+      "command": "Cmd+Shift+H",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "iterm2",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Open Paste History",
+      "usage": "Cmd+Shift+H",
+      "options": [],
+      "officialExamples": [
+        "Cmd+Shift+H"
+      ],
+      "url": "https://iterm2.com/documentation-menu-items.html · Edit > Open Paste History"
+    },
+    {
+      "command": "Cmd+Shift+O",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "iterm2",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Open Quickly",
+      "usage": "Cmd+Shift+O",
+      "options": [],
+      "officialExamples": [
+        "Cmd+Shift+O"
+      ],
+      "url": "https://iterm2.com/documentation-menu-items.html · View > Open Quickly（页面注明快捷键 Cmd-Shift-O）"
+    },
+    {
+      "command": "Cmd+Shift+Up/Down",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "iterm2",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Navigate Marks",
+      "usage": "Cmd+Shift+Up/Down",
+      "options": [],
+      "officialExamples": [
+        "Cmd+Shift+Up/Down"
+      ],
+      "url": "https://iterm2.com/documentation-shell-integration.html · How it works > Marks（原文：You can navigate marks with Cmd-Shift-Up and Down-arrow keys.）"
+    },
+    {
+      "command": "Cmd+T",
+      "context": "",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "iterm2",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "New Tab",
+      "usage": "Cmd+T",
+      "options": [],
+      "officialExamples": [
+        "Cmd+T"
+      ],
+      "url": "https://iterm2.com/documentation-menu-items.html · Shell > New Window/Tab"
+    },
+    {
+      "command": "Cmd+W",
+      "context": "tab or split pane",
+      "aliases": [],
+      "entryType": "shortcut",
+      "component": "iterm2",
+      "platforms": [
+        "mac",
+        "windows",
+        "linux"
+      ],
+      "constraints": [],
+      "description": "Close Current Tab/Pane",
+      "usage": "Cmd+W",
+      "options": [],
+      "officialExamples": [
+        "Cmd+W"
+      ],
+      "url": "https://iterm2.com/documentation-menu-items.html · Shell > Close"
+    },
+    {
+      "command": "curl -L https://iterm2.com/shell_integration/install_shell_integration.sh | bash",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "iterm2",
+      "platforms": [
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Install Shell Integration",
+      "usage": "curl -L https://iterm2.com/shell_integration/install_shell_integration.sh | bash",
+      "options": [
+        "-L"
+      ],
+      "officialExamples": [
+        "curl -L https://iterm2.com/shell_integration/install_shell_integration.sh | bash"
+      ],
+      "url": "https://iterm2.com/documentation-utilities.html · curl -L https://iterm2.com/shell_integration/install_shell_integration.sh | bash"
+    },
+    {
+      "command": "imgcat",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "iterm2",
+      "platforms": [
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Display an image inline",
+      "usage": "imgcat",
+      "options": [],
+      "officialExamples": [
+        "imgcat photo.png"
+      ],
+      "url": "https://iterm2.com/documentation-utilities.html · imgcat"
+    },
+    {
+      "command": "imgls",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "iterm2",
+      "platforms": [
+        "mac"
+      ],
+      "constraints": [],
+      "description": "List directory with image previews",
+      "usage": "imgls",
+      "options": [],
+      "officialExamples": [
+        "imgls"
+      ],
+      "url": "https://iterm2.com/documentation-utilities.html · imgls"
+    },
+    {
+      "command": "it2attention",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "iterm2",
+      "platforms": [
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Request attention",
+      "usage": "it2attention",
+      "options": [],
+      "officialExamples": [
+        "sleep 300; it2attention fireworks"
+      ],
+      "url": "https://iterm2.com/documentation-utilities.html · it2attention"
+    },
+    {
+      "command": "it2check",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "iterm2",
+      "platforms": [
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Check whether the terminal is iTerm2",
+      "usage": "it2check",
+      "options": [],
+      "officialExamples": [
+        "it2check"
+      ],
+      "url": "https://iterm2.com/documentation-utilities.html · it2check"
+    },
+    {
+      "command": "it2copy",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "iterm2",
+      "platforms": [
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Copy stdin to clipboard",
+      "usage": "it2copy",
+      "options": [],
+      "officialExamples": [
+        "cat /etc/hosts | it2copy"
+      ],
+      "url": "https://iterm2.com/documentation-utilities.html · it2copy"
+    },
+    {
+      "command": "it2dl",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "iterm2",
+      "platforms": [
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Download file from remote host",
+      "usage": "it2dl",
+      "options": [],
+      "officialExamples": [
+        "it2dl build.log"
+      ],
+      "url": "https://iterm2.com/documentation-utilities.html · it2dl"
+    },
+    {
+      "command": "it2profile",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "iterm2",
+      "platforms": [
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Switch iTerm2 profile",
+      "usage": "it2profile",
+      "options": [],
+      "officialExamples": [
+        "it2profile \"Dark Background\""
+      ],
+      "url": "https://iterm2.com/documentation.html · it2profile"
+    },
+    {
+      "command": "it2setcolor",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "iterm2",
+      "platforms": [
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Change session colors",
+      "usage": "it2setcolor",
+      "options": [],
+      "officialExamples": [
+        "it2setcolor preset 'Solarized Dark'"
+      ],
+      "url": "https://iterm2.com/documentation-utilities.html · it2setcolor"
+    },
+    {
+      "command": "it2ul",
+      "context": "",
+      "aliases": [],
+      "entryType": "slash-command",
+      "component": "iterm2",
+      "platforms": [
+        "mac"
+      ],
+      "constraints": [],
+      "description": "Upload file to remote host",
+      "usage": "it2ul",
+      "options": [],
+      "officialExamples": [
+        "it2ul deploy.tar.gz"
+      ],
+      "url": "https://iterm2.com/documentation-utilities.html · it2ul"
+    }
+  ]
+}

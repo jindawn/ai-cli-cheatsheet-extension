@@ -5,15 +5,14 @@ window.CHEATSHEET_DATA["obsidian"] = {
     "id": "obsidian",
     "name": "Obsidian",
     "color": "#7C3AED",
-    "source": "Obsidian Help and Changelog, retrieved 2025-04-10",
+    "source": "第一方来源与确定性官方入口清单，核验于 2026-07-14",
     "builtIn": false,
     "updatePolicy": "manual-only",
     "contentCheckedAt": "2026-07-07",
     "sourceCheckedAt": "2026-07-12",
     "sourceUrl": "https://obsidian.md/help",
     "sourceTier": "official",
-    "coverage": "Core default keyboard shortcuts from the official help documentation",
-    "unverifiedPolicy": "官方帮助未提供稳定的逐条默认键位定位；这些快捷键保留为待人工复核的常用子集",
+    "coverage": "官方入口全集；精确范围、组件与平台限制见 shared/official-inventories/obsidian.json",
     "platforms": [
       "mac",
       "windows",
@@ -43,13 +42,14 @@ window.CHEATSHEET_DATA["obsidian"] = {
     "verificationStatus": "model-knowledge",
     "officialCoverage": {
       "scope": "all-command-entrypoints",
-      "status": "unconfirmed",
-      "total": 0,
-      "covered": 0,
-      "checkedAt": "2026-07-12",
+      "status": "complete",
+      "total": 15,
+      "covered": 15,
+      "checkedAt": "2026-07-13",
       "sourceIds": [
         "obsidian-help"
-      ]
+      ],
+      "inventoryHash": "sha256:e45ef0f7527f8b097f2248920bf9119831ceb21f3243c5e765a7f32e9c0c3b47"
     }
   },
   "items": [
@@ -58,7 +58,7 @@ window.CHEATSHEET_DATA["obsidian"] = {
       "cmd": "Ctrl/Cmd+P",
       "en": "Open command palette",
       "zh": "打开命令面板",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "命令",
         "搜索命令",
@@ -79,7 +79,18 @@ window.CHEATSHEET_DATA["obsidian"] = {
           ],
           "scenario": "需要执行一个未绑定快捷键的命令",
           "goal": "通过关键词快速找到并执行命令",
-          "expected": "弹出命令面板浮窗，光标自动聚焦到搜索框"
+          "expected": "弹出命令面板浮窗，光标自动聚焦到搜索框",
+          "groundingRefs": [
+            {
+              "sourceId": "obsidian-help",
+              "locator": "https://obsidian.md/help · Ctrl/Cmd+P",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -87,14 +98,25 @@ window.CHEATSHEET_DATA["obsidian"] = {
         "windows",
         "linux"
       ],
-      "id": "cmd-palette"
+      "id": "cmd-palette",
+      "evidenceRefs": [
+        {
+          "sourceId": "obsidian-help",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://obsidian.md/help · Ctrl/Cmd+P",
+          "checkedAt": "2026-07-13"
+        }
+      ]
     },
     {
       "cat": "shortcut",
       "cmd": "Ctrl/Cmd+O",
       "en": "Open quick switcher",
       "zh": "打开快速切换器",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "切换笔记",
         "打开文件",
@@ -115,7 +137,18 @@ window.CHEATSHEET_DATA["obsidian"] = {
           ],
           "scenario": "你有多个笔记，想快速跳转到一个已知名称的笔记",
           "goal": "不离开键盘，通过输入部分文件名立即打开笔记",
-          "expected": "快速切换器弹窗出现，键入后实时过滤文件列表，回车即可打开目标笔记"
+          "expected": "快速切换器弹窗出现，键入后实时过滤文件列表，回车即可打开目标笔记",
+          "groundingRefs": [
+            {
+              "sourceId": "obsidian-help",
+              "locator": "https://obsidian.md/help · Ctrl/Cmd+O",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -123,14 +156,25 @@ window.CHEATSHEET_DATA["obsidian"] = {
         "windows",
         "linux"
       ],
-      "id": "quick-switcher"
+      "id": "quick-switcher",
+      "evidenceRefs": [
+        {
+          "sourceId": "obsidian-help",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://obsidian.md/help · Ctrl/Cmd+O",
+          "checkedAt": "2026-07-13"
+        }
+      ]
     },
     {
       "cat": "shortcut",
       "cmd": "Ctrl/Cmd+N",
       "en": "Create new note",
       "zh": "新建笔记",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "新建",
         "创建",
@@ -151,7 +195,18 @@ window.CHEATSHEET_DATA["obsidian"] = {
           ],
           "scenario": "在库中快速创建一篇空白笔记",
           "goal": "立即打开新笔记并开始记录",
-          "expected": "新建笔记标签页出现，标题为“未命名”或类似占位符，可直接输入内容"
+          "expected": "新建笔记标签页出现，标题为“未命名”或类似占位符，可直接输入内容",
+          "groundingRefs": [
+            {
+              "sourceId": "obsidian-help",
+              "locator": "https://obsidian.md/help · Ctrl/Cmd+N",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -159,14 +214,25 @@ window.CHEATSHEET_DATA["obsidian"] = {
         "windows",
         "linux"
       ],
-      "id": "new-note"
+      "id": "new-note",
+      "evidenceRefs": [
+        {
+          "sourceId": "obsidian-help",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://obsidian.md/help · Ctrl/Cmd+N",
+          "checkedAt": "2026-07-13"
+        }
+      ]
     },
     {
       "cat": "shortcut",
       "cmd": "Ctrl/Cmd+S",
       "en": "Save current file",
       "zh": "保存当前文件",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "保存",
         "写入磁盘",
@@ -186,7 +252,18 @@ window.CHEATSHEET_DATA["obsidian"] = {
           ],
           "scenario": "完成一段重要编辑后希望立即确保持久化",
           "goal": "手动将当前笔记内容写入磁盘",
-          "expected": "标题栏的修改指示器消失，文件内容被保存到磁盘"
+          "expected": "标题栏的修改指示器消失，文件内容被保存到磁盘",
+          "groundingRefs": [
+            {
+              "sourceId": "obsidian-help",
+              "locator": "https://obsidian.md/help · Ctrl/Cmd+S",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -194,14 +271,25 @@ window.CHEATSHEET_DATA["obsidian"] = {
         "windows",
         "linux"
       ],
-      "id": "save-file"
+      "id": "save-file",
+      "evidenceRefs": [
+        {
+          "sourceId": "obsidian-help",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://obsidian.md/help · Ctrl/Cmd+S",
+          "checkedAt": "2026-07-13"
+        }
+      ]
     },
     {
       "cat": "shortcut",
       "cmd": "Ctrl/Cmd+B",
       "en": "Bold",
       "zh": "加粗",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "粗体",
         "强调",
@@ -222,7 +310,18 @@ window.CHEATSHEET_DATA["obsidian"] = {
           ],
           "scenario": "在笔记中强调某个关键词或短语",
           "goal": "将选中文本或光标所在的单词变为粗体",
-          "expected": "选中的文字前后出现双星号，渲染后显示为粗体"
+          "expected": "选中的文字前后出现双星号，渲染后显示为粗体",
+          "groundingRefs": [
+            {
+              "sourceId": "obsidian-help",
+              "locator": "https://obsidian.md/help · Ctrl/Cmd+B",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -230,14 +329,25 @@ window.CHEATSHEET_DATA["obsidian"] = {
         "windows",
         "linux"
       ],
-      "id": "bold"
+      "id": "bold",
+      "evidenceRefs": [
+        {
+          "sourceId": "obsidian-help",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://obsidian.md/help · Ctrl/Cmd+B",
+          "checkedAt": "2026-07-13"
+        }
+      ]
     },
     {
       "cat": "shortcut",
       "cmd": "Ctrl/Cmd+I",
       "en": "Italic",
       "zh": "斜体",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "斜体",
         "强调",
@@ -258,7 +368,18 @@ window.CHEATSHEET_DATA["obsidian"] = {
           ],
           "scenario": "对次要强调内容使用斜体",
           "goal": "将选中文本或即将输入的文字变为斜体",
-          "expected": "选中文字变为星号包围，渲染时显示为斜体"
+          "expected": "选中文字变为星号包围，渲染时显示为斜体",
+          "groundingRefs": [
+            {
+              "sourceId": "obsidian-help",
+              "locator": "https://obsidian.md/help · Ctrl/Cmd+I",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -266,14 +387,25 @@ window.CHEATSHEET_DATA["obsidian"] = {
         "windows",
         "linux"
       ],
-      "id": "italic"
+      "id": "italic",
+      "evidenceRefs": [
+        {
+          "sourceId": "obsidian-help",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://obsidian.md/help · Ctrl/Cmd+I",
+          "checkedAt": "2026-07-13"
+        }
+      ]
     },
     {
       "cat": "shortcut",
       "cmd": "Ctrl/Cmd+K",
       "en": "Insert markdown link",
       "zh": "插入 Markdown 链接",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "链接",
         "URL",
@@ -294,7 +426,18 @@ window.CHEATSHEET_DATA["obsidian"] = {
           ],
           "scenario": "为一段描述性文字添加外部网页链接",
           "goal": "将选中的文本快速转换为 Markdown 链接格式",
-          "expected": "文本变为 [官网](url)，渲染后显示为可点击的链接"
+          "expected": "文本变为 [官网](url)，渲染后显示为可点击的链接",
+          "groundingRefs": [
+            {
+              "sourceId": "obsidian-help",
+              "locator": "https://obsidian.md/help · Ctrl/Cmd+K",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -302,14 +445,25 @@ window.CHEATSHEET_DATA["obsidian"] = {
         "windows",
         "linux"
       ],
-      "id": "insert-link"
+      "id": "insert-link",
+      "evidenceRefs": [
+        {
+          "sourceId": "obsidian-help",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://obsidian.md/help · Ctrl/Cmd+K",
+          "checkedAt": "2026-07-13"
+        }
+      ]
     },
     {
       "cat": "shortcut",
       "cmd": "Ctrl/Cmd+F",
       "en": "Search current file",
       "zh": "搜索当前笔记",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "查找",
         "搜索",
@@ -329,7 +483,18 @@ window.CHEATSHEET_DATA["obsidian"] = {
           ],
           "scenario": "在长篇笔记中定位某个关键词",
           "goal": "在当前笔记中高亮所有匹配项并跳转",
-          "expected": "搜索框弹出，匹配文字高亮，按 Enter 可循环跳转"
+          "expected": "搜索框弹出，匹配文字高亮，按 Enter 可循环跳转",
+          "groundingRefs": [
+            {
+              "sourceId": "obsidian-help",
+              "locator": "https://obsidian.md/help · Ctrl/Cmd+F",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -337,14 +502,25 @@ window.CHEATSHEET_DATA["obsidian"] = {
         "windows",
         "linux"
       ],
-      "id": "find"
+      "id": "find",
+      "evidenceRefs": [
+        {
+          "sourceId": "obsidian-help",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://obsidian.md/help · Ctrl/Cmd+F",
+          "checkedAt": "2026-07-13"
+        }
+      ]
     },
     {
       "cat": "shortcut",
       "cmd": "Ctrl/Cmd+Shift+F",
       "en": "Search in all files",
       "zh": "在所有文件中搜索",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "全局搜索",
         "全文检索",
@@ -364,7 +540,18 @@ window.CHEATSHEET_DATA["obsidian"] = {
           ],
           "scenario": "你不记得某个概念写在哪篇笔记里",
           "goal": "在整个知识库中搜索该关键词",
-          "expected": "侧边栏展开搜索视图，显示文件名和匹配上下文片段"
+          "expected": "侧边栏展开搜索视图，显示文件名和匹配上下文片段",
+          "groundingRefs": [
+            {
+              "sourceId": "obsidian-help",
+              "locator": "https://obsidian.md/help · Ctrl/Cmd+Shift+F",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -372,14 +559,25 @@ window.CHEATSHEET_DATA["obsidian"] = {
         "windows",
         "linux"
       ],
-      "id": "find-in-files"
+      "id": "find-in-files",
+      "evidenceRefs": [
+        {
+          "sourceId": "obsidian-help",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://obsidian.md/help · Ctrl/Cmd+Shift+F",
+          "checkedAt": "2026-07-13"
+        }
+      ]
     },
     {
       "cat": "shortcut",
       "cmd": "Ctrl/Cmd+H",
       "en": "Find and replace in current file",
       "zh": "替换当前笔记中的文本",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "替换",
         "查找替换",
@@ -399,7 +597,18 @@ window.CHEATSHEET_DATA["obsidian"] = {
           ],
           "scenario": "需要将当前笔记中所有某个拼写错误的词统一改正",
           "goal": "快速替换多个匹配文本",
-          "expected": "查找栏出现替换输入框，确认后所有匹配项一并修改"
+          "expected": "查找栏出现替换输入框，确认后所有匹配项一并修改",
+          "groundingRefs": [
+            {
+              "sourceId": "obsidian-help",
+              "locator": "https://obsidian.md/help · Ctrl/Cmd+H",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -407,14 +616,25 @@ window.CHEATSHEET_DATA["obsidian"] = {
         "windows",
         "linux"
       ],
-      "id": "replace"
+      "id": "replace",
+      "evidenceRefs": [
+        {
+          "sourceId": "obsidian-help",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://obsidian.md/help · Ctrl/Cmd+H",
+          "checkedAt": "2026-07-13"
+        }
+      ]
     },
     {
       "cat": "shortcut",
       "cmd": "Ctrl/Cmd+Z",
       "en": "Undo",
       "zh": "撤销",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "撤销",
         "回退",
@@ -434,7 +654,18 @@ window.CHEATSHEET_DATA["obsidian"] = {
           ],
           "scenario": "误删了一段文字或错误地格式化了一段内容",
           "goal": "恢复到上一步操作前的状态",
-          "expected": "上一次更改被回退，内容恢复到操作前"
+          "expected": "上一次更改被回退，内容恢复到操作前",
+          "groundingRefs": [
+            {
+              "sourceId": "obsidian-help",
+              "locator": "https://obsidian.md/help · Ctrl/Cmd+Z",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -442,14 +673,25 @@ window.CHEATSHEET_DATA["obsidian"] = {
         "windows",
         "linux"
       ],
-      "id": "undo"
+      "id": "undo",
+      "evidenceRefs": [
+        {
+          "sourceId": "obsidian-help",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://obsidian.md/help · Ctrl/Cmd+Z",
+          "checkedAt": "2026-07-13"
+        }
+      ]
     },
     {
       "cat": "shortcut",
       "cmd": "Ctrl/Cmd+Shift+Z",
       "en": "Redo",
       "zh": "重做",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "重做",
         "恢复",
@@ -469,7 +711,18 @@ window.CHEATSHEET_DATA["obsidian"] = {
           ],
           "scenario": "撤销后想要恢复刚才被撤销的更改",
           "goal": "重做上一步被撤销的操作",
-          "expected": "被撤销的更改重新应用"
+          "expected": "被撤销的更改重新应用",
+          "groundingRefs": [
+            {
+              "sourceId": "obsidian-help",
+              "locator": "https://obsidian.md/help · Ctrl/Cmd+Shift+Z",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -477,14 +730,25 @@ window.CHEATSHEET_DATA["obsidian"] = {
         "windows",
         "linux"
       ],
-      "id": "redo"
+      "id": "redo",
+      "evidenceRefs": [
+        {
+          "sourceId": "obsidian-help",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://obsidian.md/help · Ctrl/Cmd+Shift+Z",
+          "checkedAt": "2026-07-13"
+        }
+      ]
     },
     {
       "cat": "shortcut",
       "cmd": "Ctrl/Cmd+E",
       "en": "Toggle edit/view mode",
       "zh": "切换编辑/查看模式",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "编辑",
         "预览",
@@ -505,7 +769,18 @@ window.CHEATSHEET_DATA["obsidian"] = {
           ],
           "scenario": "想查看文章渲染效果，或需要切换到源码模式修改 Markdown 语法",
           "goal": "在阅读视图与源码编辑视图间切换",
-          "expected": "视图切换，若从实时预览切出则显示纯 Markdown 源码，反之显示渲染后效果"
+          "expected": "视图切换，若从实时预览切出则显示纯 Markdown 源码，反之显示渲染后效果",
+          "groundingRefs": [
+            {
+              "sourceId": "obsidian-help",
+              "locator": "https://obsidian.md/help · Ctrl/Cmd+E",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -513,14 +788,25 @@ window.CHEATSHEET_DATA["obsidian"] = {
         "windows",
         "linux"
       ],
-      "id": "toggle-edit-preview"
+      "id": "toggle-edit-preview",
+      "evidenceRefs": [
+        {
+          "sourceId": "obsidian-help",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://obsidian.md/help · Ctrl/Cmd+E",
+          "checkedAt": "2026-07-13"
+        }
+      ]
     },
     {
       "cat": "shortcut",
       "cmd": "Alt+Up",
       "en": "Move line up",
       "zh": "向上移动当前行",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "移动行",
         "上下移动",
@@ -540,7 +826,18 @@ window.CHEATSHEET_DATA["obsidian"] = {
           ],
           "scenario": "快速调整列表项或段落的顺序",
           "goal": "将当前行向上移动一行",
-          "expected": "当前行与上一行交换位置"
+          "expected": "当前行与上一行交换位置",
+          "groundingRefs": [
+            {
+              "sourceId": "obsidian-help",
+              "locator": "https://obsidian.md/help · Alt+Up",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -548,14 +845,25 @@ window.CHEATSHEET_DATA["obsidian"] = {
         "windows",
         "linux"
       ],
-      "id": "move-line-up"
+      "id": "move-line-up",
+      "evidenceRefs": [
+        {
+          "sourceId": "obsidian-help",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://obsidian.md/help · Alt+Up",
+          "checkedAt": "2026-07-13"
+        }
+      ]
     },
     {
       "cat": "shortcut",
       "cmd": "Alt+Down",
       "en": "Move line down",
       "zh": "向下移动当前行",
-      "evidenceStatus": "unverified",
+      "evidenceStatus": "verified",
       "keywords": [
         "移动行",
         "上下移动",
@@ -575,7 +883,18 @@ window.CHEATSHEET_DATA["obsidian"] = {
           ],
           "scenario": "需要将某行下移一行以调整顺序",
           "goal": "将当前行下移",
-          "expected": "当前行与下一行交换位置"
+          "expected": "当前行与下一行交换位置",
+          "groundingRefs": [
+            {
+              "sourceId": "obsidian-help",
+              "locator": "https://obsidian.md/help · Alt+Down",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ]
         }
       ],
       "platforms": [
@@ -583,7 +902,18 @@ window.CHEATSHEET_DATA["obsidian"] = {
         "windows",
         "linux"
       ],
-      "id": "move-line-down"
+      "id": "move-line-down",
+      "evidenceRefs": [
+        {
+          "sourceId": "obsidian-help",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://obsidian.md/help · Alt+Down",
+          "checkedAt": "2026-07-13"
+        }
+      ]
     }
   ]
 };

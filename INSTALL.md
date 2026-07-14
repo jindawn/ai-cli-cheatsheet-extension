@@ -2,26 +2,28 @@
 
 本文档说明浏览器扩展的完整安装流程，以及可选的“新增工具 / 检查更新”功能。
 
-当前扩展包含 Claude Code、Codex CLI、Gemini CLI、Antigravity CLI、OpenCode、OpenClaw、Cursor、Visual Studio Code、IntelliJ IDEA、Typora、Git 和 Linux 常用命令，共 12 个工具、874 条数据。
+当前扩展包含 17 个工具、1000 余条数据，准确数量以 `node tools/validate-data.js` 的输出为准。
 
 ## 1. 安装浏览器扩展
 
 ### 放到固定目录
 
-扩展以“加载已解压的扩展程序”方式运行，目录移动或被清理后会失效。不要放在 Downloads、桌面临时目录或云盘临时同步目录。
+Chrome Web Store 版面向普通用户，会由浏览器自动更新，不包含 Native Host 数据维护功能。本文后续章节面向需要“新增工具 / 检查官方更新”的源码版用户。
+
+源码版以“加载已解压的扩展程序”方式运行，目录移动或被清理后会失效。不要放在 Downloads、桌面临时目录或云盘临时同步目录。
 
 可以直接克隆仓库：
 
 macOS / Linux：
 
 ```bash
-git clone https://github.com/meijinwu/ai-cli-cheatsheet-extension.git ~/workspace/ai-cli-cheatsheet-extension
+git clone https://github.com/jindawn/ai-cli-cheatsheet-extension.git ~/workspace/ai-cli-cheatsheet-extension
 ```
 
 Windows：
 
 ```powershell
-git clone https://github.com/meijinwu/ai-cli-cheatsheet-extension.git C:\workspace\ai-cli-cheatsheet-extension
+git clone https://github.com/jindawn/ai-cli-cheatsheet-extension.git C:\workspace\ai-cli-cheatsheet-extension
 ```
 
 也可以下载 ZIP，解压到固定目录。
@@ -163,6 +165,19 @@ Windows 安装脚本会同时识别系统 Node、`APPDATA\npm`、nvm-windows、V
 4. 在浏览器扩展管理页重新加载扩展。
 
 ## 7. 常见问题
+
+### 如何更新扩展本身
+
+- Chrome Web Store 版由浏览器自动更新。
+- Git 克隆的源码版运行 `git pull`，再到扩展管理页点击“重新加载”。
+- ZIP 源码版下载新包覆盖原目录，再重新加载。
+- Native Host 代码有变化时，重新运行对应安装脚本并完全重启浏览器。
+
+管理页的“检查官方更新”仅比对和更新工具数据，不会同步 GitHub 上的扩展代码。
+
+### 从源码版切换到商店版
+
+两者通常使用不同的扩展 ID，因此本地收藏、最近使用和偏好不会自动迁移。确认商店版可用后，可手动卸载旧的已解压版本。
 
 ### 提示“连接本地更新程序失败”
 

@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>AI CLI 速查表</title>
 <link rel="stylesheet" href="popup.css">
+<script src="distribution.js"></script>
 </head>
 <body>
 <section id="homeView" class="view active">
@@ -25,7 +26,7 @@
 </section>
 
 <section id="manageView" class="view">
-  <div class="manage-header"><div class="manage-title"><button id="closeManage" class="icon-btn">← 返回</button><span>管理工具与数据</span></div></div>
+  <div class="manage-header"><div class="manage-title"><button id="closeManage" class="icon-btn">← 返回</button><span id="manageTitle">管理工具与数据</span></div></div>
   <div class="manage-body">
     <div class="panel">
       <h2>偏好设置</h2>
@@ -33,7 +34,7 @@
       <div id="manageToolToggles" class="tool-grid"></div>
       <div class="tool-actions"><button id="rerunOnboarding" class="text-btn">重新选择常用工具</button><button id="clearRecent" class="text-btn">清空最近使用</button></div>
     </div>
-    <div class="panel">
+    <div class="panel" data-source-only hidden>
       <h2>推荐添加</h2>
       <div class="recommend-controls">
         <input id="recommendSearch" type="search" placeholder="搜索推荐工具、类别或标签…" autocomplete="off">
@@ -46,7 +47,7 @@
         <span class="meta">需要本地桥接，调用模型会计入用量</span>
       </div>
     </div>
-    <div class="panel">
+    <div class="panel" data-source-only hidden>
       <details class="maintenance-panel">
         <summary>数据维护与高级操作</summary>
         <div class="setting-row"><label for="webVerifyToggle">新增工具时联网核对（更准但更慢）</label><input type="checkbox" id="webVerifyToggle"></div>
@@ -58,8 +59,8 @@
       </details>
     </div>
     <div id="manageStatus" class="status"></div>
-    <button id="cancelTask" class="act" hidden>取消任务</button>
-    <div id="pendingPanel" class="panel" hidden></div>
+    <button id="cancelTask" class="act" data-source-only data-dynamic-hidden hidden>取消任务</button>
+    <div id="pendingPanel" class="panel" data-source-only data-dynamic-hidden hidden></div>
   </div>
 </section>
 

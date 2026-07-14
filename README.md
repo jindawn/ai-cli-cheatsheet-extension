@@ -26,20 +26,28 @@
 - **证据化更新**：先发现来源再生成内容；应用前展示条目、来源、证据等级和冲突变化，来源新增、移除或证据降级时要求再次确认。
 - **全量用法示例**：每条数据都提供用法（数据自带或由人工核验的富化层补齐）；人工整理与 AI 推导内容会明确标注来源与证据等级。
 
-## 快速安装
+## 安装方式
+
+### 普通用户：Chrome Web Store（推荐）
+
+Chrome Web Store 版只提供稳定的本地查询、收藏和偏好设置，发布新版本后由 Chrome 自动更新。`1.7.0` 首次审核完成后，商店链接会在本文档和 GitHub Release 中公布。
+
+### 贡献者与高级用户：GitHub 源码版
+
+只有需要本地 Native Host、新增工具或检查官方数据时，才需要使用源码版。
 
 ### 1. 下载到固定目录
 
 macOS / Linux：
 
 ```bash
-git clone https://github.com/meijinwu/ai-cli-cheatsheet-extension.git ~/workspace/ai-cli-cheatsheet-extension
+git clone https://github.com/jindawn/ai-cli-cheatsheet-extension.git ~/workspace/ai-cli-cheatsheet-extension
 ```
 
 Windows：
 
 ```powershell
-git clone https://github.com/meijinwu/ai-cli-cheatsheet-extension.git C:\workspace\ai-cli-cheatsheet-extension
+git clone https://github.com/jindawn/ai-cli-cheatsheet-extension.git C:\workspace\ai-cli-cheatsheet-extension
 ```
 
 不要把扩展放在 Downloads、临时目录或可能被清理的位置。
@@ -53,6 +61,14 @@ git clone https://github.com/meijinwu/ai-cli-cheatsheet-extension.git C:\workspa
 5. 将“AI CLI 速查表”固定到浏览器工具栏。
 
 到这里即可使用全部本地查询功能。新增和更新工具需要额外安装本地桥接，参见 [完整安装与故障排查](INSTALL.md)。
+
+### 更新已解压的源码版
+
+Git 克隆用户在项目目录运行 `git pull`，然后在 `chrome://extensions/` 或 `edge://extensions/` 点击“重新加载”。ZIP 用户需要下载新版本、覆盖原固定目录，再重新加载。如 `native-host/` 有变化，还应重新运行安装脚本并完全重启浏览器。
+
+从已解压的源码版切换到商店版时，两者通常使用不同扩展 ID，收藏、最近使用和偏好不会自动迁移。
+
+> “扩展版本更新”由 GitHub Release 或 Chrome Web Store 发布；管理页的“检查官方更新”只维护速查工具数据，不会更新扩展自身代码。
 
 ## 快速使用
 
@@ -179,6 +195,7 @@ node tests/test_popup_ux.js
 node tests/test_background.js
 node tests/test_search_quality.js
 node tests/test_quality_core.js
+node tests/test_packaging.js
 node tools/audit-quality.js --check
 node tools/check-release.js
 python3 -m unittest discover -s tests -v
@@ -191,6 +208,12 @@ node tools/verify-source-urls.js
 ```
 
 GitHub Actions 会执行 JavaScript 语法检查、数据 Schema 校验和 Native Host 单元测试。
+
+## 发布
+
+`vX.Y.Z` Git 标签必须与 `manifest.json` 版本一致。推送标签后，Release 工作流会重跑完整校验、对源码版和商店版分别进行 Chromium 冒烟测试，再生成两个 ZIP、`SHA256SUMS` 和 GitHub Release。
+
+首次 Chrome Web Store 上架及后续自动提交所需的商店文案、图形资产和 GitHub Environment 配置见 [Chrome Web Store 上架资料](docs/chrome-web-store.md)。未配置 `CWS_PUBLISHER_ID` 和 `CWS_EXTENSION_ID` 时，商店上传任务会跳过，不影响 GitHub Release。
 
 ## 贡献
 

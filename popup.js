@@ -3,6 +3,8 @@
 const CORE = window.CHEATSHEET_CORE;
 const STATE = window.CHEATSHEET_POPUP_STATE;
 const RENDER = window.CHEATSHEET_POPUP_RENDER;
+const DISTRIBUTION = window.CHEATSHEET_DISTRIBUTION || { channel: "source", maintenance: true };
+const MAINTENANCE_ENABLED = DISTRIBUTION.channel === "source" && DISTRIBUTION.maintenance === true;
 const TOOL_FILES = Array.isArray(window.CHEATSHEET_FILES) ? window.CHEATSHEET_FILES : [];
 const catalogData = Object.fromEntries((window.CHEATSHEET_TOOL_CATALOG || []).map((meta) => [
   meta.id,
@@ -158,11 +160,13 @@ function setStatus(text, kind = "") {
 
 // 取消按钮与「返回」一样在任务期间保持可用，因此排除在禁用名单外；
 // 它的可见性跟随任务活跃状态。
-const disableManageButtons = window.CHEATSHEET_POPUP_TASKS.createButtonDisabler(
-  document,
-  "#manageView button:not(#closeManage):not(#cancelTask)",
-  "#manageView button"
-);
+const disableManageButtons = MAINTENANCE_ENABLED
+  ? window.CHEATSHEET_POPUP_TASKS.createButtonDisabler(
+    document,
+    "#manageView button:not(#closeManage):not(#cancelTask)",
+    "#manageView button"
+  )
+  : () => {};
 
 function setManageButtonsDisabled(disabled) {
   disableManageButtons(disabled);
@@ -170,7 +174,7 @@ function setManageButtonsDisabled(disabled) {
   if (cancelButton) cancelButton.hidden = !disabled;
 }
 
-const taskController = window.CHEATSHEET_POPUP_TASKS.createTaskController({
+const taskController = MAINTENANCE_ENABLED ? window.CHEATSHEET_POPUP_TASKS.createTaskController({
   chrome,
   setStatus,
   setManageButtonsDisabled,
@@ -188,7 +192,7 @@ const taskController = window.CHEATSHEET_POPUP_TASKS.createTaskController({
       if (document.getElementById("manageView").classList.contains("active")) renderManage();
     }
   },
-});
+}) : null;
 
 function manageIsActive() {
   return document.getElementById("manageView").classList.contains("active");
@@ -209,6 +213,7 @@ async function mergeAiSuggestions(suggestions) {
 }
 
 function requestAiSuggestions() {
+  if (!MAINTENANCE_ENABLED) return;
   const data = getAllData();
   const exclude = [...new Set([
     ...STATE.getToolIds(data),
@@ -589,6 +594,11 @@ function renderManage() {
   toggles.querySelectorAll("[data-enabled]").forEach((checkbox) =>
     checkbox.addEventListener("change", () => handleEnabledToolToggle(checkbox)));
 
+  if (!MAINTENANCE_ENABLED) {
+    updateManageBadge();
+    return;
+  }
+
   const recommended = document.getElementById("recommendedTools");
   const recommendSearch = document.getElementById("recommendSearch");
   const showDismissed = document.getElementById("showDismissedRecommendations");
@@ -695,6 +705,11 @@ async function bulkRecommendation(action, result) {
 function updateManageBadge() {
   const button = document.getElementById("openManage");
   if (!button) return;
+  if (!MAINTENANCE_ENABLED) {
+    button.textContent = "⚙ 管理";
+    button.title = "管理工具和偏好";
+    return;
+  }
   const count = STATE.countRecommendations(getAllData(), platform, dismissedRecommendations, aiRecommendations);
   button.textContent = count ? `⚙ 管理 · ${count}` : "⚙ 管理";
   button.title = count ? `管理工具和数据（${count} 个推荐可添加）` : "管理工具和数据";
@@ -719,6 +734,7 @@ function addToolPayload(displayName, preferWebOverride = null) {
 }
 
 function startAddTool(displayName, preferWebOverride = null) {
+  if (!MAINTENANCE_ENABLED) return false;
   const result = addToolPayload(String(displayName || "").trim(), preferWebOverride);
   if (!result.ok) {
     setStatus(result.error, "err");
@@ -760,6 +776,7 @@ function bindManageEvents() {
     render();
   });
   document.getElementById("rerunOnboarding").addEventListener("click", () => onboarding.showOnboarding(true));
+  if (!MAINTENANCE_ENABLED) return;
   document.getElementById("addToolBtn").addEventListener("click", () => {
     startAddTool(document.getElementById("addToolName").value);
   });
@@ -783,6 +800,10 @@ function bindManageEvents() {
 }
 
 async function initialize() {
+  if (!MAINTENANCE_ENABLED) document.getElementById("manageTitle").textContent = "管理工具与偏好";
+  document.querySelectorAll("[data-source-only]").forEach((element) => {
+    element.hidden = !MAINTENANCE_ENABLED || element.hasAttribute("data-dynamic-hidden");
+  });
   document.getElementById("main").innerHTML = `<div class="empty loading">正在加载速查表…</div>`;
   let stored;
   try {
@@ -830,21 +851,23 @@ async function initialize() {
     setStatus(`⚠ ${stored.lastQualityWarnings.messages.join("\n⚠ ")}`, "warn");
   }
 
-  chrome.runtime.onMessage.addListener((message) => {
-    if (message.action === "taskComplete") taskController.finishTask(message.response);
-  });
-  chrome.runtime.sendMessage({ action: "getTaskStatus" }, (status) => {
-    if (chrome.runtime.lastError || !status) return;
-    if (status.running) {
-      currentTaskMode = status.mode;
-      taskController.startTaskTimer(status.mode, status.startedAt || Date.now(), status);
-      setManageButtonsDisabled(true);
-    } else if (status.result && status.finishedAt && Date.now() - status.finishedAt < TASK_RESULT_FRESH_MS) {
-      currentTaskMode = status.mode;
-      taskController.finishTask(status.result, status.mode);
-      chrome.storage.session.set({ taskStatus: { running: false } });
-    }
-  });
+  if (MAINTENANCE_ENABLED) {
+    chrome.runtime.onMessage.addListener((message) => {
+      if (message.action === "taskComplete") taskController.finishTask(message.response);
+    });
+    chrome.runtime.sendMessage({ action: "getTaskStatus" }, (status) => {
+      if (chrome.runtime.lastError || !status) return;
+      if (status.running) {
+        currentTaskMode = status.mode;
+        taskController.startTaskTimer(status.mode, status.startedAt || Date.now(), status);
+        setManageButtonsDisabled(true);
+      } else if (status.result && status.finishedAt && Date.now() - status.finishedAt < TASK_RESULT_FRESH_MS) {
+        currentTaskMode = status.mode;
+        taskController.finishTask(status.result, status.mode);
+        chrome.storage.session.set({ taskStatus: { running: false } });
+      }
+    });
+  }
   if (!stored.onboarded) {
     onboarding.showOnboarding();
   } else {
@@ -857,6 +880,7 @@ if (window.CHEATSHEET_ENABLE_TEST_HOOKS) {
     state: STATE,
     render: RENDER,
     tasks: window.CHEATSHEET_POPUP_TASKS,
+    distribution: DISTRIBUTION,
     confirmRiskCopy,
     closeRiskDialog,
     trapDialogFocus: (dialog, event) => DIALOGS.trapDialogFocus(document, dialog, event),

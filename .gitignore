@@ -21,3 +21,7 @@ __pycache__/
 
 # API 密钥文件（install.sh 生成在安装目录，兜底防止误放入仓库）
 credentials.env
+
+# Release staging and archives
+dist/
+node_modules/

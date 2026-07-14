@@ -33,6 +33,11 @@ for (const id of files) {
 }
 
 const manifest = JSON.parse(fs.readFileSync(path.join(root, "manifest.json"), "utf8"));
+const tagArgIndex = process.argv.indexOf("--tag");
+const releaseTag = tagArgIndex >= 0 ? process.argv[tagArgIndex + 1] : process.env.RELEASE_TAG;
+if (releaseTag && releaseTag !== `v${manifest.version}`) {
+  fail(`release tag ${releaseTag} does not match manifest version v${manifest.version}`);
+}
 const readme = fs.readFileSync(path.join(root, "README.md"), "utf8");
 const countLabel = `${files.length} 个工具`;
 if (!manifest.description.includes(countLabel)) fail("manifest tool count is stale");

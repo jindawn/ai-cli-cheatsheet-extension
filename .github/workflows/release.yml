@@ -1,0 +1,130 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Verify release tag
+        run: node tools/check-release.js --tag "$GITHUB_REF_NAME"
+      - name: Check JavaScript syntax
+        run: |
+          printf '%s\0' popup.js popup-state.js popup-render.js popup-toast.js popup-dialogs.js popup-loader.js popup-tasks.js distribution.js pinyin-initials.js background.js product-core.js quality-core.js usage-examples.js tools/package-extension.js tools/publish-chrome-store.js tools/capture-store-screenshot.js | xargs -0 -n1 node --check
+          find data enrichments -name '*.js' -print0 | xargs -0 -n1 node --check
+      - name: Validate data and application behavior
+        run: |
+          node tools/validate-data.js
+          node tests/test_validation_consistency.js
+          node tests/test_global_official_contract.js
+          node tests/test_product_core.js
+          node tests/test_usage_examples.js
+          node tests/test_popup_ux.js
+          node tests/test_background.js
+          node tests/test_search_quality.js
+          node tests/test_quality_core.js
+          node tools/audit-quality.js --check
+          node tests/test_packaging.js
+      - name: Python lint and security scan
+        run: |
+          pip install ruff bandit
+          ruff check native-host tools
+          bandit -q -c bandit.yaml -r native-host tools
+      - name: Run Native Host tests
+        run: python -m unittest discover -s tests -v
+      - name: Build release directories
+        run: |
+          node tools/package-extension.js --channel source --output dist/source
+          node tools/package-extension.js --channel store --output dist/store
+      - name: Smoke test both release channels
+        run: |
+          npm install --no-save playwright@1.55.0
+          npx playwright install chromium
+          xvfb-run -a node tests/test_extension_smoke.js dist/source
+          xvfb-run -a node tests/test_extension_smoke.js dist/store
+      - name: Create archives and checksums
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          (cd dist/source && zip -X -q -r "../ai-cli-cheatsheet-source-v${VERSION}.zip" .)
+          (cd dist/store && zip -X -q -r "../ai-cli-cheatsheet-store-v${VERSION}.zip" .)
+          (cd dist && sha256sum "ai-cli-cheatsheet-source-v${VERSION}.zip" "ai-cli-cheatsheet-store-v${VERSION}.zip" > SHA256SUMS)
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-assets
+          path: |
+            dist/ai-cli-cheatsheet-*.zip
+            dist/SHA256SUMS
+          if-no-files-found: error
+
+  github-release:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: release-assets
+          path: release-assets
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload "$GITHUB_REF_NAME" release-assets/* --repo "$GITHUB_REPOSITORY" --clobber
+          else
+            gh release create "$GITHUB_REF_NAME" release-assets/* --repo "$GITHUB_REPOSITORY" --verify-tag --generate-notes --title "$GITHUB_REF_NAME"
+          fi
+
+  chrome-web-store:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    environment: chrome-web-store
+    permissions:
+      contents: read
+    steps:
+      - name: Check Chrome Web Store configuration
+        id: cws
+        env:
+          PUBLISHER_ID: ${{ vars.CWS_PUBLISHER_ID }}
+          EXTENSION_ID: ${{ vars.CWS_EXTENSION_ID }}
+        run: |
+          if [ -n "$PUBLISHER_ID" ] && [ -n "$EXTENSION_ID" ]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "Chrome Web Store IDs are not configured; skipping store submission."
+          fi
+      - uses: actions/checkout@v4
+        if: steps.cws.outputs.enabled == 'true'
+      - uses: actions/setup-node@v4
+        if: steps.cws.outputs.enabled == 'true'
+        with:
+          node-version: "22"
+      - uses: actions/download-artifact@v4
+        if: steps.cws.outputs.enabled == 'true'
+        with:
+          name: release-assets
+          path: release-assets
+      - name: Upload and submit staged review
+        if: steps.cws.outputs.enabled == 'true'
+        env:
+          CWS_SERVICE_ACCOUNT_JSON: ${{ secrets.CWS_SERVICE_ACCOUNT_JSON }}
+          CWS_PUBLISHER_ID: ${{ vars.CWS_PUBLISHER_ID }}
+          CWS_EXTENSION_ID: ${{ vars.CWS_EXTENSION_ID }}
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          node tools/publish-chrome-store.js \
+            --package "release-assets/ai-cli-cheatsheet-store-v${VERSION}.zip" \
+            --version "$VERSION"

@@ -28,6 +28,7 @@ jobs:
           node --check background.js
           node --check product-core.js
           node --check usage-examples.js
+          node --check distribution.js
           find data -name '*.js' -print0 | xargs -0 -n1 node --check
           find enrichments -name '*.js' -print0 | xargs -0 -n1 node --check
       - name: Validate cheatsheet data
@@ -40,6 +41,7 @@ jobs:
           node tests/test_popup_ux.js
           node tests/test_background.js
           node tests/test_search_quality.js
+          node tests/test_packaging.js
           node tools/check-release.js
       - name: Python lint and security scan
         run: |

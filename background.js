@@ -414,6 +414,22 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
     return true;
   }
 
+  if (msg.action === 'companionProviderRefresh') {
+    const providerId = typeof msg.providerId === 'string' ? msg.providerId : '';
+    if (!PROVIDER_ID_RE.test(providerId)) {
+      sendResponse({ ok: false, error: 'AI 环境 ID 无效' });
+      return false;
+    }
+    sendNativeOnce({
+      action: 'refresh_provider',
+      protocolVersion: PROTOCOL_VERSION,
+      providerId,
+    }, { timeoutMs: HANDSHAKE_TIMEOUT_MS })
+      .then((response) => sendResponse(response))
+      .catch(() => sendResponse({ ok: false, error: '无法重新检测该 AI 环境，请重新检测本机检测组件后再试。' }));
+    return true;
+  }
+
   if (msg.action === 'companionCommonProviderInstallPrepare') {
     const commonProviderId = typeof msg.commonProviderId === 'string' ? msg.commonProviderId : '';
     if (!/^[a-z][a-z0-9-]{0,63}$/.test(commonProviderId)) {

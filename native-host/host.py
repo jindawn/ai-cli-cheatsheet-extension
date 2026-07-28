@@ -3,8 +3,10 @@
 
 import atexit
 import base64
+import concurrent.futures
 import copy
 import datetime
+import functools
 import glob
 import hashlib
 import http.client
@@ -144,6 +146,7 @@ HOST_ACTIONS = {
     "delete_custom_provider",
     "resolve_generic_provider",
     "enable_generic_provider",
+    "refresh_provider",
     "prepare_common_provider_install",
     "install_common_provider",
 }
@@ -242,6 +245,14 @@ OFFICIAL_COVERAGE_SCOPE = VALIDATION_RULES["officialCoverageScope"]
 GROUNDING_CLAIMS = set(VALIDATION_RULES["groundingClaims"])
 SCENARIO_RULES = VALIDATION_RULES["scenarioQuality"]
 SCENARIO_PLACEHOLDER_RE = re.compile(SCENARIO_RULES["placeholderPattern"])
+
+# Detection budgets. The extension gives one handshake 35 seconds
+# (HANDSHAKE_TIMEOUT_MS in background.js); staying well inside that is what
+# turns "one hung CLI loses every result" into "one hung CLI is reported as
+# timed out while every other environment still comes back".
+PROBE_COMMAND_TIMEOUT_SECONDS = 5
+HANDSHAKE_BUDGET_SECONDS = 20
+HANDSHAKE_MAX_WORKERS = 8
 
 # Only tools with a useful local version command belong here. Stable keymaps and
 # long-lived command references intentionally have no executable probe.
@@ -477,7 +488,16 @@ def executable_search_dirs(platform=None, env=None, home=None):
     return directories
 
 
+@functools.lru_cache(maxsize=256)
 def find_executable(name, platform=None, env=None, home=None):
+    """Resolve one PATH filename, memoised for the lifetime of this process.
+
+    One handshake asks about the same binaries repeatedly (once per provider,
+    again per common-catalog entry, again per installer prerequisite) and each
+    miss walks the whole search path. ``main()`` handles a single message and
+    exits, so nothing can go stale here — except within
+    ``install_common_provider``, which clears the cache after installing.
+    """
     search_path = os.pathsep.join(executable_search_dirs(platform, env, home))
     names = [name]
     if (platform or sys.platform) == "win32" and not os.path.splitext(name)[1]:
@@ -679,6 +699,8 @@ def install_common_provider(common_provider_id):
         }
     finally:
         _active_proc = None
+    # The new binary appeared after the memoised lookups above ran.
+    find_executable.cache_clear()
     installed_status = common_provider_installation_status(entry, registry)
     if installed_status["state"] != "installed":
         return {
@@ -893,7 +915,7 @@ def _setup_logger():
 LOGGER = _setup_logger()
 
 
-def _probe_command(args, timeout=8):
+def _probe_command(args, timeout=PROBE_COMMAND_TIMEOUT_SECONDS):
     """Run a bounded, non-generating CLI probe without returning account data."""
     try:
         result = subprocess.run(
@@ -1078,6 +1100,59 @@ def provider_status(provider_id, prefer_cli_version=False):
             "executionMode": execution_mode,
         }
     return status
+
+
+def _timed_out_provider_status(adapter):
+    """Describe one provider whose probes did not finish inside the budget."""
+    return {
+        "id": adapter["id"],
+        "displayName": adapter["displayName"],
+        "source": adapter["source"],
+        "transport": adapter["transport"],
+        "verified": adapter.get("verified") is True,
+        "version": None,
+        "installed": False,
+        "loginState": "probe-timeout",
+        "ready": False,
+        "loginCommand": adapter.get("loginCommand", ""),
+        "capabilities": list(adapter.get("capabilities", [])),
+        "recommendationOrder": adapter.get("recommendationOrder", 1000),
+    }
+
+
+def scan_provider_statuses(adapters, budget=HANDSHAKE_BUDGET_SECONDS):
+    """Probe every adapter in parallel and always answer within the budget.
+
+    Probing is subprocess-bound, so threads are enough. A provider that blows
+    the budget is reported as ``probe-timeout`` instead of taking the whole
+    handshake down with it — the user keeps every environment that did answer
+    and can see which one did not.
+    """
+    if not adapters:
+        return []
+    workers = min(HANDSHAKE_MAX_WORKERS, len(adapters))
+    results = {}
+    executor = concurrent.futures.ThreadPoolExecutor(max_workers=workers)
+    try:
+        pending = {
+            executor.submit(provider_status, adapter["id"], True): adapter
+            for adapter in adapters
+        }
+        done, _unfinished = concurrent.futures.wait(pending, timeout=budget)
+        for future in done:
+            adapter = pending[future]
+            try:
+                results[adapter["id"]] = future.result()
+            except (ValidationError, ProviderRegistryError, OSError) as exc:
+                LOGGER.warning("provider probe failed for %s: %s", adapter["id"], exc)
+    finally:
+        # Never block the response on a hung probe; the interpreter cleans the
+        # threads up when this one-shot process exits.
+        executor.shutdown(wait=False)
+    return [
+        results.get(adapter["id"]) or _timed_out_provider_status(adapter)
+        for adapter in adapters
+    ]
 
 
 def provider_environment(provider_id):
@@ -1330,6 +1405,13 @@ def validate_request(message):
         if not isinstance(provider_id, str) or not re.fullmatch(
                 r"custom:[a-f0-9-]{36}", provider_id):
             raise ValidationError("只能删除自定义 AI 环境")
+        return {"action": action, "providerId": provider_id}
+    if action == "refresh_provider":
+        # Re-detecting one environment is read-only and runs no model task, so
+        # it deliberately skips the catalog-digest gate that task actions use.
+        provider_id = message.get("providerId")
+        if not isinstance(provider_id, str) or not PROVIDER_ID_RE.fullmatch(provider_id):
+            raise ValidationError("AI 环境 ID 无效")
         return {"action": action, "providerId": provider_id}
     registry = provider_registry()
     catalog_digest = message.get("providerCatalogDigest")
@@ -3397,8 +3479,12 @@ def _run_generation_prompt(prompt, use_api, prefer_web=False, provider_id="claud
             return _call_catalog_cli(prompt, provider_id, adapter)
         except ValidationError as exc:
             if adapter.get("executionMode") == "generic":
+                # Environments saved before invocation templates existed are
+                # all bound to the bare stdin form. Re-adding them runs the
+                # capability probe and picks a template that actually works.
                 raise ValidationError(
-                    "该工具不兼容通用调用模式：未得到可用的结构化输出。"
+                    f"{adapter['displayName']} 没有按当前调用方式返回可用的结构化输出。"
+                    "请在「添加 AI 环境」中删除后重新添加，届时会先试调用并选择合适的调用方式。"
                 ) from exc
             raise
     if adapter.get("transport") == "api":
@@ -5122,10 +5208,7 @@ def handle_message(message):
         if request.get("refreshCatalog"):
             catalog_refresh = refresh_catalog_if_stale(SHARED_DIR, PENDING_DIR)
         registry = provider_registry()
-        providers = [
-            provider_status(adapter["id"], prefer_cli_version=True)
-            for adapter in registry["providers"]
-        ]
+        providers = scan_provider_statuses(registry["providers"])
         first_ready = next(
             (provider for provider in providers if provider["id"] == "claude" and provider["ready"]),
             next((provider for provider in providers if provider["ready"]), providers[0]),
@@ -5164,6 +5247,7 @@ def handle_message(message):
                 "supportedActions": ["add_tool", "preview_update", "apply_update", "discard_update", "remove_tool"],
                 "genericProviderProbe": True,
                 "genericProviderProfiles": public_generic_profiles(),
+                "refreshProvider": True,
                 "providerCatalog": {
                     "updateSupported": registry["catalogUpdateSupported"],
                     "importSigned": registry["catalogUpdateSupported"],
@@ -5229,6 +5313,12 @@ def handle_message(message):
         except ProviderRegistryError as exc:
             raise ValidationError(str(exc)) from exc
         return {"ok": True, **deleted}
+    if request["action"] == "refresh_provider":
+        registry = provider_registry()
+        adapter = registry["byId"].get(request["providerId"])
+        if adapter is None:
+            raise ValidationError("所选 AI 执行环境不存在或适配器已被移除")
+        return {"ok": True, "provider": scan_provider_statuses([adapter])[0]}
     provider_id = request.get("providerId")
     result = None
     if request["action"] == "add_tool":

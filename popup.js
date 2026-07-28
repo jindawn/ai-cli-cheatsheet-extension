@@ -619,7 +619,11 @@ function renderCommonProviderList() {
       ? `<a href="${RENDER.escapeHtml(entry.officialUrl)}" target="_blank" rel="noopener noreferrer">官方说明</a>` : "";
     const remove = entry.adapterStatus === "custom"
       ? `<button class="act" type="button" data-delete-provider="${RENDER.escapeHtml(entry.providerId)}" aria-label="删除 ${RENDER.escapeHtml(entry.displayName)}">删除</button>` : "";
-    return `<div class="common-provider-item"><button class="act" type="button" data-provider-entry="${RENDER.escapeHtml(entry.id)}"><span class="name">${RENDER.escapeHtml(entry.displayName)}</span><span class="detail">${RENDER.escapeHtml(entry.description || "")}</span></button><span class="state ${state.className}">${RENDER.escapeHtml(state.label)}</span>${official}${remove}</div>`;
+    // Re-detecting one environment avoids rescanning every provider just to
+    // pick up a login that finished a moment ago.
+    const refresh = entry.registeredProviderId && bridgeSupportsProviderRefresh()
+      ? `<button class="act" type="button" data-refresh-provider="${RENDER.escapeHtml(entry.registeredProviderId)}" aria-label="重新检测 ${RENDER.escapeHtml(entry.displayName)}">重新检测</button>` : "";
+    return `<div class="common-provider-item"><button class="act" type="button" data-provider-entry="${RENDER.escapeHtml(entry.id)}"><span class="name">${RENDER.escapeHtml(entry.displayName)}</span><span class="detail">${RENDER.escapeHtml(entry.description || "")}</span></button><span class="state ${state.className}">${RENDER.escapeHtml(state.label)}</span>${official}${refresh}${remove}</div>`;
   }).join("") : '<div class="meta">没有匹配的常见环境，可选择“其他工具…”。</div>';
   for (const button of list.querySelectorAll("[data-provider-entry]")) {
     button.addEventListener("click", () => {
@@ -632,6 +636,35 @@ function renderCommonProviderList() {
       const entry = currentCommonProviderEntries().find((item) => item.providerId === button.dataset.deleteProvider);
       if (entry) deleteCustomProvider(entry);
     });
+  }
+  for (const button of list.querySelectorAll("[data-refresh-provider]")) {
+    button.addEventListener("click", () => refreshOneProvider(button, button.dataset.refreshProvider));
+  }
+}
+
+function bridgeSupportsProviderRefresh() {
+  return companionHandshake?.capabilities?.refreshProvider === true;
+}
+
+async function refreshOneProvider(button, providerId) {
+  if (!providerId || button.disabled) return;
+  button.disabled = true;
+  button.textContent = "检测中…";
+  try {
+    const response = await runtimeMessage({ action: "companionProviderRefresh", providerId });
+    if (!response?.ok || !response.provider) throw new Error(response?.error || "refresh-failed");
+    // Splice the fresh status into the cached handshake so only this row moves;
+    // a full re-probe of every environment is exactly what this avoids.
+    const providers = Array.isArray(companionHandshake?.providers) ? companionHandshake.providers : [];
+    const index = providers.findIndex((provider) => provider.id === providerId);
+    if (index >= 0) providers[index] = response.provider;
+    renderCommonProviderList();
+    renderCompanionState();
+    genericProviderStatus("", "");
+  } catch (_error) {
+    button.disabled = false;
+    button.textContent = "重新检测";
+    genericProviderStatus("重新检测失败，请重新检测本机检测组件后再试。", "err");
   }
 }
 

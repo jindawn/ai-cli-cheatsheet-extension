@@ -364,6 +364,26 @@ const VALID_TOKEN = "a".repeat(32);
     assert.strictEqual(state.connectNativeCalls.length, 0);
   }
 
+  // Re-detecting one environment forwards only a validated provider ID and
+  // never carries a catalog digest or a task payload.
+  {
+    const { chrome, state } = loadBackground();
+    const refreshed = dispatch(chrome, {
+      action: "companionProviderRefresh", providerId: "claude",
+    });
+    assert.strictEqual(refreshed.async_, true);
+    assert.deepStrictEqual(JSON.parse(JSON.stringify(state.ports[0].messages[0])), {
+      action: "refresh_provider", protocolVersion: PROTOCOL_VERSION, providerId: "claude",
+    });
+  }
+  for (const providerId of ["", "../etc", "claude; rm -rf /", "CLAUDE", undefined]) {
+    const { chrome, state } = loadBackground();
+    const rejected = dispatch(chrome, { action: "companionProviderRefresh", providerId });
+    assert.strictEqual(rejected.async_, false);
+    assert.strictEqual(rejected.getResponse().ok, false);
+    assert.strictEqual(state.connectNativeCalls.length, 0);
+  }
+
   // A common-provider install can only forward a fixed catalog ID plus an
   // explicit confirmation. No executable name or package arguments cross the
   // extension/native boundary.

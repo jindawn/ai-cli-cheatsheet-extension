@@ -316,28 +316,48 @@ const VALID_TOKEN = "a".repeat(32);
       action: "companionGenericProviderResolve", displayName: "My AI", executable: "my-ai",
     });
     assert.strictEqual(resolved.async_, true);
+    // Plain discovery must never ask the bridge to run a model task.
     assert.deepStrictEqual(JSON.parse(JSON.stringify(state.ports[0].messages[0])), {
       action: "resolve_generic_provider", protocolVersion: PROTOCOL_VERSION,
-      displayName: "My AI", executable: "my-ai",
+      displayName: "My AI", executable: "my-ai", probe: false,
+    });
+  }
+  {
+    const { chrome, state } = loadBackground();
+    const probed = dispatch(chrome, {
+      action: "companionGenericProviderResolve", displayName: "My AI", executable: "my-ai",
+      probe: true,
+    });
+    assert.strictEqual(probed.async_, true);
+    assert.deepStrictEqual(JSON.parse(JSON.stringify(state.ports[0].messages[0])), {
+      action: "resolve_generic_provider", protocolVersion: PROTOCOL_VERSION,
+      displayName: "My AI", executable: "my-ai", probe: true,
     });
   }
   {
     const { chrome, state } = loadBackground();
     const enabled = dispatch(chrome, {
       action: "companionGenericProviderEnable", displayName: "My AI", executable: "my-ai",
-      genericConfirmed: true,
+      genericProfileId: "prompt-flag-json", genericConfirmed: true,
     });
     assert.strictEqual(enabled.async_, true);
     assert.deepStrictEqual(JSON.parse(JSON.stringify(state.ports[0].messages[0])), {
       action: "enable_generic_provider", protocolVersion: PROTOCOL_VERSION,
-      displayName: "My AI", executable: "my-ai", genericConfirmed: true,
+      displayName: "My AI", executable: "my-ai",
+      genericProfileId: "prompt-flag-json", genericConfirmed: true,
     });
   }
-  {
+  // Neither an executable path nor an unregistered template ID may cross the
+  // extension/native boundary.
+  for (const invalid of [
+    { displayName: "My AI", executable: "/tmp/my-ai", genericProfileId: "stdin-json" },
+    { displayName: "My AI", executable: "my-ai", genericProfileId: "" },
+    { displayName: "My AI", executable: "my-ai", genericProfileId: "stdin-json; rm -rf /" },
+    { displayName: "My AI", executable: "my-ai" },
+  ]) {
     const { chrome, state } = loadBackground();
     const rejected = dispatch(chrome, {
-      action: "companionGenericProviderEnable", displayName: "My AI", executable: "/tmp/my-ai",
-      genericConfirmed: true,
+      action: "companionGenericProviderEnable", ...invalid, genericConfirmed: true,
     });
     assert.strictEqual(rejected.async_, false);
     assert.strictEqual(rejected.getResponse().ok, false);

@@ -11,6 +11,7 @@ from unittest import mock
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "native-host"))
 
+import generic_profiles  # noqa: E402
 import provider_registry as registry  # noqa: E402
 
 
@@ -358,7 +359,7 @@ class ProviderRegistryTests(unittest.TestCase):
             with self.assertRaisesRegex(registry.ProviderRegistryError, expected):
                 registry.save_custom_adapter(str(self.state), candidate)
 
-    def test_generic_adapter_uses_no_arguments_and_preserves_legacy_configuration(self):
+    def test_generic_adapter_binds_a_bridge_template_and_preserves_legacy_configuration(self):
         legacy = registry.save_custom_adapter(str(self.state), {
             "displayName": "Legacy AI",
             "executable": "legacy-ai",
@@ -372,29 +373,56 @@ class ProviderRegistryTests(unittest.TestCase):
         generic = registry.save_generic_adapter(str(self.state), {
             "displayName": "Generic AI",
             "executable": "generic-ai",
+            "genericProfileId": "prompt-flag-json",
             "genericConfirmed": True,
         })
         loaded = registry.load_registry(str(self.shared), str(self.state))
         self.assertEqual(loaded["byId"][legacy["id"]]["executionMode"], "legacy-configured")
         adapter = loaded["byId"][generic["id"]]
         self.assertEqual(adapter["executionMode"], "generic")
-        self.assertEqual(adapter["argv"], [])
+        self.assertEqual(adapter["genericProfileId"], "prompt-flag-json")
+        self.assertEqual(adapter["argv"], ["-p", "{prompt}", "--output-format", "json"])
+        self.assertEqual(adapter["promptMode"], "argv-template")
         self.assertEqual(adapter["versionArgs"], ["--version"])
-        self.assertEqual(adapter["promptMode"], "stdin")
         self.assertEqual(adapter["outputParser"], "json")
         self.assertNotIn("read-only", adapter["capabilities"])
+
+    def test_generic_adapter_still_supports_the_bare_stdin_template(self):
+        generic = registry.save_generic_adapter(str(self.state), {
+            "displayName": "Stdin AI",
+            "executable": "stdin-ai",
+            "genericProfileId": "stdin-json",
+            "genericConfirmed": True,
+        })
+        adapter = registry.load_registry(str(self.shared), str(self.state))["byId"][generic["id"]]
+        self.assertEqual(adapter["argv"], [])
+        self.assertEqual(adapter["promptMode"], "stdin")
 
     def test_generic_adapter_rejects_confirmation_bypass_and_custom_arguments(self):
         with self.assertRaisesRegex(registry.ProviderRegistryError, "风险确认"):
             registry.save_generic_adapter(str(self.state), {
-                "displayName": "Generic AI", "executable": "generic-ai", "genericConfirmed": False,
+                "displayName": "Generic AI", "executable": "generic-ai",
+                "genericProfileId": "stdin-json", "genericConfirmed": False,
             })
-        with self.assertRaisesRegex(registry.ProviderRegistryError, "不允许自定义参数"):
-            registry.save_custom_adapter(str(self.state), {
-                "displayName": "Generic AI", "executable": "generic-ai", "driver": "stdin-json",
-                "argv": ["--json"], "promptMode": "stdin", "outputParser": "json",
-                "versionArgs": ["--version"], "executionMode": "generic", "genericConfirmed": True,
+        with self.assertRaisesRegex(registry.ProviderRegistryError, "模板无效"):
+            registry.save_generic_adapter(str(self.state), {
+                "displayName": "Generic AI", "executable": "generic-ai",
+                "genericProfileId": "not-a-template", "genericConfirmed": True,
             })
+        # An argv that is not byte-for-byte a bridge template — including a
+        # template with one extra argument appended — must fail closed.
+        for argv, prompt_mode in [
+            (["--json"], "stdin"),
+            (["-p", "{prompt}", "--output-format", "json", "--yolo"], "argv-template"),
+            (["-p", "{prompt}"], "stdin"),
+        ]:
+            with self.assertRaisesRegex(registry.ProviderRegistryError, "桥接内置的调用模板"):
+                registry.save_custom_adapter(str(self.state), {
+                    "displayName": "Generic AI", "executable": "generic-ai", "driver": "stdin-json",
+                    "argv": argv, "promptMode": prompt_mode, "outputParser": "json",
+                    "versionArgs": ["--version"], "executionMode": "generic",
+                    "genericConfirmed": True,
+                })
 
     def test_corrupt_custom_registry_fails_closed_without_hiding_builtins(self):
         self.state.mkdir()
@@ -405,6 +433,50 @@ class ProviderRegistryTests(unittest.TestCase):
         loaded = registry.load_registry(str(self.shared), str(self.state))
         self.assertIn("claude", loaded["byId"])
         self.assertTrue(loaded["customConfigError"])
+
+
+class GenericProfileTests(unittest.TestCase):
+    """The generic templates are the only argv a generic environment may use."""
+
+    def test_every_template_is_shell_free_and_holds_one_standalone_prompt(self):
+        for profile_id in generic_profiles.generic_profile_ids():
+            profile = generic_profiles.generic_profile(profile_id)
+            with self.subTest(profile=profile_id):
+                self.assertIn(profile["promptMode"], {"stdin", "argv-template"})
+                for argument in profile["argv"]:
+                    self.assertNotRegex(argument, r"[|&;<>`$\s]")
+                placeholders = profile["argv"].count(generic_profiles.PROMPT_PLACEHOLDER)
+                if profile["promptMode"] == "argv-template":
+                    self.assertEqual(placeholders, 1)
+                    # A placeholder must be a whole element, never a fragment
+                    # concatenated with other text.
+                    self.assertNotIn(
+                        True,
+                        [generic_profiles.PROMPT_PLACEHOLDER in item
+                         and item != generic_profiles.PROMPT_PLACEHOLDER
+                         for item in profile["argv"]],
+                    )
+                else:
+                    self.assertEqual(placeholders, 0)
+
+    def test_render_argv_replaces_exactly_one_element(self):
+        profile = generic_profiles.generic_profile("prompt-flag-json")
+        rendered = generic_profiles.render_argv(profile, "task; rm -rf /")
+        # The prompt stays one array element regardless of its content, and no
+        # other element is touched.
+        self.assertEqual(rendered, ["-p", "task; rm -rf /", "--output-format", "json"])
+        self.assertEqual(rendered.count("task; rm -rf /"), 1)
+
+    def test_render_argv_fails_closed_on_a_malformed_template(self):
+        for argv in [[], ["-p", "{prompt}", "{prompt}"]]:
+            with self.assertRaises(ValueError):
+                generic_profiles.render_argv(
+                    {"argv": argv, "promptMode": "argv-template"}, "task"
+                )
+
+    def test_unknown_template_ids_are_not_resolvable(self):
+        for profile_id in [None, "", "custom", "prompt-flag-json ", "../stdin-json"]:
+            self.assertIsNone(generic_profiles.generic_profile(profile_id))
 
 
 if __name__ == "__main__":

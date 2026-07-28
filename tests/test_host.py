@@ -2253,13 +2253,14 @@ class HostProviderAdapterTests(unittest.TestCase):
         self.assertEqual(args, ["/tmp/fifth-ai", "--read-only", "--json"])
         self.assertEqual((prompt, provider_id), ("prompt", "catalog:fifth"))
 
-    def test_generic_provider_uses_exactly_one_executable_and_stdin(self):
+    def test_generic_provider_substitutes_the_prompt_into_one_argv_element(self):
         with tempfile.TemporaryDirectory() as temp, mock.patch.object(host, "PENDING_DIR", temp), \
                 mock.patch.object(host, "find_executable", return_value="/tmp/generic-ai"), \
                 mock.patch.object(host, "_probe_command", return_value=(0, "Generic AI 1.0")):
             enabled = host.handle_message({
                 "action": "enable_generic_provider", "protocolVersion": 5,
-                "displayName": "Generic AI", "executable": "generic-ai", "genericConfirmed": True,
+                "displayName": "Generic AI", "executable": "generic-ai",
+                "genericProfileId": "prompt-flag-json", "genericConfirmed": True,
             })
             provider_id = enabled["provider"]["id"]
             adapter = host.provider_adapter(provider_id)
@@ -2267,9 +2268,43 @@ class HostProviderAdapterTests(unittest.TestCase):
                     mock.patch.object(host, "_run_provider_process", return_value='{"meta":{},"items":[]}') as process:
                 self.assertEqual(host._call_catalog_cli("prompt", provider_id, adapter), {"meta": {}, "items": []})
             args, prompt, used_provider = process.call_args.args
-            self.assertEqual(args, ["/tmp/generic-ai"])
+            # The prompt occupies exactly one element and is never concatenated.
+            self.assertEqual(
+                args, ["/tmp/generic-ai", "-p", "prompt", "--output-format", "json"]
+            )
             self.assertEqual((prompt, used_provider), ("prompt", provider_id))
             self.assertFalse(process.call_args.kwargs["prompt_in_argv"])
+            # An unknown executable must never inherit the Native Messaging stdin.
+            self.assertTrue(process.call_args.kwargs["stdin_devnull"])
+
+    def test_generic_provider_bare_template_passes_the_prompt_on_stdin(self):
+        with tempfile.TemporaryDirectory() as temp, mock.patch.object(host, "PENDING_DIR", temp), \
+                mock.patch.object(host, "find_executable", return_value="/tmp/generic-ai"), \
+                mock.patch.object(host, "_probe_command", return_value=(0, "Generic AI 1.0")):
+            enabled = host.handle_message({
+                "action": "enable_generic_provider", "protocolVersion": 5,
+                "displayName": "Generic AI", "executable": "generic-ai",
+                "genericProfileId": "stdin-json", "genericConfirmed": True,
+            })
+            adapter = host.provider_adapter(enabled["provider"]["id"])
+            with mock.patch.object(host, "_provider_binary", return_value="/tmp/generic-ai"), \
+                    mock.patch.object(host, "_run_provider_process", return_value='{"meta":{},"items":[]}') as process:
+                host._call_catalog_cli("prompt", enabled["provider"]["id"], adapter)
+            self.assertEqual(process.call_args.args[0], ["/tmp/generic-ai"])
+            self.assertFalse(process.call_args.kwargs["prompt_in_argv"])
+            self.assertFalse(process.call_args.kwargs["stdin_devnull"])
+
+    def test_generic_provider_rejects_a_template_the_bridge_does_not_own(self):
+        with tempfile.TemporaryDirectory() as temp, mock.patch.object(host, "PENDING_DIR", temp), \
+                mock.patch.object(host, "find_executable", return_value="/tmp/generic-ai"), \
+                mock.patch.object(host, "_probe_command", return_value=(0, "Generic AI 1.0")):
+            for profile_id in [None, "", "prompt-flag-json; rm -rf /", "custom"]:
+                with self.assertRaises(host.ValidationError):
+                    host.handle_message({
+                        "action": "enable_generic_provider", "protocolVersion": 5,
+                        "displayName": "Generic AI", "executable": "generic-ai",
+                        "genericProfileId": profile_id, "genericConfirmed": True,
+                    })
 
     def test_generic_provider_requires_one_confirmation_and_can_resolve_existing_adapter(self):
         with tempfile.TemporaryDirectory() as temp, mock.patch.object(host, "PENDING_DIR", temp), \
@@ -2281,9 +2316,12 @@ class HostProviderAdapterTests(unittest.TestCase):
             })
             self.assertTrue(resolved["found"])
             self.assertTrue(resolved["requiresGenericConfirmation"])
+            # Discovery alone must not run a model task.
+            self.assertNotIn("genericProfileId", resolved)
             enabled = host.handle_message({
                 "action": "enable_generic_provider", "protocolVersion": 5,
-                "displayName": "Generic AI", "executable": "generic-ai", "genericConfirmed": True,
+                "displayName": "Generic AI", "executable": "generic-ai",
+                "genericProfileId": "stdin-json", "genericConfirmed": True,
             })
             self.assertTrue(enabled["ok"])
             repeated = host.handle_message({
@@ -2291,6 +2329,34 @@ class HostProviderAdapterTests(unittest.TestCase):
                 "displayName": "Generic AI", "executable": "generic-ai",
             })
             self.assertEqual(repeated["existingProviderId"], enabled["provider"]["id"])
+
+    def test_generic_probe_reports_the_first_working_template(self):
+        answered = {"argv": None}
+
+        def fake_run(args, **kwargs):
+            answered["argv"] = args
+            # Only the second template (-p prompt) is understood by this CLI.
+            if args[1:2] == ["-p"] and "--output-format" not in args:
+                return mock.Mock(returncode=0, stdout='{"ok": true}', stderr="")
+            return mock.Mock(returncode=2, stdout="", stderr="unknown option")
+
+        with mock.patch.object(host.subprocess, "run", side_effect=fake_run):
+            profile = host.probe_generic_profiles("/tmp/generic-ai")
+        self.assertEqual(profile["id"], "prompt-flag")
+        self.assertEqual(profile["promptMode"], "argv-template")
+
+    def test_generic_probe_reports_incompatible_when_no_template_answers(self):
+        def fake_run(args, **kwargs):
+            raise host.subprocess.TimeoutExpired(args, host.PROBE_TIMEOUT_SECONDS)
+
+        with mock.patch.object(host, "find_executable", return_value="/tmp/tui-ai"), \
+                mock.patch.object(host, "_probe_command", return_value=(0, "TUI AI 1.0")), \
+                mock.patch.object(host.subprocess, "run", side_effect=fake_run):
+            resolved = host.resolve_generic_provider("TUI AI", "tui-ai", probe=True)
+        # A CLI that only opens an interactive session is reported before the
+        # environment is saved, not after a 15-minute task timeout.
+        self.assertTrue(resolved["genericIncompatible"])
+        self.assertFalse(resolved["requiresGenericConfirmation"])
 
     def test_common_qwen_installer_uses_only_its_fixed_bridge_profile(self):
         installed = {"qwen": False}

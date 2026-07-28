@@ -29,7 +29,11 @@ Allowed path placeholders are `{schemaFile}`, `{outputFile}` and `{workDir}`. Th
 
 常见目录未提供签名适配器、或用户输入其他工具名称时，桥接先把名称规范化为 PATH 中的可执行文件名并执行受限的版本探测。找不到时，扩展才会要求补充一个实际命令名。找到后必须经过一次明确风险确认，才会在桥接状态目录保存 `custom:<uuid>` Provider。
 
-这类 Provider 的 `executionMode` 为 `generic`：启动数组固定为 `[executable]`，没有额外参数，任务提示通过标准输入传递，标准输出必须包含可解析的结构化 JSON；工作目录、15 分钟超时和取消机制仍由桥接控制。它不代表只读调用，不能宣称 CLI 不会写入、联网或请求权限；每次模型任务仍要求用户确认用量。非 JSON 输出、超时、未登录或运行失败不会写入数据，也不会改用其他 Provider。
+这类 Provider 的 `executionMode` 为 `generic`，其启动参数只能来自 `native-host/generic_profiles.py` 中桥接自带的固定模板集。扩展只能提交一个模板 ID，永远不能提交参数本身；`validate_adapter` 要求存储的 `argv` 与某个模板逐字节相等，模板后追加一个参数也会失败。模板中的 `{prompt}` 恰好占一个数组元素，任务提示替换该元素后直接交给 `subprocess`，不做字符串拼接、不经过 Shell。
+
+**风险确认后、保存之前**会执行一次有界能力探测：桥接按 `PROBE_ORDER` 依次试调用各模板，每次上限 60 秒且标准输入始终关闭，第一个返回可解析 JSON 的模板即被采纳。全部失败时返回 `genericIncompatible`，不保存任何 Provider。这既是对「只支持交互式使用」的 CLI 的防护（关闭的标准输入让它立即遇到 EOF，且耗时受 60 秒约束，而不是任务执行的 15 分钟超时），也保证了通用环境在保存时就是可用的。
+
+通用 Provider 的子进程标准输入为 `DEVNULL`，不会继承桥接自身的 Native Messaging 流。它不代表只读调用，不能宣称 CLI 不会写入、联网或请求权限；每次模型任务仍要求用户确认用量。非 JSON 输出、超时、未登录或运行失败不会写入数据，也不会改用其他 Provider。
 
 1.7.4 及更早版本保存的自定义适配器会以 `legacy-configured` 方式继续加载，以免破坏已有用户配置。它们可以删除，但扩展不再显示旧版参数、输出驱动或登录提示编辑表单。
 

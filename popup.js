@@ -936,14 +936,40 @@ async function resolveGenericProvider(displayName, suppliedExecutable = null) {
 
 async function enableGenericProvider() {
   if (!genericProviderCandidate) return;
-  genericProviderStatus("正在启用通用调用…", "", "genericProviderConfirmStatus");
   const button = document.getElementById("enableGenericProvider");
   button.disabled = true;
   try {
+    // Probe before saving: the bridge tries its own invocation templates and
+    // reports which one this CLI actually answers on. Without this the
+    // environment would save successfully and only fail on the first real
+    // task, after the full 15-minute execution timeout.
+    genericProviderStatus(
+      "正在试调用该工具以确认调用方式，这会消耗一次很小的模型用量…",
+      "",
+      "genericProviderConfirmStatus",
+    );
+    const probed = await runtimeMessage({
+      action: "companionGenericProviderResolve",
+      displayName: genericProviderCandidate.displayName,
+      executable: genericProviderCandidate.executable,
+      probe: true,
+    });
+    if (!probed?.ok) throw new Error(probed?.error || "probe-failed");
+    if (probed.genericIncompatible || !probed.genericProfileId) {
+      genericProviderStatus(
+        `${genericProviderCandidate.displayName} 没有响应任何一种桥接支持的非交互调用方式，因此没有保存。`
+        + "它可能只支持交互式使用，或需要先完成登录。",
+        "err",
+        "genericProviderConfirmStatus",
+      );
+      return;
+    }
+    genericProviderStatus("正在启用通用调用…", "", "genericProviderConfirmStatus");
     const response = await runtimeMessage({
       action: "companionGenericProviderEnable",
       displayName: genericProviderCandidate.displayName,
       executable: genericProviderCandidate.executable,
+      genericProfileId: probed.genericProfileId,
       genericConfirmed: true,
     });
     const providerId = response?.provider?.id || response?.providerId;
@@ -953,9 +979,13 @@ async function enableGenericProvider() {
     await storageSet({ selectedProviderId, providerSelectionExplicit: true });
     if (!await probeCompanion({ requestPermission: true, refreshCatalog: false })) throw new Error("refresh-failed");
     closeCustomProviderDialog();
-    setStatus(`已启用 ${genericProviderCandidate.displayName} 的通用调用。每次任务仍会再次确认模型用量。`, "ok");
+    setStatus(
+      `已启用 ${genericProviderCandidate.displayName} 的通用调用`
+      + `（${probed.genericProfileLabel || probed.genericProfileId}）。每次任务仍会再次确认模型用量。`,
+      "ok",
+    );
   } catch (_error) {
-    genericProviderStatus("无法启用该工具。请确认它支持无参数、标准输入 JSON 的通用模式。", "err", "genericProviderConfirmStatus");
+    genericProviderStatus("无法启用该工具，请重新检测后再试。", "err", "genericProviderConfirmStatus");
   } finally {
     button.disabled = false;
   }

@@ -59,6 +59,14 @@ from provider_registry import (  # noqa: E402
     save_generic_adapter,
 )
 from provider_installers import installer_profile  # noqa: E402
+from generic_profiles import (  # noqa: E402
+    PROBE_ORDER,
+    PROBE_PROMPT,
+    PROBE_TIMEOUT_SECONDS,
+    generic_profile,
+    public_generic_profiles,
+    render_argv,
+)
 
 # Track the active provider subprocess so it can be cleaned up if host.py is killed.
 _active_proc = None
@@ -720,7 +728,51 @@ def _generic_executable_name(value):
     return compact if re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._+-]{0,79}", compact) else None
 
 
-def resolve_generic_provider(display_name, executable=None):
+def _probe_generic_profile(binary, profile):
+    """Run one bounded capability probe and report whether JSON came back.
+
+    This is what moves the "does this CLI work at all" answer ahead of saving.
+    stdin is always closed and the budget is one minute, so an executable that
+    opens an interactive session on a pipe costs a bounded probe instead of the
+    15-minute task timeout users used to hit after the environment was saved.
+    """
+    try:
+        argv = render_argv(profile, PROBE_PROMPT)
+    except ValueError:
+        return False
+    try:
+        result = subprocess.run(
+            [binary, *argv],
+            cwd=BRIDGE_WORK_DIR if os.path.isdir(BRIDGE_WORK_DIR) else PROJECT_DIR,
+            input=PROBE_PROMPT if profile["promptMode"] == "stdin" else None,
+            stdin=None if profile["promptMode"] == "stdin" else subprocess.DEVNULL,
+            capture_output=True,
+            text=True,
+            timeout=PROBE_TIMEOUT_SECONDS,
+            env=subprocess_environment(allow_web=False),
+        )
+    except (OSError, subprocess.TimeoutExpired, ValueError):
+        return False
+    if result.returncode != 0:
+        return False
+    try:
+        extract_json_output(result.stdout or "")
+    except ValidationError:
+        return False
+    return True
+
+
+def probe_generic_profiles(binary):
+    """Return the first bridge template this executable actually answers on."""
+    os.makedirs(BRIDGE_WORK_DIR, exist_ok=True)
+    for profile_id in PROBE_ORDER:
+        profile = generic_profile(profile_id)
+        if profile and _probe_generic_profile(binary, profile):
+            return profile
+    return None
+
+
+def resolve_generic_provider(display_name, executable=None, probe=False):
     """Discover a candidate without generating text or exposing local paths."""
     name = str(display_name or "").strip()
     if not name or len(name) > 100:
@@ -753,7 +805,7 @@ def resolve_generic_provider(display_name, executable=None):
     if not binary:
         return {"ok": True, "found": False, "displayName": name, "executable": candidate, "needsExecutable": True}
     _returncode, output = _probe_command([binary, "--version"])
-    return {
+    resolved = {
         "ok": True,
         "found": True,
         "displayName": name,
@@ -761,6 +813,18 @@ def resolve_generic_provider(display_name, executable=None):
         "version": re.sub(r"\s+", " ", output)[:100] or None,
         "requiresGenericConfirmation": True,
     }
+    if not probe:
+        return resolved
+    # The capability probe runs a model task, so it only happens after the user
+    # has confirmed the risk — never during plain discovery or a handshake.
+    profile = probe_generic_profiles(binary)
+    if profile is None:
+        return {
+            **resolved,
+            "requiresGenericConfirmation": False,
+            "genericIncompatible": True,
+        }
+    return {**resolved, "genericProfileId": profile["id"], "genericProfileLabel": profile["label"]}
 
 
 def provider_adapter(provider_id):
@@ -1216,18 +1280,23 @@ def validate_request(message):
             "action": action,
             "displayName": display_name.strip(),
             "executable": executable.strip() if isinstance(executable, str) else None,
+            "probe": message.get("probe") is True,
         }
     if action == "enable_generic_provider":
         display_name = message.get("displayName")
         executable = message.get("executable")
+        profile_id = message.get("genericProfileId")
         if not isinstance(display_name, str) or not display_name.strip() or len(display_name.strip()) > 100 \
                 or not isinstance(executable, str) or not _generic_executable_name(executable) \
                 or message.get("genericConfirmed") is not True:
             raise ValidationError("通用 AI 环境确认无效")
+        if not isinstance(profile_id, str) or generic_profile(profile_id) is None:
+            raise ValidationError("通用调用模板无效，请重新探测该工具")
         return {
             "action": action,
             "displayName": display_name.strip(),
             "executable": _generic_executable_name(executable),
+            "genericProfileId": profile_id,
             "genericConfirmed": True,
         }
     if action == "save_custom_provider":
@@ -2892,7 +2961,8 @@ def _call_claude_cli(prompt, prefer_web=False):
     return extract_json_output(stdout)
 
 
-def _run_provider_process(args, prompt, provider_id, *, cwd=None, prompt_in_argv=False):
+def _run_provider_process(args, prompt, provider_id, *, cwd=None, prompt_in_argv=False,
+                          stdin_devnull=False, timeout=900):
     """Run one approved provider adapter; never execute content returned by a model."""
     os.makedirs(BRIDGE_WORK_DIR, exist_ok=True)
     display_name = provider_adapter(provider_id)["displayName"]
@@ -2900,11 +2970,21 @@ def _run_provider_process(args, prompt, provider_id, *, cwd=None, prompt_in_argv
     command = list(args)
     if prompt_in_argv:
         command.append(prompt)
+    # A generic environment is an executable the bridge knows nothing about, so
+    # it never inherits this process's stdin — that handle carries the Chrome
+    # Native Messaging stream. DEVNULL also makes an interactive CLI hit EOF
+    # immediately instead of blocking until the timeout.
+    if stdin_devnull:
+        child_stdin = subprocess.DEVNULL
+    elif prompt_in_argv:
+        child_stdin = None
+    else:
+        child_stdin = subprocess.PIPE
     try:
         _active_proc = subprocess.Popen(
             command,
             cwd=cwd or BRIDGE_WORK_DIR,
-            stdin=None if prompt_in_argv else subprocess.PIPE,
+            stdin=child_stdin,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True,
@@ -2912,13 +2992,15 @@ def _run_provider_process(args, prompt, provider_id, *, cwd=None, prompt_in_argv
         )
         try:
             stdout, stderr = _active_proc.communicate(
-                input=None if prompt_in_argv else prompt,
-                timeout=900,
+                input=None if child_stdin is not subprocess.PIPE else prompt,
+                timeout=timeout,
             )
         except subprocess.TimeoutExpired:
             _active_proc.kill()
             _active_proc.communicate()
-            raise ValidationError(f"{display_name} 执行超时（超过 15 分钟）")
+            raise ValidationError(
+                f"{display_name} 执行超时（超过 {max(1, round(timeout / 60))} 分钟）"
+            )
         returncode = _active_proc.returncode
     except OSError as exc:
         LOGGER.error("failed to start %s adapter: %s", provider_id, exc)
@@ -3116,17 +3198,23 @@ def _call_catalog_cli(prompt, provider_id, adapter):
             "{outputFile}": output_path,
             "{workDir}": BRIDGE_WORK_DIR,
         }
+        prompt_mode = adapter.get("promptMode")
         argv = []
         for raw in adapter.get("argv", []):
             value = raw
             for placeholder, replacement in replacements.items():
                 value = value.replace(placeholder, replacement)
             argv.append(value)
+        if prompt_mode == "argv-template":
+            # Bridge-owned generic template: the prompt replaces exactly one
+            # array element and stdin stays closed.
+            argv = render_argv({"argv": argv, "promptMode": prompt_mode}, prompt)
         stdout = _run_provider_process(
             [executable, *argv],
             prompt,
             provider_id,
-            prompt_in_argv=adapter.get("promptMode") == "argv",
+            prompt_in_argv=prompt_mode == "argv",
+            stdin_devnull=prompt_mode == "argv-template",
         )
         for line in stdout.splitlines():
             try:
@@ -5074,6 +5162,8 @@ def handle_message(message):
                 "chunkedBundles": True,
                 "commonProviderInstall": True,
                 "supportedActions": ["add_tool", "preview_update", "apply_update", "discard_update", "remove_tool"],
+                "genericProviderProbe": True,
+                "genericProviderProfiles": public_generic_profiles(),
                 "providerCatalog": {
                     "updateSupported": registry["catalogUpdateSupported"],
                     "importSigned": registry["catalogUpdateSupported"],
@@ -5111,7 +5201,9 @@ def handle_message(message):
     if request["action"] == "configure_api":
         return {"ok": True, "provider": save_api_profile(PENDING_DIR, request["config"])}
     if request["action"] == "resolve_generic_provider":
-        return resolve_generic_provider(request["displayName"], request.get("executable"))
+        return resolve_generic_provider(
+            request["displayName"], request.get("executable"), probe=request["probe"]
+        )
     if request["action"] == "enable_generic_provider":
         # Resolve again immediately before writing so a PATH change cannot make
         # the extension authorise an unseen executable name.

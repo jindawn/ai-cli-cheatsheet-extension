@@ -20,7 +20,7 @@ const providerRegistry = read("native-host/provider_registry.py");
 const legacyProviderAdapters = JSON.parse(read("shared/provider-adapters.json"));
 const v5ProviderAdapters = JSON.parse(read("shared/provider-adapters-v5.json"));
 
-assert(host.includes("PROTOCOL_VERSION = 5") && host.includes('COMPANION_VERSION = "1.7.9"'));
+assert(host.includes("PROTOCOL_VERSION = 5") && host.includes('COMPANION_VERSION = "1.8.0"'));
 assert(host.includes("PROJECT_DIR = os.path.realpath(_project_base_dir())"), "the frozen bridge must load bundled shared resources from _MEIPASS");
 assert(officialInventory.includes("sys._MEIPASS"), "the frozen official-inventory adapter must load bundled snapshots from _MEIPASS");
 assert(bridgeSpec.includes('(str(ROOT / "shared"), "shared")'), "the bridge bundle must include official component fixtures as well as rendered inventories");
@@ -106,13 +106,13 @@ assert(popup.includes("refreshCatalog: true") && popup.includes("companionState 
 // native-host/ rather than against a duplicated list of names.
 assert(bridgeSpec.includes('(str(ROOT / "shared"), "shared")'), "the bridge bundle must include the common AI environment directory");
 assert(workflow.includes("PROVIDER_CATALOG_SIGNING_KEY"), "release builds must inject the Ed25519 catalog key");
-assert(!popup.includes('runCompanionTask("suggest_tools"'), "AI re-recommendations must stay disabled in 1.7.9");
+assert(!popup.includes('runCompanionTask("suggest_tools"'), "AI re-recommendations must stay disabled in 1.8.0");
 
 const basicAssets = fs.mkdtempSync(path.join(os.tmpdir(), "aicli-basic-release-"));
 try {
   for (const filename of [
-    "ai-cli-cheatsheet-source-v1.7.9.zip",
-    "ai-cli-cheatsheet-store-v1.7.9.zip",
+    "ai-cli-cheatsheet-source-v1.8.0.zip",
+    "ai-cli-cheatsheet-store-v1.8.0.zip",
   ]) {
     fs.writeFileSync(path.join(basicAssets, filename), `fixture:${filename}`);
   }
@@ -120,7 +120,7 @@ try {
     process.execPath,
     path.join(root, "tools", "verify-release-assets.js"),
     "--directory", basicAssets,
-    "--version", "1.7.9",
+    "--version", "1.8.0",
     "--basic-only",
   ];
   let result = spawnSync(verify[0], verify.slice(1), { encoding: "utf8" });

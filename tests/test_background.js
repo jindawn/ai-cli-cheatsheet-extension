@@ -316,29 +316,95 @@ const VALID_TOKEN = "a".repeat(32);
       action: "companionGenericProviderResolve", displayName: "My AI", executable: "my-ai",
     });
     assert.strictEqual(resolved.async_, true);
+    // Plain discovery must never ask the bridge to run a model task.
     assert.deepStrictEqual(JSON.parse(JSON.stringify(state.ports[0].messages[0])), {
       action: "resolve_generic_provider", protocolVersion: PROTOCOL_VERSION,
-      displayName: "My AI", executable: "my-ai",
+      displayName: "My AI", executable: "my-ai", probe: false,
+    });
+  }
+  {
+    const { chrome, state } = loadBackground();
+    const probed = dispatch(chrome, {
+      action: "companionGenericProviderResolve", displayName: "My AI", executable: "my-ai",
+      probe: true,
+    });
+    assert.strictEqual(probed.async_, true);
+    assert.deepStrictEqual(JSON.parse(JSON.stringify(state.ports[0].messages[0])), {
+      action: "resolve_generic_provider", protocolVersion: PROTOCOL_VERSION,
+      displayName: "My AI", executable: "my-ai", probe: true,
     });
   }
   {
     const { chrome, state } = loadBackground();
     const enabled = dispatch(chrome, {
       action: "companionGenericProviderEnable", displayName: "My AI", executable: "my-ai",
-      genericConfirmed: true,
+      genericProfileId: "prompt-flag-json", genericConfirmed: true,
     });
     assert.strictEqual(enabled.async_, true);
     assert.deepStrictEqual(JSON.parse(JSON.stringify(state.ports[0].messages[0])), {
       action: "enable_generic_provider", protocolVersion: PROTOCOL_VERSION,
-      displayName: "My AI", executable: "my-ai", genericConfirmed: true,
+      displayName: "My AI", executable: "my-ai", providerId: null,
+      genericProfileId: "prompt-flag-json", genericConfirmed: true,
     });
   }
+  // Re-probing an already-saved generic environment may only rebind a
+  // user-created one, never a built-in or signed adapter.
   {
     const { chrome, state } = loadBackground();
-    const rejected = dispatch(chrome, {
-      action: "companionGenericProviderEnable", displayName: "My AI", executable: "/tmp/my-ai",
-      genericConfirmed: true,
+    const providerId = "custom:00000000-0000-4000-8000-000000000000";
+    const rebound = dispatch(chrome, {
+      action: "companionGenericProviderEnable", displayName: "My AI", executable: "my-ai",
+      genericProfileId: "prompt-flag", providerId, genericConfirmed: true,
     });
+    assert.strictEqual(rebound.async_, true);
+    assert.deepStrictEqual(JSON.parse(JSON.stringify(state.ports[0].messages[0])), {
+      action: "enable_generic_provider", protocolVersion: PROTOCOL_VERSION,
+      displayName: "My AI", executable: "my-ai", providerId,
+      genericProfileId: "prompt-flag", genericConfirmed: true,
+    });
+  }
+  for (const providerId of ["claude", "catalog:fifth", "custom:nope", ""]) {
+    const { chrome, state } = loadBackground();
+    const rejected = dispatch(chrome, {
+      action: "companionGenericProviderEnable", displayName: "My AI", executable: "my-ai",
+      genericProfileId: "prompt-flag", providerId, genericConfirmed: true,
+    });
+    assert.strictEqual(rejected.async_, false);
+    assert.strictEqual(rejected.getResponse().ok, false);
+    assert.strictEqual(state.connectNativeCalls.length, 0);
+  }
+  // Neither an executable path nor an unregistered template ID may cross the
+  // extension/native boundary.
+  for (const invalid of [
+    { displayName: "My AI", executable: "/tmp/my-ai", genericProfileId: "stdin-json" },
+    { displayName: "My AI", executable: "my-ai", genericProfileId: "" },
+    { displayName: "My AI", executable: "my-ai", genericProfileId: "stdin-json; rm -rf /" },
+    { displayName: "My AI", executable: "my-ai" },
+  ]) {
+    const { chrome, state } = loadBackground();
+    const rejected = dispatch(chrome, {
+      action: "companionGenericProviderEnable", ...invalid, genericConfirmed: true,
+    });
+    assert.strictEqual(rejected.async_, false);
+    assert.strictEqual(rejected.getResponse().ok, false);
+    assert.strictEqual(state.connectNativeCalls.length, 0);
+  }
+
+  // Re-detecting one environment forwards only a validated provider ID and
+  // never carries a catalog digest or a task payload.
+  {
+    const { chrome, state } = loadBackground();
+    const refreshed = dispatch(chrome, {
+      action: "companionProviderRefresh", providerId: "claude",
+    });
+    assert.strictEqual(refreshed.async_, true);
+    assert.deepStrictEqual(JSON.parse(JSON.stringify(state.ports[0].messages[0])), {
+      action: "refresh_provider", protocolVersion: PROTOCOL_VERSION, providerId: "claude",
+    });
+  }
+  for (const providerId of ["", "../etc", "claude; rm -rf /", "CLAUDE", undefined]) {
+    const { chrome, state } = loadBackground();
+    const rejected = dispatch(chrome, { action: "companionProviderRefresh", providerId });
     assert.strictEqual(rejected.async_, false);
     assert.strictEqual(rejected.getResponse().ok, false);
     assert.strictEqual(state.connectNativeCalls.length, 0);

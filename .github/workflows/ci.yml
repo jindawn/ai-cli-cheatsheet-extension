@@ -37,6 +37,7 @@ jobs:
         run: |
           node tools/validate-data.js
           node tests/test_validation_consistency.js
+          node tests/test_ai_environment_consistency.js
           node tests/test_global_official_contract.js
           node tests/test_product_core.js
           node tests/test_usage_examples.js

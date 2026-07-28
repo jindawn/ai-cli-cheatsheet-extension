@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "comment": "AI 执行环境的身份单一事实源。执行环境 ID（providerId）、常见环境目录 ID（commonId）与数据工具 ID（toolDataId）在此对齐，避免 provider-adapters*.json、common-provider-catalog.json 与 host.py 的 TOOL_VERSION_COMMANDS 各自漂移。tests/test_ai_environment_consistency.js 强制三者一致。安装器 argv 刻意不在此登记，只存在于 native-host/provider_installers.py。",
+  "environments": [
+    {
+      "providerId": "claude",
+      "commonId": "claude-code",
+      "toolDataId": "claude-code",
+      "displayName": "Claude Code",
+      "executable": "claude",
+      "versionArgs": ["--version"],
+      "overlay": "base",
+      "officialUrl": "https://docs.anthropic.com/en/docs/claude-code/overview"
+    },
+    {
+      "providerId": "codex",
+      "commonId": "codex-cli",
+      "toolDataId": "codex",
+      "displayName": "Codex CLI",
+      "executable": "codex",
+      "versionArgs": ["--version"],
+      "overlay": "base",
+      "officialUrl": "https://developers.openai.com/codex/cli/"
+    },
+    {
+      "providerId": "gemini",
+      "commonId": "gemini-cli",
+      "toolDataId": "gemini-cli",
+      "displayName": "Gemini CLI",
+      "executable": "gemini",
+      "versionArgs": ["--version"],
+      "overlay": "base",
+      "officialUrl": "https://geminicli.com/docs/"
+    },
+    {
+      "providerId": "opencode",
+      "commonId": "opencode",
+      "toolDataId": "opencode",
+      "displayName": "OpenCode",
+      "executable": "opencode",
+      "versionArgs": ["--version"],
+      "overlay": "base",
+      "officialUrl": "https://opencode.ai/docs/"
+    },
+    {
+      "providerId": "qwen",
+      "commonId": "qwen-code",
+      "toolDataId": "qwen",
+      "displayName": "Qwen Code",
+      "executable": "qwen",
+      "versionArgs": ["--version"],
+      "overlay": "v5",
+      "officialUrl": "https://github.com/QwenLM/qwen-code"
+    },
+    {
+      "providerId": null,
+      "commonId": null,
+      "toolDataId": "openclaw",
+      "displayName": "OpenClaw",
+      "executable": "openclaw",
+      "versionArgs": ["--version"],
+      "overlay": null,
+      "officialUrl": "https://docs.openclaw.ai/cli"
+    }
+  ]
+}

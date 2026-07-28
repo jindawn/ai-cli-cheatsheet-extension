@@ -19,6 +19,9 @@ const CATALOG_DIGEST_RE = /^sha256:[a-f0-9]{64}$/;
 const TASK_TIMEOUT_MINUTES = 20;
 const TASK_TIMEOUT_ERROR = `任务超过 ${TASK_TIMEOUT_MINUTES} 分钟无响应，已自动终止。`;
 const HANDSHAKE_TIMEOUT_MS = 35 * 1000;
+// The bridge probes up to five invocation templates at 60s each before it
+// reports a tool incompatible, so this watchdog must outlast that worst case.
+const GENERIC_PROBE_TIMEOUT_MS = 6 * 60 * 1000;
 const MAX_APP_MESSAGE_BYTES = 16 * 1024 * 1024;
 const DYNAMIC_DATA = globalThis.CHEATSHEET_DYNAMIC_DATA;
 
@@ -402,9 +405,28 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
       protocolVersion: PROTOCOL_VERSION,
       displayName,
       executable,
-    })
+      // The capability probe runs a real model task, so it is only requested
+      // after the user has confirmed the risk in the popup.
+      probe: msg.probe === true,
+    }, msg.probe === true ? { timeoutMs: GENERIC_PROBE_TIMEOUT_MS } : {})
       .then((response) => sendResponse(response))
       .catch(() => sendResponse({ ok: false, error: '无法检测本机 AI 环境，请重新检测本机检测组件后再试。' }));
+    return true;
+  }
+
+  if (msg.action === 'companionProviderRefresh') {
+    const providerId = typeof msg.providerId === 'string' ? msg.providerId : '';
+    if (!PROVIDER_ID_RE.test(providerId)) {
+      sendResponse({ ok: false, error: 'AI 环境 ID 无效' });
+      return false;
+    }
+    sendNativeOnce({
+      action: 'refresh_provider',
+      protocolVersion: PROTOCOL_VERSION,
+      providerId,
+    }, { timeoutMs: HANDSHAKE_TIMEOUT_MS })
+      .then((response) => sendResponse(response))
+      .catch(() => sendResponse({ ok: false, error: '无法重新检测该 AI 环境，请重新检测本机检测组件后再试。' }));
     return true;
   }
 
@@ -452,8 +474,16 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
   if (msg.action === 'companionGenericProviderEnable') {
     const displayName = typeof msg.displayName === 'string' ? msg.displayName.trim() : '';
     const executable = typeof msg.executable === 'string' ? msg.executable.trim() : '';
+    const genericProfileId = typeof msg.genericProfileId === 'string' ? msg.genericProfileId : '';
+    // Rebinding an existing environment's invocation template may only ever
+    // target a user-created one.
+    const providerId = msg.providerId === undefined || msg.providerId === null
+      ? null
+      : typeof msg.providerId === 'string' ? msg.providerId : '';
     if (!displayName || displayName.length > 100
       || !/^[A-Za-z0-9][A-Za-z0-9._+-]{0,79}$/.test(executable)
+      || !/^[a-z][a-z0-9-]{0,39}$/.test(genericProfileId)
+      || (providerId !== null && !CUSTOM_PROVIDER_ID_RE.test(providerId))
       || msg.genericConfirmed !== true) {
       sendResponse({ ok: false, error: '通用调用确认无效' });
       return false;
@@ -463,6 +493,8 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
       protocolVersion: PROTOCOL_VERSION,
       displayName,
       executable,
+      genericProfileId,
+      providerId,
       genericConfirmed: true,
     })
       .then((response) => sendResponse(response))

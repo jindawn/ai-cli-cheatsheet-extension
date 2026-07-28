@@ -1288,9 +1288,12 @@ class HostFileTests(unittest.TestCase):
         self.assertEqual(dataset["meta"]["verificationStatus"], "model-knowledge")
 
     def test_prefer_web_without_any_claude_environment_reports_clear_error(self):
+        # Patch the lookup rather than the module global: adapters resolve their
+        # executable through find_executable, so this is what "not on PATH"
+        # actually looks like to the bridge.
         with mock.patch.object(host, "_has_api_token", return_value=False), mock.patch.object(
             host, "CLAUDE_BIN", None
-        ):
+        ), mock.patch.object(host, "find_executable", return_value=None):
             with self.assertRaisesRegex(host.ValidationError, "找不到 Claude Code"):
                 host.run_claude_query("sample", "Sample Tool", "add", prefer_web=True)
 
@@ -1305,7 +1308,9 @@ class HostFileTests(unittest.TestCase):
         sent = []
         with mock.patch.object(host, "_has_api_token", return_value=False), mock.patch.object(
             host, "CLAUDE_BIN", None
-        ), mock.patch.object(host, "read_message", return_value=request), mock.patch.object(
+        ), mock.patch.object(host, "find_executable", return_value=None), mock.patch.object(
+            host, "read_message", return_value=request
+        ), mock.patch.object(
             host, "send_message", side_effect=lambda payload: sent.append(payload)
         ):
             host.main()
@@ -2253,13 +2258,14 @@ class HostProviderAdapterTests(unittest.TestCase):
         self.assertEqual(args, ["/tmp/fifth-ai", "--read-only", "--json"])
         self.assertEqual((prompt, provider_id), ("prompt", "catalog:fifth"))
 
-    def test_generic_provider_uses_exactly_one_executable_and_stdin(self):
+    def test_generic_provider_substitutes_the_prompt_into_one_argv_element(self):
         with tempfile.TemporaryDirectory() as temp, mock.patch.object(host, "PENDING_DIR", temp), \
                 mock.patch.object(host, "find_executable", return_value="/tmp/generic-ai"), \
                 mock.patch.object(host, "_probe_command", return_value=(0, "Generic AI 1.0")):
             enabled = host.handle_message({
                 "action": "enable_generic_provider", "protocolVersion": 5,
-                "displayName": "Generic AI", "executable": "generic-ai", "genericConfirmed": True,
+                "displayName": "Generic AI", "executable": "generic-ai",
+                "genericProfileId": "prompt-flag-json", "genericConfirmed": True,
             })
             provider_id = enabled["provider"]["id"]
             adapter = host.provider_adapter(provider_id)
@@ -2267,9 +2273,43 @@ class HostProviderAdapterTests(unittest.TestCase):
                     mock.patch.object(host, "_run_provider_process", return_value='{"meta":{},"items":[]}') as process:
                 self.assertEqual(host._call_catalog_cli("prompt", provider_id, adapter), {"meta": {}, "items": []})
             args, prompt, used_provider = process.call_args.args
-            self.assertEqual(args, ["/tmp/generic-ai"])
+            # The prompt occupies exactly one element and is never concatenated.
+            self.assertEqual(
+                args, ["/tmp/generic-ai", "-p", "prompt", "--output-format", "json"]
+            )
             self.assertEqual((prompt, used_provider), ("prompt", provider_id))
             self.assertFalse(process.call_args.kwargs["prompt_in_argv"])
+            # An unknown executable must never inherit the Native Messaging stdin.
+            self.assertTrue(process.call_args.kwargs["stdin_devnull"])
+
+    def test_generic_provider_bare_template_passes_the_prompt_on_stdin(self):
+        with tempfile.TemporaryDirectory() as temp, mock.patch.object(host, "PENDING_DIR", temp), \
+                mock.patch.object(host, "find_executable", return_value="/tmp/generic-ai"), \
+                mock.patch.object(host, "_probe_command", return_value=(0, "Generic AI 1.0")):
+            enabled = host.handle_message({
+                "action": "enable_generic_provider", "protocolVersion": 5,
+                "displayName": "Generic AI", "executable": "generic-ai",
+                "genericProfileId": "stdin-json", "genericConfirmed": True,
+            })
+            adapter = host.provider_adapter(enabled["provider"]["id"])
+            with mock.patch.object(host, "_provider_binary", return_value="/tmp/generic-ai"), \
+                    mock.patch.object(host, "_run_provider_process", return_value='{"meta":{},"items":[]}') as process:
+                host._call_catalog_cli("prompt", enabled["provider"]["id"], adapter)
+            self.assertEqual(process.call_args.args[0], ["/tmp/generic-ai"])
+            self.assertFalse(process.call_args.kwargs["prompt_in_argv"])
+            self.assertFalse(process.call_args.kwargs["stdin_devnull"])
+
+    def test_generic_provider_rejects_a_template_the_bridge_does_not_own(self):
+        with tempfile.TemporaryDirectory() as temp, mock.patch.object(host, "PENDING_DIR", temp), \
+                mock.patch.object(host, "find_executable", return_value="/tmp/generic-ai"), \
+                mock.patch.object(host, "_probe_command", return_value=(0, "Generic AI 1.0")):
+            for profile_id in [None, "", "prompt-flag-json; rm -rf /", "custom"]:
+                with self.assertRaises(host.ValidationError):
+                    host.handle_message({
+                        "action": "enable_generic_provider", "protocolVersion": 5,
+                        "displayName": "Generic AI", "executable": "generic-ai",
+                        "genericProfileId": profile_id, "genericConfirmed": True,
+                    })
 
     def test_generic_provider_requires_one_confirmation_and_can_resolve_existing_adapter(self):
         with tempfile.TemporaryDirectory() as temp, mock.patch.object(host, "PENDING_DIR", temp), \
@@ -2281,9 +2321,12 @@ class HostProviderAdapterTests(unittest.TestCase):
             })
             self.assertTrue(resolved["found"])
             self.assertTrue(resolved["requiresGenericConfirmation"])
+            # Discovery alone must not run a model task.
+            self.assertNotIn("genericProfileId", resolved)
             enabled = host.handle_message({
                 "action": "enable_generic_provider", "protocolVersion": 5,
-                "displayName": "Generic AI", "executable": "generic-ai", "genericConfirmed": True,
+                "displayName": "Generic AI", "executable": "generic-ai",
+                "genericProfileId": "stdin-json", "genericConfirmed": True,
             })
             self.assertTrue(enabled["ok"])
             repeated = host.handle_message({
@@ -2291,6 +2334,177 @@ class HostProviderAdapterTests(unittest.TestCase):
                 "displayName": "Generic AI", "executable": "generic-ai",
             })
             self.assertEqual(repeated["existingProviderId"], enabled["provider"]["id"])
+
+    def test_handshake_scan_degrades_one_slow_provider_without_losing_the_rest(self):
+        adapters = [
+            {"id": "claude", "displayName": "Claude Code", "source": "builtin",
+             "transport": "cli", "verified": True, "loginCommand": "claude auth login",
+             "capabilities": ["structured-output"], "recommendationOrder": 0},
+            {"id": "codex", "displayName": "Codex CLI", "source": "builtin",
+             "transport": "cli", "verified": True, "loginCommand": "codex login",
+             "capabilities": ["structured-output"], "recommendationOrder": 10},
+        ]
+
+        def slow_status(provider_id, prefer_cli_version=False):
+            if provider_id == "codex":
+                time.sleep(5)
+            return {"id": provider_id, "displayName": provider_id, "ready": True,
+                    "installed": True, "loginState": "logged-in"}
+
+        with mock.patch.object(host, "provider_status", side_effect=slow_status):
+            started = time.monotonic()
+            statuses = host.scan_provider_statuses(adapters, budget=1)
+            elapsed = time.monotonic() - started
+
+        # The budget is honoured, order is preserved, and the healthy provider
+        # still comes back with its real status.
+        self.assertLess(elapsed, 4)
+        self.assertEqual([status["id"] for status in statuses], ["claude", "codex"])
+        self.assertTrue(statuses[0]["ready"])
+        self.assertEqual(statuses[1]["loginState"], "probe-timeout")
+        self.assertFalse(statuses[1]["ready"])
+        self.assertEqual(statuses[1]["displayName"], "Codex CLI")
+
+    def test_handshake_scan_runs_providers_in_parallel(self):
+        adapters = [
+            {"id": f"catalog:slow-{index}", "displayName": f"Slow {index}",
+             "source": "catalog", "transport": "cli", "verified": True,
+             "loginCommand": "", "capabilities": [], "recommendationOrder": index}
+            for index in range(6)
+        ]
+
+        def slow_status(provider_id, prefer_cli_version=False):
+            time.sleep(0.5)
+            return {"id": provider_id, "displayName": provider_id, "ready": False,
+                    "installed": False, "loginState": "not-installed"}
+
+        with mock.patch.object(host, "provider_status", side_effect=slow_status):
+            started = time.monotonic()
+            statuses = host.scan_provider_statuses(adapters, budget=10)
+            elapsed = time.monotonic() - started
+
+        self.assertEqual(len(statuses), 6)
+        # Serial probing would take at least 3s; parallel fan-out stays near one.
+        self.assertLess(elapsed, 2)
+
+    def test_refresh_provider_rescans_only_the_requested_environment(self):
+        with mock.patch.object(
+            host, "provider_status",
+            return_value={"id": "claude", "displayName": "Claude Code", "ready": True,
+                          "installed": True, "loginState": "logged-in"},
+        ) as status:
+            result = host.handle_message({
+                "action": "refresh_provider", "protocolVersion": 5, "providerId": "claude",
+            })
+        self.assertTrue(result["ok"])
+        self.assertEqual(result["provider"]["id"], "claude")
+        self.assertEqual(status.call_count, 1)
+
+    def test_refresh_provider_rejects_unknown_and_malformed_ids(self):
+        for provider_id in ["catalog:nope", "../etc", "claude; rm -rf /", 42]:
+            with self.assertRaises(host.ValidationError):
+                host.handle_message({
+                    "action": "refresh_provider", "protocolVersion": 5,
+                    "providerId": provider_id,
+                })
+
+    def test_executable_lookup_is_memoised_within_one_message(self):
+        host.find_executable.cache_clear()
+        with mock.patch.object(host.shutil, "which", return_value="/tmp/claude") as which:
+            for _ in range(5):
+                host.find_executable("claude")
+        self.assertEqual(which.call_count, 1)
+        host.find_executable.cache_clear()
+
+    def test_existing_generic_environment_can_be_reprobed_and_rebound(self):
+        with tempfile.TemporaryDirectory() as temp, mock.patch.object(host, "PENDING_DIR", temp), \
+                mock.patch.object(host, "find_executable", return_value="/tmp/generic-ai"), \
+                mock.patch.object(host, "_probe_command", return_value=(0, "Generic AI 1.0")):
+            enabled = host.handle_message({
+                "action": "enable_generic_provider", "protocolVersion": 5,
+                "displayName": "Generic AI", "executable": "generic-ai",
+                "genericProfileId": "stdin-json", "genericConfirmed": True,
+            })
+            provider_id = enabled["provider"]["id"]
+
+            # Without a probe the existing environment is simply re-selected.
+            reselected = host.resolve_generic_provider("Generic AI", "generic-ai")
+            self.assertEqual(reselected["existingProviderId"], provider_id)
+            self.assertTrue(reselected["canRebindGenericProfile"])
+
+            # With a probe it is re-evaluated instead, so an environment saved
+            # before templates existed can be repaired without deleting it.
+            def fake_run(args, **kwargs):
+                if args[1:2] == ["-p"] and "--output-format" not in args:
+                    return mock.Mock(returncode=0, stdout='{"ok": true}', stderr="")
+                return mock.Mock(returncode=1, stdout="", stderr="")
+
+            with mock.patch.object(host.subprocess, "run", side_effect=fake_run):
+                probed = host.resolve_generic_provider("Generic AI", "generic-ai", probe=True)
+            self.assertEqual(probed["genericProfileId"], "prompt-flag")
+            self.assertEqual(probed["existingProviderId"], provider_id)
+
+            rebound = host.handle_message({
+                "action": "enable_generic_provider", "protocolVersion": 5,
+                "displayName": "Generic AI", "executable": "generic-ai",
+                "genericProfileId": "prompt-flag", "providerId": provider_id,
+                "genericConfirmed": True,
+            })
+            self.assertTrue(rebound["ok"])
+            # Rebound in place: same ID, new template, no duplicate entry.
+            self.assertEqual(rebound["provider"]["id"], provider_id)
+            adapter = host.provider_adapter(provider_id)
+            self.assertEqual(adapter["genericProfileId"], "prompt-flag")
+            self.assertEqual(adapter["argv"], ["-p", "{prompt}"])
+            self.assertEqual(
+                len([p for p in host.provider_registry()["providers"] if p["source"] == "custom"]), 1
+            )
+
+    def test_rebinding_cannot_target_a_builtin_or_signed_adapter(self):
+        with tempfile.TemporaryDirectory() as temp, mock.patch.object(host, "PENDING_DIR", temp), \
+                mock.patch.object(host, "find_executable", return_value="/tmp/claude"), \
+                mock.patch.object(host, "_probe_command", return_value=(0, "Claude 1.0")):
+            for provider_id in ["claude", "catalog:fifth", "api:not-a-uuid"]:
+                with self.assertRaises(host.ValidationError):
+                    host.handle_message({
+                        "action": "enable_generic_provider", "protocolVersion": 5,
+                        "displayName": "Claude Code", "executable": "claude",
+                        "genericProfileId": "stdin-json", "providerId": provider_id,
+                        "genericConfirmed": True,
+                    })
+            # A built-in environment is still never re-probed as generic.
+            resolved = host.resolve_generic_provider("Claude Code", "claude", probe=True)
+            self.assertEqual(resolved["existingProviderId"], "claude")
+            self.assertFalse(resolved["canRebindGenericProfile"])
+            self.assertNotIn("genericProfileId", resolved)
+
+    def test_generic_probe_reports_the_first_working_template(self):
+        answered = {"argv": None}
+
+        def fake_run(args, **kwargs):
+            answered["argv"] = args
+            # Only the second template (-p prompt) is understood by this CLI.
+            if args[1:2] == ["-p"] and "--output-format" not in args:
+                return mock.Mock(returncode=0, stdout='{"ok": true}', stderr="")
+            return mock.Mock(returncode=2, stdout="", stderr="unknown option")
+
+        with mock.patch.object(host.subprocess, "run", side_effect=fake_run):
+            profile = host.probe_generic_profiles("/tmp/generic-ai")
+        self.assertEqual(profile["id"], "prompt-flag")
+        self.assertEqual(profile["promptMode"], "argv-template")
+
+    def test_generic_probe_reports_incompatible_when_no_template_answers(self):
+        def fake_run(args, **kwargs):
+            raise host.subprocess.TimeoutExpired(args, host.PROBE_TIMEOUT_SECONDS)
+
+        with mock.patch.object(host, "find_executable", return_value="/tmp/tui-ai"), \
+                mock.patch.object(host, "_probe_command", return_value=(0, "TUI AI 1.0")), \
+                mock.patch.object(host.subprocess, "run", side_effect=fake_run):
+            resolved = host.resolve_generic_provider("TUI AI", "tui-ai", probe=True)
+        # A CLI that only opens an interactive session is reported before the
+        # environment is saved, not after a 15-minute task timeout.
+        self.assertTrue(resolved["genericIncompatible"])
+        self.assertFalse(resolved["requiresGenericConfirmation"])
 
     def test_common_qwen_installer_uses_only_its_fixed_bridge_profile(self):
         installed = {"qwen": False}

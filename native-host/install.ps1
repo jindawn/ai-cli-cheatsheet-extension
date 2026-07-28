@@ -96,12 +96,10 @@ if (-not $ReadyCli) {
 # ── 3. 部署文件 ─────────────────────────────────────────────────────────────────
 
 New-Item -ItemType Directory -Force -Path $InstallDir | Out-Null
-Copy-Item (Join-Path $ScriptDir "host.py") (Join-Path $InstallDir "host.py") -Force
-Copy-Item (Join-Path $ScriptDir "protocol.py") (Join-Path $InstallDir "protocol.py") -Force
-Copy-Item (Join-Path $ScriptDir "catalog.py") (Join-Path $InstallDir "catalog.py") -Force
-Copy-Item (Join-Path $ScriptDir "official_inventory.py") (Join-Path $InstallDir "official_inventory.py") -Force
-Copy-Item (Join-Path $ScriptDir "provider_registry.py") (Join-Path $InstallDir "provider_registry.py") -Force
-Copy-Item (Join-Path $ScriptDir "provider_installers.py") (Join-Path $InstallDir "provider_installers.py") -Force
+# 部署 native-host/ 下的全部 Python 模块，避免新增模块时漏掉导致 import 崩溃。
+Get-ChildItem -Path $ScriptDir -Filter "*.py" | ForEach-Object {
+    Copy-Item $_.FullName (Join-Path $InstallDir $_.Name) -Force
+}
 if ($Standalone) {
     $InstalledShared = Join-Path $InstallDir "shared"
     if (Test-Path $InstalledShared) { Remove-Item $InstalledShared -Recurse -Force }

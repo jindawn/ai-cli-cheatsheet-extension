@@ -14,6 +14,8 @@ import urllib.parse
 import urllib.request
 import uuid
 
+from generic_profiles import generic_profile, profile_for_argv
+
 
 PROTOCOL_VERSION = 5
 CATALOG_SCHEMA_VERSION = 1
@@ -276,6 +278,7 @@ def validate_adapter(adapter, *, source):
     if source == "custom" and SHELL_META_RE.search(login_command):
         raise ProviderRegistryError("adapter.loginCommand 不能包含 Shell 元字符")
     execution_mode = None
+    generic_template = None
     if source == "custom":
         execution_mode = adapter.get("executionMode") or "legacy-configured"
         if execution_mode not in {"generic", "legacy-configured"}:
@@ -308,13 +311,21 @@ def validate_adapter(adapter, *, source):
             if execution_mode == "generic":
                 if adapter.get("genericConfirmed") is not True:
                     raise ProviderRegistryError("启用通用调用前必须完成风险确认")
-                if driver != "stdin-json" or adapter.get("promptMode", "stdin") != "stdin" \
-                        or adapter.get("outputParser", "json") != "json":
-                    raise ProviderRegistryError("通用调用只能使用无参数标准输入 JSON 模式")
-                if adapter.get("argv", []) != [] or adapter.get("versionArgs", ["--version"]) != ["--version"]:
+                # The stored argv must be byte-for-byte one bridge-owned
+                # template. Anything else — including a template with an extra
+                # argument appended — fails closed here.
+                generic_template = profile_for_argv(
+                    adapter.get("argv", []), adapter.get("promptMode", "stdin")
+                )
+                if generic_template is None:
+                    raise ProviderRegistryError("通用调用只能使用桥接内置的调用模板")
+                if driver != "stdin-json" or adapter.get("outputParser", "json") != "json":
+                    raise ProviderRegistryError("通用调用必须按标准输出 JSON 解析")
+                if adapter.get("versionArgs", ["--version"]) != ["--version"]:
                     raise ProviderRegistryError("通用调用不允许自定义参数")
                 clean["executionMode"] = "generic"
                 clean["genericConfirmed"] = True
+                clean["genericProfileId"] = generic_template["id"]
                 clean["capabilities"] = ["structured-output", "maintenance", "cancel"]
             elif adapter.get("readOnlyConfirmed") is not True:
                 raise ProviderRegistryError("保存自定义环境前必须确认只读行为")
@@ -322,10 +333,17 @@ def validate_adapter(adapter, *, source):
                 clean["executionMode"] = "legacy-configured"
             clean["userConfigured"] = True
             argument_validator = _validate_custom_argv
-        clean["argv"] = argument_validator(adapter.get("argv", []), "adapter.argv")
-        clean["promptMode"] = adapter.get("promptMode", "stdin")
-        if clean["promptMode"] not in {"stdin", "argv"}:
-            raise ProviderRegistryError("adapter.promptMode 无效")
+        if generic_template is not None:
+            # Copy the argv straight off the bridge-owned template rather than
+            # off the request, so no stored or supplied value can ever reach
+            # subprocess for a generic environment.
+            clean["argv"] = list(generic_template["argv"])
+            clean["promptMode"] = generic_template["promptMode"]
+        else:
+            clean["argv"] = argument_validator(adapter.get("argv", []), "adapter.argv")
+            clean["promptMode"] = adapter.get("promptMode", "stdin")
+            if clean["promptMode"] not in {"stdin", "argv"}:
+                raise ProviderRegistryError("adapter.promptMode 无效")
         clean["versionArgs"] = argument_validator(
             adapter.get("versionArgs", ["--version"]), "adapter.versionArgs"
         )
@@ -666,16 +684,23 @@ def save_custom_adapter(state_dir, config):
 
 
 def save_generic_adapter(state_dir, config):
-    """Persist the minimal, user-confirmed generic stdin JSON adapter."""
+    """Persist a user-confirmed generic adapter bound to one bridge template.
+
+    ``genericProfileId`` selects the template; argv and promptMode are read out
+    of this module's own constants, never out of ``config``.
+    """
     if not isinstance(config, dict):
         raise ProviderRegistryError("通用 AI 环境配置无效")
+    profile = generic_profile(config.get("genericProfileId"))
+    if profile is None:
+        raise ProviderRegistryError("通用调用模板无效或未经探测确认")
     return save_custom_adapter(state_dir, {
         "id": config.get("id"),
         "displayName": config.get("displayName"),
         "executable": config.get("executable"),
         "driver": "stdin-json",
-        "argv": [],
-        "promptMode": "stdin",
+        "argv": profile["argv"],
+        "promptMode": profile["promptMode"],
         "outputParser": "json",
         "versionArgs": ["--version"],
         "loginCommand": "",

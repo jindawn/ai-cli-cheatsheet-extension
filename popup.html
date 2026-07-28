@@ -110,6 +110,7 @@
     <p>选择常见工具，或输入其他工具的名称。扩展会先自动检测；不会执行 Shell 命令。</p>
     <input id="commonProviderSearch" class="custom-provider-search" type="search" placeholder="搜索 Claude、Copilot、Qwen、Aider…" autocomplete="off">
     <div id="commonProviderList" class="common-provider-list" aria-live="polite"></div>
+    <p id="providerCatalogChannelNote" class="meta" role="status" hidden></p>
     <button id="openOtherProviderFlow" class="text-btn custom-provider-other" type="button">其他工具…</button>
     <form id="genericProviderForm" class="custom-provider-form" hidden aria-busy="false">
       <h3 id="genericProviderFormTitle">检测其他 AI 工具</h3>
@@ -122,7 +123,7 @@
     <section id="genericProviderConfirm" class="custom-provider-form" hidden aria-labelledby="genericProviderConfirmTitle">
       <h3 id="genericProviderConfirmTitle">确认通用调用</h3>
       <p id="genericProviderSummary"></p>
-      <p>该工具没有经过本扩展的只读验证。启用后会以<strong>无额外参数</strong>、标准输入传递任务，并要求标准输出返回结构化 JSON。扩展不会执行 Shell、模型返回内容或动态参数；但该 CLI 自身的读写、联网和权限行为仍由你确认。</p>
+      <p>该工具没有经过本扩展的只读验证。确认后会先<strong>试调用一次</strong>，在本机检测组件<strong>自带的几种固定调用方式</strong>中找出它能响应的一种（这会消耗一次很小的模型用量）；找不到就不会保存。扩展不会执行 Shell、模型返回内容或动态参数；但该 CLI 自身的读写、联网和权限行为仍由你确认。</p>
       <div id="genericProviderConfirmStatus" class="status" role="status"></div>
       <div class="bridge-dialog-actions"><button id="backGenericProvider" class="text-btn" type="button">返回</button><button id="enableGenericProvider" class="text-btn primary" type="button">确认并启用</button></div>
     </section>

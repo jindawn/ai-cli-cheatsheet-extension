@@ -197,15 +197,20 @@ function renderCompanionState() {
   }
   const providers = Array.isArray(companionHandshake?.providers) ? companionHandshake.providers : [];
   const byId = new Map(providers.map((provider) => [provider.id, provider]));
+  // A timed-out probe means "unknown", not "not installed", so it gets its own
+  // group instead of being listed as something the user still needs to install.
+  const timedOut = (provider) => provider.loginState === "probe-timeout";
   const groups = [
     ["ready", "已就绪", (provider) => provider.transport !== "api" && provider.ready],
     ["installed", "已安装，需完成登录", (provider) => provider.transport !== "api" && provider.installed && !provider.ready],
     ["api", "兼容 API", (provider) => provider.transport === "api"],
-    ["available", "其他可安装环境", (provider) => provider.transport !== "api" && !provider.installed],
+    ["timeout", "本次检测超时", (provider) => provider.transport !== "api" && !provider.installed && timedOut(provider)],
+    ["available", "其他可安装环境", (provider) => provider.transport !== "api" && !provider.installed && !timedOut(provider)],
   ];
   const optionHtml = (provider) => {
     const version = provider.version ? ` ${provider.version}` : "";
-    const state = provider.loginState === "unknown" ? " · 登录待验证"
+    const state = provider.loginState === "probe-timeout" ? " · 检测超时"
+      : provider.loginState === "unknown" ? " · 登录待验证"
       : provider.ready ? " · 已就绪"
         : provider.transport === "api" ? " · 配置不完整"
           : provider.installed ? " · 未登录" : " · 未安装";
@@ -252,7 +257,9 @@ function renderCompanionState() {
   const optionalUpdateNote = companionState === "ready" && bridgeUpdateAvailable()
     ? " 检测组件有可选更新，不影响当前扫描和维护功能。" : "";
   if (companionState === "ready" && selected) {
-    status.textContent = (selected.loginState === "unknown"
+    status.textContent = (selected.loginState === "probe-timeout"
+      ? `${selected.displayName} 的本机探测超时，本次未能确认它的状态。可在「添加 AI 环境」中单独重新检测该环境；其他已检测到的环境不受影响。`
+      : selected.loginState === "unknown"
       ? `${selected.displayName}${selected.version ? ` ${selected.version}` : ""} 已安装；该 CLI 没有稳定的无调用登录检查，首次任务会验证登录状态。任务失败时不会自动切换环境。`
       : selected.ready
       ? `已就绪：${selected.displayName}${selected.version ? ` ${selected.version}` : ""}。${selected.source === "custom" ? selected.executionMode === "generic" ? "这是用户确认的通用调用；未经过只读验证。" : "这是旧版已配置环境；保留原有设置。" : companionHandshake?.catalogRefresh?.status === "updated" ? "已同步已验证的环境目录。" : catalogRefreshFailed ? "未能更新支持目录，仍使用上次已验证版本。" : "任务失败时不会自动改用其他模型。"}`
@@ -537,9 +544,16 @@ async function loadCommonProviderCatalog() {
 function currentCommonProviderEntries() {
   const providers = Array.isArray(companionHandshake?.providers) ? companionHandshake.providers : [];
   const statusById = new Map(providers.map((provider) => [provider.id, provider]));
-  const scanned = new Map((Array.isArray(companionHandshake?.commonProviders)
-    ? companionHandshake.commonProviders : []).map((provider) => [provider.id, provider]));
-  const catalog = Array.isArray(commonProviderCatalog) ? commonProviderCatalog : [];
+  const scannedList = Array.isArray(companionHandshake?.commonProviders)
+    ? companionHandshake.commonProviders : [];
+  const scanned = new Map(scannedList.map((provider) => [provider.id, provider]));
+  // The bridge sends whole catalog entries, not just scan results, and it is
+  // the side that can actually execute them. Prefer its list so an extension
+  // and a bridge on different release trains cannot disagree about which
+  // environments exist; the bundled copy only covers the not-yet-detected case.
+  const catalog = scannedList.length
+    ? scannedList
+    : Array.isArray(commonProviderCatalog) ? commonProviderCatalog : [];
   const standard = catalog.map((entry) => {
     const builtinId = BUILTIN_COMMON_PROVIDER_IDS[entry.id];
     const scan = scanned.get(entry.id) || {};
@@ -551,6 +565,7 @@ function currentCommonProviderEntries() {
       registeredSource: scan.registeredSource || registered?.source || null,
       installed: scan.installed === true || registered?.installed === true,
       ready: registered?.ready === true,
+      loginState: registered?.loginState || null,
       installation: scan.installation || { state: "unsupported", canInstall: false },
       requiresBridgeUpgrade: Boolean(companionHandshake) && entry.installerStatus === "supported"
         && !bridgeSupportsCommonProviderInstall(),
@@ -559,6 +574,9 @@ function currentCommonProviderEntries() {
   const custom = providers.filter((provider) => provider.source === "custom").map((provider) => ({
     id: provider.id,
     providerId: provider.id,
+    registeredProviderId: provider.id,
+    registeredSource: "custom",
+    loginState: provider.loginState || null,
     displayName: provider.displayName,
     executable: provider.customConfig?.executable || "",
     adapterStatus: "custom",
@@ -573,17 +591,30 @@ function currentCommonProviderEntries() {
   return [...custom, ...standard];
 }
 
+// `ready` is true for loginState "unknown" as well, because some CLIs have no
+// non-generating auth check. The dropdown already says "登录待验证" for those,
+// so these cards must not claim "已就绪" for the same environment.
+function providerLoginQualifier(entry) {
+  if (entry.loginState === "probe-timeout") return { label: "检测超时 · 可重试", className: "" };
+  if (entry.loginState === "unknown") return { label: "已安装 · 登录待验证", className: "" };
+  return null;
+}
+
 function providerEntryState(entry) {
+  const pending = providerLoginQualifier(entry);
   if (entry.adapterStatus === "custom") {
+    if (pending && entry.loginState === "probe-timeout") return pending;
     return {
       label: entry.executionMode === "generic" ? "通用调用" : "旧版已配置",
-      className: entry.ready ? "ready" : "",
+      className: entry.ready && entry.loginState !== "unknown" ? "ready" : "",
     };
   }
   if (entry.registeredProviderId && entry.registeredSource === "catalog") {
+    if (pending) return pending;
     return { label: entry.ready ? "已验证，已就绪" : "已验证，待检测", className: entry.ready ? "ready" : "" };
   }
   if (entry.adapterStatus === "built-in") {
+    if (pending) return pending;
     if (entry.installed) {
       return { label: entry.ready ? "已验证，已就绪" : "已安装，待登录", className: entry.ready ? "ready" : "" };
     }
@@ -599,8 +630,10 @@ function providerEntryState(entry) {
     if (entry.installation?.state === "prerequisite-missing") {
       return { label: `需要 ${entry.installation.prerequisite || "前置运行时"}`, className: "" };
     }
-    return { label: "未安装 · 仅官方说明", className: "" };
+    // No bridge installer profile exists for this tool, so do not imply one.
+    return { label: "未安装 · 需按官方说明安装", className: "" };
   }
+  if (pending) return pending;
   return {
     label: entry.installed ? "已安装，可尝试接入" : "未检测到 · 可补充命令名",
     className: "",
@@ -619,7 +652,11 @@ function renderCommonProviderList() {
       ? `<a href="${RENDER.escapeHtml(entry.officialUrl)}" target="_blank" rel="noopener noreferrer">官方说明</a>` : "";
     const remove = entry.adapterStatus === "custom"
       ? `<button class="act" type="button" data-delete-provider="${RENDER.escapeHtml(entry.providerId)}" aria-label="删除 ${RENDER.escapeHtml(entry.displayName)}">删除</button>` : "";
-    return `<div class="common-provider-item"><button class="act" type="button" data-provider-entry="${RENDER.escapeHtml(entry.id)}"><span class="name">${RENDER.escapeHtml(entry.displayName)}</span><span class="detail">${RENDER.escapeHtml(entry.description || "")}</span></button><span class="state ${state.className}">${RENDER.escapeHtml(state.label)}</span>${official}${remove}</div>`;
+    // Re-detecting one environment avoids rescanning every provider just to
+    // pick up a login that finished a moment ago.
+    const refresh = entry.registeredProviderId && bridgeSupportsProviderRefresh()
+      ? `<button class="act" type="button" data-refresh-provider="${RENDER.escapeHtml(entry.registeredProviderId)}" aria-label="重新检测 ${RENDER.escapeHtml(entry.displayName)}">重新检测</button>` : "";
+    return `<div class="common-provider-item"><button class="act" type="button" data-provider-entry="${RENDER.escapeHtml(entry.id)}"><span class="name">${RENDER.escapeHtml(entry.displayName)}</span><span class="detail">${RENDER.escapeHtml(entry.description || "")}</span></button><span class="state ${state.className}">${RENDER.escapeHtml(state.label)}</span>${official}${refresh}${remove}</div>`;
   }).join("") : '<div class="meta">没有匹配的常见环境，可选择“其他工具…”。</div>';
   for (const button of list.querySelectorAll("[data-provider-entry]")) {
     button.addEventListener("click", () => {
@@ -632,6 +669,35 @@ function renderCommonProviderList() {
       const entry = currentCommonProviderEntries().find((item) => item.providerId === button.dataset.deleteProvider);
       if (entry) deleteCustomProvider(entry);
     });
+  }
+  for (const button of list.querySelectorAll("[data-refresh-provider]")) {
+    button.addEventListener("click", () => refreshOneProvider(button, button.dataset.refreshProvider));
+  }
+}
+
+function bridgeSupportsProviderRefresh() {
+  return companionHandshake?.capabilities?.refreshProvider === true;
+}
+
+async function refreshOneProvider(button, providerId) {
+  if (!providerId || button.disabled) return;
+  button.disabled = true;
+  button.textContent = "检测中…";
+  try {
+    const response = await runtimeMessage({ action: "companionProviderRefresh", providerId });
+    if (!response?.ok || !response.provider) throw new Error(response?.error || "refresh-failed");
+    // Splice the fresh status into the cached handshake so only this row moves;
+    // a full re-probe of every environment is exactly what this avoids.
+    const providers = Array.isArray(companionHandshake?.providers) ? companionHandshake.providers : [];
+    const index = providers.findIndex((provider) => provider.id === providerId);
+    if (index >= 0) providers[index] = response.provider;
+    renderCommonProviderList();
+    renderCompanionState();
+    genericProviderStatus("", "");
+  } catch (_error) {
+    button.disabled = false;
+    button.textContent = "重新检测";
+    genericProviderStatus("重新检测失败，请重新检测本机检测组件后再试。", "err");
   }
 }
 
@@ -833,7 +899,25 @@ async function openCustomProviderDialog() {
   setGenericProviderStep("list");
   await loadCommonProviderCatalog();
   renderCommonProviderList();
+  renderProviderCatalogChannelNote();
   document.getElementById("commonProviderSearch")?.focus();
+}
+
+// The signed catalog is how verified environments arrive without a component
+// release. A source-installed bridge has no release public key, so the channel
+// can never verify anything — say so here rather than leaving users to wonder
+// why the list never grows.
+function renderProviderCatalogChannelNote() {
+  const note = document.getElementById("providerCatalogChannelNote");
+  if (!note) return;
+  const capabilities = companionHandshake?.capabilities?.providerCatalog;
+  if (!companionHandshake || capabilities?.updateSupported !== false) {
+    note.hidden = true;
+    return;
+  }
+  note.hidden = false;
+  note.textContent = "当前检测组件不能接收新增的已验证环境目录（源码安装或未签名版本）。"
+    + "上面的环境仍可正常检测和使用；要获得后续新增的已验证环境，请改用签名安装包。";
 }
 
 function closeCustomProviderDialog() {
@@ -898,7 +982,7 @@ async function resolveGenericProvider(displayName, suppliedExecutable = null) {
     });
     if (!isCurrentGenericProviderDetection(detectionNonce)) return;
     if (!response?.ok) throw new Error(response?.error || "resolve-failed");
-    if (response.existingProviderId) {
+    if (response.existingProviderId && !response.canRebindGenericProfile) {
       selectedProviderId = response.existingProviderId;
       providerSelectionExplicit = true;
       await storageSet({ selectedProviderId, providerSelectionExplicit: true });
@@ -906,6 +990,24 @@ async function resolveGenericProvider(displayName, suppliedExecutable = null) {
       closeCustomProviderDialog();
       renderCompanionState();
       setStatus(`已选择 ${response.displayName || name}。`, "ok");
+      return;
+    }
+    if (response.existingProviderId) {
+      // Already saved as a generic environment. Offer to re-probe it: entries
+      // saved before invocation templates existed are all bound to the bare
+      // stdin form, which is why they can fail on every task.
+      genericProviderCandidate = {
+        displayName: response.displayName || name,
+        executable: response.executable,
+        version: response.version || "",
+        rebindProviderId: response.existingProviderId,
+      };
+      document.getElementById("genericProviderSummary").textContent =
+        `${genericProviderCandidate.displayName} 已添加过。可以重新确认它的调用方式；若之前的任务一直失败，通常就是调用方式不对。`;
+      genericProviderStatus("", "");
+      genericProviderDetectionActive = false;
+      setGenericProviderStep("confirm");
+      document.getElementById("enableGenericProvider").focus();
       return;
     }
     if (!response.found) {
@@ -936,14 +1038,41 @@ async function resolveGenericProvider(displayName, suppliedExecutable = null) {
 
 async function enableGenericProvider() {
   if (!genericProviderCandidate) return;
-  genericProviderStatus("正在启用通用调用…", "", "genericProviderConfirmStatus");
   const button = document.getElementById("enableGenericProvider");
   button.disabled = true;
   try {
+    // Probe before saving: the bridge tries its own invocation templates and
+    // reports which one this CLI actually answers on. Without this the
+    // environment would save successfully and only fail on the first real
+    // task, after the full 15-minute execution timeout.
+    genericProviderStatus(
+      "正在试调用该工具以确认调用方式，这会消耗一次很小的模型用量…",
+      "",
+      "genericProviderConfirmStatus",
+    );
+    const probed = await runtimeMessage({
+      action: "companionGenericProviderResolve",
+      displayName: genericProviderCandidate.displayName,
+      executable: genericProviderCandidate.executable,
+      probe: true,
+    });
+    if (!probed?.ok) throw new Error(probed?.error || "probe-failed");
+    if (probed.genericIncompatible || !probed.genericProfileId) {
+      genericProviderStatus(
+        `${genericProviderCandidate.displayName} 没有响应任何一种桥接支持的非交互调用方式，因此没有保存。`
+        + "它可能只支持交互式使用，或需要先完成登录。",
+        "err",
+        "genericProviderConfirmStatus",
+      );
+      return;
+    }
+    genericProviderStatus("正在启用通用调用…", "", "genericProviderConfirmStatus");
     const response = await runtimeMessage({
       action: "companionGenericProviderEnable",
       displayName: genericProviderCandidate.displayName,
       executable: genericProviderCandidate.executable,
+      genericProfileId: probed.genericProfileId,
+      providerId: genericProviderCandidate.rebindProviderId,
       genericConfirmed: true,
     });
     const providerId = response?.provider?.id || response?.providerId;
@@ -953,9 +1082,13 @@ async function enableGenericProvider() {
     await storageSet({ selectedProviderId, providerSelectionExplicit: true });
     if (!await probeCompanion({ requestPermission: true, refreshCatalog: false })) throw new Error("refresh-failed");
     closeCustomProviderDialog();
-    setStatus(`已启用 ${genericProviderCandidate.displayName} 的通用调用。每次任务仍会再次确认模型用量。`, "ok");
+    setStatus(
+      `已启用 ${genericProviderCandidate.displayName} 的通用调用`
+      + `（${probed.genericProfileLabel || probed.genericProfileId}）。每次任务仍会再次确认模型用量。`,
+      "ok",
+    );
   } catch (_error) {
-    genericProviderStatus("无法启用该工具。请确认它支持无参数、标准输入 JSON 的通用模式。", "err", "genericProviderConfirmStatus");
+    genericProviderStatus("无法启用该工具，请重新检测后再试。", "err", "genericProviderConfirmStatus");
   } finally {
     button.disabled = false;
   }

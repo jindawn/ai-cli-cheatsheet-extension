@@ -44,7 +44,12 @@ function unpackedExtensionId(extensionRoot) {
       && loadState.loadedTools.every((toolId) => defaultToolIds.has(toolId)),
     `cold popup should load only default datasets; got ${loadState.loadedTools.join(", ")}`);
 
-    await page.evaluate((enabledTools) => chrome.storage.local.set({ onboarded: true, enabledTools }), [...defaultToolIds]);
+    await page.evaluate((enabledTools) => chrome.storage.local.set({
+      onboarded: true,
+      enabledTools,
+      // Keep this cross-platform scenario deterministic on the Linux CI runner.
+      platform: "mac",
+    }), [...defaultToolIds]);
     await page.reload();
     await page.waitForSelector("#main .empty-welcome");
 

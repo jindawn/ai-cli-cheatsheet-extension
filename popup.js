@@ -899,7 +899,25 @@ async function openCustomProviderDialog() {
   setGenericProviderStep("list");
   await loadCommonProviderCatalog();
   renderCommonProviderList();
+  renderProviderCatalogChannelNote();
   document.getElementById("commonProviderSearch")?.focus();
+}
+
+// The signed catalog is how verified environments arrive without a component
+// release. A source-installed bridge has no release public key, so the channel
+// can never verify anything — say so here rather than leaving users to wonder
+// why the list never grows.
+function renderProviderCatalogChannelNote() {
+  const note = document.getElementById("providerCatalogChannelNote");
+  if (!note) return;
+  const capabilities = companionHandshake?.capabilities?.providerCatalog;
+  if (!companionHandshake || capabilities?.updateSupported !== false) {
+    note.hidden = true;
+    return;
+  }
+  note.hidden = false;
+  note.textContent = "当前检测组件不能接收新增的已验证环境目录（源码安装或未签名版本）。"
+    + "上面的环境仍可正常检测和使用；要获得后续新增的已验证环境，请改用签名安装包。";
 }
 
 function closeCustomProviderDialog() {

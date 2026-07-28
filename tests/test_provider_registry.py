@@ -435,6 +435,76 @@ class ProviderRegistryTests(unittest.TestCase):
         self.assertTrue(loaded["customConfigError"])
 
 
+class CatalogReleaseTests(unittest.TestCase):
+    """Guard the signed catalog channel that ships new AI environments.
+
+    CI never exercised this before: shared/provider-catalog-template.json is
+    only signed by a workflow_dispatch job, so a template that fails validation
+    or breaks the sign/verify round trip would not surface until release day.
+    """
+
+    TEMPLATE = Path(__file__).resolve().parent.parent / "shared" / "provider-catalog-template.json"
+
+    def _template(self):
+        with open(self.TEMPLATE, encoding="utf-8") as handle:
+            return json.load(handle)
+
+    def test_template_is_publishable(self):
+        payload = self._template()
+        # validate_catalog is what the bridge runs before replacing an active
+        # catalog, so the release template must already satisfy it.
+        catalog = registry.validate_catalog(payload)
+        self.assertEqual(catalog["minimumProtocolVersion"], registry.PROTOCOL_VERSION)
+        for adapter in catalog["adapters"]:
+            with self.subTest(adapter=adapter["id"]):
+                # A catalog adapter runs against the user's machine without a
+                # per-use risk confirmation, so it must carry a read-only
+                # declaration backed by a first-party HTTPS reference. Tools
+                # with no documented read-only mode belong in the generic,
+                # explicitly-unverified path instead.
+                self.assertTrue(adapter["security"]["readOnly"])
+                self.assertTrue(adapter["security"]["officialReference"].startswith("https://"))
+
+    def test_template_signs_and_verifies_round_trip(self):
+        seed = bytes(range(32))
+        envelope = registry.sign_catalog_envelope(self._template(), seed)
+        with tempfile.TemporaryDirectory() as shared:
+            with open(os.path.join(shared, "provider-catalog-public-key.json"), "w",
+                      encoding="utf-8") as handle:
+                json.dump({
+                    "algorithm": "Ed25519",
+                    "publicKey": base64.b64encode(
+                        registry.ed25519_public_key(seed)
+                    ).decode("ascii"),
+                }, handle)
+            verified = registry.verify_catalog_envelope(envelope, shared)
+            self.assertEqual(verified["catalogVersion"], self._template()["catalogVersion"])
+            # A tampered payload must not verify against the same signature.
+            tampered = {**envelope, "payload": {**envelope["payload"], "catalogVersion": 99}}
+            with self.assertRaises(registry.ProviderRegistryError):
+                registry.verify_catalog_envelope(tampered, shared)
+
+    def test_catalog_updates_stay_disabled_without_a_release_public_key(self):
+        # The committed public key is empty; only a release build injects one.
+        # Until then the bridge must report the channel as unavailable rather
+        # than accepting an unverified catalog.
+        shipped = json.loads(
+            (self.TEMPLATE.parent / "provider-catalog-public-key.json").read_text(encoding="utf-8")
+        )
+        if shipped.get("publicKey"):
+            self.skipTest("release build injected a signing key")
+        with tempfile.TemporaryDirectory() as shared, tempfile.TemporaryDirectory() as state:
+            for name in ("provider-adapters.json", "provider-adapters-v5.json",
+                         "provider-catalog-public-key.json"):
+                (Path(shared) / name).write_text(
+                    (self.TEMPLATE.parent / name).read_text(encoding="utf-8"), encoding="utf-8"
+                )
+            loaded = registry.load_registry(shared, state)
+            self.assertFalse(loaded["catalogUpdateSupported"])
+            refreshed = registry.refresh_catalog_if_stale(shared, state)
+            self.assertEqual(refreshed["status"], "unavailable")
+
+
 class GenericProfileTests(unittest.TestCase):
     """The generic templates are the only argv a generic environment may use."""
 

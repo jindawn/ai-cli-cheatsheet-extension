@@ -38,3 +38,17 @@ Allowed path placeholders are `{schemaFile}`, `{outputFile}` and `{workDir}`. Th
 1.7.4 及更早版本保存的自定义适配器会以 `legacy-configured` 方式继续加载，以免破坏已有用户配置。它们可以删除，但扩展不再显示旧版参数、输出驱动或登录提示编辑表单。
 
 The release secret `PROVIDER_CATALOG_SIGNING_KEY` is the Base64 encoding of a 32-byte Ed25519 seed. Release builds derive and bundle only its public key. Use `tools/provider-catalog.py` to write the public key, sign a catalog and verify the resulting envelope.
+
+## 目录通道的当前状态
+
+`shared/provider-catalog-public-key.json` 中提交的公钥为空，只有 release 构建会注入真实公钥；因此源码安装的桥接 `catalogUpdateSupported` 恒为 `false`，扩展会在「添加 AI 环境」对话框中如实说明。`shared/provider-catalog-template.json` 目前 `adapters` 为空，且 `provider-catalog` release 尚未创建，所以这条通道现在还没有向任何用户下发过适配器。
+
+`tests/test_provider_registry.py::CatalogReleaseTests` 在 CI 中校验模板可发布性与签名往返，避免问题拖到发布当天才暴露。
+
+### 收录一个工具为签名适配器的门槛
+
+目录适配器**不需要**用户逐次风险确认即可在本机运行，因此必须提供 `security.readOnly: true` 和一个第一方 HTTPS 依据。判断标准是该工具**官方文档中记载**的只读/禁用工具模式，而不是「看起来不会写」。
+
+已核验的反例：GitHub Copilot CLI 的官方 CLI programmatic reference 记载了 `-p` 非交互提示与 `--deny-tool` / `--allow-tool` 粒度控制，但**没有**记载统一的只读模式，也没有 JSON 输出格式选项。因此它不能作为签名适配器收录，只能走用户确认的通用调用路径——这正是它当前所在的位置。
+
+没有可核验只读模式的工具，应留在通用调用路径，由用户确认风险并由能力探测决定调用方式。

@@ -65,6 +65,42 @@ assert(bridgePopupSource.includes('genericProviderDetectionNonce') && bridgePopu
 assert(bridgePopupSource.includes('"detect-timeout": "检测超时，请重新检测。未执行任何模型任务。"'), "handshake timeouts should be concise and safe for the UI");
 assert(!bridgePopupSource.includes("companionErrorDetail") && bridgePopupSource.includes("检测组件异常，请重新检测。未执行任何模型任务。"), "unexpected bridge failures should use a concise fixed message instead of raw host text");
 assert(bridgePopupSource.includes('status.className = `meta${isCompanionError ? " err" : isCompanionWarning ? " warn" : ""}`') && bridgePopupSource.includes('status.setAttribute("role", isCompanionError ? "alert" : "status")'), "unexpected bridge failures must be announced as red alerts while upgrade states remain warnings");
+// The dropdown and the environment cards read the same handshake status, so
+// they must never disagree about whether an environment is ready. `ready` is
+// true for loginState "unknown" too, because some CLIs have no non-generating
+// auth check — the cards used to call that "已验证，已就绪".
+const entryStateMatch = bridgePopupSource.match(
+  /\/\/ `ready` is true for loginState "unknown"[\s\S]*?\nfunction providerEntryState\(entry\) \{[\s\S]*?\n\}\n/,
+);
+assert(entryStateMatch, "common provider cards should derive their label from one shared helper");
+const entryStateContext = { bridgeInstallersAvailable: () => false };
+vm.runInNewContext(`${entryStateMatch[0]}\nthis.entryState = providerEntryState;`, entryStateContext);
+for (const adapterStatus of ["built-in", "custom", "configuration-required"]) {
+  const unknown = entryStateContext.entryState({
+    adapterStatus, installed: true, ready: true, loginState: "unknown",
+    registeredProviderId: "qwen", registeredSource: adapterStatus === "custom" ? "custom" : "builtin",
+  });
+  assert(!unknown.label.includes("已就绪"), `${adapterStatus} with an unverified login must not claim readiness`);
+  assert.strictEqual(unknown.className, "", `${adapterStatus} with an unverified login must not use the ready style`);
+  const timedOut = entryStateContext.entryState({
+    adapterStatus, installed: false, ready: false, loginState: "probe-timeout",
+    registeredProviderId: "qwen", registeredSource: adapterStatus === "custom" ? "custom" : "builtin",
+  });
+  assert(timedOut.label.includes("检测超时"), `${adapterStatus} must report a timed-out probe as such`);
+}
+const verified = entryStateContext.entryState({
+  adapterStatus: "built-in", installed: true, ready: true, loginState: "logged-in",
+});
+assert.strictEqual(verified.label, "已验证，已就绪", "a verified login should still read as ready");
+assert.strictEqual(verified.className, "ready");
+const noInstaller = entryStateContext.entryState({
+  adapterStatus: "built-in", installed: false, ready: false, installation: { state: "unsupported" },
+});
+assert(!noInstaller.label.includes("一键安装"), "a tool without an installer profile must not imply one exists");
+assert(bridgePopupSource.includes('provider.loginState === "probe-timeout" ? " · 检测超时"'), "the provider dropdown should surface a timed-out probe");
+assert(bridgePopupSource.includes('["timeout", "本次检测超时"'), "a timed-out probe must not be grouped as an environment still to install");
+assert(bridgePopupSource.includes("data-refresh-provider") && bridgePopupSource.includes("companionProviderRefresh"), "each detected environment should be re-detectable on its own");
+
 const outdatedMatch = bridgePopupSource.match(/function isOutdatedBridgeResponse\(response\) \{[\s\S]*?\n\}\n\nfunction bridgeInstallerRequired/);
 assert(outdatedMatch, "popup should classify incompatible bridge handshakes");
 const outdatedContext = {

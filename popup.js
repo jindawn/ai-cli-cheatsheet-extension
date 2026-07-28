@@ -197,15 +197,20 @@ function renderCompanionState() {
   }
   const providers = Array.isArray(companionHandshake?.providers) ? companionHandshake.providers : [];
   const byId = new Map(providers.map((provider) => [provider.id, provider]));
+  // A timed-out probe means "unknown", not "not installed", so it gets its own
+  // group instead of being listed as something the user still needs to install.
+  const timedOut = (provider) => provider.loginState === "probe-timeout";
   const groups = [
     ["ready", "已就绪", (provider) => provider.transport !== "api" && provider.ready],
     ["installed", "已安装，需完成登录", (provider) => provider.transport !== "api" && provider.installed && !provider.ready],
     ["api", "兼容 API", (provider) => provider.transport === "api"],
-    ["available", "其他可安装环境", (provider) => provider.transport !== "api" && !provider.installed],
+    ["timeout", "本次检测超时", (provider) => provider.transport !== "api" && !provider.installed && timedOut(provider)],
+    ["available", "其他可安装环境", (provider) => provider.transport !== "api" && !provider.installed && !timedOut(provider)],
   ];
   const optionHtml = (provider) => {
     const version = provider.version ? ` ${provider.version}` : "";
-    const state = provider.loginState === "unknown" ? " · 登录待验证"
+    const state = provider.loginState === "probe-timeout" ? " · 检测超时"
+      : provider.loginState === "unknown" ? " · 登录待验证"
       : provider.ready ? " · 已就绪"
         : provider.transport === "api" ? " · 配置不完整"
           : provider.installed ? " · 未登录" : " · 未安装";
@@ -252,7 +257,9 @@ function renderCompanionState() {
   const optionalUpdateNote = companionState === "ready" && bridgeUpdateAvailable()
     ? " 检测组件有可选更新，不影响当前扫描和维护功能。" : "";
   if (companionState === "ready" && selected) {
-    status.textContent = (selected.loginState === "unknown"
+    status.textContent = (selected.loginState === "probe-timeout"
+      ? `${selected.displayName} 的本机探测超时，本次未能确认它的状态。可在「添加 AI 环境」中单独重新检测该环境；其他已检测到的环境不受影响。`
+      : selected.loginState === "unknown"
       ? `${selected.displayName}${selected.version ? ` ${selected.version}` : ""} 已安装；该 CLI 没有稳定的无调用登录检查，首次任务会验证登录状态。任务失败时不会自动切换环境。`
       : selected.ready
       ? `已就绪：${selected.displayName}${selected.version ? ` ${selected.version}` : ""}。${selected.source === "custom" ? selected.executionMode === "generic" ? "这是用户确认的通用调用；未经过只读验证。" : "这是旧版已配置环境；保留原有设置。" : companionHandshake?.catalogRefresh?.status === "updated" ? "已同步已验证的环境目录。" : catalogRefreshFailed ? "未能更新支持目录，仍使用上次已验证版本。" : "任务失败时不会自动改用其他模型。"}`
@@ -551,6 +558,7 @@ function currentCommonProviderEntries() {
       registeredSource: scan.registeredSource || registered?.source || null,
       installed: scan.installed === true || registered?.installed === true,
       ready: registered?.ready === true,
+      loginState: registered?.loginState || null,
       installation: scan.installation || { state: "unsupported", canInstall: false },
       requiresBridgeUpgrade: Boolean(companionHandshake) && entry.installerStatus === "supported"
         && !bridgeSupportsCommonProviderInstall(),
@@ -559,6 +567,9 @@ function currentCommonProviderEntries() {
   const custom = providers.filter((provider) => provider.source === "custom").map((provider) => ({
     id: provider.id,
     providerId: provider.id,
+    registeredProviderId: provider.id,
+    registeredSource: "custom",
+    loginState: provider.loginState || null,
     displayName: provider.displayName,
     executable: provider.customConfig?.executable || "",
     adapterStatus: "custom",
@@ -573,17 +584,30 @@ function currentCommonProviderEntries() {
   return [...custom, ...standard];
 }
 
+// `ready` is true for loginState "unknown" as well, because some CLIs have no
+// non-generating auth check. The dropdown already says "登录待验证" for those,
+// so these cards must not claim "已就绪" for the same environment.
+function providerLoginQualifier(entry) {
+  if (entry.loginState === "probe-timeout") return { label: "检测超时 · 可重试", className: "" };
+  if (entry.loginState === "unknown") return { label: "已安装 · 登录待验证", className: "" };
+  return null;
+}
+
 function providerEntryState(entry) {
+  const pending = providerLoginQualifier(entry);
   if (entry.adapterStatus === "custom") {
+    if (pending && entry.loginState === "probe-timeout") return pending;
     return {
       label: entry.executionMode === "generic" ? "通用调用" : "旧版已配置",
-      className: entry.ready ? "ready" : "",
+      className: entry.ready && entry.loginState !== "unknown" ? "ready" : "",
     };
   }
   if (entry.registeredProviderId && entry.registeredSource === "catalog") {
+    if (pending) return pending;
     return { label: entry.ready ? "已验证，已就绪" : "已验证，待检测", className: entry.ready ? "ready" : "" };
   }
   if (entry.adapterStatus === "built-in") {
+    if (pending) return pending;
     if (entry.installed) {
       return { label: entry.ready ? "已验证，已就绪" : "已安装，待登录", className: entry.ready ? "ready" : "" };
     }
@@ -599,8 +623,10 @@ function providerEntryState(entry) {
     if (entry.installation?.state === "prerequisite-missing") {
       return { label: `需要 ${entry.installation.prerequisite || "前置运行时"}`, className: "" };
     }
-    return { label: "未安装 · 仅官方说明", className: "" };
+    // No bridge installer profile exists for this tool, so do not imply one.
+    return { label: "未安装 · 需按官方说明安装", className: "" };
   }
+  if (pending) return pending;
   return {
     label: entry.installed ? "已安装，可尝试接入" : "未检测到 · 可补充命令名",
     className: "",

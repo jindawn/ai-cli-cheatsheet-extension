@@ -475,9 +475,15 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
     const displayName = typeof msg.displayName === 'string' ? msg.displayName.trim() : '';
     const executable = typeof msg.executable === 'string' ? msg.executable.trim() : '';
     const genericProfileId = typeof msg.genericProfileId === 'string' ? msg.genericProfileId : '';
+    // Rebinding an existing environment's invocation template may only ever
+    // target a user-created one.
+    const providerId = msg.providerId === undefined || msg.providerId === null
+      ? null
+      : typeof msg.providerId === 'string' ? msg.providerId : '';
     if (!displayName || displayName.length > 100
       || !/^[A-Za-z0-9][A-Za-z0-9._+-]{0,79}$/.test(executable)
       || !/^[a-z][a-z0-9-]{0,39}$/.test(genericProfileId)
+      || (providerId !== null && !CUSTOM_PROVIDER_ID_RE.test(providerId))
       || msg.genericConfirmed !== true) {
       sendResponse({ ok: false, error: '通用调用确认无效' });
       return false;
@@ -488,6 +494,7 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
       displayName,
       executable,
       genericProfileId,
+      providerId,
       genericConfirmed: true,
     })
       .then((response) => sendResponse(response))

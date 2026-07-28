@@ -982,7 +982,7 @@ async function resolveGenericProvider(displayName, suppliedExecutable = null) {
     });
     if (!isCurrentGenericProviderDetection(detectionNonce)) return;
     if (!response?.ok) throw new Error(response?.error || "resolve-failed");
-    if (response.existingProviderId) {
+    if (response.existingProviderId && !response.canRebindGenericProfile) {
       selectedProviderId = response.existingProviderId;
       providerSelectionExplicit = true;
       await storageSet({ selectedProviderId, providerSelectionExplicit: true });
@@ -990,6 +990,24 @@ async function resolveGenericProvider(displayName, suppliedExecutable = null) {
       closeCustomProviderDialog();
       renderCompanionState();
       setStatus(`已选择 ${response.displayName || name}。`, "ok");
+      return;
+    }
+    if (response.existingProviderId) {
+      // Already saved as a generic environment. Offer to re-probe it: entries
+      // saved before invocation templates existed are all bound to the bare
+      // stdin form, which is why they can fail on every task.
+      genericProviderCandidate = {
+        displayName: response.displayName || name,
+        executable: response.executable,
+        version: response.version || "",
+        rebindProviderId: response.existingProviderId,
+      };
+      document.getElementById("genericProviderSummary").textContent =
+        `${genericProviderCandidate.displayName} 已添加过。可以重新确认它的调用方式；若之前的任务一直失败，通常就是调用方式不对。`;
+      genericProviderStatus("", "");
+      genericProviderDetectionActive = false;
+      setGenericProviderStep("confirm");
+      document.getElementById("enableGenericProvider").focus();
       return;
     }
     if (!response.found) {
@@ -1054,6 +1072,7 @@ async function enableGenericProvider() {
       displayName: genericProviderCandidate.displayName,
       executable: genericProviderCandidate.executable,
       genericProfileId: probed.genericProfileId,
+      providerId: genericProviderCandidate.rebindProviderId,
       genericConfirmed: true,
     });
     const providerId = response?.provider?.id || response?.providerId;

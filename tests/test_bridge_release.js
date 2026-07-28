@@ -34,6 +34,29 @@ assert(host.includes('"--approval-mode", "plan"') && host.includes('"--admin-pol
 assert(host.includes('"--agent", "plan"') && host.includes('"edit": "deny"'), "OpenCode must deny edits in plan mode");
 assert(host.includes('"--permission-mode"') && host.includes('"--tools"'), "Claude must disable mutating tools");
 
+// Both installers must deploy every module in native-host/. Enumerating them
+// one by one meant a newly added module silently stayed behind and the
+// deployed host.py crashed on import.
+{
+  const modules = fs.readdirSync(path.join(root, "native-host"))
+    .filter((name) => name.endsWith(".py"));
+  assert(modules.length >= 6, "native-host should contain the bridge modules");
+  assert(
+    /for module in "\$SCRIPT_DIR"\/\*\.py/.test(installSh),
+    "install.sh must deploy every native-host module, not a hand-written list",
+  );
+  assert(
+    /Get-ChildItem -Path \$ScriptDir -Filter "\*\.py"/.test(installPs1),
+    "install.ps1 must deploy every native-host module, not a hand-written list",
+  );
+  for (const module of modules) {
+    assert(
+      !new RegExp(`cp "\\$SCRIPT_DIR/${module}"`).test(installSh),
+      `install.sh should not special-case ${module}`,
+    );
+  }
+}
+
 assert(builder.includes('STORE_EXTENSION_ID = "jdiopjiebnamikpcknmnpahhlokccgjj"'));
 assert(bridgeSpec.includes("ROOT = Path(SPECPATH).resolve().parent\n"), "PyInstaller must resolve the repository root from native-host/bridge.spec");
 assert(bridgeSpec.includes("console=True"), "the self-contained host must retain Native Messaging stdio on Windows");
@@ -79,7 +102,8 @@ assert(!host.includes("curl | bash") && !host.includes("| iex"), "the bridge mus
 assert(host.includes('adapter.get("source") in {"catalog", "custom"}'), "a custom adapter must use the same direct-process-only runner as signed adapters");
 assert(host.includes('"refreshCatalog": message.get("refreshCatalog") is True') && host.includes("refresh_catalog_if_stale"), "only an explicit handshake may refresh the signed provider catalog");
 assert(popup.includes("refreshCatalog: true") && popup.includes("companionState === \"detecting\""), "the popup must explicitly request catalog refresh and render detection progress");
-assert(installSh.includes("provider_registry.py") && installPs1.includes("provider_registry.py") && installSh.includes("provider_installers.py") && installPs1.includes("provider_installers.py"), "source installers must deploy provider registry and installer modules");
+// Module deployment is asserted below against the real contents of
+// native-host/ rather than against a duplicated list of names.
 assert(bridgeSpec.includes('(str(ROOT / "shared"), "shared")'), "the bridge bundle must include the common AI environment directory");
 assert(workflow.includes("PROVIDER_CATALOG_SIGNING_KEY"), "release builds must inject the Ed25519 catalog key");
 assert(!popup.includes('runCompanionTask("suggest_tools"'), "AI re-recommendations must stay disabled in 1.7.9");

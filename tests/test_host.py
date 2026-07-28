@@ -2416,6 +2416,68 @@ class HostProviderAdapterTests(unittest.TestCase):
         self.assertEqual(which.call_count, 1)
         host.find_executable.cache_clear()
 
+    def test_existing_generic_environment_can_be_reprobed_and_rebound(self):
+        with tempfile.TemporaryDirectory() as temp, mock.patch.object(host, "PENDING_DIR", temp), \
+                mock.patch.object(host, "find_executable", return_value="/tmp/generic-ai"), \
+                mock.patch.object(host, "_probe_command", return_value=(0, "Generic AI 1.0")):
+            enabled = host.handle_message({
+                "action": "enable_generic_provider", "protocolVersion": 5,
+                "displayName": "Generic AI", "executable": "generic-ai",
+                "genericProfileId": "stdin-json", "genericConfirmed": True,
+            })
+            provider_id = enabled["provider"]["id"]
+
+            # Without a probe the existing environment is simply re-selected.
+            reselected = host.resolve_generic_provider("Generic AI", "generic-ai")
+            self.assertEqual(reselected["existingProviderId"], provider_id)
+            self.assertTrue(reselected["canRebindGenericProfile"])
+
+            # With a probe it is re-evaluated instead, so an environment saved
+            # before templates existed can be repaired without deleting it.
+            def fake_run(args, **kwargs):
+                if args[1:2] == ["-p"] and "--output-format" not in args:
+                    return mock.Mock(returncode=0, stdout='{"ok": true}', stderr="")
+                return mock.Mock(returncode=1, stdout="", stderr="")
+
+            with mock.patch.object(host.subprocess, "run", side_effect=fake_run):
+                probed = host.resolve_generic_provider("Generic AI", "generic-ai", probe=True)
+            self.assertEqual(probed["genericProfileId"], "prompt-flag")
+            self.assertEqual(probed["existingProviderId"], provider_id)
+
+            rebound = host.handle_message({
+                "action": "enable_generic_provider", "protocolVersion": 5,
+                "displayName": "Generic AI", "executable": "generic-ai",
+                "genericProfileId": "prompt-flag", "providerId": provider_id,
+                "genericConfirmed": True,
+            })
+            self.assertTrue(rebound["ok"])
+            # Rebound in place: same ID, new template, no duplicate entry.
+            self.assertEqual(rebound["provider"]["id"], provider_id)
+            adapter = host.provider_adapter(provider_id)
+            self.assertEqual(adapter["genericProfileId"], "prompt-flag")
+            self.assertEqual(adapter["argv"], ["-p", "{prompt}"])
+            self.assertEqual(
+                len([p for p in host.provider_registry()["providers"] if p["source"] == "custom"]), 1
+            )
+
+    def test_rebinding_cannot_target_a_builtin_or_signed_adapter(self):
+        with tempfile.TemporaryDirectory() as temp, mock.patch.object(host, "PENDING_DIR", temp), \
+                mock.patch.object(host, "find_executable", return_value="/tmp/claude"), \
+                mock.patch.object(host, "_probe_command", return_value=(0, "Claude 1.0")):
+            for provider_id in ["claude", "catalog:fifth", "api:not-a-uuid"]:
+                with self.assertRaises(host.ValidationError):
+                    host.handle_message({
+                        "action": "enable_generic_provider", "protocolVersion": 5,
+                        "displayName": "Claude Code", "executable": "claude",
+                        "genericProfileId": "stdin-json", "providerId": provider_id,
+                        "genericConfirmed": True,
+                    })
+            # A built-in environment is still never re-probed as generic.
+            resolved = host.resolve_generic_provider("Claude Code", "claude", probe=True)
+            self.assertEqual(resolved["existingProviderId"], "claude")
+            self.assertFalse(resolved["canRebindGenericProfile"])
+            self.assertNotIn("genericProfileId", resolved)
+
     def test_generic_probe_reports_the_first_working_template(self):
         answered = {"argv": None}
 

@@ -833,8 +833,18 @@ def resolve_generic_provider(display_name, executable=None, probe=False):
     # returned as-is so a second generic confirmation is never required.
     matching.sort(key=lambda item: (0 if item["source"] in {"builtin", "catalog"} else 1,
                                     item.get("recommendationOrder", 1000)))
-    if matching:
-        status = provider_status(matching[0]["id"], prefer_cli_version=True)
+    existing = matching[0] if matching else None
+    rebindable = (
+        existing is not None
+        and existing["source"] == "custom"
+        and existing.get("executionMode") == "generic"
+    )
+    # An explicit probe on an existing generic environment re-selects its
+    # template. Environments saved before templates existed are all bound to
+    # the bare stdin form, and short-circuiting here would leave the user no
+    # way to repair one except deleting and re-adding it.
+    if existing is not None and not (probe and rebindable):
+        status = provider_status(existing["id"], prefer_cli_version=True)
         return {
             "ok": True,
             "found": status["installed"],
@@ -844,6 +854,7 @@ def resolve_generic_provider(display_name, executable=None, probe=False):
             "existingProviderId": status["id"],
             "existingProviderSource": status["source"],
             "executionMode": status.get("executionMode"),
+            "canRebindGenericProfile": rebindable,
         }
     binary = find_executable(candidate)
     if not binary:
@@ -852,11 +863,14 @@ def resolve_generic_provider(display_name, executable=None, probe=False):
     resolved = {
         "ok": True,
         "found": True,
-        "displayName": name,
+        "displayName": existing["displayName"] if existing else name,
         "executable": candidate,
         "version": re.sub(r"\s+", " ", output)[:100] or None,
-        "requiresGenericConfirmation": True,
+        "requiresGenericConfirmation": existing is None,
     }
+    if existing is not None:
+        resolved["existingProviderId"] = existing["id"]
+        resolved["existingProviderSource"] = existing["source"]
     if not probe:
         return resolved
     # The capability probe runs a model task, so it only happens after the user
@@ -1385,11 +1399,18 @@ def validate_request(message):
             raise ValidationError("通用 AI 环境确认无效")
         if not isinstance(profile_id, str) or generic_profile(profile_id) is None:
             raise ValidationError("通用调用模板无效，请重新探测该工具")
+        # Rebinding may only ever target an existing user-created environment.
+        provider_id = message.get("providerId")
+        if provider_id is not None and (
+                not isinstance(provider_id, str)
+                or not re.fullmatch(r"custom:[a-f0-9-]{36}", provider_id)):
+            raise ValidationError("只能更新自定义 AI 环境的调用方式")
         return {
             "action": action,
             "displayName": display_name.strip(),
             "executable": _generic_executable_name(executable),
             "genericProfileId": profile_id,
+            "providerId": provider_id,
             "genericConfirmed": True,
         }
     if action == "save_custom_provider":
@@ -5310,12 +5331,15 @@ def handle_message(message):
         # Resolve again immediately before writing so a PATH change cannot make
         # the extension authorise an unseen executable name.
         resolved = resolve_generic_provider(request["displayName"], request["executable"])
-        if resolved.get("existingProviderId"):
+        rebinding = request.get("providerId")
+        if resolved.get("existingProviderId") and not rebinding:
             return {"ok": True, "existing": True, "providerId": resolved["existingProviderId"]}
+        if rebinding and resolved.get("existingProviderId") != rebinding:
+            raise ValidationError("该 AI 环境已变化，请重新检测后再更新调用方式")
         if not resolved.get("found") or resolved.get("executable") != request["executable"]:
             raise ValidationError("未找到该 AI 工具，请确认安装完成后重新检测")
         try:
-            provider = save_generic_adapter(PENDING_DIR, request)
+            provider = save_generic_adapter(PENDING_DIR, {**request, "id": rebinding})
         except ProviderRegistryError as exc:
             raise ValidationError(str(exc)) from exc
         return {"ok": True, "provider": provider}

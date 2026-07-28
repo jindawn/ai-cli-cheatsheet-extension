@@ -190,21 +190,18 @@ echo ""
 echo "正在部署到：$INSTALL_DIR"
 mkdir -p "$INSTALL_DIR"
 # 开发模式（--symlink 或 AICLI_DEV=1）：软链而非拷贝，改 native-host/host.py 即时生效，无需重新部署。
+# 部署 native-host/ 下的全部 Python 模块。逐个列举容易在新增模块时漏掉，
+# 导致已部署的 host.py 在 import 时直接崩溃；tests/test_bridge_release.js
+# 会断言这里覆盖了仓库中的每个模块。
 if [ "$DEV_MODE" = "1" ]; then
-  ln -sfn "$SCRIPT_DIR/host.py" "$INSTALL_DIR/host.py"
-  ln -sfn "$SCRIPT_DIR/protocol.py" "$INSTALL_DIR/protocol.py"
-  ln -sfn "$SCRIPT_DIR/catalog.py" "$INSTALL_DIR/catalog.py"
-  ln -sfn "$SCRIPT_DIR/official_inventory.py" "$INSTALL_DIR/official_inventory.py"
-  ln -sfn "$SCRIPT_DIR/provider_registry.py" "$INSTALL_DIR/provider_registry.py"
-  ln -sfn "$SCRIPT_DIR/provider_installers.py" "$INSTALL_DIR/provider_installers.py"
+  for module in "$SCRIPT_DIR"/*.py; do
+    ln -sfn "$module" "$INSTALL_DIR/$(basename "$module")"
+  done
   echo "✅ host.py 已软链到仓库（开发模式：改 native-host/host.py 即时生效）"
 else
-  cp "$SCRIPT_DIR/host.py" "$INSTALL_DIR/host.py"
-  cp "$SCRIPT_DIR/protocol.py" "$INSTALL_DIR/protocol.py"
-  cp "$SCRIPT_DIR/catalog.py" "$INSTALL_DIR/catalog.py"
-  cp "$SCRIPT_DIR/official_inventory.py" "$INSTALL_DIR/official_inventory.py"
-  cp "$SCRIPT_DIR/provider_registry.py" "$INSTALL_DIR/provider_registry.py"
-  cp "$SCRIPT_DIR/provider_installers.py" "$INSTALL_DIR/provider_installers.py"
+  for module in "$SCRIPT_DIR"/*.py; do
+    cp "$module" "$INSTALL_DIR/$(basename "$module")"
+  done
   chmod 700 "$INSTALL_DIR/host.py"
   echo "✅ host.py 已更新"
 fi

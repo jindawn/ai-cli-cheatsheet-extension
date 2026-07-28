@@ -2,7 +2,9 @@
 
 const assert = require("assert");
 const fs = require("fs");
+const os = require("os");
 const path = require("path");
+const { spawnSync } = require("child_process");
 
 const root = path.resolve(__dirname, "..");
 const read = (file) => fs.readFileSync(path.join(root, file), "utf8");
@@ -18,7 +20,7 @@ const providerRegistry = read("native-host/provider_registry.py");
 const legacyProviderAdapters = JSON.parse(read("shared/provider-adapters.json"));
 const v5ProviderAdapters = JSON.parse(read("shared/provider-adapters-v5.json"));
 
-assert(host.includes("PROTOCOL_VERSION = 5") && host.includes('COMPANION_VERSION = "1.7.6"'));
+assert(host.includes("PROTOCOL_VERSION = 5") && host.includes('COMPANION_VERSION = "1.7.7"'));
 assert(host.includes("PROJECT_DIR = os.path.realpath(_project_base_dir())"), "the frozen bridge must load bundled shared resources from _MEIPASS");
 assert(officialInventory.includes("sys._MEIPASS"), "the frozen official-inventory adapter must load bundled snapshots from _MEIPASS");
 assert(bridgeSpec.includes('(str(ROOT / "shared"), "shared")'), "the bridge bundle must include official component fixtures as well as rendered inventories");
@@ -42,14 +44,17 @@ assert(builder.includes('exec sudo \\"$0\\" \\"$@\\"'), "the macOS uninstall ent
 for (const suffix of ["macos-{arch}-v{version}.pkg", "windows-x64-v{version}.msi", "linux-x64-v{version}.{package_type}"]) {
   assert(builder.includes(suffix), `missing versioned installer pattern: ${suffix}`);
 }
-assert(workflow.includes("needs: [build-and-test, build-bridge]"), "GitHub Release must wait for bridge builds");
-assert(workflow.includes("needs: github-release"), "Chrome submission must wait for the GitHub Release");
+assert(workflow.includes("release-preflight:"), "release must explicitly negotiate optional signed-installer capability");
+assert(workflow.includes("needs: [build-and-test, release-preflight, build-bridge]"), "GitHub Release must wait for bridge builds when signed installer assets are available");
+assert(workflow.includes("if: needs.release-preflight.outputs.advanced_release == 'true'"), "bridge installers must be gated on complete signing capability");
+assert(workflow.includes("needs: [github-release, release-preflight]"), "Chrome submission must wait for the GitHub Release and release capability gate");
 assert(workflow.includes('test "$EXTENSION_ID" = "jdiopjiebnamikpcknmnpahhlokccgjj"'), "store submission must match the bridge allowed origin");
 assert(workflow.includes("runner: macos-15") && workflow.includes("runner: macos-15-intel"), "bridge builds need explicit current arm64 and Intel macOS runners");
 assert(workflow.includes("--require-signing") && builder.includes("notarytool"), "signed/notarized installers must be mandatory");
 assert(workflow.includes("verify-release-assets.js") && workflow.includes("SHA256SUMS.asc"));
 assert(workflow.includes("--bridge-installers-ready"), "store package may expose installers only after the release assets are verified");
 assert(workflow.includes("--bridge-only") && workflow.includes("--channel source --output dist/source-release --bridge-installers-ready"), "source and store release packages may expose installers only after every bridge asset is present");
+assert(workflow.includes("--basic-only"), "the baseline extension release must remain publishable without signed bridge installers");
 assert(builder.includes('"bridgeInstallersAvailable": true') || read("tools/package-extension.js").includes("bridgeInstallersAvailable: true"), "a verified source release package must expose graphical installer entry points");
 
 assert(popup.includes("releases/download/v${BRIDGE_VERSION}"), "download URLs must be pinned to the extension version");
@@ -74,6 +79,29 @@ assert(popup.includes("refreshCatalog: true") && popup.includes("companionState 
 assert(installSh.includes("provider_registry.py") && installPs1.includes("provider_registry.py") && installSh.includes("provider_installers.py") && installPs1.includes("provider_installers.py"), "source installers must deploy provider registry and installer modules");
 assert(bridgeSpec.includes('(str(ROOT / "shared"), "shared")'), "the bridge bundle must include the common AI environment directory");
 assert(workflow.includes("PROVIDER_CATALOG_SIGNING_KEY"), "release builds must inject the Ed25519 catalog key");
-assert(!popup.includes('runCompanionTask("suggest_tools"'), "AI re-recommendations must stay disabled in 1.7.6");
+assert(!popup.includes('runCompanionTask("suggest_tools"'), "AI re-recommendations must stay disabled in 1.7.7");
+
+const basicAssets = fs.mkdtempSync(path.join(os.tmpdir(), "aicli-basic-release-"));
+try {
+  for (const filename of [
+    "ai-cli-cheatsheet-source-v1.7.7.zip",
+    "ai-cli-cheatsheet-store-v1.7.7.zip",
+  ]) {
+    fs.writeFileSync(path.join(basicAssets, filename), `fixture:${filename}`);
+  }
+  const verify = [
+    process.execPath,
+    path.join(root, "tools", "verify-release-assets.js"),
+    "--directory", basicAssets,
+    "--version", "1.7.7",
+    "--basic-only",
+  ];
+  let result = spawnSync(verify[0], verify.slice(1), { encoding: "utf8" });
+  assert.strictEqual(result.status, 0, result.stderr || result.stdout);
+  result = spawnSync(verify[0], [...verify.slice(1), "--check"], { encoding: "utf8" });
+  assert.strictEqual(result.status, 0, result.stderr || result.stdout);
+} finally {
+  fs.rmSync(basicAssets, { recursive: true, force: true });
+}
 
 console.log("Bridge protocol and release-gate tests passed.");

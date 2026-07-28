@@ -3,7 +3,7 @@
 ## 首次上架
 
 1. 在 Chrome Web Store Developer Dashboard 新建扩展条目。
-2. 先发布并验证 `v1.7.6` 的 macOS、Windows、Linux 桥接资产及 SHA-256，再上传 `ai-cli-cheatsheet-store-v1.7.6.zip`。
+2. 先发布并验证 `v1.7.7` 的 macOS、Windows、Linux 桥接资产及 SHA-256，再上传 `ai-cli-cheatsheet-store-v1.7.7.zip`。
 3. 首次提交和发布在开发者后台人工完成。
 4. 获得 Publisher ID 和 Extension ID 后，按下文配置 GitHub Environment；从下一个版本开始由标签自动上传并提交审核。
 

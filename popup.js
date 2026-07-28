@@ -2148,6 +2148,9 @@ if (window.CHEATSHEET_ENABLE_TEST_HOOKS) {
     confirmRiskCopy,
     closeRiskDialog,
     confirmCommandCopy,
+    setPreferredCommandPlatformForTest: (value) => {
+      if (["mac", "windows", "linux"].includes(value)) platform = value;
+    },
     setAcknowledgedPlatformScopes: (values) => {
       acknowledgedPlatformScopes = new Set(Array.isArray(values) ? values : []);
     },

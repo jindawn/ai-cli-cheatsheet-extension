@@ -673,6 +673,17 @@ class HostFileTests(unittest.TestCase):
             patcher.stop()
         self.temp.cleanup()
 
+    @staticmethod
+    def ready_claude_status():
+        """Keep direct Claude subprocess tests independent of the CI image."""
+        return {
+            "id": "claude",
+            "displayName": "Claude Code",
+            "installed": True,
+            "loginState": "logged-in",
+            "ready": True,
+        }
+
     def test_atomic_write_preserves_old_file_when_replace_fails(self):
         target = self.data_dir / "sample.js"
         target.write_text("old", encoding="utf-8")
@@ -915,6 +926,8 @@ class HostFileTests(unittest.TestCase):
         # 强制 _call_api_direct 返回 None，走 claude 子进程回退路径（不依赖 CI 是否设置 token）
         with mock.patch.object(host, "_call_api_direct", return_value=None), mock.patch.object(
             host, "CLAUDE_BIN", "/usr/bin/claude"
+        ), mock.patch.object(
+            host, "provider_status", return_value=self.ready_claude_status()
         ), mock.patch.object(host, "PROJECT_DIR", self.temp.name), mock.patch.object(
             host.subprocess, "Popen", return_value=mock_proc
         ) as popen:
@@ -1223,6 +1236,8 @@ class HostFileTests(unittest.TestCase):
         ]
         with mock.patch.object(host, "_call_api_direct", return_value=None), mock.patch.object(
             host, "CLAUDE_BIN", "/usr/bin/claude"
+        ), mock.patch.object(
+            host, "provider_status", return_value=self.ready_claude_status()
         ), mock.patch.object(host, "PROJECT_DIR", self.temp.name), mock.patch.object(
             host.subprocess, "Popen", return_value=mock_proc
         ):
@@ -1236,6 +1251,8 @@ class HostFileTests(unittest.TestCase):
         mock_proc.returncode = 0
         with mock.patch.object(host, "_call_api_direct", return_value=None), mock.patch.object(
             host, "CLAUDE_BIN", "/usr/bin/claude"
+        ), mock.patch.object(
+            host, "provider_status", return_value=self.ready_claude_status()
         ), mock.patch.object(host, "PROJECT_DIR", self.temp.name), mock.patch.object(
             host.subprocess, "Popen", return_value=mock_proc
         ):

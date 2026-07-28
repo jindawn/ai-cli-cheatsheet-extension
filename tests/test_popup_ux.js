@@ -891,6 +891,9 @@ const dialogHooks = dialogContext.window.CHEATSHEET_POPUP_TESTS;
   assert.strictEqual(await thirdPending, false, "the dialog must be usable again after the pending confirmation closes");
 
   // 跨平台复制：首次确认后按目标平台记忆；与高风险并存时复用同一个对话框。
+  // Node 在 CI 中会暴露 Linux navigator；这里明确设置为 macOS，验证用户实际
+  // 首选命令平台而不是测试运行器的平台。
+  dialogHooks.setPreferredCommandPlatformForTest("mac");
   dialogHooks.setAcknowledgedPlatformScopes([]);
   const linuxInfo = core.getPlatformCommand({ cmd: "systemctl status sshd", platforms: ["linux"] }, "mac");
   const firstLinuxCopy = dialogHooks.confirmCommandCopy("systemctl status sshd", core.classifyCommandRisk("systemctl status sshd"), { platforms: ["linux"] }, linuxInfo);

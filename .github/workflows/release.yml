@@ -9,6 +9,53 @@ permissions:
   contents: write
 
 jobs:
+  release-preflight:
+    runs-on: ubuntu-latest
+    outputs:
+      advanced_release: ${{ steps.capabilities.outputs.advanced_release }}
+    steps:
+      - name: Check optional signed-installer release capability
+        id: capabilities
+        env:
+          PROVIDER_CATALOG_SIGNING_KEY: ${{ secrets.PROVIDER_CATALOG_SIGNING_KEY }}
+          MACOS_CERTIFICATES_P12: ${{ secrets.MACOS_CERTIFICATES_P12 }}
+          MACOS_CERTIFICATES_PASSWORD: ${{ secrets.MACOS_CERTIFICATES_PASSWORD }}
+          MACOS_KEYCHAIN_PASSWORD: ${{ secrets.MACOS_KEYCHAIN_PASSWORD }}
+          MACOS_APPLICATION_IDENTITY: ${{ secrets.MACOS_APPLICATION_IDENTITY }}
+          MACOS_INSTALLER_IDENTITY: ${{ secrets.MACOS_INSTALLER_IDENTITY }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_APP_PASSWORD: ${{ secrets.APPLE_APP_PASSWORD }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          WINDOWS_SIGNING_PFX: ${{ secrets.WINDOWS_SIGNING_PFX }}
+          WINDOWS_SIGNING_PASSWORD: ${{ secrets.WINDOWS_SIGNING_PASSWORD }}
+          RELEASE_GPG_PRIVATE_KEY: ${{ secrets.RELEASE_GPG_PRIVATE_KEY }}
+          RELEASE_GPG_PASSPHRASE: ${{ secrets.RELEASE_GPG_PASSPHRASE }}
+        run: |
+          missing=()
+          for name in \
+            PROVIDER_CATALOG_SIGNING_KEY \
+            MACOS_CERTIFICATES_P12 \
+            MACOS_CERTIFICATES_PASSWORD \
+            MACOS_KEYCHAIN_PASSWORD \
+            MACOS_APPLICATION_IDENTITY \
+            MACOS_INSTALLER_IDENTITY \
+            APPLE_ID \
+            APPLE_APP_PASSWORD \
+            APPLE_TEAM_ID \
+            WINDOWS_SIGNING_PFX \
+            WINDOWS_SIGNING_PASSWORD \
+            RELEASE_GPG_PRIVATE_KEY \
+            RELEASE_GPG_PASSPHRASE; do
+            if [ -z "${!name}" ]; then missing+=("$name"); fi
+          done
+          if [ "${#missing[@]}" -eq 0 ]; then
+            echo "advanced_release=true" >> "$GITHUB_OUTPUT"
+            echo "Signed bridge installers and signed checksums are enabled."
+          else
+            echo "advanced_release=false" >> "$GITHUB_OUTPUT"
+            echo "Signed bridge installers are unavailable for this release; publishing verified extension archives without installer entry points."
+          fi
+
   build-and-test:
     runs-on: ubuntu-latest
     steps:
@@ -48,12 +95,6 @@ jobs:
           bandit -q -c bandit.yaml -r native-host tools
       - name: Run Native Host tests
         run: python -m unittest discover -s tests -v
-      - name: Inject Provider catalog verification key
-        env:
-          PROVIDER_CATALOG_SIGNING_KEY: ${{ secrets.PROVIDER_CATALOG_SIGNING_KEY }}
-        run: |
-          test -n "$PROVIDER_CATALOG_SIGNING_KEY"
-          python tools/provider-catalog.py write-public-key --output shared/provider-catalog-public-key.json
       - name: Build release directories
         run: |
           node tools/package-extension.js --channel source --output dist/source
@@ -64,20 +105,23 @@ jobs:
           npx playwright install chromium
           xvfb-run -a node tests/test_extension_smoke.js dist/source
           xvfb-run -a node tests/test_extension_smoke.js dist/store
-      - name: Create extension archives
+      - name: Create extension archives and checksums
         run: |
           VERSION="${GITHUB_REF_NAME#v}"
           (cd dist/source && zip -X -q -r "../ai-cli-cheatsheet-source-v${VERSION}.zip" .)
           (cd dist/store && zip -X -q -r "../ai-cli-cheatsheet-store-v${VERSION}.zip" .)
+          node tools/verify-release-assets.js --directory dist --version "$VERSION" --basic-only
       - uses: actions/upload-artifact@v4
         with:
           name: release-assets
           path: |
             dist/ai-cli-cheatsheet-*.zip
+            dist/SHA256SUMS
           if-no-files-found: error
 
   build-bridge:
-    needs: build-and-test
+    needs: [build-and-test, release-preflight]
+    if: needs.release-preflight.outputs.advanced_release == 'true'
     strategy:
       fail-fast: false
       matrix:
@@ -171,7 +215,8 @@ jobs:
           if-no-files-found: error
 
   github-release:
-    needs: [build-and-test, build-bridge]
+    needs: [build-and-test, release-preflight, build-bridge]
+    if: ${{ always() && needs.build-and-test.result == 'success' && needs.release-preflight.result == 'success' && (needs.release-preflight.outputs.advanced_release != 'true' || needs.build-bridge.result == 'success') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v4
@@ -179,6 +224,7 @@ jobs:
           name: release-assets
           path: release-assets
       - uses: actions/download-artifact@v4
+        if: needs.release-preflight.outputs.advanced_release == 'true'
         with:
           pattern: bridge-*
           path: release-assets
@@ -188,10 +234,12 @@ jobs:
         with:
           node-version: "22"
       - name: Verify bridge installers before enabling installer entry points
+        if: needs.release-preflight.outputs.advanced_release == 'true'
         run: |
           VERSION="${GITHUB_REF_NAME#v}"
           node tools/verify-release-assets.js --directory release-assets --version "$VERSION" --bridge-only
       - name: Rebuild release packages with verified installer entry points
+        if: needs.release-preflight.outputs.advanced_release == 'true'
         run: |
           VERSION="${GITHUB_REF_NAME#v}"
           node tools/package-extension.js --channel source --output dist/source-release --bridge-installers-ready
@@ -200,7 +248,13 @@ jobs:
           rm -f "release-assets/ai-cli-cheatsheet-store-v${VERSION}.zip"
           (cd dist/source-release && zip -X -q -r "../../release-assets/ai-cli-cheatsheet-source-v${VERSION}.zip" .)
           (cd dist/store-release && zip -X -q -r "../../release-assets/ai-cli-cheatsheet-store-v${VERSION}.zip" .)
+      - name: Verify basic extension release set
+        if: needs.release-preflight.outputs.advanced_release != 'true'
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          node tools/verify-release-assets.js --directory release-assets --version "$VERSION" --basic-only
       - name: Verify complete signed release set
+        if: needs.release-preflight.outputs.advanced_release == 'true'
         env:
           RELEASE_GPG_PRIVATE_KEY: ${{ secrets.RELEASE_GPG_PRIVATE_KEY }}
           RELEASE_GPG_PASSPHRASE: ${{ secrets.RELEASE_GPG_PASSPHRASE }}
@@ -215,17 +269,21 @@ jobs:
       - name: Create GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
-          PROVIDER_CATALOG_SIGNING_KEY: ${{ secrets.PROVIDER_CATALOG_SIGNING_KEY }}
         run: |
-          test -n "$PROVIDER_CATALOG_SIGNING_KEY"
-          python tools/provider-catalog.py sign \
-            --input shared/provider-catalog-template.json \
-            --output release-assets/provider-catalog-envelope.json
           if gh release view "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             gh release upload "$GITHUB_REF_NAME" release-assets/* --repo "$GITHUB_REPOSITORY" --clobber
           else
             gh release create "$GITHUB_REF_NAME" release-assets/* --repo "$GITHUB_REPOSITORY" --verify-tag --generate-notes --title "$GITHUB_REF_NAME"
           fi
+      - name: Publish signed Provider catalog
+        if: needs.release-preflight.outputs.advanced_release == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PROVIDER_CATALOG_SIGNING_KEY: ${{ secrets.PROVIDER_CATALOG_SIGNING_KEY }}
+        run: |
+          python tools/provider-catalog.py sign \
+            --input shared/provider-catalog-template.json \
+            --output release-assets/provider-catalog-envelope.json
           if gh release view provider-catalog --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             gh release upload provider-catalog release-assets/provider-catalog-envelope.json --repo "$GITHUB_REPOSITORY" --clobber
           else
@@ -236,7 +294,7 @@ jobs:
           fi
 
   chrome-web-store:
-    needs: github-release
+    needs: [github-release, release-preflight]
     runs-on: ubuntu-latest
     environment: chrome-web-store
     permissions:
@@ -247,8 +305,12 @@ jobs:
         env:
           PUBLISHER_ID: ${{ vars.CWS_PUBLISHER_ID }}
           EXTENSION_ID: ${{ vars.CWS_EXTENSION_ID }}
+          ADVANCED_RELEASE: ${{ needs.release-preflight.outputs.advanced_release }}
         run: |
-          if [ -n "$PUBLISHER_ID" ] && [ -n "$EXTENSION_ID" ]; then
+          if [ "$ADVANCED_RELEASE" != "true" ]; then
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "Signed bridge installers are not available; skipping Chrome Web Store submission."
+          elif [ -n "$PUBLISHER_ID" ] && [ -n "$EXTENSION_ID" ]; then
             test "$EXTENSION_ID" = "jdiopjiebnamikpcknmnpahhlokccgjj"
             echo "enabled=true" >> "$GITHUB_OUTPUT"
           else

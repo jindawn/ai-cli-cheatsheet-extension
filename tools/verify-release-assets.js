@@ -11,8 +11,12 @@ const directory = path.resolve(valueFor("--directory") || "");
 const version = valueFor("--version");
 const checkOnly = args.includes("--check");
 const bridgeOnly = args.includes("--bridge-only");
+const basicOnly = args.includes("--basic-only");
 if (!version || !/^\d+\.\d+\.\d+$/.test(version) || !fs.statSync(directory).isDirectory()) {
   throw new Error("Usage: verify-release-assets.js --directory <dir> --version <x.y.z>");
+}
+if (bridgeOnly && basicOnly) {
+  throw new Error("--bridge-only and --basic-only cannot be used together");
 }
 const bridgeAssets = [
   `ai-cli-cheatsheet-bridge-macos-arm64-v${version}.pkg`,
@@ -21,11 +25,15 @@ const bridgeAssets = [
   `ai-cli-cheatsheet-bridge-linux-x64-v${version}.deb`,
   `ai-cli-cheatsheet-bridge-linux-x64-v${version}.rpm`,
 ];
-const required = bridgeOnly ? bridgeAssets : [
-  ...bridgeAssets,
+const basicAssets = [
   `ai-cli-cheatsheet-source-v${version}.zip`,
   `ai-cli-cheatsheet-store-v${version}.zip`,
 ];
+const required = bridgeOnly
+  ? bridgeAssets
+  : basicOnly
+    ? basicAssets
+    : [...bridgeAssets, ...basicAssets];
 for (const name of required) {
   const file = path.join(directory, name);
   if (!fs.existsSync(file) || fs.statSync(file).size < 1) throw new Error(`Release asset missing or empty: ${name}`);
@@ -44,4 +52,5 @@ if (bridgeOnly) {
 } else {
   fs.writeFileSync(checksumPath, `${sums.join("\n")}\n`);
 }
-console.log(`Verified ${required.length} release assets for v${version}.`);
+const releaseKind = basicOnly ? "basic extension" : "release";
+console.log(`Verified ${required.length} ${releaseKind} assets for v${version}.`);

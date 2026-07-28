@@ -4,7 +4,7 @@
 // packager replaces channel-specific persistence and permission details.
 window.CHEATSHEET_DISTRIBUTION = Object.freeze({
   channel: "source",
-  releaseVersion: "1.7.6",
+  releaseVersion: "1.7.7",
   storeExtensionId: "jdiopjiebnamikpcknmnpahhlokccgjj",
   // Source checkouts are previews: never point users at an unverified release
   // asset. The store packager enables this only after its release gate exists.

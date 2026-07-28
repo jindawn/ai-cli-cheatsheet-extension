@@ -181,7 +181,9 @@ GitHub Actions 会执行 JavaScript 语法检查、数据 Schema 校验和 Nativ
 
 ## 发布
 
-`vX.Y.Z` Git 标签必须与 `manifest.json` 版本一致。推送标签后，Release 工作流会重跑完整校验、对源码版和商店版分别进行 Chromium 冒烟测试，再生成两个 ZIP、`SHA256SUMS` 和 GitHub Release。桥接构建还要求仓库 Secret `PROVIDER_CATALOG_SIGNING_KEY`（32 字节 Ed25519 seed 的 Base64），构建时只把公钥注入安装包；私钥不会进入产物。独立的 Provider Catalog 工作流使用同一密钥发布签名目录。
+`vX.Y.Z` Git 标签必须与 `manifest.json` 版本一致。推送标签后，Release 工作流会重跑完整校验、对源码版和商店版分别进行 Chromium 冒烟测试，再生成两个 ZIP、`SHA256SUMS` 和 GitHub Release；这条基础发布路径不依赖签名密钥。
+
+图形本机桥接安装器、签名的 `SHA256SUMS.asc`、Provider 适配器目录和 Chrome Web Store 自动提交属于额外的签名发布能力。只有同时配置 Provider 目录密钥、macOS 公证签名、Windows 代码签名及发布 GPG 密钥时，工作流才会构建这些资产，并在已配置商店凭据后提交审核。缺少任一项时，扩展 ZIP 仍可正常发布，但包内不会开放尚未验证的安装器入口。独立的 Provider Catalog 工作流仍要求 `PROVIDER_CATALOG_SIGNING_KEY`（32 字节 Ed25519 seed 的 Base64），构建时只把公钥注入安装包；私钥不会进入产物。
 
 首次 Chrome Web Store 上架及后续自动提交所需的商店文案、图形资产和 GitHub Environment 配置见 [Chrome Web Store 上架资料](docs/chrome-web-store.md)。未配置 `CWS_PUBLISHER_ID` 和 `CWS_EXTENSION_ID` 时，商店上传任务会跳过，不影响 GitHub Release。
 

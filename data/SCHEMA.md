@@ -35,6 +35,11 @@
   en: "英文官方说明（简短）",
   zh: "中文说明（讲清楚用途，不是字面翻译）",
   context: "编辑器 / 集成终端",            // 可选；相同 cmd 在不同场景出现时必填
+  entryType: "cli-command",              // 官方入口类型；组件全集工具必填
+  components: ["util-linux"],            // 发现该入口的固定官方组件，可有重叠
+  constraints: ["仅 Linux；取决于构建选项"], // 可选构建、发行版和前置条件
+  usage: "command [OPTION] OPERAND",      // 官方 Usage/Synopsis，不把选项拆成独立程序
+  options: ["--json", "--verbose"],      // 官方清单解析到的关键选项；可为空
   shell: {                                  // 仅 Shell 聚合工具使用；普通工具不得填写。Shell 仅含解释器与终端环境本体，外部 CLI 工具不收录
     layer: "syntax",                        // syntax / keyword / builtin / option / shortcut / config
     family: "bash",                         // 只能是 posix-sh / bash / zsh（Shell 本体）；不要用 coreutils / grep / sed 等外部工具族
@@ -110,7 +115,9 @@ meta：
     covered: 440,
     checkedAt: "2026-07-13",
     sourceIds: ["official-docs"],
-    inventoryHash: "sha256:..."                        // complete 时必填
+    inventoryHash: "sha256:...",                       // complete 时必填
+    componentCounts: { "systemd": 81 },                // 按固定组件实时枚举，不能写人工目标数
+    sourceManifestHash: "sha256:..."                   // 固定版本、解析结果与排除项的事务摘要
   },
   unverifiedPolicy: "未核验条目的保留原因与复核方式",    // 存在 unverified 时必填；禁止无解释保留
   sources: [{
@@ -165,6 +172,7 @@ meta：
 
 - Native Host 和仓库 CI 都要求每条目具备合法的 `keywords`（3..8）、`examples`（1..3）和第一方 `groundingRefs`。缺失、降级或审校失败会终止新增/更新，不再只产生质量警告。
 - 每个工具必须具有 schema v2 官方清单、确定性适配器闭合证明和匹配当前内容哈希的场景审校快照。完整规则以根目录 `OFFICIAL_DATA_POLICY.md` 为准。
+- 组件全集工具还必须提交 `shared/official-component-fixtures/<id>.json`。夹具逐组件记录固定版本、下载地址、归档 SHA-256、解析器、公开入口及有理由的排除项；`tools/verify-official-command-sources.py` 会重新下载并复跑解析器，不能从渲染后的清单反向生成“证明”。
 - **示例 UI 文案语言**：`description`、`scenario`、`goal`、`expected`、`prerequisites`、`caveat`、`warning` 必须包含中文；`value`、`cmd`、`en`、URL、产品名和命令参数可以保留英文。
 
 两侧的数量上下限与危险/密钥正则保持一致，统一声明在 `shared/validation-rules.json`，并由 `tests/test_validation_consistency.js` 防止漂移。改任一侧规则前先更新该 JSON。危险/密钥正则同时作用于 `examples[].value` 与 `examples[].platformValues` 的每个平台值：仓库端命中即要求 `warning` + `copyable: false`；生成端命中会自动降级（补 warning、禁复制、补安全预览 caveat）。

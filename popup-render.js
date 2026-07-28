@@ -18,6 +18,22 @@
     ).join("");
   }
 
+  function platformNames(platforms) {
+    const labels = { mac: "macOS", windows: "Windows", linux: "Linux" };
+    return (Array.isArray(platforms) ? platforms : []).map((platform) => labels[platform] || platform);
+  }
+
+  function platformScopeLabel(platforms) {
+    const names = platformNames(platforms);
+    if (!names.length || names.length >= 3) return "";
+    return names.length === 1 ? `仅 ${names[0]}` : `适用于 ${names.join(" / ")}`;
+  }
+
+  function platformBadge(meta) {
+    const label = platformScopeLabel(meta?.platforms);
+    return label ? `<span class="platform-badge">${escapeHtml(label)}</span>` : "";
+  }
+
   function normalizedSources(meta) {
     if (Array.isArray(meta.sources) && meta.sources.length) return meta.sources;
     if (!meta.sourceUrl) return [];
@@ -140,7 +156,7 @@
     const quickHtml = quickItems.map(([id, label]) =>
       `<button class="chip ${state.activeTool === id ? "active" : ""}" data-tool="${id}">${escapeHtml(label)}</button>`
     ).join("");
-    const toolHtml = [["all", "全部工具"], ...helpers.visibleToolIds(data, state.enabledTools).map((id) => [id, data[id].meta.name])]
+    const toolHtml = [["all", "全部工具"], ...helpers.visibleToolIds(data, state.enabledTools, state.platform).map((id) => [id, data[id].meta.name])]
       .map(([id, label]) => `<button class="chip ${state.activeTool === id ? "active" : ""}" data-tool="${id}">${escapeHtml(label)}</button>`)
       .join("");
     const categoryHtml = Object.entries(helpers.CAT_LABEL).map(([id, label]) =>
@@ -148,7 +164,7 @@
     ).join("") + `<button id="clearFilters" class="chip filter-clear">清除筛选</button>`;
     const evidenceHtml = [["verified", "已核验"], ["partial", "部分核验"], ["unverified", "未核验"]]
       .map(([id, label]) => `<button class="chip ${state.activeEvidence === id ? "active" : ""}" data-evidence="${id}">${label}</button>`).join("");
-    const exampleHtml = [["with-examples", "有用法"], ["platform-examples", "当前平台用法"]]
+    const exampleHtml = [["with-examples", "有用法"], ["platform-examples", "首选平台用法"]]
       .map(([id, label]) => `<button class="chip ${state.activeExampleFilter === id ? "active" : ""}" data-example-filter="${id}">${label}</button>`).join("");
     const shellHtml = state.activeTool === "shell" && data.shell
       ? [
@@ -175,10 +191,12 @@
       ...example,
       index,
       platformInfo: core.getPlatformExample(example, platform),
-    })).filter((example) => !example.platformInfo.unsupported);
+    }));
     const examplesOpen = expandedExamples.has(key);
     const commandRisk = core.classifyCommandRisk(entry.displayCmd, examples);
-    const note = entry.platformInfo.unsupported ? "当前平台不可用" : entry.platformInfo.usedFallback ? "通用写法" : "";
+    const note = entry.platformInfo.platformMismatch
+      ? platformScopeLabel(entry.item.platforms)
+      : entry.platformInfo.usedFallback ? "通用写法" : "";
     const aliases = entry.item.aliases?.length
       ? `<span class="alias-note">别名：${entry.item.aliases.map(escapeHtml).join("、")}</span>`
       : "";
@@ -204,6 +222,7 @@
     const examplesHtml = examplesOpen ? `<div class="examples">${entry.item.en ? `<div class="en">${highlightHtml(core, entry.item.en, query)}</div>` : ""}${examples.map((example, exampleIndex) => `
     <div class="example">
       ${exampleIndex === 0 ? `<span class="example-badge">推荐用法</span>` : ""}
+      ${example.platformInfo.platformMismatch ? `<span class="platform-badge">${escapeHtml(platformScopeLabel(example.platforms))}</span>` : ""}
       <div class="example-value">${commandExampleHtml(core, example.platformInfo.value, query)}</div>
       <div class="example-desc">${highlightHtml(core, example.description, query)}</div>
       ${example.scenario ? `<div class="example-context">场景：${escapeHtml(example.scenario)}</div>` : ""}
@@ -216,7 +235,7 @@
       ${example.copyable !== false ? `<button class="act example-copy" data-example="${example.index}" title="复制此用法" aria-label="复制此用法">复制</button>` : ""}
     </div>`).join("")}${commandEvidenceHtml(entry.item, sources)}</div>` : "";
     return `<article class="entry-wrap" data-tool="${entry.toolId}" data-item="${entry.itemId}">
-    <div class="row"><button class="row-main" data-copy-command ${entry.platformInfo.unsupported ? "disabled" : ""} aria-label="${entry.platformInfo.unsupported ? "当前平台不可用" : `复制命令 ${escapeHtml(entry.displayCmd)}`}">
+    <div class="row"><button class="row-main" data-copy-command aria-label="复制命令 ${escapeHtml(entry.displayCmd)}${note ? `（${escapeHtml(note)}）` : ""}">
     <span class="cmd"><span class="dot" style="background:${escapeHtml(tool.meta.color)}"></span>${highlightHtml(core, entry.displayCmd, query)}
       ${includeBadge ? `<span class="context">${escapeHtml(tool.meta.name)}</span>` : ""}
       ${entry.item.context ? `<span class="context">${escapeHtml(entry.item.context)}</span>` : ""}
@@ -225,7 +244,7 @@
     </span>
     <span class="zh">${highlightHtml(core, entry.item.zh, query)}</span>
     ${matchReason}${summary}</button>
-    <div class="row-actions"><button class="act copy-btn" data-copy-command ${entry.platformInfo.unsupported ? "disabled" : ""} title="${entry.platformInfo.unsupported ? "当前平台不可用" : "复制命令"}" aria-label="${entry.platformInfo.unsupported ? "当前平台不可用" : "复制命令"}">复制</button><button class="act fav-btn ${favourites.has(key) ? "fav-active" : ""}" title="${favourites.has(key) ? "取消收藏" : "收藏"}" aria-label="${favourites.has(key) ? "取消收藏" : "收藏"}">${favourites.has(key) ? "♥" : "♡"}</button></div>
+    <div class="row-actions"><button class="act copy-btn" data-copy-command title="复制命令${note ? `（${escapeHtml(note)}）` : ""}" aria-label="复制命令${note ? `（${escapeHtml(note)}）` : ""}">复制</button><button class="act fav-btn ${favourites.has(key) ? "fav-active" : ""}" title="${favourites.has(key) ? "取消收藏" : "收藏"}" aria-label="${favourites.has(key) ? "取消收藏" : "收藏"}">${favourites.has(key) ? "♥" : "♡"}</button></div>
     </div>
     ${examples.length ? `<button class="usage-toggle" aria-expanded="${examplesOpen}" aria-controls="${examplesId}" data-usage>${examplesOpen ? "收起用法" : `查看用法 ${examples.length}`}</button>` : ""}
     ${examplesOpen ? `<div id="${examplesId}">${examplesHtml}</div>` : ""}
@@ -234,7 +253,7 @@
 
   function renderManageToolToggles(data, toolIds, state) {
     return toolIds.map((toolId) =>
-      `<label class="tool-choice"><input type="checkbox" data-enabled="${toolId}" ${state.enabledTools.has(toolId) ? "checked" : ""}> ${escapeHtml(data[toolId].meta.name)}</label>`
+      `<label class="tool-choice"><input type="checkbox" data-enabled="${toolId}" ${state.enabledTools.has(toolId) ? "checked" : ""}> <span>${escapeHtml(data[toolId].meta.name)}</span>${platformBadge(data[toolId].meta)}</label>`
     ).join("");
   }
 
@@ -291,31 +310,30 @@
     const toggle = item.dismissed
       ? `<button class="text-btn" data-recommend-restore="${escapeHtml(item.tool)}" data-recommend-label="${escapeHtml(item.displayName)}">恢复</button>`
       : `<button class="text-btn" data-recommend-dismiss="${escapeHtml(item.tool)}" data-recommend-label="${escapeHtml(item.displayName)}">忽略</button>`;
-    const addLabel = webVerify ? "新增 · 联网" : "新增";
-    const add = `<button class="text-btn" data-recommend-tool="${escapeHtml(item.tool)}" data-recommend-name="${escapeHtml(item.displayName)}">${addLabel}</button>`;
+    const add = item.dismissed ? "" : `<button class="text-btn primary" data-recommend-add="${escapeHtml(item.displayName)}" data-recommend-web="${webVerify || item.preferWeb === true ? "true" : "false"}">查询并新增</button>`;
     return `${learn}${toggle}${add}`;
   }
 
   function recommendCard(item, webVerify) {
     return `<div class="recommend-card ${item.dismissed ? "is-dismissed" : ""} ${item.adding ? "is-adding" : ""}">
       <div class="recommend-head">
-        <div><div class="recommend-name">${escapeHtml(item.displayName)}${item.source === "ai" ? `<span class="recommend-ai">AI</span>` : ""}</div><div class="recommend-cat">${escapeHtml(item.category)}</div></div>
+        <div><div class="recommend-name">${escapeHtml(item.displayName)}</div><div class="recommend-cat">${escapeHtml(item.category)}</div></div>
         <div class="recommend-actions">${recommendCardActions(item, webVerify)}</div>
       </div>
       ${item.explainReasons && item.explainReasons.length
         ? item.explainReasons.map((reason) => `<div class="recommend-related">${escapeHtml(reason)}</div>`).join("")
         : item.relatedTo && item.relatedTo.length ? `<div class="recommend-related">因为你已添加 ${escapeHtml(item.relatedTo.join("、"))}</div>` : ""}
       <div class="meta">${escapeHtml(item.reason)}</div>
-      <div class="recommend-tags">${(item.tags || []).map((tag) => `<span>${escapeHtml(tag)}</span>`).join("")}${item.preferWeb && !webVerify ? `<span class="recommend-web-hint">建议联网</span>` : ""}</div>
+      <div class="recommend-tags">${(item.tags || []).map((tag) => `<span>${escapeHtml(tag)}</span>`).join("")}</div>
     </div>`;
   }
 
   function renderRecommendedTools(result) {
     if (!result.totalAvailable) {
-      return `<div class="meta">当前平台的常用推荐都已收录。也可以在下方手动输入工具名称。</div>`;
+      return `<div class="meta">首选平台的常用推荐都已收录。</div>`;
     }
     if (!result.totalVisible) {
-      return `<div class="meta">${result.query || result.activeCategory !== "all" ? "当前筛选没有匹配的推荐。" : "当前平台的推荐都已忽略。"}可以调整筛选、显示已忽略项，或在下方手动输入工具名称。</div>`;
+      return `<div class="meta">${result.query || result.activeCategory !== "all" ? "当前筛选没有匹配的推荐。" : "首选平台的推荐都已忽略。"}可以调整筛选或显示已忽略项。</div>`;
     }
     const webVerify = result.webVerify === true;
     if (result.batched && result.batch) {
@@ -347,8 +365,7 @@
   </div>`;
   }
 
-  // 搜索无结果时，从未收录的推荐池里按查询匹配，给出「添加到速查表」的引导（改动 2）。
-  // 与管理面板保持一致：尊重已忽略项、并纳入 AI 现荐。
+  // 搜索无结果时，从未收录的本地推荐池里按查询匹配，给出进一步了解的入口。
   function findUninstalledSuggestions(query, ctx, limit = 2) {
     if (!ctx || !ctx.helpers || typeof ctx.helpers.filterRecommendedTools !== "function") return [];
     const result = ctx.helpers.filterRecommendedTools(ctx.data || {}, ctx.platform, {
@@ -366,11 +383,12 @@
       const homepage = safeHttpsUrl(item.homepage);
       const learn = homepage ? ` <a class="suggest-learn" href="${escapeHtml(homepage)}" target="_blank" rel="noopener noreferrer">了解 ↗</a>` : "";
       return `<div class="suggest-add-item">
-        <button class="text-btn primary" data-suggest-add-tool="${escapeHtml(item.tool)}" data-suggest-add-name="${escapeHtml(item.displayName)}">添加 ${escapeHtml(item.displayName)}</button>${learn}
+        <strong>${escapeHtml(item.displayName)}</strong>${learn}
+        <button class="text-btn primary" data-query-add="${escapeHtml(item.displayName)}" data-query-web="${item.preferWeb === true ? "true" : "false"}">查询并新增</button>
         <div class="suggest-add-reason">${escapeHtml(item.reason || "")}</div>
       </div>`;
     }).join("");
-    return `<div class="suggest-add"><div class="suggest-add-title">速查表还没收录，要加进来吗？</div>${cards}</div>`;
+    return `<div class="suggest-add"><div class="suggest-add-title">速查表尚未收录，可能在找这些工具：</div>${cards}</div>`;
   }
 
   function renderResults(entries, query, state, ctx) {
@@ -393,10 +411,10 @@
 
     if (query.trim() || state.activeTool === "recent" || state.activeTool === "favourites") {
       const visible = entries.slice(0, state.searchLimit);
-      const unsupported = visible.length && visible.every((entry) => entry.platformInfo.unsupported)
-        ? `<div class="result-notice">这些结果在当前平台不可用，可在管理中切换平台。</div>`
+      const platformMismatchNotice = visible.length && visible.every((entry) => entry.platformInfo.platformMismatch)
+        ? `<div class="result-notice">这些结果适用于其他平台；仍可查看和复制，首次复制时会提示目标平台。</div>`
         : "";
-      return unsupported + visible.map((entry) => renderRow(entry, query, ctx, true)).join("")
+      return platformMismatchNotice + visible.map((entry) => renderRow(entry, query, ctx, true)).join("")
         + (entries.length > visible.length ? `<button class="text-btn more-btn" data-more-results>继续显示（剩余 ${entries.length - visible.length} 条）</button>` : "");
     }
 
@@ -430,11 +448,18 @@
     return toolIds.map((toolId) => {
       const meta = data[toolId].meta;
       const catalogOnly = meta.catalogOnly === true;
-      const canDelete = !meta.builtIn;
+      const canDelete = state.deletableToolIds instanceof Set
+        ? state.deletableToolIds.has(toolId)
+        : !meta.builtIn;
       const officialCoverage = meta.officialCoverage;
       const coverageText = officialCoverage?.status === "complete"
         ? `官方入口覆盖：${officialCoverage.covered}/${officialCoverage.total}（${officialCoverage.checkedAt}）`
         : "官方入口覆盖：完整性未确认";
+      const componentCoverageText = officialCoverage?.componentCounts
+        ? Object.entries(officialCoverage.componentCounts)
+          .map(([component, count]) => `${component} ${count}`)
+          .join(" · ")
+        : "";
       const sources = normalizedSources(meta);
       const quality = globalScope.CHEATSHEET_QUALITY?.auditTool(toolId, data[toolId], {
         target: helpers.TOOL_PRESETS.ai.includes(toolId) ? 0.9 : 0.75,
@@ -467,11 +492,12 @@
           evidenceCountsForExamples[example.evidenceTier] += 1;
         }
       }));
-      return `<div class="tool-card"><div class="tool-title"><input type="checkbox" data-enabled="${toolId}" id="enabled-${toolId}" ${state.enabledTools.has(toolId) ? "checked" : ""}><label for="enabled-${toolId}">${escapeHtml(meta.name)}</label></div>
+      return `<div class="tool-card"><div class="tool-title"><input type="checkbox" data-enabled="${toolId}" id="enabled-${toolId}" ${state.enabledTools.has(toolId) ? "checked" : ""}><label for="enabled-${toolId}">${escapeHtml(meta.name)}</label>${platformBadge(meta)}</div>
       <div class="meta">${catalogOnly ? "启用后按需加载完整数据" : `${escapeHtml(meta.coverage || meta.source)}<br>${escapeHtml(coverageText)}<br>来源 ${sources.length} 个 · ${escapeHtml(helpers.updateStatusLabel(meta))} · 数据整理方式：<span class="verify">${escapeHtml(verification)}</span>`}</div>
       ${catalogOnly ? "" : `<details class="stats-detail"><summary>数据质量明细</summary>
         <div class="meta">条目核验：已核验 ${evidenceCounts.verified} / 部分核验 ${evidenceCounts.partial} / 未核验 ${evidenceCounts.unverified}</div>
         <div class="meta">${escapeHtml(coverageText)}</div>
+        ${componentCoverageText ? `<div class="meta">组件闭合：${escapeHtml(componentCoverageText)}</div>` : ""}
         ${quality ? `<div class="meta">准确度：${Math.round(quality.verifiedRatio * 100)}% / 目标 ${Math.round(quality.target * 100)}% · ${quality.targetMet ? "达标" : "待提升"}</div>
         <div class="meta">类别：快捷键 ${quality.categories.shortcut} / 命令 ${quality.categories.slash} / 参数 ${quality.categories.flag}</div>
         <div class="meta">平台：macOS ${quality.platforms.mac} / Windows ${quality.platforms.windows} / Linux ${quality.platforms.linux} · 平台专属用法 ${quality.examples.platformSpecific}</div>
@@ -480,11 +506,11 @@
         <div class="meta">案例编写：官方原例 ${authorshipCounts.official} / 编辑整理 ${authorshipCounts.editorial} / 自动生成 ${authorshipCounts.generated}</div>
         <div class="meta">案例证据：第一方 ${evidenceCountsForExamples["first-party"]} / 权威社区 ${evidenceCountsForExamples["authoritative-community"]} / 普通社区 ${evidenceCountsForExamples.community} / 无独立证据 ${evidenceCountsForExamples.none}</div>
       </details>`}
-      ${catalogOnly ? "" : `<div class="tool-actions"><button class="text-btn" data-update="${toolId}">检查官方更新</button></div>`}
-      <details class="advanced-actions"><summary>高级操作</summary>
+      ${!state.maintenanceReady ? "" : `<div class="tool-actions"><button class="text-btn" data-update="${toolId}">检查官方更新</button></div>`}
+      ${(state.maintenanceReady || canDelete) ? `<details class="advanced-actions"><summary>高级操作</summary>
         <div class="meta">检查官方更新每次都会读取官方目录；只有发现缺项或版本变化时才继续生成更新预览。</div>
         <div class="tool-actions">${canDelete ? `<button class="text-btn danger" data-remove="${toolId}">删除</button>` : `<span class="meta">内置工具可隐藏，不可删除</span>`}</div>
-      </details></div>`;
+      </details>` : ""}</div>`;
     }).join("");
   }
 
@@ -525,7 +551,7 @@
 
   function renderOnboardChoices(data, toolIds, enabledTools) {
     return toolIds.map((toolId) =>
-      `<label class="tool-choice"><input type="checkbox" value="${toolId}" ${enabledTools.has(toolId) ? "checked" : ""}> ${escapeHtml(data[toolId].meta.name)}</label>`
+      `<label class="tool-choice"><input type="checkbox" value="${toolId}" ${enabledTools.has(toolId) ? "checked" : ""}> <span>${escapeHtml(data[toolId].meta.name)}</span>${platformBadge(data[toolId].meta)}</label>`
     ).join("");
   }
 

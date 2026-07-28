@@ -30,37 +30,45 @@
   <div class="manage-body">
     <div class="panel">
       <h2>偏好设置</h2>
-      <div class="setting-row"><span>当前平台</span><select id="platformSelect"><option value="mac">macOS</option><option value="windows">Windows</option><option value="linux">Linux</option></select></div>
+      <div class="setting-row"><span>首选命令平台</span><select id="platformSelect"><option value="mac">macOS</option><option value="windows">Windows</option><option value="linux">Linux</option></select></div>
       <div id="manageToolToggles" class="tool-grid"></div>
       <div class="tool-actions"><button id="rerunOnboarding" class="text-btn">重新选择常用工具</button><button id="clearRecent" class="text-btn">清空最近使用</button></div>
     </div>
-    <div class="panel" data-source-only hidden>
-      <h2>推荐添加</h2>
+    <div class="panel" id="recommendationPanel">
+      <h2>个性化推荐</h2>
       <div class="recommend-controls">
         <input id="recommendSearch" type="search" placeholder="搜索推荐工具、类别或标签…" autocomplete="off">
         <label><input type="checkbox" id="showDismissedRecommendations">显示已忽略</label>
       </div>
       <div id="recommendCategories" class="filters"></div>
       <div id="recommendedTools" class="recommend-grid"></div>
-      <div class="recommend-ai-row">
-        <button id="aiSuggestBtn" class="text-btn">✨ 让 AI 再荐一批</button>
-        <span class="meta">需要本地桥接，调用模型会计入用量</span>
-      </div>
+      <div class="meta">推荐仅根据已启用工具、收藏和最近使用在本地排序，不需要额外安装或授权。</div>
     </div>
-    <div class="panel" data-source-only hidden>
-      <details class="maintenance-panel">
+    <div class="panel">
+      <details class="maintenance-panel" id="maintenancePanel">
         <summary>数据维护与高级操作</summary>
-        <div class="setting-row"><label for="webVerifyToggle">新增工具时联网核对（更准但更慢）</label><input type="checkbox" id="webVerifyToggle"></div>
+        <div class="runtime-row">
+          <label for="providerSelect">AI 执行环境</label>
+          <select id="providerSelect" aria-label="AI 执行环境">
+            <option value="" selected disabled>检测本机 AI 环境后选择</option>
+          </select>
+          <button id="detectBridge" class="text-btn detect-btn" type="button" aria-busy="false">
+            <span class="detect-spinner" aria-hidden="true"></span><span class="detect-label">检测</span>
+          </button>
+        </div>
+        <div id="providerStatus" class="meta" role="status">首次使用维护功能时检测本机环境；不会在冷启动时调用模型。</div>
+        <div class="meta">新增与更新都会先刷新确定性官方清单；清单无法证明完整时不会调用模型或写入数据。</div>
         <h2>工具与来源</h2>
         <div id="manageTools"></div>
         <h2>新增工具</h2>
-        <div class="add-row"><input id="addToolName" placeholder="如 Warp / Cursor"><button id="addToolBtn" class="text-btn primary">查询并新增</button></div>
-        <div class="meta">需要已安装本地桥接和 Claude Code，会计入正常 Claude 用量。</div>
+        <div class="add-row"><input id="addToolName" placeholder="如 ripgrep / kubectl"><button id="addToolBtn" class="text-btn primary">查询并新增</button></div>
+        <div class="meta">仅在官方入口能够确定性闭合时生成预览；应用前会再次确认。</div>
+        <div class="tool-actions"><button id="resetDynamicData" class="text-btn">重置本地覆盖</button></div>
       </details>
     </div>
     <div id="manageStatus" class="status"></div>
-    <button id="cancelTask" class="act" data-source-only data-dynamic-hidden hidden>取消任务</button>
-    <div id="pendingPanel" class="panel" data-source-only data-dynamic-hidden hidden></div>
+    <button id="cancelTask" class="act" data-dynamic-hidden hidden>取消任务</button>
+    <div id="pendingPanel" class="panel" data-dynamic-hidden hidden></div>
   </div>
 </section>
 
@@ -68,8 +76,8 @@
   <div class="onboard-card" role="document" tabindex="-1">
     <h1 id="onboardTitle">先选择你常用的工具</h1>
     <p>之后首页只展示这些工具。你可以跳过并保留全部，也可以随时在管理页修改。</p>
-    <div class="setting-row"><span>使用平台</span><select id="onboardPlatform"><option value="mac">macOS</option><option value="windows">Windows</option><option value="linux">Linux</option></select></div>
-    <div class="preset-row" aria-label="常用工具预设"><button class="chip" data-preset="ai">AI CLI</button><button class="chip" data-preset="editors">编辑器</button><button class="chip" data-preset="terminal">Git / Linux / Shell</button><button class="chip" data-preset="all">全部</button></div>
+    <div class="setting-row"><span>首选命令平台</span><select id="onboardPlatform"><option value="mac">macOS</option><option value="windows">Windows</option><option value="linux">Linux</option></select></div>
+    <div class="preset-row" aria-label="常用工具预设"><button class="chip" data-preset="ai">AI CLI</button><button class="chip" data-preset="editors">编辑器</button><button class="chip" data-preset="terminal">Git / Unix / Linux / Shell</button><button class="chip" data-preset="all">全部</button></div>
     <div id="onboardTools" class="tool-grid"></div>
     <div class="onboard-actions"><button id="skipOnboarding" class="text-btn">跳过，显示全部</button><button id="saveOnboarding" class="text-btn primary">保存偏好</button></div>
   </div>
@@ -84,6 +92,51 @@
     <div class="risk-actions"><button id="riskCancel" class="text-btn">取消</button><button id="riskConfirm" class="text-btn primary">确认复制</button></div>
   </div>
 </div>
+
+<div id="bridgeDialog" class="bridge-dialog" role="dialog" aria-modal="true" aria-labelledby="bridgeTitle">
+  <div class="bridge-card" role="document" tabindex="-1">
+    <div class="bridge-dialog-head"><h2 id="bridgeTitle">安装本机检测组件</h2><button id="closeBridgeDialog" class="icon-btn" aria-label="关闭">×</button></div>
+    <p id="bridgeIntro">这不是安装 AI 环境。安装组件后，点击“检测”即可发现 Claude、Codex、Gemini 及其他已支持的本机 AI 环境。以后环境有变化时只需重新检测。</p>
+    <div id="bridgeInstallActions" class="bridge-install-actions"></div>
+    <ol id="bridgeSteps" class="bridge-steps"><li>下载并在系统安装界面确认安装。</li><li>安装完成后返回此处重新检测。</li></ol>
+    <div id="bridgeDialogStatus" class="status"></div>
+    <div class="bridge-dialog-actions"><button id="bridgeDetect" class="text-btn primary">重新检测本机 AI 环境</button></div>
+  </div>
+</div>
+
+<div id="customProviderDialog" class="custom-provider-dialog" role="dialog" aria-modal="true" aria-labelledby="customProviderTitle" aria-hidden="true">
+  <div class="custom-provider-card" role="document" tabindex="-1">
+    <div class="bridge-dialog-head"><h2 id="customProviderTitle">添加 AI 环境</h2><button id="closeCustomProviderDialog" class="icon-btn" aria-label="关闭">×</button></div>
+    <p>选择常见工具，或输入其他工具的名称。扩展会先自动检测；不会执行 Shell 命令。</p>
+    <input id="commonProviderSearch" class="custom-provider-search" type="search" placeholder="搜索 Claude、Copilot、Qwen、Aider…" autocomplete="off">
+    <div id="commonProviderList" class="common-provider-list" aria-live="polite"></div>
+    <button id="openOtherProviderFlow" class="text-btn custom-provider-other" type="button">其他工具…</button>
+    <form id="genericProviderForm" class="custom-provider-form" hidden aria-busy="false">
+      <h3 id="genericProviderFormTitle">检测其他 AI 工具</h3>
+      <label>工具名称<input id="genericProviderName" maxlength="100" placeholder="如 My AI CLI" autocomplete="off"></label>
+      <label id="genericExecutableField" hidden>实际命令名<input id="genericProviderExecutable" maxlength="80" placeholder="如 my-ai" autocomplete="off"></label>
+      <p class="meta">先按工具名称在本机 PATH 中自动检测；找不到时才需要填写实际命令名。</p>
+      <div id="genericProviderStatus" class="status" role="status"></div>
+      <div class="bridge-dialog-actions"><button id="cancelGenericProvider" class="text-btn" type="button">返回</button><button id="detectGenericProvider" class="text-btn primary" type="submit">自动检测</button></div>
+    </form>
+    <section id="genericProviderConfirm" class="custom-provider-form" hidden aria-labelledby="genericProviderConfirmTitle">
+      <h3 id="genericProviderConfirmTitle">确认通用调用</h3>
+      <p id="genericProviderSummary"></p>
+      <p>该工具没有经过本扩展的只读验证。启用后会以<strong>无额外参数</strong>、标准输入传递任务，并要求标准输出返回结构化 JSON。扩展不会执行 Shell、模型返回内容或动态参数；但该 CLI 自身的读写、联网和权限行为仍由你确认。</p>
+      <div id="genericProviderConfirmStatus" class="status" role="status"></div>
+      <div class="bridge-dialog-actions"><button id="backGenericProvider" class="text-btn" type="button">返回</button><button id="enableGenericProvider" class="text-btn primary" type="button">确认并启用</button></div>
+    </section>
+    <section id="commonProviderInstallConfirm" class="custom-provider-form" hidden aria-labelledby="commonProviderInstallTitle" aria-busy="false">
+      <h3 id="commonProviderInstallTitle">安装 AI 环境</h3>
+      <p id="commonProviderInstallSummary"></p>
+      <p id="commonProviderInstallPrerequisite" class="meta"></p>
+      <p>将通过已验证的官方安装来源完成安装，不会执行 Shell 脚本或读取你的模型凭据。安装完成后会自动重新检测。</p>
+      <div id="commonProviderInstallStatus" class="status" role="status"></div>
+      <div class="bridge-dialog-actions"><button id="backCommonProviderInstall" class="text-btn" type="button">返回</button><button id="confirmCommonProviderInstall" class="text-btn primary" type="button">确认安装</button></div>
+    </section>
+  </div>
+</div>
+
 
 <script src="data/index.js"></script>
 <script src="pinyin-initials.js"></script>
@@ -102,7 +155,6 @@
 <script src="enrichments/migrated-gemini-cli.js"></script>
 <script src="enrichments/migrated-git.js"></script>
 <script src="enrichments/migrated-idea.js"></script>
-<script src="enrichments/migrated-linux.js"></script>
 <script src="enrichments/migrated-openclaw.js"></script>
 <script src="enrichments/migrated-opencode.js"></script>
 <script src="enrichments/migrated-typora.js"></script>
@@ -113,6 +165,7 @@
 <script src="popup-toast.js"></script>
 <script src="popup-dialogs.js"></script>
 <script src="popup-loader.js"></script>
+<script src="dynamic-data.js"></script>
 <script src="popup-tasks.js"></script>
 <script src="popup.js"></script>
 </body>

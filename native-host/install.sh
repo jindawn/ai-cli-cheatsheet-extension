@@ -8,6 +8,22 @@ PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
 HOST_NAME="com.aicli.cheatsheet_updater"
 MANIFEST_FILE="$HOST_NAME.json"
 OS_NAME="$(uname -s)"
+DEV_MODE="${AICLI_DEV:-0}"
+STANDALONE_MODE=0
+EXTENSION_ID=""
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    --symlink) DEV_MODE=1 ;;
+    --standalone) STANDALONE_MODE=1 ;;
+    --extension-id)
+      shift
+      [ "$#" -gt 0 ] || { echo "❌ --extension-id 缺少值"; exit 2; }
+      EXTENSION_ID="$1"
+      ;;
+    *) echo "❌ 未知参数：$1"; exit 2 ;;
+  esac
+  shift
+done
 
 case "$OS_NAME" in
   Darwin)
@@ -24,7 +40,7 @@ case "$OS_NAME" in
     EDGE_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/microsoft-edge/NativeMessagingHosts"
     ;;
   *)
-    echo "❌ 不支持的系统：$OS_NAME。Windows 请运行 install.ps1。"
+    echo "❌ 不支持的系统：${OS_NAME}。Windows 请运行 install.ps1。"
     exit 1
     ;;
 esac
@@ -94,19 +110,24 @@ for dir in "${RUNTIME_DIRS[@]}"; do
 done
 
 NODE_BIN="$(PATH="$RUNTIME_PATH" command -v node 2>/dev/null || true)"
-CLAUDE_BIN="$(PATH="$RUNTIME_PATH" command -v claude 2>/dev/null || true)"
 if [ -n "$NODE_BIN" ]; then
   echo "✅ node：$("$NODE_BIN" --version) ($NODE_BIN)"
 else
   echo "ℹ️  未检测到 Node.js；数据读取不需要 Node，仅 npm 安装的 CLI 运行时可能需要。"
 fi
 
-if [ -z "$CLAUDE_BIN" ]; then
-  echo "⚠️  没找到 claude 命令。"
-  echo "   本功能需要 Claude Code CLI：npm install -g @anthropic-ai/claude-code"
-  echo "   安装好 claude 后，重新运行本脚本即可，或者先继续完成安装。"
-else
-  echo "✅ claude：$CLAUDE_BIN"
+READY_CLI=0
+for cmd in claude codex gemini opencode; do
+  resolved="$(PATH="$RUNTIME_PATH" command -v "$cmd" 2>/dev/null || true)"
+  if [ -n "$resolved" ]; then
+    echo "✅ ${cmd}：${resolved}"
+    READY_CLI=1
+  else
+    echo "ℹ️  未检测到 $cmd"
+  fi
+done
+if [ "$READY_CLI" = "0" ]; then
+  echo "⚠️  尚未检测到受支持的 AI CLI；桥接可先安装，之后安装并登录任意一个再检测。"
 fi
 
 refresh_runtime_path() {
@@ -136,6 +157,32 @@ path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 PY
 }
 
+validate_extension_id() {
+  if [[ ! "$1" =~ ^[a-z]{32}$ ]]; then
+    echo "❌ 扩展 ID 格式不对（应为 32 位小写字母，如 abcdefghijklmnopabcdefghijklmnop）。"
+    echo "   请在 chrome://extensions 开发者模式下确认正确的 ID 再重新运行。"
+    exit 1
+  fi
+}
+
+write_manifest() {
+  local TARGET_DIR="$1"
+  local RUN_SH="$INSTALL_DIR/run.sh"
+  mkdir -p "$TARGET_DIR"
+  cat > "$TARGET_DIR/$MANIFEST_FILE" << MEOF
+{
+  "name": "$HOST_NAME",
+  "description": "AI CLI 速查表插件的本地更新桥接程序",
+  "path": "$RUN_SH",
+  "type": "stdio",
+  "allowed_origins": [
+    "chrome-extension://$EXTENSION_ID/"
+  ]
+}
+MEOF
+  echo "✅ 已注册到：$TARGET_DIR/$MANIFEST_FILE"
+}
+
 # ── 2. 部署文件到 ~/Library ────────────────────────────────────────────────────
 # 放在 Library 而非插件目录，以避免 macOS 对 Downloads 等目录的访问限制。
 
@@ -143,17 +190,31 @@ echo ""
 echo "正在部署到：$INSTALL_DIR"
 mkdir -p "$INSTALL_DIR"
 # 开发模式（--symlink 或 AICLI_DEV=1）：软链而非拷贝，改 native-host/host.py 即时生效，无需重新部署。
-if [ "${1:-}" = "--symlink" ] || [ "${AICLI_DEV:-}" = "1" ]; then
+if [ "$DEV_MODE" = "1" ]; then
   ln -sfn "$SCRIPT_DIR/host.py" "$INSTALL_DIR/host.py"
   ln -sfn "$SCRIPT_DIR/protocol.py" "$INSTALL_DIR/protocol.py"
   ln -sfn "$SCRIPT_DIR/catalog.py" "$INSTALL_DIR/catalog.py"
+  ln -sfn "$SCRIPT_DIR/official_inventory.py" "$INSTALL_DIR/official_inventory.py"
+  ln -sfn "$SCRIPT_DIR/provider_registry.py" "$INSTALL_DIR/provider_registry.py"
+  ln -sfn "$SCRIPT_DIR/provider_installers.py" "$INSTALL_DIR/provider_installers.py"
   echo "✅ host.py 已软链到仓库（开发模式：改 native-host/host.py 即时生效）"
 else
   cp "$SCRIPT_DIR/host.py" "$INSTALL_DIR/host.py"
   cp "$SCRIPT_DIR/protocol.py" "$INSTALL_DIR/protocol.py"
   cp "$SCRIPT_DIR/catalog.py" "$INSTALL_DIR/catalog.py"
+  cp "$SCRIPT_DIR/official_inventory.py" "$INSTALL_DIR/official_inventory.py"
+  cp "$SCRIPT_DIR/provider_registry.py" "$INSTALL_DIR/provider_registry.py"
+  cp "$SCRIPT_DIR/provider_installers.py" "$INSTALL_DIR/provider_installers.py"
   chmod 700 "$INSTALL_DIR/host.py"
   echo "✅ host.py 已更新"
+fi
+if [ "$STANDALONE_MODE" = "1" ]; then
+  rm -rf "$INSTALL_DIR/shared"
+  cp -R "$PROJECT_DIR/shared" "$INSTALL_DIR/shared"
+  RUNTIME_PROJECT_DIR="$INSTALL_DIR"
+  echo "✅ 官方清单与校验契约已部署到伴侣目录"
+else
+  RUNTIME_PROJECT_DIR="$PROJECT_DIR"
 fi
 chmod 700 "$INSTALL_DIR"
 
@@ -165,6 +226,16 @@ if [ -f "$INSTALL_DIR/run.sh" ]; then
   UPDATE_ONLY="${UPDATE_ONLY:-Y}"
   if [[ "$UPDATE_ONLY" =~ ^[Yy]$ ]]; then
     refresh_runtime_path "$INSTALL_DIR/run.sh"
+    if [ -n "$EXTENSION_ID" ]; then
+      validate_extension_id "$EXTENSION_ID"
+      for CHROME_DIR in "${CHROME_DIRS[@]}"; do
+        write_manifest "$CHROME_DIR"
+      done
+      if [ -f "$EDGE_DIR/$MANIFEST_FILE" ]; then
+        write_manifest "$EDGE_DIR"
+      fi
+      echo "✅ 已将现有注册更新为当前扩展 ID：$EXTENSION_ID"
+    fi
     echo ""
     echo "=== 更新完成 ==="
     echo ""
@@ -177,7 +248,7 @@ fi
 # ── 3. 配置 claude 调用方式 ────────────────────────────────────────────────────
 
 echo ""
-echo "Claude Code 调用配置："
+echo "可选：Claude / Anthropic 兼容 API 高级配置（Codex、Gemini、OpenCode 凭据仍由各 CLI 管理）："
 echo "  [1] 使用当前 shell 环境（默认，会继承你终端里的 ANTHROPIC_BASE_URL 等变量）"
 echo "  [2] 强制走官方 Claude API（取消所有自定义 API 变量，走 ~/.claude/ 里的登录会话）"
 echo "  [3] 自定义（手动填写 API Base URL 和 Auth Token）"
@@ -236,7 +307,7 @@ fi
 # ── 4. 生成 run.sh ─────────────────────────────────────────────────────────────
 
 RUN_SH="$INSTALL_DIR/run.sh"
-printf -v QUOTED_PROJECT_DIR '%q' "$PROJECT_DIR"
+printf -v QUOTED_PROJECT_DIR '%q' "$RUNTIME_PROJECT_DIR"
 printf -v QUOTED_INSTALL_HOST '%q' "$INSTALL_DIR/host.py"
 printf -v QUOTED_PYTHON '%q' "$PYTHON_BIN"
 printf -v QUOTED_RUNTIME_PATH '%q' "$RUNTIME_PATH"
@@ -261,36 +332,17 @@ echo "需要你的浏览器扩展 ID："
 echo "  Chrome：打开 chrome://extensions/，开启开发者模式，找到「AI CLI 速查表」，"
 echo "          卡片上会显示一串字母，如 abcdefghijklmnopabcdefghijklmnop"
 echo "  Edge：  打开 edge://extensions/，步骤相同"
-read -rp "请粘贴扩展 ID: " EXTENSION_ID
+if [ -z "$EXTENSION_ID" ]; then
+  read -rp "请粘贴扩展 ID: " EXTENSION_ID
+fi
 
 if [ -z "$EXTENSION_ID" ]; then
   echo "❌ 扩展 ID 不能为空。请先在浏览器里加载好插件，获取 ID 后重新运行本脚本。"
   exit 1
 fi
-if [[ ! "$EXTENSION_ID" =~ ^[a-z]{32}$ ]]; then
-  echo "❌ 扩展 ID 格式不对（应为 32 位小写字母，如 abcdefghijklmnopabcdefghijklmnop）。"
-  echo "   请在 chrome://extensions 开发者模式下确认正确的 ID 再重新运行。"
-  exit 1
-fi
+validate_extension_id "$EXTENSION_ID"
 
 # ── 6. 写入 Native Messaging manifest ─────────────────────────────────────────
-
-write_manifest() {
-  local TARGET_DIR="$1"
-  mkdir -p "$TARGET_DIR"
-  cat > "$TARGET_DIR/$MANIFEST_FILE" << MEOF
-{
-  "name": "$HOST_NAME",
-  "description": "AI CLI 速查表插件的本地更新桥接程序",
-  "path": "$RUN_SH",
-  "type": "stdio",
-  "allowed_origins": [
-    "chrome-extension://$EXTENSION_ID/"
-  ]
-}
-MEOF
-  echo "✅ 已注册到：$TARGET_DIR/$MANIFEST_FILE"
-}
 
 for CHROME_DIR in "${CHROME_DIRS[@]}"; do
   write_manifest "$CHROME_DIR"
@@ -307,6 +359,6 @@ fi
 echo ""
 echo "=== 安装完成 ==="
 echo ""
-echo "请完全退出浏览器（Cmd+Q），重新打开后，插件里的「查询并写入」按钮即可使用。"
+echo "请完全退出浏览器（Cmd+Q），重新打开后，在插件中选择 AI 环境并使用「查询并新增」或「检查官方更新」。"
 echo ""
 echo "如需重新配置（更换 API 或更新扩展 ID），直接重新运行本脚本即可。"

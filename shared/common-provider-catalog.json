@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "providers": [
+    {
+      "id": "claude-code",
+      "displayName": "Claude Code",
+      "executable": "claude",
+      "adapterStatus": "built-in",
+      "officialUrl": "https://docs.anthropic.com/en/docs/claude-code/overview",
+      "description": "内置已验证的只读适配器。"
+    },
+    {
+      "id": "codex-cli",
+      "displayName": "Codex CLI",
+      "executable": "codex",
+      "adapterStatus": "built-in",
+      "officialUrl": "https://developers.openai.com/codex/cli/",
+      "description": "内置已验证的只读适配器。"
+    },
+    {
+      "id": "gemini-cli",
+      "displayName": "Gemini CLI",
+      "executable": "gemini",
+      "adapterStatus": "built-in",
+      "officialUrl": "https://geminicli.com/docs/",
+      "description": "内置已验证的只读适配器。"
+    },
+    {
+      "id": "opencode",
+      "displayName": "OpenCode",
+      "executable": "opencode",
+      "adapterStatus": "built-in",
+      "officialUrl": "https://opencode.ai/docs/",
+      "description": "内置已验证的只读适配器。"
+    },
+    {
+      "id": "github-copilot-cli",
+      "displayName": "GitHub Copilot CLI",
+      "executable": "copilot",
+      "adapterStatus": "configuration-required",
+      "officialUrl": "https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-programmatic-reference",
+      "description": "检测到后可用通用模式尝试接入。"
+    },
+    {
+      "id": "qwen-code",
+      "displayName": "Qwen Code",
+      "executable": "qwen",
+      "adapterStatus": "built-in",
+      "installerStatus": "supported",
+      "officialUrl": "https://github.com/QwenLM/qwen-code",
+      "description": "已验证的受控接入；未安装时可一键安装。"
+    },
+    {
+      "id": "kimi-code",
+      "displayName": "Kimi Code",
+      "executable": "kimi",
+      "adapterStatus": "configuration-required",
+      "officialUrl": "https://www.kimi.com/help/kimi-code/cli-getting-started",
+      "description": "该工具可能具备编辑和 Shell 能力；检测到后需一次风险确认才会尝试通用调用。"
+    },
+    {
+      "id": "goose",
+      "displayName": "Goose",
+      "executable": "goose",
+      "adapterStatus": "configuration-required",
+      "officialUrl": "https://block.github.io/goose/docs/getting-started/installation/",
+      "description": "检测到后可用通用模式尝试接入。"
+    },
+    {
+      "id": "auggie",
+      "displayName": "Auggie",
+      "executable": "auggie",
+      "adapterStatus": "configuration-required",
+      "officialUrl": "https://docs.augmentcode.com/cli/overview",
+      "description": "检测到后可用通用模式尝试接入。"
+    },
+    {
+      "id": "aider",
+      "displayName": "Aider",
+      "executable": "aider",
+      "adapterStatus": "configuration-required",
+      "officialUrl": "https://aider.chat/docs/",
+      "description": "检测到后可用通用模式尝试接入。"
+    }
+  ]
+}

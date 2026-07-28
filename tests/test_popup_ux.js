@@ -21,15 +21,99 @@ assert(html.includes('id="categoryFilters" class="filters"'), "the filter panel 
 assert(html.includes('id="evidenceFilters"') && html.includes('id="exampleFilters"'), "quality and usage facets should be available");
 assert(html.includes('class="search-shortcut"'), "search should display its keyboard shortcut");
 assert(html.includes('id="shellFilters"'), "Shell-specific filters should have a dedicated container");
-assert(html.includes("Git / Linux / Shell"), "terminal onboarding preset should expose Shell");
+assert(html.includes("Git / Unix / Linux / Shell"), "terminal onboarding preset should expose Unix, Linux and Shell");
+assert(html.includes("个性化推荐") && !/id="recommendationPanel"[^>]*hidden/.test(html), "local recommendations must be visible in every channel");
+assert(!html.includes('id="localAiPanel"') && html.includes('id="bridgeDialog"'), "bridge setup should use a compact dialog rather than a permanent panel");
+assert(html.includes('id="bridgeSteps"'), "bridge setup should expose channel-specific installation steps");
+assert(!html.includes('bridge-extension-id') && !html.includes('copyBridgeExtensionId'), "bridge setup must not expose extension IDs or copy controls to users");
+assert(!html.includes('bridge-source-command') && !html.includes('copyProviderApiCommand'), "the popup must not require terminal commands or command copying");
+assert(!html.includes('id="providerApiForm"') && !html.includes('id="providerApiDialog"'), "the extension should only display bridge-configured compatible APIs, not collect API credentials");
+assert(!html.includes('id="aiSuggestBtn"') && html.includes('id="addToolBtn"'), "query-and-add should return without restoring AI re-recommendations");
 assert(html.includes('id="recommendedTools"'), "management view should expose recommended tool additions");
 assert(html.includes('id="recommendSearch"'), "recommended tool additions should be searchable");
 assert(html.includes('id="showDismissedRecommendations"'), "dismissed recommendations should be restorable");
-assert(html.includes('id="cancelTask"'), "management view should expose a cancel-task action");
-assert(/cancelTask[^>]*hidden/.test(html), "the cancel button should stay hidden until a task runs");
+assert(html.includes('id="cancelTask"') && html.includes('id="pendingPanel"'), "maintenance tasks need cancellation and preview controls");
+assert(html.includes('id="providerSelect"') && html.includes("检测本机 AI 环境后选择"), "maintenance should wait for the dynamic provider handshake");
+assert(html.includes('id="detectBridge"') && html.includes('class="detect-spinner"') && html.includes('aria-busy="false"'), "Detect should expose an accessible loading indicator");
+assert(!html.includes('id="addProviderEnvironment"') && !html.includes('id="providerSetup"'), "maintenance should keep provider discovery to one automatic detection action");
+assert(html.includes('id="customProviderDialog"') && html.includes('id="commonProviderSearch"') && html.includes('id="openOtherProviderFlow"'), "adding an environment should use one on-demand dialog with common tools and a fallback flow");
+assert(!html.includes('id="providerApiForm"') && !html.includes('id="providerCatalogUpdate"'), "the maintenance panel must not grow manual provider-management controls");
+assert(html.includes('id="genericProviderName"') && html.includes('id="genericProviderExecutable"') && html.includes('id="enableGenericProvider"'), "an unknown provider should need only a name, optional command fallback, and one confirmation");
+for (const removedField of ["customProviderDriver", "customProviderArgs", "customProviderLogin", "customProviderReadOnly"]) {
+  assert(!html.includes(`id="${removedField}"`), `the simplified flow must not expose ${removedField}`);
+}
+assert(!html.includes('<option value="claude">'), "provider options must not be hard-coded in HTML");
+assert(html.includes("数据维护与高级操作") && html.includes("查询并新增"), "maintenance must stay collapsed while exposing the restored workflow");
+const bridgePopupSource = fs.readFileSync(path.join(root, "popup.js"), "utf8");
+assert(bridgePopupSource.includes("providers.filter(matches)") && bridgePopupSource.includes("left.recommendationOrder"), "provider options should be grouped and sorted from handshake data");
+assert(!bridgePopupSource.includes("const PROVIDER_LABELS"), "provider display names must come from the bridge registry");
+assert(!bridgePopupSource.includes("bridgeSourceInstallCommand") && !bridgePopupSource.includes("providerApiConfigureCommand"), "the popup must not generate terminal installation or configuration commands");
+assert(!bridgePopupSource.includes("refreshSignedProviderCatalog") && !bridgePopupSource.includes("openProviderApiDialog"), "the popup must not expose manual provider or compatible API configuration");
+assert(bridgePopupSource.includes('companionState === "detecting"') && bridgePopupSource.includes('detectButton.classList.toggle("is-loading", detecting)') && bridgePopupSource.includes('detectButton.setAttribute("aria-busy", detecting ? "true" : "false")'), "Detect should disable duplicates and expose a busy state while scanning");
+assert(bridgePopupSource.includes('refreshCatalog: refreshCatalog === true') && bridgePopupSource.includes('refreshCatalog: true'), "only explicit detection and maintenance actions may ask the bridge to refresh its signed catalog");
+assert(bridgePopupSource.includes('ADD_PROVIDER_SENTINEL') && bridgePopupSource.includes('＋ 添加 AI 环境…'), "the dynamic provider selector should contain the only add-environment entry");
+assert(bridgePopupSource.includes('shared/common-provider-catalog.json') && bridgePopupSource.includes('customProviderDialog'), "common environments should load only when the add dialog opens");
+assert(bridgePopupSource.includes('companionGenericProviderResolve') && bridgePopupSource.includes('companionGenericProviderEnable'), "generic providers should be detected and enabled through the local bridge");
+assert(bridgePopupSource.includes('未经过只读验证') && bridgePopupSource.includes('不会通过 Shell 执行它'), "generic-provider tasks need an explicit responsibility confirmation");
+assert(html.includes('id="genericProviderFormTitle"') && html.includes('aria-busy="false"'), "common-provider detection should have a visible busy state");
+assert(bridgePopupSource.includes('genericProviderBridgeFailureMessage') && bridgePopupSource.includes('未在 PATH 中找到'), "missing or failed provider detection must remain visible with a safe explanation");
+assert(bridgePopupSource.includes('未检测到 · 可补充命令名'), "undetected common providers should explain that an executable-name fallback is available");
+const resolveGenericMatch = bridgePopupSource.match(/async function resolveGenericProvider\([\s\S]*?\n\}\n\nasync function enableGenericProvider/);
+assert(resolveGenericMatch, "generic provider resolution should have a dedicated interaction flow");
+assert(resolveGenericMatch[0].indexOf('beginGenericProviderDetection') < resolveGenericMatch[0].indexOf('await probeCompanion'), "the visible generic detection state must render before the bridge request");
+assert(bridgePopupSource.includes('genericProviderDetectionNonce') && bridgePopupSource.includes('isCurrentGenericProviderDetection'), "closing or retrying detection must not allow stale bridge results to overwrite the active view");
+assert(bridgePopupSource.includes('"detect-timeout": "检测超时，请重新检测。未执行任何模型任务。"'), "handshake timeouts should be concise and safe for the UI");
+assert(!bridgePopupSource.includes("companionErrorDetail") && bridgePopupSource.includes("检测组件异常，请重新检测。未执行任何模型任务。"), "unexpected bridge failures should use a concise fixed message instead of raw host text");
+assert(bridgePopupSource.includes('status.className = `meta${isCompanionError ? " err" : isCompanionWarning ? " warn" : ""}`') && bridgePopupSource.includes('status.setAttribute("role", isCompanionError ? "alert" : "status")'), "unexpected bridge failures must be announced as red alerts while upgrade states remain warnings");
+const outdatedMatch = bridgePopupSource.match(/function isOutdatedBridgeResponse\(response\) \{[\s\S]*?\n\}\n\nfunction bridgeInstallerRequired/);
+assert(outdatedMatch, "popup should classify incompatible bridge handshakes");
+const outdatedContext = {
+  BRIDGE_PROTOCOL_VERSION: 5,
+  MIN_COMPATIBLE_BRIDGE_PROTOCOL_VERSION: 3,
+  BRIDGE_SCHEMA_VERSION: 2,
+};
+vm.runInNewContext(`${outdatedMatch[0].replace(/\n\nfunction bridgeInstallerRequired$/, "")}\nthis.isOutdated = isOutdatedBridgeResponse;`, outdatedContext);
+assert.strictEqual(outdatedContext.isOutdated({ protocolVersion: 3, schemaVersion: 2 }), false, "a v3 bridge response must stay eligible for compatibility negotiation");
+assert.strictEqual(outdatedContext.isOutdated({ protocolVersion: 4, schemaVersion: 2 }), false, "a v4 bridge response must stay eligible for compatibility negotiation");
+assert.strictEqual(outdatedContext.isOutdated({ protocolVersion: 2, schemaVersion: 2 }), true, "a bridge below the compatibility floor must require an upgrade");
+assert.strictEqual(outdatedContext.isOutdated({ protocolVersion: 5, schemaVersion: 2 }), false, "the current bridge protocol must remain valid");
+assert(bridgePopupSource.includes("bridgeInstallerRequired") && bridgePopupSource.includes("await probeCompanion({ requestPermission: true, refreshCatalog: true })"), "maintenance should detect first and open installation only when needed");
+assert(bridgePopupSource.includes("if (entry.requiresBridgeUpgrade)") && bridgePopupSource.includes("closeCustomProviderDialog();\n    await openBridgeDialog({"), "a known legacy bridge must open the upgrade dialog directly instead of leaving Qwen in a detection form");
+assert(bridgePopupSource.includes("commonProviderId: entry.id") && bridgePopupSource.includes("pendingBridgeCommonProviderId"), "a bridge upgrade should remember the selected common provider and resume its installation preparation after detection");
+assert(bridgePopupSource.includes("resumeIntent: Boolean(pendingBridgeCommonProviderId)"), "the main Detect control must resume a Qwen setup after the system installer closes the popup");
+assert(bridgePopupSource.includes("检测组件发布后可安装") && bridgePopupSource.includes("不会显示失效下载链接"), "a source preview without verified assets must not advertise a dead one-click installer");
+assert(html.includes('id="commonProviderInstallConfirm"') && html.includes('id="confirmCommonProviderInstall"'), "common providers should use a dedicated one-click installation confirmation");
+assert(bridgePopupSource.includes("companionCommonProviderInstallPrepare") && bridgePopupSource.includes("companionCommonProviderInstall"), "the popup must prepare and confirm a bridge-owned common-provider installation");
+assert(bridgePopupSource.includes("安装完成，正在自动重新检测") && bridgePopupSource.includes("finishCommonProviderInstall"), "a completed installation must automatically rescan before changing the selected provider");
+assert(!html.includes("npm install") && !bridgePopupSource.includes("@qwen-code/qwen-code"), "the extension UI must never expose a package-manager command");
+assert(bridgePopupSource.includes("effectiveProtocolVersion") && bridgePopupSource.includes("bridgeSupportsCommonProviderInstall") && bridgePopupSource.includes("bridgeSupportsDynamicProviderSetup"), "the popup must negotiate legacy bridge capabilities instead of requiring an exact bridge version");
+assert(bridgePopupSource.includes("检测组件有可选更新，不影响当前扫描和维护功能。"), "optional bridge updates must not be styled as detection failures");
 assert(css.includes(":focus-visible"), "interactive controls need visible keyboard focus");
 assert(state.STORAGE_KEYS.includes("dismissedRecommendations"), "dismissed recommendations should be persisted");
+assert(state.STORAGE_KEYS.includes("providerSelectionExplicit"), "explicit provider choice should be persisted separately from automatic defaults");
+assert(state.STORAGE_KEYS.includes("pendingBridgeCommonProviderId"), "an interrupted bridge upgrade should resume the selected common-provider setup after redetection");
+assert(state.STORAGE_KEYS.includes("acknowledgedPlatformScopes"), "one-time cross-platform copy acknowledgements should be persisted locally");
+assert(html.includes("首选命令平台") && !html.includes("<span>当前平台</span>"), "platform selection should describe a command preference rather than an access gate");
+const lazyManageHtml = render.renderManageTools({
+  lazy: { meta: { id: "lazy", name: "Lazy Tool", catalogOnly: true, builtIn: true }, items: [] },
+}, ["lazy"], { enabledTools: new Set(), maintenanceReady: true, deletableToolIds: new Set() }, state, { entries: [] });
+assert(lazyManageHtml.includes('data-update="lazy"'), "disabled lazy tools must still expose check-update and load on demand");
+const componentCoverageHtml = render.renderManageTools({
+  linux: {
+    meta: {
+      id: "linux", name: "Linux 系统工具", builtIn: true, platforms: ["linux"],
+      source: "Pinned upstream releases", sources: [], verificationStatus: "manual",
+      officialCoverage: {
+        status: "complete", covered: 262, total: 262, checkedAt: "2026-07-23",
+        componentCounts: { "procps-ng": 20, systemd: 81, "util-linux": 143, iproute2: 19 },
+      },
+    },
+    items: [],
+  },
+}, ["linux"], { enabledTools: new Set(["linux"]), maintenanceReady: false, deletableToolIds: new Set() }, state, { entries: [] });
+assert(componentCoverageHtml.includes("组件闭合：procps-ng 20 · systemd 81 · util-linux 143 · iproute2 19"), "management quality details should expose per-component closure counts");
 assert(css.includes("prefers-reduced-motion"), "motion must respect the reduced-motion preference");
+assert(css.includes("@keyframes detect-spin") && css.includes(".detect-btn.is-loading .detect-spinner"), "Detect should visibly spin while scanning");
 assert(html.includes('<link rel="stylesheet" href="popup.css">'), "popup styles should live in the external stylesheet");
 assert(!html.includes("<style>"), "popup.html should not retain an inline stylesheet");
 assert(/id="countBar"[^>]*aria-live="polite"/.test(html), "result count must be announced to screen readers");
@@ -219,12 +303,12 @@ assert(!state.filterRecommendedTools({ ...data, ghostty: { meta: { name: "Ghostt
 const categoryHtml = render.renderRecommendationCategories(macRecommendationResult);
 assert(categoryHtml.includes('data-recommend-category="terminal"'), "recommended categories should render filter chips");
 const recommendationsHtml = render.renderRecommendedTools(state.filterRecommendedTools(data, "mac", { query: "Ghostty" }));
-assert(recommendationsHtml.includes('data-recommend-tool="ghostty"'), "recommended cards should expose add action data");
+assert(!recommendationsHtml.includes('data-recommend-tool="ghostty"'), "recommended cards must not expose removed AI collection actions");
 assert(recommendationsHtml.includes("recommend-tags"), "recommended cards should render tags");
 assert(render.renderRecommendedTools(visibleDismissed).includes('data-recommend-restore="ghostty"'), "dismissed recommendation cards should expose restore actions");
 const allMacCollected = { ...data };
 state.recommendedTools(data, "mac").forEach((item) => { allMacCollected[item.tool] = { meta: { name: item.displayName }, items: [] }; });
-assert(render.renderRecommendedTools(state.filterRecommendedTools(allMacCollected, "mac")).includes("手动输入工具名称"), "empty recommendations should explain manual add fallback");
+assert(render.renderRecommendedTools(state.filterRecommendedTools(allMacCollected, "mac")).includes("都已收录"), "empty recommendations should report that the local list is complete");
 assert(render.renderRecommendedTools(state.filterRecommendedTools(data, "mac", { query: "not-a-tool" })).includes("当前筛选没有匹配"), "filtered empty recommendations should explain the active filter");
 
 // C: 扩充列表与新分类
@@ -266,20 +350,20 @@ const devEnvItems = affinityResult.groups.flatMap((group) => group.items);
 const lazygitItem = devEnvItems.find((item) => item.tool === "lazygit");
 assert(lazygitItem && lazygitItem.relevanceScore === 8, "category affinity alone should lift a recommendation lacking related edges");
 assert(render.renderRecommendedTools(affinityResult).includes("因为你常关注"), "affinity-only recommendation cards should explain the category signal");
-// D4: 搜索↔推荐打通——无结果且查询命中未收录工具时渲染添加 CTA（改动 2）
+// D4: 搜索↔推荐打通——无结果时可进入同一查询并新增流程。
 const bridgeCtx = { data, core, platform: "mac", helpers: state, favourites: new Set(), expandedExamples: new Set() };
 const bridgeEmpty = render.renderResults([], "ripgrep", { activeTool: "all", activeCat: null }, bridgeCtx);
-assert(bridgeEmpty.includes('data-suggest-add-tool="ripgrep"'), "empty search matching an uninstalled tool should render an add CTA");
-assert(bridgeEmpty.includes("速查表还没收录"), "the add CTA should explain the suggestion");
-assert(!render.renderResults([], "zzzznotatool", { activeTool: "all", activeCat: null }, bridgeCtx).includes("data-suggest-add-tool"), "no matching uninstalled tool should not render a CTA");
-assert(!render.renderResults([], "ripgrep", { activeTool: "all", activeCat: "shortcut" }, bridgeCtx).includes("data-suggest-add-tool"), "filter-only empty state should not show the add CTA");
-assert(!render.renderResults([], "", { activeTool: "recent", activeCat: null }, bridgeCtx).includes("data-suggest-add-tool"), "the recent tab empty state should not show the add CTA");
+assert(bridgeEmpty.includes("ripgrep") && bridgeEmpty.includes("了解"), "empty search should explain matching uninstalled tools");
+assert(bridgeEmpty.includes("data-query-add"), "empty search must expose query-and-add for a matching recommendation");
+assert(!render.renderResults([], "zzzznotatool", { activeTool: "all", activeCat: null }, bridgeCtx).includes("data-query-add"), "no matching uninstalled tool should not render a CTA");
+assert(!render.renderResults([], "ripgrep", { activeTool: "all", activeCat: "shortcut" }, bridgeCtx).includes("data-query-add"), "filter-only empty state should not show the add CTA");
+assert(!render.renderResults([], "", { activeTool: "recent", activeCat: null }, bridgeCtx).includes("data-query-add"), "the recent tab empty state should not show the add CTA");
 assert(render.renderResults([], "", { activeTool: "all", activeCat: null }, bridgeCtx).includes("data-browse-all"), "an empty dashboard should teach search and offer full browsing");
 // CTA 与管理面板一致：尊重已忽略项、纳入 AI 现荐
 const bridgeDismissed = { ...bridgeCtx, dismissedRecommendations: new Set(["ripgrep"]) };
-assert(!render.renderResults([], "ripgrep", { activeTool: "all", activeCat: null }, bridgeDismissed).includes("data-suggest-add-tool"), "dismissed tools should not be offered by the empty-search CTA");
+assert(!render.renderResults([], "ripgrep", { activeTool: "all", activeCat: null }, bridgeDismissed).includes("data-query-add"), "dismissed tools should not be offered by the empty-search CTA");
 const bridgeAi = { ...bridgeCtx, aiRecommendations: [{ tool: "fd", displayName: "fd", category: "命令行增强", categoryKey: "cli-utility", reason: "find 替代", tags: ["search"], platforms: ["mac"], source: "ai" }] };
-assert(render.renderResults([], "fd", { activeTool: "all", activeCat: null }, bridgeAi).includes('data-suggest-add-tool="fd"'), "AI recommendations should be eligible for the empty-search CTA");
+assert(render.renderResults([], "fd", { activeTool: "all", activeCat: null }, bridgeAi).includes("fd"), "stored recommendations may still inform empty search without exposing collection actions");
 
 // E: AI 建议持久化的过期剪枝（改动 3）
 assert(state.STORAGE_KEYS.includes("aiRecommendations"), "AI suggestions should be persisted in local storage");
@@ -344,12 +428,9 @@ assert(render.exampleProvenanceTooltip(firstPartyExample, "unverified").includes
 assert(!render.exampleProvenanceTooltip(firstPartyExample, "verified").includes("命令级证据"), "verified commands should not carry the degradation note");
 assert.strictEqual(render.exampleProvenanceLabel({ authorship: "editorial", evidenceTier: "none" }, "unverified"), "编辑整理场景", "non-first-party examples are not affected by the degradation");
 
-// B: 新增中状态
-assert(render.renderRecommendedTools(state.filterRecommendedTools(data, "mac", { query: "Ghostty", addingTool: "ghostty" })).includes("添加中…"), "adding recommendation should render a busy state");
-
-// G: 联网核对标记
-assert(render.renderRecommendedTools(state.filterRecommendedTools(data, "mac", { query: "Ghostty", webVerify: true })).includes("新增 · 联网"), "web verify should be reflected on the add button");
-assert(render.renderRecommendedTools(state.filterRecommendedTools(data, "mac", { query: "Ghostty" })).includes("建议联网"), "web-preferred tools should hint when global verify is off");
+const localRecommendationHtml = render.renderRecommendedTools(state.filterRecommendedTools(data, "mac", { query: "Ghostty" }));
+assert(!localRecommendationHtml.includes("data-recommend-tool"), "local recommendation cards must not expose AI collection actions");
+assert(!localRecommendationHtml.includes("建议联网"), "local-only recommendations must not imply an unavailable network action");
 
 // H: 批量忽略/恢复入口
 assert(render.renderRecommendationCategories(state.filterRecommendedTools(data, "mac")).includes('data-recommend-bulk="dismiss"'), "categories should expose a bulk dismiss action");
@@ -400,15 +481,14 @@ const dupAi = state.filterRecommendedTools(data, "mac", { extraRecommendations: 
 assert.strictEqual(dupAi.groups.flatMap((group) => group.items).filter((item) => item.tool === "ghostty").length, 1, "extra recommendations should dedupe against static ones");
 assert(!state.recommendedTools(data, "windows", [{ ...aiItem, platforms: ["mac"] }]).some((item) => item.tool === "fd"), "extra recommendations should respect platform filtering");
 const aiHtml = render.renderRecommendedTools(withAi);
-assert(aiHtml.includes("recommend-ai") && aiHtml.includes('data-recommend-tool="fd"'), "AI recommendation cards should render an AI badge");
-assert(html.includes('id="aiSuggestBtn"'), "recommendation panel should expose an AI suggest button");
+assert(!aiHtml.includes("recommend-ai") && !aiHtml.includes('data-recommend-tool="fd"'), "legacy AI recommendations must not expose AI labels or collection actions");
 const relatedBatch = state.filterRecommendedTools({ ...data, docker: { meta: { name: "Docker" }, items: [] } }, "mac", { batchSize: 6, collectedToolIds: new Set(["docker"]) });
 assert(relatedBatch.batch.items.some((item) => item.relatedTo && item.relatedTo.length), "related recommendations should surface in the first batch");
 const enabledBatch = state.filterRecommendedTools(shellCollected, "mac", { batchSize: 6, enabledToolIds: new Set(["shell"]) });
 assert(enabledBatch.batch.items.slice(0, 3).some((item) => item.relatedTo && item.relatedTo.includes("Shell")), "batched browsing should prioritize high-relevance recommendations");
 const batchHtml = render.renderRecommendedTools(firstBatch);
 assert(!batchHtml.includes("recommend-group"), "batched recommendations should render flat without group headers");
-assert((batchHtml.match(/data-recommend-tool=/g) || []).length === 6, "batched view should render the batch cards");
+assert((batchHtml.match(/class="recommend-card/g) || []).length === 6, "batched view should render the batch cards");
 assert(render.renderRecommendationCategories(firstBatch).includes("data-recommend-shuffle"), "batched categories should expose a shuffle action");
 assert(!render.renderRecommendationCategories(firstBatch).includes("data-recommend-bulk"), "batched view should not expose bulk dismiss");
 
@@ -425,6 +505,37 @@ const openEntry = platformEntries.find((entry) => entry.itemId === "open-item");
 const linuxOnly = platformEntries.find((entry) => entry.itemId === "linux-only");
 assert.strictEqual(openEntry.displayCmd, "Ctrl+P", "platform command should refresh for Windows");
 assert.strictEqual(linuxOnly.platformInfo.unsupported, true, "unsupported platform state should be carried into render entries");
+assert.strictEqual(linuxOnly.platformInfo.platformMismatch, true, "platformMismatch should be the canonical cross-platform state");
+assert(state.visibleToolIds(data, baseState.enabledTools, "windows").includes("beta"), "enabled tools must remain visible outside their preferred platform");
+const crossPlatformHtml = render.renderResults([linuxOnly], "linux", baseState, {
+  data,
+  core,
+  platform: "windows",
+  expandedExamples: new Set(),
+  favourites: new Set(),
+  helpers: state,
+});
+assert(crossPlatformHtml.includes("仅 Linux") && !crossPlatformHtml.includes("disabled"), "other-platform commands should be labeled and copyable");
+const manageAllPlatforms = render.renderManageToolToggles({ ...data, linux: { meta: { name: "Linux 系统工具", platforms: ["linux"] }, items: [] } }, ["linux"], baseState);
+assert(manageAllPlatforms.includes("Linux 系统工具") && manageAllPlatforms.includes("仅 Linux"), "management choices should list other-platform tools with a platform badge");
+const onboardAllPlatforms = render.renderOnboardChoices({ linux: { meta: { name: "Linux 系统工具", platforms: ["linux"] } } }, ["linux"], new Set());
+assert(onboardAllPlatforms.includes("仅 Linux") && !onboardAllPlatforms.includes("checked"), "onboarding should list but not preselect an unenabled Linux-only tool");
+const linuxExampleEntry = {
+  ...linuxOnly,
+  item: {
+    ...linuxOnly.item,
+    examples: [{ value: "systemctl status sshd", description: "查看服务状态", platforms: ["linux"], authorship: "editorial", evidenceTier: "none", adaptation: "scenario-derived" }],
+  },
+};
+const linuxExampleHtml = render.renderRow(linuxExampleEntry, "", {
+  data,
+  core,
+  platform: "windows",
+  expandedExamples: new Set(["beta::linux-only"]),
+  favourites: new Set(),
+  helpers: state,
+}, false);
+assert(linuxExampleHtml.includes("systemctl status sshd") && linuxExampleHtml.includes('data-example="0"'), "other-platform examples must remain visible and copyable");
 
 const recentEntries = state.collectEntries(entryIndex, data, core, { ...baseState, activeTool: "recent", platform: "mac" });
 const rankedRecent = core.rankItems(recentEntries, "", { favourites: baseState.favourites, recents: baseState.recents })
@@ -659,11 +770,13 @@ const context = {
   confirmCalls: 0,
 };
 const popupSource = fs.readFileSync(path.join(root, "popup.js"), "utf8");
+const dialogSource = fs.readFileSync(path.join(root, "popup-dialogs.js"), "utf8");
 // 搜索框按 ↓ 应直达第一条结果（README 宣称的键盘路径）。
 assert(
   /search"\)\.addEventListener\("keydown"[\s\S]{0,300}ArrowDown[\s\S]{0,300}\.row-main/.test(popupSource),
   "the search box must wire ArrowDown to focus the first result row"
 );
+assert(dialogSource.includes("deps.state.getToolIds(deps.getAllData())"), "onboarding and show-all must include tools from every platform");
 vm.createContext(context);
 vm.runInContext(popupSource, context, { filename: "popup.js" });
 assert(context.window.CHEATSHEET_POPUP_TESTS, "popup test hooks should be available only when enabled");
@@ -753,6 +866,12 @@ const dialogHooks = dialogContext.window.CHEATSHEET_POPUP_TESTS;
     false,
     "already collected recommendations should not start add tasks"
   );
+  assert(context.window.CHEATSHEET_POPUP_TESTS.addToolPayload("Docker", true).error.includes("尚未启用"), "collected but disabled tools should point to preferences instead of update");
+  context.window.CHEATSHEET_DATA = { linux: { meta: { name: "Linux 系统工具", platforms: ["linux"] }, items: [] } };
+  const hiddenLinux = context.window.CHEATSHEET_POPUP_TESTS.addToolPayload("Linux", true);
+  assert.strictEqual(hiddenLinux.code, "collected-disabled", "a collected Linux tool should offer direct enablement instead of switching platform");
+  assert.strictEqual(hiddenLinux.tool, "linux");
+  assert(hiddenLinux.error.includes("无需调用 AI"), "collected tools must not start an AI add task");
   assert(context.window.CHEATSHEET_POPUP_TESTS.addToolPayload("CLI", true).error.includes("范围过大"), "broad recommendation names should stay blocked");
 
   // 风险确认并发防护：确认框未决时的第二次复制直接按"未确认"处理，
@@ -770,6 +889,23 @@ const dialogHooks = dialogContext.window.CHEATSHEET_POPUP_TESTS;
   const thirdPending = dialogHooks.confirmRiskCopy("rm -rf ./x", risk);
   dialogHooks.closeRiskDialog(false);
   assert.strictEqual(await thirdPending, false, "the dialog must be usable again after the pending confirmation closes");
+
+  // 跨平台复制：首次确认后按目标平台记忆；与高风险并存时复用同一个对话框。
+  dialogHooks.setAcknowledgedPlatformScopes([]);
+  const linuxInfo = core.getPlatformCommand({ cmd: "systemctl status sshd", platforms: ["linux"] }, "mac");
+  const firstLinuxCopy = dialogHooks.confirmCommandCopy("systemctl status sshd", core.classifyCommandRisk("systemctl status sshd"), { platforms: ["linux"] }, linuxInfo);
+  assert.strictEqual(dialogElements.get("riskTitle").textContent, "确认命令目标平台");
+  assert(dialogElements.get("riskDetails").innerHTML.includes("Linux") && dialogElements.get("riskDetails").innerHTML.includes("macOS"));
+  dialogHooks.closeRiskDialog(true);
+  assert.strictEqual(await firstLinuxCopy, true);
+  assert.deepStrictEqual(JSON.parse(JSON.stringify(dialogHooks.getAcknowledgedPlatformScopes())), ["linux"], "confirmed Linux scope should be remembered");
+  assert.strictEqual(await dialogHooks.confirmCommandCopy("systemctl status sshd", core.classifyCommandRisk("systemctl status sshd"), { platforms: ["linux"] }, linuxInfo), true, "the remembered platform scope should not prompt again");
+  dialogHooks.setAcknowledgedPlatformScopes([]);
+  const combinedCopy = dialogHooks.confirmCommandCopy("rm -rf /tmp/demo", core.classifyCommandRisk("rm -rf /tmp/demo"), { platforms: ["linux"] }, linuxInfo);
+  assert.strictEqual(dialogElements.get("riskTitle").textContent, "确认目标平台与命令风险");
+  assert(dialogElements.get("riskDetails").innerHTML.includes("Linux") && dialogElements.get("riskDetails").innerHTML.includes("删除"), "one dialog should combine platform and risk details");
+  dialogHooks.closeRiskDialog(false);
+  assert.strictEqual(await combinedCopy, false);
 
   // 焦点陷阱：Tab 在对话框内循环，其它按键不拦截。
   const focusCalls = [];

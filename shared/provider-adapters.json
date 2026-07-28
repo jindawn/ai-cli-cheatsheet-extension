@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "catalogVersion": 1,
+  "minimumProtocolVersion": 4,
+  "adapters": [
+    {
+      "id": "claude",
+      "displayName": "Claude Code",
+      "source": "builtin",
+      "transport": "cli",
+      "verified": true,
+      "driver": "builtin-claude",
+      "executableCandidates": ["claude"],
+      "loginCommand": "claude auth login",
+      "capabilities": ["structured-output", "read-only", "maintenance", "cancel"],
+      "recommendationOrder": 0
+    },
+    {
+      "id": "codex",
+      "displayName": "Codex CLI",
+      "source": "builtin",
+      "transport": "cli",
+      "verified": true,
+      "driver": "builtin-codex",
+      "executableCandidates": ["codex"],
+      "loginCommand": "codex login",
+      "capabilities": ["structured-output", "read-only", "maintenance", "cancel"],
+      "recommendationOrder": 10
+    },
+    {
+      "id": "gemini",
+      "displayName": "Gemini CLI",
+      "source": "builtin",
+      "transport": "cli",
+      "verified": true,
+      "driver": "builtin-gemini",
+      "executableCandidates": ["gemini"],
+      "loginCommand": "gemini",
+      "capabilities": ["structured-output", "read-only", "maintenance", "cancel"],
+      "recommendationOrder": 20
+    },
+    {
+      "id": "opencode",
+      "displayName": "OpenCode",
+      "source": "builtin",
+      "transport": "cli",
+      "verified": true,
+      "driver": "builtin-opencode",
+      "executableCandidates": ["opencode"],
+      "loginCommand": "opencode auth login",
+      "capabilities": ["structured-output", "read-only", "maintenance", "cancel"],
+      "recommendationOrder": 30
+    }
+  ]
+}

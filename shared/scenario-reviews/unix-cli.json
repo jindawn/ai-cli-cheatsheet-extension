@@ -1,0 +1,1408 @@
+{
+  "schemaVersion": 1,
+  "toolId": "unix-cli",
+  "reviewVersion": "scenario-grounding-v2",
+  "reviewedAt": "2026-07-23",
+  "inventoryHash": "sha256:4a4541e5b16f5cdef82cb7971e5492ba04efe523aba3d6e22075a92f9d4f2ee1",
+  "status": "passed",
+  "examples": [
+    {
+      "itemId": "unix-admin",
+      "exampleIndex": 0,
+      "contentHash": "sha256:391b6022cd3f1a7296a41c6a1f74673cd993d02ea92709ce4bd0d93eb62db2cc",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-alias",
+      "exampleIndex": 0,
+      "contentHash": "sha256:b3426a89c2a663908aaf542356007e2bcf0a57c40b0d702844f37d24badb6c7c",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-ar",
+      "exampleIndex": 0,
+      "contentHash": "sha256:e438b5b81ad52135f6fc3fac184812877599780c9b228762fe2a1cec93b0b139",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-arch",
+      "exampleIndex": 0,
+      "contentHash": "sha256:b23b8244a24c66ab85c5b4117920ca2a1662dfcc3914bd42a72ada90f4aa98e1",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-asa",
+      "exampleIndex": 0,
+      "contentHash": "sha256:eef85e044f06315fbc5d2db5e0ac0920e59b28a562129129cec7cf7497b24c90",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-at",
+      "exampleIndex": 0,
+      "contentHash": "sha256:b9bef4ed30df27e90e9ce6b245e40737d7e5b358f8478ad72e8ad984056e1fd6",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-awk",
+      "exampleIndex": 0,
+      "contentHash": "sha256:54abaa70c2b03765c4b9a798124a4687908b19f3c8263d1e2ee8915c3a5ad1cf",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-b2sum",
+      "exampleIndex": 0,
+      "contentHash": "sha256:6d502ce2063e0d143c3c27f9e5f9db3c3c864c1ac87e0d4a9a7aa0d961b4f253",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-base32",
+      "exampleIndex": 0,
+      "contentHash": "sha256:c0e5aeddd2603b7c79b7fa7b62f101ebf044189d80af60c2cc472e07ddf3be67",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-base64",
+      "exampleIndex": 0,
+      "contentHash": "sha256:1409d7f2364f203d391eb19560fdafb20a972f53227d90b0e7ef146f39a42fab",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-basename",
+      "exampleIndex": 0,
+      "contentHash": "sha256:7f717e32fa5ba8873b4f8ba34e06887260badd85ea4c30d1993f1c0d962fa094",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-basenc",
+      "exampleIndex": 0,
+      "contentHash": "sha256:2a86d49aa1d17b19a7518eebc8387d38122d59d74db8c916876eb16783dc98d8",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-batch",
+      "exampleIndex": 0,
+      "contentHash": "sha256:2dbfd4d178e0f2eb8768784fb05d4bcb6eb07d147b1bdadabb2f04d3f82ef9f7",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-bc",
+      "exampleIndex": 0,
+      "contentHash": "sha256:7d693ba6a3c950d864a6dc9bbbb32e2f0fff5cb0ffff23dc1cdc21952dfb626e",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-bg",
+      "exampleIndex": 0,
+      "contentHash": "sha256:b89a369ba81a084ba190c1ce56b022cdd3e9faaeea7412b4616e07e2e475e2ce",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-c17",
+      "exampleIndex": 0,
+      "contentHash": "sha256:1e3c30ef4e34b8f791572d3122c6a03965044e6618cc768e161d845c54e8dc31",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-cal",
+      "exampleIndex": 0,
+      "contentHash": "sha256:f88cbdf5b60528b0a829b2753b39878d4fe7a1510a7ae9647653b8a944eb59bb",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-cat",
+      "exampleIndex": 0,
+      "contentHash": "sha256:b52e3ad15893d4ac71a902431b087ce9bee1e379d1bd010da9f6a10c36f40f49",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-cd",
+      "exampleIndex": 0,
+      "contentHash": "sha256:851690cf8bdf68e1d5f6591197aeed2d031e6aa8ab9e0a3ea4d0628136fedf8f",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-cflow",
+      "exampleIndex": 0,
+      "contentHash": "sha256:775cbd156a40e79d8a78582219c925dc5149d2b6a7dc5ecc081cbab9249a6a1c",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-chcon",
+      "exampleIndex": 0,
+      "contentHash": "sha256:a009f27b4e7bafbf2dc442d43dd2a080ccf71cfdf16bd9c9b5eba9d4d664de8f",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-chgrp",
+      "exampleIndex": 0,
+      "contentHash": "sha256:c69f71176e58325d958f09e744b27e293b1a5f3e198b52f969a143c19bcd9b5b",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-chmod",
+      "exampleIndex": 0,
+      "contentHash": "sha256:ec008a228e3715a3d23f866edd11886e4bff5f626552e5896049e91b6a720c8c",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-chmod",
+      "exampleIndex": 1,
+      "contentHash": "sha256:c4cb487355e27e073b81da9b1f454db20abb5043a45b9518833fa3083fadcac0",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-chmod",
+      "exampleIndex": 2,
+      "contentHash": "sha256:575794e38dcd7c4d70b1444df6e704c7a14d553bbb1ff9281e1b7791eeb8ff22",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-chown",
+      "exampleIndex": 0,
+      "contentHash": "sha256:84b2d7278aa3f60431be307faa70d9a3311b721eac503bf2ea7ed84d432f4c87",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-chroot",
+      "exampleIndex": 0,
+      "contentHash": "sha256:f00ce732a715b26c7d066e7132baacd2c3688995700d7b7dff011e2df54d4f6d",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-cksum",
+      "exampleIndex": 0,
+      "contentHash": "sha256:2f465a47f7726d3162aa4ad77ab832165fe7f95a1c050f63ac41ead7bb208886",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-cmp",
+      "exampleIndex": 0,
+      "contentHash": "sha256:ad9baec2db1a79463004b2ceaf1031f5a1de0026a2fde3082bdd7968cfdec0f4",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-comm",
+      "exampleIndex": 0,
+      "contentHash": "sha256:33d1465ccde89f867c5a3941d901bef02293fecdf5cea31bd6ae641581bb5174",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-command",
+      "exampleIndex": 0,
+      "contentHash": "sha256:f6d67f5bd6ab1ec5980e895d8c1c97a4d469fb36a42e0441bfb16c1230791fac",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-compress",
+      "exampleIndex": 0,
+      "contentHash": "sha256:ac05462ad38da6ad629d5ed0d0d273cc394e27a444f15fefd165357c0e126891",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-coreutils",
+      "exampleIndex": 0,
+      "contentHash": "sha256:8503dcb29683d435bf94bd70a443a594549ce5620716966548a79625608eecfd",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-cp",
+      "exampleIndex": 0,
+      "contentHash": "sha256:49c13b4601024a41fe8ba3a54a5b2ae41b1c308e289e2d611e5036b6e8967205",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-cp",
+      "exampleIndex": 1,
+      "contentHash": "sha256:03b4455bb5519ca995929d8104d9737665f51ce70ac0f6df52e869fae24097a4",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-crontab",
+      "exampleIndex": 0,
+      "contentHash": "sha256:c0972d7fab1647c5e3d29dab16ce37db8ab0ee6a9f7008de0808ec59f289c740",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-csplit",
+      "exampleIndex": 0,
+      "contentHash": "sha256:d32370704e299891d5af43fcc6a27170c2981baf043a73a54e823f5a22a928b6",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-ctags",
+      "exampleIndex": 0,
+      "contentHash": "sha256:5a0861558c8dd9f6f09e8d8ae5ebdc0c96ec7735ac818e75b0622fb3b15a9efe",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-curl",
+      "exampleIndex": 0,
+      "contentHash": "sha256:eb1dd04cfbbbd3523824d12fbb2d934f275f131d807452c99386f52d0595d47a",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-curl-config",
+      "exampleIndex": 0,
+      "contentHash": "sha256:dc01fca7bfaad3ac0fc0bf3ea941d2b77b027c3f3f21d2f7e8c019f7aa8d1c91",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-cut",
+      "exampleIndex": 0,
+      "contentHash": "sha256:83aa54f38095d82830159f221daeadeb68e4849e43b34278afdeffbd2bc87873",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-cxref",
+      "exampleIndex": 0,
+      "contentHash": "sha256:d873a5e52d3a513d9502c24646475a615f693f388262d38f1bb3cd0257cb6064",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-date",
+      "exampleIndex": 0,
+      "contentHash": "sha256:6f41e452f193f460f45e8e67bf04b94477e7cea80e03056550ad42f886b05616",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-dd",
+      "exampleIndex": 0,
+      "contentHash": "sha256:1398e3ed4ea696d7eec7eacb6712163ebb3297defd058a97ad78a8654049d411",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-delta",
+      "exampleIndex": 0,
+      "contentHash": "sha256:a56ce7952d3a4beca844c494d60f0eec248f100e1a582b3b304fb64396e8f870",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-df",
+      "exampleIndex": 0,
+      "contentHash": "sha256:1f5ae6929b9406d6b7044ebfd6f0b9aef8ce1eb817ac9385433ed8235b0a4e53",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-diff",
+      "exampleIndex": 0,
+      "contentHash": "sha256:81688ed416e52d01f8a0ef28d884f3981556d53c45f855949496a043d98757b0",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-diff3",
+      "exampleIndex": 0,
+      "contentHash": "sha256:97f970e17a5f1d0d113b054c3f5f9e1ee28274340d5656cd799b9d41a003bc55",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-dir",
+      "exampleIndex": 0,
+      "contentHash": "sha256:00a96fd62908c044e22cd5e3a51c7277affb3c12d1c620e6cd87c61b7443ebe6",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-dircolors",
+      "exampleIndex": 0,
+      "contentHash": "sha256:9a8024bfd1907707f3dafc95a59f7777774bd88173a1718858360adf049a976c",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-dirname",
+      "exampleIndex": 0,
+      "contentHash": "sha256:2e82cbd80e0e14ff7ee925aaa0c8a85548d7d3a5c2b1f166643b24ce1bd8204a",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-du",
+      "exampleIndex": 0,
+      "contentHash": "sha256:4a28f728933e7261aaf3e14c58aca4fb4e20bf20395bd50c13bd717061f2c456",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-echo",
+      "exampleIndex": 0,
+      "contentHash": "sha256:a225a673e8e73fb79760947ef59ad21e156d1b17922440289c7d964dbaa0b72f",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-ed",
+      "exampleIndex": 0,
+      "contentHash": "sha256:256795cf7d8fce87eb24b43fbb2a74aee1b06204fbbf94a9c384d958536791e1",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-env",
+      "exampleIndex": 0,
+      "contentHash": "sha256:9f1ce0749ea4fd80f091e5dab72272a46e756f073b3ab398f46b28e2d51cf8b5",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-ex",
+      "exampleIndex": 0,
+      "contentHash": "sha256:b337e42cfdc5287e8623921914c9422af400d8c9de2ee68c2256982357e06771",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-expand",
+      "exampleIndex": 0,
+      "contentHash": "sha256:79641cd972a5a92458cf81c31f59a962102831babacf2acc61e2ecf40db118c0",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-expr",
+      "exampleIndex": 0,
+      "contentHash": "sha256:2405aeb4c114173870dff1fb83c18c321ec34162b6ade5a7754b4b6491bd2c94",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-factor",
+      "exampleIndex": 0,
+      "contentHash": "sha256:3806ba6de34480224c089ff6c954843b245f307d218e0dd911a7cfcfe5a618c7",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-false",
+      "exampleIndex": 0,
+      "contentHash": "sha256:a45c2f108c529cc94dec04d54834cf3f952d9ced457e9729c678f1b6a359bee1",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-fc",
+      "exampleIndex": 0,
+      "contentHash": "sha256:ffbb3690aa569540a977dcfb03e1f8d8eff0ad0ab08334e7eebc68d88472d6bb",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-fg",
+      "exampleIndex": 0,
+      "contentHash": "sha256:44cf7e37a2215b4a1d3b8f1ae194a507249df85fff004af2d65c40c06b1733b5",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-file",
+      "exampleIndex": 0,
+      "contentHash": "sha256:64b977ef38078e3dd4ae762ac3e8afc8a89c22722a97e419a8a2d2f71bfac805",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-find",
+      "exampleIndex": 0,
+      "contentHash": "sha256:49d55526d74dbf1a35bcea88e8b908da6116b413a989b1493086e3beeb3ef148",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-find",
+      "exampleIndex": 1,
+      "contentHash": "sha256:a6c63e5eba6ec984aa1eb3fc758e19e4d91a2c8ac1a0f9eb3a724d2fa70d7596",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-fmt",
+      "exampleIndex": 0,
+      "contentHash": "sha256:36b6657e36b38cfbbb5a91ad95976e85181b65d53a6baae9e1b1d416561eccab",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-fold",
+      "exampleIndex": 0,
+      "contentHash": "sha256:8d14e868a2cc5b2218375f94247cc118d97b495cf47bc9680fa1eb15a67a87a6",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-fuser",
+      "exampleIndex": 0,
+      "contentHash": "sha256:c0589b328f0aea2c32e628c29ed113c0b64120b66eca59153ce87eff21f47331",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-gawk",
+      "exampleIndex": 0,
+      "contentHash": "sha256:da50f42f6e274459305f9741f87ff91f818b35ed60b6134018d6cdd8150a85b2",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-gawkbug",
+      "exampleIndex": 0,
+      "contentHash": "sha256:493224f6b77e50c7eef22da51bd5c0600738641cee54488e55562d61ab0830e8",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-gencat",
+      "exampleIndex": 0,
+      "contentHash": "sha256:8dbf118448e909b6968e4c6846bafe5dc7a5b02df217bf3d45c02354933dec07",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-get",
+      "exampleIndex": 0,
+      "contentHash": "sha256:85a1f40309ff9fc18b84c56a164f5dc11f79f5b55dcca03861085583b6bdf98b",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-getconf",
+      "exampleIndex": 0,
+      "contentHash": "sha256:2e215a6d226f96d73b4437ac6d1be56914b550263b63e2cb0a09b38bbb022575",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-getopts",
+      "exampleIndex": 0,
+      "contentHash": "sha256:e3322afe0805777d62925ae85a07c68e75907658d5289f55bc6d5de00dbfb777",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-gettext",
+      "exampleIndex": 0,
+      "contentHash": "sha256:8adebb1e5ad5fda0683165f8a8300039f3c624da4519e95874eee58bfebec0ed",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-grep",
+      "exampleIndex": 0,
+      "contentHash": "sha256:9dd8056d6a32af4098177c5acf70dfed32102d50edc363450102164d9f38f98e",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-grep",
+      "exampleIndex": 1,
+      "contentHash": "sha256:bfe023dd1bfaf01bb89062b195522f64ac8befd9a7cf7d33c767ac65242a0804",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-grep",
+      "exampleIndex": 2,
+      "contentHash": "sha256:ff0c0293d5943bff175bb9b3ac911e193774c33e72cb57dd6dc5876069c54c1a",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-groups",
+      "exampleIndex": 0,
+      "contentHash": "sha256:2c748adb889e0b85b8c17e8ac7440eacdf465af7d4e57919bf197bb1714cd93b",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-hash",
+      "exampleIndex": 0,
+      "contentHash": "sha256:b68c45ac8cb383130468f642feaf70fe0e1b43f070a6b2f024919f7b51593690",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-head",
+      "exampleIndex": 0,
+      "contentHash": "sha256:4aa024aa2626654514bd35dfaef44f18f17da739ac7c072dd49d580e8722b097",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-hostid",
+      "exampleIndex": 0,
+      "contentHash": "sha256:2f3e69400525a99007057591af52947ed2fb92593e6e9807fb7a0f68fb41c700",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-hostname",
+      "exampleIndex": 0,
+      "contentHash": "sha256:b23480002f1ee92ad28752562d68b2cedaf13052d26b806260e83f7566303946",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-iconv",
+      "exampleIndex": 0,
+      "contentHash": "sha256:6c2e578fbd99bbbe4fa1a5b19b6277b0c29717f757219c606bad29e4f5d5b0eb",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-id",
+      "exampleIndex": 0,
+      "contentHash": "sha256:581728ffeae51dba9e80c7bc95b9d53e29cfa456a991efdf43b03cda3fdd477a",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-install",
+      "exampleIndex": 0,
+      "contentHash": "sha256:c944c718292ad49139e81f7bf99c23abb498e19ade94b0c0ca73e9734afd7940",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-ipcrm",
+      "exampleIndex": 0,
+      "contentHash": "sha256:e5d7a7fa94efb709fc9291dcd7bfe061350f76fad0587defc6c1f6ce9fcfbd1a",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-ipcs",
+      "exampleIndex": 0,
+      "contentHash": "sha256:0bb5a5901e9a4f72568a18edd394c03164801d1bf12d06b16aa96588c3d979de",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-jobs",
+      "exampleIndex": 0,
+      "contentHash": "sha256:06a1dad9bbf00a06453f2c20efe6ce75964608e5ec2ebb43c19e9ca8b584c284",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-join",
+      "exampleIndex": 0,
+      "contentHash": "sha256:dbdfd7a57ebb8efd777a83fa75e6e3ed3fda74751fb93be15aebf771c9341101",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-kill",
+      "exampleIndex": 0,
+      "contentHash": "sha256:a3195046e721d6329109980f08303cdbf5a7a3615a2e7796d2c22957bd64a3b2",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-kill",
+      "exampleIndex": 1,
+      "contentHash": "sha256:8bcc925667c796d8eb6ea6589e03e1b4db3db30b6ae55d43dbe23f3a7436ed4a",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-less",
+      "exampleIndex": 0,
+      "contentHash": "sha256:7b0eb031fafd1a19f325e6aa8f4f7a666bf3234000464830830bc0f345d86210",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-lex",
+      "exampleIndex": 0,
+      "contentHash": "sha256:9ed0f1a3fa26069003a88093022e63ca665b72d98515b57eab1c6244b3ae3e9c",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-link",
+      "exampleIndex": 0,
+      "contentHash": "sha256:3ab841a292dad58b3f9dae6ec3243435102ae861e45349d9ff29ce3a35f54b3d",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-ln",
+      "exampleIndex": 0,
+      "contentHash": "sha256:65d798c66c6bc144b05cb9f0c27b5eaf67ef33c64532c8be815d8a1321dcfa0b",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-locale",
+      "exampleIndex": 0,
+      "contentHash": "sha256:15c1ae333e99d1ff1da9f59e064e979304f7205e2f00391256cae8ca4014917e",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-localedef",
+      "exampleIndex": 0,
+      "contentHash": "sha256:b1e2f410d0de7a351b967f90baf4843259c6481bba4925a4c4773dda78548a3d",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-locate",
+      "exampleIndex": 0,
+      "contentHash": "sha256:8ee2e40e2288ce39b49074f0f5a8f85c813ac85eb2febec6aa4b01b6756279fd",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-logger",
+      "exampleIndex": 0,
+      "contentHash": "sha256:93bd89c32a6f3bb79d6520f8b824c309bd7cd7a62c0566e7eed232227963f70b",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-logname",
+      "exampleIndex": 0,
+      "contentHash": "sha256:f14efd7df9e98d9165e7a481e08ab89a5a7006cec656aca0052f59dd38a534b1",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-lp",
+      "exampleIndex": 0,
+      "contentHash": "sha256:4693f4625bfe14208c6d0ae885a666ac395b796d9253e02d61f48e3a681a11e2",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-ls",
+      "exampleIndex": 0,
+      "contentHash": "sha256:16fcd6ca7586bdbad04adc4c6db2b2a360c9e0916d0284bc2df1a4bceee82089",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-m4",
+      "exampleIndex": 0,
+      "contentHash": "sha256:c09557c84dd26f2f85262906f13df9dc822846d59fddb5bae61c251bd89693b1",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-mailx",
+      "exampleIndex": 0,
+      "contentHash": "sha256:c3076c7917341809b9efdcda7cb59cf731edc749fdb830630a44a71852507923",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-make",
+      "exampleIndex": 0,
+      "contentHash": "sha256:2d5d6e02553f1c8528259341203c6ea3bfb075ad6e8c77b653800b1dc22c3479",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-man",
+      "exampleIndex": 0,
+      "contentHash": "sha256:452f81f958c14896a31dd88f064e2e9d4d5dcc3636ac080b8a1ae7396ae27c42",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-md5sum",
+      "exampleIndex": 0,
+      "contentHash": "sha256:14d02d17be3c2245a62b78d0bbe86a100b17f5f15426f95233c2618ffce196a1",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-mesg",
+      "exampleIndex": 0,
+      "contentHash": "sha256:35c1085d9a3e496220710c8ea45833cc8aef535a783a68ccd3d406d40b54ad22",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-mkdir",
+      "exampleIndex": 0,
+      "contentHash": "sha256:bc6de1f7b73f4c7f95aadc324c682864254c79acf5943ec13438b594aa4faa9d",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-mkfifo",
+      "exampleIndex": 0,
+      "contentHash": "sha256:37676d32b3edbbf4a7bc5fe89425206d2d54a8506abb5fa961ac558c295ded3a",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-mknod",
+      "exampleIndex": 0,
+      "contentHash": "sha256:64525a0a1eb5638baf9d38b2c18fed687a114ee09c8ff591f1e8b505afb43352",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-mktemp",
+      "exampleIndex": 0,
+      "contentHash": "sha256:8d2416350da2619cd6b101f376fd1cb344fc01d2590023cd10194e78c3e661c3",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-more",
+      "exampleIndex": 0,
+      "contentHash": "sha256:7cfa0ea0ac10c818d3072fd03fe655482017a29026ec309f42ff97af13aa0a50",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-msgfmt",
+      "exampleIndex": 0,
+      "contentHash": "sha256:565b5ebb3c01b1e3da35c644bed382a2fc86b7636b5fe7ff3798daad52e16fbe",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-mv",
+      "exampleIndex": 0,
+      "contentHash": "sha256:d0817c333f2def16f1d478cf8e546bfcc2776a7d395cec70549474cc83a2d291",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-newgrp",
+      "exampleIndex": 0,
+      "contentHash": "sha256:873b4e1d9fe1264af4d69311c60a72ed9403d646293586c2fc99700eb0465549",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-ngettext",
+      "exampleIndex": 0,
+      "contentHash": "sha256:db3ef3c8e27cc19313b13116d1ae9506671716743e8c53ccc27c077f85abb0b7",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-nice",
+      "exampleIndex": 0,
+      "contentHash": "sha256:0bf7430ba9e998eb5d6a167c6b4d44e281f730d17a2b2896aa44fd8b0534c604",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-nl",
+      "exampleIndex": 0,
+      "contentHash": "sha256:1e19ff2eb224c1ae131b165f93e6325fac392e1735b616a81339d09a8c9bb14b",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-nm",
+      "exampleIndex": 0,
+      "contentHash": "sha256:9e30082890bd607da6a482d207438866dd505bcf7034179d232080521da9fb71",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-nohup",
+      "exampleIndex": 0,
+      "contentHash": "sha256:ad8b974c800fa5391f814e08e285b8a16ac3328c2717a093ab3f85eba38b5cda",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-nproc",
+      "exampleIndex": 0,
+      "contentHash": "sha256:6c52e5c1fe513e7acfae87b106097623bf93d4f88991d62f90a6544a018f6a27",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-numfmt",
+      "exampleIndex": 0,
+      "contentHash": "sha256:0e901befae4095a02ec2ac7b03c83248d3f58721975adc10ea86e05da697e44d",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-od",
+      "exampleIndex": 0,
+      "contentHash": "sha256:c76ebab8a5b84703624039f5d54167b1b4ffe3c13bde72b4e2b73ee11afd95f7",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-paste",
+      "exampleIndex": 0,
+      "contentHash": "sha256:47c9e61bf8168e87d5143c8682af0875c28b683d5d655da4a63b930dcefea262",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-patch",
+      "exampleIndex": 0,
+      "contentHash": "sha256:1089b379c15d88de8d4188251fb35dced4e4b127240ea8eb1a305735cf8c9286",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-pathchk",
+      "exampleIndex": 0,
+      "contentHash": "sha256:1024d3b02b85b023aedb13b276469d80e755f3b0dbc6209dd4bad712ee307972",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-pax",
+      "exampleIndex": 0,
+      "contentHash": "sha256:da2f1341678bb14ea7b3dce87a961a884616d4514372a56bd5723ba7035bc01c",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-ping",
+      "exampleIndex": 0,
+      "contentHash": "sha256:2ca3850cb61303721ab210c109f85410d8b3068cdc846c7adc81e50e79aff942",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-pinky",
+      "exampleIndex": 0,
+      "contentHash": "sha256:da73f947da8760b8ebd050bccd64e120187c5b82206ca0b8cf51872d2bb2f97b",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-pr",
+      "exampleIndex": 0,
+      "contentHash": "sha256:13ac5e24a163f64a15b6a9d2b683554209f8a5bdc50fe8f3579b40e1fc10dd66",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-printenv",
+      "exampleIndex": 0,
+      "contentHash": "sha256:eada682a75d1a84e1369f46c0927dd9182d9b9ced534ee4a819e44267906bed1",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-printf",
+      "exampleIndex": 0,
+      "contentHash": "sha256:f9290a3fba5dd8c23ce919a44f7d951c0802ac5c5e6d07a750cbc2047c661160",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-prs",
+      "exampleIndex": 0,
+      "contentHash": "sha256:78b7ac06c29ec2fca3e0ec81a74ea97ef1bd4ad9ba0d533d4c48d9d1a9dc754a",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-ps",
+      "exampleIndex": 0,
+      "contentHash": "sha256:93d14a267083badf3b1d7e34a302e56cd23a4f3cc2ec37bdb14dd19658a66bbe",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-ps",
+      "exampleIndex": 1,
+      "contentHash": "sha256:4a74407d90b1961f574b2cae91e7eba800a9cdf75d89ac24a6c0270adac9e1ac",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-ptx",
+      "exampleIndex": 0,
+      "contentHash": "sha256:a1afc4a1871eba388b7b516e99a4009f8bcd0474f07ca6a4f5584ffdde0f6f9e",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-pwd",
+      "exampleIndex": 0,
+      "contentHash": "sha256:4fe250594ac312d04ccd04007009169ab4c01a4e70aba10ebb81f669c6f0171d",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-read",
+      "exampleIndex": 0,
+      "contentHash": "sha256:b12068246c01c514f87aeb5659ca9fbfbe73d551786e6b98278c3c14cc69590d",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-readlink",
+      "exampleIndex": 0,
+      "contentHash": "sha256:67d5e283c32853bccc0f83a564e74dc92a3251cf24706cc21bf80354a76474da",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-realpath",
+      "exampleIndex": 0,
+      "contentHash": "sha256:99815275fddef41790b505941895da07bab886c864ecb86807edac16db6963ac",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-renice",
+      "exampleIndex": 0,
+      "contentHash": "sha256:4945d21dd9890b5d4dea6b31d4e1a06faf2b5aa8418a2e3d24ce6cd8a47af797",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-rm",
+      "exampleIndex": 0,
+      "contentHash": "sha256:8bf2f34515ca148ce12a59cf06e45cd157f66c7dc1705c68e22ee2928c1c3314",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-rm",
+      "exampleIndex": 1,
+      "contentHash": "sha256:4b58d85897755ab541591e12b7c00494788037d6c03864dad702cb4adccd0807",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-rmdel",
+      "exampleIndex": 0,
+      "contentHash": "sha256:6891d1a769a917b1b31fb9d18ded74ae58332e61de2b2c9950fcdc779255d535",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-rmdir",
+      "exampleIndex": 0,
+      "contentHash": "sha256:a4a0f9615521509f8e64926f41e03316bbc9dc8adf59357d9ceb3e5c9f3eaec2",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-runcon",
+      "exampleIndex": 0,
+      "contentHash": "sha256:51ba656778ffd9e8ed5cc5810d4c96341d494e2367fe35c6cacd904730ecc8be",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-sact",
+      "exampleIndex": 0,
+      "contentHash": "sha256:8a5603fe0dbc9296816f0271f5214744b4a88efc103e7d10d28d92130ff65ccb",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-sccs",
+      "exampleIndex": 0,
+      "contentHash": "sha256:8ccedcc878e9e8c880ebc02b3d276a8965d09a84cce4ee73ee28fa43fec27a0a",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-scp",
+      "exampleIndex": 0,
+      "contentHash": "sha256:e35f03f0043413bc0690a71c830d7916cfc933413613f513eb3d77dd28fba385",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-sdiff",
+      "exampleIndex": 0,
+      "contentHash": "sha256:92f4142ab1ef3bbe62dfb2452e14f57ed9ac11481e41a511688ad0697ef8cd02",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-sed",
+      "exampleIndex": 0,
+      "contentHash": "sha256:6f4249b086567035178fec1b8699ba511da98b6477ab58ebe0a71840a6730698",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-sed",
+      "exampleIndex": 1,
+      "contentHash": "sha256:2f34f788319db5ba1628fe75ddf762fcc2bc961f44aacc7aba81fc8186dee188",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-seq",
+      "exampleIndex": 0,
+      "contentHash": "sha256:b95382d94f9a12a569ea982e1b3fb0693485c9ae59105a081af50ebe03df96e9",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-sftp",
+      "exampleIndex": 0,
+      "contentHash": "sha256:7b02bf86dd89ec43ae4386fb4445a51192e3f868f77b03d77b11faea674dd392",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-sh",
+      "exampleIndex": 0,
+      "contentHash": "sha256:111707aebdd043393790c2793169db5f799aeb9040a77dcecc4876724ab729b3",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-sha1sum",
+      "exampleIndex": 0,
+      "contentHash": "sha256:92fd5a59fc99bd92d4701e836540b1070a5dbd707432d0a49702ce439f1dd059",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-sha224sum",
+      "exampleIndex": 0,
+      "contentHash": "sha256:e7be3c8fcec828fb952a8d61981c51aa01dd3572755966d31dc6d38a2e8b19e5",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-sha256sum",
+      "exampleIndex": 0,
+      "contentHash": "sha256:c3c75e9a743b5d904cbe0a50344becb0d757705eef19645f796f7c1e3c4559a9",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-sha384sum",
+      "exampleIndex": 0,
+      "contentHash": "sha256:2ce14cab0cee716a11da4e5594ca7f108d06df740cd88106c4814f43307cdd02",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-sha512sum",
+      "exampleIndex": 0,
+      "contentHash": "sha256:2c6ece563c1297c5d9e36071e6f399f85dd35ef2d5497d25f90a98253ad2b170",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-shred",
+      "exampleIndex": 0,
+      "contentHash": "sha256:6bb8b85b2855750eccb5807ff012ac317d4a81f5388ef2c8b2c94bd5746a74da",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-shuf",
+      "exampleIndex": 0,
+      "contentHash": "sha256:c32f5d05c823a3f670a23a197ff98ed941b4af86532f6260adecc5dac43fc7a8",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-sleep",
+      "exampleIndex": 0,
+      "contentHash": "sha256:f194d393e6399c1ebe721d43e61f60ac36a48b0fe23b25169b845bdd1f2404a3",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-sort",
+      "exampleIndex": 0,
+      "contentHash": "sha256:ea0ee05fe8d4383f6cdb6cab0ed128f6428536f049dd58c272943cd0fa9e57f1",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-split",
+      "exampleIndex": 0,
+      "contentHash": "sha256:48d8fdfd1dad81d7de12f0bbede26eedbc608c8bbd4afd0af0ab54e44ede8a5b",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-ssh",
+      "exampleIndex": 0,
+      "contentHash": "sha256:05ab4ce3d7a74ecaca5f8040bc78eb7a6bba1dfe9aae533edba26b592e7189e3",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-ssh-add",
+      "exampleIndex": 0,
+      "contentHash": "sha256:a4e4cb73393e7911d711423da8722b449c1e46d0e6fd714f95036e47849bce88",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-ssh-agent",
+      "exampleIndex": 0,
+      "contentHash": "sha256:7b2ce91447c71e73dbd18e5d65300266e2ed762e6e192433ef1221e86d39ed32",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-ssh-keygen",
+      "exampleIndex": 0,
+      "contentHash": "sha256:212a38250b827280213b8f67c06dae05ace265505d104c0c7c12468be38bb927",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-ssh-keyscan",
+      "exampleIndex": 0,
+      "contentHash": "sha256:1011b8ee8d580cdbb514ad34e52286613421e1319fdbb7426501ad1563bc2fce",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-stat",
+      "exampleIndex": 0,
+      "contentHash": "sha256:0caa88de51c6177d29cfec537023f1e68118414464586e8fdaf90a0435d6ac25",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-stdbuf",
+      "exampleIndex": 0,
+      "contentHash": "sha256:7db8bcb6005cec68fed51a29e759b9953bac9e5a158a3825abb16b6bda2c527f",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-strings",
+      "exampleIndex": 0,
+      "contentHash": "sha256:3e4d19bfd85bf9a29f99c71ce9f10a9a742367a71cfa1f34527ab9f1cd15a9cc",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-strip",
+      "exampleIndex": 0,
+      "contentHash": "sha256:342caa3c3bb8364fda914c18b99e98ee93134e5e8d971ae3c72b49991d2933ed",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-stty",
+      "exampleIndex": 0,
+      "contentHash": "sha256:0d69cfe82d333b5f382a7d1b504b547d7707f77dc8bc122458ae1a3628ebb3b6",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-sum",
+      "exampleIndex": 0,
+      "contentHash": "sha256:6aab2e89915fd893ad126b8eda3f7445f71f6404f11af282e9d5f30ca14add04",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-sync",
+      "exampleIndex": 0,
+      "contentHash": "sha256:a73a9fa7984515f5c90b390526f194fdad86832b52e741087f21b93666a53fcd",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-tabs",
+      "exampleIndex": 0,
+      "contentHash": "sha256:bcb67e83c7af9f1448f09fb9befb70cdf56bf9e363ce453ddc54c921b925c4c2",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-tac",
+      "exampleIndex": 0,
+      "contentHash": "sha256:8cb1892ca3dfba0e7179c006847ff25de6e687f285709904579c99bce8961248",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-tail",
+      "exampleIndex": 0,
+      "contentHash": "sha256:3b9e5d95fd113db48102e247738774c147eefb20819e3e7165712acb0bfcead9",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-tail",
+      "exampleIndex": 1,
+      "contentHash": "sha256:21a9d59afb6a5af8b4e3a568bc134376ac6e8634530ea0c73f7a228a1a086d81",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-talk",
+      "exampleIndex": 0,
+      "contentHash": "sha256:f8ae94fbb4bfac4b6d6a5651d55d6f808510cdfdf37793bf1f0a1027c6e3d5c7",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-tar",
+      "exampleIndex": 0,
+      "contentHash": "sha256:83c6181b7801a4953a9555e0629b79f536ea2bf7242b107449e03d91f3a205d4",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-tar",
+      "exampleIndex": 1,
+      "contentHash": "sha256:95747994c3a1e56c0cde41d21f8c1238d88afb24ac1027f283a61d23424f2a42",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-tar",
+      "exampleIndex": 2,
+      "contentHash": "sha256:bcb8b4c871ec7b967adb8ab6323dc1a340301b9ed6b4c1b29e208ab3cbbbe0bf",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-tee",
+      "exampleIndex": 0,
+      "contentHash": "sha256:4fbe8f20fafef38b14b31523679350cb64b7e1586fcb66ab7578f95bb3c6ca54",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-test",
+      "exampleIndex": 0,
+      "contentHash": "sha256:5eeeeb5d2a146fa1cc60ec86b34a26226b36afcf1193bdc624d13c374cccc5ab",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-time",
+      "exampleIndex": 0,
+      "contentHash": "sha256:71064cf449dcf5fa52346530d05bbc1b0eee78c4e77a2f4c61f2e44eb94aaeea",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-timeout",
+      "exampleIndex": 0,
+      "contentHash": "sha256:3fb44eeeceef4657385a65366d252e07a0c8426769d07c9909090e9b28e18c49",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-top",
+      "exampleIndex": 0,
+      "contentHash": "sha256:30ef7faeb892b2dcc18744464f7d8b5b2e12840ada03510897effd7777050283",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-touch",
+      "exampleIndex": 0,
+      "contentHash": "sha256:deacc6000257cbcbfb0191e26cf9837f6ead079d1f7d33ceafe49ab031f89b61",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-tput",
+      "exampleIndex": 0,
+      "contentHash": "sha256:5c6388b30ef345eaec5064fe816b607bccc2ca23e09244b240c2cdabe82a38e7",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-tr",
+      "exampleIndex": 0,
+      "contentHash": "sha256:a808e1e8b742668c4e3fd54939a5a942272688f91734c9022801d80e8cfb34a8",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-true",
+      "exampleIndex": 0,
+      "contentHash": "sha256:361f64d010574f9c4f80bf372f679ff8b2fc79551b0aefc6c2b3b9edbbc94634",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-truncate",
+      "exampleIndex": 0,
+      "contentHash": "sha256:2c60a12197d43e527c8b31eea14e4d8b2e84690cca065b98c31bfd51dc3abc86",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-tsort",
+      "exampleIndex": 0,
+      "contentHash": "sha256:a1ffba7ca9bb12db1e625bbde4f684587d587c9b982328ba04ee0705061c28f4",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-tty",
+      "exampleIndex": 0,
+      "contentHash": "sha256:85fcee338ecd30ebb916330f5090b5ff3cc2d187aa724c368191140238663e2b",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-type",
+      "exampleIndex": 0,
+      "contentHash": "sha256:b64744e76da87a84b1b5679bc9578459ab109f650c965e8a97c8ff232f5acdc6",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-ulimit",
+      "exampleIndex": 0,
+      "contentHash": "sha256:a491624fcea959155e7e397ede2edae44a9c7cf7ff6cde2c3fcc4e4c9f8c4066",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-umask",
+      "exampleIndex": 0,
+      "contentHash": "sha256:05f33ef037645774125731b90258a7bf75e77b2ded68cc6553eeb5039a60034d",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-unalias",
+      "exampleIndex": 0,
+      "contentHash": "sha256:8fa262482181cf6f5acebc9ee9b02cb8f5f802ee381de3cba86b4015bb82d6bb",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-uname",
+      "exampleIndex": 0,
+      "contentHash": "sha256:a210260dbeabd4daa2cf06c9012d4346937413d9ecb0437eb4ed78fbce2149d9",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-uncompress",
+      "exampleIndex": 0,
+      "contentHash": "sha256:2b8ce27c7a7614925c60e690b7fb5954eeea00ad0bb854327759acec0b4b55ee",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-unexpand",
+      "exampleIndex": 0,
+      "contentHash": "sha256:bfe9acd871abb8cde8547d7a2b4c252d76fdd121b1ed21ec363de07878b35980",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-unget",
+      "exampleIndex": 0,
+      "contentHash": "sha256:8eca4dbb7c37852ee8edf25146b921e33b4df6f0f53c12ca7c40a40d4882b1c2",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-uniq",
+      "exampleIndex": 0,
+      "contentHash": "sha256:645de77f5017fe9783f1604ae29342e226a78700b7a4dac29f971e1ab4c8e28b",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-unlink",
+      "exampleIndex": 0,
+      "contentHash": "sha256:d0748d74d2cd9909978d5025ea1812c12402d9f794887ef9fe7ab92e2e639d4d",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-updatedb",
+      "exampleIndex": 0,
+      "contentHash": "sha256:704ff062a8d3ee4fda9d44e95c24e26892f5b3bc8cf1ef29c57721703f3400d1",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-uptime",
+      "exampleIndex": 0,
+      "contentHash": "sha256:058079025c85346c36c28e4e7a463bda6bfba321cd14af74afa0ea29cf8ae9a1",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-users",
+      "exampleIndex": 0,
+      "contentHash": "sha256:8038f35f84fd9fed9f17613badbead92747c768635c828429f57f926b5072ce3",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-uucp",
+      "exampleIndex": 0,
+      "contentHash": "sha256:f398a617c3e86295e1c32b2bfd6f44a0ede2d5e5da73dec0660cc693cb06ee2b",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-uudecode",
+      "exampleIndex": 0,
+      "contentHash": "sha256:aa8a7a00a6c5796e28ee55282a05b46703d3bc130d23e53402d2d5d005364a4c",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-uuencode",
+      "exampleIndex": 0,
+      "contentHash": "sha256:8204547c0f7d6f731567468505bc355a3f3e440082fbb1376c838cab8cd424c5",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-uustat",
+      "exampleIndex": 0,
+      "contentHash": "sha256:d5d68d4166649f05232895d350e5128dc379ad3e6cd306b90600f5ce64588553",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-uux",
+      "exampleIndex": 0,
+      "contentHash": "sha256:987801eaa1ddb600b31d82ffe00e56d4ac54742a59b4e922f4395d23768f2e4e",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-val",
+      "exampleIndex": 0,
+      "contentHash": "sha256:7607de02ada951cf188fdb18021c8dde614a29609e759c2cb9356a8db4e585af",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-vdir",
+      "exampleIndex": 0,
+      "contentHash": "sha256:d674533ca41a6a712a513d60e962a6af9d79ace75983d5d184699131b69f7246",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-vi",
+      "exampleIndex": 0,
+      "contentHash": "sha256:bac5291ef0c4d77962f1c881f2f7dc8e93a4a05c7a52e8598c825f4f26a9668d",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-wait",
+      "exampleIndex": 0,
+      "contentHash": "sha256:eefaea99219f1b8ac2011b2bea8cf9c980c5d171c70c02f271a243fabd1bc41b",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-wc",
+      "exampleIndex": 0,
+      "contentHash": "sha256:fe2be050ea6055ed7b3c75176d9d196c8dfb0796df20fd863500ecefb582b997",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-wget",
+      "exampleIndex": 0,
+      "contentHash": "sha256:a6260e4d98e4b4eff15191d36790d94c8b5cfae5a429613e95b15891f6b67b62",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-what",
+      "exampleIndex": 0,
+      "contentHash": "sha256:ef20cb12f035ba011d8831d920bf9cfdd8a13452552329ba111ee190344c29af",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-which",
+      "exampleIndex": 0,
+      "contentHash": "sha256:4e49b336f1fc3ddf975e96c8a9155ffc04aa9b0984ff74b4f24ef9d1718013e8",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-who",
+      "exampleIndex": 0,
+      "contentHash": "sha256:98a543643fd3ed4ab93fb3db665fee35a2d7a42e1aa831c1677c8668b2b115b8",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-whoami",
+      "exampleIndex": 0,
+      "contentHash": "sha256:dc13f8ba45d39d1997ac3b5a713a1831b72f11911ba0e0be9792ce7bc5368ce5",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-write",
+      "exampleIndex": 0,
+      "contentHash": "sha256:492a007d438bf33958cac464059b2ff9eb34c303da6aa519fdde140bfbcfafb6",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-xargs",
+      "exampleIndex": 0,
+      "contentHash": "sha256:e16f87b40c23f71930f84d44dd3d245f2c5a00e58e9a6528deaaab49a2ed799b",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-xgettext",
+      "exampleIndex": 0,
+      "contentHash": "sha256:670e2fc2613ea00460344ff83623ad33a843f5fd38314763b751c887bf418bde",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-yacc",
+      "exampleIndex": 0,
+      "contentHash": "sha256:85c5609d813cfa9813158a3593c093a581b0011b2f29c1fd1a5184dd8613086c",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-yes",
+      "exampleIndex": 0,
+      "contentHash": "sha256:c652937b46818db646c32bae28a174fd626934f5d92ba4330533bde9bb4bcc93",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-zcat",
+      "exampleIndex": 0,
+      "contentHash": "sha256:aefebf74516c2563f845dd38ea9adb4e9fe78679ff6ac7e46147d763b786c008",
+      "status": "passed"
+    }
+  ]
+}

@@ -1,10 +1,11 @@
 import importlib.util
+import hashlib
 import json
+import logging
 import os
 import pathlib
 import tempfile
 import time
-import types
 import unittest
 from unittest import mock
 
@@ -655,6 +656,8 @@ class HostFileTests(unittest.TestCase):
                 "scope": "all-command-entrypoints",
                 "checkedAt": "2026-07-13",
                 "sourceIds": ["official-docs"],
+                "adapter": {"id": "sample-fixed", "kind": "fixed-official-component-union", "version": 1},
+                "closure": {"status": "closed", "entryCount": 1, "components": ["sample"], "platforms": [], "proof": "test"},
                 "entries": [{
                     "command": "sample", "aliases": [], "description": "Sample",
                     "usage": "sample", "url": "https://example.com/docs/sample",
@@ -691,24 +694,6 @@ class HostFileTests(unittest.TestCase):
         inventory_probe.assert_called_once_with("sample")
         generate.assert_not_called()
         self.assertEqual(result["officialCoverage"]["status"], "complete")
-
-    def test_generic_inventory_uses_registered_first_party_urls(self):
-        dataset = valid_dataset()
-        generated = {
-            "sourceIds": ["official-docs"],
-            "entries": [{
-                "command": "sample run", "aliases": ["sample r"],
-                "description": "Run sample", "usage": "sample run",
-                "url": "https://example.com/docs/run",
-            }],
-        }
-        with mock.patch.dict(host.SOURCE_REGISTRY_BY_ID, {
-            "official-docs": {"urlPrefixes": ["https://example.com/docs"]},
-        }), mock.patch.object(host, "_run_generation_prompt", return_value=generated) as generate:
-            result = host.fetch_generic_official_inventory("sample", "Sample Tool", dataset)
-        generate.assert_called_once()
-        self.assertEqual(result["entries"][0]["aliases"], ["sample r"])
-        self.assertEqual(result["sourceIds"], ["official-docs"])
 
     def _stage_pending(self, token, tool_id, age_seconds=0):
         path = host.pending_path(token)
@@ -936,8 +921,8 @@ class HostFileTests(unittest.TestCase):
             result = host.add_tool("sample", "Sample Tool")
         self.assertTrue(result["changed"])
         command = popen.call_args.args[0]
-        self.assertIn("default", command)
-        self.assertNotIn("plan", command)
+        self.assertIn("plan", command)
+        self.assertIn("--tools", command)
         self.assertNotIn("acceptEdits", command)
         self.assertTrue(result["pendingToken"])
         self.assertFalse((self.data_dir / "sample.js").exists())
@@ -1258,25 +1243,19 @@ class HostFileTests(unittest.TestCase):
                 host.add_tool("sample", "Sample Tool")
         self.assertFalse((self.data_dir / "sample.js").exists())
 
-    def test_prefer_web_forces_claude_even_with_token(self):
-        # 勾选"联网核对"时即使有 token 也走 claude -p 联网路径，不调用直连 API。
-        stdout = json.dumps({"result": json.dumps(valid_dataset())})
+    def test_prefer_web_keeps_anthropic_compatible_api_available(self):
+        # 官方资料由 Host 确定性刷新；勾选重新核对不应让 API-only 用户失去维护能力。
         discovery = {"sources": valid_dataset()["meta"]["sources"], "conflicts": [], "notes": []}
-        mock_proc = mock.MagicMock()
-        mock_proc.communicate.side_effect = [
-            (json.dumps({"result": json.dumps(discovery)}), ""),
-            (stdout, ""),
-        ]
-        mock_proc.returncode = 0
-        api = mock.MagicMock()
+        popen = mock.MagicMock()
         with mock.patch.object(host, "_has_api_token", return_value=True), mock.patch.object(
-            host, "_call_api_direct", api
-        ), mock.patch.object(host, "CLAUDE_BIN", "/usr/bin/claude"), mock.patch.object(
-            host, "PROJECT_DIR", self.temp.name
-        ), mock.patch.object(host.subprocess, "Popen", return_value=mock_proc):
+            host, "_call_api_direct", side_effect=[json.dumps(discovery), json.dumps(valid_dataset())]
+        ) as api, mock.patch.object(host, "CLAUDE_BIN", None), mock.patch.object(
+            host.subprocess, "Popen", popen
+        ):
             dataset = host.run_claude_query("sample", "Sample Tool", "add", prefer_web=True)
-        api.assert_not_called()
-        self.assertEqual(dataset["meta"]["verificationStatus"], "web-assisted")
+        self.assertEqual(api.call_count, 2)
+        popen.assert_not_called()
+        self.assertEqual(dataset["meta"]["verificationStatus"], "model-knowledge")
 
     def test_token_without_prefer_web_uses_offline_api(self):
         # 不勾选时有 token 走直连 API 离线路径，不启动 claude 子进程。
@@ -1291,17 +1270,21 @@ class HostFileTests(unittest.TestCase):
         popen.assert_not_called()
         self.assertEqual(dataset["meta"]["verificationStatus"], "model-knowledge")
 
-    def test_prefer_web_without_claude_reports_clear_error(self):
-        with mock.patch.object(host, "_has_api_token", return_value=True), mock.patch.object(
+    def test_prefer_web_without_any_claude_environment_reports_clear_error(self):
+        with mock.patch.object(host, "_has_api_token", return_value=False), mock.patch.object(
             host, "CLAUDE_BIN", None
         ):
-            with self.assertRaisesRegex(host.ValidationError, "联网核对需要 Claude Code"):
+            with self.assertRaisesRegex(host.ValidationError, "找不到 Claude Code"):
                 host.run_claude_query("sample", "Sample Tool", "add", prefer_web=True)
 
     def test_add_tool_without_token_or_claude_returns_protocol_error(self):
         # 完全没有本机 AI 环境（无 API token 且未安装 claude CLI）时，
         # add_tool 必须走协议返回友好中文错误，而不是崩溃或泄露堆栈。
-        request = {"action": "add_tool", "tool": "sample", "display_name": "Sample Tool"}
+        request = {
+            "action": "add_tool", "protocolVersion": 5, "providerId": "claude",
+            "providerCatalogDigest": host.provider_registry()["catalogDigest"],
+            "tool": "sample", "display_name": "Sample Tool",
+        }
         sent = []
         with mock.patch.object(host, "_has_api_token", return_value=False), mock.patch.object(
             host, "CLAUDE_BIN", None
@@ -1311,7 +1294,7 @@ class HostFileTests(unittest.TestCase):
             host.main()
         self.assertEqual(len(sent), 1)
         self.assertFalse(sent[0]["ok"])
-        self.assertIn("找不到 claude 命令", sent[0]["error"])
+        self.assertIn("找不到 Claude Code", sent[0]["error"])
         self.assertNotIn("Traceback", sent[0]["error"])
         self.assertFalse((self.data_dir / "sample.js").exists())
 
@@ -1343,7 +1326,11 @@ class HostFileTests(unittest.TestCase):
         self.assertEqual(preview["diff"]["counts"]["modified"], 1)
         applied = host.apply_update(preview["pendingToken"])
         self.assertTrue(applied["changed"])
-        self.assertIn("Ctrl+Shift+K", target.read_text(encoding="utf-8"))
+        updated_content = target.read_text(encoding="utf-8")
+        self.assertIn("Ctrl+Shift+K", updated_content)
+        index_content = (self.data_dir / "index.js").read_text(encoding="utf-8")
+        expected_hash = "sha256:" + hashlib.sha256(updated_content.encode("utf-8")).hexdigest()
+        self.assertIn(expected_hash, index_content)
 
         with mock.patch.object(
             host, "run_claude_query", return_value=host.validate_dataset(old_dataset, "sample")
@@ -1351,6 +1338,36 @@ class HostFileTests(unittest.TestCase):
             second_preview = host.preview_update("sample", "Sample Tool", deep_check=True)
         discarded = host.discard_update(second_preview["pendingToken"])
         self.assertFalse(discarded["changed"])
+
+    def test_apply_update_rolls_back_data_policy_files_when_index_write_fails(self):
+        old_dataset = valid_dataset()
+        old_dataset["items"][0]["id"] = "stable-item"
+        target = self.data_dir / "sample.js"
+        target.write_text(host.render_data_file(old_dataset), encoding="utf-8")
+        host.write_data_index()
+        inventory_path = pathlib.Path(host.official_inventory_path("sample"))
+        review_path = pathlib.Path(host.scenario_review_path("sample"))
+        inventory_path.write_text("previous inventory\n", encoding="utf-8")
+        review_path.write_text("previous review\n", encoding="utf-8")
+        original_data = target.read_text(encoding="utf-8")
+        original_index = (self.data_dir / "index.js").read_text(encoding="utf-8")
+
+        new_dataset = valid_dataset()
+        new_dataset["items"][0].update({"id": "stable-item", "cmd": "Ctrl+Shift+K"})
+        with mock.patch.object(
+            host, "run_claude_query", return_value=host.validate_dataset(new_dataset, "sample")
+        ):
+            preview = host.preview_update("sample", "Sample Tool", deep_check=True)
+
+        with mock.patch.object(host, "write_data_index", side_effect=OSError("index failed")):
+            with self.assertRaisesRegex(OSError, "index failed"):
+                host.apply_update(preview["pendingToken"])
+
+        self.assertEqual(target.read_text(encoding="utf-8"), original_data)
+        self.assertEqual((self.data_dir / "index.js").read_text(encoding="utf-8"), original_index)
+        self.assertEqual(inventory_path.read_text(encoding="utf-8"), "previous inventory\n")
+        self.assertEqual(review_path.read_text(encoding="utf-8"), "previous review\n")
+        self.assertTrue(pathlib.Path(host.pending_path(preview["pendingToken"])).exists())
 
     def test_preview_matches_legacy_items_without_ids(self):
         old_dataset = valid_dataset()
@@ -1458,6 +1475,25 @@ class HostErrorSanitizationTests(unittest.TestCase):
     def test_sanitize_error_text_handles_empty_input(self):
         self.assertEqual(host.sanitize_error_text(None), "")
         self.assertEqual(host.sanitize_error_text(""), "")
+
+    def test_sanitize_error_text_redacts_configured_and_known_secrets(self):
+        configured = "custom-token-abcdef0123456789"
+        known = "sk-proj-" + ("a" * 32)
+        raw = f"authorization: Bearer {configured}; fallback {known}"
+        with mock.patch.dict(os.environ, {"ANTHROPIC_AUTH_TOKEN": configured}, clear=False):
+            cleaned = host.sanitize_error_text(raw)
+        self.assertNotIn(configured, cleaned)
+        self.assertNotIn(known, cleaned)
+        self.assertIn("<REDACTED>", cleaned)
+
+    def test_log_formatter_redacts_traceback_secret_values(self):
+        configured = "custom-token-abcdef0123456789"
+        record = logging.LogRecord("test", logging.ERROR, __file__, 1, "failed: %s", (configured,), None)
+        formatter = host.RedactingFormatter("%(levelname)s %(message)s")
+        with mock.patch.dict(os.environ, {"ANTHROPIC_AUTH_TOKEN": configured}, clear=False):
+            rendered = formatter.format(record)
+        self.assertNotIn(configured, rendered)
+        self.assertIn("<REDACTED>", rendered)
 
     def test_cli_stderr_is_sanitized_before_reaching_ui(self):
         home = os.path.expanduser("~")
@@ -1624,6 +1660,9 @@ class HostApiTests(unittest.TestCase):
     def test_shell_add_tool_requests_are_canonicalized(self):
         request = host.validate_request({
             "action": "add_tool",
+            "protocolVersion": 5,
+            "providerId": "claude",
+            "providerCatalogDigest": host.provider_registry()["catalogDigest"],
             "tool": "terminal",
             "display_name": "Terminal",
         })
@@ -1733,6 +1772,15 @@ class HostExecutableDiscoveryTests(unittest.TestCase):
         for marker in ("nvm", "fnm", "volta", "scoop"):
             self.assertIn(marker, powershell.lower())
 
+    def test_installers_keep_custom_credentials_out_of_launchers(self):
+        shell = (ROOT / "native-host" / "install.sh").read_text(encoding="utf-8")
+        powershell = (ROOT / "native-host" / "install.ps1").read_text(encoding="utf-8")
+        self.assertIn('CREDS_FILE="$INSTALL_DIR/credentials.env"', shell)
+        self.assertIn('$CredentialsFile = Join-Path $InstallDir "credentials.env"', powershell)
+        self.assertIn('Read-Host "ANTHROPIC_AUTH_TOKEN（你的 API Key，输入时不显示）" -AsSecureString', powershell)
+        self.assertIn('Set-Acl -Path $CredentialsFile', powershell)
+        self.assertIn('call `"$CredentialsFile`"', powershell)
+
     def test_uninstall_scripts_mirror_install_artifacts(self):
         # 卸载脚本必须与安装脚本指向同一批产物：host 名、安装目录、
         # 浏览器注册位置；credentials.env 含密钥，必须是询问式删除。
@@ -1754,6 +1802,14 @@ class HostExecutableDiscoveryTests(unittest.TestCase):
         shell = (ROOT / "native-host" / "install.sh").read_text(encoding="utf-8")
         register_block = shell[shell.index("同时注册到 Edge"):]
         self.assertNotIn("Library/Application Support", register_block)
+
+    def test_install_sh_update_only_refreshes_explicit_extension_id(self):
+        shell = (ROOT / "native-host" / "install.sh").read_text(encoding="utf-8")
+        update_only = shell[shell.index('if [[ "$UPDATE_ONLY"'):shell.index("# ── 3.")]
+        self.assertIn('validate_extension_id "$EXTENSION_ID"', update_only)
+        self.assertIn('write_manifest "$CHROME_DIR"', update_only)
+        self.assertIn('write_manifest "$EDGE_DIR"', update_only)
+        self.assertNotRegex(shell, r'\$[A-Za-z_][A-Za-z0-9_]*[^\x00-\x7f]')
 
 
 class HostDiffEnrichmentTests(unittest.TestCase):
@@ -2042,24 +2098,16 @@ class HostHttpRetryTests(unittest.TestCase):
 
 
 class HostSuggestToolsTests(unittest.TestCase):
-    def test_validate_request_normalizes_params(self):
-        request = host.validate_request({
-            "action": "suggest_tools",
-            "platform": "mac",
-            "count": 99,
-            "exclude": ["ripgrep", "BAD ID", "fzf", 123],
-            "enabled": [{"id": "shell", "name": "Shell"}, {"id": "BAD ID", "name": "Bad"}, {"id": "git", "name": ""}],
-            "collected": [{"id": "docker", "name": "Docker"}, {"id": "docker", "name": "Duplicate"}],
-        })
-        self.assertEqual(request["platform"], "mac")
-        self.assertEqual(request["count"], host.SUGGEST_MAX_COUNT)
-        self.assertEqual(request["exclude"], ["ripgrep", "fzf"])
-        self.assertEqual(request["enabled"], [{"id": "shell", "name": "Shell"}])
-        self.assertEqual(request["collected"], [{"id": "docker", "name": "Docker"}])
+    def test_protocol_rejects_removed_ai_recommendation_action(self):
+        with self.assertRaisesRegex(host.ValidationError, "未知"):
+            host.validate_request({
+                "action": "suggest_tools", "providerId": "claude",
+                "platform": "mac", "count": 3, "exclude": [],
+            })
 
     def test_validate_request_rejects_bad_platform(self):
         with self.assertRaises(host.ValidationError):
-            host.validate_request({"action": "suggest_tools", "platform": "solaris", "count": 3, "exclude": []})
+            host.validate_request({"action": "suggest_tools", "providerId": "claude", "platform": "solaris", "count": 3, "exclude": []})
 
     def test_suggest_tools_sanitizes_and_excludes(self):
         payload = {"tools": [
@@ -2130,6 +2178,475 @@ class HostSuggestToolsTests(unittest.TestCase):
                 mock.patch.object(host, "_run_generation_prompt", return_value={"nope": 1}):
             with self.assertRaises(host.ValidationError):
                 host.suggest_tools("mac", 8, [])
+
+
+class HostProviderAdapterTests(unittest.TestCase):
+    def test_claude_cli_version_is_not_replaced_by_configured_model_name(self):
+        with mock.patch.object(host, "_has_api_token", return_value=True), mock.patch.object(
+            host, "_probe_command", return_value=(0, "2.1.216 (Claude Code)")
+        ):
+            self.assertEqual(host._provider_version("claude", "/tmp/claude"), "Anthropic compatible API")
+            self.assertEqual(host._provider_version("claude", "/tmp/claude", prefer_cli=True), "2.1.216 (Claude Code)")
+
+    def test_v5_requires_and_preserves_explicit_provider(self):
+        digest = host.provider_registry()["catalogDigest"]
+        with self.assertRaisesRegex(host.ValidationError, "providerId"):
+            host.validate_request({
+                "action": "add_tool", "protocolVersion": 5,
+                "providerCatalogDigest": digest,
+                "tool": "sample", "display_name": "Sample",
+            })
+        request = host.validate_request({
+            "action": "add_tool", "protocolVersion": 5, "providerId": "codex",
+            "providerCatalogDigest": digest,
+            "tool": "sample", "display_name": "Sample",
+        })
+        self.assertEqual(request["providerId"], "codex")
+
+    def test_v5_rejects_stale_catalog_digest_and_unknown_provider(self):
+        with self.assertRaisesRegex(host.ValidationError, "目录已变化"):
+            host.validate_request({
+                "action": "add_tool", "protocolVersion": 5,
+                "providerId": "catalog:fifth",
+                "providerCatalogDigest": f"sha256:{'0' * 64}",
+                "tool": "sample", "display_name": "Sample",
+            })
+        with self.assertRaisesRegex(host.ValidationError, "providerId"):
+            host.validate_request({
+                "action": "add_tool", "protocolVersion": 5,
+                "providerId": "catalog:fifth",
+                "providerCatalogDigest": host.provider_registry()["catalogDigest"],
+                "tool": "sample", "display_name": "Sample",
+            })
+
+    def test_declarative_fifth_provider_uses_fixed_argv_without_shell(self):
+        adapter = {
+            "id": "catalog:fifth", "displayName": "Fifth AI", "source": "catalog",
+            "transport": "cli", "driver": "stdin-json", "promptMode": "stdin",
+            "argv": ["--read-only", "--json"], "outputParser": "json",
+            "executableCandidates": ["fifth-ai"],
+        }
+        with mock.patch.object(host, "_provider_binary", return_value="/tmp/fifth-ai"), \
+                mock.patch.object(
+                    host, "_run_provider_process", return_value='{"meta":{},"items":[]}'
+                ) as process:
+            result = host._call_catalog_cli("prompt", "catalog:fifth", adapter)
+        self.assertEqual(result, {"meta": {}, "items": []})
+        args, prompt, provider_id = process.call_args.args
+        self.assertEqual(args, ["/tmp/fifth-ai", "--read-only", "--json"])
+        self.assertEqual((prompt, provider_id), ("prompt", "catalog:fifth"))
+
+    def test_generic_provider_uses_exactly_one_executable_and_stdin(self):
+        with tempfile.TemporaryDirectory() as temp, mock.patch.object(host, "PENDING_DIR", temp), \
+                mock.patch.object(host, "find_executable", return_value="/tmp/generic-ai"), \
+                mock.patch.object(host, "_probe_command", return_value=(0, "Generic AI 1.0")):
+            enabled = host.handle_message({
+                "action": "enable_generic_provider", "protocolVersion": 5,
+                "displayName": "Generic AI", "executable": "generic-ai", "genericConfirmed": True,
+            })
+            provider_id = enabled["provider"]["id"]
+            adapter = host.provider_adapter(provider_id)
+            with mock.patch.object(host, "_provider_binary", return_value="/tmp/generic-ai"), \
+                    mock.patch.object(host, "_run_provider_process", return_value='{"meta":{},"items":[]}') as process:
+                self.assertEqual(host._call_catalog_cli("prompt", provider_id, adapter), {"meta": {}, "items": []})
+            args, prompt, used_provider = process.call_args.args
+            self.assertEqual(args, ["/tmp/generic-ai"])
+            self.assertEqual((prompt, used_provider), ("prompt", provider_id))
+            self.assertFalse(process.call_args.kwargs["prompt_in_argv"])
+
+    def test_generic_provider_requires_one_confirmation_and_can_resolve_existing_adapter(self):
+        with tempfile.TemporaryDirectory() as temp, mock.patch.object(host, "PENDING_DIR", temp), \
+                mock.patch.object(host, "find_executable", return_value="/tmp/generic-ai"), \
+                mock.patch.object(host, "_probe_command", return_value=(0, "Generic AI 1.0")):
+            resolved = host.handle_message({
+                "action": "resolve_generic_provider", "protocolVersion": 5,
+                "displayName": "Generic AI", "executable": "generic-ai",
+            })
+            self.assertTrue(resolved["found"])
+            self.assertTrue(resolved["requiresGenericConfirmation"])
+            enabled = host.handle_message({
+                "action": "enable_generic_provider", "protocolVersion": 5,
+                "displayName": "Generic AI", "executable": "generic-ai", "genericConfirmed": True,
+            })
+            self.assertTrue(enabled["ok"])
+            repeated = host.handle_message({
+                "action": "resolve_generic_provider", "protocolVersion": 5,
+                "displayName": "Generic AI", "executable": "generic-ai",
+            })
+            self.assertEqual(repeated["existingProviderId"], enabled["provider"]["id"])
+
+    def test_common_qwen_installer_uses_only_its_fixed_bridge_profile(self):
+        installed = {"qwen": False}
+
+        def executable(name, *_args, **_kwargs):
+            if name == "qwen":
+                return "/tmp/qwen" if installed["qwen"] else None
+            return {"node": "/tmp/node", "npm": "/tmp/npm"}.get(name)
+
+        def probe(args, *_args, **_kwargs):
+            return (0, "v22.2.0") if args[0] == "/tmp/node" else (0, "10.0.0")
+
+        process = mock.Mock()
+        process.returncode = 0
+        process.communicate.side_effect = lambda timeout: (installed.__setitem__("qwen", True) or ("", ""))
+        with mock.patch.object(host, "find_executable", side_effect=executable), \
+                mock.patch.object(host, "_probe_command", side_effect=probe), \
+                mock.patch.object(host.subprocess, "Popen", return_value=process) as popen:
+            prepared = host.handle_message({
+                "action": "prepare_common_provider_install", "protocolVersion": 5,
+                "commonProviderId": "qwen-code",
+            })
+            self.assertEqual(prepared["installation"]["state"], "ready")
+            result = host.handle_message({
+                "action": "install_common_provider", "protocolVersion": 5,
+                "commonProviderId": "qwen-code", "confirmed": True,
+            })
+        self.assertTrue(result["ok"])
+        self.assertEqual(result["providerId"], "qwen")
+        self.assertEqual(
+            popen.call_args.args[0],
+            ["/tmp/npm", "install", "--global", "@qwen-code/qwen-code@latest"],
+        )
+        self.assertNotIn("shell", popen.call_args.kwargs)
+
+    def test_common_provider_install_requires_confirmation_and_rejects_unknown_id(self):
+        with self.assertRaisesRegex(host.ValidationError, "需要用户确认"):
+            host.validate_request({
+                "action": "install_common_provider", "protocolVersion": 5,
+                "commonProviderId": "qwen-code",
+            })
+        with self.assertRaisesRegex(host.ValidationError, "ID 无效"):
+            host.validate_request({
+                "action": "prepare_common_provider_install", "protocolVersion": 5,
+                "commonProviderId": "qwen-code;rm",
+            })
+        with self.assertRaisesRegex(host.ValidationError, "未登记"):
+            host.handle_message({
+                "action": "prepare_common_provider_install", "protocolVersion": 5,
+                "commonProviderId": "unknown-ai",
+            })
+
+    def test_qwen_adapter_uses_documented_headless_plan_arguments(self):
+        output = json.dumps([{"type": "result", "result": '{"meta":{},"items":[]}'}])
+        with mock.patch.object(host, "_provider_binary", return_value="/tmp/qwen"), \
+                mock.patch.object(host, "_run_provider_process", return_value=output) as process:
+            self.assertEqual(host._call_qwen_cli("prompt"), {"meta": {}, "items": []})
+        args, prompt, provider_id = process.call_args.args
+        self.assertEqual(args[:5], ["/tmp/qwen", "--safe-mode", "--approval-mode", "plan", "--max-wall-time"])
+        self.assertIn("--output-format", args)
+        self.assertEqual((prompt, provider_id), ("prompt", "qwen"))
+        self.assertTrue(process.call_args.kwargs["prompt_in_argv"])
+
+    def test_compatible_api_protocols_normalize_structured_text(self):
+        expected = '{"meta":{},"items":[]}'
+        self.assertEqual(host._compatible_api_text(
+            "anthropic-messages", {"content": [{"type": "text", "text": expected}]}
+        ), expected)
+        self.assertEqual(host._compatible_api_text(
+            "openai-chat-completions",
+            {"choices": [{"message": {"content": expected}}]},
+        ), expected)
+        self.assertEqual(host._compatible_api_text(
+            "openai-responses", {"output_text": expected}
+        ), expected)
+
+    def test_openai_compatible_api_uses_bridge_profile_and_returns_json(self):
+        profile = {
+            "id": "api:12345678-1234-1234-1234-123456789abc",
+            "displayName": "Compatible API",
+            "protocol": "openai-responses",
+            "baseUrl": "https://api.example.com/v1",
+            "model": "example-model",
+            "token": "secret-token",
+        }
+        adapter = {"displayName": "Compatible API"}
+        response = mock.MagicMock()
+        response.read.return_value = json.dumps({
+            "model": "example-model",
+            "output_text": '{"meta":{},"items":[]}',
+        }).encode("utf-8")
+        response.__enter__.return_value = response
+        with mock.patch.object(host, "_compatible_api_profile", return_value=profile), \
+                mock.patch.object(host.urllib.request, "urlopen", return_value=response) as opener:
+            result = host._call_compatible_api("prompt", profile["id"], adapter)
+        self.assertEqual(result, {"meta": {}, "items": []})
+        request = opener.call_args.args[0]
+        self.assertEqual(request.full_url, "https://api.example.com/v1/responses")
+        self.assertEqual(request.get_header("Authorization"), "Bearer secret-token")
+
+    def test_selected_provider_never_falls_back(self):
+        ready = {
+            "id": "codex", "displayName": "Codex CLI", "installed": True,
+            "ready": True, "loginCommand": "codex login",
+        }
+        with mock.patch.object(host, "provider_status", return_value=ready), \
+                mock.patch.object(host, "_call_codex_cli", return_value={"ok": True}) as codex, \
+                mock.patch.object(host, "_call_claude_cli") as claude:
+            result = host._run_generation_prompt("prompt", False, provider_id="codex")
+        self.assertEqual(result, {"ok": True})
+        codex.assert_called_once_with("prompt")
+        claude.assert_not_called()
+
+    def test_codex_adapter_is_ephemeral_read_only_and_schema_bound(self):
+        captured = {}
+
+        def fake_run(args, _prompt, provider_id, **_kwargs):
+            captured["args"] = args
+            captured["provider"] = provider_id
+            output_path = pathlib.Path(args[args.index("-o") + 1])
+            output_path.write_text('{"value":1}', encoding="utf-8")
+            return ""
+
+        with mock.patch.object(host, "CODEX_BIN", "/bin/codex"), \
+                mock.patch.object(host, "_run_provider_process", side_effect=fake_run):
+            self.assertEqual(host._call_codex_cli("prompt"), {"value": 1})
+        self.assertEqual(captured["provider"], "codex")
+        self.assertIn("--ephemeral", captured["args"])
+        self.assertIn("read-only", captured["args"])
+        self.assertIn("--output-schema", captured["args"])
+        self.assertIn('web_search="disabled"', captured["args"])
+
+    def test_gemini_and_opencode_adapters_disable_writes(self):
+        calls = []
+
+        def fake_run(args, _prompt, provider_id, **kwargs):
+            calls.append((args, provider_id, kwargs, os.environ.get("OPENCODE_PERMISSION")))
+            if provider_id == "gemini":
+                return json.dumps({"response": '{"value":"gemini"}'})
+            return json.dumps({"part": {"text": '{"value":"opencode"}'}})
+
+        with mock.patch.object(host, "GEMINI_BIN", "/bin/gemini"), \
+                mock.patch.object(host, "OPENCODE_BIN", "/bin/opencode"), \
+                mock.patch.object(host, "_run_provider_process", side_effect=fake_run):
+            with tempfile.TemporaryDirectory() as temp, \
+                    mock.patch.object(host, "BRIDGE_WORK_DIR", temp):
+                self.assertEqual(host._call_gemini_cli("prompt")["value"], "gemini")
+                self.assertEqual(host._call_opencode_cli("prompt")["value"], "opencode")
+        self.assertIn("plan", calls[0][0])
+        self.assertIn("--admin-policy", calls[0][0])
+        self.assertIn("plan", calls[1][0])
+        permissions = json.loads(calls[1][3])
+        self.assertTrue(all(value == "deny" for value in permissions.values()))
+
+    def test_gemini_requires_a_non_generating_auth_signal(self):
+        with tempfile.TemporaryDirectory() as home, \
+                mock.patch.dict(os.environ, {
+                    "HOME": home,
+                    "GEMINI_API_KEY": "",
+                    "GOOGLE_API_KEY": "",
+                    "GOOGLE_APPLICATION_CREDENTIALS": "",
+                }, clear=False):
+            self.assertEqual(host._gemini_login_state(), "not-logged-in")
+            gemini_dir = pathlib.Path(home, ".gemini")
+            gemini_dir.mkdir()
+            (gemini_dir / ".env").write_text("GEMINI_API_KEY=secret\n", encoding="utf-8")
+            self.assertEqual(host._gemini_login_state(), "configured")
+
+    def test_unknown_cli_only_closes_from_recursive_help_tree(self):
+        outputs = {
+            (): "Usage: sample COMMAND\n\nCommands:\n  run     Run a task\n  config  Configure\n\nOptions:\n  --help  Help\n",
+            ("run",): "Usage: sample run\n\nOptions:\n  --dry-run  Preview\n",
+            ("config",): "Usage: sample config\n\nOptions:\n  --list  List config\n",
+        }
+        with mock.patch.object(host, "find_executable", return_value="/bin/sample"), \
+                mock.patch.object(host, "_local_help_output", side_effect=lambda _exe, parts: outputs[tuple(parts)]):
+            inventory = host.fetch_local_help_inventory("sample", "Sample")
+        self.assertEqual(inventory["closure"]["status"], "closed")
+        self.assertEqual(
+            [entry["command"] for entry in inventory["entries"]],
+            ["sample", "sample run", "sample config"],
+        )
+        self.assertEqual(inventory["adapter"]["kind"], "recursive-local-help-tree")
+
+    def test_unknown_cli_without_commands_fails_closed(self):
+        with mock.patch.object(host, "find_executable", return_value="/bin/sample"), \
+                mock.patch.object(host, "_local_help_output", return_value="Usage: sample [OPTIONS]"):
+            with self.assertRaisesRegex(host.OfficialInventoryError, "尚不能证明"):
+                host.fetch_local_help_inventory("sample", "Sample")
+
+
+class HostCompanionProtocolTests(unittest.TestCase):
+    def test_handshake_reports_protocol_and_capabilities(self):
+        result = host.handle_message({
+            "action": "handshake", "protocolVersion": 5, "schemaVersion": 2,
+            "extensionId": "a" * 32,
+        })
+        self.assertTrue(result["ok"])
+        self.assertEqual(result["protocolVersion"], 5)
+        self.assertEqual(result["schemaVersion"], 2)
+        self.assertEqual([item["id"] for item in result["providers"][:4]], [
+            "claude", "codex", "gemini", "opencode",
+        ])
+        self.assertRegex(result["providerCatalogDigest"], r"^sha256:[a-f0-9]{64}$")
+        self.assertFalse(result["capabilities"]["aiRecommendations"])
+        self.assertTrue(result["capabilities"]["chunkedBundles"])
+        self.assertLessEqual(result["capabilities"]["chunkBytes"], 512 * 1024)
+        self.assertTrue(result["capabilities"]["providerCatalog"]["configureCompatibleApi"])
+
+    def test_handshake_enumerates_registry_provider_without_extension_allowlist(self):
+        current = host.provider_registry()
+        fifth = {
+            "id": "catalog:fifth", "displayName": "Fifth AI", "source": "catalog",
+            "transport": "cli", "verified": True, "ready": True, "installed": True,
+            "loginState": "logged-in", "version": "1.0", "loginCommand": "",
+            "capabilities": ["structured-output", "read-only", "maintenance", "cancel"],
+            "recommendationOrder": 40,
+        }
+        fake_registry = {
+            **current,
+            "providers": [*current["providers"], fifth],
+            "byId": {**current["byId"], "catalog:fifth": fifth},
+            "catalogDigest": f"sha256:{'a' * 64}",
+        }
+        original_status = host.provider_status
+
+        def status(provider_id, prefer_cli_version=False):
+            if provider_id == "catalog:fifth":
+                return fifth
+            return original_status(provider_id, prefer_cli_version)
+
+        with mock.patch.object(host, "provider_registry", return_value=fake_registry), \
+                mock.patch.object(host, "provider_status", side_effect=status):
+            result = host.handle_message({
+                "action": "handshake", "protocolVersion": 5, "schemaVersion": 2,
+                "extensionId": "a" * 32,
+            })
+        self.assertEqual(result["providers"][-1]["id"], "catalog:fifth")
+        self.assertEqual(result["providerCatalogDigest"], f"sha256:{'a' * 64}")
+
+    def test_user_requested_handshake_refreshes_catalog_before_scanning(self):
+        with mock.patch.object(
+            host, "refresh_catalog_if_stale",
+            return_value={"status": "updated", "checkedAt": "2026-07-26T00:00:00Z"},
+        ) as refresh:
+            result = host.handle_message({
+                "action": "handshake", "protocolVersion": 5, "schemaVersion": 2,
+                "extensionId": "a" * 32, "refreshCatalog": True,
+            })
+        refresh.assert_called_once_with(host.SHARED_DIR, host.PENDING_DIR)
+        self.assertEqual(result["catalogRefresh"]["status"], "updated")
+
+    def test_cold_handshake_never_refreshes_catalog(self):
+        with mock.patch.object(host, "refresh_catalog_if_stale") as refresh:
+            result = host.handle_message({
+                "action": "handshake", "protocolVersion": 5, "schemaVersion": 2,
+                "extensionId": "a" * 32,
+            })
+        refresh.assert_not_called()
+        self.assertEqual(result["catalogRefresh"]["status"], "not-requested")
+
+    def test_handshake_rejects_incompatible_schema(self):
+        result = host.handle_message({
+            "action": "handshake", "protocolVersion": 5, "schemaVersion": 1,
+            "extensionId": "a" * 32,
+        })
+        self.assertFalse(result["ok"])
+        self.assertEqual(result["schemaVersion"], 2)
+
+    def test_graphical_api_configuration_writes_only_bridge_state(self):
+        token = "bridge-local-test-token"
+        with tempfile.TemporaryDirectory() as temp, mock.patch.object(host, "PENDING_DIR", temp):
+            result = host.handle_message({
+                "action": "configure_api", "protocolVersion": 5,
+                "config": {
+                    "displayName": "Test API", "protocol": "openai-responses",
+                    "baseUrl": "https://api.example.test/v1", "model": "test-model",
+                    "token": token,
+                },
+            })
+            self.assertTrue(result["ok"])
+            self.assertNotIn("token", result["provider"])
+            self.assertNotIn(token, json.dumps(result))
+            stored = pathlib.Path(temp, "provider-api-config.json").read_text(encoding="utf-8")
+            self.assertIn(token, stored)
+
+    def test_custom_provider_save_is_local_and_handshake_exposes_safe_metadata(self):
+        with tempfile.TemporaryDirectory() as temp, mock.patch.object(host, "PENDING_DIR", temp):
+            saved = host.handle_message({
+                "action": "save_custom_provider", "protocolVersion": 5,
+                "config": {
+                    "displayName": "My Local AI", "executable": "my-local-ai",
+                    "driver": "stdin-json", "argv": ["--json", "--read-only"],
+                    "promptMode": "stdin", "outputParser": "json",
+                    "versionArgs": ["--version"], "loginCommand": "my-local-ai login",
+                    "readOnlyConfirmed": True,
+                },
+            })
+            self.assertTrue(saved["ok"])
+            provider_id = saved["provider"]["id"]
+            self.assertRegex(provider_id, r"^custom:[a-f0-9-]{36}$")
+            handshake = host.handle_message({
+                "action": "handshake", "protocolVersion": 5, "schemaVersion": 2,
+                "extensionId": "a" * 32,
+            })
+            listed = next(item for item in handshake["providers"] if item["id"] == provider_id)
+            self.assertEqual(listed["source"], "custom")
+            self.assertFalse(listed["verified"])
+            self.assertEqual(listed["customConfig"]["executable"], "my-local-ai")
+            self.assertNotIn("token", json.dumps(handshake))
+            deleted = host.handle_message({
+                "action": "delete_custom_provider", "protocolVersion": 5,
+                "providerId": provider_id,
+            })
+            self.assertTrue(deleted["deleted"])
+
+    def test_custom_provider_rejects_shell_arguments_before_execution(self):
+        with tempfile.TemporaryDirectory() as temp, mock.patch.object(host, "PENDING_DIR", temp):
+            with self.assertRaisesRegex(host.ValidationError, "Shell 元字符"):
+                host.handle_message({
+                    "action": "save_custom_provider", "protocolVersion": 5,
+                    "config": {
+                        "displayName": "Unsafe", "executable": "unsafe-ai",
+                        "driver": "stdin-json", "argv": ["--json", "|", "cat"],
+                        "promptMode": "stdin", "outputParser": "json",
+                        "versionArgs": ["--version"], "loginCommand": "",
+                        "readOnlyConfirmed": True,
+                    },
+                })
+
+    def test_store_apply_returns_checksum_verified_chunks(self):
+        dataset = host.validate_dataset(valid_dataset(), "sample")
+        item = dataset["items"][0]
+        inventory = {
+            "schemaVersion": 2,
+            "toolId": "sample",
+            "scope": "all-command-entrypoints",
+            "checkedAt": "2026-07-16",
+            "sourceIds": ["official-docs"],
+            "adapter": {"id": "sample-fixed", "kind": "fixed-official-component-union", "version": 1},
+            "closure": {"status": "closed", "entryCount": 1, "components": ["sample"], "platforms": ["mac"], "proof": "test"},
+            "entries": [{
+                "command": item["cmd"], "context": item.get("context", ""), "aliases": [],
+                "entryType": "keyboard-shortcut", "component": "sample", "platforms": ["mac"],
+                "constraints": [], "description": item["en"], "usage": item["cmd"], "options": [],
+                "officialExamples": [item["examples"][0]["value"]], "url": "https://example.com/docs#ctrl-k",
+            }],
+        }
+        dataset["meta"]["officialCoverage"] = host.official_coverage(inventory, 1)
+        dataset = host.validate_dataset(dataset, "sample", enforce_global_contract=True)
+        review = host.build_scenario_review(dataset, inventory)
+        token = "b" * 32
+        payload = {
+            "token": token, "mode": "add", "toolId": "sample", "oldHash": None,
+            "dataset": dataset, "officialInventory": inventory, "scenarioReview": review,
+            "diff": {"risks": []}, "channel": "store",
+            "officialAdapter": inventory["adapter"],
+            "sourceRegistry": dataset["meta"]["sources"],
+            "generationEnvironment": {"providerId": "claude", "providerDisplayName": "Claude Code", "cliVersion": "test"},
+        }
+        with tempfile.TemporaryDirectory() as temp, mock.patch.object(host, "PENDING_DIR", temp):
+            host.atomic_write(host.pending_path(token), json.dumps(payload))
+            applied = host.apply_update(token, channel="store")
+            self.assertIn("transfer", applied)
+            chunks = [host.read_bundle_chunk(token, index)["data"] for index in range(applied["transfer"]["totalChunks"])]
+            import base64
+            import hashlib
+            raw = b"".join(base64.b64decode(chunk) for chunk in chunks)
+            self.assertEqual(len(raw), applied["transfer"]["totalBytes"])
+            self.assertEqual(hashlib.sha256(raw).hexdigest(), applied["transfer"]["sha256"])
+            self.assertEqual(json.loads(raw)["dataset"]["meta"]["id"], "sample")
+            host.finalize_bundle(token)
+            self.assertFalse(pathlib.Path(host.pending_path(token)).exists())
 
 
 if __name__ == "__main__":

@@ -2,8 +2,8 @@
   "manifest_version": 3,
   "name": "AI CLI 速查表",
   "short_name": "AI CLI速查",
-  "description": "AI CLI、编辑器、终端与常用开发工具的命令、参数与快捷键中英对照速查（Claude Code、Codex、Gemini CLI、Git、Docker、Homebrew 等 17 个工具）。基础查询纯本地完成；新增/更新数据为可选功能。",
-  "version": "1.7.0",
+  "description": "AI CLI、编辑器、Unix/POSIX、Linux 系统等 18 个工具分类的命令、参数和快捷键速查；查询与个性化推荐均在本地完成。",
+  "version": "1.7.6",
   "background": { "service_worker": "background.js" },
   "permissions": ["nativeMessaging", "storage", "alarms"],
   "action": {

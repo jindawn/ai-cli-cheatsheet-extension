@@ -416,19 +416,22 @@
   }
 
   /**
-   * 解析条目在指定平台下应展示的命令，并标记是否走了通用回退或当前平台未覆盖。
+   * 解析条目在首选平台下应展示的命令，并标记是否走了通用回退或属于其他平台。
    * @param {{ cmd: string, platformCmds?: Record<string, string>, platforms?: string[] }} item
    * @param {string} platform "mac" | "windows" | "linux"（其余值回退为 "mac"）
-   * @returns {{ command: string, usedFallback: boolean, unsupported: boolean }}
+   * @returns {{ command: string, usedFallback: boolean, platformMismatch: boolean, unsupported: boolean }}
    */
   function getPlatformCommand(item, platform) {
     const normalizedPlatform = ["mac", "windows", "linux"].includes(platform) ? platform : "mac";
     const platformCmds = item.platformCmds || {};
     const supported = Array.isArray(item.platforms) ? item.platforms : [];
+    const platformMismatch = Boolean(supported.length && !supported.includes(normalizedPlatform));
     return {
       command: platformCmds[normalizedPlatform] || item.cmd,
       usedFallback: Boolean(Object.keys(platformCmds).length && !platformCmds[normalizedPlatform]),
-      unsupported: Boolean(supported.length && !supported.includes(normalizedPlatform)),
+      platformMismatch,
+      // 1.7.x compatibility alias. New UI code must use platformMismatch.
+      unsupported: platformMismatch,
     };
   }
 
@@ -436,15 +439,18 @@
    * 解析示例在指定平台下应展示的内容。
    * @param {{ value: string, platformValues?: Record<string, string>, platforms?: string[] }} example
    * @param {string} platform
-   * @returns {{ value: string, unsupported: boolean }}
+   * @returns {{ value: string, platformMismatch: boolean, unsupported: boolean }}
    */
   function getPlatformExample(example, platform) {
     const normalizedPlatform = ["mac", "windows", "linux"].includes(platform) ? platform : "mac";
     const platformValues = example.platformValues || {};
     const supported = Array.isArray(example.platforms) ? example.platforms : [];
+    const platformMismatch = Boolean(supported.length && !supported.includes(normalizedPlatform));
     return {
       value: platformValues[normalizedPlatform] || example.value,
-      unsupported: Boolean(supported.length && !supported.includes(normalizedPlatform)),
+      platformMismatch,
+      // 1.7.x compatibility alias. New UI code must use platformMismatch.
+      unsupported: platformMismatch,
     };
   }
 

@@ -544,9 +544,16 @@ async function loadCommonProviderCatalog() {
 function currentCommonProviderEntries() {
   const providers = Array.isArray(companionHandshake?.providers) ? companionHandshake.providers : [];
   const statusById = new Map(providers.map((provider) => [provider.id, provider]));
-  const scanned = new Map((Array.isArray(companionHandshake?.commonProviders)
-    ? companionHandshake.commonProviders : []).map((provider) => [provider.id, provider]));
-  const catalog = Array.isArray(commonProviderCatalog) ? commonProviderCatalog : [];
+  const scannedList = Array.isArray(companionHandshake?.commonProviders)
+    ? companionHandshake.commonProviders : [];
+  const scanned = new Map(scannedList.map((provider) => [provider.id, provider]));
+  // The bridge sends whole catalog entries, not just scan results, and it is
+  // the side that can actually execute them. Prefer its list so an extension
+  // and a bridge on different release trains cannot disagree about which
+  // environments exist; the bundled copy only covers the not-yet-detected case.
+  const catalog = scannedList.length
+    ? scannedList
+    : Array.isArray(commonProviderCatalog) ? commonProviderCatalog : [];
   const standard = catalog.map((entry) => {
     const builtinId = BUILTIN_COMMON_PROVIDER_IDS[entry.id];
     const scan = scanned.get(entry.id) || {};

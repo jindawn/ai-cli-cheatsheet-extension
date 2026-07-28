@@ -1288,9 +1288,12 @@ class HostFileTests(unittest.TestCase):
         self.assertEqual(dataset["meta"]["verificationStatus"], "model-knowledge")
 
     def test_prefer_web_without_any_claude_environment_reports_clear_error(self):
+        # Patch the lookup rather than the module global: adapters resolve their
+        # executable through find_executable, so this is what "not on PATH"
+        # actually looks like to the bridge.
         with mock.patch.object(host, "_has_api_token", return_value=False), mock.patch.object(
             host, "CLAUDE_BIN", None
-        ):
+        ), mock.patch.object(host, "find_executable", return_value=None):
             with self.assertRaisesRegex(host.ValidationError, "找不到 Claude Code"):
                 host.run_claude_query("sample", "Sample Tool", "add", prefer_web=True)
 
@@ -1305,7 +1308,9 @@ class HostFileTests(unittest.TestCase):
         sent = []
         with mock.patch.object(host, "_has_api_token", return_value=False), mock.patch.object(
             host, "CLAUDE_BIN", None
-        ), mock.patch.object(host, "read_message", return_value=request), mock.patch.object(
+        ), mock.patch.object(host, "find_executable", return_value=None), mock.patch.object(
+            host, "read_message", return_value=request
+        ), mock.patch.object(
             host, "send_message", side_effect=lambda payload: sent.append(payload)
         ):
             host.main()

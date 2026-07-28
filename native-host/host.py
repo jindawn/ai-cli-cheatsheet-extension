@@ -254,15 +254,37 @@ PROBE_COMMAND_TIMEOUT_SECONDS = 5
 HANDSHAKE_BUDGET_SECONDS = 20
 HANDSHAKE_MAX_WORKERS = 8
 
-# Only tools with a useful local version command belong here. Stable keymaps and
-# long-lived command references intentionally have no executable probe.
-TOOL_VERSION_COMMANDS = {
-    "claude-code": (("claude", "--version"),),
-    "codex": (("codex", "--version"),),
-    "gemini-cli": (("gemini", "--version"),),
-    "openclaw": (("openclaw", "--version"),),
-    "opencode": (("opencode", "--version"),),
-}
+def load_ai_environments():
+    """Read the identity source of truth shared by detection and tool data."""
+    path = os.path.join(_project_base_dir(), "shared", "ai-environments.json")
+    with open(path, "r", encoding="utf-8") as handle:
+        payload = json.load(handle)
+    environments = payload.get("environments")
+    if not isinstance(environments, list) or not environments:
+        raise RuntimeError("shared/ai-environments.json 缺少 environments")
+    return environments
+
+
+AI_ENVIRONMENTS = load_ai_environments()
+
+
+def _tool_version_commands():
+    """Derive local version probes from the shared environment registry.
+
+    Keeping this table hand-written next to the provider registry is what let
+    the two drift: one listed openclaw but not qwen, the other the reverse.
+    Stable keymaps and long-lived command references stay absent by design —
+    they are simply not registered as environments.
+    """
+    return {
+        environment["toolDataId"]: (
+            (environment["executable"], *environment["versionArgs"]),
+        )
+        for environment in AI_ENVIRONMENTS
+    }
+
+
+TOOL_VERSION_COMMANDS = _tool_version_commands()
 
 
 def load_source_registry():
@@ -932,14 +954,10 @@ def _probe_command(args, timeout=PROBE_COMMAND_TIMEOUT_SECONDS):
 
 
 def _provider_binary(provider_id, adapter=None):
-    builtins = {
-        "claude": CLAUDE_BIN,
-        "codex": CODEX_BIN,
-        "gemini": GEMINI_BIN,
-        "opencode": OPENCODE_BIN,
-    }
-    if provider_id in builtins:
-        return builtins[provider_id]
+    # Every CLI provider resolves the same way, through its adapter's declared
+    # candidates. Qwen already relied on this path while the other four went
+    # through a parallel lookup table — that inconsistency is the drift this
+    # removes. find_executable is memoised, so there is no extra PATH walk.
     adapter = adapter or provider_adapter(provider_id)
     if adapter.get("transport") != "cli":
         return None

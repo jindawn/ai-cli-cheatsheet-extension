@@ -20,7 +20,7 @@ const providerRegistry = read("native-host/provider_registry.py");
 const legacyProviderAdapters = JSON.parse(read("shared/provider-adapters.json"));
 const v5ProviderAdapters = JSON.parse(read("shared/provider-adapters-v5.json"));
 
-assert(host.includes("PROTOCOL_VERSION = 5") && host.includes('COMPANION_VERSION = "1.7.8"'));
+assert(host.includes("PROTOCOL_VERSION = 5") && host.includes('COMPANION_VERSION = "1.7.9"'));
 assert(host.includes("PROJECT_DIR = os.path.realpath(_project_base_dir())"), "the frozen bridge must load bundled shared resources from _MEIPASS");
 assert(officialInventory.includes("sys._MEIPASS"), "the frozen official-inventory adapter must load bundled snapshots from _MEIPASS");
 assert(bridgeSpec.includes('(str(ROOT / "shared"), "shared")'), "the bridge bundle must include official component fixtures as well as rendered inventories");
@@ -55,6 +55,9 @@ assert(workflow.includes("verify-release-assets.js") && workflow.includes("SHA25
 assert(workflow.includes("--bridge-installers-ready"), "store package may expose installers only after the release assets are verified");
 assert(workflow.includes("--bridge-only") && workflow.includes("--channel source --output dist/source-release --bridge-installers-ready"), "source and store release packages may expose installers only after every bridge asset is present");
 assert(workflow.includes("--basic-only"), "the baseline extension release must remain publishable without signed bridge installers");
+const githubReleaseWorkflow = workflow.slice(workflow.indexOf("  github-release:"), workflow.indexOf("  chrome-web-store:"));
+assert(githubReleaseWorkflow.indexOf("actions/checkout@v4") < githubReleaseWorkflow.indexOf("name: release-assets"),
+  "checkout must run before downloading release assets so its clean step cannot remove them");
 assert(builder.includes('"bridgeInstallersAvailable": true') || read("tools/package-extension.js").includes("bridgeInstallersAvailable: true"), "a verified source release package must expose graphical installer entry points");
 
 assert(popup.includes("releases/download/v${BRIDGE_VERSION}"), "download URLs must be pinned to the extension version");
@@ -79,13 +82,13 @@ assert(popup.includes("refreshCatalog: true") && popup.includes("companionState 
 assert(installSh.includes("provider_registry.py") && installPs1.includes("provider_registry.py") && installSh.includes("provider_installers.py") && installPs1.includes("provider_installers.py"), "source installers must deploy provider registry and installer modules");
 assert(bridgeSpec.includes('(str(ROOT / "shared"), "shared")'), "the bridge bundle must include the common AI environment directory");
 assert(workflow.includes("PROVIDER_CATALOG_SIGNING_KEY"), "release builds must inject the Ed25519 catalog key");
-assert(!popup.includes('runCompanionTask("suggest_tools"'), "AI re-recommendations must stay disabled in 1.7.8");
+assert(!popup.includes('runCompanionTask("suggest_tools"'), "AI re-recommendations must stay disabled in 1.7.9");
 
 const basicAssets = fs.mkdtempSync(path.join(os.tmpdir(), "aicli-basic-release-"));
 try {
   for (const filename of [
-    "ai-cli-cheatsheet-source-v1.7.8.zip",
-    "ai-cli-cheatsheet-store-v1.7.8.zip",
+    "ai-cli-cheatsheet-source-v1.7.9.zip",
+    "ai-cli-cheatsheet-store-v1.7.9.zip",
   ]) {
     fs.writeFileSync(path.join(basicAssets, filename), `fixture:${filename}`);
   }
@@ -93,7 +96,7 @@ try {
     process.execPath,
     path.join(root, "tools", "verify-release-assets.js"),
     "--directory", basicAssets,
-    "--version", "1.7.8",
+    "--version", "1.7.9",
     "--basic-only",
   ];
   let result = spawnSync(verify[0], verify.slice(1), { encoding: "utf8" });

@@ -17,6 +17,7 @@ from pathlib import Path
 import re
 import shutil
 import subprocess
+import tarfile
 import tempfile
 import urllib.parse
 import urllib.request
@@ -128,7 +129,25 @@ def ensure_extracted(cache: Path, component_id: str, archive: Path) -> None:
     with tempfile.TemporaryDirectory(dir=cache, prefix="extract-") as temporary:
         stage = Path(temporary)
         # Extraction happens only after the archive matches its committed digest.
-        subprocess.run(["tar", "-xf", str(archive), "-C", str(stage)], check=True)  # nosec B603
+        stage_root = stage.resolve()
+        with tarfile.open(archive, mode="r:*") as package:
+            for member in package.getmembers():
+                destination = (stage / member.name).resolve()
+                try:
+                    destination.relative_to(stage_root)
+                except ValueError as exc:
+                    raise RuntimeError(f"{component_id} archive contains an unsafe path") from exc
+                if member.isdir():
+                    destination.mkdir(parents=True, exist_ok=True)
+                    continue
+                if not member.isreg():
+                    raise RuntimeError(f"{component_id} archive contains an unsupported special entry")
+                source = package.extractfile(member)
+                if source is None:
+                    raise RuntimeError(f"{component_id} archive entry could not be read")
+                destination.parent.mkdir(parents=True, exist_ok=True)
+                with source, destination.open("wb") as output:
+                    shutil.copyfileobj(source, output)
         roots = [path for path in stage.iterdir() if path.is_dir()]
         if len(roots) != 1:
             raise RuntimeError(f"{component_id} archive did not contain one source root")

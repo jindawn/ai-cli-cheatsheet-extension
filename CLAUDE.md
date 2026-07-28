@@ -8,11 +8,11 @@
 
 ## 这是什么
 
-一个 Chrome/Edge（Manifest V3）速查表扩展（"AI CLI 速查表"），覆盖 AI CLI、编辑器与开发工具；外加一个 **Python 本机消息（native messaging）桥接程序**，通过调用 Claude Code 或 Anthropic 兼容 API 来生成/更新速查数据。产品界面与大部分注释为中文。
+一个 Chrome/Edge（Manifest V3）速查表扩展（"AI CLI 速查表"），覆盖 AI CLI、Unix/POSIX、Linux 系统工具、Shell、编辑器与开发工具；外加一个可选的 **Native Messaging 桥接程序**，通过动态 Provider Registry 调用用户明确选择的 AI 环境来生成/更新速查数据。四个首批 CLI 使用内置适配器，其他本机 CLI 使用签名适配器，OpenAI/Anthropic 兼容 API 在桥接侧配置。产品界面与大部分注释为中文。
 
 两个运行时，刻意解耦：
 - **浏览器侧（JavaScript，无构建步骤）**：`popup.*`、`background.js`、`product-core.js`、`usage-examples.js`，以及生成的 `data/*.js`。所有基础查询都是纯本地 JS —— 不联网。
-- **本机 Host（`native-host/host.py`，仅用标准库的 Python 3）**：只有可选的「新增工具 / 检查更新」流程才会通过 Chrome Native Messaging 调用它。
+- **本机 Host（`native-host/host.py`，仅用标准库的 Python 3）**：只有可选的「查询并新增 / 检查更新」流程才会通过 Chrome Native Messaging 调用它。源码/开发模式可运行脚本版；商店发布使用 PyInstaller 自包含签名包。
 
 仓库**没有 `package.json`、没有打包器、没有 lint 配置** —— 扩展直接加载源文件，CI 仅用 `node --check` 做语法检查。
 
@@ -67,11 +67,9 @@ printf 'Y\n' | bash native-host/install.sh   # 「仅更新 host.py」路径；�
 `data/SCHEMA.md`；来源出处登记在 `shared/source-registry.json`。
 
 ### 新增/更新流水线（`background.js` → `host.py`）
-1. popup 发送 Native Messaging 请求；`host.py` 按 `action` 分发（`ping`、`add_tool`、
+1. popup 通过协议 v3 发送带必填 `providerId` 的 Native Messaging 请求；`host.py` 按 `action` 分发（`handshake`、`add_tool`、
    `preview_update`、`apply_update`、`discard_update`、`remove_tool`）。
-2. 生成优先走直连 Anthropic 兼容 API（`_call_api_direct`，环境变量：`ANTHROPIC_BASE_URL`、
-   `ANTHROPIC_AUTH_TOKEN`/`ANTHROPIC_API_KEY`、`ANTHROPIC_MODEL`）；没有 token 时回退到
-   `claude -p`（`_call_claude_cli`）。
+2. Provider Adapter 只执行用户明确选择且存在于 v4 握手目录中的环境，不静默切换。内置和签名 CLI 适配器使用固定参数、只读、无头和结构化输出模式；兼容 API 凭据只保存在桥接侧。
 3. 确定性适配器先生成并验证闭合官方清单；模型只能按该清单翻译整理条目。`validate_dataset()` 校验 schema、证据、逐例 grounding、去重和稳定 ID。
 4. 新增与更新都返回**差异预览**；独立场景审校通过并绑定内容哈希后才写入待处理文件，确认后复核旧文件、官方清单和审校哈希，再原子写入数据、索引、清单与审校快照。
 
@@ -90,7 +88,7 @@ command、zh、en、keywords、context、`shell` 子字段和 examples —— �
 ### Shell 是特殊的聚合工具
 与普通工具不同，"Shell" 是分批生成的（`SHELL_BATCHES`、`run_shell_aggregate_query`），范围限定为解释器/终端
 环境本体（sh/POSIX、bash、zsh）。外部 CLI（grep/git/docker/npm/claude…）刻意不收进 Shell，它们属于其它工具
-（如 GNU/Linux CLI、Git），只能作为某个 Shell 条目的关联 `keywords` 出现。聚合路径刻意做了容错：单次调用被截断时
+（如 Unix/POSIX 基础命令、Linux 系统工具、Git），只能作为某个 Shell 条目的关联 `keywords` 出现。聚合路径刻意做了容错：单次调用被截断时
 缩小批次并重试，个别不合规条目会被丢弃，空批次会被跳过（带质量提示）而不是让整个新增失败。
 
 ## 约定 / 注意事项

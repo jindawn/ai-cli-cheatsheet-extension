@@ -1,6 +1,11 @@
 # install.ps1 — Windows 一次性安装脚本，把 native-host 部署并注册进浏览器。
 # 用法：在 PowerShell 里运行（右键 → 用 PowerShell 运行，或 powershell -ExecutionPolicy Bypass -File install.ps1）
 
+param(
+    [string]$ExtensionId = "",
+    [switch]$Standalone
+)
+
 $ErrorActionPreference = "Stop"
 
 $ScriptDir  = Split-Path -Parent $MyInvocation.MyCommand.Path
@@ -69,18 +74,23 @@ function Find-InRuntime([string[]]$Names) {
     return $null
 }
 $NodeExe = Find-InRuntime @("node.exe", "node.cmd", "node")
-$ClaudeExe = Find-InRuntime @("claude.cmd", "claude.exe", "claude")
 if ($NodeExe) {
     Write-Host "✅ node: $(& $NodeExe --version)  ($NodeExe)" -ForegroundColor Green
 } else {
     Write-Host "ℹ️  未检测到 Node.js；数据读取不需要 Node，仅 npm 安装的 CLI 运行时可能需要。" -ForegroundColor Yellow
 }
-if (-not $ClaudeExe) {
-    Write-Host "⚠️  没找到 claude 命令。" -ForegroundColor Yellow
-    Write-Host "   本功能需要 Claude Code CLI：npm install -g @anthropic-ai/claude-code"
-    Write-Host "   安装好后重新运行本脚本，或先继续完成安装。"
-} else {
-    Write-Host "✅ claude: $ClaudeExe" -ForegroundColor Green
+$ReadyCli = $false
+foreach ($cmd in @("claude", "codex", "gemini", "opencode")) {
+    try {
+        $ResolvedCli = (Get-Command $cmd -ErrorAction Stop).Source
+        Write-Host "✅ $cmd`: $ResolvedCli" -ForegroundColor Green
+        $ReadyCli = $true
+    } catch {
+        Write-Host "ℹ️  未检测到 $cmd" -ForegroundColor Yellow
+    }
+}
+if (-not $ReadyCli) {
+    Write-Host "⚠️  尚未检测到受支持的 AI CLI；桥接可先安装，之后安装并登录任意一个再检测。" -ForegroundColor Yellow
 }
 
 # ── 3. 部署文件 ─────────────────────────────────────────────────────────────────
@@ -89,6 +99,18 @@ New-Item -ItemType Directory -Force -Path $InstallDir | Out-Null
 Copy-Item (Join-Path $ScriptDir "host.py") (Join-Path $InstallDir "host.py") -Force
 Copy-Item (Join-Path $ScriptDir "protocol.py") (Join-Path $InstallDir "protocol.py") -Force
 Copy-Item (Join-Path $ScriptDir "catalog.py") (Join-Path $InstallDir "catalog.py") -Force
+Copy-Item (Join-Path $ScriptDir "official_inventory.py") (Join-Path $InstallDir "official_inventory.py") -Force
+Copy-Item (Join-Path $ScriptDir "provider_registry.py") (Join-Path $InstallDir "provider_registry.py") -Force
+Copy-Item (Join-Path $ScriptDir "provider_installers.py") (Join-Path $InstallDir "provider_installers.py") -Force
+if ($Standalone) {
+    $InstalledShared = Join-Path $InstallDir "shared"
+    if (Test-Path $InstalledShared) { Remove-Item $InstalledShared -Recurse -Force }
+    Copy-Item (Join-Path $ProjectDir "shared") $InstalledShared -Recurse -Force
+    $RuntimeProjectDir = $InstallDir
+    Write-Host "✅ 官方清单与校验契约已部署到伴侣目录" -ForegroundColor Green
+} else {
+    $RuntimeProjectDir = $ProjectDir
+}
 Write-Host "✅ host.py 已复制到：$InstallDir" -ForegroundColor Green
 
 $RunBat = Join-Path $InstallDir "run.bat"
@@ -118,7 +140,7 @@ if (Test-Path -LiteralPath $RunBat) {
 # ── 4. 配置 claude 调用方式 ─────────────────────────────────────────────────────
 
 Write-Host ""
-Write-Host "Claude Code 调用配置："
+Write-Host "可选：Claude / Anthropic 兼容 API 高级配置（其他 CLI 凭据由各自管理）："
 Write-Host "  [1] 使用当前系统环境（默认，继承系统 ANTHROPIC_BASE_URL 等变量）"
 Write-Host "  [2] 强制走官方 Claude API（清除所有自定义变量，使用 ~/.claude/ 登录会话）"
 Write-Host "  [3] 自定义（手动填写 API Base URL 和 Auth Token）"
@@ -126,6 +148,8 @@ $ApiChoice = Read-Host "请选择 [1/2/3]，直接回车默认选 1"
 if ([string]::IsNullOrEmpty($ApiChoice)) { $ApiChoice = "1" }
 
 $EnvLines = @()
+$CredentialsFile = Join-Path $InstallDir "credentials.env"
+if (Test-Path $CredentialsFile) { Remove-Item $CredentialsFile -Force }
 if ($ApiChoice -eq "2") {
     $EnvLines = @(
         'set "ANTHROPIC_BASE_URL="',
@@ -142,19 +166,32 @@ if ($ApiChoice -eq "2") {
     )
 } elseif ($ApiChoice -eq "3") {
     $CustomUrl   = Read-Host "ANTHROPIC_BASE_URL（如 https://api.deepseek.com/anthropic）"
-    $CustomToken = Read-Host "ANTHROPIC_AUTH_TOKEN（你的 API Key）"
+    $SecureToken = Read-Host "ANTHROPIC_AUTH_TOKEN（你的 API Key，输入时不显示）" -AsSecureString
+    $TokenPointer = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($SecureToken)
+    try { $CustomToken = [Runtime.InteropServices.Marshal]::PtrToStringBSTR($TokenPointer) }
+    finally { [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($TokenPointer) }
     $CustomModel = Read-Host "ANTHROPIC_MODEL（如 deepseek-chat，留空跳过）"
-    $EnvLines = @("set `"ANTHROPIC_BASE_URL=$CustomUrl`"", "set `"ANTHROPIC_AUTH_TOKEN=$CustomToken`"")
-    if ($CustomModel) { $EnvLines += "set `"ANTHROPIC_MODEL=$CustomModel`"" }
+    $CredentialLines = @("@echo off", "set `"ANTHROPIC_BASE_URL=$CustomUrl`"", "set `"ANTHROPIC_AUTH_TOKEN=$CustomToken`"")
+    if ($CustomModel) { $CredentialLines += "set `"ANTHROPIC_MODEL=$CustomModel`"" }
+    [IO.File]::WriteAllLines($CredentialsFile, $CredentialLines, [Text.UTF8Encoding]::new($false))
+    $Acl = New-Object Security.AccessControl.FileSecurity
+    $CurrentUser = [Security.Principal.WindowsIdentity]::GetCurrent().User
+    $Acl.SetOwner($CurrentUser)
+    $Acl.SetAccessRuleProtection($true, $false)
+    $Acl.AddAccessRule((New-Object Security.AccessControl.FileSystemAccessRule($CurrentUser, "FullControl", "Allow")))
+    Set-Acl -Path $CredentialsFile -AclObject $Acl
+    $EnvLines = @("call `"$CredentialsFile`"")
+    Write-Host "✅ 密钥已写入仅当前用户可访问的独立文件：$CredentialsFile" -ForegroundColor Green
 }
 
 # ── 5. 生成 run.bat ──────────────────────────────────────────────────────────────
 
 $BatchLines = @(
     "@echo off",
-    "rem Auto-generated by install.ps1 — re-run install.ps1 to reconfigure."
+    "rem Auto-generated by install.ps1 — re-run install.ps1 to reconfigure.",
+    "rem API credentials are stored separately in credentials.env."
 ) + $EnvLines + @(
-    "set `"AICLI_PROJECT_DIR=$ProjectDir`"",
+    "set `"AICLI_PROJECT_DIR=$RuntimeProjectDir`"",
     "set `"AICLI_EXTRA_PATH=$RuntimePath`"",
     'set "PATH=%AICLI_EXTRA_PATH%;%SystemRoot%\System32;%SystemRoot%"',
     "`"$PythonExe`" `"$InstallDir\host.py`" %*"
@@ -169,7 +206,9 @@ Write-Host "需要你的浏览器扩展 ID："
 Write-Host "  Chrome：打开 chrome://extensions/，开启开发者模式，找到「AI CLI 速查表」"
 Write-Host "  Edge：  打开 edge://extensions/，步骤相同"
 Write-Host "  卡片上会显示一串字母，如 abcdefghijklmnopabcdefghijklmnop"
-$ExtensionId = Read-Host "请粘贴扩展 ID"
+if ([string]::IsNullOrEmpty($ExtensionId)) {
+    $ExtensionId = Read-Host "请粘贴扩展 ID"
+}
 if ([string]::IsNullOrEmpty($ExtensionId)) {
     Write-Host "❌ 扩展 ID 不能为空，安装中止。" -ForegroundColor Red
     exit 1
@@ -213,6 +252,6 @@ if ($EdgeChoice -match "^[Yy]$") {
 Write-Host ""
 Write-Host "=== 安装完成 ===" -ForegroundColor Cyan
 Write-Host ""
-Write-Host "请完全退出浏览器，重新打开后，插件里的「查询并写入」按钮即可使用。"
+Write-Host "请完全退出浏览器，重新打开后，在插件中选择 AI 环境并使用「查询并新增」或「检查官方更新」。"
 Write-Host ""
 Write-Host "如需重新配置（更换 API 或更新扩展 ID），直接重新运行本脚本即可。"

@@ -1,0 +1,4337 @@
+{
+  "schemaVersion": 1,
+  "toolId": "unix-cli",
+  "generatedAt": "2026-07-23",
+  "components": [
+    {
+      "id": "posix-utilities",
+      "version": "IEEE Std 1003.1-2024 Issue 8",
+      "sourceId": "posix-shell-utilities",
+      "sourceUrl": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html",
+      "downloadUrl": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html",
+      "archive": "posix-2024-utilities.html",
+      "archiveSha256": "76c479d640ebc044cdc01e9f63445f1c23fcea4235793756ae225c0e317ae5d8",
+      "parser": "posix-html-index-v1",
+      "entries": [
+        {
+          "command": "admin",
+          "aliases": [],
+          "description": "create and administer SCCS files ( DEVELOPMENT )",
+          "usage": "[ XSI ] admin -i [ name ] [ -n ] [ -a login ] [ -d flag ] [ -e login ] [ -f flag ] [ -m mrlist ] [ -r rel ] [ -t [ name ] [ -y [ comment ]] newfile admin -n [ -a login ] [ -d flag ] [ -e login ] [ -f flag ] [ -m mrlist ] [ -t [ name ]] [ -y [ comment ]] newfile ... admin [ -a log",
+          "options": [
+            "-i",
+            "-t",
+            "-y",
+            "-n",
+            "-r",
+            "-f",
+            "-b",
+            "-e"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/admin.html",
+          "constraints": [
+            "POSIX option group: DEVELOPMENT",
+            "some synopsis forms require POSIX option group XSI"
+          ]
+        },
+        {
+          "command": "alias",
+          "aliases": [],
+          "description": "define or display aliases",
+          "usage": "alias [ alias-name [ = string ] ... ]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/alias.html",
+          "constraints": []
+        },
+        {
+          "command": "ar",
+          "aliases": [],
+          "description": "create and maintain library archives",
+          "usage": "[ SD ] ar -d [ -v ] archive file ... [ XSI ] ar -m [ -v ] archive file ... ar -m -a [ -v ] posname archive file ... ar -m -b [ -v ] posname archive file ... ar -m -i [ -v ] posname archive file ... [ XSI ] ar -p [ -v ] [ -s ] archive [ file ... ] [ XSI ] ar -q [ -cv ] archive fil",
+          "options": [
+            "-a",
+            "-b",
+            "-c",
+            "-C",
+            "-T",
+            "-d",
+            "-i",
+            "-m"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/ar.html",
+          "constraints": [
+            "some synopsis forms require POSIX option group SD",
+            "some synopsis forms require POSIX option group XSI"
+          ]
+        },
+        {
+          "command": "asa",
+          "aliases": [],
+          "description": "interpret carriage-control characters",
+          "usage": "[ FR ] asa [ file ... ]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/asa.html",
+          "constraints": [
+            "some synopsis forms require POSIX option group FR"
+          ]
+        },
+        {
+          "command": "at",
+          "aliases": [],
+          "description": "execute commands at a later time",
+          "usage": "at [ -m ] [ -f file ] [ -q queuename ] -t time_arg at [ -m ] [ -f file ] [ -q queuename ] timespec ... at -r at_job_id ... at -l -q queuename at -l [ at_job_id ... ]",
+          "options": [
+            "-f",
+            "-l",
+            "-m",
+            "-q",
+            "-t",
+            "-r"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/at.html",
+          "constraints": []
+        },
+        {
+          "command": "awk",
+          "aliases": [],
+          "description": "pattern scanning and processing language",
+          "usage": "awk [ -F sepstring ] [ -v assignment ] ... program [ argument ... ] awk [ -F sepstring ] -f progfile [ -f progfile ] ... [ -v assignment ] ... [ argument ... ]",
+          "options": [
+            "-F",
+            "-v",
+            "-f"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/awk.html",
+          "constraints": []
+        },
+        {
+          "command": "basename",
+          "aliases": [],
+          "description": "return non-directory portion of a pathname",
+          "usage": "basename string [ suffix ]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/basename.html",
+          "constraints": []
+        },
+        {
+          "command": "batch",
+          "aliases": [],
+          "description": "schedule commands to be executed in a batch queue",
+          "usage": "batch",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/batch.html",
+          "constraints": []
+        },
+        {
+          "command": "bc",
+          "aliases": [],
+          "description": "arbitrary-precision arithmetic language",
+          "usage": "bc [ -l ] [ file ... ]",
+          "options": [
+            "-l"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/bc.html",
+          "constraints": []
+        },
+        {
+          "command": "bg",
+          "aliases": [],
+          "description": "run jobs in the background",
+          "usage": "[ UP ] bg [ job_id ... ]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/bg.html",
+          "constraints": [
+            "some synopsis forms require POSIX option group UP"
+          ]
+        },
+        {
+          "command": "c17",
+          "aliases": [],
+          "description": "compile standard C programs",
+          "usage": "[ CD ] c17 [ options ... ] pathname [[ pathname ] [ -I directory ] [ -L directory ] [ -l library ] [ -R directory ]] ...",
+          "options": [
+            "-L",
+            "-l",
+            "-R",
+            "-c",
+            "-B",
+            "-E",
+            "-G",
+            "-D"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/c17.html",
+          "constraints": [
+            "some synopsis forms require POSIX option group CD"
+          ]
+        },
+        {
+          "command": "cal",
+          "aliases": [],
+          "description": "print a calendar",
+          "usage": "[ XSI ] cal [[ month ] year ]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/cal.html",
+          "constraints": [
+            "some synopsis forms require POSIX option group XSI"
+          ]
+        },
+        {
+          "command": "cat",
+          "aliases": [],
+          "description": "concatenate and print files",
+          "usage": "cat [ -u ] [ file ... ]",
+          "options": [
+            "-u"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/cat.html",
+          "constraints": []
+        },
+        {
+          "command": "cd",
+          "aliases": [],
+          "description": "change the working directory",
+          "usage": "cd [ -L ] [ directory ] cd -P [ -e ] [ directory ]",
+          "options": [
+            "-e",
+            "-P",
+            "-L"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/cd.html",
+          "constraints": []
+        },
+        {
+          "command": "cflow",
+          "aliases": [],
+          "description": "generate a C-language flowgraph ( DEVELOPMENT )",
+          "usage": "[ XSI ] cflow [ -r ] [ -d num ] [ -D name [ = def ]] ... [ -i incl ] [ -I dir ] ... [ -U dir ] ... file ...",
+          "options": [
+            "-D",
+            "-I",
+            "-U",
+            "-d",
+            "-i",
+            "-r"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/cflow.html",
+          "constraints": [
+            "POSIX option group: DEVELOPMENT",
+            "some synopsis forms require POSIX option group XSI"
+          ]
+        },
+        {
+          "command": "chgrp",
+          "aliases": [],
+          "description": "change the file group ownership",
+          "usage": "chgrp [ -h ] group file ... chgrp -R [ -H|-L|-P ] group file ...",
+          "options": [
+            "-h",
+            "-H",
+            "-R",
+            "-L",
+            "-P"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/chgrp.html",
+          "constraints": []
+        },
+        {
+          "command": "chmod",
+          "aliases": [],
+          "description": "change the file modes",
+          "usage": "chmod [ -R ] mode file ...",
+          "options": [
+            "-R"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/chmod.html",
+          "constraints": []
+        },
+        {
+          "command": "chown",
+          "aliases": [],
+          "description": "change the file ownership",
+          "usage": "chown [ -h ] owner [ : group ] file ... chown -R [ -H|-L|-P ] owner [ : group ] file ...",
+          "options": [
+            "-h",
+            "-H",
+            "-R",
+            "-L",
+            "-P"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/chown.html",
+          "constraints": []
+        },
+        {
+          "command": "cksum",
+          "aliases": [],
+          "description": "write file checksums and sizes",
+          "usage": "cksum [ file ... ]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/cksum.html",
+          "constraints": []
+        },
+        {
+          "command": "cmp",
+          "aliases": [],
+          "description": "compare two files",
+          "usage": "cmp [ -l|-s ] file1 file2",
+          "options": [
+            "-l",
+            "-s"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/cmp.html",
+          "constraints": []
+        },
+        {
+          "command": "comm",
+          "aliases": [],
+          "description": "select or reject lines common to two files",
+          "usage": "comm [ -123 ] file1 file2",
+          "options": [
+            "-1",
+            "-2",
+            "-3"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/comm.html",
+          "constraints": []
+        },
+        {
+          "command": "command",
+          "aliases": [],
+          "description": "execute a simple command",
+          "usage": "command [ -p ] command_name [ argument ... ] command [ -p ][ -v|-V ] command_name",
+          "options": [
+            "-p",
+            "-v",
+            "-V"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/command.html",
+          "constraints": []
+        },
+        {
+          "command": "compress",
+          "aliases": [],
+          "description": "compress and decompress data",
+          "usage": "[ XSI ] compress [ -fv ] [ -b value ] [ -g | -m algo ] [ file ... ] compress -c [ -fv ] [ -b value ] [ -g | -m algo ] [ file ] compress -d [ -cfv ] [ file ... ] uncompress [ -cfv ] [ file ... ] zcat [ file ... ]",
+          "options": [
+            "-b",
+            "-c",
+            "-d",
+            "-f",
+            "-g",
+            "-m",
+            "-v"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/compress.html",
+          "constraints": [
+            "some synopsis forms require POSIX option group XSI"
+          ]
+        },
+        {
+          "command": "cp",
+          "aliases": [],
+          "description": "copy files",
+          "usage": "cp [ -Pfip ] source_file target_file cp [ -Pfip ] source_file ... target cp -R [ -H|-L|-P ] [ -fip ] source_file ... target",
+          "options": [
+            "-f",
+            "-H",
+            "-i",
+            "-L",
+            "-P",
+            "-p",
+            "-R"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/cp.html",
+          "constraints": []
+        },
+        {
+          "command": "crontab",
+          "aliases": [],
+          "description": "schedule periodic background work",
+          "usage": "crontab [ file ] [ UP ] crontab [ -e |-l|-r ]",
+          "options": [
+            "-e",
+            "-l",
+            "-r"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/crontab.html",
+          "constraints": [
+            "some synopsis forms require POSIX option group UP"
+          ]
+        },
+        {
+          "command": "csplit",
+          "aliases": [],
+          "description": "split files based on context",
+          "usage": "csplit [ -ks ] [ -f prefix ] [ -n number ] file arg ...",
+          "options": [
+            "-f",
+            "-k",
+            "-n",
+            "-s"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/csplit.html",
+          "constraints": []
+        },
+        {
+          "command": "ctags",
+          "aliases": [],
+          "description": "create a tags file ( DEVELOPMENT )",
+          "usage": "[ CD SD ] ctags [ -a ] [ -f tagsfile ] pathname ... ctags -x pathname ...",
+          "options": [
+            "-a",
+            "-f",
+            "-x"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/ctags.html",
+          "constraints": [
+            "POSIX option group: DEVELOPMENT"
+          ]
+        },
+        {
+          "command": "cut",
+          "aliases": [],
+          "description": "cut out selected fields of each line of a file",
+          "usage": "cut -b list [ -n ] [ file ... ] cut -c list [ file ... ] cut -f list [ -d delim ] [ -s ] [ file ... ]",
+          "options": [
+            "-b",
+            "-c",
+            "-f",
+            "-s",
+            "-n",
+            "-d"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/cut.html",
+          "constraints": []
+        },
+        {
+          "command": "cxref",
+          "aliases": [],
+          "description": "generate a C-language program cross-reference table ( DEVELOPMENT )",
+          "usage": "[ XSI ] cxref [ -cs ] [ -o file ] [ -w num ] [ -D name [ = def ]] ... [ -I dir ] ... [ -U name ] ... file ...",
+          "options": [
+            "-D",
+            "-I",
+            "-U",
+            "-c",
+            "-s",
+            "-o",
+            "-w"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/cxref.html",
+          "constraints": [
+            "POSIX option group: DEVELOPMENT",
+            "some synopsis forms require POSIX option group XSI"
+          ]
+        },
+        {
+          "command": "date",
+          "aliases": [],
+          "description": "write the date and time",
+          "usage": "date [ -u ] [ + format ] [ XSI ] date [ -u ] mmddhhmm [[ cc ] yy ]",
+          "options": [
+            "-u"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/date.html",
+          "constraints": [
+            "some synopsis forms require POSIX option group XSI"
+          ]
+        },
+        {
+          "command": "dd",
+          "aliases": [],
+          "description": "convert and copy a file",
+          "usage": "dd [ operand ... ]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/dd.html",
+          "constraints": []
+        },
+        {
+          "command": "delta",
+          "aliases": [],
+          "description": "make a delta (change) to an SCCS file ( DEVELOPMENT )",
+          "usage": "[ XSI ] delta [ -nps ] [ -g list ] [ -m mrlist ] [ -r SID ] [ -y [ comment ]] file ...",
+          "options": [
+            "-y",
+            "-r",
+            "-e",
+            "-s",
+            "-n",
+            "-g",
+            "-m",
+            "-p"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/delta.html",
+          "constraints": [
+            "POSIX option group: DEVELOPMENT",
+            "some synopsis forms require POSIX option group XSI"
+          ]
+        },
+        {
+          "command": "df",
+          "aliases": [],
+          "description": "report free disk space",
+          "usage": "[ XSI ] df [ -k ] [ -P| -t ] [ file ... ]",
+          "options": [
+            "-k",
+            "-P",
+            "-t"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/df.html",
+          "constraints": [
+            "some synopsis forms require POSIX option group XSI"
+          ]
+        },
+        {
+          "command": "diff",
+          "aliases": [],
+          "description": "compare two files",
+          "usage": "diff [ -c|-e|-f|-u|-C n |-U n ] [ -br ] file1 file2",
+          "options": [
+            "-b",
+            "-c",
+            "-C",
+            "-e",
+            "-f",
+            "-r",
+            "-u",
+            "-U"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/diff.html",
+          "constraints": []
+        },
+        {
+          "command": "dirname",
+          "aliases": [],
+          "description": "return the directory portion of a pathname",
+          "usage": "dirname string",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/dirname.html",
+          "constraints": []
+        },
+        {
+          "command": "du",
+          "aliases": [],
+          "description": "estimate file space usage",
+          "usage": "du [ -a|-s ] [ -kx ] [ -H|-L ] [ file ... ]",
+          "options": [
+            "-a",
+            "-H",
+            "-k",
+            "-L",
+            "-s",
+            "-x"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/du.html",
+          "constraints": []
+        },
+        {
+          "command": "echo",
+          "aliases": [],
+          "description": "write arguments to standard output",
+          "usage": "echo [ string ... ]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/echo.html",
+          "constraints": []
+        },
+        {
+          "command": "ed",
+          "aliases": [],
+          "description": "edit text",
+          "usage": "ed [ -p string ] [ -s ] [ file ]",
+          "options": [
+            "-p",
+            "-s"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/ed.html",
+          "constraints": []
+        },
+        {
+          "command": "env",
+          "aliases": [],
+          "description": "set the environment for command invocation",
+          "usage": "env [ -i ] [ name = value ] ... [ utility [ argument ... ]]",
+          "options": [
+            "-i"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/env.html",
+          "constraints": []
+        },
+        {
+          "command": "ex",
+          "aliases": [],
+          "description": "text editor",
+          "usage": "[ UP ] ex [ -rR ] [ -s|-v ] [ -c command ] [ -t tagstring ] [ -w size ] [ file ... ]",
+          "options": [
+            "-c",
+            "-r",
+            "-t",
+            "-R",
+            "-s",
+            "-v",
+            "-w"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/ex.html",
+          "constraints": [
+            "some synopsis forms require POSIX option group UP"
+          ]
+        },
+        {
+          "command": "expand",
+          "aliases": [],
+          "description": "convert tabs to spaces",
+          "usage": "expand [ -t tablist ] [ file ... ]",
+          "options": [
+            "-t"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/expand.html",
+          "constraints": []
+        },
+        {
+          "command": "expr",
+          "aliases": [],
+          "description": "evaluate arguments as an expression",
+          "usage": "expr operand ...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/expr.html",
+          "constraints": []
+        },
+        {
+          "command": "false",
+          "aliases": [],
+          "description": "return false value",
+          "usage": "false",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/false.html",
+          "constraints": []
+        },
+        {
+          "command": "fc",
+          "aliases": [],
+          "description": "process the command history list",
+          "usage": "[ UP ] fc [ -r ] [ -e editor ] [ first [ last ]] fc -l [ -nr ] [ first [ last ]] fc -s [ old = new ] [ first ]",
+          "options": [
+            "-e",
+            "-l",
+            "-r",
+            "-n",
+            "-s"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/fc.html",
+          "constraints": [
+            "some synopsis forms require POSIX option group UP"
+          ]
+        },
+        {
+          "command": "fg",
+          "aliases": [],
+          "description": "run jobs in the foreground",
+          "usage": "[ UP ] fg [ job_id ]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/fg.html",
+          "constraints": [
+            "some synopsis forms require POSIX option group UP"
+          ]
+        },
+        {
+          "command": "file",
+          "aliases": [],
+          "description": "determine file type",
+          "usage": "file [ -dh ] [ -M file ] [ -m file ] file ... file -i [ -h ] file ...",
+          "options": [
+            "-m",
+            "-d",
+            "-M",
+            "-h",
+            "-i"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/file.html",
+          "constraints": []
+        },
+        {
+          "command": "find",
+          "aliases": [],
+          "description": "find files",
+          "usage": "find [ -H|-L ] path ... [ operand_expression ... ]",
+          "options": [
+            "-H",
+            "-L"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/find.html",
+          "constraints": []
+        },
+        {
+          "command": "fold",
+          "aliases": [],
+          "description": "filter for folding lines",
+          "usage": "fold [ -bs ] [ -w width ] [ file ... ]",
+          "options": [
+            "-b",
+            "-s",
+            "-w"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/fold.html",
+          "constraints": []
+        },
+        {
+          "command": "fuser",
+          "aliases": [],
+          "description": "list process IDs of all processes that are using one or more named files",
+          "usage": "[ XSI ] fuser [ -cfu ] file ...",
+          "options": [
+            "-c",
+            "-f",
+            "-u"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/fuser.html",
+          "constraints": [
+            "some synopsis forms require POSIX option group XSI"
+          ]
+        },
+        {
+          "command": "gencat",
+          "aliases": [],
+          "description": "generate a formatted message catalog",
+          "usage": "gencat catfile msgfile ...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/gencat.html",
+          "constraints": []
+        },
+        {
+          "command": "get",
+          "aliases": [],
+          "description": "get a version of an SCCS file ( DEVELOPMENT )",
+          "usage": "[ XSI ] get [ -begkmnlLpst ] [ -c cutoff ] [ -i list ] [ -r SID ] [ -x list ] file ...",
+          "options": [
+            "-r",
+            "-e",
+            "-c",
+            "-k",
+            "-b",
+            "-i",
+            "-x",
+            "-l"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/get.html",
+          "constraints": [
+            "POSIX option group: DEVELOPMENT",
+            "some synopsis forms require POSIX option group XSI"
+          ]
+        },
+        {
+          "command": "getconf",
+          "aliases": [],
+          "description": "get configuration values",
+          "usage": "getconf [ -v specification ] system_var getconf [ -v specification ] path_var pathname",
+          "options": [
+            "-v",
+            "-1"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/getconf.html",
+          "constraints": []
+        },
+        {
+          "command": "getopts",
+          "aliases": [],
+          "description": "parse utility options",
+          "usage": "getopts optstring name [ param ... ]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/getopts.html",
+          "constraints": []
+        },
+        {
+          "command": "gettext",
+          "aliases": [],
+          "description": "retrieve text string from messages object",
+          "usage": "gettext [ -e|-E ] [ -d textdomain ] [ textdomain ] msgid gettext [ -e|-E ] [ -n ] -s [ -d textdomain ] msgid ... ngettext [ -e|-E ] [ -d textdomain ] [ textdomain ] msgid msgid_plural n",
+          "options": [
+            "-d",
+            "-e",
+            "-E",
+            "-n",
+            "-s"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/gettext.html",
+          "constraints": []
+        },
+        {
+          "command": "grep",
+          "aliases": [],
+          "description": "search a file for a pattern",
+          "usage": "grep [ -E|-F ] [ -c|-l|-q ] [ -insvx ] -e pattern_list [ -e pattern_list ] ... [ -f pattern_file ] ... [ file ... ] grep [ -E|-F ] [ -c|-l|-q ] [ -insvx ] [ -e pattern_list ]... -f pattern_file [ -f pattern_file ] ... [ file ... ] grep [ -E|-F ] [ -c|-l|-q ] [ -insvx ] pattern_li",
+          "options": [
+            "-E",
+            "-F",
+            "-c",
+            "-e",
+            "-f",
+            "-i",
+            "-l",
+            "-n"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/grep.html",
+          "constraints": []
+        },
+        {
+          "command": "hash",
+          "aliases": [],
+          "description": "remember or report utility locations",
+          "usage": "hash [ utility ... ] hash -r",
+          "options": [
+            "-r"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/hash.html",
+          "constraints": []
+        },
+        {
+          "command": "head",
+          "aliases": [],
+          "description": "copy the first part of files",
+          "usage": "head [ -c number |-n number ] [ file ... ]",
+          "options": [
+            "-c",
+            "-n"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/head.html",
+          "constraints": []
+        },
+        {
+          "command": "iconv",
+          "aliases": [],
+          "description": "codeset conversion",
+          "usage": "iconv [ -cs ] -f frommap -t tomap [ file ... ] iconv -f fromcode [ -cs ] [ -t tocode ] [ file ... ] iconv -t tocode [ -cs ] [ -f fromcode ] [ file ... ] iconv -l",
+          "options": [
+            "-c",
+            "-f",
+            "-l",
+            "-s",
+            "-t"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/iconv.html",
+          "constraints": []
+        },
+        {
+          "command": "id",
+          "aliases": [],
+          "description": "return user identity",
+          "usage": "id [ user ] id -G [ -n ] [ user ] id -g [ -nr ] [ user ] id -u [ -nr ] [ user ]",
+          "options": [
+            "-G",
+            "-g",
+            "-n",
+            "-r",
+            "-u"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/id.html",
+          "constraints": []
+        },
+        {
+          "command": "ipcrm",
+          "aliases": [],
+          "description": "remove an XSI message queue, semaphore set, or shared memory segment identifier",
+          "usage": "[ XSI ] ipcrm [ -q msgid|-Q msgkey|-s semid|-S semkey|-m shmid|-M shmkey ] ...",
+          "options": [
+            "-q",
+            "-m",
+            "-s",
+            "-Q",
+            "-M",
+            "-S"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/ipcrm.html",
+          "constraints": [
+            "some synopsis forms require POSIX option group XSI"
+          ]
+        },
+        {
+          "command": "ipcs",
+          "aliases": [],
+          "description": "report XSI interprocess communication facilities status",
+          "usage": "[ XSI ] ipcs [ -qms ] [ -a|-bcopt ]",
+          "options": [
+            "-q",
+            "-m",
+            "-s",
+            "-a",
+            "-b",
+            "-c",
+            "-o",
+            "-p"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/ipcs.html",
+          "constraints": [
+            "some synopsis forms require POSIX option group XSI"
+          ]
+        },
+        {
+          "command": "jobs",
+          "aliases": [],
+          "description": "display status of jobs in the current shell execution environment",
+          "usage": "[ UP ] jobs [ -l|-p ] [ job_id ... ]",
+          "options": [
+            "-l",
+            "-p"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/jobs.html",
+          "constraints": [
+            "some synopsis forms require POSIX option group UP"
+          ]
+        },
+        {
+          "command": "join",
+          "aliases": [],
+          "description": "relational database operator",
+          "usage": "join [ -a file_number |-v file_number ] [ -e string ] [ -o list ] [ -t char ] [ -1 field ] [ -2 field ] file1 file2",
+          "options": [
+            "-a",
+            "-e",
+            "-o",
+            "-s",
+            "-t",
+            "-b",
+            "-v",
+            "-1"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/join.html",
+          "constraints": []
+        },
+        {
+          "command": "kill",
+          "aliases": [],
+          "description": "terminate or signal processes",
+          "usage": "kill [ -s signal_name ] pid ... kill -l [ exit_status ] [ XSI ] kill [ - signal_name ] pid ... kill [ - signal_number ] pid ...",
+          "options": [
+            "-l",
+            "-s"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/kill.html",
+          "constraints": [
+            "some synopsis forms require POSIX option group XSI"
+          ]
+        },
+        {
+          "command": "lex",
+          "aliases": [],
+          "description": "generate programs for lexical tasks ( DEVELOPMENT )",
+          "usage": "[ CD ] lex [ -t ] [ -n|-v ] [ file ... ]",
+          "options": [
+            "-n",
+            "-v",
+            "-t"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/lex.html",
+          "constraints": [
+            "POSIX option group: DEVELOPMENT",
+            "some synopsis forms require POSIX option group CD"
+          ]
+        },
+        {
+          "command": "link",
+          "aliases": [],
+          "description": "call link function",
+          "usage": "[ XSI ] link file1 file2",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/link.html",
+          "constraints": [
+            "some synopsis forms require POSIX option group XSI"
+          ]
+        },
+        {
+          "command": "ln",
+          "aliases": [],
+          "description": "link files",
+          "usage": "ln [ -fs ] [ -L|-P ] source_file target_file ln [ -fs ] [ -L|-P ] source_file ... target_dir",
+          "options": [
+            "-f",
+            "-L",
+            "-P",
+            "-s"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/ln.html",
+          "constraints": []
+        },
+        {
+          "command": "locale",
+          "aliases": [],
+          "description": "get locale-specific information",
+          "usage": "locale [ -a|-m ] locale [ -ck ] name ...",
+          "options": [
+            "-a",
+            "-c",
+            "-k",
+            "-m"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/locale.html",
+          "constraints": []
+        },
+        {
+          "command": "localedef",
+          "aliases": [],
+          "description": "define locale environment",
+          "usage": "localedef [ -c ] [ -f charmap ] [ -i sourcefile ] [ -u code_set_name ] name",
+          "options": [
+            "-c",
+            "-f",
+            "-i",
+            "-u"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/localedef.html",
+          "constraints": []
+        },
+        {
+          "command": "logger",
+          "aliases": [],
+          "description": "log messages",
+          "usage": "logger [ -i ] [ -f file ] [ -p priority ] [ -t tag ] [ string... ]",
+          "options": [
+            "-f",
+            "-i",
+            "-p",
+            "-t"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/logger.html",
+          "constraints": []
+        },
+        {
+          "command": "logname",
+          "aliases": [],
+          "description": "return the user's login name",
+          "usage": "logname",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/logname.html",
+          "constraints": []
+        },
+        {
+          "command": "lp",
+          "aliases": [],
+          "description": "send files to a printer",
+          "usage": "lp [ -c ] [ -d dest ] [ -n copies ] [ -msw ] [ -o option ] ... [ -t title ] [ file ... ]",
+          "options": [
+            "-c",
+            "-d",
+            "-m",
+            "-n",
+            "-o",
+            "-s",
+            "-t",
+            "-w"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/lp.html",
+          "constraints": []
+        },
+        {
+          "command": "ls",
+          "aliases": [],
+          "description": "list directory contents",
+          "usage": "[ XSI ] ls [ -ikqrs ] [ - g ln o ] [ -A|-a ] [ -C|-m|-x|-1 ] \\ [ -F|-p ] [ -H|-L ] [ -R|-d ] [ -S|-f|-t ] [ -c|-u ] [ file ... ]",
+          "options": [
+            "-A",
+            "-C",
+            "-F",
+            "-H",
+            "-L",
+            "-l",
+            "-R",
+            "-d"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/ls.html",
+          "constraints": [
+            "some synopsis forms require POSIX option group XSI"
+          ]
+        },
+        {
+          "command": "m4",
+          "aliases": [],
+          "description": "macro processor",
+          "usage": "m4 [ -s ] [ -D name [ = val ]] ... [ -U name ] ... [ file ... ]",
+          "options": [
+            "-D",
+            "-U",
+            "-s"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/m4.html",
+          "constraints": []
+        },
+        {
+          "command": "mailx",
+          "aliases": [],
+          "description": "process messages",
+          "usage": "Send Mode mailx [ -E ] [ -s subject ] address ... Receive Mode [ UP ] mailx -e mailx [ -HiNn ] [ -F ] [ -u user ] mailx -f [ -HiNn ] [ -F ] [ file ]",
+          "options": [
+            "-E",
+            "-s",
+            "-e",
+            "-f",
+            "-F",
+            "-H",
+            "-i",
+            "-n"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/mailx.html",
+          "constraints": [
+            "some synopsis forms require POSIX option group UP"
+          ]
+        },
+        {
+          "command": "make",
+          "aliases": [],
+          "description": "maintain, update, and regenerate files ( DEVELOPMENT )",
+          "usage": "[ SD ] make [ -einpqrst ] [ -f makefile ] ... [ -j maxjobs ] [ -k|-S ] [ macro [ :: [ : ]] = value ... ] [ target_name ... ]",
+          "options": [
+            "-e",
+            "-f",
+            "-i",
+            "-j",
+            "-k",
+            "-n",
+            "-p",
+            "-q"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/make.html",
+          "constraints": [
+            "POSIX option group: DEVELOPMENT",
+            "some synopsis forms require POSIX option group SD"
+          ]
+        },
+        {
+          "command": "man",
+          "aliases": [],
+          "description": "display system documentation",
+          "usage": "[ UP ] man [ -k ] name ...",
+          "options": [
+            "-k",
+            "-E"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/man.html",
+          "constraints": [
+            "some synopsis forms require POSIX option group UP"
+          ]
+        },
+        {
+          "command": "mesg",
+          "aliases": [],
+          "description": "permit or deny messages",
+          "usage": "mesg [ y|n ]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/mesg.html",
+          "constraints": []
+        },
+        {
+          "command": "mkdir",
+          "aliases": [],
+          "description": "make directories",
+          "usage": "mkdir [ -p ] [ -m mode ] dir ...",
+          "options": [
+            "-m",
+            "-p"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/mkdir.html",
+          "constraints": []
+        },
+        {
+          "command": "mkfifo",
+          "aliases": [],
+          "description": "make FIFO special files",
+          "usage": "mkfifo [ -m mode ] file ...",
+          "options": [
+            "-m"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/mkfifo.html",
+          "constraints": []
+        },
+        {
+          "command": "more",
+          "aliases": [],
+          "description": "display files on a page-by-page basis",
+          "usage": "[ UP ] more [ -ceisu ] [ -n number ] [ -p command ] [ -t tagstring ] [ file ... ]",
+          "options": [
+            "-c",
+            "-e",
+            "-i",
+            "-n",
+            "-p",
+            "-s",
+            "-t",
+            "-u"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/more.html",
+          "constraints": [
+            "some synopsis forms require POSIX option group UP"
+          ]
+        },
+        {
+          "command": "msgfmt",
+          "aliases": [],
+          "description": "create messages objects from portable messages object source files",
+          "usage": "msgfmt [ -cfSv ] [ -D dir ] [ -o outputfile ] pathname ...",
+          "options": [
+            "-c",
+            "-v",
+            "-D",
+            "-f",
+            "-o",
+            "-S"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/msgfmt.html",
+          "constraints": []
+        },
+        {
+          "command": "mv",
+          "aliases": [],
+          "description": "move files",
+          "usage": "mv [ -if ] source_file target_file mv [ -if ] source_file ... target_dir",
+          "options": [
+            "-f",
+            "-i"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/mv.html",
+          "constraints": []
+        },
+        {
+          "command": "newgrp",
+          "aliases": [],
+          "description": "change to a new group",
+          "usage": "newgrp [ -l ] [ group ]",
+          "options": [
+            "-l"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/newgrp.html",
+          "constraints": []
+        },
+        {
+          "command": "ngettext",
+          "aliases": [],
+          "description": "retrieve text string from messages object",
+          "usage": "gettext [ -e|-E ] [ -d textdomain ] [ textdomain ] msgid gettext [ -e|-E ] [ -n ] -s [ -d textdomain ] msgid ... ngettext [ -e|-E ] [ -d textdomain ] [ textdomain ] msgid msgid_plural n",
+          "options": [
+            "-d",
+            "-e",
+            "-E",
+            "-n",
+            "-s"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/ngettext.html",
+          "constraints": []
+        },
+        {
+          "command": "nice",
+          "aliases": [],
+          "description": "invoke a utility with an altered nice value",
+          "usage": "nice [ -n increment ] utility [ argument ... ]",
+          "options": [
+            "-n"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/nice.html",
+          "constraints": []
+        },
+        {
+          "command": "nl",
+          "aliases": [],
+          "description": "line numbering filter",
+          "usage": "[ XSI ] nl [ -p ] [ -b type ] [ -d delim ] [ -f type ] [ -h type ] [ -i incr ] [ -l num ] [ -n format ] [ -s sep ] [ -v startnum ] [ -w width ] [ file ]",
+          "options": [
+            "-b",
+            "-d",
+            "-f",
+            "-h",
+            "-i",
+            "-l",
+            "-n",
+            "-p"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/nl.html",
+          "constraints": [
+            "some synopsis forms require POSIX option group XSI"
+          ]
+        },
+        {
+          "command": "nm",
+          "aliases": [],
+          "description": "write the name list of an object file ( DEVELOPMENT )",
+          "usage": "[ SD ] nm [ -APv ] [ -g|-u ] [ -t format ] file ... [ XSI ] nm [ -APv ] [ -efox ] [ -g|-u ] [ -t format ] file ...",
+          "options": [
+            "-A",
+            "-e",
+            "-f",
+            "-g",
+            "-o",
+            "-t",
+            "-P",
+            "-u"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/nm.html",
+          "constraints": [
+            "POSIX option group: DEVELOPMENT",
+            "some synopsis forms require POSIX option group SD",
+            "some synopsis forms require POSIX option group XSI"
+          ]
+        },
+        {
+          "command": "nohup",
+          "aliases": [],
+          "description": "invoke a utility immune to hangups",
+          "usage": "nohup utility [ argument ... ]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/nohup.html",
+          "constraints": []
+        },
+        {
+          "command": "od",
+          "aliases": [],
+          "description": "dump files in various formats",
+          "usage": "od [ -v ] [ -A address_base ] [ -j skip ] [ -N count ] [ -t type_string ] ... [ file ... ] [ XSI ] od [ -bcdosx ] [ file ] [[ + ] offset [ . ][ b ]]",
+          "options": [
+            "-t",
+            "-b",
+            "-A",
+            "-c",
+            "-d",
+            "-j",
+            "-N",
+            "-o"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/od.html",
+          "constraints": [
+            "some synopsis forms require POSIX option group XSI"
+          ]
+        },
+        {
+          "command": "paste",
+          "aliases": [],
+          "description": "merge corresponding or subsequent lines of files",
+          "usage": "paste [ -s ] [ -d list ] file ...",
+          "options": [
+            "-d",
+            "-s"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/paste.html",
+          "constraints": []
+        },
+        {
+          "command": "patch",
+          "aliases": [],
+          "description": "apply changes to files",
+          "usage": "patch [ -blNR ] [ -c|-e|-n|-u ] [ -d dir ] [ -D define ] [ -i patchfile ] [ -o outfile ] [ -p num ] [ -r rejectfile ] [ file ]",
+          "options": [
+            "-b",
+            "-o",
+            "-c",
+            "-C",
+            "-d",
+            "-D",
+            "-e",
+            "-i"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/patch.html",
+          "constraints": []
+        },
+        {
+          "command": "pathchk",
+          "aliases": [],
+          "description": "check pathnames",
+          "usage": "pathchk [ -p ] [ -P ] pathname ...",
+          "options": [
+            "-p",
+            "-P"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/pathchk.html",
+          "constraints": []
+        },
+        {
+          "command": "pax",
+          "aliases": [],
+          "description": "portable archive interchange",
+          "usage": "pax [ -dv ] [ -c|-n ] [ -H|-L ] [ -o options ] [ -f archive ] [ -s replstr ] ... [ pattern ... ] pax -r [ -c|-n ] [ -dikuv ] [ -H|-L ] [ -f archive ] [ -o options ] ... [ -p string ] ... [ -s replstr ] ... [ pattern ... ] pax -w [ -dituvX ] [ -H|-L ] [ -b blocksize ] [[ -a ] [ -f",
+          "options": [
+            "-o",
+            "-p",
+            "-s",
+            "-r",
+            "-w",
+            "-a",
+            "-b",
+            "-x"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/pax.html",
+          "constraints": []
+        },
+        {
+          "command": "pr",
+          "aliases": [],
+          "description": "print files",
+          "usage": "[ XSI ] pr [ + page ] [ - column ] [ -ad f Fmprt ] [ -e [ char ][ gap ]] [ -h header ] [ -i [ char ][ gap ]] [ -l lines ] [ -n [ char ][ width ]] [ -o offset ] [ -s [ char ]] [ -w width ] [ file ... ]",
+          "options": [
+            "-s",
+            "-e",
+            "-i",
+            "-n",
+            "-m",
+            "-l",
+            "-t",
+            "-a"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/pr.html",
+          "constraints": [
+            "some synopsis forms require POSIX option group XSI"
+          ]
+        },
+        {
+          "command": "printf",
+          "aliases": [],
+          "description": "write formatted output",
+          "usage": "printf format [ argument ... ]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/printf.html",
+          "constraints": []
+        },
+        {
+          "command": "prs",
+          "aliases": [],
+          "description": "print an SCCS file ( DEVELOPMENT )",
+          "usage": "[ XSI ] prs [ -a ] [ -d dataspec ] [ -r [ SID ]] file ... prs [ -e|-l ] -c cutoff [ -d dataspec ] file ... prs [ -e|-l ] -r [ SID ] [ -d dataspec ] file ...",
+          "options": [
+            "-r",
+            "-d",
+            "-e",
+            "-c",
+            "-l",
+            "-a"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/prs.html",
+          "constraints": [
+            "POSIX option group: DEVELOPMENT",
+            "some synopsis forms require POSIX option group XSI"
+          ]
+        },
+        {
+          "command": "ps",
+          "aliases": [],
+          "description": "report process status",
+          "usage": "[ XSI ] ps [ -aAw ] [ -defl ] [ -g grouplist ] [ -G grouplist ] [ -n namelist ] [ -o format ] ... [ -p proclist ] [ -t termlist ] [ -u userlist ] [ -U userlist ]",
+          "options": [
+            "-a",
+            "-A",
+            "-d",
+            "-e",
+            "-f",
+            "-g",
+            "-s",
+            "-G"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/ps.html",
+          "constraints": [
+            "some synopsis forms require POSIX option group XSI"
+          ]
+        },
+        {
+          "command": "pwd",
+          "aliases": [],
+          "description": "return working directory name",
+          "usage": "pwd [ -L|-P ]",
+          "options": [
+            "-L",
+            "-P"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/pwd.html",
+          "constraints": []
+        },
+        {
+          "command": "read",
+          "aliases": [],
+          "description": "read from standard input into shell variables",
+          "usage": "read [ -r ] [ -d delim ] var ...",
+          "options": [
+            "-d",
+            "-r"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/read.html",
+          "constraints": []
+        },
+        {
+          "command": "readlink",
+          "aliases": [],
+          "description": "display the contents of a symbolic link",
+          "usage": "readlink [ -n ] file",
+          "options": [
+            "-n"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/readlink.html",
+          "constraints": []
+        },
+        {
+          "command": "realpath",
+          "aliases": [],
+          "description": "resolve a pathname",
+          "usage": "realpath [ -E|-e ] file",
+          "options": [
+            "-E",
+            "-e"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/realpath.html",
+          "constraints": []
+        },
+        {
+          "command": "renice",
+          "aliases": [],
+          "description": "set nice values of running processes",
+          "usage": "renice [ -g|-p|-u ] -n increment ID ...",
+          "options": [
+            "-g",
+            "-n",
+            "-p",
+            "-u"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/renice.html",
+          "constraints": []
+        },
+        {
+          "command": "rm",
+          "aliases": [],
+          "description": "remove directory entries",
+          "usage": "rm [ -diRrv ] file ... rm -f [ -diRrv ] [ file ... ]",
+          "options": [
+            "-d",
+            "-f",
+            "-i",
+            "-R",
+            "-r",
+            "-v"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/rm.html",
+          "constraints": []
+        },
+        {
+          "command": "rmdel",
+          "aliases": [],
+          "description": "remove a delta from an SCCS file ( DEVELOPMENT )",
+          "usage": "[ XSI ] rmdel -r SID file ...",
+          "options": [
+            "-r"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/rmdel.html",
+          "constraints": [
+            "POSIX option group: DEVELOPMENT",
+            "some synopsis forms require POSIX option group XSI"
+          ]
+        },
+        {
+          "command": "rmdir",
+          "aliases": [],
+          "description": "remove directories",
+          "usage": "rmdir [ -p ] dir ...",
+          "options": [
+            "-p"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/rmdir.html",
+          "constraints": []
+        },
+        {
+          "command": "sact",
+          "aliases": [],
+          "description": "print current SCCS file-editing activity ( DEVELOPMENT )",
+          "usage": "[ XSI ] sact file ...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/sact.html",
+          "constraints": [
+            "POSIX option group: DEVELOPMENT",
+            "some synopsis forms require POSIX option group XSI"
+          ]
+        },
+        {
+          "command": "sccs",
+          "aliases": [],
+          "description": "front end for the SCCS subsystem ( DEVELOPMENT )",
+          "usage": "[ XSI ] sccs [ -r ] [ -d path ] [ -p path ] command [ options ... ] [ operands ... ]",
+          "options": [
+            "-d",
+            "-p",
+            "-r"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/sccs.html",
+          "constraints": [
+            "POSIX option group: DEVELOPMENT",
+            "some synopsis forms require POSIX option group XSI"
+          ]
+        },
+        {
+          "command": "sed",
+          "aliases": [],
+          "description": "stream editor",
+          "usage": "sed [ -En ] script [ file ... ] sed [ -En ] -e script [ -e script ] ... [ -f script_file ] ... [ file ... ] sed [ -En ] [ -e script ] ... -f script_file [ -f script_file ] ... [ file ... ]",
+          "options": [
+            "-e",
+            "-f",
+            "-E",
+            "-n"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/sed.html",
+          "constraints": []
+        },
+        {
+          "command": "sh",
+          "aliases": [],
+          "description": "shell, the standard command language interpreter",
+          "usage": "[ OB ] sh [ -abCef h imnuvx ] [ -o option ] ... [ +abCef h imnuvx ] [ +o option ] ... [ command_file [ argument ... ]] [ OB ] sh -c [ -abCef h imnuvx ] [ -o option ] ... [ +abCef h imnuvx ] [ +o option ] ... command_string [ command_name [ argument ... ]] [ OB ] sh -s [ -abCef h ",
+          "options": [
+            "-a",
+            "-b",
+            "-C",
+            "-e",
+            "-f",
+            "-h",
+            "-m",
+            "-n"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/sh.html",
+          "constraints": [
+            "some synopsis forms require POSIX option group OB"
+          ]
+        },
+        {
+          "command": "sleep",
+          "aliases": [],
+          "description": "suspend execution for an interval",
+          "usage": "sleep time",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/sleep.html",
+          "constraints": []
+        },
+        {
+          "command": "sort",
+          "aliases": [],
+          "description": "sort, merge, or sequence check text files",
+          "usage": "sort [ -m ] [ -o output ] [ -bdfinru ] [ -t char ] [ -k keydef ] ... [ file ... ] sort [ -c|-C ] [ -bdfinru ] [ -t char ] [ -k keydef ] [ file ]",
+          "options": [
+            "-k",
+            "-b",
+            "-d",
+            "-f",
+            "-i",
+            "-n",
+            "-r",
+            "-c"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/sort.html",
+          "constraints": []
+        },
+        {
+          "command": "split",
+          "aliases": [],
+          "description": "split a file into pieces",
+          "usage": "split [ -l line_count ] [ -a suffix_length ] [ file [ name ]] split -b n [ k|m ] [ -a suffix_length ] [ file [ name ]]",
+          "options": [
+            "-a",
+            "-b",
+            "-l"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/split.html",
+          "constraints": []
+        },
+        {
+          "command": "strings",
+          "aliases": [],
+          "description": "find printable strings in files",
+          "usage": "strings [ -a ] [ -t format ] [ -n number ] [ file ... ]",
+          "options": [
+            "-a",
+            "-n",
+            "-t"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/strings.html",
+          "constraints": []
+        },
+        {
+          "command": "strip",
+          "aliases": [],
+          "description": "remove unnecessary information from strippable files ( DEVELOPMENT )",
+          "usage": "[ SD ] strip file ...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/strip.html",
+          "constraints": [
+            "POSIX option group: DEVELOPMENT",
+            "some synopsis forms require POSIX option group SD"
+          ]
+        },
+        {
+          "command": "stty",
+          "aliases": [],
+          "description": "set the options for a terminal",
+          "usage": "stty [ -a|-g ] stty operand ...",
+          "options": [
+            "-a",
+            "-g"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/stty.html",
+          "constraints": []
+        },
+        {
+          "command": "tabs",
+          "aliases": [],
+          "description": "set terminal tabs",
+          "usage": "[ XSI ] tabs [ - n | -a|-a2|-c|-c2|-c3|-f|-p|-s|-u ] [ -T type ] tabs [ -T type ] n [[ sep [ + ] n ] ... ]",
+          "options": [
+            "-a",
+            "-c",
+            "-8",
+            "-0",
+            "-f",
+            "-p",
+            "-s",
+            "-u"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/tabs.html",
+          "constraints": [
+            "some synopsis forms require POSIX option group XSI"
+          ]
+        },
+        {
+          "command": "tail",
+          "aliases": [],
+          "description": "copy the last part of a file",
+          "usage": "tail [ -f ] [ -c number |-n number ] [ file ] tail -r [ -n number ] [ file ]",
+          "options": [
+            "-c",
+            "-1",
+            "-f",
+            "-n",
+            "-r"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/tail.html",
+          "constraints": []
+        },
+        {
+          "command": "talk",
+          "aliases": [],
+          "description": "talk to another user",
+          "usage": "[ UP ] talk address [ terminal ]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/talk.html",
+          "constraints": [
+            "some synopsis forms require POSIX option group UP"
+          ]
+        },
+        {
+          "command": "tee",
+          "aliases": [],
+          "description": "duplicate standard input",
+          "usage": "tee [ -ai ] [ file ... ]",
+          "options": [
+            "-a",
+            "-i"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/tee.html",
+          "constraints": []
+        },
+        {
+          "command": "test",
+          "aliases": [],
+          "description": "evaluate expression",
+          "usage": "test [ expression ] [ [ expression ] ]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/test.html",
+          "constraints": []
+        },
+        {
+          "command": "time",
+          "aliases": [],
+          "description": "time a simple command",
+          "usage": "time [ -p ] utility [ argument ... ]",
+          "options": [
+            "-p"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/time.html",
+          "constraints": []
+        },
+        {
+          "command": "timeout",
+          "aliases": [],
+          "description": "execute a utility with a time limit",
+          "usage": "timeout [ -fp ] [ -k time ] [ -s signal_name ] duration utility [ argument ... ]",
+          "options": [
+            "-f",
+            "-k",
+            "-p",
+            "-s"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/timeout.html",
+          "constraints": []
+        },
+        {
+          "command": "touch",
+          "aliases": [],
+          "description": "change file access and modification times",
+          "usage": "touch [ -acm ] [ -r ref_file |-t time |-d date_time ] file ...",
+          "options": [
+            "-a",
+            "-m",
+            "-c",
+            "-d",
+            "-t",
+            "-r"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/touch.html",
+          "constraints": []
+        },
+        {
+          "command": "tput",
+          "aliases": [],
+          "description": "change terminal characteristics",
+          "usage": "tput [ -T type ] operand ...",
+          "options": [
+            "-T"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/tput.html",
+          "constraints": []
+        },
+        {
+          "command": "tr",
+          "aliases": [],
+          "description": "translate characters",
+          "usage": "tr [ -c|-C ] [ -s ] string1 string2 tr -s [ -c|-C ] string1 tr -d [ -c|-C ] string1 tr -ds [ -c|-C ] string1 string2",
+          "options": [
+            "-c",
+            "-C",
+            "-d",
+            "-s"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/tr.html",
+          "constraints": []
+        },
+        {
+          "command": "true",
+          "aliases": [],
+          "description": "return true value",
+          "usage": "true",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/true.html",
+          "constraints": []
+        },
+        {
+          "command": "tsort",
+          "aliases": [],
+          "description": "topological sort",
+          "usage": "tsort [ -w ] [ file ]",
+          "options": [
+            "-w"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/tsort.html",
+          "constraints": []
+        },
+        {
+          "command": "tty",
+          "aliases": [],
+          "description": "return user's terminal name",
+          "usage": "tty",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/tty.html",
+          "constraints": []
+        },
+        {
+          "command": "type",
+          "aliases": [],
+          "description": "write a description of command type",
+          "usage": "[ XSI ] type name ...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/type.html",
+          "constraints": [
+            "some synopsis forms require POSIX option group XSI"
+          ]
+        },
+        {
+          "command": "ulimit",
+          "aliases": [],
+          "description": "report or set resource limits",
+          "usage": "ulimit [ -H|-S ] -a [ XSI ] ulimit [ -H|-S ] [ -c|-d|-f|-n|-s| -t |-v ] [ newlimit ]",
+          "options": [
+            "-H",
+            "-S",
+            "-a",
+            "-f",
+            "-c",
+            "-d",
+            "-n",
+            "-s"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/ulimit.html",
+          "constraints": [
+            "some synopsis forms require POSIX option group XSI"
+          ]
+        },
+        {
+          "command": "umask",
+          "aliases": [],
+          "description": "get or set the file mode creation mask",
+          "usage": "umask [ -S ] [ mask ]",
+          "options": [
+            "-S"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/umask.html",
+          "constraints": []
+        },
+        {
+          "command": "unalias",
+          "aliases": [],
+          "description": "remove alias definitions",
+          "usage": "unalias alias-name ... unalias -a",
+          "options": [
+            "-a"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/unalias.html",
+          "constraints": []
+        },
+        {
+          "command": "uname",
+          "aliases": [],
+          "description": "return system name",
+          "usage": "uname [ -amnrsv ]",
+          "options": [
+            "-a",
+            "-m",
+            "-n",
+            "-r",
+            "-s",
+            "-v"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/uname.html",
+          "constraints": []
+        },
+        {
+          "command": "uncompress",
+          "aliases": [],
+          "description": "compress and decompress data",
+          "usage": "[ XSI ] compress [ -fv ] [ -b value ] [ -g | -m algo ] [ file ... ] compress -c [ -fv ] [ -b value ] [ -g | -m algo ] [ file ] compress -d [ -cfv ] [ file ... ] uncompress [ -cfv ] [ file ... ] zcat [ file ... ]",
+          "options": [
+            "-b",
+            "-c",
+            "-d",
+            "-f",
+            "-g",
+            "-m",
+            "-v"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/uncompress.html",
+          "constraints": [
+            "some synopsis forms require POSIX option group XSI"
+          ]
+        },
+        {
+          "command": "unexpand",
+          "aliases": [],
+          "description": "convert spaces to tabs",
+          "usage": "unexpand [ -a|-t tablist ] [ file ... ]",
+          "options": [
+            "-a",
+            "-t"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/unexpand.html",
+          "constraints": []
+        },
+        {
+          "command": "unget",
+          "aliases": [],
+          "description": "undo a previous get of an SCCS file ( DEVELOPMENT )",
+          "usage": "[ XSI ] unget [ -ns ] [ -r SID ] file ...",
+          "options": [
+            "-r",
+            "-s",
+            "-n"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/unget.html",
+          "constraints": [
+            "POSIX option group: DEVELOPMENT",
+            "some synopsis forms require POSIX option group XSI"
+          ]
+        },
+        {
+          "command": "uniq",
+          "aliases": [],
+          "description": "report or filter out repeated lines in a file",
+          "usage": "uniq [ -c|-d|-u ] [ -f fields ] [ -s char ] [ input_file [ output_file ]]",
+          "options": [
+            "-c",
+            "-d",
+            "-f",
+            "-s",
+            "-u"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/uniq.html",
+          "constraints": []
+        },
+        {
+          "command": "unlink",
+          "aliases": [],
+          "description": "call the unlink function",
+          "usage": "[ XSI ] unlink file",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/unlink.html",
+          "constraints": [
+            "some synopsis forms require POSIX option group XSI"
+          ]
+        },
+        {
+          "command": "uucp",
+          "aliases": [],
+          "description": "system-to-system copy",
+          "usage": "[ UU ] uucp [ -cCdfjmr ] [ -n user ] source-file ... destination-file",
+          "options": [
+            "-c",
+            "-C",
+            "-d",
+            "-f",
+            "-j",
+            "-m",
+            "-n",
+            "-r"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/uucp.html",
+          "constraints": [
+            "some synopsis forms require POSIX option group UU",
+            "optional POSIX component: UUCP Utilities; not required on every conforming implementation"
+          ]
+        },
+        {
+          "command": "uudecode",
+          "aliases": [],
+          "description": "decode a binary file",
+          "usage": "uudecode [ -o outfile ] [ file ]",
+          "options": [
+            "-o"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/uudecode.html",
+          "constraints": []
+        },
+        {
+          "command": "uuencode",
+          "aliases": [],
+          "description": "encode a binary file",
+          "usage": "uuencode [ -m ] [ file ] decode_pathname",
+          "options": [
+            "-m"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/uuencode.html",
+          "constraints": []
+        },
+        {
+          "command": "uustat",
+          "aliases": [],
+          "description": "uucp status enquiry and job control",
+          "usage": "[ UU ] uustat [ -q|-k jobid |-r jobid ] uustat [ -s system ] [ -u user ]",
+          "options": [
+            "-q",
+            "-k",
+            "-r",
+            "-s",
+            "-u"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/uustat.html",
+          "constraints": [
+            "some synopsis forms require POSIX option group UU",
+            "optional POSIX component: UUCP Utilities; not required on every conforming implementation"
+          ]
+        },
+        {
+          "command": "uux",
+          "aliases": [],
+          "description": "remote command execution",
+          "usage": "[ UU ] uux [ -jnp ] command-string",
+          "options": [
+            "-j",
+            "-n",
+            "-p"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/uux.html",
+          "constraints": [
+            "some synopsis forms require POSIX option group UU",
+            "optional POSIX component: UUCP Utilities; not required on every conforming implementation"
+          ]
+        },
+        {
+          "command": "val",
+          "aliases": [],
+          "description": "validate SCCS files ( DEVELOPMENT )",
+          "usage": "[ XSI ] val - val [ -s ] [ -m name ] [ -r SID ] [ -y type ] file ...",
+          "options": [
+            "-m",
+            "-r",
+            "-s",
+            "-y"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/val.html",
+          "constraints": [
+            "POSIX option group: DEVELOPMENT",
+            "some synopsis forms require POSIX option group XSI"
+          ]
+        },
+        {
+          "command": "vi",
+          "aliases": [],
+          "description": "screen-oriented (visual) display editor",
+          "usage": "[ UP ] vi [ -rR ] [ -c command ] [ -t tagstring ] [ -w size ] [ file ... ]",
+          "options": [
+            "-c",
+            "-r",
+            "-R",
+            "-t",
+            "-w"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/vi.html",
+          "constraints": [
+            "some synopsis forms require POSIX option group UP"
+          ]
+        },
+        {
+          "command": "wait",
+          "aliases": [],
+          "description": "await process completion",
+          "usage": "wait [ pid ... ]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/wait.html",
+          "constraints": []
+        },
+        {
+          "command": "wc",
+          "aliases": [],
+          "description": "word, line, and byte or character count",
+          "usage": "wc [ -c|-m ] [ -lw ] [ file ... ]",
+          "options": [
+            "-c",
+            "-l",
+            "-m",
+            "-w"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/wc.html",
+          "constraints": []
+        },
+        {
+          "command": "what",
+          "aliases": [],
+          "description": "identify SCCS files ( DEVELOPMENT )",
+          "usage": "[ XSI ] what [ -s ] file ...",
+          "options": [
+            "-s"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/what.html",
+          "constraints": [
+            "POSIX option group: DEVELOPMENT",
+            "some synopsis forms require POSIX option group XSI"
+          ]
+        },
+        {
+          "command": "who",
+          "aliases": [],
+          "description": "display who is on the system",
+          "usage": "[ XSI ] who [ -mTu ] [ -abdHlprt ] [ file ] [ XSI ] who [ -mu ] -s [ -bHlprt ] [ file ] who -q [ file ] who am i who am I",
+          "options": [
+            "-a",
+            "-b",
+            "-d",
+            "-l",
+            "-p",
+            "-r",
+            "-t",
+            "-T"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/who.html",
+          "constraints": [
+            "some synopsis forms require POSIX option group XSI"
+          ]
+        },
+        {
+          "command": "write",
+          "aliases": [],
+          "description": "write to another user",
+          "usage": "write user_name [ terminal ]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/write.html",
+          "constraints": []
+        },
+        {
+          "command": "xargs",
+          "aliases": [],
+          "description": "construct argument lists and invoke utility",
+          "usage": "[ XSI ] xargs [ -prtx ] [ -E eofstr |-0 ] [ -I replstr |-L number |-n number ] [ -s size ] [ utility [ argument ... ]]",
+          "options": [
+            "-E",
+            "-0",
+            "-I",
+            "-x",
+            "-L",
+            "-n",
+            "-s",
+            "-p"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/xargs.html",
+          "constraints": [
+            "some synopsis forms require POSIX option group XSI"
+          ]
+        },
+        {
+          "command": "xgettext",
+          "aliases": [],
+          "description": "extract gettext call strings from C-language source files (DEVELOPMENT)",
+          "usage": "[ CD ] xgettext [ -j ] [ -n ] [ -d default-domain ] [ -K keyword-spec ] ... [ -p pathname ] file ... xgettext -a [ -n ] [ -d default-domain ] [ -p pathname ] [ -x exclude-file ] file ...",
+          "options": [
+            "-a",
+            "-d",
+            "-j",
+            "-K",
+            "-t",
+            "-n",
+            "-p",
+            "-x"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/xgettext.html",
+          "constraints": [
+            "some synopsis forms require POSIX option group CD"
+          ]
+        },
+        {
+          "command": "yacc",
+          "aliases": [],
+          "description": "yet another compiler compiler ( DEVELOPMENT )",
+          "usage": "[ CD ] yacc [ -dltv ] [ -b file_prefix ] [ -p sym_prefix ] grammar",
+          "options": [
+            "-b",
+            "-d",
+            "-v",
+            "-l",
+            "-p",
+            "-t"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/yacc.html",
+          "constraints": [
+            "POSIX option group: DEVELOPMENT",
+            "some synopsis forms require POSIX option group CD"
+          ]
+        },
+        {
+          "command": "zcat",
+          "aliases": [],
+          "description": "compress and decompress data",
+          "usage": "[ XSI ] compress [ -fv ] [ -b value ] [ -g | -m algo ] [ file ... ] compress -c [ -fv ] [ -b value ] [ -g | -m algo ] [ file ] compress -d [ -cfv ] [ file ... ] uncompress [ -cfv ] [ file ... ] zcat [ file ... ]",
+          "options": [
+            "-b",
+            "-c",
+            "-d",
+            "-f",
+            "-g",
+            "-m",
+            "-v"
+          ],
+          "officialExamples": [],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/zcat.html",
+          "constraints": [
+            "some synopsis forms require POSIX option group XSI"
+          ]
+        }
+      ],
+      "exclusions": []
+    },
+    {
+      "id": "gnu-coreutils",
+      "version": "9.11",
+      "sourceId": "gnu-manuals",
+      "sourceUrl": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz",
+      "downloadUrl": "https://ftpmirror.gnu.org/coreutils/coreutils-9.11.tar.xz",
+      "archive": "coreutils-9.11.tar.xz",
+      "archiveSha256": "394024eda0a5955217ceda9cd1201e65dc8fa3aa29c2951135a49521d57c3cc3",
+      "parser": "man1-directory-v1",
+      "entries": [
+        {
+          "command": "arch",
+          "aliases": [],
+          "description": "arch print machine hardware name (same as uname -m)",
+          "usage": "arch [\\,OPTION\\/]...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/arch.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "b2sum",
+          "aliases": [],
+          "description": "b2sum compute and check BLAKE2 message digest",
+          "usage": "b2sum [\\,OPTION\\/]... [\\,FILE\\/]...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/b2sum.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "base32",
+          "aliases": [],
+          "description": "base32 base32 encode/decode data and print to standard output",
+          "usage": "base32 [\\,OPTION\\/]... [\\,FILE\\/]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/base32.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "base64",
+          "aliases": [],
+          "description": "base64 base64 encode/decode data and print to standard output",
+          "usage": "base64 [\\,OPTION\\/]... [\\,FILE\\/]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/base64.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "basename",
+          "aliases": [],
+          "description": "basename strip directory and suffix from filenames",
+          "usage": "basename \\,NAME \\/[\\,SUFFIX\\/] .br basename \\,OPTION\\/... \\,NAME\\/...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/basename.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "basenc",
+          "aliases": [],
+          "description": "basenc Encode/decode data and print to standard output",
+          "usage": "basenc [\\,OPTION\\/]... [\\,FILE\\/]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/basenc.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "cat",
+          "aliases": [],
+          "description": "cat concatenate files and print on the standard output",
+          "usage": "cat [\\,OPTION\\/]... [\\,FILE\\/]...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/cat.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "chcon",
+          "aliases": [],
+          "description": "chcon change file security context",
+          "usage": "chcon [\\,OPTION\\/]... \\,CONTEXT FILE\\/... .br chcon [\\,OPTION\\/]... [\\,-u USER\\/] [\\,-r ROLE\\/] [\\,-l RANGE\\/] [\\,-t TYPE\\/] \\,FILE\\/... .br chcon [\\,OPTION\\/]... \\,--reference=RFILE FILE\\/...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/chcon.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "chgrp",
+          "aliases": [],
+          "description": "chgrp change group ownership",
+          "usage": "chgrp [\\,OPTION\\/]... \\,GROUP FILE\\/... .br chgrp [\\,OPTION\\/]... \\,--reference=RFILE FILE\\/...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/chgrp.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "chmod",
+          "aliases": [],
+          "description": "chmod change file mode bits",
+          "usage": "chmod [\\,OPTION\\/]... \\,MODE\\/[\\,,MODE\\/]... \\,FILE\\/... .br chmod [\\,OPTION\\/]... \\,OCTAL-MODE FILE\\/... .br chmod [\\,OPTION\\/]... \\,--reference=RFILE FILE\\/...",
+          "options": [
+            "--reference",
+            "-c",
+            "--changes",
+            "-f",
+            "--silent",
+            "--quiet",
+            "-v",
+            "--verbose"
+          ],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/chmod.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "chown",
+          "aliases": [],
+          "description": "chown change file owner and group",
+          "usage": "chown [\\,OPTION\\/]... [\\,OWNER\\/][\\,:\\/[\\,GROUP\\/]] \\,FILE\\/... .br chown [\\,OPTION\\/]... \\,--reference=RFILE FILE\\/...",
+          "options": [
+            "--reference",
+            "-c",
+            "--changes",
+            "-f",
+            "--silent",
+            "--quiet",
+            "-v",
+            "--verbose"
+          ],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/chown.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "chroot",
+          "aliases": [],
+          "description": "chroot run command or interactive shell with special root directory",
+          "usage": "chroot [\\,OPTION\\/]... \\,NEWROOT \\/[\\,COMMAND \\/[\\,ARG\\/]...]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/chroot.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "cksum",
+          "aliases": [],
+          "description": "cksum compute and verify file checksums",
+          "usage": "cksum [\\,OPTION\\/]... [\\,FILE\\/]...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/cksum.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "comm",
+          "aliases": [],
+          "description": "comm compare two sorted files line by line",
+          "usage": "comm [\\,OPTION\\/]... \\,FILE1 FILE2\\/",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/comm.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "coreutils",
+          "aliases": [],
+          "description": "coreutils single binary for coreutils programs",
+          "usage": "coreutils \\,--coreutils-prog=PROGRAM_NAME \\/[\\,PARAMETERS\\/]...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/coreutils.1",
+          "constraints": [
+            "available when GNU coreutils is built or installed in multi-call form",
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "cp",
+          "aliases": [],
+          "description": "cp copy files and directories",
+          "usage": "cp [\\,OPTION\\/]... [\\,-T\\/] \\,SOURCE DEST\\/ .br cp [\\,OPTION\\/]... \\,SOURCE\\/... \\,DIRECTORY\\/ .br cp [\\,OPTION\\/]... \\,-t DIRECTORY SOURCE\\/...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/cp.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "csplit",
+          "aliases": [],
+          "description": "csplit split a file into sections determined by context lines",
+          "usage": "csplit [\\,OPTION\\/]... \\,FILE PATTERN\\/...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/csplit.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "cut",
+          "aliases": [],
+          "description": "cut remove sections from each line of files",
+          "usage": "cut \\,OPTION\\/... [\\,FILE\\/]...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/cut.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "date",
+          "aliases": [],
+          "description": "date print or set the system date and time",
+          "usage": "date [\\,OPTION\\/]... [+\\,FORMAT\\/] .br date [\\,OPTION\\/]... \\ MMDDhhmm\\/[[\\,CC\\/]\\,YY\\/][.\\,ss\\/]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/date.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "dd",
+          "aliases": [],
+          "description": "dd convert and copy a file",
+          "usage": "dd [\\,OPERAND\\/]... .br dd \\,OPTION\\/",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/dd.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "df",
+          "aliases": [],
+          "description": "df report file system space usage",
+          "usage": "df [\\,OPTION\\/]... [\\,FILE\\/]...",
+          "options": [
+            "-a",
+            "--all",
+            "-B",
+            "--block",
+            "-size",
+            "-BM",
+            "-h",
+            "--human"
+          ],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/df.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "dir",
+          "aliases": [],
+          "description": "dir list directory contents",
+          "usage": "dir [\\,OPTION\\/]... [\\,FILE\\/]...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/dir.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "dircolors",
+          "aliases": [],
+          "description": "dircolors color setup for ls",
+          "usage": "dircolors [\\,OPTION\\/]... [\\,FILE\\/]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/dircolors.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "dirname",
+          "aliases": [],
+          "description": "dirname strip last component from file name",
+          "usage": "dirname [\\,OPTION\\/] \\,NAME\\/...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/dirname.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "du",
+          "aliases": [],
+          "description": "du estimate file space usage",
+          "usage": "du [\\,OPTION\\/]... [\\,FILE\\/]... .br du [\\,OPTION\\/]... \\,--files0-from=F\\/",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/du.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "echo",
+          "aliases": [],
+          "description": "echo display a line of text",
+          "usage": "echo [\\,SHORT-OPTION\\/]... [\\,STRING\\/]... .br echo \\,LONG-OPTION\\/",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/echo.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "env",
+          "aliases": [],
+          "description": "env run a program in a modified environment",
+          "usage": "env [\\,OPTION\\/]... [\\,-\\/] [\\,NAME=VALUE\\/]... [\\,COMMAND \\/[\\,ARG\\/]...]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/env.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "expand",
+          "aliases": [],
+          "description": "expand convert tabs to spaces",
+          "usage": "expand [\\,OPTION\\/]... [\\,FILE\\/]...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/expand.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "expr",
+          "aliases": [],
+          "description": "expr evaluate expressions",
+          "usage": "expr \\,EXPRESSION\\/ .br expr \\,OPTION\\/",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/expr.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "factor",
+          "aliases": [],
+          "description": "factor factor numbers",
+          "usage": "factor [\\,OPTION\\/] [\\,NUMBER\\/]...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/factor.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "false",
+          "aliases": [],
+          "description": "false do nothing, unsuccessfully",
+          "usage": "false [\\,ignored command line arguments\\/] .br false \\,OPTION\\/",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/false.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "fmt",
+          "aliases": [],
+          "description": "fmt simple optimal text formatter",
+          "usage": "fmt [\\,-WIDTH\\/] [\\,OPTION\\/]... [\\,FILE\\/]...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/fmt.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "fold",
+          "aliases": [],
+          "description": "fold wrap each input line to fit in specified width",
+          "usage": "fold [\\,OPTION\\/]... [\\,FILE\\/]...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/fold.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "groups",
+          "aliases": [],
+          "description": "groups print the groups a user is in",
+          "usage": "groups [\\,OPTION\\/]... [\\,USERNAME\\/]...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/groups.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "head",
+          "aliases": [],
+          "description": "head output the first part of files",
+          "usage": "head [\\,OPTION\\/]... [\\,FILE\\/]...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/head.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "hostid",
+          "aliases": [],
+          "description": "hostid print the numeric identifier for the current host",
+          "usage": "hostid [\\,OPTION\\/]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/hostid.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "hostname",
+          "aliases": [],
+          "description": "hostname set or print the name of the current host system",
+          "usage": "hostname [\\,NAME\\/] .br hostname \\,OPTION\\/",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/hostname.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "id",
+          "aliases": [],
+          "description": "id print real and effective user and group IDs",
+          "usage": "id [\\,OPTION\\/]... [\\,USER\\/]...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/id.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "install",
+          "aliases": [],
+          "description": "install copy files and set attributes",
+          "usage": "install [\\,OPTION\\/]... [\\,-T\\/] \\,SOURCE DEST\\/ .br install [\\,OPTION\\/]... \\,SOURCE\\/... \\,DIRECTORY\\/ .br install [\\,OPTION\\/]... \\,-t DIRECTORY SOURCE\\/... .br install [\\,OPTION\\/]... \\,-d DIRECTORY\\/...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/install.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "join",
+          "aliases": [],
+          "description": "join join lines of two files on a common field",
+          "usage": "join [\\,OPTION\\/]... \\,FILE1 FILE2\\/",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/join.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "kill",
+          "aliases": [],
+          "description": "kill send signals to processes, or list signals",
+          "usage": "kill [\\,-s SIGNAL | -SIGNAL\\/] \\,PID\\/... .br kill \\,-l \\/[\\,SIGNAL\\/]... .br kill \\,-t \\/[\\,SIGNAL\\/]...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/kill.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "link",
+          "aliases": [],
+          "description": "link call the link function to create a link to a file",
+          "usage": "link \\,FILE1 FILE2\\/ .br link \\,OPTION\\/",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/link.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "ln",
+          "aliases": [],
+          "description": "ln make links between files",
+          "usage": "ln [\\,OPTION\\/]... [\\,-T\\/] \\,TARGET LINK_NAME\\/ .br ln [\\,OPTION\\/]... \\,TARGET\\/ .br ln [\\,OPTION\\/]... \\,TARGET\\/... \\,DIRECTORY\\/ .br ln [\\,OPTION\\/]... \\,-t DIRECTORY TARGET\\/...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/ln.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "logname",
+          "aliases": [],
+          "description": "logname print user\\'s login name",
+          "usage": "logname [\\,OPTION\\/]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/logname.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "ls",
+          "aliases": [],
+          "description": "ls list directory contents",
+          "usage": "ls [\\,OPTION\\/]... [\\,FILE\\/]...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/ls.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "md5sum",
+          "aliases": [],
+          "description": "md5sum compute and check MD5 message digest",
+          "usage": "md5sum [\\,OPTION\\/]... [\\,FILE\\/]...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/md5sum.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "mkdir",
+          "aliases": [],
+          "description": "mkdir make directories",
+          "usage": "mkdir [\\,OPTION\\/]... \\,DIRECTORY\\/...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/mkdir.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "mkfifo",
+          "aliases": [],
+          "description": "mkfifo make FIFOs (named pipes)",
+          "usage": "mkfifo [\\,OPTION\\/]... \\,NAME\\/...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/mkfifo.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "mknod",
+          "aliases": [],
+          "description": "mknod make block or character special files",
+          "usage": "mknod [\\,OPTION\\/]... \\,NAME TYPE \\/[\\,MAJOR MINOR\\/]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/mknod.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "mktemp",
+          "aliases": [],
+          "description": "mktemp create a temporary file or directory",
+          "usage": "mktemp [\\,OPTION\\/]... [\\,TEMPLATE\\/]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/mktemp.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "mv",
+          "aliases": [],
+          "description": "mv move (rename) files",
+          "usage": "mv [\\,OPTION\\/]... [\\,-T\\/] \\,SOURCE DEST\\/ .br mv [\\,OPTION\\/]... \\,SOURCE\\/... \\,DIRECTORY\\/ .br mv [\\,OPTION\\/]... \\,-t DIRECTORY SOURCE\\/...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/mv.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "nice",
+          "aliases": [],
+          "description": "nice run a program with modified scheduling priority",
+          "usage": "nice [\\,OPTION\\/] [\\,COMMAND \\/[\\,ARG\\/]...]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/nice.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "nl",
+          "aliases": [],
+          "description": "nl number lines of files",
+          "usage": "nl [\\,OPTION\\/]... [\\,FILE\\/]...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/nl.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "nohup",
+          "aliases": [],
+          "description": "nohup run a command immune to hangups, with output to a non-tty",
+          "usage": "nohup \\,COMMAND \\/[\\,ARG\\/]... .br nohup \\,OPTION\\/",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/nohup.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "nproc",
+          "aliases": [],
+          "description": "nproc print the number of processing units available",
+          "usage": "nproc [\\,OPTION\\/]...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/nproc.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "numfmt",
+          "aliases": [],
+          "description": "numfmt Convert numbers from/to human-readable strings",
+          "usage": "numfmt [\\,OPTION\\/]... [\\,NUMBER\\/]...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/numfmt.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "od",
+          "aliases": [],
+          "description": "od dump files in octal and other formats",
+          "usage": "od [\\,OPTION\\/]... [\\,FILE\\/]... .br od [\\,-abcdfilosx\\/]... [\\,FILE\\/] [[\\,+\\/]\\,OFFSET\\/[\\,.\\/][\\,b\\/]] .br od \\,--traditional \\/[\\,OPTION\\/]... [\\,FILE\\/] [[\\,+\\/]\\,OFFSET\\/[\\,.\\/][\\,b\\/] [\\,+\\/][\\,LABEL\\/][\\,.\\/][\\,b\\/]]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/od.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "paste",
+          "aliases": [],
+          "description": "paste merge lines of files",
+          "usage": "paste [\\,OPTION\\/]... [\\,FILE\\/]...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/paste.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "pathchk",
+          "aliases": [],
+          "description": "pathchk check whether file names are valid or portable",
+          "usage": "pathchk [\\,OPTION\\/]... \\,NAME\\/...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/pathchk.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "pinky",
+          "aliases": [],
+          "description": "pinky lightweight finger",
+          "usage": "pinky [\\,OPTION\\/]... [\\,USER\\/]...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/pinky.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "pr",
+          "aliases": [],
+          "description": "pr convert text files for printing",
+          "usage": "pr [\\,OPTION\\/]... [\\,FILE\\/]...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/pr.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "printenv",
+          "aliases": [],
+          "description": "printenv print all or part of environment",
+          "usage": "printenv [\\,OPTION\\/] [\\,VARIABLE\\/]...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/printenv.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "printf",
+          "aliases": [],
+          "description": "printf format and print data",
+          "usage": "printf \\,FORMAT \\/[\\,ARGUMENT\\/]... .br printf \\,OPTION\\/",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/printf.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "ptx",
+          "aliases": [],
+          "description": "ptx produce a permuted index of file contents",
+          "usage": "ptx [\\,OPTION\\/]... [\\,INPUT\\/]... \\,(without -G)\\/ .br ptx \\,-G \\/[\\,OPTION\\/]... [\\,INPUT \\/[\\,OUTPUT\\/]]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/ptx.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "pwd",
+          "aliases": [],
+          "description": "pwd print name of current/working directory",
+          "usage": "pwd [\\,OPTION\\/]...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/pwd.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "readlink",
+          "aliases": [],
+          "description": "readlink print resolved symbolic links or canonical file names",
+          "usage": "readlink [\\,OPTION\\/]... \\,FILE\\/...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/readlink.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "realpath",
+          "aliases": [],
+          "description": "realpath print the resolved path",
+          "usage": "realpath [\\,OPTION\\/]... \\,FILE\\/...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/realpath.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "rm",
+          "aliases": [],
+          "description": "rm remove files or directories",
+          "usage": "rm [\\,OPTION\\/]... [\\,FILE\\/]...",
+          "options": [
+            "-f",
+            "--force",
+            "-i",
+            "-I",
+            "-interactive",
+            "--interactive",
+            "-one-file-system",
+            "--one"
+          ],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/rm.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "rmdir",
+          "aliases": [],
+          "description": "rmdir remove empty directories",
+          "usage": "rmdir [\\,OPTION\\/]... \\,DIRECTORY\\/...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/rmdir.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "runcon",
+          "aliases": [],
+          "description": "runcon run command with specified security context",
+          "usage": "runcon [\\,CONTEXT COMMAND \\/[\\,ARG\\/]...] .br runcon [\\,-c\\/] [\\,-u USER\\/] [\\,-r ROLE\\/] [\\,-t TYPE\\/] [\\,-l RANGE\\/] \\,COMMAND \\/[\\,ARG\\/]...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/runcon.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "seq",
+          "aliases": [],
+          "description": "seq print a sequence of numbers",
+          "usage": "seq [\\,OPTION\\/]... \\,LAST\\/ .br seq [\\,OPTION\\/]... \\,FIRST LAST\\/ .br seq [\\,OPTION\\/]... \\,FIRST INCREMENT LAST\\/",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/seq.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "sha1sum",
+          "aliases": [],
+          "description": "sha1sum compute and check SHA1 message digest",
+          "usage": "sha1sum [\\,OPTION\\/]... [\\,FILE\\/]...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/sha1sum.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "sha224sum",
+          "aliases": [],
+          "description": "sha224sum compute and check SHA224 message digest",
+          "usage": "sha224sum [\\,OPTION\\/]... [\\,FILE\\/]...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/sha224sum.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "sha256sum",
+          "aliases": [],
+          "description": "sha256sum compute and check SHA256 message digest",
+          "usage": "sha256sum [\\,OPTION\\/]... [\\,FILE\\/]...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/sha256sum.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "sha384sum",
+          "aliases": [],
+          "description": "sha384sum compute and check SHA384 message digest",
+          "usage": "sha384sum [\\,OPTION\\/]... [\\,FILE\\/]...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/sha384sum.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "sha512sum",
+          "aliases": [],
+          "description": "sha512sum compute and check SHA512 message digest",
+          "usage": "sha512sum [\\,OPTION\\/]... [\\,FILE\\/]...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/sha512sum.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "shred",
+          "aliases": [],
+          "description": "shred overwrite a file to hide its contents, and optionally delete it",
+          "usage": "shred [\\,OPTION\\/]... \\,FILE\\/...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/shred.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "shuf",
+          "aliases": [],
+          "description": "shuf generate random permutations",
+          "usage": "shuf [\\,OPTION\\/]... [\\,FILE\\/] .br shuf \\,-e \\/[\\,OPTION\\/]... [\\,ARG\\/]... .br shuf \\,-i LO-HI \\/[\\,OPTION\\/]...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/shuf.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "sleep",
+          "aliases": [],
+          "description": "sleep delay for a specified amount of time",
+          "usage": "sleep \\,NUMBER\\/[\\,SUFFIX\\/]... .br sleep \\,OPTION\\/",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/sleep.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "sort",
+          "aliases": [],
+          "description": "sort sort lines of text files",
+          "usage": "sort [\\,OPTION\\/]... [\\,FILE\\/]... .br sort [\\,OPTION\\/]... \\,--files0-from=F\\/",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/sort.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "split",
+          "aliases": [],
+          "description": "split split a file into pieces",
+          "usage": "split [\\,OPTION\\/]... [\\,FILE \\/[\\,PREFIX\\/]]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/split.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "stat",
+          "aliases": [],
+          "description": "stat display file or file system status",
+          "usage": "stat [\\,OPTION\\/]... \\,FILE\\/...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/stat.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "stdbuf",
+          "aliases": [],
+          "description": "stdbuf Run COMMAND, with modified buffering operations for its standard streams.",
+          "usage": "stdbuf \\,OPTION\\/... \\,COMMAND\\/",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/stdbuf.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "stty",
+          "aliases": [],
+          "description": "stty change and print terminal line settings",
+          "usage": "stty [\\,-F DEVICE | --file=DEVICE\\/] [\\,SETTING\\/]... .br stty [\\,-F DEVICE | --file=DEVICE\\/] [\\,-a|--all\\/] .br stty [\\,-F DEVICE | --file=DEVICE\\/] [\\,-g|--save\\/]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/stty.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "sum",
+          "aliases": [],
+          "description": "sum checksum and count the blocks in a file",
+          "usage": "sum [\\,OPTION\\/]... [\\,FILE\\/]...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/sum.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "sync",
+          "aliases": [],
+          "description": "sync Synchronize cached writes to persistent storage",
+          "usage": "sync [\\,OPTION\\/] [\\,FILE\\/]...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/sync.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "tac",
+          "aliases": [],
+          "description": "tac concatenate and print files in reverse",
+          "usage": "tac [\\,OPTION\\/]... [\\,FILE\\/]...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/tac.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "tail",
+          "aliases": [],
+          "description": "tail output the last part of files",
+          "usage": "tail [\\,OPTION\\/]... [\\,FILE\\/]...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/tail.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "tee",
+          "aliases": [],
+          "description": "tee read from standard input and write to standard output and files",
+          "usage": "tee [\\,OPTION\\/]... [\\,FILE\\/]...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/tee.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "test",
+          "aliases": [],
+          "description": "test check file types and compare values",
+          "usage": "test EXPRESSION .br test .br .\\\" tells doclifter the brackets are literal (Bug#31803). [ EXPRESSION ] .br \"[ ]\" .br [ OPTION",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/test.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "timeout",
+          "aliases": [],
+          "description": "timeout run a command with a time limit",
+          "usage": "timeout [\\,OPTION\\/]... \\,DURATION COMMAND \\/[\\,ARG\\/]...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/timeout.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "touch",
+          "aliases": [],
+          "description": "touch create file, or change file timestamps",
+          "usage": "touch [\\,OPTION\\/]... \\,FILE\\/...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/touch.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "tr",
+          "aliases": [],
+          "description": "tr translate or delete characters",
+          "usage": "tr [\\,OPTION\\/]... \\,STRING1 \\/[\\,STRING2\\/]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/tr.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "true",
+          "aliases": [],
+          "description": "true do nothing, successfully",
+          "usage": "true [\\,ignored command line arguments\\/] .br true \\,OPTION\\/",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/true.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "truncate",
+          "aliases": [],
+          "description": "truncate shrink or extend the size of a file to the specified size",
+          "usage": "truncate \\,OPTION\\/... \\,FILE\\/...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/truncate.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "tsort",
+          "aliases": [],
+          "description": "tsort perform topological sort",
+          "usage": "tsort [\\,OPTION\\/] [\\,FILE\\/]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/tsort.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "tty",
+          "aliases": [],
+          "description": "tty print the file name of the terminal connected to standard input",
+          "usage": "tty [\\,OPTION\\/]...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/tty.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "uname",
+          "aliases": [],
+          "description": "uname print system information",
+          "usage": "uname [\\,OPTION\\/]...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/uname.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "unexpand",
+          "aliases": [],
+          "description": "unexpand convert spaces to tabs",
+          "usage": "unexpand [\\,OPTION\\/]... [\\,FILE\\/]...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/unexpand.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "uniq",
+          "aliases": [],
+          "description": "uniq report or omit repeated lines",
+          "usage": "uniq [\\,OPTION\\/]... [\\,INPUT \\/[\\,OUTPUT\\/]]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/uniq.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "unlink",
+          "aliases": [],
+          "description": "unlink call the unlink function to remove the specified file",
+          "usage": "unlink \\,FILE\\/ .br unlink \\,OPTION\\/",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/unlink.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "uptime",
+          "aliases": [],
+          "description": "uptime tell how long the system has been running",
+          "usage": "uptime [\\,OPTION\\/]... [\\,FILE\\/]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/uptime.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "users",
+          "aliases": [],
+          "description": "users print the user names of users currently logged in to the current host",
+          "usage": "users [\\,OPTION\\/]... [\\,FILE\\/]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/users.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "vdir",
+          "aliases": [],
+          "description": "vdir list directory contents",
+          "usage": "vdir [\\,OPTION\\/]... [\\,FILE\\/]...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/vdir.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "wc",
+          "aliases": [],
+          "description": "wc print newline, word, and byte counts for each file",
+          "usage": "wc [\\,OPTION\\/]... [\\,FILE\\/]... .br wc [\\,OPTION\\/]... \\,--files0-from=F\\/",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/wc.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "who",
+          "aliases": [],
+          "description": "who show who is logged on",
+          "usage": "who [\\,OPTION\\/]... [ \\,FILE | ARG1 ARG2 \\/]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/who.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "whoami",
+          "aliases": [],
+          "description": "whoami print effective user name",
+          "usage": "whoami [\\,OPTION\\/]...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/whoami.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "yes",
+          "aliases": [],
+          "description": "yes output a string repeatedly until killed",
+          "usage": "yes [\\,STRING\\/]... .br yes \\,OPTION\\/",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/yes.1",
+          "constraints": [
+            "reference behavior follows gnu-coreutils 9.11; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        }
+      ],
+      "exclusions": []
+    },
+    {
+      "id": "gnu-findutils",
+      "version": "4.11.0",
+      "sourceId": "gnu-manuals",
+      "sourceUrl": "https://ftp.gnu.org/gnu/findutils/findutils-4.11.0.tar.xz",
+      "downloadUrl": "https://ftpmirror.gnu.org/findutils/findutils-4.11.0.tar.xz",
+      "archive": "findutils-4.11.0.tar.xz",
+      "archiveSha256": "bfd19cb06cc71f3352d567e90284d8cdac02ac89774bbeadf0b533b0c11432fd",
+      "parser": "man1-directory-v1",
+      "entries": [
+        {
+          "command": "find",
+          "aliases": [],
+          "description": "find search for files in a directory hierarchy",
+          "usage": "\\\" FIXME-2027: switch to .HP when groff-1.24 is more commonly available. .nr sA \\n(.j \\\" Save the adjustment mode. .na find [ H ] [ L ] [ P ] [ D\\ \\c debugopts ] [ O\\c level ] [ starting-point .\\|.\\|.] [ expression ] .ad \\n(sA \\\" Restore the adjustment mode. .rr sA .",
+          "options": [
+            "-H",
+            "-L",
+            "-P",
+            "-print",
+            "-print0",
+            "-D",
+            "-O",
+            "-files0"
+          ],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/findutils/findutils-4.11.0.tar.xz · find/find.1",
+          "constraints": [
+            "reference behavior follows gnu-findutils 4.11.0; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "locate",
+          "aliases": [],
+          "description": "locate list files in databases that match a pattern .",
+          "usage": "\\\" FIXME-2027: switch to .HP when groff-1.24 is more commonly available. .nr sA \\n(.j \\\" Save the adjustment mode. .na locate [ d\\ \\c path | \\*%database= path\\c ] [ e | E | \\*% [ non ] existing ] [ i | \\*%ignorecase ] [ 0 | null ] [ c | \\*%count ] [ w | \\*%wholename ] [ b | \\*%ba",
+          "options": [
+            "-0",
+            "--null",
+            "-A",
+            "--all",
+            "-b",
+            "--basename",
+            "-c",
+            "--count"
+          ],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/findutils/findutils-4.11.0.tar.xz · locate/locate.1",
+          "constraints": [
+            "reference behavior follows gnu-findutils 4.11.0; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "updatedb",
+          "aliases": [],
+          "description": "updatedb update a file name database",
+          "usage": "updatedb [ options ] .",
+          "options": [
+            "--findoptions",
+            "-option1",
+            "-option2",
+            "--localpaths",
+            "--netpaths",
+            "--prunepaths",
+            "--prunefs",
+            "--output"
+          ],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/findutils/findutils-4.11.0.tar.xz · locate/updatedb.1",
+          "constraints": [
+            "reference behavior follows gnu-findutils 4.11.0; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "xargs",
+          "aliases": [],
+          "description": "xargs build and execute command lines from standard input",
+          "usage": "xargs [ option \\*(~~.\\|.\\|.] [ command ] [ initial-argument \\*(~~.\\|.\\|.] .",
+          "options": [
+            "-0",
+            "--null",
+            "-print0",
+            "-a",
+            "--arg",
+            "-file",
+            "--delimiter",
+            "-d"
+          ],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/findutils/findutils-4.11.0.tar.xz · xargs/xargs.1",
+          "constraints": [
+            "reference behavior follows gnu-findutils 4.11.0; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        }
+      ],
+      "exclusions": []
+    },
+    {
+      "id": "gnu-grep",
+      "version": "3.12",
+      "sourceId": "gnu-manuals",
+      "sourceUrl": "https://ftp.gnu.org/gnu/grep/grep-3.12.tar.xz",
+      "downloadUrl": "https://ftpmirror.gnu.org/grep/grep-3.12.tar.xz",
+      "archive": "grep-3.12.tar.xz",
+      "archiveSha256": "2649b27c0e90e632eadcd757be06c6e9a4f48d941de51e7c0f83ff76408a07b9",
+      "parser": "gnu-grep-build-v1",
+      "entries": [
+        {
+          "command": "grep",
+          "aliases": [
+            "egrep",
+            "fgrep",
+            "rgrep"
+          ],
+          "description": "grep print lines that match patterns .",
+          "usage": "grep [ OPTION ].\\|.\\|. PATTERNS [ FILE ].\\|.\\|. .br grep [ OPTION ].\\|.\\|. e PATTERNS .\\|.\\|. [ FILE ].\\|.\\|. .br grep [ OPTION ].\\|.\\|. f PATTERN_FILE .\\|.\\|. [ FILE ].\\|.\\|. .",
+          "options": [
+            "-help",
+            "-V",
+            "-version",
+            "-E",
+            "-extended",
+            "-regexp",
+            "-F",
+            "-fixed"
+          ],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/grep/grep-3.12.tar.xz · doc/grep.in.1",
+          "constraints": [
+            "reference behavior follows gnu-grep 3.12; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        }
+      ],
+      "exclusions": []
+    },
+    {
+      "id": "gnu-sed",
+      "version": "4.10",
+      "sourceId": "gnu-manuals",
+      "sourceUrl": "https://ftp.gnu.org/gnu/sed/sed-4.10.tar.xz",
+      "downloadUrl": "https://ftpmirror.gnu.org/sed/sed-4.10.tar.xz",
+      "archive": "sed-4.10.tar.xz",
+      "archiveSha256": "b8e72182b2ec96a3574e2998c47b7aaa64cc20ce000d8e9ac313cc07cecf28c7",
+      "parser": "man1-directory-v1",
+      "entries": [
+        {
+          "command": "sed",
+          "aliases": [],
+          "description": "sed stream editor for filtering and transforming text",
+          "usage": ".nf sed [-V] [--version] [--help] [-n] [--quiet] [--silent] [-l N] [--line-length=N] [-u] [--unbuffered] [-E] [-r] [--regexp-extended] [-e script] [--expression=script] [-f script-file] [--file=script-file] [script-if-no-other-script] [file...] .fi",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/sed/sed-4.10.tar.xz · doc/sed.1",
+          "constraints": [
+            "reference behavior follows gnu-sed 4.10; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        }
+      ],
+      "exclusions": [
+        {
+          "entry": "sed-dummy",
+          "reason": "documentation build helper"
+        }
+      ]
+    },
+    {
+      "id": "gnu-gawk",
+      "version": "5.4.1",
+      "sourceId": "gnu-manuals",
+      "sourceUrl": "https://ftp.gnu.org/gnu/gawk/gawk-5.4.1.tar.xz",
+      "downloadUrl": "https://ftpmirror.gnu.org/gawk/gawk-5.4.1.tar.xz",
+      "archive": "gawk-5.4.1.tar.xz",
+      "archiveSha256": "07f6f7342b7febe4313fc2c2542ad93d64fe20ad8717200109f105a826f5fd37",
+      "parser": "gawk-public-programs-v1",
+      "entries": [
+        {
+          "command": "gawk",
+          "aliases": [],
+          "description": "gawk pattern scanning and processing language",
+          "usage": "gawk [ \\*(PX or \\*(GN style options ] f program-file [ \\^ ] file .\\|.\\|. .br gawk [ \\*(PX or \\*(GN style options ] [ \\^ ] program-text file .\\|.\\|.",
+          "options": [
+            "-f",
+            "-file",
+            "-F",
+            "-field-separator",
+            "-v",
+            "-assign",
+            "-b",
+            "-characters"
+          ],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/gawk/gawk-5.4.1.tar.xz · doc/gawk.1",
+          "constraints": [
+            "reference behavior follows gnu-gawk 5.4.1; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "gawkbug",
+          "aliases": [],
+          "description": "gawkbug report a bug in gawk",
+          "usage": "gawkbug [\\^version] [\\^help] [email-address]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/gawk/gawk-5.4.1.tar.xz · doc/gawkbug.1",
+          "constraints": [
+            "reference behavior follows gnu-gawk 5.4.1; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        }
+      ],
+      "exclusions": [
+        {
+          "entry": "pm-gawk",
+          "reason": "optional profiling variant, not a separately installed default public program"
+        }
+      ]
+    },
+    {
+      "id": "gnu-diffutils",
+      "version": "3.12",
+      "sourceId": "gnu-manuals",
+      "sourceUrl": "https://ftp.gnu.org/gnu/diffutils/diffutils-3.12.tar.xz",
+      "downloadUrl": "https://ftpmirror.gnu.org/diffutils/diffutils-3.12.tar.xz",
+      "archive": "diffutils-3.12.tar.xz",
+      "archiveSha256": "7c8b7f9fc8609141fdea9cece85249d308624391ff61dedaf528fcb337727dfd",
+      "parser": "man1-directory-v1",
+      "entries": [
+        {
+          "command": "cmp",
+          "aliases": [],
+          "description": "cmp compare two files byte by byte",
+          "usage": "cmp [\\,OPTION\\/]... \\,FILE1 \\/[\\,FILE2 \\/[\\,SKIP1 \\/[\\,SKIP2\\/]]]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/diffutils/diffutils-3.12.tar.xz · man/cmp.1",
+          "constraints": [
+            "reference behavior follows gnu-diffutils 3.12; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "diff",
+          "aliases": [],
+          "description": "diff compare files line by line",
+          "usage": "diff [\\,OPTION\\/]... \\,FILES\\/",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/diffutils/diffutils-3.12.tar.xz · man/diff.1",
+          "constraints": [
+            "reference behavior follows gnu-diffutils 3.12; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "diff3",
+          "aliases": [],
+          "description": "diff3 compare three files line by line",
+          "usage": "diff3 [\\,OPTION\\/]... \\,MYFILE OLDFILE YOURFILE\\/",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/diffutils/diffutils-3.12.tar.xz · man/diff3.1",
+          "constraints": [
+            "reference behavior follows gnu-diffutils 3.12; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        },
+        {
+          "command": "sdiff",
+          "aliases": [],
+          "description": "sdiff side-by-side merge of file differences",
+          "usage": "sdiff [\\,OPTION\\/]... \\,FILE1 FILE2\\/",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/diffutils/diffutils-3.12.tar.xz · man/sdiff.1",
+          "constraints": [
+            "reference behavior follows gnu-diffutils 3.12; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        }
+      ],
+      "exclusions": []
+    },
+    {
+      "id": "gnu-tar",
+      "version": "1.35",
+      "sourceId": "gnu-manuals",
+      "sourceUrl": "https://ftp.gnu.org/gnu/tar/tar-1.35.tar.xz",
+      "downloadUrl": "https://ftpmirror.gnu.org/tar/tar-1.35.tar.xz",
+      "archive": "tar-1.35.tar.xz",
+      "archiveSha256": "4d62ff37342ec7aed748535323930c7cf94acf71c3591882b26a7ea50f3edc16",
+      "parser": "gnu-tar-public-v1",
+      "entries": [
+        {
+          "command": "tar",
+          "aliases": [],
+          "description": "tar an archiving utility",
+          "usage": "Traditional usage tar {A|c|d|r|t|u|x}\\ [GnSkUWOmpsMBiajJzZhPlRvwo] [ARG...] UNIX-style usage .sp tar A [OPTIONS] f ARCHIVE ARCHIVE... .sp tar c [f ARCHIVE] [OPTIONS] [FILE...] .sp tar d [f ARCHIVE] [OPTIONS] [FILE...] .sp tar r [f ARCHIVE] [OPTIONS] [FILE...] .sp tar t [f ARCHIVE",
+          "options": [
+            "--check",
+            "-device",
+            "-g",
+            "--listed",
+            "-incremental",
+            "--hole",
+            "-detection",
+            "--sparse"
+          ],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/tar/tar-1.35.tar.xz · doc/tar.1",
+          "constraints": [
+            "reference behavior follows gnu-tar 1.35; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        }
+      ],
+      "exclusions": [
+        {
+          "entry": "rmt",
+          "reason": "remote tape protocol helper, not a direct user command"
+        }
+      ]
+    },
+    {
+      "id": "gnu-wget",
+      "version": "1.25.0",
+      "sourceId": "gnu-manuals",
+      "sourceUrl": "https://ftp.gnu.org/gnu/wget/wget-1.25.0.tar.gz",
+      "downloadUrl": "https://ftpmirror.gnu.org/wget/wget-1.25.0.tar.gz",
+      "archive": "wget-1.25.0.tar.gz",
+      "archiveSha256": "766e48423e79359ea31e41db9e5c289675947a7fcf2efdcedb726ac9d0da3784",
+      "parser": "gnu-wget-public-v1",
+      "entries": [
+        {
+          "command": "wget",
+          "aliases": [],
+          "description": "retrieve files using HTTP, HTTPS and FTP",
+          "usage": "wget [OPTION]... [URL]...",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/wget/wget-1.25.0.tar.gz · doc/wget.texi",
+          "constraints": [
+            "reference behavior follows gnu-wget 1.25.0; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        }
+      ],
+      "exclusions": []
+    },
+    {
+      "id": "gnu-which",
+      "version": "2.25",
+      "sourceId": "gnu-manuals",
+      "sourceUrl": "https://ftp.gnu.org/gnu/which/which-2.25.tar.gz",
+      "downloadUrl": "https://ftpmirror.gnu.org/which/which-2.25.tar.gz",
+      "archive": "which-2.25.tar.gz",
+      "archiveSha256": "1cb83e4f702e60b8211ab5ec4c2afbab1b1dec80209456a7d2faf7584ed225ea",
+      "parser": "gnu-which-public-v1",
+      "entries": [
+        {
+          "command": "which",
+          "aliases": [],
+          "description": "which shows the full path of (shell) commands.",
+          "usage": "which [options] [] programname [...]",
+          "options": [
+            "--all",
+            "--read-alias",
+            "-i",
+            "--skip-alias",
+            "-read-alias",
+            "--read-functions",
+            "-f",
+            "--skip-functions"
+          ],
+          "officialExamples": [],
+          "locator": "https://ftp.gnu.org/gnu/which/which-2.25.tar.gz · which.1",
+          "constraints": [
+            "reference behavior follows gnu-which 2.25; macOS may ship a BSD/POSIX implementation or require the GNU package to be installed separately"
+          ]
+        }
+      ],
+      "exclusions": []
+    },
+    {
+      "id": "openssh-client",
+      "version": "10.4p1",
+      "sourceId": "openssh-portable-repository",
+      "sourceUrl": "https://github.com/openssh/openssh-portable/tree/V_10_4_P1",
+      "downloadUrl": "https://github.com/openssh/openssh-portable/archive/refs/tags/V_10_4_P1.tar.gz",
+      "archive": "openssh-V_10_4_P1.tar.gz",
+      "archiveSha256": "a4cc7433529924af159b8c905015e8742ba4d3b1644818e44c96cb7cd56aee4a",
+      "parser": "openssh-client-man1-v1",
+      "entries": [
+        {
+          "command": "scp",
+          "aliases": [],
+          "description": "m scp d OpenSSH secure file copy",
+          "usage": "m scp p Fl 346ABCOpqRrsTv p Fl c Ar cipher p Fl D Ar sftp_server_path p Fl F Ar ssh_config p Fl i Ar identity_file p Fl J Ar destination p Fl l Ar limit p Fl o Ar ssh_option p Fl P Ar port p Fl S Ar program p Fl X Ar sftp_option r source ... target",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://github.com/openssh/openssh-portable/tree/V_10_4_P1 · scp.1",
+          "constraints": [
+            "requires an OpenSSH client; available features depend on the installed OpenSSH version"
+          ]
+        },
+        {
+          "command": "sftp",
+          "aliases": [],
+          "description": "m sftp d OpenSSH secure file transfer",
+          "usage": "m sftp p Fl 46AaCfNpqrv p Fl B Ar buffer_size p Fl b Ar batchfile p Fl c Ar cipher p Fl D Ar sftp_server_command p Fl F Ar ssh_config p Fl i Ar identity_file p Fl J Ar destination p Fl l Ar limit p Fl o Ar ssh_option p Fl P Ar port p Fl R Ar num_requests p Fl S Ar program p Fl s ",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://github.com/openssh/openssh-portable/tree/V_10_4_P1 · sftp.1",
+          "constraints": [
+            "requires an OpenSSH client; available features depend on the installed OpenSSH version"
+          ]
+        },
+        {
+          "command": "ssh",
+          "aliases": [],
+          "description": "m ssh d OpenSSH remote login client",
+          "usage": "m ssh p Fl 46AaCfGgKkMNnqsTtVvXxYy p Fl B Ar bind_interface p Fl b Ar bind_address p Fl c Ar cipher_spec p Fl D Oo Ar bind_address : Oc Ns Ar port p Fl E Ar log_file p Fl e Ar escape_char p Fl F Ar configfile p Fl I Ar pkcs11 p Fl i Ar identity_file p Fl J Ar destination p Fl L A",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://github.com/openssh/openssh-portable/tree/V_10_4_P1 · ssh.1",
+          "constraints": [
+            "requires an OpenSSH client; available features depend on the installed OpenSSH version"
+          ]
+        },
+        {
+          "command": "ssh-add",
+          "aliases": [],
+          "description": "m ssh-add d adds private key identities to the OpenSSH authentication agent",
+          "usage": "m ssh-add p Fl CcDdKkLlNqvXx p Fl E Ar fingerprint_hash p Fl H Ar hostkey_file p Fl h Ar destination_constraint p Fl S Ar provider p Fl t Ar life p Ar m ssh-add l s Ar pkcs11 p Fl Cv p Ar certificate ... m ssh-add l e Ar pkcs11 m ssh-add l T r pubkey ... m ssh-add l Q",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://github.com/openssh/openssh-portable/tree/V_10_4_P1 · ssh-add.1",
+          "constraints": [
+            "requires an OpenSSH client; available features depend on the installed OpenSSH version"
+          ]
+        },
+        {
+          "command": "ssh-agent",
+          "aliases": [],
+          "description": "m ssh-agent d OpenSSH authentication agent",
+          "usage": "m ssh-agent p Fl c | s p Fl DdTU p Fl a Ar bind_address p Fl E Ar fingerprint_hash p Fl O Ar option p Fl P Ar allowed_providers p Fl t Ar life m ssh-agent p Fl TU p Fl a Ar bind_address p Fl E Ar fingerprint_hash p Fl O Ar option p Fl P Ar allowed_providers p Fl t Ar life r comma",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://github.com/openssh/openssh-portable/tree/V_10_4_P1 · ssh-agent.1",
+          "constraints": [
+            "requires an OpenSSH client; available features depend on the installed OpenSSH version"
+          ]
+        },
+        {
+          "command": "ssh-keygen",
+          "aliases": [],
+          "description": "m ssh-keygen d OpenSSH authentication key utility",
+          "usage": "m ssh-keygen p Fl q p Fl a Ar rounds p Fl b Ar bits p Fl C Ar comment p Fl f Ar output_keyfile p Fl m Ar format p Fl N Ar new_passphrase p Fl O Ar option p Fl t Cm ecdsa | ecdsa-sk | ed25519 | ed25519-sk | mldsa44-ed25519 | rsa p Fl w Ar provider p Fl Z Ar cipher m ssh-keygen l p",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://github.com/openssh/openssh-portable/tree/V_10_4_P1 · ssh-keygen.1",
+          "constraints": [
+            "requires an OpenSSH client; available features depend on the installed OpenSSH version"
+          ]
+        },
+        {
+          "command": "ssh-keyscan",
+          "aliases": [],
+          "description": "m ssh-keyscan d gather SSH public keys from servers",
+          "usage": "m ssh-keyscan p Fl 46cDHqv p Fl f Ar file p Fl O Ar option p Fl p Ar port p Fl T Ar timeout p Fl t Ar type p Ar host | addrlist namelist",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://github.com/openssh/openssh-portable/tree/V_10_4_P1 · ssh-keyscan.1",
+          "constraints": [
+            "requires an OpenSSH client; available features depend on the installed OpenSSH version"
+          ]
+        }
+      ],
+      "exclusions": [
+        {
+          "entry": "sshd",
+          "reason": "server daemon outside openssh-client scope"
+        },
+        {
+          "entry": "ssh-keysign/ssh-pkcs11-helper/ssh-sk-helper",
+          "reason": "non-interactive client helper programs"
+        }
+      ]
+    },
+    {
+      "id": "curl",
+      "version": "8.21.0",
+      "sourceId": "curl-docs",
+      "sourceUrl": "https://github.com/curl/curl/releases/tag/curl-8_21_0",
+      "downloadUrl": "https://curl.se/download/curl-8.21.0.tar.gz",
+      "archive": "curl-8.21.0.tar.gz",
+      "archiveSha256": "d9b327997999045a24cda50f3983e69e51c516bd8be6ef9842fc7f99135e33bb",
+      "parser": "curl-public-programs-v1",
+      "entries": [
+        {
+          "command": "curl",
+          "aliases": [],
+          "description": "transfer data from or to a server",
+          "usage": "curl [options...] <url>",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://curl.se/docs/manpage.html",
+          "constraints": [
+            "requires curl; protocol and option availability depends on the installed build"
+          ]
+        },
+        {
+          "command": "curl-config",
+          "aliases": [],
+          "description": "report information about the installed libcurl",
+          "usage": "curl-config [options]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://github.com/curl/curl/releases/tag/curl-8_21_0 · docs/curl-config.md",
+          "constraints": [
+            "requires curl; protocol and option availability depends on the installed build"
+          ]
+        }
+      ],
+      "exclusions": []
+    },
+    {
+      "id": "less",
+      "version": "708",
+      "sourceId": "less-repository",
+      "sourceUrl": "https://github.com/gwsw/less/tree/v708",
+      "downloadUrl": "https://github.com/gwsw/less/archive/refs/tags/v708.tar.gz",
+      "archive": "less-v708.tar.gz",
+      "archiveSha256": "687951329b36d1fcf9a159c2ad16d32e1c2b8084802a8b3b32fbb452b3fe7cf0",
+      "parser": "less-install-targets-v1",
+      "entries": [
+        {
+          "command": "less",
+          "aliases": [],
+          "description": "view text one screen at a time",
+          "usage": "less [options] file",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://github.com/gwsw/less/tree/v708 · less.nro.VER",
+          "constraints": [
+            "requires less 708 or a compatible installed version"
+          ]
+        }
+      ],
+      "exclusions": [
+        {
+          "entry": "lessecho",
+          "reason": "installed libexec helper"
+        },
+        {
+          "entry": "lesskey",
+          "reason": "no longer built as a standalone executable in release 708"
+        }
+      ]
+    },
+    {
+      "id": "ping-implementations",
+      "version": "iputils-20250605/BSD",
+      "sourceId": "iputils-repository",
+      "sourceUrl": "https://github.com/iputils/iputils/releases/tag/20250605",
+      "downloadUrl": "https://github.com/iputils/iputils/releases/download/20250605/iputils-20250605.tar.gz",
+      "archive": "iputils-20250605.tar.gz",
+      "archiveSha256": "475c643e5f55b302286267b97d3ce0f47ca3489ced8aa0401b1eeb1e68228d6b",
+      "parser": "ping-entrypoint-v1",
+      "entries": [
+        {
+          "command": "ping",
+          "aliases": [],
+          "description": "send ICMP echo requests to network hosts",
+          "usage": "ping host",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://github.com/iputils/iputils/releases/tag/20250605 · ping/ping.rst",
+          "constraints": [
+            "ping flags and privilege requirements differ between BSD/macOS and iputils/Linux"
+          ]
+        }
+      ],
+      "exclusions": [
+        {
+          "entry": "arping/clockdiff/tracepath",
+          "reason": "Linux-only iputils programs outside the cross-platform ping implementation scope"
+        }
+      ]
+    },
+    {
+      "id": "top-implementations",
+      "version": "procps-ng-4.0.6/BSD",
+      "sourceId": "procps-ng-repository",
+      "sourceUrl": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6",
+      "downloadUrl": "https://gitlab.com/procps-ng/procps/-/archive/v4.0.6/procps-v4.0.6.tar.gz",
+      "archive": "procps-v4.0.6.tar.gz",
+      "archiveSha256": "1bbe8ff21dcd05a6adcda99a67d2e99cbd515c9e3a78fd3cc915b12aeb330d40",
+      "parser": "top-entrypoint-v1",
+      "entries": [
+        {
+          "command": "top",
+          "aliases": [],
+          "description": ".\\\" ---------------------------------------------------------------------- top display Linux processes .\\\"",
+          "usage": ".\\\" ---------------------------------------------------------------------- \\*(WE [ option \" .\\|.\\|.]\" .\\\"",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/top.1",
+          "constraints": [
+            "top fields and interactive keys differ between BSD/macOS and procps-ng/Linux"
+          ]
+        }
+      ],
+      "exclusions": []
+    }
+  ],
+  "manifestHash": "sha256:4c297c316826977d85007ba6fc5c9e4b2dc3500639de7b1b1ca0a401b7449d15"
+}

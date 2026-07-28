@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "toolId": "shell",
   "reviewVersion": "scenario-grounding-v2",
-  "reviewedAt": "2026-07-13",
-  "inventoryHash": "sha256:beee55c475ffea222d58ac6ba844548d79810eafef1dd93fc65e8327a129d0b9",
+  "reviewedAt": "2026-07-16",
+  "inventoryHash": "sha256:4c2e5c7b233b2ba36ce5c40e5d4a701856f877d22669b9a83169b13b5446fecb",
   "status": "passed",
   "examples": [
     {
@@ -568,6 +568,42 @@
       "itemId": "shell-bypass-alias",
       "exampleIndex": 0,
       "contentHash": "sha256:2bfad60d3812fa40534c353f80687c6577b1251e59e3a13a95774307f588b971",
+      "status": "passed"
+    },
+    {
+      "itemId": "shell-pipe-syntax",
+      "exampleIndex": 0,
+      "contentHash": "sha256:b06a6db8039d12739f76ac6a30fc242365c9c71b3bacd61eb763177fe89d579a",
+      "status": "passed"
+    },
+    {
+      "itemId": "shell-redirect-out",
+      "exampleIndex": 0,
+      "contentHash": "sha256:e73acee2c67d748ec236b5d98f17dea4e1d1d35fde31b5355198ac1289623200",
+      "status": "passed"
+    },
+    {
+      "itemId": "shell-redirect-append",
+      "exampleIndex": 0,
+      "contentHash": "sha256:0bc2df28fc405fd5d25ebd748059674d4fd9493ff4dc386a0f9c6741f2d99fe2",
+      "status": "passed"
+    },
+    {
+      "itemId": "shell-history",
+      "exampleIndex": 0,
+      "contentHash": "sha256:2bd76c0dc26fd0a99fa051b7d0fdb4f9d0030de9c002c1825e500b1a229a93e9",
+      "status": "passed"
+    },
+    {
+      "itemId": "shell-ctrl-r",
+      "exampleIndex": 0,
+      "contentHash": "sha256:0bd685bab89ab402a6fe1fed6dd659109419fbf8af25415e0e64ac3b9077b9c1",
+      "status": "passed"
+    },
+    {
+      "itemId": "shell-ctrl-c",
+      "exampleIndex": 0,
+      "contentHash": "sha256:d7fc2be0ee2f78c48f8c2719c64b4b4fdd24841629942537f39c47ccb9a01abb",
       "status": "passed"
     }
   ]

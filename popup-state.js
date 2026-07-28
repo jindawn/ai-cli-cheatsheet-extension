@@ -1,7 +1,7 @@
 "use strict";
 
 (function initPopupState(globalScope) {
-  const STORAGE_KEYS = ["favourites", "recentCopies", "enabledTools", "platform", "onboarded", "lastQuery", "pendingUpdate", "lastQualityWarnings", "webVerify", "dismissedRecommendations", "aiRecommendations"];
+  const STORAGE_KEYS = ["favourites", "recentCopies", "enabledTools", "platform", "acknowledgedPlatformScopes", "onboarded", "lastQuery", "pendingUpdate", "lastQualityWarnings", "webVerify", "dismissedRecommendations", "aiRecommendations", "selectedProviderId", "providerSelectionExplicit", "bridgeSetupStep", "pendingBridgeCommonProviderId", "dataMigrationVersion"];
   const CAT_LABEL = { shortcut: "⌨ 快捷键", slash: "› 命令", flag: "⚑ 参数/选项" };
   const SHELL_FILTER_LABELS = {
     layer: {
@@ -37,7 +37,7 @@
   const TOOL_PRESETS = {
     ai: ["claude-code", "codex", "gemini-cli", "antigravity-cli", "opencode", "openclaw"],
     editors: ["cursor", "vs-code", "idea", "typora"],
-    terminal: ["git", "linux", "shell"],
+    terminal: ["git", "unix-cli", "linux", "shell"],
   };
   const RECOMMENDATION_CATEGORIES = [
     { key: "all", label: "全部" },
@@ -114,7 +114,7 @@
       tags: ["search", "grep", "cli-utility"],
       useCases: ["搜索文件", "代码搜索", "正则", "grep 替代"],
       homepage: "https://github.com/BurntSushi/ripgrep",
-      related: ["linux"],
+      related: ["unix-cli"],
       preferWeb: true,
     },
     {
@@ -141,7 +141,7 @@
       reason: "带语法高亮和分页的 cat 替代，参数、主题和分页常用。",
       tags: ["cat", "syntax", "cli-utility"],
       homepage: "https://github.com/sharkdp/bat",
-      related: ["linux"],
+      related: ["unix-cli"],
       preferWeb: true,
     },
     {
@@ -154,7 +154,7 @@
       reason: "现代 ls 替代（原 exa），图标、树形和 Git 状态参数常用。",
       tags: ["ls", "cli-utility"],
       homepage: "https://github.com/eza-community/eza",
-      related: ["linux"],
+      related: ["unix-cli"],
       preferWeb: true,
     },
     {
@@ -379,7 +379,7 @@
       reason: "Windows 上管理 Linux 发行版、路径和集成终端的常用入口。",
       tags: ["windows", "linux", "dev-env"],
       homepage: "https://learn.microsoft.com/windows/wsl/",
-      related: ["linux", "shell"],
+      related: ["unix-cli", "linux", "shell"],
       preferWeb: true,
     },
   ];
@@ -436,7 +436,16 @@
     );
   }
 
-  function visibleToolIds(data, enabledTools) {
+  function toolSupportsPlatform(tool, platform) {
+    const supported = tool?.meta?.platforms;
+    return !Array.isArray(supported) || !supported.length || supported.includes(platform);
+  }
+
+  function availableToolIds(data, platform) {
+    return getToolIds(data).filter((id) => toolSupportsPlatform(data[id], platform));
+  }
+
+  function visibleToolIds(data, enabledTools, _platform = null) {
     return getToolIds(data).filter((id) => enabledTools.has(id));
   }
 
@@ -461,6 +470,7 @@
     shell: "terminal",
     iterm2: "terminal",
     git: "dev-env",
+    "unix-cli": "cli-utility",
     linux: "cli-utility",
     "vs-code": "dev-env",
     idea: "dev-env",
@@ -736,7 +746,7 @@
 
   function collectEntries(entryIndex, data, core, state) {
     const ids = state.activeTool === "all" || state.activeTool === "recent" || state.activeTool === "favourites"
-      ? new Set(visibleToolIds(data, state.enabledTools))
+      ? new Set(visibleToolIds(data, state.enabledTools, state.platform))
       : new Set([state.activeTool].filter((id) => state.enabledTools.has(id)));
     const recentKeys = new Set(state.recents.map((item) => `${item.toolId}::${item.itemId}`));
     return entryIndex.entries.flatMap((base) => {
@@ -773,6 +783,112 @@
     return new Set(rawValue.filter((key) => typeof key === "string"));
   }
 
+  // v2 split GNU/Linux CLI into three ownership domains. Keep this table
+  // explicit so every one of the former 63 stable IDs has one deterministic
+  // destination and browser upgrades never silently drop user state.
+  const LEGACY_LINUX_ITEM_TARGETS = {
+    "linux-ls": "unix-cli::unix-ls", "linux-ls-l": "unix-cli::unix-ls",
+    "linux-ls-a": "unix-cli::unix-ls", "linux-ls-la": "unix-cli::unix-ls",
+    "linux-cd": "shell::posix-cd", "linux-cd-parent": "shell::posix-cd",
+    "linux-pwd": "unix-cli::unix-pwd", "linux-mkdir": "unix-cli::unix-mkdir",
+    "linux-mkdir-p": "unix-cli::unix-mkdir", "linux-cp": "unix-cli::unix-cp",
+    "linux-cp-r": "unix-cli::unix-cp", "linux-mv": "unix-cli::unix-mv",
+    "linux-rm": "unix-cli::unix-rm", "linux-rm-rf": "unix-cli::unix-rm",
+    "linux-touch": "unix-cli::unix-touch", "linux-cat": "unix-cli::unix-cat",
+    "linux-less": "unix-cli::unix-less", "linux-head": "unix-cli::unix-head",
+    "linux-tail": "unix-cli::unix-tail", "linux-tail-f": "unix-cli::unix-tail",
+    "linux-chmod": "unix-cli::unix-chmod", "linux-chmod-x": "unix-cli::unix-chmod",
+    "linux-chmod-755": "unix-cli::unix-chmod", "linux-chown": "unix-cli::unix-chown",
+    "linux-ps": "unix-cli::unix-ps", "linux-ps-aux": "unix-cli::unix-ps",
+    "linux-kill": "unix-cli::unix-kill", "linux-kill-9": "unix-cli::unix-kill",
+    "linux-top": "unix-cli::unix-top", "linux-grep": "unix-cli::unix-grep",
+    "linux-grep-r": "unix-cli::unix-grep", "linux-grep-i": "unix-cli::unix-grep",
+    "linux-find": "unix-cli::unix-find", "linux-find-name": "unix-cli::unix-find",
+    "linux-sort": "unix-cli::unix-sort", "linux-uniq": "unix-cli::unix-uniq",
+    "linux-wc": "unix-cli::unix-wc", "linux-wc-l": "unix-cli::unix-wc",
+    "linux-diff": "unix-cli::unix-diff", "linux-df": "unix-cli::unix-df",
+    "linux-du": "unix-cli::unix-du", "linux-free": "linux::linux-free",
+    "linux-curl": "unix-cli::unix-curl", "linux-wget": "unix-cli::unix-wget",
+    "linux-tar": "unix-cli::unix-tar", "linux-tar-xzf": "unix-cli::unix-tar",
+    "linux-tar-czf": "unix-cli::unix-tar", "linux-pipe": "shell::shell-pipe-syntax",
+    "linux-redirect-out": "shell::shell-redirect-out",
+    "linux-redirect-append": "shell::shell-redirect-append",
+    "linux-ssh": "unix-cli::unix-ssh", "linux-scp": "unix-cli::unix-scp",
+    "linux-ping": "unix-cli::unix-ping", "linux-ln-s": "unix-cli::unix-ln",
+    "linux-sed": "unix-cli::unix-sed", "linux-awk": "unix-cli::unix-awk",
+    "linux-which": "unix-cli::unix-which", "linux-history": "shell::shell-history",
+    "linux-ctrl-r": "shell::shell-ctrl-r", "linux-ctrl-c": "shell::shell-ctrl-c",
+    "linux-ctrl-z": "shell::3999a131cd65c45a", "linux-bg": "shell::a0fea5659995fe20",
+    "linux-fg": "shell::9f72d802481e6123",
+  };
+
+  const LEGACY_LINUX_COMMAND_TARGETS = {
+    "ls": "unix-cli::unix-ls", "ls -l": "unix-cli::unix-ls", "ls -a": "unix-cli::unix-ls",
+    "ls -la": "unix-cli::unix-ls", "cd": "shell::posix-cd", "cd ..": "shell::posix-cd",
+    "pwd": "unix-cli::unix-pwd", "mkdir": "unix-cli::unix-mkdir", "mkdir -p": "unix-cli::unix-mkdir",
+    "cp": "unix-cli::unix-cp", "cp -r": "unix-cli::unix-cp", "mv": "unix-cli::unix-mv",
+    "rm": "unix-cli::unix-rm", "rm -rf": "unix-cli::unix-rm", "touch": "unix-cli::unix-touch",
+    "cat": "unix-cli::unix-cat", "less": "unix-cli::unix-less", "head": "unix-cli::unix-head",
+    "tail": "unix-cli::unix-tail", "tail -f": "unix-cli::unix-tail", "chmod": "unix-cli::unix-chmod",
+    "chmod +x": "unix-cli::unix-chmod", "chmod 755": "unix-cli::unix-chmod",
+    "chown": "unix-cli::unix-chown", "ps": "unix-cli::unix-ps", "ps aux": "unix-cli::unix-ps",
+    "kill": "unix-cli::unix-kill", "kill -9": "unix-cli::unix-kill", "top": "unix-cli::unix-top",
+    "grep": "unix-cli::unix-grep", "grep -r": "unix-cli::unix-grep", "grep -i": "unix-cli::unix-grep",
+    "find": "unix-cli::unix-find", "find . -name": "unix-cli::unix-find", "sort": "unix-cli::unix-sort",
+    "uniq": "unix-cli::unix-uniq", "wc": "unix-cli::unix-wc", "wc -l": "unix-cli::unix-wc",
+    "diff": "unix-cli::unix-diff", "df -h": "unix-cli::unix-df", "du -sh": "unix-cli::unix-du",
+    "free -h": "linux::linux-free", "curl": "unix-cli::unix-curl", "wget": "unix-cli::unix-wget",
+    "tar": "unix-cli::unix-tar", "tar -xzf": "unix-cli::unix-tar", "tar -czf": "unix-cli::unix-tar",
+    "|": "shell::shell-pipe-syntax", ">": "shell::shell-redirect-out", ">>": "shell::shell-redirect-append",
+    "ssh": "unix-cli::unix-ssh", "scp": "unix-cli::unix-scp", "ping": "unix-cli::unix-ping",
+    "ln -s": "unix-cli::unix-ln", "sed": "unix-cli::unix-sed", "awk": "unix-cli::unix-awk",
+    "which": "unix-cli::unix-which", "history": "shell::shell-history", "Ctrl+R": "shell::shell-ctrl-r",
+    "Ctrl+C": "shell::shell-ctrl-c", "Ctrl+Z": "shell::3999a131cd65c45a",
+    "bg": "shell::a0fea5659995fe20", "fg": "shell::9f72d802481e6123",
+  };
+
+  function legacyLinuxTarget(value) {
+    return LEGACY_LINUX_ITEM_TARGETS[value] || LEGACY_LINUX_COMMAND_TARGETS[value] || null;
+  }
+
+  function migratedToolIds(values, platform) {
+    const next = new Set(Array.isArray(values) ? values.filter((value) => typeof value === "string") : []);
+    if (!next.delete("linux")) return [...next];
+    if (platform !== "windows") next.add("unix-cli");
+    if (platform === "linux") next.add("linux");
+    return [...next];
+  }
+
+  function migrateLegacyLinuxState(raw = {}, fallbackPlatform = "mac") {
+    const platform = ["mac", "windows", "linux"].includes(raw.platform) ? raw.platform : fallbackPlatform;
+    const favourites = [];
+    for (const key of Array.isArray(raw.favourites) ? raw.favourites : []) {
+      if (typeof key !== "string" || !key.startsWith("linux::")) favourites.push(key);
+      else favourites.push(legacyLinuxTarget(key.slice("linux::".length)) || key);
+    }
+    const recentCopies = (Array.isArray(raw.recentCopies) ? raw.recentCopies : []).map((item) => {
+      if (!item || item.toolId !== "linux") return item;
+      const target = legacyLinuxTarget(item.itemId);
+      if (!target) return item;
+      const [toolId, itemIdValue] = target.split("::");
+      return { ...item, toolId, itemId: itemIdValue };
+    });
+    const relatedReplacement = platform === "linux" ? ["unix-cli", "linux"]
+      : (platform === "windows" ? [] : ["unix-cli"]);
+    const aiRecommendations = (Array.isArray(raw.aiRecommendations) ? raw.aiRecommendations : []).map((item) => ({
+      ...item,
+      related: Array.isArray(item?.related)
+        ? [...new Set(item.related.flatMap((toolId) => toolId === "linux" ? relatedReplacement : [toolId]))]
+        : item?.related,
+    }));
+    const migration = { dataMigrationVersion: 2 };
+    if (Array.isArray(raw.favourites)) migration.favourites = [...new Set(favourites)];
+    if (Array.isArray(raw.recentCopies)) migration.recentCopies = recentCopies;
+    if (Array.isArray(raw.enabledTools)) migration.enabledTools = migratedToolIds(raw.enabledTools, platform);
+    if (Array.isArray(raw.aiRecommendations)) migration.aiRecommendations = aiRecommendations;
+    return migration;
+  }
+
   function migrateFavourites(data, favourites) {
     const next = favourites instanceof Set ? new Set(favourites) : new Set();
     let changed = false;
@@ -802,7 +918,7 @@
     else if (state.activeTool !== "all" && data[state.activeTool]) parts.push(data[state.activeTool].meta.name);
     if (state.activeCat) parts.push(CAT_LABEL[state.activeCat]);
     if (state.activeEvidence) parts.push({ verified: "已核验", partial: "部分核验", unverified: "未核验" }[state.activeEvidence]);
-    if (state.activeExampleFilter) parts.push(state.activeExampleFilter === "platform-examples" ? "当前平台用法" : "有用法");
+    if (state.activeExampleFilter) parts.push(state.activeExampleFilter === "platform-examples" ? "首选平台用法" : "有用法");
     const shellFilter = SHELL_FILTERS.find((filter) => filter.key === state.activeShellFilter);
     if (shellFilter) parts.push(shellFilter.label);
     return parts.join(" ＋ ");
@@ -874,6 +990,8 @@
     storageSet,
     debounce,
     getToolIds,
+    toolSupportsPlatform,
+    availableToolIds,
     visibleToolIds,
     recommendedTools,
     countRecommendations,
@@ -887,6 +1005,8 @@
     collectEntries,
     findEntry,
     restoreFavourites,
+    LEGACY_LINUX_ITEM_TARGETS,
+    migrateLegacyLinuxState,
     migrateFavourites,
     pruneRecents,
     activeFilterLabel,

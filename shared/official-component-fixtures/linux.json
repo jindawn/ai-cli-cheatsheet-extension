@@ -1,0 +1,4581 @@
+{
+  "schemaVersion": 1,
+  "toolId": "linux",
+  "generatedAt": "2026-07-23",
+  "components": [
+    {
+      "id": "procps-ng",
+      "version": "4.0.6",
+      "sourceId": "procps-ng-repository",
+      "sourceUrl": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6",
+      "downloadUrl": "https://gitlab.com/procps-ng/procps/-/archive/v4.0.6/procps-v4.0.6.tar.gz",
+      "archive": "procps-v4.0.6.tar.gz",
+      "archiveSha256": "1bbe8ff21dcd05a6adcda99a67d2e99cbd515c9e3a78fd3cc915b12aeb330d40",
+      "parser": "man1-man8-directory-v1",
+      "entries": [
+        {
+          "command": "free",
+          "aliases": [],
+          "description": "free Display amount of free and used memory in the system",
+          "usage": "free [ option \" .\\|.\\|.]\"",
+          "options": [
+            "-b",
+            "--bytes",
+            "-k",
+            "--kibi",
+            "-m",
+            "--mebi",
+            "-g",
+            "--gibi"
+          ],
+          "officialExamples": [],
+          "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/free.1",
+          "constraints": [
+            "requires Linux with procps-ng 4.0.6 installed"
+          ]
+        },
+        {
+          "command": "hugetop",
+          "aliases": [],
+          "description": "hugetop report huge page information",
+          "usage": "hugetop [ option \" .\\|.\\|.]\"",
+          "options": [
+            "-d",
+            "--delay",
+            "-n",
+            "--numa",
+            "-o",
+            "--once",
+            "-H",
+            "--human"
+          ],
+          "officialExamples": [],
+          "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/hugetop.1",
+          "constraints": [
+            "requires Linux with procps-ng 4.0.6 installed"
+          ]
+        },
+        {
+          "command": "kill",
+          "aliases": [],
+          "description": "kill send a signal to one or more processes",
+          "usage": "kill [ q\\~\\c value |\\c queue \\~value\\c ] pid \" .\\|.\\|.\" kill signal [ q\\~\\c value |\\c queue \\~value\\c ] pid-or-pgid \" .\\|.\\|.\" .br kill s \\~signal [ q\\~\\c value |\\c queue \\~value\\c ] pid-or-pgid \" .\\|.\\|.\" .br kill signal \\~signal [ q\\~\\c value |\\c queue \\~value\\c ] pid-or-pgid \"",
+          "options": [
+            "-s",
+            "--signal",
+            "-q",
+            "--queue",
+            "-l",
+            "--list",
+            "-L",
+            "--table"
+          ],
+          "officialExamples": [],
+          "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/kill.1",
+          "constraints": [
+            "requires Linux with procps-ng 4.0.6 installed"
+          ]
+        },
+        {
+          "command": "pgrep",
+          "aliases": [],
+          "description": "pgrep, pkill, pidwait look up, signal, or wait for processes based on name and other attributes",
+          "usage": "pgrep [ option \" .\\|.\\|.]\" pattern pkill [ option \" .\\|.\\|.]\" pattern pidwait [ option \" .\\|.\\|.]\" pattern",
+          "options": [
+            "--signal",
+            "--require",
+            "-handler",
+            "-a",
+            "--list",
+            "-full",
+            "-A",
+            "--ignore-ancestors"
+          ],
+          "officialExamples": [],
+          "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/pgrep.1",
+          "constraints": [
+            "requires Linux with procps-ng 4.0.6 installed"
+          ]
+        },
+        {
+          "command": "pidof",
+          "aliases": [],
+          "description": "pidof find the process ID of a running program",
+          "usage": "pidof [ s ] [ c ] [ q ] [ w ] [ x ] [ o omitpid [,.\\|.\\|.]] .\\|.\\|. [ t ] [ S separator ] program \" .\\|.\\|.\"",
+          "options": [
+            "-s",
+            "-c",
+            "-q",
+            "-w",
+            "-x",
+            "-t",
+            "-d"
+          ],
+          "officialExamples": [],
+          "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/pidof.1",
+          "constraints": [
+            "requires Linux with procps-ng 4.0.6 installed"
+          ]
+        },
+        {
+          "command": "pidwait",
+          "aliases": [],
+          "description": "pidwait",
+          "usage": "pidwait",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/pidwait.1",
+          "constraints": [
+            "requires Linux with procps-ng 4.0.6 installed"
+          ]
+        },
+        {
+          "command": "pkill",
+          "aliases": [],
+          "description": "pkill",
+          "usage": "pkill",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/pkill.1",
+          "constraints": [
+            "requires Linux with procps-ng 4.0.6 installed"
+          ]
+        },
+        {
+          "command": "pmap",
+          "aliases": [],
+          "description": "pmap report memory map of a process",
+          "usage": "pmap [ option \" .\\|.\\|.]\" pid \" .\\|.\\|.\"",
+          "options": [
+            "-x",
+            "--extended",
+            "-d",
+            "--device",
+            "-q",
+            "--quiet",
+            "-A",
+            "--range"
+          ],
+          "officialExamples": [],
+          "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/pmap.1",
+          "constraints": [
+            "requires Linux with procps-ng 4.0.6 installed"
+          ]
+        },
+        {
+          "command": "ps",
+          "aliases": [],
+          "description": "ps report a snapshot of the current processes.",
+          "usage": "ps [ option \" .\\|.\\|.]\"",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/ps.1",
+          "constraints": [
+            "requires Linux with procps-ng 4.0.6 installed"
+          ]
+        },
+        {
+          "command": "pwdx",
+          "aliases": [],
+          "description": "pwdx report current working directory of a process",
+          "usage": "pwdx [ option \" .\\|.\\|.]\" pid \" .\\|.\\|.\"",
+          "options": [
+            "-V",
+            "--version",
+            "-h",
+            "--help"
+          ],
+          "officialExamples": [],
+          "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/pwdx.1",
+          "constraints": [
+            "requires Linux with procps-ng 4.0.6 installed"
+          ]
+        },
+        {
+          "command": "skill",
+          "aliases": [],
+          "description": "skill, snice send a signal or report process status",
+          "usage": "skill [ signal-option ] [ other-option \" .\\|.\\|.]\" expression snice [ new-priority ] [ option \" .\\|.\\|.]\" expression",
+          "options": [
+            "-f",
+            "--fast",
+            "-i",
+            "--interactive",
+            "-l",
+            "--list",
+            "-L",
+            "--table"
+          ],
+          "officialExamples": [],
+          "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/skill.1",
+          "constraints": [
+            "requires Linux with procps-ng 4.0.6 installed"
+          ]
+        },
+        {
+          "command": "slabtop",
+          "aliases": [],
+          "description": "slabtop display kernel slab cache information in real time",
+          "usage": "slabtop [ option \" .\\|.\\|.]\"",
+          "options": [
+            "-d",
+            "--delay",
+            "-s",
+            "--sort",
+            "-o",
+            "--once",
+            "--human",
+            "-V"
+          ],
+          "officialExamples": [],
+          "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/slabtop.1",
+          "constraints": [
+            "requires Linux with procps-ng 4.0.6 installed"
+          ]
+        },
+        {
+          "command": "snice",
+          "aliases": [],
+          "description": "snice",
+          "usage": "snice",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/snice.1",
+          "constraints": [
+            "requires Linux with procps-ng 4.0.6 installed"
+          ]
+        },
+        {
+          "command": "sysctl",
+          "aliases": [],
+          "description": "sysctl configure kernel parameters at runtime",
+          "usage": "sysctl [ option \" .\\|.\\|.]\" variable [\\c = value\\c ] .\\|.\\|. sysctl p file-or-regexp \" .\\|.\\|.\"",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/sysctl.8",
+          "constraints": [
+            "requires Linux with procps-ng 4.0.6 installed"
+          ]
+        },
+        {
+          "command": "tload",
+          "aliases": [],
+          "description": "tload graphic representation of system load average",
+          "usage": "tload [ option \" .\\|.\\|.]\" [ tty ]",
+          "options": [
+            "-s",
+            "--scale",
+            "-d",
+            "--delay",
+            "-h",
+            "--help",
+            "-V",
+            "--version"
+          ],
+          "officialExamples": [],
+          "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/tload.1",
+          "constraints": [
+            "requires Linux with procps-ng 4.0.6 installed"
+          ]
+        },
+        {
+          "command": "top",
+          "aliases": [],
+          "description": ".\\\" ---------------------------------------------------------------------- top display Linux processes .\\\"",
+          "usage": ".\\\" ---------------------------------------------------------------------- \\*(WE [ option \" .\\|.\\|.]\" .\\\"",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/top.1",
+          "constraints": [
+            "requires Linux with procps-ng 4.0.6 installed"
+          ]
+        },
+        {
+          "command": "uptime",
+          "aliases": [],
+          "description": "uptime Tell how long the system has been running.",
+          "usage": "uptime [ option \" .\\|.\\|.]\"",
+          "options": [
+            "-c",
+            "--container",
+            "-p",
+            "--pretty",
+            "-h",
+            "--help",
+            "-r",
+            "--raw"
+          ],
+          "officialExamples": [],
+          "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/uptime.1",
+          "constraints": [
+            "requires Linux with procps-ng 4.0.6 installed"
+          ]
+        },
+        {
+          "command": "vmstat",
+          "aliases": [],
+          "description": "vmstat Report virtual memory statistics",
+          "usage": "vmstat [ option \" .\\|.\\|.]\" [ delay \" [\" count ]]",
+          "options": [
+            "-a",
+            "--active",
+            "-f",
+            "--forks",
+            "-m",
+            "--slabs",
+            "-n",
+            "--one-header"
+          ],
+          "officialExamples": [],
+          "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/vmstat.8",
+          "constraints": [
+            "requires Linux with procps-ng 4.0.6 installed"
+          ]
+        },
+        {
+          "command": "w",
+          "aliases": [],
+          "description": "w Show who is logged on and what they are doing.",
+          "usage": "w [ option \" .\\|.\\|.]\" [ user ]",
+          "options": [
+            "-c",
+            "--container",
+            "-h",
+            "--no",
+            "-header",
+            "-u",
+            "-current",
+            "-s"
+          ],
+          "officialExamples": [],
+          "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/w.1",
+          "constraints": [
+            "requires Linux with procps-ng 4.0.6 installed"
+          ]
+        },
+        {
+          "command": "watch",
+          "aliases": [],
+          "description": "watch execute a program periodically, showing output fullscreen",
+          "usage": "watch [ option \" .\\|.\\|.]\" command",
+          "options": [
+            "-b",
+            "--beep",
+            "-c",
+            "--color",
+            "-C",
+            "--no-color",
+            "-d",
+            "--differences"
+          ],
+          "officialExamples": [],
+          "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/watch.1",
+          "constraints": [
+            "requires Linux with procps-ng 4.0.6 installed"
+          ]
+        }
+      ],
+      "exclusions": []
+    },
+    {
+      "id": "systemd",
+      "version": "261.1",
+      "sourceId": "systemd-man",
+      "sourceUrl": "https://github.com/systemd/systemd/tree/v261.1",
+      "downloadUrl": "https://github.com/systemd/systemd/archive/refs/tags/v261.1.tar.gz",
+      "archive": "systemd-v261.1.tar.gz",
+      "archiveSha256": "f9b9da1103d1714703503d1746971ccbeeae945663ef3ede3b7348169b5df064",
+      "parser": "systemd-public-meson-v1",
+      "entries": [
+        {
+          "command": "bootctl",
+          "aliases": [],
+          "description": "Control EFI firmware boot settings and manage boot loader",
+          "usage": "bootctl",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/bootctl.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1",
+            "build option: HAVE_BLKID"
+          ]
+        },
+        {
+          "command": "busctl",
+          "aliases": [],
+          "description": "Introspect the bus",
+          "usage": "busctl",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/busctl.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "coredumpctl",
+          "aliases": [],
+          "description": "Retrieve and process saved core dumps and metadata",
+          "usage": "coredumpctl",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/coredumpctl.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "homectl",
+          "aliases": [],
+          "description": "Create, remove, change or inspect home directories",
+          "usage": "homectl",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/homectl.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "hostnamectl",
+          "aliases": [],
+          "description": "Control the system hostname",
+          "usage": "hostnamectl",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/hostnamectl.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "importctl",
+          "aliases": [],
+          "description": "Download, import or export disk images",
+          "usage": "importctl",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/importctl.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "journalctl",
+          "aliases": [],
+          "description": "Print log entries from the systemd journal",
+          "usage": "journalctl",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/journalctl.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "kernel-install",
+          "aliases": [],
+          "description": "Add and remove kernel and initrd images to and from the boot partition",
+          "usage": "kernel-install",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/kernel-install.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1",
+            "build option: ENABLE_KERNEL_INSTALL"
+          ]
+        },
+        {
+          "command": "localectl",
+          "aliases": [],
+          "description": "Control the system locale and keyboard layout settings",
+          "usage": "localectl",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/localectl.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "loginctl",
+          "aliases": [],
+          "description": "Control the systemd login manager",
+          "usage": "loginctl",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/loginctl.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "machinectl",
+          "aliases": [],
+          "description": "Control the systemd machine manager",
+          "usage": "machinectl",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/machinectl.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "networkctl",
+          "aliases": [],
+          "description": "Query or modify the status of network links",
+          "usage": "networkctl",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/networkctl.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1",
+            "build option: ENABLE_NETWORKD"
+          ]
+        },
+        {
+          "command": "oomctl",
+          "aliases": [],
+          "description": "Analyze the state stored in systemd-oomd",
+          "usage": "oomctl",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/oomctl.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "portablectl",
+          "aliases": [],
+          "description": "Attach, detach or inspect portable service images",
+          "usage": "portablectl",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/portablectl.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "resolvectl",
+          "aliases": [
+            "resolvconf"
+          ],
+          "description": "Resolve domain names, IPV4 and IPv6 addresses, DNS resource records, and services; introspect and reconfigure the DNS resolver",
+          "usage": "resolvectl",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/resolvectl.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "storagectl",
+          "aliases": [],
+          "description": "Enumerate and mount storage volumes provided by storage providers",
+          "usage": "storagectl",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/storagectl.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemctl",
+          "aliases": [
+            "halt",
+            "poweroff",
+            "reboot",
+            "shutdown"
+          ],
+          "description": "Control the systemd system and service manager",
+          "usage": "systemctl",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemctl.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd",
+          "aliases": [],
+          "description": "systemd system and service manager",
+          "usage": "systemd",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-ac-power",
+          "aliases": [],
+          "description": "Report whether we are connected to an external power source",
+          "usage": "systemd-ac-power",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-ac-power.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-analyze",
+          "aliases": [],
+          "description": "Analyze and debug system manager",
+          "usage": "systemd-analyze",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-analyze.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-ask-password",
+          "aliases": [],
+          "description": "Query the user for a system password",
+          "usage": "systemd-ask-password",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-ask-password.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-battery-check",
+          "aliases": [],
+          "description": "Check battery level whether there's enough charge, and power off if not",
+          "usage": "systemd-battery-check",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-battery-check.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-binfmt",
+          "aliases": [],
+          "description": "Configure additional binary formats for executables at boot",
+          "usage": "systemd-binfmt",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-binfmt.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-bless-boot",
+          "aliases": [],
+          "description": "Mark current boot process as successful",
+          "usage": "systemd-bless-boot",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-bless-boot.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1",
+            "build option: HAVE_BLKID",
+            "build option: ENABLE_BOOTLOADER"
+          ]
+        },
+        {
+          "command": "systemd-bsod",
+          "aliases": [],
+          "description": "Displays boot-time emergency log message in full screen",
+          "usage": "systemd-bsod",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-bsod.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1",
+            "build option: HAVE_QRENCODE"
+          ]
+        },
+        {
+          "command": "systemd-cat",
+          "aliases": [],
+          "description": "Connect a pipeline or program's output with the journal",
+          "usage": "systemd-cat",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-cat.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-cgls",
+          "aliases": [],
+          "description": "Recursively show control group contents",
+          "usage": "systemd-cgls",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-cgls.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-cgtop",
+          "aliases": [],
+          "description": "Show top control groups by their resource usage",
+          "usage": "systemd-cgtop",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-cgtop.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-creds",
+          "aliases": [],
+          "description": "Lists, shows, encrypts and decrypts service credentials",
+          "usage": "systemd-creds",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-creds.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-cryptenroll",
+          "aliases": [],
+          "description": "Enroll PKCS#11, FIDO2, TPM2 token/devices to LUKS2 encrypted volumes",
+          "usage": "systemd-cryptenroll",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-cryptenroll.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-cryptsetup",
+          "aliases": [],
+          "description": "Full disk decryption logic",
+          "usage": "systemd-cryptsetup",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-cryptsetup.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-delta",
+          "aliases": [],
+          "description": "Find overridden configuration files",
+          "usage": "systemd-delta",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-delta.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-detect-virt",
+          "aliases": [],
+          "description": "Detect execution in a virtualized environment",
+          "usage": "systemd-detect-virt",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-detect-virt.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-dissect",
+          "aliases": [],
+          "description": "Dissect Discoverable Disk Images (DDIs)",
+          "usage": "systemd-dissect",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-dissect.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-escape",
+          "aliases": [],
+          "description": "Escape strings for usage in systemd unit names",
+          "usage": "systemd-escape",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-escape.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-executor",
+          "aliases": [],
+          "description": "systemd public executable systemd-executor",
+          "usage": "systemd-executor",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://github.com/systemd/systemd/tree/v261.1 · src/core/meson.build",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-export",
+          "aliases": [],
+          "description": "systemd public executable systemd-export",
+          "usage": "systemd-export",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://github.com/systemd/systemd/tree/v261.1 · src/import/meson.build",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-firstboot",
+          "aliases": [],
+          "description": "Initialize basic system settings on or before the first boot-up of a system",
+          "usage": "systemd-firstboot",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-firstboot.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1",
+            "build option: ENABLE_FIRSTBOOT"
+          ]
+        },
+        {
+          "command": "systemd-hwdb",
+          "aliases": [],
+          "description": "hardware database management tool",
+          "usage": "systemd-hwdb",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-hwdb.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1",
+            "build option: ENABLE_HWDB"
+          ]
+        },
+        {
+          "command": "systemd-id128",
+          "aliases": [],
+          "description": "Generate and print sd-128 identifiers",
+          "usage": "systemd-id128",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-id128.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-imds",
+          "aliases": [],
+          "description": "Cloud IMDS (Instance Metadata Service) tool",
+          "usage": "systemd-imds",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-imds.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-imdsd",
+          "aliases": [],
+          "description": "Cloud IMDS (Instance Metadata Service) client",
+          "usage": "systemd-imdsd",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-imdsd.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-import",
+          "aliases": [],
+          "description": "systemd public executable systemd-import",
+          "usage": "systemd-import",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://github.com/systemd/systemd/tree/v261.1 · src/import/meson.build",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-import-fs",
+          "aliases": [],
+          "description": "systemd public executable systemd-import-fs",
+          "usage": "systemd-import-fs",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://github.com/systemd/systemd/tree/v261.1 · src/import/meson.build",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-inhibit",
+          "aliases": [],
+          "description": "Execute a program with an inhibition lock taken",
+          "usage": "systemd-inhibit",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-inhibit.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-journal-gatewayd",
+          "aliases": [],
+          "description": "HTTP server for journal events",
+          "usage": "systemd-journal-gatewayd",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-journal-gatewayd.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1",
+            "build option: ENABLE_REMOTE",
+            "build option: HAVE_MICROHTTPD"
+          ]
+        },
+        {
+          "command": "systemd-journal-remote",
+          "aliases": [],
+          "description": "Receive journal messages over the network",
+          "usage": "systemd-journal-remote",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-journal-remote.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-journal-upload",
+          "aliases": [],
+          "description": "Send journal messages over the network",
+          "usage": "systemd-journal-upload",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-journal-upload.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1",
+            "build option: ENABLE_REMOTE",
+            "build option: HAVE_LIBCURL"
+          ]
+        },
+        {
+          "command": "systemd-mount",
+          "aliases": [
+            "systemd-umount"
+          ],
+          "description": "Establish and destroy transient mount or auto-mount points",
+          "usage": "systemd-mount",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-mount.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-mstack",
+          "aliases": [],
+          "description": "Mstack Discoverable Disk Images (DDIs)",
+          "usage": "systemd-mstack",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-mstack.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-mute-console",
+          "aliases": [],
+          "description": "Temporarily mute kernel log output and service manager status output to the system console",
+          "usage": "systemd-mute-console",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-mute-console.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-networkd-wait-online",
+          "aliases": [],
+          "description": "Wait for network to come online",
+          "usage": "systemd-networkd-wait-online",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-networkd-wait-online.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1",
+            "build option: ENABLE_NETWORKD"
+          ]
+        },
+        {
+          "command": "systemd-notify",
+          "aliases": [],
+          "description": "Notify service manager about start-up completion and other daemon status changes",
+          "usage": "systemd-notify",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-notify.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-nspawn",
+          "aliases": [],
+          "description": "Spawn a command or OS in a lightweight container",
+          "usage": "systemd-nspawn",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-nspawn.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-path",
+          "aliases": [],
+          "description": "List and query system and user paths",
+          "usage": "systemd-path",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-path.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-pcrlock",
+          "aliases": [],
+          "description": "Analyze and predict TPM2 PCR states and generate an access policy from the prediction",
+          "usage": "systemd-pcrlock",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-pcrlock.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-pty-forward",
+          "aliases": [],
+          "description": "Run a command with a custom terminal background color or title",
+          "usage": "systemd-pty-forward",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-pty-forward.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-pull",
+          "aliases": [],
+          "description": "systemd public executable systemd-pull",
+          "usage": "systemd-pull",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://github.com/systemd/systemd/tree/v261.1 · src/import/meson.build",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-repart",
+          "aliases": [],
+          "description": "Automatically grow and add partitions, and generate disk images (DDIs)",
+          "usage": "systemd-repart",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-repart.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-repart.standalone",
+          "aliases": [],
+          "description": "systemd public executable systemd-repart.standalone",
+          "usage": "systemd-repart.standalone",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://github.com/systemd/systemd/tree/v261.1 · src/repart/meson.build",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-report",
+          "aliases": [],
+          "description": "Generate report of system metrics",
+          "usage": "systemd-report",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-report.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-report-basic",
+          "aliases": [],
+          "description": "systemd public executable systemd-report-basic",
+          "usage": "systemd-report-basic",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://github.com/systemd/systemd/tree/v261.1 · src/report/meson.build",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-run",
+          "aliases": [],
+          "description": "Run programs in transient scope units, service units, or path-, socket-, or timer-triggered service units",
+          "usage": "systemd-run",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-run.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-socket-activate",
+          "aliases": [],
+          "description": "Test socket activation of daemons",
+          "usage": "systemd-socket-activate",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-socket-activate.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-socket-proxyd",
+          "aliases": [],
+          "description": "Bidirectionally proxy local sockets to another (possibly remote) socket",
+          "usage": "systemd-socket-proxyd",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-socket-proxyd.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-stdio-bridge",
+          "aliases": [],
+          "description": "D-Bus proxy",
+          "usage": "systemd-stdio-bridge",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-stdio-bridge.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-sysctl",
+          "aliases": [],
+          "description": "Configure kernel parameters at boot",
+          "usage": "systemd-sysctl",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-sysctl.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-sysext",
+          "aliases": [],
+          "description": "Activates System Extension Images",
+          "usage": "systemd-sysext",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-sysext.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1",
+            "build option: ENABLE_SYSEXT"
+          ]
+        },
+        {
+          "command": "systemd-sysinstall",
+          "aliases": [],
+          "description": "Simple OS installer",
+          "usage": "systemd-sysinstall",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-sysinstall.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1",
+            "build option: ENABLE_SYSINSTALL"
+          ]
+        },
+        {
+          "command": "systemd-sysupdate",
+          "aliases": [],
+          "description": "Automatically Update OS or Other Resources",
+          "usage": "systemd-sysupdate",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-sysupdate.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1",
+            "build option: ENABLE_SYSUPDATE"
+          ]
+        },
+        {
+          "command": "systemd-sysusers",
+          "aliases": [],
+          "description": "Allocate system users and groups",
+          "usage": "systemd-sysusers",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-sysusers.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-sysusers.standalone",
+          "aliases": [],
+          "description": "systemd public executable systemd-sysusers.standalone",
+          "usage": "systemd-sysusers.standalone",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://github.com/systemd/systemd/tree/v261.1 · src/sysusers/meson.build",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-tmpfiles",
+          "aliases": [],
+          "description": "Create, delete, and clean up files and directories",
+          "usage": "systemd-tmpfiles",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-tmpfiles.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-tmpfiles.standalone",
+          "aliases": [],
+          "description": "systemd public executable systemd-tmpfiles.standalone",
+          "usage": "systemd-tmpfiles.standalone",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://github.com/systemd/systemd/tree/v261.1 · src/tmpfiles/meson.build",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-tty-ask-password-agent",
+          "aliases": [],
+          "description": "List or process pending systemd password requests",
+          "usage": "systemd-tty-ask-password-agent",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-tty-ask-password-agent.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-vmspawn",
+          "aliases": [],
+          "description": "Spawn an OS in a virtual machine",
+          "usage": "systemd-vmspawn",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-vmspawn.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "systemd-vpick",
+          "aliases": [],
+          "description": "Resolve paths to .v/ versioned directories",
+          "usage": "systemd-vpick",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-vpick.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "timedatectl",
+          "aliases": [],
+          "description": "Control the system time and date",
+          "usage": "timedatectl",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/timedatectl.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1",
+            "build option: ENABLE_TIMEDATECTL"
+          ]
+        },
+        {
+          "command": "udevadm",
+          "aliases": [],
+          "description": "udev management tool",
+          "usage": "udevadm",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/udevadm.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        },
+        {
+          "command": "updatectl",
+          "aliases": [],
+          "description": "Control the system update service",
+          "usage": "updatectl",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/updatectl.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1",
+            "build option: ENABLE_SYSUPDATED"
+          ]
+        },
+        {
+          "command": "varlinkctl",
+          "aliases": [],
+          "description": "Introspect with and invoke Varlink services",
+          "usage": "varlinkctl",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://www.freedesktop.org/software/systemd/man/latest/varlinkctl.html",
+          "constraints": [
+            "requires a Linux distribution built with systemd 261.1"
+          ]
+        }
+      ],
+      "exclusions": []
+    },
+    {
+      "id": "util-linux",
+      "version": "2.42.2",
+      "sourceId": "util-linux-repository",
+      "sourceUrl": "https://github.com/util-linux/util-linux/tree/v2.42.2",
+      "downloadUrl": "https://github.com/util-linux/util-linux/archive/refs/tags/v2.42.2.tar.gz",
+      "archive": "util-linux-v2.42.2.tar.gz",
+      "archiveSha256": "a451596f794739216da2e98398e31958ecf455f2372d99a12194a468e852e834",
+      "parser": "util-linux-man1-man8-v1",
+      "entries": [
+        {
+          "command": "addpart",
+          "aliases": [],
+          "description": "tell the kernel about the existence of a partition",
+          "usage": "addpart device partition start length",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · disk-utils/addpart.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "addpart.static",
+          "aliases": [],
+          "description": "statically linked tell the kernel about the existence of a partition",
+          "usage": "addpart.static device partition start length",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · meson.build executable('addpart.static')",
+          "constraints": [
+            "requires a util-linux 2.42.2 build with the corresponding static_programs target enabled",
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "agetty",
+          "aliases": [],
+          "description": "alternative Linux getty",
+          "usage": "agetty [options] port [baudrate...] [term]",
+          "options": [
+            "-8",
+            "--8bits",
+            "-a",
+            "--autologin",
+            "-f",
+            "--login-options",
+            "-c",
+            "--noreset"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · term-utils/agetty.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "bits",
+          "aliases": [],
+          "description": "convert bit masks or lists from/to various formats",
+          "usage": "bits [-h] [-V] [-w number] [mode] [mask|list]...",
+          "options": [
+            "-w",
+            "--width"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · text-utils/bits.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "blkdiscard",
+          "aliases": [],
+          "description": "discard sectors on a device",
+          "usage": "blkdiscard [options] [-o offset] [-l length] device",
+          "options": [
+            "-f",
+            "--force",
+            "-o",
+            "--offset",
+            "-l",
+            "--length",
+            "-p",
+            "--step"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/blkdiscard.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "blkid",
+          "aliases": [],
+          "description": "locate/print block device attributes",
+          "usage": "blkid --label label | --uuid uuid blkid [--no-encoding --garbage-collect --list-one --cache-file file] [--output format] [--match-tag tag] [--match-token NAME=value] [device...] blkid --probe [--offset offset] [--output format] [--size size] [--match-tag tag] [--match-types list]",
+          "options": [
+            "-c",
+            "--cache-file",
+            "-d",
+            "--no-encoding",
+            "--output",
+            "-D",
+            "--no-part-details",
+            "-g"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/blkid.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "blkid.static",
+          "aliases": [],
+          "description": "statically linked locate/print block device attributes",
+          "usage": "blkid.static --label label | --uuid uuid blkid [--no-encoding --garbage-collect --list-one --cache-file file] [--output format] [--match-tag tag] [--match-token NAME=value] [device...] blkid --probe [--offset offset] [--output format] [--size size] [--match-tag tag] [--match-types list]",
+          "options": [
+            "-c",
+            "--cache-file",
+            "-d",
+            "--no-encoding",
+            "--output",
+            "-D",
+            "--no-part-details",
+            "-g"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · meson.build executable('blkid.static')",
+          "constraints": [
+            "requires a util-linux 2.42.2 build with the corresponding static_programs target enabled",
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "blkpr",
+          "aliases": [],
+          "description": "run a persistent-reservations command on a device",
+          "usage": "blkpr [options] device",
+          "options": [
+            "-c",
+            "--command",
+            "-k",
+            "--key",
+            "-K",
+            "--oldkey",
+            "-f",
+            "--flag"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/blkpr.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "blkzone",
+          "aliases": [],
+          "description": "run zone command on a device",
+          "usage": "blkzone command [options] device",
+          "options": [
+            "-o",
+            "--offset",
+            "-l",
+            "--length",
+            "--count",
+            "-c",
+            "-f",
+            "--force"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/blkzone.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "blockdev",
+          "aliases": [],
+          "description": "call block device ioctls from the command line",
+          "usage": "blockdev [-q] [-v] command [command...] device [device...] blockdev --report [device...] blockdev -h|-V",
+          "options": [
+            "-q",
+            "-v",
+            "--report"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · disk-utils/blockdev.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "cal",
+          "aliases": [],
+          "description": "display a calendar",
+          "usage": "cal [options] [[[day] month] year] cal [options] [timestamp|monthname]",
+          "options": [
+            "-1",
+            "--one",
+            "-3",
+            "--three",
+            "-n",
+            "--months",
+            "-S",
+            "--span"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/cal.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "cfdisk",
+          "aliases": [],
+          "description": "display or manipulate a disk partition table",
+          "usage": "cfdisk [options] [device]",
+          "options": [
+            "-L",
+            "--color",
+            "--help",
+            "--lock",
+            "-r",
+            "--read-only",
+            "-b",
+            "--sector-size"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · disk-utils/cfdisk.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "chcpu",
+          "aliases": [],
+          "description": "configure CPUs",
+          "usage": "chcpu -c|-d|-e|-g cpu-list chcpu -p mode chcpu -r|-h|-V",
+          "options": [
+            "-c",
+            "--configure",
+            "-d",
+            "--disable",
+            "-e",
+            "--enable",
+            "-g",
+            "--deconfigure"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/chcpu.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "chfn",
+          "aliases": [],
+          "description": "change your finger information",
+          "usage": "chfn [-f full-name] [-o office] [-p office-phone] [-h home-phone] [-u] [-V] [username|UID]",
+          "options": [
+            "-f",
+            "--full-name",
+            "-o",
+            "--office",
+            "-p",
+            "--office-phone",
+            "-h",
+            "--home-phone"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · login-utils/chfn.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "chmem",
+          "aliases": [],
+          "description": "configure memory",
+          "usage": "chmem [-h] [-V] [-v] [-c|-e|-d|-g] [SIZE|RANGE|-b BLOCKRANGE] [-z ZONE] [-m MEMMAP-ON-MEMORY]",
+          "options": [
+            "-b",
+            "--blocks",
+            "--enable",
+            "--disable",
+            "-c",
+            "--configure",
+            "-d",
+            "-e"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/chmem.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "choom",
+          "aliases": [],
+          "description": "display or adjust OOM-killer score",
+          "usage": "choom -p PID choom -p PID -n number choom -n number [--] command [argument ...]",
+          "options": [
+            "-p",
+            "--pid",
+            "-n",
+            "--adjust"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/choom.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "chrt",
+          "aliases": [],
+          "description": "manipulate the real-time attributes of a process",
+          "usage": "chrt [options] [priority] command [argument...] chrt --pid [options] [priority] PID",
+          "options": [
+            "-a",
+            "--all-tasks",
+            "-m",
+            "--max",
+            "-p",
+            "--pid",
+            "-v",
+            "--verbose"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · schedutils/chrt.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "chsh",
+          "aliases": [],
+          "description": "change your login shell",
+          "usage": "chsh [-s shell] [-l] [-h] [-V] [username|UID]",
+          "options": [
+            "-s",
+            "--shell",
+            "-l",
+            "--list-shells",
+            "-h",
+            "--help",
+            "-u",
+            "-V"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · login-utils/chsh.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "col",
+          "aliases": [],
+          "description": "filter reverse line feeds from input",
+          "usage": "col options",
+          "options": [
+            "-b",
+            "--no-backspaces",
+            "-f",
+            "--fine",
+            "-h",
+            "--tabs",
+            "-l",
+            "--lines"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · text-utils/col.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "colcrt",
+          "aliases": [],
+          "description": "filter nroff output for CRT previewing",
+          "usage": "colcrt [options] [file ...]",
+          "options": [
+            "--no-underlining",
+            "-2",
+            "--half-lines"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · text-utils/colcrt.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "colrm",
+          "aliases": [],
+          "description": "remove columns from a file",
+          "usage": "colrm [first [last]]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · text-utils/colrm.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "column",
+          "aliases": [],
+          "description": "columnate lists",
+          "usage": "column [options] [file ...]",
+          "options": [
+            "--table-",
+            "--table-columns",
+            "--table-column",
+            "-R0",
+            "-1",
+            "-R",
+            "-J",
+            "--json"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · text-utils/column.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "copyfilerange",
+          "aliases": [],
+          "description": "copy range(s) from source to destination file",
+          "usage": "copyfilerange [options] source destination range...",
+          "options": [
+            "-r",
+            "--ranges",
+            "-v",
+            "--verbose"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/copyfilerange.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "coresched",
+          "aliases": [],
+          "description": "manage core scheduling cookies for tasks",
+          "usage": "{command} [get] [-s pid] {command} new [-t type] -d pid {command} new [-t type] - command [argument...] {command} copy [-s pid] [-t type] -d pid {command} copy [-s pid] [-t type] - command [argument...]",
+          "options": [
+            "-s",
+            "--source",
+            "-d",
+            "--dest",
+            "-t",
+            "--dest-type",
+            "-v",
+            "--verbose"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · schedutils/coresched.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "ctrlaltdel",
+          "aliases": [],
+          "description": "set the function of the Ctrl-Alt-Del combination",
+          "usage": "ctrlaltdel hard|soft",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/ctrlaltdel.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "delpart",
+          "aliases": [],
+          "description": "tell the kernel to forget about a partition",
+          "usage": "delpart device partition",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · disk-utils/delpart.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "delpart.static",
+          "aliases": [],
+          "description": "statically linked tell the kernel to forget about a partition",
+          "usage": "delpart.static device partition",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · meson.build executable('delpart.static')",
+          "constraints": [
+            "requires a util-linux 2.42.2 build with the corresponding static_programs target enabled",
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "dmesg",
+          "aliases": [],
+          "description": "print or control the kernel ring buffer",
+          "usage": "dmesg [options] dmesg --clear dmesg --read-clear [options] dmesg --console-level level dmesg --console-on dmesg --console-off",
+          "options": [
+            "--clear",
+            "--read-clear",
+            "--console-on",
+            "--console-off",
+            "--console-level",
+            "-C",
+            "-c",
+            "-D"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/dmesg.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "eject",
+          "aliases": [],
+          "description": "eject removable media",
+          "usage": "eject [options] device|mountpoint",
+          "options": [
+            "-a",
+            "--auto",
+            "-c",
+            "--changerslot",
+            "-d",
+            "--default",
+            "-F",
+            "--force"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/eject.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "enosys",
+          "aliases": [],
+          "description": "utility to make syscalls fail with ENOSYS",
+          "usage": "enosys [--syscall|-s syscall] command",
+          "options": [
+            "-s",
+            "--syscall",
+            "-i",
+            "--ioctl",
+            "-l",
+            "--list",
+            "-m",
+            "--list-ioctl"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/enosys.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "exch",
+          "aliases": [],
+          "description": "atomically exchanges paths between two files",
+          "usage": "exch oldpath newpath",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/exch.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "fadvise",
+          "aliases": [],
+          "description": "utility to use the posix_fadvise(2) system call",
+          "usage": "fadvise [-a advice] [-o offset] [-l length] filename fadvise [-a advice] [-o offset] [-l length] -d file-descriptor",
+          "options": [
+            "-d",
+            "--fd",
+            "-a",
+            "--advice",
+            "--help",
+            "-o",
+            "--offset",
+            "-l"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/fadvise.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "fallocate",
+          "aliases": [],
+          "description": "preallocate or deallocate space to a file",
+          "usage": "fallocate [-c|-p|-z|-w] [-o offset] -l length [-n] filename fallocate -d [-o offset] [-l length] filename fallocate -r [-o offset] filename fallocate -x [-o offset] -l length filename",
+          "options": [
+            "--collapse-range",
+            "--dig-holes",
+            "--report-holes",
+            "--punch-hole",
+            "--zero-range",
+            "--write-zeroes",
+            "--posix",
+            "-c"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/fallocate.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "fdformat",
+          "aliases": [],
+          "description": "low-level format a floppy disk",
+          "usage": "fdformat [options] device",
+          "options": [
+            "-f",
+            "--from",
+            "-t",
+            "--to",
+            "-r",
+            "--repair",
+            "-n",
+            "--no-verify"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · disk-utils/fdformat.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "fdisk",
+          "aliases": [],
+          "description": "manipulate disk partition table",
+          "usage": "fdisk [options] device fdisk -l [device...]",
+          "options": [
+            "-b",
+            "--sector-size",
+            "-B",
+            "--protect-boot",
+            "-c",
+            "--compatibility",
+            "-L",
+            "--color"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · disk-utils/fdisk.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "fdisk.static",
+          "aliases": [],
+          "description": "statically linked manipulate disk partition table",
+          "usage": "fdisk.static [options] device fdisk -l [device...]",
+          "options": [
+            "-b",
+            "--sector-size",
+            "-B",
+            "--protect-boot",
+            "-c",
+            "--compatibility",
+            "-L",
+            "--color"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · meson.build executable('fdisk.static')",
+          "constraints": [
+            "requires a util-linux 2.42.2 build with the corresponding static_programs target enabled",
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "fincore",
+          "aliases": [],
+          "description": "count pages of file contents in core",
+          "usage": "fincore [options] file...",
+          "options": [
+            "-n",
+            "--noheadings",
+            "-b",
+            "--bytes",
+            "-c",
+            "--total",
+            "-C",
+            "--cachestat"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/fincore.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "findfs",
+          "aliases": [],
+          "description": "find a filesystem by label or UUID",
+          "usage": "findfs TAGNAME=value",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/findfs.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "findmnt",
+          "aliases": [],
+          "description": "find a filesystem",
+          "usage": "findmnt [options] findmnt [options] device|mountpoint findmnt [options] [--source] device [--target path|--mountpoint mountpoint]",
+          "options": [
+            "-A",
+            "--all",
+            "-a",
+            "--ascii",
+            "-b",
+            "--bytes",
+            "-C",
+            "--nocanonicalize"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/findmnt.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "flock",
+          "aliases": [],
+          "description": "manage locks from shell scripts",
+          "usage": "flock [options] file|directory command [arguments] flock [options] file|directory -c command flock [options] number",
+          "options": [
+            "-c",
+            "--command",
+            "-E",
+            "--conflict-exit-code",
+            "-n",
+            "-w",
+            "-F",
+            "--no-fork"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/flock.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "fsck",
+          "aliases": [],
+          "description": "check and repair a Linux filesystem",
+          "usage": "fsck [-lsAVRTMNP] [-r [fd]] [-C [fd]] [-t fstype] [filesystem...] [--] [fs-specific-options]",
+          "options": [
+            "-l",
+            "-A",
+            "-r",
+            "-s",
+            "-p",
+            "-a",
+            "-n",
+            "-t"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · disk-utils/fsck.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "fsck.cramfs",
+          "aliases": [],
+          "description": "fsck compressed ROM file system",
+          "usage": "fsck.cramfs [options] file",
+          "options": [
+            "-v",
+            "--verbose",
+            "-b",
+            "--blocksize",
+            "--extract",
+            "-a",
+            "-y"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · disk-utils/fsck.cramfs.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "fsck.minix",
+          "aliases": [],
+          "description": "check consistency of Minix filesystem",
+          "usage": "fsck.minix [options] device",
+          "options": [
+            "-l",
+            "--list",
+            "-r",
+            "--repair",
+            "-a",
+            "--auto",
+            "-v",
+            "--verbose"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · disk-utils/fsck.minix.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "fsfreeze",
+          "aliases": [],
+          "description": "suspend access to a filesystem (Ext3/4, ReiserFS, JFS, XFS)",
+          "usage": "fsfreeze --freeze|--unfreeze mountpoint",
+          "options": [
+            "-f",
+            "--freeze",
+            "-u",
+            "--unfreeze"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/fsfreeze.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "fstrim",
+          "aliases": [],
+          "description": "discard unused blocks on a mounted filesystem",
+          "usage": "fstrim [-v] [-o offset] [-l length] [-m minimum-size] -A|-a|mountpoint",
+          "options": [
+            "-A",
+            "--fstab",
+            "--offset",
+            "--length",
+            "--minimum",
+            "-a",
+            "--all",
+            "-n"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/fstrim.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "getino",
+          "aliases": [],
+          "description": "print the unique inode number associated to a process file descriptor or namespace for a given PID",
+          "usage": "getino [--pidfs|--cgroupns|--ipcns|--netns|--mntns|--pidns|--timens|--userns|--utsns] [--print-pid|-p] PID[:inode]... getino [--print-pid|-p] PID[:inode]... getino PID[:inode]...",
+          "options": [
+            "-p",
+            "--print-pid",
+            "--pidfs",
+            "--cgroupns",
+            "--ipcns",
+            "--netns",
+            "--mntns",
+            "--pidns"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/getino.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "getopt",
+          "aliases": [],
+          "description": "parse command options (enhanced)",
+          "usage": "getopt optstring parameters getopt [options] [--] optstring parameters getopt [options] -o|--options optstring [options] [--] parameters",
+          "options": [
+            "-a",
+            "--alternative",
+            "-l",
+            "--longoptions",
+            "-n",
+            "--name",
+            "-o",
+            "--options"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/getopt.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "hardlink",
+          "aliases": [],
+          "description": "link multiple copies of a file",
+          "usage": "hardlink [options] directory|file...",
+          "options": [
+            "-c",
+            "--content",
+            "-pot",
+            "-b",
+            "--io-size",
+            "-d",
+            "--respect-dir",
+            "--respect-name"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/hardlink.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "hexdump",
+          "aliases": [],
+          "description": "display file contents in hexadecimal, decimal, octal, or ascii",
+          "usage": "hexdump [options] file ... hd [options] file ...",
+          "options": [
+            "-b",
+            "--one-byte-octal",
+            "-X",
+            "--one-byte-hex",
+            "-c",
+            "--one-byte-char",
+            "-C",
+            "--canonical"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · text-utils/hexdump.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "hwclock",
+          "aliases": [],
+          "description": "time clocks utility",
+          "usage": "hwclock [function] [option...]",
+          "options": [
+            "--adjfile",
+            "--date",
+            "--set",
+            "--predict",
+            "--localtime",
+            "--delay",
+            "-D",
+            "--debug"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/hwclock.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "ionice",
+          "aliases": [],
+          "description": "set or get process I/O scheduling class and priority",
+          "usage": "ionice [-c class] [-n level] [-t] -p PID ionice [-c class] [-n level] [-t] -P PGID ionice [-c class] [-n level] [-t] -u UID ionice [-c class] [-n level] [-t] command [argument] ...",
+          "options": [
+            "-c",
+            "--class",
+            "-n",
+            "--classdata",
+            "-p",
+            "--pid",
+            "-P",
+            "--pgid"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · schedutils/ionice.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "ipcmk",
+          "aliases": [],
+          "description": "make various IPC resources",
+          "usage": "ipcmk [options]",
+          "options": [
+            "-M",
+            "--shmem",
+            "-m",
+            "--posix-shmem",
+            "-Q",
+            "--queue",
+            "-q",
+            "--posix-mqueue"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/ipcmk.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "ipcrm",
+          "aliases": [],
+          "description": "remove certain IPC resources",
+          "usage": "ipcrm [options] ipcrm [shm|msg|sem] ID ...",
+          "options": [
+            "-a",
+            "--all",
+            "-M",
+            "--shmem-key",
+            "-m",
+            "--shmem-id",
+            "--posix-shmem",
+            "-Q"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/ipcrm.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "ipcs",
+          "aliases": [],
+          "description": "show information on IPC facilities",
+          "usage": "ipcs [options]",
+          "options": [
+            "-i",
+            "--id",
+            "-m",
+            "-q",
+            "-s",
+            "--shmems",
+            "--queues",
+            "--semaphores"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/ipcs.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "irqtop",
+          "aliases": [],
+          "description": "display kernel interrupt information",
+          "usage": "irqtop [options]",
+          "options": [
+            "-o",
+            "--output",
+            "--help",
+            "-b",
+            "--batch",
+            "-c",
+            "--cpu-stat",
+            "-C"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/irqtop.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "isosize",
+          "aliases": [],
+          "description": "output the length of an iso9660 filesystem",
+          "usage": "isosize [options] iso9660imagefile",
+          "options": [
+            "-x",
+            "--sectors",
+            "-d",
+            "--divisor"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · disk-utils/isosize.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "kill",
+          "aliases": [],
+          "description": "terminate a process",
+          "usage": "kill [-signal|-s signal|-p] [-q value] [-a] [--timeout milliseconds signal] [--] pid|pid:pidfdinode|name... kill [-signal|-s signal] pid|pid:pidfdinode... kill -l [number|``0x``sigmask] | -L kill -d pid",
+          "options": [
+            "-s",
+            "--signal",
+            "-l",
+            "--list",
+            "-L",
+            "--table",
+            "-a",
+            "--all"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/kill.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "last",
+          "aliases": [
+            "lastb"
+          ],
+          "description": "show a listing of last logged in users",
+          "usage": "last [options] [username|tty]... lastb [options] [username|tty]...",
+          "options": [
+            "-a",
+            "--hostlast",
+            "-d",
+            "--dns",
+            "-f",
+            "--file",
+            "-F",
+            "--fulltimes"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · login-utils/last.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "lastlog2",
+          "aliases": [],
+          "description": "displays date of last login for all users or a specific one",
+          "usage": "lastlog2 [options]",
+          "options": [
+            "-a",
+            "--active",
+            "-b",
+            "--before",
+            "-C",
+            "--clear",
+            "-u",
+            "--user"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/lastlog2.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "ldattach",
+          "aliases": [],
+          "description": "attach a line discipline to a serial line",
+          "usage": "ldattach [-1278denoVh] [-i iflag] [-s speed] [-m mtu] ldisc device",
+          "options": [
+            "-1",
+            "--onestopbit",
+            "-2",
+            "--twostopbits",
+            "-7",
+            "--sevenbits",
+            "-8",
+            "--eightbits"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/ldattach.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "line",
+          "aliases": [],
+          "description": "read one line",
+          "usage": "line [-h|-V]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · text-utils/line.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "logger",
+          "aliases": [],
+          "description": "enter messages into the system log",
+          "usage": "logger [options] message",
+          "options": [
+            "-d",
+            "--udp",
+            "--server",
+            "--socket",
+            "-e",
+            "--skip-empty",
+            "--prio-prefix",
+            "-f"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/logger.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "login",
+          "aliases": [],
+          "description": "begin session on the system",
+          "usage": "login [-p] [-s shell] [-h host] [-H] [[-f] username|UID]",
+          "options": [
+            "-p",
+            "-f",
+            "-h",
+            "-H",
+            "-s",
+            "--shell"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · login-utils/login.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "look",
+          "aliases": [],
+          "description": "display lines beginning with a given string",
+          "usage": "look [options] string [file]",
+          "options": [
+            "-a",
+            "--alternative",
+            "-d",
+            "--alphanum",
+            "-f",
+            "--ignore-case",
+            "-t",
+            "--terminate"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/look.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "losetup",
+          "aliases": [],
+          "description": "set up and control loop devices",
+          "usage": "Set up a loop device: losetup [options] -f|loopdev file Get info: losetup [-l] [-a|loopdev] losetup -j file [-o offset] Recalibrate the size of a loop device: losetup -c loopdev Detach loop devices: losetup -d loopdev ... losetup -D Prevent loop devices from getting listed: loset",
+          "options": [
+            "-a",
+            "--all",
+            "--list",
+            "-d",
+            "--detach",
+            "-D",
+            "--detach-all",
+            "-f"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/losetup.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "losetup.static",
+          "aliases": [],
+          "description": "statically linked set up and control loop devices",
+          "usage": "Set up a loop device: losetup.static [options] -f|loopdev file Get info: losetup [-l] [-a|loopdev] losetup -j file [-o offset] Recalibrate the size of a loop device: losetup -c loopdev Detach loop devices: losetup -d loopdev ... losetup -D Prevent loop devices from getting listed: loset",
+          "options": [
+            "-a",
+            "--all",
+            "--list",
+            "-d",
+            "--detach",
+            "-D",
+            "--detach-all",
+            "-f"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · meson.build executable('losetup.static')",
+          "constraints": [
+            "requires a util-linux 2.42.2 build with the corresponding static_programs target enabled",
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "lsblk",
+          "aliases": [],
+          "description": "list block devices",
+          "usage": "lsblk [options] [device...]",
+          "options": [
+            "-A",
+            "--noempty",
+            "-a",
+            "--all",
+            "-b",
+            "--bytes",
+            "-H",
+            "--list-columns"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/lsblk.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "lsclocks",
+          "aliases": [],
+          "description": "display system clocks",
+          "usage": "lsclocks [option]",
+          "options": [
+            "-J",
+            "--json",
+            "-n",
+            "--noheadings",
+            "-o",
+            "--output",
+            "--output-all",
+            "-r"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/lsclocks.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "lscpu",
+          "aliases": [],
+          "description": "display information about the CPU architecture",
+          "usage": "lscpu [options]",
+          "options": [
+            "-a",
+            "--all",
+            "-e",
+            "-p",
+            "-B",
+            "--bytes",
+            "-b",
+            "--online"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/lscpu.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "lsfd",
+          "aliases": [],
+          "description": "list file descriptors",
+          "usage": "lsfd [option]",
+          "options": [
+            "-l",
+            "--threads",
+            "-J",
+            "--json",
+            "-n",
+            "--noheadings",
+            "-o",
+            "--output"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · lsfd-cmd/lsfd.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "lsipc",
+          "aliases": [],
+          "description": "show information on IPC facilities currently employed in the system",
+          "usage": "lsipc [options]",
+          "options": [
+            "-i",
+            "--id",
+            "-m",
+            "-q",
+            "-s",
+            "--list",
+            "--raw",
+            "--json"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/lsipc.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "lsirq",
+          "aliases": [],
+          "description": "utility to display kernel interrupt information",
+          "usage": "lsirq [options]",
+          "options": [
+            "-n",
+            "--noheadings",
+            "-i",
+            "--input",
+            "-o",
+            "--output",
+            "--help",
+            "-s"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/lsirq.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "lslocks",
+          "aliases": [],
+          "description": "list local system locks",
+          "usage": "lslocks [options]",
+          "options": [
+            "-b",
+            "--bytes",
+            "-H",
+            "--list-columns",
+            "--output",
+            "--json",
+            "--raw",
+            "-i"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/lslocks.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "lslogins",
+          "aliases": [],
+          "description": "display information about known users in the system",
+          "usage": "lslogins [options] [-s|-u[=UID]] [-g groups] [-l logins] [username]",
+          "options": [
+            "-a",
+            "--acc-expiration",
+            "--btmp-file",
+            "-c",
+            "--colon-separate",
+            "-e",
+            "--export",
+            "--shell"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · login-utils/lslogins.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "lsmem",
+          "aliases": [],
+          "description": "list the ranges of available memory with their online status",
+          "usage": "lsmem [options]",
+          "options": [
+            "-a",
+            "--all",
+            "-b",
+            "--bytes",
+            "-J",
+            "--json",
+            "-n",
+            "--noheadings"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/lsmem.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "lsns",
+          "aliases": [],
+          "description": "list namespaces",
+          "usage": "lsns [options] [namespace ID]",
+          "options": [
+            "-H",
+            "--list-columns",
+            "--output",
+            "--json",
+            "--raw",
+            "-J",
+            "-l",
+            "--list"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/lsns.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "mcookie",
+          "aliases": [],
+          "description": "generate magic cookies for xauth",
+          "usage": "mcookie [options]",
+          "options": [
+            "-f",
+            "--file",
+            "-m",
+            "--max-size",
+            "-v",
+            "--verbose"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/mcookie.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "mesg",
+          "aliases": [],
+          "description": "display (or do not display) messages from other users",
+          "usage": "mesg [option] [n|y]",
+          "options": [
+            "-v",
+            "--verbose"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · term-utils/mesg.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "mkfs",
+          "aliases": [],
+          "description": "build a Linux filesystem",
+          "usage": "mkfs [options] [-t type] [fs-options] device [size]",
+          "options": [
+            "-t",
+            "--type",
+            "-V",
+            "--verbose"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · disk-utils/mkfs.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "mkfs.bfs",
+          "aliases": [],
+          "description": "make an SCO bfs filesystem",
+          "usage": "mkfs.bfs [options] device [block-count]",
+          "options": [
+            "-N",
+            "--inodes",
+            "-V",
+            "--vname",
+            "-F",
+            "--fname",
+            "--lock",
+            "-v"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · disk-utils/mkfs.bfs.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "mkfs.cramfs",
+          "aliases": [],
+          "description": "make compressed ROM file system",
+          "usage": "mkfs.cramfs [options] directory file",
+          "options": [
+            "-v",
+            "-E",
+            "-b",
+            "-e",
+            "-N",
+            "-i",
+            "-n",
+            "-p"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · disk-utils/mkfs.cramfs.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "mkfs.minix",
+          "aliases": [],
+          "description": "make a Minix filesystem",
+          "usage": "mkfs.minix [options] device [size-in-blocks]",
+          "options": [
+            "-c",
+            "--check",
+            "-n",
+            "--namelength",
+            "--lock",
+            "-i",
+            "--inodes",
+            "-l"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · disk-utils/mkfs.minix.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "mkswap",
+          "aliases": [],
+          "description": "set up a Linux swap area",
+          "usage": "mkswap [options] device [blocks] mkswap [options] --size size --file file",
+          "options": [
+            "-c",
+            "--check",
+            "-F",
+            "--file",
+            "-f",
+            "--force",
+            "-q",
+            "--quiet"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · disk-utils/mkswap.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "more",
+          "aliases": [],
+          "description": "display the contents of a file in a terminal",
+          "usage": "more [options] file ...",
+          "options": [
+            "-d",
+            "--silent",
+            "-l",
+            "--logical",
+            "-e",
+            "--exit-on-eof",
+            "-f",
+            "--no-pause"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · text-utils/more.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "mount",
+          "aliases": [],
+          "description": "mount a filesystem",
+          "usage": "mount [-h|-V] mount [-l] [-t fstype] mount -a [-F] [-fnrsvw] [-t fstype] [-O optlist] mount [-fnrsvw] [-o options] device|mountpoint mount [-fnrsvw] [-o options] [-t fstype] device mountpoint mount --bind|--rbind|--move olddir newdir mount --make-[r]{shared|slave|private|unbindab",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/mount.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "mount.static",
+          "aliases": [],
+          "description": "statically linked mount a filesystem",
+          "usage": "mount.static [-h|-V] mount [-l] [-t fstype] mount -a [-F] [-fnrsvw] [-t fstype] [-O optlist] mount [-fnrsvw] [-o options] device|mountpoint mount [-fnrsvw] [-o options] [-t fstype] device mountpoint mount --bind|--rbind|--move olddir newdir mount --make-[r]{shared|slave|private|unbindab",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · meson.build executable('mount.static')",
+          "constraints": [
+            "requires a util-linux 2.42.2 build with the corresponding static_programs target enabled",
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "mountpoint",
+          "aliases": [],
+          "description": "see if a directory or file is a mountpoint",
+          "usage": "mountpoint [-d|-q] directory|file mountpoint -x device",
+          "options": [
+            "-d",
+            "--fs-devno",
+            "-q",
+            "--quiet",
+            "--nofollow",
+            "-x",
+            "--devno",
+            "--show"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/mountpoint.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "namei",
+          "aliases": [],
+          "description": "follow a pathname until a terminal point is found",
+          "usage": "namei [options] pathname...",
+          "options": [
+            "-l",
+            "--long",
+            "-m",
+            "-o",
+            "-v",
+            "--modes",
+            "-n",
+            "--nosymlinks"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/namei.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "newgrp",
+          "aliases": [],
+          "description": "log in to a new group",
+          "usage": "newgrp [group [command]] newgrp [-c command] [group]",
+          "options": [
+            "-c",
+            "--command"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · login-utils/newgrp.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "nologin",
+          "aliases": [],
+          "description": "politely refuse a login",
+          "usage": "nologin [-V] [-h]",
+          "options": [
+            "-c",
+            "--command",
+            "--init-file",
+            "-i",
+            "--interactive",
+            "-l",
+            "--login",
+            "--noprofile"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · login-utils/nologin.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "nsenter",
+          "aliases": [],
+          "description": "run program in different namespaces",
+          "usage": "nsenter [options] [program [arguments]]",
+          "options": [
+            "-a",
+            "--all",
+            "--mount",
+            "-t",
+            "--target",
+            "-m",
+            "-u",
+            "--uts"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/nsenter.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "nsenter.static",
+          "aliases": [],
+          "description": "statically linked run program in different namespaces",
+          "usage": "nsenter.static [options] [program [arguments]]",
+          "options": [
+            "-a",
+            "--all",
+            "--mount",
+            "-t",
+            "--target",
+            "-m",
+            "-u",
+            "--uts"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · meson.build executable('nsenter.static')",
+          "constraints": [
+            "requires a util-linux 2.42.2 build with the corresponding static_programs target enabled",
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "partx",
+          "aliases": [],
+          "description": "tell the kernel about the presence and numbering of on-disk partitions",
+          "usage": "partx [-a|-d|-P|-r|-s|-u] [-t type] [-n M:N] [-] disk partx [-a|-d|-P|-r|-s|-u] [-t type] partition [disk]",
+          "options": [
+            "-a",
+            "--add",
+            "-b",
+            "--bytes",
+            "-d",
+            "--delete",
+            "--nr",
+            "-g"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · disk-utils/partx.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "partx.static",
+          "aliases": [],
+          "description": "statically linked tell the kernel about the presence and numbering of on-disk partitions",
+          "usage": "partx.static [-a|-d|-P|-r|-s|-u] [-t type] [-n M:N] [-] disk partx [-a|-d|-P|-r|-s|-u] [-t type] partition [disk]",
+          "options": [
+            "-a",
+            "--add",
+            "-b",
+            "--bytes",
+            "-d",
+            "--delete",
+            "--nr",
+            "-g"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · meson.build executable('partx.static')",
+          "constraints": [
+            "requires a util-linux 2.42.2 build with the corresponding static_programs target enabled",
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "pg",
+          "aliases": [],
+          "description": "browse pagewise through text files",
+          "usage": "pg -amount -p prompt -cefnrs +line +/pattern/ file ...",
+          "options": [
+            "-c",
+            "-e",
+            "-f",
+            "-n",
+            "-p",
+            "-r",
+            "-s"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · text-utils/pg.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "pipesz",
+          "aliases": [],
+          "description": "set or examine pipe and FIFO buffer sizes",
+          "usage": "pipesz [options] [--set size] [--] [command [argument...]] pipesz [options] --get",
+          "options": [
+            "-g",
+            "--get",
+            "--file",
+            "--fd",
+            "--set",
+            "-s",
+            "-f",
+            "-n"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/pipesz.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "pivot_root",
+          "aliases": [],
+          "description": "change the root filesystem",
+          "usage": "pivotroot newroot putold",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/pivot_root.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "prlimit",
+          "aliases": [],
+          "description": "get and set process resource limits",
+          "usage": "prlimit [options] [--resource[=limits]] [--pid PID] prlimit [options] [--resource[=limits]] command [argument...]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/prlimit.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "raw",
+          "aliases": [],
+          "description": "bind a Linux raw character device",
+          "usage": "raw /dev/raw/raw raw /dev/raw/raw /dev/ raw -q /dev/raw/raw raw -qa",
+          "options": [
+            "-q",
+            "--query",
+            "-a",
+            "--all"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · disk-utils/raw.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "readprofile",
+          "aliases": [],
+          "description": "read kernel profiling information",
+          "usage": "readprofile [options]",
+          "options": [
+            "-a",
+            "--all",
+            "-b",
+            "--histbin",
+            "-i",
+            "--info",
+            "-t",
+            "-m"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/readprofile.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "rename",
+          "aliases": [],
+          "description": "rename files",
+          "usage": "rename [options] substring replacement file...",
+          "options": [
+            "-s",
+            "--symlink",
+            "-v",
+            "--verbose",
+            "-n",
+            "--no-act",
+            "-a",
+            "--all"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/rename.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "renice",
+          "aliases": [],
+          "description": "alter priority of running processes",
+          "usage": "renice [-n|--priority|--relative] priority [-g|-p|-u] identifier...",
+          "options": [
+            "-n",
+            "--priority",
+            "--relative",
+            "-g",
+            "--pgrp",
+            "-p",
+            "--pid",
+            "-u"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/renice.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "resizepart",
+          "aliases": [],
+          "description": "tell the kernel about the new size of a partition",
+          "usage": "resizepart device partition length",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · disk-utils/resizepart.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "resizepart.static",
+          "aliases": [],
+          "description": "statically linked tell the kernel about the new size of a partition",
+          "usage": "resizepart.static device partition length",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · meson.build executable('resizepart.static')",
+          "constraints": [
+            "requires a util-linux 2.42.2 build with the corresponding static_programs target enabled",
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "rev",
+          "aliases": [],
+          "description": "reverse lines characterwise",
+          "usage": "rev [option] [file...]",
+          "options": [
+            "-0",
+            "--zero"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · text-utils/rev.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "rfkill",
+          "aliases": [],
+          "description": "tool for enabling and disabling wireless devices",
+          "usage": "rfkill [options] [command] [ID|type ...]",
+          "options": [
+            "-J",
+            "--json",
+            "-n",
+            "--noheadings",
+            "-o",
+            "--output",
+            "--help",
+            "--output-all"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/rfkill.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "rtcwake",
+          "aliases": [],
+          "description": "enter a system sleep state until specified wakeup time",
+          "usage": "rtcwake [options] [-d device] [-m standbymode] {-s seconds|-t timet}",
+          "options": [
+            "-A",
+            "--adjfile",
+            "-a",
+            "--auto",
+            "--date",
+            "-d",
+            "--device",
+            "-l"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/rtcwake.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "runuser",
+          "aliases": [],
+          "description": "run a command with substitute user and group ID",
+          "usage": "runuser [options] -u user [[--] command [argument...]] runuser [options] [-] [user [argument...]]",
+          "options": [
+            "-c",
+            "--command",
+            "--session-command",
+            "-f",
+            "--fast",
+            "-g",
+            "--group",
+            "-G"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · login-utils/runuser.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "script",
+          "aliases": [],
+          "description": "make typescript of terminal session",
+          "usage": "script [options] [file] [-- command [argument...]]",
+          "options": [
+            "-a",
+            "--append",
+            "-c",
+            "--command",
+            "-E",
+            "--echo",
+            "-e",
+            "--return"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · term-utils/script.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "scriptlive",
+          "aliases": [],
+          "description": "re-run session typescripts, using timing information",
+          "usage": "scriptlive [options] timingfile typescript",
+          "options": [
+            "-c",
+            "--command",
+            "-I",
+            "--log-in",
+            "-B",
+            "--log-io",
+            "-E",
+            "--echo"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · term-utils/scriptlive.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "scriptreplay",
+          "aliases": [],
+          "description": "play back typescripts, using timing information",
+          "usage": "scriptreplay [options] timingfile [typescript [divisor]]",
+          "options": [
+            "-I",
+            "--log-in",
+            "-O",
+            "--log-out",
+            "-B",
+            "--log-io",
+            "-t",
+            "--timing"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · term-utils/scriptreplay.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "setarch",
+          "aliases": [],
+          "description": "change reported architecture in new program environment and/or set personality flags",
+          "usage": "setarch [arch] [options] [program [argument...]] arch [options] [program [argument...]]",
+          "options": [
+            "--list",
+            "--show",
+            "-p",
+            "--pid",
+            "--uname-2",
+            "-v",
+            "--verbose",
+            "-3"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/setarch.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "setpgid",
+          "aliases": [],
+          "description": "run a program in a new process group",
+          "usage": "setpgid [options] program [arguments]",
+          "options": [
+            "-f",
+            "--foreground"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/setpgid.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "setpriv",
+          "aliases": [],
+          "description": "run a program with different Linux privilege settings",
+          "usage": "setpriv [options] program [arguments]",
+          "options": [
+            "--clear-groups",
+            "-d",
+            "--dump",
+            "--groups",
+            "--inh-caps",
+            "--ambient-caps",
+            "--bounding-set",
+            "-all"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/setpriv.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "setsid",
+          "aliases": [],
+          "description": "run a program in a new session",
+          "usage": "setsid [options] program [arguments]",
+          "options": [
+            "-c",
+            "--ctty",
+            "-f",
+            "--fork",
+            "-w",
+            "--wait"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/setsid.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "setterm",
+          "aliases": [],
+          "description": "set terminal attributes",
+          "usage": "setterm [options]",
+          "options": [
+            "--underline",
+            "--half-bright",
+            "--option",
+            "--appcursorkeys",
+            "--append",
+            "--dump",
+            "--background",
+            "--blank"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · term-utils/setterm.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "sfdisk",
+          "aliases": [],
+          "description": "display or manipulate a disk partition table",
+          "usage": "sfdisk [options] device [-N partition-number] sfdisk [options] command",
+          "options": [
+            "-a",
+            "--append",
+            "-N",
+            "-b",
+            "--backup",
+            "-O",
+            "--backup-file",
+            "--bytes"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · disk-utils/sfdisk.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "sfdisk.static",
+          "aliases": [],
+          "description": "statically linked display or manipulate a disk partition table",
+          "usage": "sfdisk.static [options] device [-N partition-number] sfdisk [options] command",
+          "options": [
+            "-a",
+            "--append",
+            "-N",
+            "-b",
+            "--backup",
+            "-O",
+            "--backup-file",
+            "--bytes"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · meson.build executable('sfdisk.static')",
+          "constraints": [
+            "requires a util-linux 2.42.2 build with the corresponding static_programs target enabled",
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "su",
+          "aliases": [],
+          "description": "run a command with substitute user and group ID",
+          "usage": "su [options] [-] [user|UID [argument...]]",
+          "options": [
+            "-c",
+            "--command",
+            "--session-command",
+            "-f",
+            "--fast",
+            "-g",
+            "--group",
+            "-G"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · login-utils/su.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "sulogin",
+          "aliases": [],
+          "description": "single-user login",
+          "usage": "sulogin [options] [tty]",
+          "options": [
+            "-e",
+            "--force",
+            "-p",
+            "--login-shell",
+            "-t",
+            "--timeout"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · login-utils/sulogin.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "swaplabel",
+          "aliases": [],
+          "description": "print or change the label or UUID of a swap area",
+          "usage": "swaplabel [-L label] [-U UUID] device",
+          "options": [
+            "-L",
+            "--label",
+            "-U",
+            "--uuid"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · disk-utils/swaplabel.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "swapon",
+          "aliases": [
+            "swapoff"
+          ],
+          "description": "enable/disable devices and files for paging and swapping",
+          "usage": "swapon [options] [specialfile...] swapoff [-va] [specialfile...]",
+          "options": [
+            "-a",
+            "--all",
+            "-T",
+            "--fstab",
+            "-d",
+            "--discard",
+            "-e",
+            "--ifexists"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/swapon.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "switch_root",
+          "aliases": [],
+          "description": "switch to another filesystem as the root of the mount tree",
+          "usage": "switchroot [-hV] switchroot newroot init [arg...]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/switch_root.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "taskset",
+          "aliases": [],
+          "description": "set or retrieve a process's CPU affinity",
+          "usage": "taskset [options] mask command [argument...] taskset [options] -p [mask] pid",
+          "options": [
+            "-a",
+            "--all-tasks",
+            "-c",
+            "--cpu-list",
+            "-p",
+            "--pid"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · schedutils/taskset.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "tunelp",
+          "aliases": [],
+          "description": "set various parameters for the lp device",
+          "usage": "tunelp [options] device",
+          "options": [
+            "-i",
+            "--irq",
+            "-t",
+            "-c",
+            "--time",
+            "--chars",
+            "-w",
+            "--wait"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/tunelp.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "uclampset",
+          "aliases": [],
+          "description": "manipulate the utilization clamping attributes of the system or a process",
+          "usage": "uclampset [options] [-m minimum] [-M maximum] -p PID uclampset [options] [-m minimum] [-M maximum] command [argument...]",
+          "options": [
+            "-m",
+            "-M",
+            "-a",
+            "--all-tasks",
+            "-p",
+            "--pid",
+            "-s",
+            "--system"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · schedutils/uclampset.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "ul",
+          "aliases": [],
+          "description": "do underlining",
+          "usage": "ul [options] [file...]",
+          "options": [
+            "-i",
+            "--indicated",
+            "-t",
+            "-T",
+            "--terminal"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · text-utils/ul.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "umount",
+          "aliases": [],
+          "description": "unmount filesystems",
+          "usage": "umount -a [-dflnrv] [-t fstype] [-O option...] umount [-dflnrv] {directory|device} umount -h|-V",
+          "options": [
+            "-a",
+            "--all",
+            "--types",
+            "-A",
+            "--all-targets",
+            "--recursive",
+            "-c",
+            "--no-canonicalize"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/umount.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "umount.static",
+          "aliases": [],
+          "description": "statically linked unmount filesystems",
+          "usage": "umount.static -a [-dflnrv] [-t fstype] [-O option...] umount [-dflnrv] {directory|device} umount -h|-V",
+          "options": [
+            "-a",
+            "--all",
+            "--types",
+            "-A",
+            "--all-targets",
+            "--recursive",
+            "-c",
+            "--no-canonicalize"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · meson.build executable('umount.static')",
+          "constraints": [
+            "requires a util-linux 2.42.2 build with the corresponding static_programs target enabled",
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "unshare",
+          "aliases": [],
+          "description": "run program in new namespaces",
+          "usage": "unshare [options] [program [arguments]]",
+          "options": [
+            "-i",
+            "--ipc",
+            "-m",
+            "--mount",
+            "-o",
+            "-n",
+            "--net",
+            "-p"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/unshare.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "unshare.static",
+          "aliases": [],
+          "description": "statically linked run program in new namespaces",
+          "usage": "unshare.static [options] [program [arguments]]",
+          "options": [
+            "-i",
+            "--ipc",
+            "-m",
+            "--mount",
+            "-o",
+            "-n",
+            "--net",
+            "-p"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · meson.build executable('unshare.static')",
+          "constraints": [
+            "requires a util-linux 2.42.2 build with the corresponding static_programs target enabled",
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "utmpdump",
+          "aliases": [],
+          "description": "dump UTMP and WTMP files in raw format",
+          "usage": "utmpdump [options] filename",
+          "options": [
+            "-f",
+            "--follow",
+            "-o",
+            "--output",
+            "-r",
+            "--reverse"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · login-utils/utmpdump.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "uuidd",
+          "aliases": [],
+          "description": "UUID generation daemon",
+          "usage": "uuidd [options]",
+          "options": [
+            "-C",
+            "--cont-clock",
+            "-d",
+            "--debug",
+            "-F",
+            "--no-fork",
+            "-k",
+            "--kill"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/uuidd.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "uuidgen",
+          "aliases": [],
+          "description": "create a new UUID value",
+          "usage": "uuidgen [options]",
+          "options": [
+            "-r",
+            "--random",
+            "-t",
+            "--time",
+            "-m",
+            "--md5",
+            "-s",
+            "--sha1"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/uuidgen.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "uuidparse",
+          "aliases": [],
+          "description": "a utility to parse unique identifiers",
+          "usage": "uuidparse [options] uuid",
+          "options": [
+            "-J",
+            "--json",
+            "-n",
+            "--noheadings",
+            "-o",
+            "--output",
+            "--help",
+            "-r"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/uuidparse.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "vipw",
+          "aliases": [
+            "vigr"
+          ],
+          "description": "edit the password or group file",
+          "usage": "vipw [options] vigr [options]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · login-utils/vipw.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "waitpid",
+          "aliases": [],
+          "description": "utility to wait for arbitrary processes",
+          "usage": "waitpid [-v] [--timeout|-t seconds] PID[:inode]...",
+          "options": [
+            "-v",
+            "--verbose",
+            "-t",
+            "--timeout",
+            "-e",
+            "--exited",
+            "-c",
+            "--count"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/waitpid.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "wall",
+          "aliases": [],
+          "description": "write a message to all users",
+          "usage": "wall [-n] [-t timeout] [-g group] [message | file]",
+          "options": [
+            "-n",
+            "--nobanner",
+            "-t",
+            "--timeout",
+            "-g",
+            "--group"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · term-utils/wall.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "wdctl",
+          "aliases": [],
+          "description": "show hardware watchdog status",
+          "usage": "wdctl [options] [device...]",
+          "options": [
+            "-f",
+            "--flags",
+            "-F",
+            "--noflags",
+            "-I",
+            "--noident",
+            "-n",
+            "--noheadings"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/wdctl.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "whereis",
+          "aliases": [],
+          "description": "locate the binary, source, and manual page files for a command",
+          "usage": "whereis [options] [-BMS directory... -f] name...",
+          "options": [
+            "-b",
+            "-m",
+            "-s",
+            "-u",
+            "-B",
+            "-M",
+            "-S",
+            "-f"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/whereis.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "wipefs",
+          "aliases": [],
+          "description": "wipe a signature from a device",
+          "usage": "wipefs [options] device... wipefs [--backup] -o offset device... wipefs [--backup] -a device...",
+          "options": [
+            "-a",
+            "--all",
+            "-t",
+            "-b",
+            "--backup",
+            "-f",
+            "--force",
+            "-J"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/wipefs.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "write",
+          "aliases": [],
+          "description": "send a message to another user",
+          "usage": "write user [ttyname]",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · term-utils/write.1.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        },
+        {
+          "command": "zramctl",
+          "aliases": [],
+          "description": "set up and control zram devices",
+          "usage": "Get info: :: zramctl [options] Reset zram: :: zramctl -r zramdev... Print name of first unused zram device: :: zramctl -f Set up a zram device: :: zramctl [-f | zramdev] [-s size] [-t number] [-a algorithm]",
+          "options": [
+            "-a",
+            "--algorithm",
+            "-b",
+            "--bytes",
+            "-f",
+            "--find",
+            "--size",
+            "-n"
+          ],
+          "officialExamples": [],
+          "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/zramctl.8.adoc",
+          "constraints": [
+            "requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration"
+          ]
+        }
+      ],
+      "exclusions": [
+        {
+          "entry": "section 3/5 manuals",
+          "reason": "libraries and configuration formats are not executable entry points"
+        },
+        {
+          "entry": "Meson executable() targets without install",
+          "reason": "tests and internal helpers are not installed public CLI entry points"
+        },
+        {
+          "entry": "pam_lastlog2",
+          "reason": "PAM module manual, not an executable entry point"
+        }
+      ]
+    },
+    {
+      "id": "iproute2",
+      "version": "7.1.0",
+      "sourceId": "iproute2-repository",
+      "sourceUrl": "https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tag/?h=v7.1.0",
+      "downloadUrl": "https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/snapshot/iproute2-7.1.0.tar.gz",
+      "archive": "iproute2-v7.1.0.tar.gz",
+      "archiveSha256": "220ebd1e29b8d4e83a7b133091b678df6e74dfedbd8857c390c546b913d600fb",
+      "parser": "iproute2-install-targets-v1",
+      "entries": [
+        {
+          "command": "arpd",
+          "aliases": [],
+          "description": "arpd userspace arp daemon.",
+          "usage": "Usage: arpd [ -lkh? ] [ -a N ] [ -b dbase ] [ -B number ] [ -f file ] [-p interval ] [ -n time ] [ -R rate ] [ ]",
+          "options": [
+            "-h",
+            "-l",
+            "-f",
+            "-b",
+            "-a",
+            "-k",
+            "-n",
+            "-p"
+          ],
+          "officialExamples": [],
+          "locator": "https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tag/?h=v7.1.0 · man/man8/arpd.8",
+          "constraints": [
+            "requires Linux with iproute2 7.1.0 installed; optional targets depend on build features"
+          ]
+        },
+        {
+          "command": "bridge",
+          "aliases": [],
+          "description": "bridge show / manipulate bridge addresses and devices",
+          "usage": ".ad l .in +8 .ti -8 bridge \"[ \" OPTIONS \" ] \" OBJECT \" { \" COMMAND \" | \" help \" }\" .sp .ti -8 OBJECT \" := { \" link \" | \" fdb \" | \" mdb \" | \" vlan \" | \" vni \" | \" monitor \" }\" .sp .ti -8 OPTIONS \" := { \" V[ersion] | s[tatistics] | n[etns] name | b[atch] filename | com[pressvlans] ",
+          "options": [
+            "-V",
+            "-Version",
+            "-s",
+            "-stats",
+            "-statistics",
+            "-d",
+            "-details",
+            "-n"
+          ],
+          "officialExamples": [],
+          "locator": "https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tag/?h=v7.1.0 · man/man8/bridge.8",
+          "constraints": [
+            "requires Linux with iproute2 7.1.0 installed; optional targets depend on build features"
+          ]
+        },
+        {
+          "command": "dcb",
+          "aliases": [],
+          "description": "dcb show / manipulate DCB (Data Center Bridging) settings",
+          "usage": ".sp .ad l .in +8 .ti -8 dcb \"[ \" OPTIONS \" ] \" \"{ \" app \" | \" buffer \" | \" ets \" | \" maxrate \" | \" pfc \" }\" \"{ \" COMMAND \" | \" help \" }\" .sp .ti -8 dcb \"[ \" -force \" ] \" \"-batch \" filename .sp .ti -8 dcb \"[ \" OPTIONS \" ] \" help .sp",
+          "options": [
+            "-n",
+            "--netns",
+            "-V",
+            "--Version",
+            "-b",
+            "--batch",
+            "-f",
+            "--force"
+          ],
+          "officialExamples": [],
+          "locator": "https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tag/?h=v7.1.0 · man/man8/dcb.8",
+          "constraints": [
+            "requires Linux with iproute2 7.1.0 installed; optional targets depend on build features"
+          ]
+        },
+        {
+          "command": "devlink",
+          "aliases": [],
+          "description": "devlink Devlink tool",
+          "usage": ".sp .ad l .in +8 .ti -8 devlink \"[ \" OPTIONS \" ] { \" dev | port | monitor | sb | resource | region | health | trap | rate | lc | dpipe \" } { \" COMMAND \" | \" help \" }\" .sp .ti -8 devlink \"[ \" -force \" ] \" \"-batch \" filename .sp",
+          "options": [
+            "-V",
+            "--Version",
+            "-b",
+            "-batch",
+            "-force",
+            "-n",
+            "--no-nice-names",
+            "-j"
+          ],
+          "officialExamples": [],
+          "locator": "https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tag/?h=v7.1.0 · man/man8/devlink.8",
+          "constraints": [
+            "requires Linux with iproute2 7.1.0 installed; optional targets depend on build features"
+          ]
+        },
+        {
+          "command": "dpll",
+          "aliases": [],
+          "description": "dpll Digital Phase Locked Loop (DPLL) subsystem management",
+          "usage": ".ad l .in +8 .ti -8 dpll \"[ \" OPTIONS \" ]\" device \"{ \" COMMAND \" | \" help \" }\" .sp .ti -8 dpll \"[ \" OPTIONS \" ]\" pin \"{ \" COMMAND \" | \" help \" }\" .sp .ti -8 dpll \"[ \" OPTIONS \" ]\" monitor .ti -8 OPTIONS \" := { \" V | Version | j | json | p | pretty }",
+          "options": [
+            "-V",
+            "--Version",
+            "-j",
+            "--json",
+            "-p",
+            "--pretty"
+          ],
+          "officialExamples": [],
+          "locator": "https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tag/?h=v7.1.0 · man/man8/dpll.8",
+          "constraints": [
+            "requires Linux with iproute2 7.1.0 installed; optional targets depend on build features"
+          ]
+        },
+        {
+          "command": "genl",
+          "aliases": [],
+          "description": "genl generic netlink utility frontend",
+          "usage": ".in +8 .ti -8 genl \"[ \" OPTIONS \" ] \" OBJECT .ti -8 genl \" { \" -V [ ersion \"] | \" -h [ elp \"] }\" .ti -8 OPTIONS \" := { \" s[tatistics] | d[etails] | j[son] | p[retty] } .ti -8 OBJECT \" := { \" ctrl CTRL_OPTS \" }\" .ti -8 CTRL_OPTS \" := { \" help \" | \" list \" | \" monitor \" | \" get PAR",
+          "options": [
+            "-h",
+            "-help",
+            "-V",
+            "-Version",
+            "-s",
+            "-stats",
+            "-statistics",
+            "-d"
+          ],
+          "officialExamples": [],
+          "locator": "https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tag/?h=v7.1.0 · man/man8/genl.8",
+          "constraints": [
+            "requires Linux with iproute2 7.1.0 installed; optional targets depend on build features"
+          ]
+        },
+        {
+          "command": "ifstat",
+          "aliases": [],
+          "description": "ifstat handy utility to read network interface statistics",
+          "usage": ".in +8 .ti -8 ifstat \" [ \" OPTIONS \" ] [ \" INTERFACE_LIST \" ]\" .ti -8 INTERFACE_LIST \" := \" INTERFACE_LIST \" | \" interface",
+          "options": [
+            "-h",
+            "--help",
+            "-V",
+            "--version",
+            "-a",
+            "--ignore",
+            "-d",
+            "--scan"
+          ],
+          "officialExamples": [],
+          "locator": "https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tag/?h=v7.1.0 · man/man8/ifstat.8",
+          "constraints": [
+            "requires Linux with iproute2 7.1.0 installed; optional targets depend on build features"
+          ]
+        },
+        {
+          "command": "ip",
+          "aliases": [],
+          "description": "ip show / manipulate routing, network devices, interfaces and tunnels",
+          "usage": ".ad l .in +8 .ti -8 ip \"[ \" OPTIONS \" ] \" OBJECT \" { \" COMMAND \" | \" help \" }\" .sp .ti -8 ip \"[ \" -force \" ] \" \"-batch \" filename .sp .ti -8 OBJECT \" := { \" address \" | \" addrlabel \" | \" fou \" | \" help \" | \" ila \" | \" ioam \" | \"\\ l2tp \" | \" link \" | \" macsec \" | \" maddress \" | \" ",
+          "options": [
+            "-V",
+            "-Version",
+            "-h",
+            "-human",
+            "-human-readable",
+            "-b",
+            "-batch",
+            "-force"
+          ],
+          "officialExamples": [],
+          "locator": "https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tag/?h=v7.1.0 · man/man8/ip.8",
+          "constraints": [
+            "requires Linux with iproute2 7.1.0 installed; optional targets depend on build features"
+          ]
+        },
+        {
+          "command": "lnstat",
+          "aliases": [
+            "rtstat",
+            "ctstat"
+          ],
+          "description": "lnstat unified Linux network statistics",
+          "usage": "lnstat [ options ]",
+          "options": [
+            "-h",
+            "--help",
+            "-V",
+            "--version",
+            "-c",
+            "--count",
+            "-d",
+            "--dump"
+          ],
+          "officialExamples": [],
+          "locator": "https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tag/?h=v7.1.0 · man/man8/lnstat.8",
+          "constraints": [
+            "requires Linux with iproute2 7.1.0 installed; optional targets depend on build features"
+          ]
+        },
+        {
+          "command": "netshaper",
+          "aliases": [],
+          "description": "netshaper show / manipulate network device hardware shaping configuration",
+          "usage": ".ad l .in +8 .ti -8 netshaper \"[ \" OPTIONS \" ] { \" COMMAND \" | \" help \" }\" .sp .ti -8 OPTIONS \" := { \" V[ersion] | c[olor] | help } .ti -8 \"netshaper set\" dev DEV handle scope HANDLE_SCOPE \"[ \" id HANDLE_ID \" ]\" bw-max BW_MAX .ti -8 \"netshaper\" \" { \" show \" | \" delete \" }\" dev DE",
+          "options": [
+            "-V",
+            "-Version",
+            "-c",
+            "-help"
+          ],
+          "officialExamples": [],
+          "locator": "https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tag/?h=v7.1.0 · man/man8/netshaper.8",
+          "constraints": [
+            "requires Linux with iproute2 7.1.0 installed; optional targets depend on build features"
+          ]
+        },
+        {
+          "command": "nstat",
+          "aliases": [],
+          "description": "nstat",
+          "usage": "nstat",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tag/?h=v7.1.0 · man/man8/nstat.8",
+          "constraints": [
+            "requires Linux with iproute2 7.1.0 installed; optional targets depend on build features"
+          ]
+        },
+        {
+          "command": "rdma",
+          "aliases": [],
+          "description": "rdma RDMA tool",
+          "usage": ".sp .ad l .in +8 .ti -8 rdma \"[ \" OPTIONS \" ] \" OBJECT \" { \" COMMAND \" | \" help \" }\" .sp .ti -8 rdma \"[ \" -force \" ] \" \"-batch \" filename .sp .ti -8 OBJECT \" := { \" dev \" | \" link \" | \" resource \" | \" system \" | \" statistic \" | \" monitor \" }\" .sp .ti -8 OPTIONS \" := { \" V[ersion]",
+          "options": [
+            "-V",
+            "-Version",
+            "-b",
+            "-batch",
+            "-force",
+            "-d",
+            "--details",
+            "-r"
+          ],
+          "officialExamples": [],
+          "locator": "https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tag/?h=v7.1.0 · man/man8/rdma.8",
+          "constraints": [
+            "requires Linux with iproute2 7.1.0 installed; optional targets depend on build features"
+          ]
+        },
+        {
+          "command": "routel",
+          "aliases": [],
+          "description": "routel list routes with pretty output format",
+          "usage": "routel \"[ \" OPTIONS \" ]\" \"[ \" tablenr [ ip route options... ] ] .ti 8 OPTIONS \" := {\" -h | --help | [{-f | --family } {inet | inet6 } | -4 | -6 }",
+          "options": [],
+          "officialExamples": [],
+          "locator": "https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tag/?h=v7.1.0 · man/man8/routel.8",
+          "constraints": [
+            "requires Linux with iproute2 7.1.0 installed; optional targets depend on build features"
+          ]
+        },
+        {
+          "command": "rtacct",
+          "aliases": [],
+          "description": "network statistics tools",
+          "usage": "Usage: nstat [ -h?vVzrnasd:t:jp ] [ PATTERN [ PATTERN ] ] .br Usage: rtacct [ -h?vVzrnasd:t: ] [ ListOfRealms ]",
+          "options": [
+            "-h",
+            "--help",
+            "-V",
+            "--version",
+            "-z",
+            "--zeros",
+            "-r",
+            "--reset"
+          ],
+          "officialExamples": [],
+          "locator": "https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tag/?h=v7.1.0 · man/man8/rtacct.8",
+          "constraints": [
+            "requires Linux with iproute2 7.1.0 installed; optional targets depend on build features"
+          ]
+        },
+        {
+          "command": "rtmon",
+          "aliases": [],
+          "description": "rtmon listens to and monitors RTnetlink",
+          "usage": ".sp .ad l .in +8 .ti -8 \"rtmon\" \"[ \" OPTIONS \" ] \" \"file \" FILE \"[ \" all \"| \" OBJECTS \"]\" .ti -8 OPTIONS \":= { f[amily] { inet | inet6 | link | help } |\" \"-4 | -6 | -0 | -V[ersion] }\" .ti -8 OBJECTS \":= [\" link \"]\" \"[\" address \"]\" \"[\" route \"]\"",
+          "options": [
+            "-Version",
+            "-family",
+            "-4",
+            "-6",
+            "-0"
+          ],
+          "officialExamples": [],
+          "locator": "https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tag/?h=v7.1.0 · man/man8/rtmon.8",
+          "constraints": [
+            "requires Linux with iproute2 7.1.0 installed; optional targets depend on build features"
+          ]
+        },
+        {
+          "command": "ss",
+          "aliases": [],
+          "description": "ss another utility to investigate sockets",
+          "usage": "ss [ options ] \" [ FILTER ]\"",
+          "options": [
+            "-h",
+            "--help",
+            "-V",
+            "--version",
+            "-H",
+            "--no-header",
+            "-Q",
+            "--no-queues"
+          ],
+          "officialExamples": [],
+          "locator": "https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tag/?h=v7.1.0 · man/man8/ss.8",
+          "constraints": [
+            "requires Linux with iproute2 7.1.0 installed; optional targets depend on build features"
+          ]
+        },
+        {
+          "command": "tc",
+          "aliases": [],
+          "description": "tc show / manipulate traffic control settings",
+          "usage": "tc \"[ \" OPTIONS \" ]\" qdisc [ add | change | replace | link | delete ] dev DEV [ parent qdisc-id | root ] [ handle qdisc-id ] [ ingress_block BLOCK_INDEX ] [ egress_block BLOCK_INDEX ] qdisc [ qdisc specific parameters ] tc \"[ \" OPTIONS \" ]\" class [ add | change | replace | delete",
+          "options": [
+            "-b",
+            "-batch",
+            "-force",
+            "-o",
+            "-oneline",
+            "-n",
+            "-net",
+            "-netns"
+          ],
+          "officialExamples": [],
+          "locator": "https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tag/?h=v7.1.0 · man/man8/tc.8",
+          "constraints": [
+            "requires Linux with iproute2 7.1.0 installed; optional targets depend on build features"
+          ]
+        },
+        {
+          "command": "tipc",
+          "aliases": [],
+          "description": "tipc a TIPC configuration and management tool",
+          "usage": ".ad l .in +8 .ti -8 tipc \"[ \" OPTIONS \" ] \" COMMAND \" \" ARGUMENTS \" .sp .ti -8 COMMAND \" := { \" bearer \" | \" link \" | \" media \" | \" nametable \" | \" node \" | \" socket \" } .sp .ti -8 OPTIONS \" := { \" h[help] }",
+          "options": [
+            "-h",
+            "--help",
+            "-j",
+            "-json",
+            "-p",
+            "-pretty"
+          ],
+          "officialExamples": [],
+          "locator": "https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tag/?h=v7.1.0 · man/man8/tipc.8",
+          "constraints": [
+            "requires Linux with iproute2 7.1.0 installed; optional targets depend on build features"
+          ]
+        },
+        {
+          "command": "vdpa",
+          "aliases": [],
+          "description": "vdpa vdpa management tool",
+          "usage": ".sp .ad l .in +8 .ti -8 vdpa \"[ \" OPTIONS \" ] { \" dev | mgmtdev \" } { \" COMMAND \" | \" help \" }\" .sp",
+          "options": [
+            "-V",
+            "--Version",
+            "-j",
+            "--json",
+            "-p",
+            "--pretty"
+          ],
+          "officialExamples": [],
+          "locator": "https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tag/?h=v7.1.0 · man/man8/vdpa.8",
+          "constraints": [
+            "requires Linux with iproute2 7.1.0 installed; optional targets depend on build features"
+          ]
+        }
+      ],
+      "exclusions": [
+        {
+          "entry": "ip-*/tc-*/dcb-*/devlink-* man pages",
+          "reason": "subcommands of installed frontends, not standalone executables"
+        }
+      ]
+    }
+  ],
+  "manifestHash": "sha256:c839353e67d8f70a10d781fccc5b8d26efb137bd59866de321b65fc755fbdf3c"
+}

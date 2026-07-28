@@ -8,6 +8,7 @@ const { chromium } = require("playwright");
 
 const extensionRoot = path.resolve(process.argv[2] || "dist/store");
 const output = path.resolve(process.argv[3] || "store-assets/search-and-usage-1280x800.png");
+const captureRecommendations = /recommend|local-ai/i.test(path.basename(output));
 
 function unpackedExtensionId(root) {
   const digest = crypto.createHash("sha256").update(fs.realpathSync(root)).digest().subarray(0, 16);
@@ -27,19 +28,32 @@ function unpackedExtensionId(root) {
   try {
     const page = await context.newPage();
     await page.goto(`chrome-extension://${unpackedExtensionId(extensionRoot)}/popup.html`);
-    await page.evaluate(() => chrome.storage.local.set({ onboarded: true }));
+    await page.evaluate(() => chrome.storage.local.set({
+      onboarded: true,
+      enabledTools: window.CHEATSHEET_FILES,
+      dataMigrationVersion: 2,
+    }));
     await page.reload();
     await page.waitForSelector("#main .empty-welcome");
-    await page.fill("#search", "恢复会话");
-    await page.waitForSelector("#main .entry-wrap");
-    const usage = page.locator("#main [data-usage]").first();
-    if (await usage.count()) await usage.click();
+    if (captureRecommendations) {
+      await page.click("#openManage");
+      await page.waitForSelector("#recommendedTools .recommend-card");
+    } else {
+      await page.fill("#search", "恢复会话");
+      await page.waitForSelector("#main .entry-wrap");
+      const usage = page.locator("#main [data-usage]").first();
+      if (await usage.count()) await usage.click();
+    }
     await page.addStyleTag({ content: `
       html { width: 1280px !important; height: 800px !important; display: flex; align-items: center; justify-content: center;
         background: radial-gradient(circle at 20% 10%, #29364a 0, #111827 45%, #080d15 100%); }
-      body { flex: none; width: 460px !important; height: 600px !important; border: 1px solid #344155;
+      body { flex: none; width: ${captureRecommendations ? 540 : 460}px !important; height: ${captureRecommendations ? 720 : 600}px !important; border: 1px solid #344155;
         border-radius: 14px; box-shadow: 0 30px 80px rgba(0,0,0,.5); overflow: hidden; }
+      ${captureRecommendations ? "#recommendedTools { max-height: 300px; overflow: hidden; }" : ""}
     ` });
+    if (captureRecommendations) {
+      await page.locator("#recommendationPanel").evaluate((element) => element.scrollIntoView({ block: "start" }));
+    }
     fs.mkdirSync(path.dirname(output), { recursive: true });
     await page.screenshot({ path: output, fullPage: false });
     console.log(`Created Chrome Web Store screenshot: ${output}`);

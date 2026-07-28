@@ -96,6 +96,10 @@ assert.strictEqual(core.getPlatformCommand({
   cmd: "Windows only",
   platforms: ["windows"],
 }, "mac").unsupported, true);
+assert.strictEqual(core.getPlatformCommand({
+  cmd: "systemctl status sshd",
+  platforms: ["linux"],
+}, "mac").platformMismatch, true, "cross-platform visibility should use platformMismatch while retaining the compatibility alias");
 // 平台回退：定义了 platformCmds 但当前平台缺失时回退通用 cmd 并标记 usedFallback。
 const fallbackPlatform = core.getPlatformCommand({
   cmd: "generic",
@@ -109,6 +113,10 @@ assert.strictEqual(core.getPlatformExample({
   value: "sed -i 's/a/b/g' file",
   platformValues: { mac: "sed -i '' 's/a/b/g' file" },
 }, "mac").value, "sed -i '' 's/a/b/g' file");
+assert.strictEqual(core.getPlatformExample({
+  value: "journalctl -u sshd",
+  platforms: ["linux"],
+}, "mac").platformMismatch, true, "other-platform examples should remain identifiable without being hidden");
 
 const recent = core.updateRecent(
   [{ toolId: "codex", itemId: "old", copiedAt: 1 }],

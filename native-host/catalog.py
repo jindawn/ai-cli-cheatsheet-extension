@@ -3,8 +3,8 @@
 import json
 
 
-def catalog_entry(tool_id, meta):
-    return {
+def catalog_entry(tool_id, meta, content_hash=None):
+    entry = {
         "id": tool_id,
         "name": meta.get("name", tool_id),
         "color": meta.get("color", "#666666"),
@@ -13,6 +13,9 @@ def catalog_entry(tool_id, meta):
         "builtIn": meta.get("builtIn") is True,
         "order": meta.get("order", 999),
     }
+    if content_hash:
+        entry["contentHash"] = content_hash
+    return entry
 
 
 def render_data_index(tool_ids, catalog):

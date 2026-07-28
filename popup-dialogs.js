@@ -35,8 +35,9 @@
       pendingRiskResolve = null;
     }
 
-    function confirmRiskCopy(value, risk) {
-      if (!risk.requiresConfirmation) return Promise.resolve(true);
+    function confirmRiskCopy(value, risk, options = {}) {
+      const platformNotice = String(options.platformNotice || "").trim();
+      if (!risk.requiresConfirmation && !platformNotice) return Promise.resolve(true);
       const dialog = riskDialogElement();
       if (pendingRiskResolve) {
         // 已有未决的风险确认：第二次复制请求直接按"未确认"处理，
@@ -45,12 +46,24 @@
         return Promise.resolve(false);
       }
       if (!dialog) {
-        return Promise.resolve(deps.confirmFallback(`这是高风险命令：${risk.warning}\n\n${value}\n\n确定要复制吗？`));
+        const notices = [
+          platformNotice,
+          risk.requiresConfirmation ? `这是高风险命令：${risk.warning}` : "",
+        ].filter(Boolean).join("\n\n");
+        return Promise.resolve(deps.confirmFallback(`${notices}\n\n${value}\n\n确定要复制吗？`));
       }
-      doc.getElementById("riskSummary").textContent = `风险类型：${risk.labels.join("、") || risk.warning || "高风险操作"}`;
+      doc.getElementById("riskTitle").textContent = platformNotice
+        ? risk.requiresConfirmation ? "确认目标平台与命令风险" : "确认命令目标平台"
+        : "复制前确认高风险命令";
+      doc.getElementById("riskSummary").textContent = platformNotice
+        ? risk.requiresConfirmation ? `平台提醒 · 风险类型：${risk.labels.join("、") || risk.warning || "高风险操作"}` : "该命令适用于其他平台"
+        : `风险类型：${risk.labels.join("、") || risk.warning || "高风险操作"}`;
       doc.getElementById("riskCommand").textContent = value;
-      const details = deps.core.commandRiskDetails(risk);
-      doc.getElementById("riskDetails").innerHTML = (details.length ? details : ["复制前请确认命令、路径、目标环境和当前上下文。"])
+      const riskDetails = risk.requiresConfirmation ? deps.core.commandRiskDetails(risk) : [];
+      const details = [platformNotice, ...riskDetails].filter(Boolean);
+      const detailsElement = doc.getElementById("riskDetails");
+      detailsElement.className = `risk-list${risk.requiresConfirmation ? "" : " platform-only"}`;
+      detailsElement.innerHTML = (details.length ? details : ["复制前请确认命令、路径、目标环境和当前上下文。"])
         .map((detail) => `<li>${deps.render.escapeHtml(detail)}</li>`)
         .join("");
       dialog.classList.add("show");
@@ -109,6 +122,10 @@
     }
 
     function bindOnboarding() {
+      doc.getElementById("onboardPlatform").addEventListener("change", (event) => {
+        deps.setPlatform(event.target.value);
+        renderOnboardChoices();
+      });
       doc.querySelectorAll("[data-preset]").forEach((button) => button.addEventListener("click", () => {
         const preset = button.dataset.preset;
         const selected = preset === "all"
@@ -120,7 +137,7 @@
       }));
       doc.getElementById("saveOnboarding").addEventListener("click", async () => {
         const selected = [...doc.querySelectorAll("#onboardTools input:checked")].map((input) => input.value);
-        deps.setEnabledTools(new Set(selected.length ? selected : deps.state.getToolIds(deps.getAllData())));
+        deps.setEnabledTools(new Set(selected.length ? selected : deps.state.availableToolIds(deps.getAllData(), deps.getPlatform())));
         deps.setPlatform(doc.getElementById("onboardPlatform").value);
         await deps.storageSet({ enabledTools: [...deps.getEnabledTools()], platform: deps.getPlatform(), onboarded: true });
         hideOnboarding({ focusSearch: true });

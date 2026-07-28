@@ -2,6 +2,7 @@
 """Native Messaging host for safe, schema-validated cheatsheet updates."""
 
 import atexit
+import base64
 import copy
 import datetime
 import glob
@@ -24,7 +25,16 @@ import urllib.parse
 import urllib.error
 import urllib.request
 
+# A development install uses symlinked bridge files but may predate a newly
+# added helper module. Prefer the explicitly configured checkout when present
+# so upgrading the extension code does not leave the development host with a
+# half-old import set. Packaged bridges have no checkout path and keep using
+# their bundled directory.
+_configured_project = os.environ.get("AICLI_PROJECT_DIR", "").strip()
+_configured_native_host = os.path.join(_configured_project, "native-host")
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+if os.path.isfile(os.path.join(_configured_native_host, "provider_installers.py")):
+    sys.path.insert(0, _configured_native_host)
 from protocol import read_native_message, send_native_message  # noqa: E402
 from catalog import catalog_entry, render_data_index  # noqa: E402
 from official_inventory import (  # noqa: E402
@@ -32,9 +42,27 @@ from official_inventory import (  # noqa: E402
     fetch_official_inventory,
     inventory_hash,
 )
+from provider_registry import (  # noqa: E402
+    PROVIDER_ID_RE,
+    ProviderRegistryError,
+    configure_api_interactive,
+    delete_custom_adapter,
+    download_catalog_envelope,
+    install_catalog_envelope,
+    load_api_profiles,
+    load_common_provider_catalog,
+    load_registry,
+    refresh_catalog_if_stale,
+    remove_api_interactive,
+    save_api_profile,
+    save_custom_adapter,
+    save_generic_adapter,
+)
+from provider_installers import installer_profile  # noqa: E402
 
-# Track the active claude subprocess so it can be cleaned up if host.py is killed.
+# Track the active provider subprocess so it can be cleaned up if host.py is killed.
 _active_proc = None
+_last_model_ids = {}
 
 
 def _kill_active_proc():
@@ -60,9 +88,23 @@ signal.signal(signal.SIGTERM, _sigterm_handler)
 
 
 def _project_base_dir():
+    if getattr(sys, "frozen", False) and getattr(sys, "_MEIPASS", None):
+        return sys._MEIPASS
     return os.environ.get("AICLI_PROJECT_DIR") or os.path.dirname(
         os.path.dirname(os.path.abspath(__file__))
     )
+
+
+def _default_state_dir():
+    if not getattr(sys, "frozen", False):
+        return os.path.join(_project_base_dir(), ".aicli-pending")
+    if sys.platform == "win32":
+        root = os.environ.get("LOCALAPPDATA") or os.path.expanduser("~")
+        return os.path.join(root, "AI CLI Cheatsheet", "bridge-state")
+    if sys.platform == "darwin":
+        return os.path.join(os.path.expanduser("~"), "Library", "Application Support", "AI CLI Cheatsheet", "bridge-state")
+    root = os.environ.get("XDG_STATE_HOME") or os.path.join(os.path.expanduser("~"), ".local", "state")
+    return os.path.join(root, "ai-cli-cheatsheet", "bridge-state")
 
 
 def load_validation_rules():
@@ -78,13 +120,24 @@ VALIDATION_RULES = load_validation_rules()
 
 
 HOST_ACTIONS = {
+    "handshake",
     "ping",
     "add_tool",
     "preview_update",
     "apply_update",
     "discard_update",
     "remove_tool",
-    "suggest_tools",
+    "read_bundle_chunk",
+    "finalize_bundle",
+    "update_provider_catalog",
+    "import_provider_catalog",
+    "configure_api",
+    "save_custom_provider",
+    "delete_custom_provider",
+    "resolve_generic_provider",
+    "enable_generic_provider",
+    "prepare_common_provider_install",
+    "install_common_provider",
 }
 TOOL_ID_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 # 推荐工具的分类键（与浏览器侧 popup-state.js 的 RECOMMENDATION_CATEGORIES 对齐）。
@@ -116,7 +169,7 @@ SHELL_TOOL_ALIASES = {"shell", "terminal", "command-line", "commandline", "命�
 # environment itself (sh/POSIX, bash, zsh): built-ins, keywords, syntax,
 # shortcuts, config files, environment, history, completion, troubleshooting.
 # External CLI tools (ls/grep/sed/find/tar/git/docker/npm/claude/codex...) live
-# in their own categories (e.g. "GNU/Linux CLI", Git) and only appear here as
+# in their own categories (e.g. Unix/POSIX 基础命令、Linux 系统工具、Git) and only appear here as
 # related keywords, never as Shell items.
 SHELL_LAYERS = set(VALIDATION_RULES["shell"]["layers"])
 SHELL_PORTABILITIES = set(VALIDATION_RULES["shell"]["portabilities"])
@@ -126,7 +179,7 @@ SHELL_BATCH_MAX_ITEMS = 20
 # inside the model output cap. If even this truncates, fail with a clear error.
 SHELL_BATCH_MIN_ITEMS = 3
 # Each batch covers Shell本体 only — the interpreter and terminal environment.
-# No external utilities (those belong to GNU/Linux CLI, Git, AI Coding, etc.).
+# No external utilities (those belong to Unix/POSIX、Linux 系统工具、Git、AI Coding, etc.).
 SHELL_BATCHES = [
     {"id": "posix-builtins", "label": "POSIX sh 内置", "topics": ["builtins"], "scope": "POSIX sh 核心内置命令：cd、pwd、echo、printf、read、test/[、:、true/false、exit、return、shift、eval、exec、getopts、umask"},
     {"id": "bash-builtins", "label": "bash 内置命令", "topics": ["builtins"], "scope": "bash 专有内置：type、command、hash、help、builtin、enable、declare、local、let、mapfile/readarray、compgen/complete、bind、shopt、caller（只收录 bash 解释器本体）"},
@@ -145,7 +198,11 @@ SHELL_BATCHES = [
     {"id": "prompt-options", "label": "提示符与 shell 选项", "topics": ["config", "syntax"], "scope": "提示符 PS1/PS2、zsh PROMPT；set -e、set -u、set -o pipefail、set -x；shopt、setopt 常用选项"},
     {"id": "troubleshooting", "label": "命令来源与脚本排错", "topics": ["troubleshooting", "scripting"], "scope": "type -a、command -v、which、hash -r 排查命令来源/别名遮蔽；$?、set -x 调试、|| true、set -e 陷阱"},
 ]
-MAX_MESSAGE_BYTES = 1024 * 1024
+PROTOCOL_VERSION = 5
+DATA_SCHEMA_VERSION = 2
+COMPANION_VERSION = "1.7.6"
+MAX_MESSAGE_BYTES = 16 * 1024 * 1024
+TRANSFER_CHUNK_BYTES = 512 * 1024
 MAX_ITEMS = VALIDATION_RULES["limits"]["maxItems"]
 MAX_FIELD_LENGTH = VALIDATION_RULES["limits"]["maxFieldLength"]
 MIN_KEYWORDS = VALIDATION_RULES["keywords"]["min"]
@@ -441,13 +498,309 @@ def reports_missing_node_runtime(text):
 
 
 CLAUDE_BIN = find_executable("claude")
-PROJECT_DIR = os.path.realpath(
-    os.environ.get("AICLI_PROJECT_DIR")
-    or os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-)
+CODEX_BIN = find_executable("codex")
+GEMINI_BIN = find_executable("gemini")
+OPENCODE_BIN = find_executable("opencode")
+PROJECT_DIR = os.path.realpath(_project_base_dir())
+SHARED_DIR = os.path.realpath(os.path.join(PROJECT_DIR, "shared"))
 DATA_DIR = os.path.realpath(os.path.join(PROJECT_DIR, "data"))
 DATA_INDEX = os.path.join(DATA_DIR, "index.js")
-PENDING_DIR = os.path.realpath(os.path.join(PROJECT_DIR, ".aicli-pending"))
+PENDING_DIR = os.path.realpath(os.environ.get("AICLI_STATE_DIR") or _default_state_dir())
+BRIDGE_WORK_DIR = os.path.realpath(os.environ.get("AICLI_BRIDGE_WORK_DIR") or PENDING_DIR)
+
+
+def provider_registry():
+    try:
+        return load_registry(SHARED_DIR, PENDING_DIR)
+    except ProviderRegistryError as exc:
+        raise ValidationError(str(exc)) from exc
+
+
+def _common_provider_entry(common_provider_id):
+    if not isinstance(common_provider_id, str) or not re.fullmatch(
+            r"[a-z][a-z0-9-]{0,63}", common_provider_id):
+        raise ValidationError("常见 AI 环境 ID 无效")
+    try:
+        return next(
+            entry for entry in load_common_provider_catalog(SHARED_DIR)
+            if entry["id"] == common_provider_id
+        )
+    except StopIteration as exc:
+        raise ValidationError("该常见 AI 环境未登记，不能安装") from exc
+    except ProviderRegistryError as exc:
+        raise ValidationError(str(exc)) from exc
+
+
+def _version_major(executable):
+    """Read only the first semantic version component from a local probe."""
+    if not executable:
+        return None
+    _returncode, output = _probe_command([executable, "--version"])
+    match = re.search(r"(?:v|version\s*)?(\d+)(?:\.\d+){0,2}", output, re.IGNORECASE)
+    return int(match.group(1)) if match else None
+
+
+def common_provider_installation_status(entry, registry=None):
+    """Return UI-safe install readiness without exposing commands or paths."""
+    profile = installer_profile(entry["id"])
+    if profile and registry is not None and profile["providerId"] not in registry["byId"]:
+        # A v5-only built-in adapter is unavailable when its optional overlay
+        # could not be validated. Never offer an installer that would leave
+        # the user with a non-executable Provider.
+        return {
+            "state": "unsupported",
+            "canInstall": False,
+            "providerId": profile["providerId"],
+            "sourceLabel": profile["sourceLabel"],
+            "officialUrl": entry["officialUrl"],
+        }
+    installed = bool(find_executable(entry["executable"]))
+    base = {
+        "state": "installed" if installed else "unsupported",
+        "canInstall": False,
+        "providerId": profile["providerId"] if profile else None,
+        "sourceLabel": profile["sourceLabel"] if profile else None,
+        "officialUrl": entry["officialUrl"],
+    }
+    if installed:
+        return base
+    if profile is None:
+        return base
+    for prerequisite in profile["prerequisites"]:
+        executable = find_executable(prerequisite["executable"])
+        minimum_major = prerequisite.get("minimumMajor")
+        version_major = _version_major(executable) if minimum_major is not None else None
+        if not executable or (
+                minimum_major is not None
+                and (version_major is None or version_major < minimum_major)):
+            return {
+                **base,
+                "state": "prerequisite-missing",
+                "prerequisite": prerequisite["label"],
+            }
+    return {
+        **base,
+        "state": "ready",
+        "canInstall": True,
+        "prerequisite": None,
+    }
+
+
+def prepare_common_provider_install(common_provider_id):
+    entry = _common_provider_entry(common_provider_id)
+    status = common_provider_installation_status(entry, provider_registry())
+    return {
+        "ok": True,
+        "commonProviderId": entry["id"],
+        "displayName": entry["displayName"],
+        "expectedExecutable": entry["executable"],
+        "installation": status,
+    }
+
+
+def install_common_provider(common_provider_id):
+    """Install one bridge-owned profile using a fixed direct-process command.
+
+    The action only accepts a catalog ID.  The selected profile and all argv
+    values live in ``provider_installers.py``; no browser or model supplied
+    text can affect what gets executed.
+    """
+    entry = _common_provider_entry(common_provider_id)
+    registry = provider_registry()
+    status = common_provider_installation_status(entry, registry)
+    if status["state"] != "ready":
+        return {
+            "ok": status["state"] == "installed",
+            "commonProviderId": entry["id"],
+            "displayName": entry["displayName"],
+            "installation": status,
+        }
+    profile = installer_profile(entry["id"])
+    if profile is None:  # Defensive: readiness above can only be true with one.
+        raise ValidationError("该 AI 环境没有可验证的安装方式")
+    installer = find_executable(profile["installer"]["executable"])
+    if not installer:
+        return {
+            "ok": False,
+            "commonProviderId": entry["id"],
+            "displayName": entry["displayName"],
+            "installation": {
+                **status,
+                "state": "prerequisite-missing",
+                "canInstall": False,
+                "prerequisite": "npm（随 Node.js 提供）",
+            },
+        }
+    global _active_proc
+    try:
+        _active_proc = subprocess.Popen(
+            [installer, *profile["installer"]["argv"]],
+            cwd=BRIDGE_WORK_DIR if os.path.isdir(BRIDGE_WORK_DIR) else PROJECT_DIR,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            env=subprocess_environment(allow_web=True),
+        )
+        try:
+            _stdout, _stderr = _active_proc.communicate(timeout=600)
+        except subprocess.TimeoutExpired:
+            _active_proc.kill()
+            _active_proc.communicate()
+            return {
+                "ok": False,
+                "commonProviderId": entry["id"],
+                "displayName": entry["displayName"],
+                "installation": {**status, "state": "failed", "canInstall": True},
+                "error": "安装超时，请检查网络或软件包权限后重试。",
+            }
+        if _active_proc.returncode != 0:
+            return {
+                "ok": False,
+                "commonProviderId": entry["id"],
+                "displayName": entry["displayName"],
+                "installation": {**status, "state": "failed", "canInstall": True},
+                "error": "安装未成功完成，请检查网络、软件包权限和 Node.js 版本后重试。",
+            }
+    except OSError:
+        return {
+            "ok": False,
+            "commonProviderId": entry["id"],
+            "displayName": entry["displayName"],
+            "installation": {**status, "state": "failed", "canInstall": True},
+            "error": "无法启动官方安装程序，请重新检测前置条件后重试。",
+        }
+    finally:
+        _active_proc = None
+    installed_status = common_provider_installation_status(entry, registry)
+    if installed_status["state"] != "installed":
+        return {
+            "ok": False,
+            "commonProviderId": entry["id"],
+            "displayName": entry["displayName"],
+            "installation": {**installed_status, "state": "failed"},
+            "error": "安装完成后仍未检测到该工具，请重新打开浏览器后再检测。",
+        }
+    return {
+        "ok": True,
+        "commonProviderId": entry["id"],
+        "displayName": entry["displayName"],
+        "providerId": profile["providerId"],
+        "installation": installed_status,
+    }
+
+
+def common_provider_statuses(registry):
+    """Expose common entries plus UI-safe installation readiness."""
+    try:
+        common = load_common_provider_catalog(SHARED_DIR)
+    except ProviderRegistryError:
+        return []
+    known_by_executable = {}
+    for adapter in registry["providers"]:
+        for candidate in adapter.get("executableCandidates", []):
+            known_by_executable.setdefault(candidate.casefold(), adapter)
+    result = []
+    for entry in common:
+        known = known_by_executable.get(entry["executable"].casefold())
+        result.append({
+            **entry,
+            "installed": bool(find_executable(entry["executable"])),
+            "registeredProviderId": known.get("id") if known else None,
+            "registeredSource": known.get("source") if known else None,
+            "installation": common_provider_installation_status(entry, registry),
+        })
+    return result
+
+
+def _generic_executable_name(value):
+    """Return one deterministic PATH filename candidate, never a path."""
+    if not isinstance(value, str) or not value.strip():
+        return None
+    compact = re.sub(r"\s+", "-", value.strip().lower())
+    return compact if re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._+-]{0,79}", compact) else None
+
+
+def resolve_generic_provider(display_name, executable=None):
+    """Discover a candidate without generating text or exposing local paths."""
+    name = str(display_name or "").strip()
+    if not name or len(name) > 100:
+        raise ValidationError("AI 工具名称无效")
+    candidate = _generic_executable_name(executable or name)
+    if not candidate:
+        return {"ok": True, "found": False, "displayName": name, "needsExecutable": True}
+    registry = provider_registry()
+    matching = [adapter for adapter in registry["providers"]
+                if candidate.casefold() in {
+                    item.casefold() for item in adapter.get("executableCandidates", [])
+                }]
+    # Built-in and signed adapters retain priority; existing user entries are
+    # returned as-is so a second generic confirmation is never required.
+    matching.sort(key=lambda item: (0 if item["source"] in {"builtin", "catalog"} else 1,
+                                    item.get("recommendationOrder", 1000)))
+    if matching:
+        status = provider_status(matching[0]["id"], prefer_cli_version=True)
+        return {
+            "ok": True,
+            "found": status["installed"],
+            "displayName": status["displayName"],
+            "executable": candidate,
+            "version": status.get("version"),
+            "existingProviderId": status["id"],
+            "existingProviderSource": status["source"],
+            "executionMode": status.get("executionMode"),
+        }
+    binary = find_executable(candidate)
+    if not binary:
+        return {"ok": True, "found": False, "displayName": name, "executable": candidate, "needsExecutable": True}
+    _returncode, output = _probe_command([binary, "--version"])
+    return {
+        "ok": True,
+        "found": True,
+        "displayName": name,
+        "executable": candidate,
+        "version": re.sub(r"\s+", " ", output)[:100] or None,
+        "requiresGenericConfirmation": True,
+    }
+
+
+def provider_adapter(provider_id):
+    adapter = provider_registry()["byId"].get(provider_id)
+    if not adapter:
+        raise ValidationError("所选 AI 执行环境不存在或适配器已被移除")
+    return adapter
+
+
+def redact_sensitive_text(text):
+    """Remove credential material before text reaches the UI or local logs."""
+    value = str(text or "")
+    for name in ("ANTHROPIC_AUTH_TOKEN", "ANTHROPIC_API_KEY"):
+        secret = os.environ.get(name)
+        if secret and len(secret) >= 6:
+            value = value.replace(secret, "<REDACTED>")
+    patterns = (
+        r"(?i)(\b(?:authorization|x-api-key|api[_-]?key|auth[_-]?token|access[_-]?token)\s*[:=]\s*(?:Bearer\s+)?)[^\s,;\"']+",
+        r"\b(?:AKIA|ASIA)[0-9A-Z]{16}\b",
+        r"\bAIza[0-9A-Za-z_-]{35}\b",
+        r"\b(?:gh[pousr]_[A-Za-z0-9_]{30,}|github_pat_[A-Za-z0-9_]{20,})\b",
+        r"\bsk-(?:ant-|proj-)?[A-Za-z0-9_-]{20,}\b",
+        r"\bxox[baprs]-[A-Za-z0-9-]{10,}\b",
+    )
+    value = re.sub(patterns[0], r"\1<REDACTED>", value)
+    for pattern in patterns[1:]:
+        value = re.sub(pattern, "<REDACTED>", value)
+    value = re.sub(
+        r"-----BEGIN (?:RSA |EC |OPENSSH |DSA )?PRIVATE KEY-----.*?"
+        r"-----END (?:RSA |EC |OPENSSH |DSA )?PRIVATE KEY-----",
+        "<REDACTED PRIVATE KEY>",
+        value,
+        flags=re.DOTALL,
+    )
+    return value
+
+
+class RedactingFormatter(logging.Formatter):
+    def format(self, record):
+        return redact_sensitive_text(super().format(record))
 
 
 def _setup_logger():
@@ -466,7 +819,7 @@ def _setup_logger():
             backupCount=2,
             encoding="utf-8",
         )
-        handler.setFormatter(logging.Formatter("%(asctime)s %(levelname)s %(message)s"))
+        handler.setFormatter(RedactingFormatter("%(asctime)s %(levelname)s %(message)s"))
         logger.addHandler(handler)
     except OSError:
         logger.addHandler(logging.NullHandler())
@@ -476,13 +829,226 @@ def _setup_logger():
 LOGGER = _setup_logger()
 
 
+def _probe_command(args, timeout=8):
+    """Run a bounded, non-generating CLI probe without returning account data."""
+    try:
+        result = subprocess.run(
+            args,
+            cwd=BRIDGE_WORK_DIR if os.path.isdir(BRIDGE_WORK_DIR) else PROJECT_DIR,
+            capture_output=True,
+            text=True,
+            timeout=timeout,
+            env=subprocess_environment(allow_web=False),
+        )
+    except (OSError, subprocess.TimeoutExpired, ValueError):
+        return 127, ""
+    return result.returncode, (result.stdout or result.stderr or "").strip()[:32768]
+
+
+def _provider_binary(provider_id, adapter=None):
+    builtins = {
+        "claude": CLAUDE_BIN,
+        "codex": CODEX_BIN,
+        "gemini": GEMINI_BIN,
+        "opencode": OPENCODE_BIN,
+    }
+    if provider_id in builtins:
+        return builtins[provider_id]
+    adapter = adapter or provider_adapter(provider_id)
+    if adapter.get("transport") != "cli":
+        return None
+    for candidate in adapter.get("executableCandidates", []):
+        executable = find_executable(candidate)
+        if executable:
+            return executable
+    return None
+
+
+def _provider_version(provider_id, executable, prefer_cli=False, adapter=None):
+    adapter = adapter or provider_adapter(provider_id)
+    if adapter.get("transport") == "api":
+        return adapter.get("model")
+    if provider_id == "claude" and _has_api_token() and not prefer_cli:
+        return "Anthropic compatible API"
+    if not executable:
+        return "Anthropic compatible API" if provider_id == "claude" and _has_api_token() else None
+    version_args = adapter.get("versionArgs", ["--version"])
+    returncode, output = _probe_command([executable, *version_args])
+    if returncode != 0:
+        return None
+    return re.sub(r"\s+", " ", output)[:100]
+
+
+def _dotenv_keys(path):
+    """Return configured variable names without ever loading credential values."""
+    try:
+        with open(path, "r", encoding="utf-8") as handle:
+            lines = handle.readlines()
+    except OSError:
+        return set()
+    keys = set()
+    for line in lines:
+        match = re.match(r"\s*(?:export\s+)?([A-Za-z_][A-Za-z0-9_]*)\s*=", line)
+        if match:
+            keys.add(match.group(1))
+    return keys
+
+
+def _gemini_login_state():
+    """Detect Gemini's documented auth configuration without invoking a model."""
+    home = os.path.expanduser("~")
+    gemini_dir = os.path.join(home, ".gemini")
+    environment_keys = {
+        key for key in (
+            "GEMINI_API_KEY", "GOOGLE_API_KEY", "GOOGLE_APPLICATION_CREDENTIALS",
+        ) if os.environ.get(key)
+    }
+    environment_keys.update(_dotenv_keys(os.path.join(gemini_dir, ".env")))
+    selected_type = None
+    try:
+        with open(os.path.join(gemini_dir, "settings.json"), "r", encoding="utf-8") as handle:
+            settings = json.load(handle)
+        selected_type = (
+            settings.get("security", {}).get("auth", {}).get("selectedType")
+            if isinstance(settings, dict) else None
+        )
+    except (OSError, json.JSONDecodeError, AttributeError):
+        pass
+
+    if "GEMINI_API_KEY" in environment_keys or "GOOGLE_API_KEY" in environment_keys:
+        return "configured"
+    if "GOOGLE_APPLICATION_CREDENTIALS" in environment_keys:
+        return "configured"
+    if os.path.isfile(os.path.join(gemini_dir, "oauth_creds.json")):
+        return "logged-in"
+    if selected_type and os.path.isfile(os.path.join(
+        home, ".config", "gcloud", "application_default_credentials.json"
+    )):
+        return "configured"
+    return "not-logged-in"
+
+
+def _provider_login_state(provider_id, executable, adapter=None):
+    adapter = adapter or provider_adapter(provider_id)
+    if adapter.get("transport") == "api":
+        try:
+            configured = next(
+                profile for profile in load_api_profiles(PENDING_DIR, include_secret=True)
+                if profile["id"] == provider_id
+            )
+        except (StopIteration, ProviderRegistryError):
+            return "not-configured"
+        return "configured" if configured.get("token") else "not-configured"
+    if provider_id == "claude" and _has_api_token():
+        return "configured"
+    if not executable:
+        return "not-installed"
+    if provider_id == "gemini":
+        # Gemini has no non-generating auth-status command. Detect only the
+        # documented user settings/cached OAuth/API/ADC signals; the first task
+        # remains the final validity check and never triggers a silent fallback.
+        return _gemini_login_state()
+    commands = {
+        "claude": [executable, "auth", "status", "--json"],
+        "codex": [executable, "login", "status"],
+        "opencode": [executable, "auth", "list"],
+    }
+    if provider_id not in commands:
+        probe = adapter.get("loginProbe")
+        if not probe:
+            return "unknown"
+        returncode, output = _probe_command([executable, *probe["args"]])
+        if returncode != 0:
+            return "not-logged-in"
+        return (
+            "logged-in"
+            if probe["successContains"].casefold() in output.casefold()
+            else "not-logged-in"
+        )
+    returncode, output = _probe_command(commands[provider_id])
+    if returncode != 0:
+        return "not-logged-in"
+    lowered = output.casefold()
+    if provider_id == "claude":
+        try:
+            payload = json.loads(output)
+            return "logged-in" if payload.get("loggedIn") or payload.get("logged_in") else "not-logged-in"
+        except json.JSONDecodeError:
+            return "logged-in" if "logged" in lowered and "not logged" not in lowered else "not-logged-in"
+    if provider_id == "codex":
+        return "logged-in" if "logged in" in lowered else "not-logged-in"
+    # `opencode auth list` exits successfully even when the list is empty.
+    return "logged-in" if output and not re.search(r"\b0\s+(?:credentials|providers?)\b", lowered) else "not-logged-in"
+
+
+def provider_status(provider_id, prefer_cli_version=False):
+    adapter = provider_adapter(provider_id)
+    executable = _provider_binary(provider_id, adapter)
+    api_configured = provider_id == "claude" and _has_api_token()
+    installed = adapter.get("transport") == "api" or bool(executable or api_configured)
+    login_state = _provider_login_state(provider_id, executable, adapter)
+    ready = installed and login_state in {"logged-in", "configured", "unknown"}
+    status = {
+        "id": provider_id,
+        "displayName": adapter["displayName"],
+        "source": adapter["source"],
+        "transport": adapter["transport"],
+        "verified": adapter.get("verified") is True,
+        "version": _provider_version(
+            provider_id, executable, prefer_cli=prefer_cli_version, adapter=adapter
+        ),
+        "installed": installed,
+        "loginState": login_state,
+        "ready": ready,
+        "loginCommand": adapter.get("loginCommand", ""),
+        "capabilities": list(adapter.get("capabilities", [])),
+        "recommendationOrder": adapter.get("recommendationOrder", 1000),
+    }
+    if adapter.get("source") == "custom":
+        execution_mode = adapter.get("executionMode", "legacy-configured")
+        status["executionMode"] = execution_mode
+        status["customConfig"] = {
+            "id": adapter["id"],
+            "displayName": adapter["displayName"],
+            "executable": adapter["executableCandidates"][0],
+            "executionMode": execution_mode,
+        }
+    return status
+
+
+def provider_environment(provider_id):
+    status = provider_status(provider_id)
+    adapter = provider_adapter(provider_id)
+    return {
+        "providerId": provider_id,
+        "providerDisplayName": status["displayName"],
+        "cliVersion": status.get("version"),
+        "modelId": (
+            _last_model_ids.get(provider_id)
+            or adapter.get("model")
+            or (os.environ.get("ANTHROPIC_MODEL") if provider_id == "claude" and _has_api_token() else None)
+            or os.environ.get(f"AICLI_{provider_id.upper().replace(':', '_')}_MODEL")
+        ),
+    }
+
+
+def _remember_model_id(provider_id, payload):
+    if not isinstance(payload, dict):
+        return
+    candidate = payload.get("model") or payload.get("modelId") or payload.get("model_id")
+    if not candidate and isinstance(payload.get("modelUsage"), dict) and payload["modelUsage"]:
+        candidate = next(iter(payload["modelUsage"]))
+    if isinstance(candidate, str) and candidate.strip():
+        _last_model_ids[provider_id] = candidate.strip()[:120]
+
+
 def sanitize_error_text(text):
     """面向 UI 的错误文本脱敏：把本机绝对路径前缀替换为占位符并截断到 500 字符。
 
-    完整原文只进本地日志（host.log）。先替换项目路径再替换 home，
-    因为项目目录通常位于 home 之下。
+    UI 与本地日志共用密钥脱敏；UI 额外替换本机路径并截断。
+    先替换项目路径再替换 home，因为项目目录通常位于 home 之下。
     """
-    value = str(text or "")
+    value = redact_sensitive_text(text)
     if not value:
         return ""
     try:
@@ -584,33 +1150,126 @@ def validate_request(message):
     action = message.get("action")
     if action not in HOST_ACTIONS:
         raise ValidationError(f"未知的 action: {action}")
+    if action == "handshake":
+        return {
+            "action": "handshake",
+            "protocolVersion": message.get("protocolVersion"),
+            "schemaVersion": message.get("schemaVersion"),
+            "extensionId": str(message.get("extensionId") or "")[:128],
+            # Refreshing the signed adapter catalog is allowed only on an
+            # explicit extension user gesture. Handshakes on cold start keep
+            # this false and therefore perform no bridge network activity.
+            "refreshCatalog": message.get("refreshCatalog") is True,
+        }
     if action == "ping":
         return {"action": "ping"}
 
-    if action == "suggest_tools":
-        platform = message.get("platform", "")
-        if platform not in SUGGEST_PLATFORMS:
-            raise ValidationError("平台无效")
-        try:
-            count = int(message.get("count", 8))
-        except (TypeError, ValueError):
-            raise ValidationError("count 必须是整数")
-        count = max(1, min(SUGGEST_MAX_COUNT, count))
-        raw_exclude = message.get("exclude", [])
-        if not isinstance(raw_exclude, list):
-            raise ValidationError("exclude 必须是数组")
-        exclude = []
-        for item in raw_exclude[:SUGGEST_MAX_EXCLUDE]:
-            if isinstance(item, str) and TOOL_ID_RE.match(item):
-                exclude.append(item)
+    if action in {"read_bundle_chunk", "finalize_bundle"}:
+        token = message.get("token", "")
+        if not isinstance(token, str) or not re.fullmatch(r"[a-f0-9]{32}", token):
+            raise ValidationError("分块传输 token 无效")
+        request = {"action": action, "token": token}
+        if action == "read_bundle_chunk":
+            index = message.get("index")
+            if not isinstance(index, int) or index < 0 or index > 63:
+                raise ValidationError("分块序号无效")
+            request["index"] = index
+        return request
+
+    if message.get("protocolVersion") != PROTOCOL_VERSION:
+        raise ValidationError(f"任务协议不兼容，需要 v{PROTOCOL_VERSION}")
+    if action in {"prepare_common_provider_install", "install_common_provider"}:
+        common_provider_id = message.get("commonProviderId")
+        if not isinstance(common_provider_id, str) or not re.fullmatch(
+                r"[a-z][a-z0-9-]{0,63}", common_provider_id):
+            raise ValidationError("常见 AI 环境 ID 无效")
+        if action == "install_common_provider" and message.get("confirmed") is not True:
+            raise ValidationError("安装常见 AI 环境前需要用户确认")
+        return {"action": action, "commonProviderId": common_provider_id}
+    if action == "update_provider_catalog":
+        return {"action": action}
+    if action == "import_provider_catalog":
+        envelope = message.get("envelope")
+        if not isinstance(envelope, dict):
+            raise ValidationError("缺少签名 Provider catalog")
+        if len(json.dumps(envelope, ensure_ascii=False).encode("utf-8")) > 1024 * 1024:
+            raise ValidationError("Provider catalog 超过大小上限")
+        return {"action": action, "envelope": copy.deepcopy(envelope)}
+    if action == "configure_api":
+        config = message.get("config")
+        if not isinstance(config, dict):
+            raise ValidationError("缺少兼容 API 配置")
+        allowed = ("displayName", "protocol", "baseUrl", "model", "token")
+        if any(not isinstance(config.get(field), str) for field in allowed):
+            raise ValidationError("兼容 API 配置字段无效")
+        if len(json.dumps(config, ensure_ascii=False).encode("utf-8")) > 8192:
+            raise ValidationError("兼容 API 配置超过大小上限")
+        return {"action": action, "config": {field: config[field] for field in allowed}}
+    if action == "resolve_generic_provider":
+        display_name = message.get("displayName")
+        executable = message.get("executable")
+        if not isinstance(display_name, str) or not display_name.strip() or len(display_name.strip()) > 100:
+            raise ValidationError("AI 工具名称无效")
+        if executable is not None and (not isinstance(executable, str) or len(executable.strip()) > 80):
+            raise ValidationError("实际命令名无效")
         return {
-            "action": "suggest_tools",
-            "platform": platform,
-            "count": count,
-            "exclude": exclude,
-            "enabled": clean_suggest_context(message.get("enabled", [])),
-            "collected": clean_suggest_context(message.get("collected", [])),
+            "action": action,
+            "displayName": display_name.strip(),
+            "executable": executable.strip() if isinstance(executable, str) else None,
         }
+    if action == "enable_generic_provider":
+        display_name = message.get("displayName")
+        executable = message.get("executable")
+        if not isinstance(display_name, str) or not display_name.strip() or len(display_name.strip()) > 100 \
+                or not isinstance(executable, str) or not _generic_executable_name(executable) \
+                or message.get("genericConfirmed") is not True:
+            raise ValidationError("通用 AI 环境确认无效")
+        return {
+            "action": action,
+            "displayName": display_name.strip(),
+            "executable": _generic_executable_name(executable),
+            "genericConfirmed": True,
+        }
+    if action == "save_custom_provider":
+        config = message.get("config")
+        if not isinstance(config, dict) or isinstance(config, list):
+            raise ValidationError("自定义 AI 环境配置无效")
+        if len(json.dumps(config, ensure_ascii=False).encode("utf-8")) > 16384:
+            raise ValidationError("自定义 AI 环境配置超过大小上限")
+        allowed = (
+            "id", "displayName", "executable", "driver", "argv", "promptMode",
+            "outputParser", "versionArgs", "loginCommand", "readOnlyConfirmed",
+        )
+        if any(key not in allowed for key in config):
+            raise ValidationError("自定义 AI 环境包含不支持的字段")
+        request = {"action": action}
+        for field in allowed:
+            if field in config:
+                request[field] = copy.deepcopy(config[field])
+        if not isinstance(request.get("displayName"), str) \
+                or not isinstance(request.get("executable"), str) \
+                or not isinstance(request.get("driver"), str) \
+                or not isinstance(request.get("argv", []), list) \
+                or not isinstance(request.get("versionArgs", ["--version"]), list) \
+                or not isinstance(request.get("readOnlyConfirmed"), bool):
+            raise ValidationError("自定义 AI 环境字段无效")
+        return {"action": action, "config": {
+            field: request.get(field) for field in allowed if field in request
+        }}
+    if action == "delete_custom_provider":
+        provider_id = message.get("providerId")
+        if not isinstance(provider_id, str) or not re.fullmatch(
+                r"custom:[a-f0-9-]{36}", provider_id):
+            raise ValidationError("只能删除自定义 AI 环境")
+        return {"action": action, "providerId": provider_id}
+    registry = provider_registry()
+    catalog_digest = message.get("providerCatalogDigest")
+    if catalog_digest != registry["catalogDigest"]:
+        raise ValidationError("AI 环境目录已变化，请重新检测并确认执行环境")
+    provider_id = message.get("providerId")
+    if not isinstance(provider_id, str) or not PROVIDER_ID_RE.fullmatch(provider_id) \
+            or provider_id not in registry["byId"]:
+        raise ValidationError("任务缺少受支持的 providerId，已拒绝执行以避免调用错误账号")
 
     if action in {"apply_update", "discard_update"}:
         token = message.get("token", "")
@@ -618,8 +1277,11 @@ def validate_request(message):
             raise ValidationError("待处理更新 token 无效")
         return {
             "action": action,
+            "providerId": provider_id,
+            "providerCatalogDigest": catalog_digest,
             "token": token,
             "confirm_risk": action == "apply_update" and message.get("confirm_risk") is True,
+            "channel": "store" if message.get("channel") == "store" else "source",
         }
 
     tool_id = validate_tool_id(message.get("tool", ""))
@@ -636,13 +1298,35 @@ def validate_request(message):
         scope_error = overbroad_add_tool_error(tool_id, display_name)
         if scope_error:
             raise ValidationError(scope_error)
-    return {
+    request = {
         "action": action,
+        "providerId": provider_id,
+        "providerCatalogDigest": catalog_digest,
         "tool": tool_id,
         "display_name": display_name,
         "prefer_web": bool(message.get("prefer_web")),
         "deep_check": bool(message.get("deep_check")),
+        "channel": "store" if message.get("channel") == "store" else "source",
     }
+    if request["channel"] == "store" and action == "preview_update":
+        for field in ("current_dataset", "official_inventory", "scenario_review"):
+            value = message.get(field)
+            if not isinstance(value, dict):
+                raise ValidationError(f"商店版更新请求缺少 {field}")
+            request[field] = value
+        base_hash = message.get("base_content_hash")
+        if not isinstance(base_hash, str) or not re.fullmatch(r"sha256:[a-f0-9]{64}", base_hash):
+            raise ValidationError("商店版更新请求缺少基础数据哈希")
+        request["base_content_hash"] = base_hash
+        for field in ("official_adapter", "source_registry"):
+            value = message.get(field)
+            if value is not None:
+                if field == "official_adapter" and not isinstance(value, dict):
+                    raise ValidationError("商店版 official_adapter 格式无效")
+                if field == "source_registry" and not isinstance(value, (dict, list)):
+                    raise ValidationError("商店版 source_registry 格式无效")
+                request[field] = value
+    return request
 
 
 def atomic_write(path, content):
@@ -682,13 +1366,15 @@ def write_data_index(tool_ids=None):
     catalog = []
     for tool_id in tool_ids:
         with open(tool_data_path(tool_id), "r", encoding="utf-8") as handle:
+            raw_data = handle.read()
             try:
-                meta = parse_data_file(handle.read(), tool_id).get("meta", {})
+                meta = parse_data_file(raw_data, tool_id).get("meta", {})
             except ValidationError:
                 # Preserve compatibility with an older hand-maintained index;
                 # the normal add/update paths always write the structured form.
                 meta = {}
-        catalog.append(catalog_entry(tool_id, meta))
+        content_hash = "sha256:" + hashlib.sha256(raw_data.encode("utf-8")).hexdigest()
+        catalog.append(catalog_entry(tool_id, meta, content_hash))
     atomic_write(DATA_INDEX, render_data_index(tool_ids, catalog))
 
 
@@ -1815,6 +2501,7 @@ def build_prompt(
         else ""
     )
     update_signal_section = ""
+    official_inventory_section = ""
     if update_context:
         missing_commands = update_context.get("officialMissing") or []
         missing_section = (
@@ -1831,6 +2518,13 @@ def build_prompt(
             "若发布内容未改变命令界面，保持 items 不变，仅更新核验版本元数据；"
             "不要因页面排版、发布日期或措辞变化重写条目。\n"
         )
+        if isinstance(update_context.get("officialInventory"), dict):
+            official_inventory_section = (
+                "\n以下官方入口清单已由 Host 的确定性适配器闭合。items 必须与 entries 一一对应，"
+                "不得新增清单外入口或遗漏入口；description、usage、options 和限制只作为整理依据：\n"
+                + json.dumps(update_context["officialInventory"], ensure_ascii=False, indent=2)
+                + "\n"
+            )
     whitelist = "、".join(QUASI_OFFICIAL_DOMAINS)
     # 来源策略随是否联网而变：只有联网路径能可靠核对第三方页面，因此只有它能产出
     # quasi-official；离线（纯模型知识）路径禁止类官方，避免编造看似合法的白名单 URL。
@@ -1991,6 +2685,7 @@ JSON 格式：
 
 {current_section}
 {update_signal_section}
+{official_inventory_section}
 """.strip()
 
 
@@ -2113,6 +2808,7 @@ def _call_api_direct(prompt, max_tokens=None):
             LOGGER.error("API error %s: %s", resp.status, body[:2000])
             raise ValidationError(f"API 错误 {resp.status}：{sanitize_error_text(body)}")
         data = json.loads(body)
+        _remember_model_id("claude", data)
         if data.get("stop_reason") == "max_tokens":
             raise TruncatedGenerationError(
                 "生成内容过长被截断（已达 max_tokens 上限）。请拆分该工具的命令范围后重试，"
@@ -2151,20 +2847,23 @@ def _call_claude_cli(prompt, prefer_web=False):
             [
                 CLAUDE_BIN,
                 "-p",
-                prompt,
                 "--permission-mode",
-                "default",
+                "plan",
                 "--output-format",
                 "json",
+                "--no-session-persistence",
+                "--tools",
+                "",
             ],
             cwd=PROJECT_DIR,
+            stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True,
             env=env,
         )
         try:
-            stdout, stderr = _active_proc.communicate(timeout=900)
+            stdout, stderr = _active_proc.communicate(input=prompt, timeout=900)
         except subprocess.TimeoutExpired:
             _active_proc.kill()
             _active_proc.communicate()
@@ -2186,15 +2885,437 @@ def _call_claude_cli(prompt, prefer_web=False):
             )
         raise ValidationError(sanitize_error_text(error))
 
+    try:
+        _remember_model_id("claude", json.loads(stdout))
+    except json.JSONDecodeError:
+        pass
     return extract_json_output(stdout)
 
 
-def _run_generation_prompt(prompt, use_api, prefer_web=False):
-    if use_api:
+def _run_provider_process(args, prompt, provider_id, *, cwd=None, prompt_in_argv=False):
+    """Run one approved provider adapter; never execute content returned by a model."""
+    os.makedirs(BRIDGE_WORK_DIR, exist_ok=True)
+    display_name = provider_adapter(provider_id)["displayName"]
+    global _active_proc
+    command = list(args)
+    if prompt_in_argv:
+        command.append(prompt)
+    try:
+        _active_proc = subprocess.Popen(
+            command,
+            cwd=cwd or BRIDGE_WORK_DIR,
+            stdin=None if prompt_in_argv else subprocess.PIPE,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            env=subprocess_environment(allow_web=False),
+        )
+        try:
+            stdout, stderr = _active_proc.communicate(
+                input=None if prompt_in_argv else prompt,
+                timeout=900,
+            )
+        except subprocess.TimeoutExpired:
+            _active_proc.kill()
+            _active_proc.communicate()
+            raise ValidationError(f"{display_name} 执行超时（超过 15 分钟）")
+        returncode = _active_proc.returncode
+    except OSError as exc:
+        LOGGER.error("failed to start %s adapter: %s", provider_id, exc)
+        raise ValidationError(
+            f"启动 {display_name} 失败：{sanitize_error_text(exc)}"
+        ) from exc
+    finally:
+        _active_proc = None
+    if returncode != 0:
+        error = (stderr or stdout or f"{display_name} 执行失败").strip()[:2000]
+        LOGGER.error("%s adapter failed (rc=%s): %s", provider_id, returncode, error)
+        if reports_missing_node_runtime(error):
+            raise ValidationError(
+                f"已找到 {display_name}，但它需要的 Node.js 运行时不可用。"
+            )
+        raise ValidationError(sanitize_error_text(error))
+    return stdout
+
+
+def _call_codex_cli(prompt):
+    if not CODEX_BIN:
+        raise ValidationError("找不到 codex 命令，请先安装 Codex CLI")
+    os.makedirs(BRIDGE_WORK_DIR, exist_ok=True)
+    schema = {"type": "object", "additionalProperties": True}
+    with tempfile.TemporaryDirectory(prefix="codex-", dir=BRIDGE_WORK_DIR) as temp_dir:
+        schema_path = os.path.join(temp_dir, "output-schema.json")
+        output_path = os.path.join(temp_dir, "final-output.json")
+        atomic_write(schema_path, json.dumps(schema))
+        events = _run_provider_process([
+            CODEX_BIN, "exec", "--ephemeral", "--sandbox", "read-only",
+            "--skip-git-repo-check", "--ignore-rules", "-C", BRIDGE_WORK_DIR,
+            "-c", 'web_search="disabled"',
+            "--json", "--output-schema", schema_path, "-o", output_path, "-",
+        ], prompt, "codex")
+        for line in events.splitlines():
+            try:
+                _remember_model_id("codex", json.loads(line))
+            except json.JSONDecodeError:
+                continue
+        try:
+            with open(output_path, "r", encoding="utf-8") as handle:
+                return extract_json_output(handle.read())
+        except OSError as exc:
+            raise ValidationError("Codex CLI 未生成结构化最终输出") from exc
+
+
+def _call_gemini_cli(prompt):
+    if not GEMINI_BIN:
+        raise ValidationError("找不到 gemini 命令，请先安装 Gemini CLI")
+    os.makedirs(BRIDGE_WORK_DIR, exist_ok=True)
+    # Gemini's headless plan flow can transition after a plan is completed.
+    # An explicit supplemental admin policy therefore denies every tool in all
+    # modes; this task only needs the prompt and the model response.
+    with tempfile.TemporaryDirectory(prefix="gemini-", dir=BRIDGE_WORK_DIR) as temp_dir:
+        policy_path = os.path.join(temp_dir, "deny-all-tools.toml")
+        atomic_write(policy_path, (
+            '[[rule]]\n'
+            'toolName = "*"\n'
+            'decision = "deny"\n'
+            'priority = 999\n'
+            'interactive = false\n'
+            'denyMessage = "AI CLI Cheatsheet maintenance is read-only."\n'
+        ))
+        stdout = _run_provider_process([
+            GEMINI_BIN, "--approval-mode", "plan", "--admin-policy", policy_path,
+            "--output-format", "json", "-p",
+        ], prompt, "gemini", prompt_in_argv=True)
+    try:
+        wrapper = json.loads(stdout)
+    except json.JSONDecodeError:
+        return extract_json_output(stdout)
+    _remember_model_id("gemini", wrapper)
+    content = wrapper.get("response") if isinstance(wrapper, dict) else None
+    return extract_json_output(content if isinstance(content, str) else stdout)
+
+
+def _opencode_text(stdout):
+    texts = []
+    for line in stdout.splitlines():
+        try:
+            event = json.loads(line)
+        except json.JSONDecodeError:
+            continue
+        _remember_model_id("opencode", event)
+        candidates = [event]
+        if isinstance(event, dict) and isinstance(event.get("part"), dict):
+            candidates.insert(0, event["part"])
+        for candidate in candidates:
+            if not isinstance(candidate, dict):
+                continue
+            for key in ("text", "content", "result"):
+                value = candidate.get(key)
+                if isinstance(value, str) and value.strip():
+                    texts.append(value)
+    return "\n".join(texts) if texts else stdout
+
+
+def _call_opencode_cli(prompt):
+    if not OPENCODE_BIN:
+        raise ValidationError("找不到 opencode 命令，请先安装 OpenCode")
+    env_permissions = json.dumps({
+        "edit": "deny", "bash": "deny", "task": "deny", "question": "deny",
+        "webfetch": "deny", "websearch": "deny",
+    }, separators=(",", ":"))
+    previous = os.environ.get("OPENCODE_PERMISSION")
+    os.environ["OPENCODE_PERMISSION"] = env_permissions
+    try:
+        stdout = _run_provider_process([
+            OPENCODE_BIN, "run", "--pure", "--agent", "plan", "--format", "json",
+            "--dir", BRIDGE_WORK_DIR,
+        ], prompt, "opencode", prompt_in_argv=True)
+    finally:
+        if previous is None:
+            os.environ.pop("OPENCODE_PERMISSION", None)
+        else:
+            os.environ["OPENCODE_PERMISSION"] = previous
+    return extract_json_output(_opencode_text(stdout))
+
+
+def _qwen_result_text(value):
+    """Extract the terminal answer from Qwen's documented JSON event array."""
+    if isinstance(value, str) and value.strip():
+        return value
+    if isinstance(value, list):
+        for item in reversed(value):
+            text = _qwen_result_text(item)
+            if text:
+                return text
+        return ""
+    if not isinstance(value, dict):
+        return ""
+    for key in ("result", "response", "text", "content", "output", "message"):
+        text = _qwen_result_text(value.get(key))
+        if text:
+            return text
+    return ""
+
+
+def _call_qwen_cli(prompt):
+    adapter = provider_adapter("qwen")
+    executable = _provider_binary("qwen", adapter)
+    if not executable:
+        raise ValidationError("找不到 Qwen Code，请先安装后重新检测")
+    # Qwen documents headless JSON output and Plan mode.  Safe mode disables
+    # user customisations, while Plan mode prevents file edits and shell calls.
+    stdout = _run_provider_process([
+        executable,
+        "--safe-mode",
+        "--approval-mode", "plan",
+        "--max-wall-time", "15m",
+        "--max-session-turns", "8",
+        "--output-format", "json",
+        "--prompt",
+    ], prompt, "qwen", prompt_in_argv=True)
+    try:
+        payload = json.loads(stdout)
+    except json.JSONDecodeError:
+        return extract_json_output(stdout)
+    _remember_model_id("qwen", payload if isinstance(payload, dict) else {})
+    return extract_json_output(_qwen_result_text(payload) or stdout)
+
+
+def _catalog_event_text(stdout, provider_id=None):
+    texts = []
+    for line in stdout.splitlines():
+        try:
+            event = json.loads(line)
+        except json.JSONDecodeError:
+            continue
+        if not isinstance(event, dict):
+            continue
+        if provider_id:
+            _remember_model_id(provider_id, event)
+        for candidate in (event, event.get("part"), event.get("message")):
+            if not isinstance(candidate, dict):
+                continue
+            for key in ("text", "content", "result", "response", "output_text"):
+                value = candidate.get(key)
+                if isinstance(value, str) and value.strip():
+                    texts.append(value)
+    return "\n".join(texts) if texts else stdout
+
+
+def _call_catalog_cli(prompt, provider_id, adapter):
+    executable = _provider_binary(provider_id, adapter)
+    if not executable:
+        raise ValidationError(f"找不到 {adapter['displayName']}，请先安装后重新检测")
+    os.makedirs(BRIDGE_WORK_DIR, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix="provider-", dir=BRIDGE_WORK_DIR) as temp_dir:
+        schema_path = os.path.join(temp_dir, "output-schema.json")
+        output_path = os.path.join(temp_dir, "final-output.json")
+        atomic_write(schema_path, json.dumps({"type": "object", "additionalProperties": True}))
+        replacements = {
+            "{schemaFile}": schema_path,
+            "{outputFile}": output_path,
+            "{workDir}": BRIDGE_WORK_DIR,
+        }
+        argv = []
+        for raw in adapter.get("argv", []):
+            value = raw
+            for placeholder, replacement in replacements.items():
+                value = value.replace(placeholder, replacement)
+            argv.append(value)
+        stdout = _run_provider_process(
+            [executable, *argv],
+            prompt,
+            provider_id,
+            prompt_in_argv=adapter.get("promptMode") == "argv",
+        )
+        for line in stdout.splitlines():
+            try:
+                _remember_model_id(provider_id, json.loads(line))
+            except json.JSONDecodeError:
+                continue
+        parser = adapter.get("outputParser", "json")
+        if parser == "output-file-json":
+            try:
+                with open(output_path, "r", encoding="utf-8") as handle:
+                    output = handle.read()
+            except OSError as exc:
+                raise ValidationError(
+                    f"{adapter['displayName']} 未生成结构化输出文件"
+                ) from exc
+        elif parser == "jsonl-text":
+            output = _catalog_event_text(stdout, provider_id)
+        else:
+            output = stdout
+        try:
+            parsed = json.loads(output)
+            _remember_model_id(provider_id, parsed)
+        except json.JSONDecodeError:
+            pass
+        return extract_json_output(output)
+
+
+def _compatible_api_profile(provider_id):
+    try:
+        return next(
+            profile for profile in load_api_profiles(PENDING_DIR, include_secret=True)
+            if profile["id"] == provider_id
+        )
+    except StopIteration as exc:
+        raise ValidationError("兼容 API 配置已被删除，请重新检测") from exc
+    except ProviderRegistryError as exc:
+        raise ValidationError(str(exc)) from exc
+
+
+def _compatible_api_url(profile):
+    suffixes = {
+        "anthropic-messages": "/v1/messages",
+        "openai-responses": "/v1/responses",
+        "openai-chat-completions": "/v1/chat/completions",
+    }
+    parsed = urllib.parse.urlparse(profile["baseUrl"])
+    base_path = parsed.path.rstrip("/")
+    suffix = suffixes[profile["protocol"]]
+    if base_path.endswith(suffix):
+        path = base_path
+    elif base_path.endswith("/v1") and suffix.startswith("/v1/"):
+        path = base_path + suffix[3:]
+    else:
+        path = base_path + suffix
+    return urllib.parse.urlunparse((
+        parsed.scheme, parsed.netloc, path, "", "", ""
+    ))
+
+
+def _compatible_api_text(protocol, payload):
+    if protocol == "anthropic-messages":
+        parts = payload.get("content", []) if isinstance(payload, dict) else []
+        return "".join(
+            part.get("text", "") for part in parts
+            if isinstance(part, dict) and isinstance(part.get("text"), str)
+        )
+    if protocol == "openai-chat-completions":
+        choices = payload.get("choices", []) if isinstance(payload, dict) else []
+        if choices and isinstance(choices[0], dict):
+            message = choices[0].get("message", {})
+            if isinstance(message, dict) and isinstance(message.get("content"), str):
+                return message["content"]
+        return ""
+    if isinstance(payload, dict) and isinstance(payload.get("output_text"), str):
+        return payload["output_text"]
+    texts = []
+    for item in payload.get("output", []) if isinstance(payload, dict) else []:
+        for content in item.get("content", []) if isinstance(item, dict) else []:
+            if isinstance(content, dict):
+                text = content.get("text") or content.get("output_text")
+                if isinstance(text, str):
+                    texts.append(text)
+    return "".join(texts)
+
+
+def _call_compatible_api(prompt, provider_id, adapter):
+    profile = _compatible_api_profile(provider_id)
+    protocol = profile["protocol"]
+    if protocol == "anthropic-messages":
+        payload = {
+            "model": profile["model"],
+            "max_tokens": resolve_api_max_tokens(),
+            "messages": [{"role": "user", "content": prompt}],
+        }
+        headers = {
+            "x-api-key": profile["token"],
+            "authorization": f"Bearer {profile['token']}",
+            "anthropic-version": "2023-06-01",
+        }
+    elif protocol == "openai-responses":
+        payload = {"model": profile["model"], "input": prompt}
+        headers = {"authorization": f"Bearer {profile['token']}"}
+    else:
+        payload = {
+            "model": profile["model"],
+            "messages": [{"role": "user", "content": prompt}],
+        }
+        headers = {"authorization": f"Bearer {profile['token']}"}
+    headers["content-type"] = "application/json"
+    request = urllib.request.Request(
+        _compatible_api_url(profile),
+        data=json.dumps(payload).encode("utf-8"),
+        headers=headers,
+        method="POST",
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=900) as response:  # nosec B310
+            final_url = response.geturl()
+            if isinstance(final_url, str):
+                final_parsed = urllib.parse.urlparse(final_url)
+                final_loopback = final_parsed.hostname in {"127.0.0.1", "localhost", "::1"}
+                if not final_parsed.netloc or (
+                    final_parsed.scheme != "https"
+                    and not (final_parsed.scheme == "http" and final_loopback)
+                ):
+                    raise ValidationError("兼容 API 重定向到了不安全的地址")
+            body = response.read(MAX_MESSAGE_BYTES + 1)
+    except urllib.error.HTTPError as exc:
+        detail = exc.read(2000).decode("utf-8", errors="replace")
+        detail = detail.replace(profile["token"], "<REDACTED>")
+        raise ValidationError(
+            f"{adapter['displayName']} API 错误 {exc.code}：{sanitize_error_text(detail)}"
+        ) from exc
+    except (OSError, ssl.SSLError) as exc:
+        raise ValidationError(
+            f"{adapter['displayName']} API 调用失败：{sanitize_error_text(exc)}"
+        ) from exc
+    if len(body) > MAX_MESSAGE_BYTES:
+        raise ValidationError("兼容 API 响应超过大小上限")
+    try:
+        wrapper = json.loads(body.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise ValidationError("兼容 API 未返回有效 JSON") from exc
+    _remember_model_id(provider_id, wrapper)
+    text = _compatible_api_text(protocol, wrapper)
+    if not text.strip():
+        raise ValidationError("兼容 API 未返回文本内容")
+    return extract_json_output(text)
+
+
+def _run_generation_prompt(prompt, use_api, prefer_web=False, provider_id="claude"):
+    adapter = provider_adapter(provider_id)
+    status = provider_status(provider_id)
+    if not status["ready"]:
+        if adapter.get("transport") == "api":
+            raise ValidationError(
+                f"{status['displayName']} 配置不完整，请在扩展中使用“配置兼容 API”后重新检测"
+            )
+        if status["installed"]:
+            raise ValidationError(
+                f"{status['displayName']} 尚未登录，请运行：{status['loginCommand']}"
+            )
+        raise ValidationError(f"找不到 {status['displayName']}，请先安装后重新检测")
+    if provider_id == "claude" and use_api:
         api_text = _call_api_direct(prompt)
         if api_text is not None:
             return extract_json_output(api_text)
-    return _call_claude_cli(prompt, prefer_web)
+    if provider_id == "claude":
+        return _call_claude_cli(prompt, prefer_web)
+    if provider_id == "codex":
+        return _call_codex_cli(prompt)
+    if provider_id == "gemini":
+        return _call_gemini_cli(prompt)
+    if provider_id == "opencode":
+        return _call_opencode_cli(prompt)
+    if provider_id == "qwen":
+        return _call_qwen_cli(prompt)
+    if adapter.get("source") in {"catalog", "custom"}:
+        try:
+            return _call_catalog_cli(prompt, provider_id, adapter)
+        except ValidationError as exc:
+            if adapter.get("executionMode") == "generic":
+                raise ValidationError(
+                    "该工具不兼容通用调用模式：未得到可用的结构化输出。"
+                ) from exc
+            raise
+    if adapter.get("transport") == "api":
+        return _call_compatible_api(prompt, provider_id, adapter)
+    raise ValidationError("所选 AI 执行环境缺少受支持的安全适配器")
 
 
 def suggest_context_text(items):
@@ -2281,10 +3402,10 @@ def _normalize_suggestion(raw, platform, seen):
     }
 
 
-def suggest_tools(platform, count, exclude, enabled=None, collected=None):
+def suggest_tools(platform, count, exclude, enabled=None, collected=None, provider_id="claude"):
     prompt = build_suggest_prompt(platform, count, exclude, enabled, collected)
-    use_api = _has_api_token()
-    result = _run_generation_prompt(prompt, use_api, prefer_web=False)
+    use_api = provider_id == "claude" and _has_api_token()
+    result = _run_generation_prompt(prompt, use_api, prefer_web=False, provider_id=provider_id)
     tools = result.get("tools") if isinstance(result, dict) else None
     if not isinstance(tools, list):
         raise ValidationError("AI 没有返回合法的 tools 数组")
@@ -2330,7 +3451,7 @@ Shell 聚合工具采用小批次生成。你现在只生成本批次，不要�
 
 分类边界（最重要）：
 - Shell 分类只表示「终端命令解释与脚本环境本体」：sh/POSIX、bash、zsh 的内置命令、关键字、语法、终端快捷键、配置文件、环境变量/PATH、alias/函数、补全、历史命令、脚本语法与排错。
-- 外部 CLI 工具不属于 Shell，禁止作为 item 收录，包括但不限于：ls、cp、mv、rm、mkdir、cat、grep、sed、awk、find、xargs、tar、gzip、ps、kill、chmod、chown、ssh、scp、curl、wget、git、docker、npm、brew、python、node、java、claude、codex、cursor。它们分别属于 GNU/Linux CLI、Git、AI Coding 等其它分类。
+- 外部 CLI 工具不属于 Shell，禁止作为 item 收录，包括但不限于：ls、cp、mv、rm、mkdir、cat、grep、sed、awk、find、xargs、tar、gzip、ps、kill、chmod、chown、ssh、scp、curl、wget、git、docker、npm、brew、python、node、java、claude、codex、cursor。它们分别属于 Unix/POSIX 基础命令、Linux 系统工具、Git、AI Coding 等其它分类。
 - 这些外部工具只能作为某个 Shell 条目的关联线索出现在 keywords 里（例如 `type -a claude` 用来排查命令来源，keywords 可含「命令来源」「Claude Code」「外部CLI」），但该条目的主体仍是 Shell 内置/语法/排错。
 - shell.family 只能是 posix-sh、bash、zsh 之一。
 
@@ -2512,7 +3633,7 @@ def merge_shell_datasets(datasets):
     return validate_dataset(merged, "shell")
 
 
-def _generate_shell_batch(discovered, batch, web_enabled, use_api, prefer_web):
+def _generate_shell_batch(discovered, batch, web_enabled, use_api, prefer_web, provider_id="claude"):
     """Generate one shell batch, shrinking the item budget on truncation.
 
     Model output length is non-deterministic, so a batch can occasionally exceed
@@ -2525,7 +3646,7 @@ def _generate_shell_batch(discovered, batch, web_enabled, use_api, prefer_web):
     while True:
         prompt = build_shell_batch_prompt(discovered, batch, web_enabled, max_items=max_items)
         try:
-            raw = _run_generation_prompt(prompt, use_api, prefer_web)
+            raw = _run_generation_prompt(prompt, use_api, prefer_web, provider_id=provider_id)
         except TruncatedGenerationError:
             if max_items <= SHELL_BATCH_MIN_ITEMS:
                 raise TruncatedGenerationError(
@@ -2540,9 +3661,12 @@ def _generate_shell_batch(discovered, batch, web_enabled, use_api, prefer_web):
         return validate_shell_batch_tolerant(raw)
 
 
-def run_shell_aggregate_query(prefer_web=False):
-    use_api = _has_api_token() and not prefer_web
-    web_enabled = not use_api
+def run_shell_aggregate_query(prefer_web=False, provider_id="claude"):
+    # Official material is fetched and closed by the Host before generation, so
+    # an Anthropic-compatible API remains valid even when the UI asks for a
+    # refreshed official check. The model itself is never the web crawler.
+    use_api = provider_id == "claude" and _has_api_token()
+    web_enabled = False
     discovered = shell_registered_discovery()
     datasets = []
     total_dropped = 0
@@ -2550,7 +3674,7 @@ def run_shell_aggregate_query(prefer_web=False):
     for batch in SHELL_BATCHES:
         try:
             batch_dataset, dropped = _generate_shell_batch(
-                discovered, batch, web_enabled, use_api, prefer_web
+                discovered, batch, web_enabled, use_api, prefer_web, provider_id
             )
         except ValidationError:
             # A batch that yields no usable data (empty output, every item
@@ -2569,7 +3693,7 @@ def run_shell_aggregate_query(prefer_web=False):
         )
     dataset = merge_shell_datasets(datasets)
     prune_unused_sources(dataset)
-    dataset["meta"]["verificationStatus"] = "model-knowledge" if use_api else "web-assisted"
+    dataset["meta"]["verificationStatus"] = "web-assisted" if web_enabled else "model-knowledge"
     warnings = list(dataset.get("qualityWarnings", []))
     if total_dropped:
         warnings.append(
@@ -2644,15 +3768,23 @@ def has_definitively_missing_sources(sources):
 
 
 def run_claude_query(
-    tool_id, display_name, mode, prefer_web=False, update_context=None, deep_check=False
+    tool_id, display_name, mode, prefer_web=False, update_context=None, deep_check=False,
+    provider_id="claude",
 ):
     if mode == "add" and os.path.exists(tool_data_path(tool_id)):
         raise ValidationError(f"data/{tool_id}.js 已存在，请使用更新模式")
 
-    use_api = _has_api_token() and not prefer_web
-    web_enabled = not use_api
+    use_api = provider_id == "claude" and _has_api_token()
+    web_enabled = False
     discovered = None
     current = None
+    if update_context and isinstance(update_context.get("officialSources"), list) \
+            and update_context["officialSources"]:
+        discovered = {
+            "sources": copy.deepcopy(update_context["officialSources"]),
+            "conflicts": [],
+            "notes": ["来源由确定性官方清单适配器提供。"],
+        }
     if mode == "update" and not deep_check:
         current = load_existing_dataset(tool_id)
         current_sources = current.get("meta", {}).get("sources") or []
@@ -2666,7 +3798,9 @@ def run_claude_query(
         discovery_prompt = build_source_discovery_prompt(
             tool_id, display_name, mode, web_enabled
         )
-        discovered = _run_generation_prompt(discovery_prompt, use_api, prefer_web)
+        discovered = _run_generation_prompt(
+            discovery_prompt, use_api, prefer_web, provider_id=provider_id
+        )
         if not isinstance(discovered, dict) or not isinstance(discovered.get("sources"), list):
             raise ValidationError("来源发现阶段没有返回合法的 sources 数组")
 
@@ -2678,7 +3812,7 @@ def run_claude_query(
         discovered_sources=discovered,
         update_context=update_context,
     )
-    raw = _run_generation_prompt(content_prompt, use_api, prefer_web)
+    raw = _run_generation_prompt(content_prompt, use_api, prefer_web, provider_id=provider_id)
     if use_api:
         raw = _demote_quasi_official(raw)
     if not isinstance(raw, dict) or not isinstance(raw.get("meta"), dict):
@@ -2701,7 +3835,7 @@ def run_claude_query(
     dataset = validate_dataset(raw, tool_id, enforce_global_contract=True)
     prune_unused_sources(dataset)
     dataset["meta"]["verificationStatus"] = (
-        "model-knowledge" if use_api else "web-assisted"
+        "web-assisted" if web_enabled else "model-knowledge"
     )
     return dataset
 
@@ -3027,101 +4161,161 @@ def inventory_preview_summary(inventory):
     }
 
 
-def fetch_generic_official_inventory(tool_id, display_name, dataset):
-    sources = [
-        source for source in dataset.get("meta", {}).get("sources", [])
-        if source.get("evidenceTier") == "first-party"
-        and source.get("kind") in {"official-doc", "local-help", "official-repository"}
-    ]
-    if not sources:
-        raise OfficialInventoryError(
-            "official_source_missing",
-            f"{display_name} 没有可用于完整性核验的第一方来源",
-            ["登记工具维护方的官方文档或官方帮助来源", "不要把社区资料标为完整官方清单"],
-        )
-    source_text = json.dumps([
-        {key: source.get(key) for key in ("id", "title", "url", "resolvedUrl", "kind", "version") if source.get(key)}
-        for source in sources
-    ], ensure_ascii=False, indent=2)
-    prompt = f"""
-你正在为 {display_name}（工具 ID：{tool_id}）建立可计算的官方入口清单。
-必须实际读取下列第一方来源，只返回 JSON，不要 Markdown：
-{source_text}
+HELP_COMMAND_HEADING_RE = re.compile(
+    r"^\s*(?:available\s+)?(?:sub)?commands?\s*:\s*$", re.IGNORECASE
+)
+HELP_SECTION_HEADING_RE = re.compile(r"^\s*[A-Za-z][A-Za-z /_-]{1,30}:\s*$")
+HELP_COMMAND_LINE_RE = re.compile(r"^\s{1,8}([A-Za-z0-9][A-Za-z0-9:_-]*)\s{2,}(.+?)\s*$")
+HELP_OPTION_RE = re.compile(r"^\s*(?:-[A-Za-z0-9],\s*)?(--[A-Za-z0-9][A-Za-z0-9-]*)\b")
 
-完整性口径：
-- CLI/终端：官方列出的全部命令、子命令、交互命令、斜杠命令和默认快捷键入口。
-- IDE/编辑器：官方默认键位表中的入口；排除第三方插件、自定义键位和未公开内部命令。
-- 实验性、平台专属、版本专属和官方可选组件仍收录，并在 description 说明限制。
-- aliases 只写官方明确声明的短别名或等价入口，不得推测。
-- url 必须是能够定位该入口的第一方 HTTPS 页面；没有精确页面时使用对应官方章节。
 
-JSON 格式：
-{{
-  "sourceIds": ["上方来源 ID"],
-  "entries": [
-    {{"command":"规范入口", "aliases":["官方别名"], "description":"官方英文简述", "usage":"官方用法或入口", "url":"https://第一方精确地址"}}
-  ]
-}}
-""".strip()
-    raw = _run_generation_prompt(prompt, use_api=False, prefer_web=True)
-    if not isinstance(raw, dict) or not isinstance(raw.get("entries"), list) or not raw["entries"]:
-        raise OfficialInventoryError(
-            "official_inventory_invalid", "官方入口发现没有返回非空 entries",
-            ["重试官方检查", "若反复出现，请检查模型输出和官方页面结构"],
-        )
-    allowed_source_ids = {source["id"] for source in sources}
-    allowed_url_prefixes = [
-        prefix
-        for source in sources
-        for prefix in SOURCE_REGISTRY_BY_ID.get(source.get("registryId") or source["id"], {}).get("urlPrefixes", [])
+def _parse_local_help(text):
+    commands = []
+    options = []
+    usage = ""
+    in_commands = False
+    for raw_line in str(text or "").splitlines():
+        line = raw_line.rstrip()
+        if not usage and re.match(r"^\s*usage\s*:", line, re.IGNORECASE):
+            usage = re.sub(r"^\s*usage\s*:\s*", "", line, flags=re.IGNORECASE).strip()
+        option = HELP_OPTION_RE.match(line)
+        if option:
+            options.append(option.group(1))
+        if HELP_COMMAND_HEADING_RE.match(line):
+            in_commands = True
+            continue
+        if in_commands and HELP_SECTION_HEADING_RE.match(line):
+            in_commands = False
+        if not in_commands:
+            continue
+        match = HELP_COMMAND_LINE_RE.match(line)
+        if match and match.group(1).casefold() not in {"help"}:
+            commands.append((match.group(1), match.group(2).strip()))
+    return list(dict.fromkeys(commands)), list(dict.fromkeys(options)), usage
+
+
+def _local_help_output(executable, parts):
+    attempts = [
+        [executable, *parts, "--help"],
+        [executable, "help", *parts],
     ]
-    source_ids = raw.get("sourceIds")
-    if not isinstance(source_ids, list) or not source_ids or set(source_ids) - allowed_source_ids:
+    for args in attempts:
+        returncode, output = _probe_command(args, timeout=12)
+        if returncode == 0 and output:
+            return output
+    raise OfficialInventoryError(
+        "official_help_failed",
+        f"无法读取 {' '.join([os.path.basename(executable), *parts])} 的本机 --help",
+        ["确认该 CLI 的帮助命令可用", "在修复前不要应用残缺数据"],
+    )
+
+
+def fetch_local_help_inventory(tool_id, display_name, max_entries=160, max_depth=4):
+    executable = find_executable(tool_id)
+    if not executable:
         raise OfficialInventoryError(
-            "official_inventory_invalid", "官方入口清单引用了未登记来源",
-            ["仅使用已登记的第一方来源重新生成清单"],
+            "official_adapter_missing",
+            f"{tool_id} 尚不能证明官方入口完整：未找到可闭合命令树的本机 CLI",
+            ["安装目标 CLI 后重试", "或为该工具实现受信任的声明式官方适配器"],
         )
-    clean_entries = []
-    seen_commands = set()
-    for index, entry in enumerate(raw["entries"]):
-        if not isinstance(entry, dict):
-            raise OfficialInventoryError("official_inventory_invalid", f"官方入口 {index} 不是对象", ["重新检查更新"])
-        command = checked_text(entry.get("command"), f"officialInventory.entries[{index}].command")
-        normalized = normalized_command(command)
-        if normalized in seen_commands:
-            raise OfficialInventoryError("official_inventory_invalid", f"官方入口重复：{command}", ["重新检查更新"])
-        seen_commands.add(normalized)
-        aliases = entry.get("aliases") or []
-        if not isinstance(aliases, list) or any(not isinstance(alias, str) or not alias.strip() for alias in aliases):
-            raise OfficialInventoryError("official_inventory_invalid", f"{command} 的 aliases 非法", ["重新检查更新"])
-        url = checked_text(entry.get("url"), f"officialInventory.entries[{index}].url")
-        if not re.fullmatch(r"https://[^\s]+", url):
-            raise OfficialInventoryError("official_inventory_invalid", f"{command} 缺少第一方 HTTPS 定位", ["重新检查更新"])
-        if not any(url.startswith(prefix) for prefix in allowed_url_prefixes):
-            raise OfficialInventoryError(
-                "official_inventory_untrusted_url", f"{command} 的定位不属于已登记第一方来源：{url}",
-                ["更新来源登记或仅使用已登记的第一方页面"],
-            )
-        clean_entries.append({
+    root_output = _local_help_output(executable, [])
+    root_commands, root_options, root_usage = _parse_local_help(root_output)
+    if not root_commands:
+        raise OfficialInventoryError(
+            "official_inventory_unconfirmed",
+            f"{display_name} 的 --help 没有可识别的完整 Commands 区段，尚不能证明官方入口完整",
+            ["为该 CLI 增加经过测试的帮助格式适配器", "不要写入残缺数据"],
+        )
+    queue = [([], display_name, root_output)]
+    visited = set()
+    entries = []
+    while queue:
+        parts, description, output = queue.pop(0)
+        key = tuple(parts)
+        if key in visited:
+            continue
+        visited.add(key)
+        child_commands, options, usage = _parse_local_help(output)
+        command = " ".join([tool_id, *parts])
+        entries.append({
             "command": command,
-            "aliases": list(dict.fromkeys(alias.strip() for alias in aliases if alias.strip() != command)),
-            "description": checked_text(entry.get("description"), f"officialInventory.entries[{index}].description"),
-            "usage": checked_text(entry.get("usage") or command, f"officialInventory.entries[{index}].usage"),
-            "url": url,
+            "context": "",
+            "aliases": [],
+            "entryType": "cli-command",
+            "component": tool_id,
+            "platforms": [],
+            "constraints": [],
+            "description": description or command,
+            "usage": usage or command,
+            "options": options,
+            "officialExamples": [],
+            "url": f"local-help:{command} --help",
         })
+        if len(entries) > max_entries:
+            raise OfficialInventoryError(
+                "official_inventory_too_large",
+                f"{display_name} 的本机帮助树超过安全上限 {max_entries}",
+                ["为该 CLI 实现专用分页适配器", "不要截断后写入"],
+            )
+        if len(parts) >= max_depth:
+            if child_commands:
+                raise OfficialInventoryError(
+                    "official_inventory_depth_exceeded",
+                    f"{command} 仍有未遍历子命令，尚不能证明官方入口完整",
+                    ["提高专用适配器的递归深度并增加固定样本测试"],
+                )
+            continue
+        for child, child_description in child_commands:
+            child_parts = [*parts, child]
+            child_output = _local_help_output(executable, child_parts)
+            queue.append((child_parts, child_description, child_output))
+    today = datetime.date.today().isoformat()
+    source_id = f"{tool_id}-local-help"
+    adapter = {
+        "id": f"{tool_id}-recursive-local-help",
+        "kind": "recursive-local-help-tree",
+        "version": 1,
+        "command": tool_id,
+        "arguments": ["--help"],
+        "maxDepth": max_depth,
+    }
+    source_registry = [{
+        "id": source_id,
+        "title": f"{display_name} local --help command tree",
+        "kind": "local-help",
+        "maintainer": display_name,
+        "evidenceTier": "first-party",
+        "lastVerifiedAt": today,
+        "purposes": ["command-existence", "option-semantics"],
+    }]
     return {
+        "schemaVersion": 2,
         "toolId": tool_id,
         "scope": OFFICIAL_COVERAGE_SCOPE,
-        "checkedAt": datetime.date.today().isoformat(),
-        "sourceIds": list(dict.fromkeys(source_ids)),
-        "entries": sorted(clean_entries, key=lambda entry: normalized_command(entry["command"])),
+        "checkedAt": today,
+        "sourceIds": [source_id],
+        "adapter": adapter,
+        "sourceRegistry": source_registry,
+        "closure": {
+            "status": "closed",
+            "entryCount": len(entries),
+            "components": [tool_id],
+            "platforms": [],
+            "proof": "recursive-local-help-tree",
+        },
+        "entries": entries,
     }
 
 
 def refresh_official_inventory(tool_id, display_name, dataset):
-    # Completeness is never delegated to a model. Unknown tools and adapters
-    # without a deterministic closure proof fail closed in official_inventory.
-    return fetch_official_inventory(tool_id)
+    # Completeness is never delegated to a model. A committed deterministic
+    # adapter wins; unknown CLIs may use a bounded recursive local-help adapter.
+    try:
+        return fetch_official_inventory(tool_id)
+    except OfficialInventoryError as exc:
+        if exc.code != "official_adapter_missing":
+            raise
+        return fetch_local_help_inventory(tool_id, display_name)
 
 
 def pending_path(token):
@@ -3416,15 +4610,30 @@ def parse_data_file(content, expected_tool_id):
     return dataset
 
 
-def add_tool(tool_id, display_name, prefer_web=False):
+def validate_store_snapshot(tool_id, dataset, inventory, review):
+    dataset = validate_dataset(dataset, tool_id, enforce_global_contract=True)
+    if not isinstance(inventory, dict) or inventory.get("schemaVersion") != 2 \
+            or inventory.get("toolId") != tool_id or not isinstance(inventory.get("entries"), list):
+        raise ValidationError("商店版当前官方清单无效")
+    validate_inventory_dataset_exact(dataset, inventory)
+    coverage = dataset.get("meta", {}).get("officialCoverage") or {}
+    if coverage.get("inventoryHash") != inventory_hash(inventory["entries"]):
+        raise ValidationError("商店版当前数据与官方清单哈希不一致")
+    expected_review = build_scenario_review(dataset, inventory)
+    if not scenario_review_matches(review, expected_review):
+        raise ValidationError("商店版当前场景审校快照失效")
+    return dataset
+
+
+def add_tool(tool_id, display_name, prefer_web=False, channel="source", provider_id="claude"):
     if is_shell_add_request(tool_id, display_name):
         tool_id = "shell"
         display_name = "Shell"
-    if os.path.exists(tool_data_path(tool_id)):
+    if channel != "store" and os.path.exists(tool_data_path(tool_id)):
         raise ValidationError(f"data/{tool_id}.js 已存在，请使用更新模式")
     inventory = refresh_official_inventory(tool_id, display_name, {"meta": {}, "items": []})
     dataset = (
-        run_shell_aggregate_query(prefer_web)
+        run_shell_aggregate_query(prefer_web, provider_id=provider_id)
         if tool_id == "shell"
         else run_claude_query(
             tool_id, display_name, "add", prefer_web,
@@ -3434,7 +4643,10 @@ def add_tool(tool_id, display_name, prefer_web=False):
                 "marker": inventory["checkedAt"],
                 "officialMissing": [entry["command"] for entry in inventory["entries"]],
                 "officialTotal": len(inventory["entries"]),
+                "officialSources": inventory.get("sourceRegistry", []),
+                "officialInventory": inventory,
             },
+            provider_id=provider_id,
         )
     )
     dataset["meta"]["officialCoverage"] = official_coverage(inventory, len(inventory["entries"]))
@@ -3445,7 +4657,10 @@ def add_tool(tool_id, display_name, prefer_web=False):
     payload = {
         "token": token, "mode": "add", "toolId": tool_id, "oldHash": None,
         "dataset": dataset, "officialInventory": inventory,
-        "scenarioReview": review, "diff": diff,
+        "scenarioReview": review, "diff": diff, "channel": channel,
+        "officialAdapter": inventory.get("adapter", {}),
+        "sourceRegistry": dataset.get("meta", {}).get("sources", []),
+        "generationEnvironment": provider_environment(provider_id),
     }
     atomic_write(pending_path(token), json.dumps(payload, ensure_ascii=False, indent=2))
     prune_pending_files(current_tool_id=tool_id, keep_token=token)
@@ -3463,10 +4678,27 @@ def add_tool(tool_id, display_name, prefer_web=False):
     }
 
 
-def preview_update(tool_id, display_name, prefer_web=False, deep_check=False):
-    old_dataset = load_existing_dataset(tool_id)
+def preview_update(tool_id, display_name, prefer_web=False, deep_check=False,
+                   channel="source", current_dataset=None, current_inventory=None,
+                   current_review=None, base_content_hash=None, provider_id="claude",
+                   current_adapter=None, current_source_registry=None):
+    old_dataset = (
+        validate_store_snapshot(tool_id, current_dataset, current_inventory, current_review)
+        if channel == "store" else load_existing_dataset(tool_id)
+    )
     policy = old_dataset.get("meta", {}).get("updatePolicy")
-    inventory = refresh_official_inventory(tool_id, display_name, old_dataset)
+    if channel == "store" and current_adapter is not None:
+        if not isinstance(current_adapter, dict) or current_adapter.get("id") \
+                != (current_inventory or {}).get("adapter", {}).get("id"):
+            raise ValidationError("商店版动态修订的官方适配器与清单不一致")
+        if current_adapter.get("kind") == "recursive-local-help-tree":
+            if current_adapter.get("command") != tool_id or current_adapter.get("version") != 1:
+                raise ValidationError("商店版动态修订的本机帮助适配器不受支持")
+            inventory = fetch_local_help_inventory(tool_id, display_name)
+        else:
+            inventory = refresh_official_inventory(tool_id, display_name, old_dataset)
+    else:
+        inventory = refresh_official_inventory(tool_id, display_name, old_dataset)
     if not isinstance(inventory.get("entries"), list) or not inventory["entries"]:
         raise OfficialInventoryError(
             "official_inventory_empty", "官方入口清单为空，不能判断数据是否最新",
@@ -3486,11 +4718,17 @@ def preview_update(tool_id, display_name, prefer_web=False, deep_check=False):
         # Shell is a batch-aggregated tool; regenerate via the same pipeline as
         # add_tool so a (deep-check) update keeps the interpreter-only scope and
         # batch structure instead of the generic single-prompt path.
-        new_dataset = run_shell_aggregate_query(True)
+        new_dataset = run_shell_aggregate_query(True, provider_id=provider_id)
     else:
         update_context = dict(signal or {"policy": policy or "manual-only", "signalType": "official-inventory", "marker": inventory["checkedAt"]})
         update_context["officialMissing"] = [entry["command"] for entry in missing_before]
         update_context["officialTotal"] = len(inventory["entries"])
+        update_context["officialSources"] = (
+            inventory.get("sourceRegistry")
+            or (current_source_registry if isinstance(current_source_registry, list) else None)
+            or old_dataset.get("meta", {}).get("sources", [])
+        )
+        update_context["officialInventory"] = inventory
         new_dataset = run_claude_query(
             tool_id,
             display_name,
@@ -3498,6 +4736,7 @@ def preview_update(tool_id, display_name, prefer_web=False, deep_check=False):
             True,
             update_context=update_context,
             deep_check=True,
+            provider_id=provider_id,
         )
     new_dataset["meta"]["builtIn"] = old_dataset["meta"].get("builtIn", False)
     if policy:
@@ -3534,7 +4773,11 @@ def preview_update(tool_id, display_name, prefer_web=False, deep_check=False):
     diff["qualityWarnings"] = new_dataset.get("qualityWarnings", [])
     changed = any(diff["counts"].values())
     if not changed:
-        require_current_scenario_review(tool_id, scenario_review)
+        if channel == "store":
+            if not scenario_review_matches(current_review, scenario_review):
+                raise ValidationError("商店版当前场景审校快照失效")
+        else:
+            require_current_scenario_review(tool_id, scenario_review)
         return {
             "ok": True,
             "changed": False,
@@ -3552,11 +4795,15 @@ def preview_update(tool_id, display_name, prefer_web=False, deep_check=False):
     payload = {
         "token": token,
         "toolId": tool_id,
-        "oldHash": file_sha256(tool_data_path(tool_id)),
+        "oldHash": base_content_hash if channel == "store" else file_sha256(tool_data_path(tool_id)),
         "dataset": new_dataset,
         "officialInventory": inventory,
         "scenarioReview": scenario_review,
+        "officialAdapter": inventory.get("adapter", {}),
+        "sourceRegistry": new_dataset.get("meta", {}).get("sources", []),
+        "generationEnvironment": provider_environment(provider_id),
         "diff": diff,
+        "channel": channel,
     }
     atomic_write(pending_path(token), json.dumps(payload, ensure_ascii=False, indent=2))
     prune_pending_files(current_tool_id=tool_id, keep_token=token)
@@ -3591,10 +4838,27 @@ def load_pending(token):
     return path, payload
 
 
-def apply_update(token, confirm_risk=False):
+def bundle_bytes_from_payload(payload):
+    bundle = {
+        "dataset": payload["dataset"],
+        "officialInventory": payload["officialInventory"],
+        "scenarioReview": payload["scenarioReview"],
+        "officialAdapter": payload["officialAdapter"],
+        "sourceRegistry": payload["sourceRegistry"],
+        "generationEnvironment": payload["generationEnvironment"],
+        "baseContentHash": payload.get("oldHash"),
+        "schemaVersion": DATA_SCHEMA_VERSION,
+        "createdAt": payload.get("transferCreatedAt"),
+    }
+    return json.dumps(bundle, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+
+
+def apply_update(token, confirm_risk=False, channel="source"):
     path, payload = load_pending(token)
+    if payload.get("channel", "source") != channel:
+        raise ValidationError("待处理更新与当前发布渠道不匹配")
     data_path = tool_data_path(payload["toolId"])
-    if file_sha256(data_path) != payload.get("oldHash"):
+    if channel != "store" and payload.get("mode") != "add" and file_sha256(data_path) != payload.get("oldHash"):
         raise ValidationError("原数据已发生变化，请重新检查更新")
     inventory = payload.get("officialInventory")
     dataset = validate_dataset(
@@ -3612,45 +4876,80 @@ def apply_update(token, confirm_risk=False):
     expected_review = build_scenario_review(dataset, inventory)
     if not scenario_review_matches(review, expected_review):
         raise ValidationError("待处理更新的场景审校快照缺失、失效或内容已变化")
+    adapter = payload.get("officialAdapter")
+    if not isinstance(adapter, dict) or not adapter.get("id"):
+        raise ValidationError("待处理更新缺少声明式官方适配器")
+    if adapter.get("id") != inventory.get("adapter", {}).get("id"):
+        raise ValidationError("待处理更新的官方适配器与清单不一致")
+    if not isinstance(payload.get("sourceRegistry"), list):
+        raise ValidationError("待处理更新缺少来源登记")
+    generation = payload.get("generationEnvironment")
+    generation_provider = generation.get("providerId") if isinstance(generation, dict) else None
+    if not isinstance(generation_provider, str) or not PROVIDER_ID_RE.fullmatch(generation_provider):
+        raise ValidationError("待处理更新缺少生成环境记录")
     if payload.get("diff", {}).get("risks") and not confirm_risk:
         raise ValidationError("该更新包含高风险变化，请核对并确认后再应用")
+    if channel == "store":
+        payload["transferApproved"] = True
+        payload["transferCreatedAt"] = datetime.datetime.now(datetime.timezone.utc).isoformat()
+        atomic_write(path, json.dumps(payload, ensure_ascii=False, indent=2))
+        bundle = bundle_bytes_from_payload(payload)
+        if len(bundle) > MAX_MESSAGE_BYTES:
+            raise ValidationError("动态数据包超过应用大小上限")
+        return {
+            "ok": True,
+            "changed": True,
+            "output": "新增已校验，正在写入浏览器本地修订" if payload.get("mode") == "add" else "更新已校验，正在写入浏览器本地修订",
+            "toolId": payload["toolId"],
+            "qualityWarnings": dataset.get("qualityWarnings", []),
+            "transfer": {
+                "token": token,
+                "totalBytes": len(bundle),
+                "totalChunks": (len(bundle) + TRANSFER_CHUNK_BYTES - 1) // TRANSFER_CHUNK_BYTES,
+                "sha256": hashlib.sha256(bundle).hexdigest(),
+            },
+        }
     inventory_path = official_inventory_path(payload["toolId"])
     review_path = scenario_review_path(payload["toolId"])
-    previous_inventory = None
-    if os.path.exists(inventory_path):
-        with open(inventory_path, "r", encoding="utf-8") as handle:
-            previous_inventory = handle.read()
-    previous_review = None
-    if os.path.exists(review_path):
-        with open(review_path, "r", encoding="utf-8") as handle:
-            previous_review = handle.read()
+
+    def read_previous(target_path):
+        if not os.path.exists(target_path):
+            return None
+        with open(target_path, "r", encoding="utf-8") as handle:
+            return handle.read()
+
+    def restore_previous(target_path, previous_content):
+        if previous_content is None:
+            try:
+                os.unlink(target_path)
+            except FileNotFoundError:
+                pass
+            return
+        atomic_write(target_path, previous_content)
+
+    previous_inventory = read_previous(inventory_path)
+    previous_review = read_previous(review_path)
+    previous_data = read_previous(data_path)
+    previous_index = read_previous(DATA_INDEX)
     try:
         atomic_write(inventory_path, json.dumps(inventory, ensure_ascii=False, indent=2) + "\n")
         atomic_write(review_path, json.dumps(review, ensure_ascii=False, indent=2) + "\n")
         atomic_write(data_path, render_data_file(dataset))
-        if payload.get("mode") == "add":
-            write_data_index()
+        # Add and update must both refresh the content hash in data/index.js.
+        # Treat the four files as one recoverable transaction: the pending
+        # record is kept until every write has succeeded.
+        write_data_index()
     except Exception:
-        if previous_inventory is None:
+        for target_path, previous_content in (
+            (inventory_path, previous_inventory),
+            (review_path, previous_review),
+            (data_path, previous_data),
+            (DATA_INDEX, previous_index),
+        ):
             try:
-                os.unlink(inventory_path)
+                restore_previous(target_path, previous_content)
             except OSError:
-                pass
-        else:
-            atomic_write(inventory_path, previous_inventory)
-        if previous_review is None:
-            try:
-                os.unlink(review_path)
-            except OSError:
-                pass
-        else:
-            atomic_write(review_path, previous_review)
-        if payload.get("mode") == "add" and os.path.exists(data_path):
-            try:
-                os.unlink(data_path)
-                write_data_index()
-            except OSError:
-                pass
+                LOGGER.error("apply_update: failed to restore %s", target_path, exc_info=True)
         raise
     os.unlink(path)
     return {
@@ -3662,8 +4961,37 @@ def apply_update(token, confirm_risk=False):
     }
 
 
-def discard_update(token):
+def read_bundle_chunk(token, index):
+    _path, payload = load_pending(token)
+    if payload.get("channel") != "store" or payload.get("transferApproved") is not True:
+        raise ValidationError("动态数据包尚未通过应用确认")
+    bundle = bundle_bytes_from_payload(payload)
+    total_chunks = (len(bundle) + TRANSFER_CHUNK_BYTES - 1) // TRANSFER_CHUNK_BYTES
+    if index >= total_chunks:
+        raise ValidationError("分块序号超出范围")
+    start = index * TRANSFER_CHUNK_BYTES
+    chunk = bundle[start:start + TRANSFER_CHUNK_BYTES]
+    return {
+        "ok": True,
+        "token": token,
+        "index": index,
+        "totalChunks": total_chunks,
+        "data": base64.b64encode(chunk).decode("ascii"),
+    }
+
+
+def finalize_bundle(token):
     path, payload = load_pending(token)
+    if payload.get("channel") != "store" or payload.get("transferApproved") is not True:
+        raise ValidationError("动态数据包尚未完成")
+    os.unlink(path)
+    return {"ok": True, "changed": False, "toolId": payload["toolId"], "output": "动态修订传输已完成"}
+
+
+def discard_update(token, channel="source"):
+    path, payload = load_pending(token)
+    if payload.get("channel", "source") != channel:
+        raise ValidationError("待处理更新与当前发布渠道不匹配")
     os.unlink(path)
     return {"ok": True, "changed": False, "output": "已放弃本次更新", "toolId": payload["toolId"]}
 
@@ -3692,32 +5020,162 @@ def remove_tool(tool_id):
 
 def handle_message(message):
     request = validate_request(message)
+    if request["action"] == "handshake":
+        if request.get("protocolVersion") != PROTOCOL_VERSION \
+                or request.get("schemaVersion") != DATA_SCHEMA_VERSION:
+            return {
+                "ok": False,
+                "error": f"桥接协议或数据 Schema 不兼容，需要 v{PROTOCOL_VERSION}/Schema {DATA_SCHEMA_VERSION}",
+                "protocolVersion": PROTOCOL_VERSION,
+                "schemaVersion": DATA_SCHEMA_VERSION,
+                "bridgeVersion": COMPANION_VERSION,
+            }
+        catalog_refresh = {"status": "not-requested", "checkedAt": None}
+        if request.get("refreshCatalog"):
+            catalog_refresh = refresh_catalog_if_stale(SHARED_DIR, PENDING_DIR)
+        registry = provider_registry()
+        providers = [
+            provider_status(adapter["id"], prefer_cli_version=True)
+            for adapter in registry["providers"]
+        ]
+        first_ready = next(
+            (provider for provider in providers if provider["id"] == "claude" and provider["ready"]),
+            next((provider for provider in providers if provider["ready"]), providers[0]),
+        )
+        return {
+            "ok": True,
+            "pong": True,
+            "protocolVersion": PROTOCOL_VERSION,
+            "schemaVersion": DATA_SCHEMA_VERSION,
+            "bridgeVersion": COMPANION_VERSION,
+            "companionVersion": COMPANION_VERSION,
+            "provider": first_ready["displayName"],
+            "providerId": first_ready["id"],
+            "providerDisplayName": first_ready["displayName"],
+            "providerConfigured": first_ready["ready"],
+            "providers": providers,
+            "commonProviders": common_provider_statuses(registry),
+            "providerCatalogVersion": registry["catalogVersion"],
+            "providerCatalogDigest": registry["catalogDigest"],
+            "catalogRefresh": catalog_refresh,
+            # Registry internals can contain local paths. The extension only
+            # needs a stable status code; detailed diagnostics stay local.
+            "providerCatalogError": "catalog-invalid" if registry.get("catalogError") else None,
+            "builtinProviderOverlayError": (
+                "builtin-overlay-invalid"
+                if registry.get("builtinOverlayError")
+                else None
+            ),
+            "customProviderConfigError": "custom-config-invalid" if registry.get("customConfigError") else None,
+            "providerConfigError": "api-config-invalid" if registry.get("apiConfigError") else None,
+            "capabilities": {
+                "aiRecommendations": False,
+                "dataMaintenance": True,
+                "chunkedBundles": True,
+                "commonProviderInstall": True,
+                "supportedActions": ["add_tool", "preview_update", "apply_update", "discard_update", "remove_tool"],
+                "providerCatalog": {
+                    "updateSupported": registry["catalogUpdateSupported"],
+                    "importSigned": registry["catalogUpdateSupported"],
+                    "configureCompatibleApi": True,
+                    "compatibleApi": [
+                        "anthropic-messages",
+                        "openai-responses",
+                        "openai-chat-completions",
+                    ],
+                },
+                "maxRequestBytes": MAX_MESSAGE_BYTES,
+                "chunkBytes": TRANSFER_CHUNK_BYTES,
+            },
+        }
     if request["action"] == "ping":
         return {"ok": True, "pong": True}
+    if request["action"] == "prepare_common_provider_install":
+        return prepare_common_provider_install(request["commonProviderId"])
+    if request["action"] == "install_common_provider":
+        return install_common_provider(request["commonProviderId"])
+    if request["action"] == "update_provider_catalog":
+        try:
+            result = download_catalog_envelope(SHARED_DIR, PENDING_DIR)
+        except ProviderRegistryError as exc:
+            raise ValidationError(str(exc)) from exc
+        return {"ok": True, "changed": True, **result}
+    if request["action"] == "import_provider_catalog":
+        try:
+            result = install_catalog_envelope(
+                request["envelope"], SHARED_DIR, PENDING_DIR
+            )
+        except ProviderRegistryError as exc:
+            raise ValidationError(str(exc)) from exc
+        return {"ok": True, "changed": True, **result}
+    if request["action"] == "configure_api":
+        return {"ok": True, "provider": save_api_profile(PENDING_DIR, request["config"])}
+    if request["action"] == "resolve_generic_provider":
+        return resolve_generic_provider(request["displayName"], request.get("executable"))
+    if request["action"] == "enable_generic_provider":
+        # Resolve again immediately before writing so a PATH change cannot make
+        # the extension authorise an unseen executable name.
+        resolved = resolve_generic_provider(request["displayName"], request["executable"])
+        if resolved.get("existingProviderId"):
+            return {"ok": True, "existing": True, "providerId": resolved["existingProviderId"]}
+        if not resolved.get("found") or resolved.get("executable") != request["executable"]:
+            raise ValidationError("未找到该 AI 工具，请确认安装完成后重新检测")
+        try:
+            provider = save_generic_adapter(PENDING_DIR, request)
+        except ProviderRegistryError as exc:
+            raise ValidationError(str(exc)) from exc
+        return {"ok": True, "provider": provider}
+    if request["action"] == "save_custom_provider":
+        try:
+            provider = save_custom_adapter(PENDING_DIR, request["config"])
+        except ProviderRegistryError as exc:
+            raise ValidationError(str(exc)) from exc
+        return {"ok": True, "provider": provider}
+    if request["action"] == "delete_custom_provider":
+        try:
+            deleted = delete_custom_adapter(PENDING_DIR, request["providerId"])
+        except ProviderRegistryError as exc:
+            raise ValidationError(str(exc)) from exc
+        return {"ok": True, **deleted}
+    provider_id = request.get("providerId")
+    result = None
     if request["action"] == "add_tool":
-        return add_tool(request["tool"], request["display_name"], request.get("prefer_web", False))
-    if request["action"] == "preview_update":
-        return preview_update(
+        result = add_tool(
+            request["tool"], request["display_name"], request.get("prefer_web", False),
+            request.get("channel", "source"), provider_id,
+        )
+    elif request["action"] == "preview_update":
+        result = preview_update(
             request["tool"],
             request["display_name"],
             request.get("prefer_web", False),
             request.get("deep_check", False),
+            request.get("channel", "source"),
+            request.get("current_dataset"),
+            request.get("official_inventory"),
+            request.get("scenario_review"),
+            request.get("base_content_hash"),
+            provider_id,
+            request.get("official_adapter"),
+            request.get("source_registry"),
         )
-    if request["action"] == "apply_update":
-        return apply_update(request["token"], request["confirm_risk"])
-    if request["action"] == "discard_update":
-        return discard_update(request["token"])
-    if request["action"] == "remove_tool":
-        return remove_tool(request["tool"])
-    if request["action"] == "suggest_tools":
-        return suggest_tools(
-            request["platform"],
-            request["count"],
-            request["exclude"],
-            request.get("enabled", []),
-            request.get("collected", []),
-        )
-    raise ValidationError(f"未知的 action: {request['action']}")
+    elif request["action"] == "apply_update":
+        result = apply_update(request["token"], request["confirm_risk"], request.get("channel", "source"))
+    elif request["action"] == "discard_update":
+        result = discard_update(request["token"], request.get("channel", "source"))
+    elif request["action"] == "remove_tool":
+        if request.get("channel") == "store":
+            raise ValidationError("商店版自定义工具由扩展本地存储删除")
+        result = remove_tool(request["tool"])
+    elif request["action"] == "read_bundle_chunk":
+        return read_bundle_chunk(request["token"], request["index"])
+    elif request["action"] == "finalize_bundle":
+        return finalize_bundle(request["token"])
+    if result is None:
+        raise ValidationError(f"未知的 action: {request['action']}")
+    if isinstance(result, dict):
+        result.update(provider_environment(provider_id))
+    return result
 
 
 def validation_diagnostic(exc):
@@ -3779,4 +5237,13 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        if len(sys.argv) == 2 and sys.argv[1] == "--configure-api":
+            configure_api_interactive(PENDING_DIR)
+        elif len(sys.argv) == 3 and sys.argv[1] == "--remove-api":
+            remove_api_interactive(PENDING_DIR, sys.argv[2])
+        else:
+            main()
+    except ProviderRegistryError as exc:
+        print(f"配置失败：{exc}", file=sys.stderr)
+        raise SystemExit(1) from exc

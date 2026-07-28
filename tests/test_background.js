@@ -1,7 +1,7 @@
 "use strict";
 
 // background.js 是 popup 与 native messaging host 之间的安全边界：
-// 所有从 popup 传入的 startTask 参数都先在这里做白名单校验和清洗，
+// 所有从 popup 传入的 startTask 参数都先在这里做格式校验和清洗，
 // 再转发给本地进程。这层校验此前完全没有测试覆盖（CI 只做 node --check
 // 语法检查），本文件补上对校验/清洗逻辑与任务生命周期的覆盖。
 
@@ -12,6 +12,7 @@ const vm = require("vm");
 
 const root = path.resolve(__dirname, "..");
 const SOURCE = fs.readFileSync(path.join(root, "background.js"), "utf8");
+const PROTOCOL_VERSION = 5;
 
 function flushMicrotasks() {
   return new Promise((resolve) => setImmediate(resolve));
@@ -40,6 +41,7 @@ function createChromeMock() {
       },
     },
     runtime: {
+      id: "a".repeat(32),
       lastError: null,
       sendMessage(msg) { state.sentMessages.push(msg); return Promise.resolve(); },
       connectNative(name) {
@@ -63,15 +65,33 @@ function createChromeMock() {
 
 function loadBackground() {
   const { chrome, state } = createChromeMock();
-  const context = { chrome, console };
+  const timers = [];
+  const context = {
+    chrome,
+    console,
+    setTimeout(fn, delay) {
+      timers.push({ fn, delay, cleared: false });
+      return timers.length - 1;
+    },
+    clearTimeout(index) {
+      if (timers[index]) timers[index].cleared = true;
+    },
+  };
   vm.createContext(context);
   vm.runInContext(SOURCE, context, { filename: "background.js" });
-  return { chrome, state };
+  return { chrome, state, timers };
 }
 
 function dispatch(chrome, msg) {
+  const request = msg.action === "startTask"
+    ? {
+        providerId: "claude",
+        providerCatalogDigest: `sha256:${"b".repeat(64)}`,
+        ...msg,
+      }
+    : msg;
   let response;
-  const async_ = chrome.runtime.onMessage.listener(msg, {}, (res) => { response = res; });
+  const async_ = chrome.runtime.onMessage.listener(request, {}, (res) => { response = res; });
   // sendResponse 的对象来自 vm 沙箱的独立 realm，与本文件的内建对象原型不同，
   // deepStrictEqual 会因原型不同而判定“不相等”；先经 JSON 往返剥离 realm 差异。
   return { async_, getResponse: () => JSON.parse(JSON.stringify(response)) };
@@ -98,6 +118,267 @@ const VALID_TOKEN = "a".repeat(32);
     assert.deepStrictEqual(getResponse(), { running: true, tool: "git" });
   }
 
+  // Optional companion handshake is a one-shot native request and exposes no task slot.
+  {
+    const { chrome, state } = loadBackground();
+    const handshake = dispatch(chrome, { action: "companionHandshake", protocolVersion: PROTOCOL_VERSION, schemaVersion: 2 });
+    assert.strictEqual(handshake.async_, true);
+    assert.deepStrictEqual(JSON.parse(JSON.stringify(state.ports[0].messages[0])), {
+      action: "handshake", protocolVersion: PROTOCOL_VERSION, schemaVersion: 2, extensionId: "a".repeat(32), refreshCatalog: false,
+    });
+    state.ports[0].onMessage.listener({ ok: true, protocolVersion: PROTOCOL_VERSION, schemaVersion: 2 });
+    await flushMicrotasks();
+    assert.strictEqual(handshake.getResponse().ok, true);
+  }
+  // A direct Detect click explicitly permits a one-shot signed catalog refresh.
+  {
+    const { chrome, state } = loadBackground();
+    const handshake = dispatch(chrome, {
+      action: "companionHandshake", protocolVersion: PROTOCOL_VERSION, schemaVersion: 2, refreshCatalog: true,
+    });
+    assert.strictEqual(state.ports[0].messages[0].refreshCatalog, true);
+    state.ports[0].onMessage.listener({ ok: true, protocolVersion: PROTOCOL_VERSION, schemaVersion: 2 });
+    await flushMicrotasks();
+    assert.strictEqual(handshake.getResponse().ok, true);
+  }
+  // A v4 bridge reports its supported protocol, then receives one automatic
+  // retry. It remains usable for existing maintenance instead of forcing an
+  // unrelated component upgrade during detection.
+  {
+    const { chrome, state } = loadBackground();
+    const handshake = dispatch(chrome, { action: "companionHandshake", protocolVersion: PROTOCOL_VERSION, schemaVersion: 2 });
+    state.ports[0].onMessage.listener({
+      ok: false, error: "桥接协议不兼容，需要 v4/Schema 2", protocolVersion: 4, schemaVersion: 2,
+    });
+    await flushMicrotasks();
+    assert.strictEqual(state.ports.length, 2, "a supported legacy bridge must receive one compatibility retry");
+    assert.strictEqual(state.ports[1].messages[0].protocolVersion, 4);
+    state.ports[1].onMessage.listener({
+      ok: true, protocolVersion: 4, schemaVersion: 2, bridgeVersion: "1.7.5",
+      providers: [{ id: "claude", displayName: "Claude Code", ready: true }],
+      providerCatalogDigest: `sha256:${"c".repeat(64)}`,
+      capabilities: { dataMaintenance: true, supportedActions: ["add_tool"] },
+    });
+    await flushMicrotasks();
+    const response = handshake.getResponse();
+    assert.strictEqual(response.ok, true);
+    assert.strictEqual(response.effectiveProtocolVersion, 4);
+    assert.strictEqual(response.legacyCompatibility, true);
+  }
+  // v3 does not expose a Provider catalog digest, but it still supports the
+  // four original CLI providers and maintenance actions.
+  {
+    const { chrome, state } = loadBackground();
+    const handshake = dispatch(chrome, { action: "companionHandshake", protocolVersion: PROTOCOL_VERSION, schemaVersion: 2 });
+    state.ports[0].onMessage.listener({
+      ok: false, error: "桥接协议不兼容，需要 v3/Schema 2", protocolVersion: 3, schemaVersion: 2,
+    });
+    await flushMicrotasks();
+    assert.strictEqual(state.ports[1].messages[0].protocolVersion, 3);
+    state.ports[1].onMessage.listener({
+      ok: true, protocolVersion: 3, schemaVersion: 2, bridgeVersion: "1.7.2",
+      providers: [{ id: "claude", displayName: "Claude Code", ready: true }],
+      capabilities: { dataMaintenance: true, supportedActions: ["add_tool", "preview_update"] },
+    });
+    await flushMicrotasks();
+    const response = handshake.getResponse();
+    assert.strictEqual(response.ok, true);
+    assert.strictEqual(response.effectiveProtocolVersion, 3);
+    assert.strictEqual(response.providerCatalogDigest, undefined);
+  }
+  // A reachable v1/v2 host reports handshake as unknown. Treat it as an
+  // upgrade problem, not as a missing AI CLI or an absent native host.
+  {
+    const { chrome, state } = loadBackground();
+    const handshake = dispatch(chrome, { action: "companionHandshake", protocolVersion: PROTOCOL_VERSION, schemaVersion: 2 });
+    state.ports[0].onMessage.listener({ ok: false, error: "未知的 action: handshake" });
+    await flushMicrotasks();
+    assert.strictEqual(handshake.getResponse().code, "bridge_outdated");
+    assert(/不支持当前协议/.test(handshake.getResponse().error));
+  }
+
+  assert(SOURCE.includes("HANDSHAKE_TIMEOUT_MS = 35 * 1000"), "handshakes must time out after 35 seconds");
+  assert(SOURCE.includes("native_handshake_timeout"), "handshake timeouts must remain distinguishable from a missing bridge");
+  {
+    const { chrome, state, timers } = loadBackground();
+    const handshake = dispatch(chrome, { action: "companionHandshake", protocolVersion: PROTOCOL_VERSION, schemaVersion: 2 });
+    assert.strictEqual(timers.length, 1, "a handshake must schedule a timeout");
+    assert.strictEqual(timers[0].delay, 35 * 1000);
+    timers[0].fn();
+    await flushMicrotasks();
+    assert.strictEqual(handshake.getResponse().code, "native_handshake_timeout");
+    assert.strictEqual(state.ports[0].disconnected, true, "timed-out handshakes must disconnect their native port");
+  }
+  {
+    const { chrome, state } = loadBackground();
+    const handshake = dispatch(chrome, { action: "companionHandshake", protocolVersion: PROTOCOL_VERSION, schemaVersion: 1 });
+    assert.strictEqual(handshake.async_, false);
+    assert.strictEqual(handshake.getResponse().ok, false);
+    assert.strictEqual(state.connectNativeCalls.length, 0, "an incompatible schema must not reach the native host");
+  }
+
+  // Provider catalog updates/imports are explicit one-shot bridge operations.
+  {
+    const { chrome, state } = loadBackground();
+    const update = dispatch(chrome, { action: "companionProviderCatalogUpdate" });
+    assert.strictEqual(update.async_, true);
+    assert.deepStrictEqual(JSON.parse(JSON.stringify(state.ports[0].messages[0])), {
+      action: "update_provider_catalog", protocolVersion: PROTOCOL_VERSION,
+    });
+    state.ports[0].onMessage.listener({ ok: true, catalogVersion: 2 });
+    await flushMicrotasks();
+    assert.strictEqual(update.getResponse().catalogVersion, 2);
+  }
+  {
+    const { chrome, state } = loadBackground();
+    const invalid = dispatch(chrome, { action: "companionProviderCatalogImport", envelope: [] });
+    assert.strictEqual(invalid.async_, false);
+    assert.strictEqual(invalid.getResponse().ok, false);
+    assert.strictEqual(state.connectNativeCalls.length, 0);
+  }
+  {
+    const { chrome, state } = loadBackground();
+    const envelope = { payload: { adapters: [] }, sha256: "sha256:test", signature: "test" };
+    const imported = dispatch(chrome, { action: "companionProviderCatalogImport", envelope });
+    assert.strictEqual(imported.async_, true);
+    assert.deepStrictEqual(JSON.parse(JSON.stringify(state.ports[0].messages[0])), {
+      action: "import_provider_catalog", protocolVersion: PROTOCOL_VERSION, envelope,
+    });
+  }
+  // Compatible API setup is a one-shot native request. The credential is
+  // forwarded only to the bridge and is never persisted by the extension.
+  {
+    const { chrome, state } = loadBackground();
+    const config = {
+      displayName: "Test API", protocol: "openai-responses",
+      baseUrl: "https://api.example.test", model: "test-model", token: "test-token",
+    };
+    const configured = dispatch(chrome, { action: "companionProviderApiConfigure", config });
+    assert.strictEqual(configured.async_, true);
+    assert.deepStrictEqual(JSON.parse(JSON.stringify(state.ports[0].messages[0])), {
+      action: "configure_api", protocolVersion: PROTOCOL_VERSION, config,
+    });
+    state.ports[0].onMessage.listener({ ok: true, provider: { id: "api:00000000-0000-4000-8000-000000000000" } });
+    await flushMicrotasks();
+    assert.strictEqual(configured.getResponse().ok, true);
+  }
+  {
+    const { chrome, state } = loadBackground();
+    const invalid = dispatch(chrome, { action: "companionProviderApiConfigure", config: { token: "only-token" } });
+    assert.strictEqual(invalid.async_, false);
+    assert.strictEqual(invalid.getResponse().ok, false);
+    assert.strictEqual(state.connectNativeCalls.length, 0);
+  }
+
+  // A user-configured provider can only carry declarative fields to the host.
+  {
+    const { chrome, state } = loadBackground();
+    const config = {
+      displayName: "My Local AI", executable: "my-local-ai", driver: "stdin-json",
+      argv: ["--json", "--read-only"], promptMode: "stdin", outputParser: "json",
+      versionArgs: ["--version"], loginCommand: "my-local-ai login", readOnlyConfirmed: true,
+    };
+    const saved = dispatch(chrome, { action: "companionCustomProviderSave", config });
+    assert.strictEqual(saved.async_, true);
+    assert.deepStrictEqual(JSON.parse(JSON.stringify(state.ports[0].messages[0])), {
+      action: "save_custom_provider", protocolVersion: PROTOCOL_VERSION, config,
+    });
+    state.ports[0].onMessage.listener({ ok: true, provider: { id: "custom:00000000-0000-4000-8000-000000000000" } });
+    await flushMicrotasks();
+    assert.strictEqual(saved.getResponse().ok, true);
+  }
+  {
+    const { chrome, state } = loadBackground();
+    const invalid = dispatch(chrome, { action: "companionCustomProviderSave", config: {
+      displayName: "Unsafe", executable: "/tmp/unsafe", driver: "stdin-json",
+      argv: [], promptMode: "stdin", outputParser: "json", versionArgs: ["--version"],
+      loginCommand: "", readOnlyConfirmed: false,
+    } });
+    assert.strictEqual(invalid.async_, false);
+    assert.strictEqual(invalid.getResponse().ok, false);
+    assert.strictEqual(state.connectNativeCalls.length, 0);
+  }
+  {
+    const { chrome, state } = loadBackground();
+    const providerId = "custom:00000000-0000-4000-8000-000000000000";
+    const deleted = dispatch(chrome, { action: "companionCustomProviderDelete", providerId });
+    assert.strictEqual(deleted.async_, true);
+    assert.deepStrictEqual(JSON.parse(JSON.stringify(state.ports[0].messages[0])), {
+      action: "delete_custom_provider", protocolVersion: PROTOCOL_VERSION, providerId,
+    });
+  }
+
+  // One-click generic providers can only resolve a bare PATH filename and
+  // require an explicit enable confirmation before any configuration is saved.
+  {
+    const { chrome, state } = loadBackground();
+    const resolved = dispatch(chrome, {
+      action: "companionGenericProviderResolve", displayName: "My AI", executable: "my-ai",
+    });
+    assert.strictEqual(resolved.async_, true);
+    assert.deepStrictEqual(JSON.parse(JSON.stringify(state.ports[0].messages[0])), {
+      action: "resolve_generic_provider", protocolVersion: PROTOCOL_VERSION,
+      displayName: "My AI", executable: "my-ai",
+    });
+  }
+  {
+    const { chrome, state } = loadBackground();
+    const enabled = dispatch(chrome, {
+      action: "companionGenericProviderEnable", displayName: "My AI", executable: "my-ai",
+      genericConfirmed: true,
+    });
+    assert.strictEqual(enabled.async_, true);
+    assert.deepStrictEqual(JSON.parse(JSON.stringify(state.ports[0].messages[0])), {
+      action: "enable_generic_provider", protocolVersion: PROTOCOL_VERSION,
+      displayName: "My AI", executable: "my-ai", genericConfirmed: true,
+    });
+  }
+  {
+    const { chrome, state } = loadBackground();
+    const rejected = dispatch(chrome, {
+      action: "companionGenericProviderEnable", displayName: "My AI", executable: "/tmp/my-ai",
+      genericConfirmed: true,
+    });
+    assert.strictEqual(rejected.async_, false);
+    assert.strictEqual(rejected.getResponse().ok, false);
+    assert.strictEqual(state.connectNativeCalls.length, 0);
+  }
+
+  // A common-provider install can only forward a fixed catalog ID plus an
+  // explicit confirmation. No executable name or package arguments cross the
+  // extension/native boundary.
+  {
+    const { chrome, state } = loadBackground();
+    const prepared = dispatch(chrome, {
+      action: "companionCommonProviderInstallPrepare", commonProviderId: "qwen-code",
+    });
+    assert.strictEqual(prepared.async_, true);
+    assert.deepStrictEqual(JSON.parse(JSON.stringify(state.ports[0].messages[0])), {
+      action: "prepare_common_provider_install", protocolVersion: PROTOCOL_VERSION,
+      commonProviderId: "qwen-code",
+    });
+  }
+  {
+    const { chrome, state } = loadBackground();
+    const install = dispatch(chrome, {
+      action: "companionCommonProviderInstall", commonProviderId: "qwen-code", confirmed: true,
+    });
+    assert.strictEqual(install.async_, true);
+    assert.deepStrictEqual(JSON.parse(JSON.stringify(state.ports[0].messages[0])), {
+      action: "install_common_provider", protocolVersion: PROTOCOL_VERSION,
+      commonProviderId: "qwen-code", confirmed: true,
+    });
+  }
+  {
+    const { chrome, state } = loadBackground();
+    const rejected = dispatch(chrome, {
+      action: "companionCommonProviderInstall", commonProviderId: "qwen-code;rm", confirmed: true,
+    });
+    assert.strictEqual(rejected.async_, false);
+    assert.strictEqual(rejected.getResponse().ok, false);
+    assert.strictEqual(state.connectNativeCalls.length, 0);
+  }
+
   // getTaskStatus 在没有存储值时回退为 running:false
   {
     const { chrome } = loadBackground();
@@ -118,6 +399,33 @@ const VALID_TOKEN = "a".repeat(32);
     assert(/任务参数无效/.test(invalidResponse.error), "invalid params should be named as the failure reason");
     assert(/重新打开|重试/.test(invalidResponse.error), "the error should tell the user what to do next");
     assert.strictEqual(state.connectNativeCalls.length, 0, "invalid mode must not reach the native host");
+  }
+  {
+    const { chrome, state } = loadBackground();
+    const { getResponse } = dispatch(chrome, {
+      action: "startTask", mode: "add_tool", tool: "git", display_name: "Git",
+      providerId: "custom:00000000-0000-4000-8000-000000000000",
+    });
+    assert.strictEqual(getResponse().ok, true);
+    assert.strictEqual(state.ports[0].messages[0].providerId, "custom:00000000-0000-4000-8000-000000000000");
+  }
+
+  // v4 不再维护四项白名单：动态 ID 可转发，格式非法的 ID 仍被拒绝。
+  {
+    const { chrome, state } = loadBackground();
+    const { getResponse } = dispatch(chrome, {
+      action: "startTask", mode: "add_tool", tool: "git", display_name: "Git", providerId: "catalog:fifth",
+    });
+    assert.strictEqual(getResponse().ok, true);
+    assert.strictEqual(state.ports[0].messages[0].providerId, "catalog:fifth");
+  }
+  {
+    const { chrome, state } = loadBackground();
+    const { getResponse } = dispatch(chrome, {
+      action: "startTask", mode: "add_tool", tool: "git", display_name: "Git", providerId: "UNKNOWN!",
+    });
+    assert.strictEqual(getResponse().ok, false);
+    assert.strictEqual(state.connectNativeCalls.length, 0);
   }
 
   // startTask 参数校验：拒绝非法 tool id（大写/非法字符）
@@ -166,7 +474,7 @@ const VALID_TOKEN = "a".repeat(32);
     assert.strictEqual(state.connectNativeCalls.length, 1);
   }
 
-  // startTask 参数校验：suggest_tools 模式要求合法 platform/count
+  // 1.7.3 不恢复 AI 再推荐，旧 suggest_tools 协议请求必须被拒绝。
   {
     const { chrome } = loadBackground();
     assert.strictEqual(
@@ -194,11 +502,11 @@ const VALID_TOKEN = "a".repeat(32);
   {
     const { chrome, state } = loadBackground();
     const { getResponse } = dispatch(chrome, { action: "startTask", mode: "suggest_tools", platform: "mac", count: 5 });
-    assert.strictEqual(getResponse().ok, true);
-    assert.strictEqual(state.connectNativeCalls.length, 1);
+    assert.strictEqual(getResponse().ok, false);
+    assert.strictEqual(state.connectNativeCalls.length, 0);
   }
 
-  // startTask 清洗 exclude / enabled / collected，过滤非法条目而非整体拒绝
+  // 与维护动作无关的旧推荐上下文不得继续转发。
   {
     const { chrome, state } = loadBackground();
     const { getResponse } = dispatch(chrome, {
@@ -218,13 +526,55 @@ const VALID_TOKEN = "a".repeat(32);
     });
     assert.strictEqual(getResponse().ok, true);
     const posted = JSON.parse(JSON.stringify(state.ports[0].messages[0]));
-    assert.deepStrictEqual(posted.exclude, ["good-tool", "another-good"], "exclude should drop ids that fail TOOL_ID_RE");
-    assert.deepStrictEqual(
-      posted.enabled,
-      [{ id: "good-tool", name: "Good Tool" }, { id: "ok2", name: "Trimmed" }],
-      "enabled should drop invalid ids, empty names, and over-length names, and trim surviving names"
-    );
-    assert.deepStrictEqual(posted.collected, [{ id: "collected-1", name: "Collected" }]);
+    assert.strictEqual(posted.exclude, undefined);
+    assert.strictEqual(posted.enabled, undefined);
+    assert.strictEqual(posted.collected, undefined);
+    assert.strictEqual(posted.providerId, "claude");
+    assert.strictEqual(posted.protocolVersion, PROTOCOL_VERSION);
+    assert.strictEqual(posted.providerCatalogDigest, `sha256:${"b".repeat(64)}`);
+  }
+
+  // v3 maintenance intentionally omits the catalog digest because the older
+  // host has no signed registry; v4 and v5 retain the binding.
+  {
+    const { chrome, state } = loadBackground();
+    const { getResponse } = dispatch(chrome, {
+      action: "startTask", mode: "add_tool", tool: "git", display_name: "Git",
+      bridgeProtocolVersion: 3, providerCatalogDigest: undefined,
+    });
+    assert.strictEqual(getResponse().ok, true);
+    const posted = JSON.parse(JSON.stringify(state.ports[0].messages[0]));
+    assert.strictEqual(posted.protocolVersion, 3);
+    assert.strictEqual(posted.providerCatalogDigest, undefined);
+  }
+  {
+    const { chrome, state } = loadBackground();
+    const { getResponse } = dispatch(chrome, {
+      action: "startTask", mode: "add_tool", tool: "git", display_name: "Git",
+      bridgeProtocolVersion: 4,
+    });
+    assert.strictEqual(getResponse().ok, true);
+    const posted = JSON.parse(JSON.stringify(state.ports[0].messages[0]));
+    assert.strictEqual(posted.protocolVersion, 4);
+    assert.strictEqual(posted.providerCatalogDigest, `sha256:${"b".repeat(64)}`);
+  }
+  {
+    const { chrome, state } = loadBackground();
+    const rejected = dispatch(chrome, {
+      action: "startTask", mode: "add_tool", tool: "git", display_name: "Git",
+      bridgeProtocolVersion: 3, providerId: "qwen", providerCatalogDigest: undefined,
+    });
+    assert.strictEqual(rejected.getResponse().ok, false, "v3 must not accept providers outside its four built-ins");
+    assert.strictEqual(state.connectNativeCalls.length, 0);
+  }
+  {
+    const { chrome, state } = loadBackground();
+    const rejected = dispatch(chrome, {
+      action: "startTask", mode: "add_tool", tool: "git", display_name: "Git",
+      bridgeProtocolVersion: 4, providerCatalogDigest: undefined,
+    });
+    assert.strictEqual(rejected.getResponse().ok, false, "v4 must keep the Provider catalog digest requirement");
+    assert.strictEqual(state.connectNativeCalls.length, 0);
   }
 
   // startTask 把非布尔值的 confirm_risk/prefer_web/deep_check 收窄为 false
@@ -238,6 +588,28 @@ const VALID_TOKEN = "a".repeat(32);
     assert.strictEqual(posted.confirm_risk, false, "non-boolean confirm_risk must not be coerced to true");
     assert.strictEqual(posted.prefer_web, false);
     assert.strictEqual(posted.deep_check, false);
+  }
+
+  // Store maintenance forwards only JSON context and the explicit channel.
+  {
+    const { chrome, state } = loadBackground();
+    dispatch(chrome, {
+      action: "startTask", mode: "preview_update", tool: "git", display_name: "Git", channel: "store",
+      current_dataset: { meta: { id: "git" }, items: [] },
+      official_inventory: { toolId: "git", entries: [] },
+      scenario_review: { toolId: "git", examples: [] },
+      official_adapter: { id: "git-fixed", kind: "fixed-official-component-union", version: 1 },
+      source_registry: [{ id: "git-docs", url: "https://git-scm.com/docs" }],
+      base_content_hash: `sha256:${"a".repeat(64)}`,
+    });
+    const posted = state.ports[0].messages[0];
+    assert.strictEqual(posted.channel, "store");
+    assert.strictEqual(posted.current_dataset.meta.id, "git");
+    assert.strictEqual(posted.official_adapter.id, "git-fixed");
+    assert.deepStrictEqual(JSON.parse(JSON.stringify(posted.source_registry)), [
+      { id: "git-docs", url: "https://git-scm.com/docs" },
+    ]);
+    assert.strictEqual(posted.base_content_hash, `sha256:${"a".repeat(64)}`);
   }
 
   // startTask 并发守卫：任务进行中拒绝第二个请求，完成后恢复可用
@@ -350,6 +722,11 @@ const VALID_TOKEN = "a".repeat(32);
     );
     const retry = dispatch(chrome, { action: "startTask", mode: "add_tool", tool: "git", display_name: "Git" });
     assert.strictEqual(retry.getResponse().ok, true, "task slot should be free again after cancellation");
+    const sentAfterCancel = state.sentMessages.length;
+    state.ports[0].onMessage.listener({ ok: true, output: "stale completion" });
+    assert.strictEqual(state.ports[1].disconnected, false, "a cancelled task's late response must not disconnect the replacement task");
+    assert.strictEqual(state.sentMessages.length, sentAfterCancel, "a cancelled task's late response must not broadcast completion");
+    state.ports[1].onMessage.listener({ ok: true, output: "replacement complete" });
   }
 
   // cancelTask：无任务时返回明确提示，不广播

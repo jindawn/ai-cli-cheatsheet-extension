@@ -6,6 +6,7 @@ import hashlib
 import json
 import os
 import re
+import sys
 import urllib.error
 import urllib.request
 
@@ -13,7 +14,13 @@ import urllib.request
 DOCKER_ROOT = "https://docs.docker.com/reference/cli/docker/"
 DOCKER_MARKDOWN_ROOT = "https://docs.docker.com/reference/cli/docker.md"
 USER_AGENT = "ai-cli-cheatsheet-extension/official-inventory"
-PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PROJECT_DIR = (
+    sys._MEIPASS
+    if getattr(sys, "frozen", False) and getattr(sys, "_MEIPASS", None)
+    else os.environ.get("AICLI_PROJECT_DIR") or os.path.dirname(
+        os.path.dirname(os.path.abspath(__file__))
+    )
+)
 
 
 class OfficialInventoryError(RuntimeError):
@@ -217,6 +224,170 @@ def _load_snapshot(tool_id):
     return inventory
 
 
+def _load_component_fixture(tool_id, relative_path):
+    path = os.path.join(PROJECT_DIR, relative_path)
+    try:
+        with open(path, "r", encoding="utf-8") as handle:
+            fixture = json.load(handle)
+    except (OSError, json.JSONDecodeError) as exc:
+        raise OfficialInventoryError(
+            "official_inventory_unconfirmed",
+            f"{tool_id} 的官方组件入口夹具不可读：{exc}",
+            ["重新解析固定版本的官方发布包", "在夹具恢复前不要应用新增或更新"],
+        ) from exc
+    components = fixture.get("components")
+    if (
+        fixture.get("schemaVersion") != 1
+        or fixture.get("toolId") != tool_id
+        or not isinstance(components, list)
+        or not components
+        or fixture.get("manifestHash") != inventory_hash(components)
+    ):
+        raise OfficialInventoryError(
+            "official_inventory_unconfirmed",
+            f"{tool_id} 的官方组件夹具摘要或结构无效",
+            ["用官方发布包重新生成组件夹具", "核对夹具中的版本、来源和 SHA-256"],
+        )
+    for component in components:
+        if (
+            not component.get("id")
+            or not component.get("version")
+            or not component.get("sourceId")
+            or not component.get("sourceUrl", "").startswith("https://")
+            or not component.get("downloadUrl", "").startswith("https://")
+            or not re.fullmatch(r"[a-f0-9]{64}", component.get("archiveSha256", ""))
+            or not component.get("parser")
+            or not isinstance(component.get("entries"), list)
+            or not component["entries"]
+            or not isinstance(component.get("exclusions"), list)
+        ):
+            raise OfficialInventoryError(
+                "official_inventory_unconfirmed",
+                f"{tool_id} 的组件 {component.get('id', '?')} 缺少闭合来源元数据",
+                ["重新解析该组件的官方发布包", "不要以人工条数替代官方入口索引"],
+            )
+        for entry in component["entries"]:
+            if not entry.get("command") or not entry.get("locator"):
+                raise OfficialInventoryError(
+                    "official_inventory_unconfirmed",
+                    f"{tool_id}/{component['id']} 存在无命令名或无定位的入口",
+                    ["修复组件解析器并重新生成夹具"],
+                )
+    return fixture
+
+
+def _component_union_entries(fixture):
+    tool_id = fixture["toolId"]
+    posix_commands = set()
+    if tool_id == "unix-cli":
+        posix_component = next(
+            (component for component in fixture["components"] if component["id"] == "posix-utilities"),
+            None,
+        )
+        if not posix_component:
+            raise OfficialInventoryError(
+                "official_inventory_unconfirmed", "Unix/POSIX 夹具缺少 POSIX Issue 8 基线",
+                ["恢复 posix-utilities 组件并重新生成清单"],
+            )
+        posix_commands = {entry["command"] for entry in posix_component["entries"]}
+    merged = {}
+    for component in fixture["components"]:
+        for raw in component["entries"]:
+            command = raw["command"].strip()
+            context = (
+                "linux-system" if tool_id == "linux"
+                else "posix-utility" if command in posix_commands
+                else "external-command"
+            )
+            key = (command.casefold(), context)
+            if key not in merged:
+                merged[key] = {
+                    "command": command,
+                    "context": context,
+                    "aliases": [],
+                    "entryType": "cli-command",
+                    "component": component["id"],
+                    "components": [],
+                    "platforms": ["linux"] if tool_id == "linux" else ["mac", "linux"],
+                    "constraints": [],
+                    "description": raw.get("description") or command,
+                    "usage": raw.get("usage") or command,
+                    "options": raw.get("options", []),
+                    "officialExamples": raw.get("officialExamples", []),
+                    "url": raw["locator"],
+                    "sourceId": component["sourceId"],
+                    "sourceVersion": component["version"],
+                }
+            entry = merged[key]
+            entry["components"].append(component["id"])
+            entry["constraints"].extend(raw.get("constraints", []))
+            entry["aliases"].extend(raw.get("aliases", []))
+    canonical = {entry["command"].casefold() for entry in merged.values()}
+    result = []
+    for entry in merged.values():
+        entry["components"] = sorted(set(entry["components"]))
+        entry["component"] = "/".join(entry["components"])
+        entry["constraints"] = sorted(set(entry["constraints"]))
+        entry["aliases"] = sorted({
+            alias for alias in entry["aliases"]
+            if alias.casefold() not in canonical and alias.casefold() != entry["command"].casefold()
+        })
+        result.append(entry)
+    return sorted(result, key=lambda entry: (entry["command"].casefold(), entry["context"]))
+
+
+def build_component_union_inventory(tool_id, adapter):
+    fixture_path = adapter.get("fixture")
+    if not fixture_path:
+        raise OfficialInventoryError(
+            "official_adapter_missing", f"{tool_id} 的组件适配器未登记独立夹具",
+            ["在适配器登记 fixture 路径", "重新生成官方组件入口夹具"],
+        )
+    fixture = _load_component_fixture(tool_id, fixture_path)
+    fixture_component_ids = [component["id"] for component in fixture["components"]]
+    fixture_source_ids = list(dict.fromkeys(component["sourceId"] for component in fixture["components"]))
+    if fixture_component_ids != adapter.get("components") or fixture_source_ids != adapter.get("sourceIds"):
+        raise OfficialInventoryError(
+            "official_inventory_unconfirmed", f"{tool_id} 的适配器范围与组件夹具不一致",
+            ["同步适配器组件、来源与固定发布版本", "不要缩减组件范围来通过校验"],
+        )
+    entries = _component_union_entries(fixture)
+    component_counts = {component["id"]: len(component["entries"]) for component in fixture["components"]}
+    inventory = {
+        "schemaVersion": 2,
+        "toolId": tool_id,
+        "scope": "all-command-entrypoints",
+        "checkedAt": datetime.date.today().isoformat(),
+        "sourceIds": fixture_source_ids,
+        "adapter": {
+            "id": f"{tool_id}-official-component-index-union",
+            "kind": "official-component-index-union",
+            "version": 1,
+        },
+        "closure": {
+            "status": "closed",
+            "entryCount": len(entries),
+            "components": fixture_component_ids,
+            "componentCounts": component_counts,
+            "platforms": ["linux"] if tool_id == "linux" else ["mac", "linux"],
+            "sourceManifestHash": fixture["manifestHash"],
+            "excluded": sum((component["exclusions"] for component in fixture["components"]), []),
+            "proof": "deterministic union parsed from pinned official release indexes; aliases and component overlaps are merged",
+        },
+        "entries": entries,
+    }
+    snapshot = _load_snapshot(tool_id)
+    if (
+        snapshot.get("closure", {}).get("sourceManifestHash") != fixture["manifestHash"]
+        or inventory_hash(snapshot["entries"]) != inventory_hash(entries)
+    ):
+        raise OfficialInventoryError(
+            "official_inventory_unconfirmed", f"{tool_id} 的渲染清单与官方组件夹具不一致",
+            ["同时更新数据、清单与场景审校", "运行强制数据政策校验"],
+        )
+    return inventory
+
+
 def fetch_official_inventory(tool_id):
     if tool_id == "docker":
         return fetch_docker_inventory()
@@ -236,6 +407,8 @@ def fetch_official_inventory(tool_id):
             f"{tool_id} 尚未配置可验证的官方入口清单适配器，不能新增或断言已是最新",
             ["先实现确定性官方目录适配器和固定样本", "在适配完成前不要写入数据"],
         )
+    if adapter.get("kind") == "official-component-index-union":
+        return build_component_union_inventory(tool_id, adapter)
     inventory = _load_snapshot(tool_id)
     if (
         inventory["adapter"].get("kind") != adapter.get("kind")

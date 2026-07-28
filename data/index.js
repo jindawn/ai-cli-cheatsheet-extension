@@ -16,26 +16,256 @@ window.CHEATSHEET_FILES = [
   "opencode",
   "shell",
   "typora",
+  "unix-cli",
   "vs-code"
 ];
 
 // Lightweight metadata used before the full per-tool datasets are loaded.
 window.CHEATSHEET_TOOL_CATALOG = [
-  {"id":"antigravity-cli","name":"Antigravity CLI","color":"#9b6bdf","platforms":["mac","windows","linux"],"updatePolicy":"manual-only","builtIn":true,"order":4},
-  {"id":"claude-code","name":"Claude Code","color":"#d97757","platforms":["mac","windows","linux"],"updatePolicy":"version-driven","builtIn":true,"order":1},
-  {"id":"codex","name":"Codex CLI","color":"#74aa9c","platforms":["mac","windows","linux"],"updatePolicy":"version-driven","builtIn":true,"order":2},
-  {"id":"cursor","name":"Cursor","color":"#8B5CF6","platforms":["mac","windows","linux"],"updatePolicy":"manual-only","builtIn":false,"order":8},
-  {"id":"docker","name":"Docker","color":"#2496ED","platforms":["mac","windows","linux"],"updatePolicy":"version-driven","builtIn":false,"order":999},
-  {"id":"gemini-cli","name":"Gemini CLI","color":"#4c8bf5","platforms":["mac","windows","linux"],"updatePolicy":"version-driven","builtIn":true,"order":3},
-  {"id":"git","name":"Git","color":"#F05032","platforms":["mac","windows","linux"],"updatePolicy":"manual-only","builtIn":false,"order":999},
-  {"id":"homebrew","name":"Homebrew","color":"#FBB040","platforms":["mac","linux"],"updatePolicy":"version-driven","builtIn":false,"order":999},
-  {"id":"idea","name":"IntelliJ IDEA","color":"#F59E0B","platforms":["mac","windows","linux"],"updatePolicy":"manual-only","builtIn":true,"order":6},
-  {"id":"iterm2","name":"iTerm2","color":"#EBBF00","platforms":["mac"],"updatePolicy":"manual-only","builtIn":false,"order":999},
-  {"id":"linux","name":"GNU/Linux CLI","color":"#FCC624","platforms":["linux","mac"],"updatePolicy":"manual-only","builtIn":false,"order":999},
-  {"id":"obsidian","name":"Obsidian","color":"#7C3AED","platforms":["mac","windows","linux"],"updatePolicy":"manual-only","builtIn":false,"order":999},
-  {"id":"openclaw","name":"OpenClaw","color":"#e55934","platforms":["mac","windows","linux"],"updatePolicy":"version-driven","builtIn":false,"order":999},
-  {"id":"opencode","name":"OpenCode","color":"#e8445a","platforms":["mac","windows","linux"],"updatePolicy":"version-driven","builtIn":true,"order":5},
-  {"id":"shell","name":"Shell","color":"#1E1E1E","platforms":["mac","linux"],"updatePolicy":"manual-only","builtIn":false,"order":999},
-  {"id":"typora","name":"Typora","color":"#2a3333","platforms":["mac","windows","linux"],"updatePolicy":"manual-only","builtIn":false,"order":999},
-  {"id":"vs-code","name":"VS Code","color":"#007ACC","platforms":["mac","windows","linux"],"updatePolicy":"manual-only","builtIn":true,"order":7}
+  {
+    "id": "antigravity-cli",
+    "name": "Antigravity CLI",
+    "color": "#9b6bdf",
+    "platforms": [
+      "mac",
+      "windows",
+      "linux"
+    ],
+    "updatePolicy": "manual-only",
+    "builtIn": true,
+    "order": 4,
+    "contentHash": "sha256:8f43471a85d1c3d67c34f60f7d2dbb18466317c8653e0984eb00d345b8a3b49c"
+  },
+  {
+    "id": "claude-code",
+    "name": "Claude Code",
+    "color": "#d97757",
+    "platforms": [
+      "mac",
+      "windows",
+      "linux"
+    ],
+    "updatePolicy": "version-driven",
+    "builtIn": true,
+    "order": 1,
+    "contentHash": "sha256:3fcbe1f08e6877a25f855073c31a368a14a439388722541314cb5f4f371acd6c"
+  },
+  {
+    "id": "codex",
+    "name": "Codex CLI",
+    "color": "#74aa9c",
+    "platforms": [
+      "mac",
+      "windows",
+      "linux"
+    ],
+    "updatePolicy": "version-driven",
+    "builtIn": true,
+    "order": 2,
+    "contentHash": "sha256:2de75b5fb255af66a17e7ab774200788e65677e2361039dd372346a81fa84a6b"
+  },
+  {
+    "id": "cursor",
+    "name": "Cursor",
+    "color": "#8B5CF6",
+    "platforms": [
+      "mac",
+      "windows",
+      "linux"
+    ],
+    "updatePolicy": "manual-only",
+    "builtIn": false,
+    "order": 8,
+    "contentHash": "sha256:12735e77d66e84341727e16f4a7dbfc7c4835994fa496228b3c68a2748a044f2"
+  },
+  {
+    "id": "docker",
+    "name": "Docker",
+    "color": "#2496ED",
+    "platforms": [
+      "mac",
+      "windows",
+      "linux"
+    ],
+    "updatePolicy": "version-driven",
+    "builtIn": false,
+    "order": 999,
+    "contentHash": "sha256:de23b2d5675a88b7a042ba376af690a029e9c719ce168266130ac512929a4558"
+  },
+  {
+    "id": "gemini-cli",
+    "name": "Gemini CLI",
+    "color": "#4c8bf5",
+    "platforms": [
+      "mac",
+      "windows",
+      "linux"
+    ],
+    "updatePolicy": "version-driven",
+    "builtIn": true,
+    "order": 3,
+    "contentHash": "sha256:d921e1f32e1d87740ffe0621278e3cbde2bca0916a151fbb1e0d56265fae36b7"
+  },
+  {
+    "id": "git",
+    "name": "Git",
+    "color": "#F05032",
+    "platforms": [
+      "mac",
+      "windows",
+      "linux"
+    ],
+    "updatePolicy": "manual-only",
+    "builtIn": false,
+    "order": 999,
+    "contentHash": "sha256:8093e01f7f30eb8b45907697bea7a37f79bb5da394563faa1e2e9affefadc63d"
+  },
+  {
+    "id": "homebrew",
+    "name": "Homebrew",
+    "color": "#FBB040",
+    "platforms": [
+      "mac",
+      "linux"
+    ],
+    "updatePolicy": "version-driven",
+    "builtIn": false,
+    "order": 999,
+    "contentHash": "sha256:b4cc390bce9eca4fbb5b8bbe46360e051f4a134be47d0c18cf23818996c38dcb"
+  },
+  {
+    "id": "idea",
+    "name": "IntelliJ IDEA",
+    "color": "#F59E0B",
+    "platforms": [
+      "mac",
+      "windows",
+      "linux"
+    ],
+    "updatePolicy": "manual-only",
+    "builtIn": true,
+    "order": 6,
+    "contentHash": "sha256:ae4e64b47ebdce5dbc8742dc9ff5fe84a0e761a0ef68957f9435a02ec77bb416"
+  },
+  {
+    "id": "iterm2",
+    "name": "iTerm2",
+    "color": "#EBBF00",
+    "platforms": [
+      "mac"
+    ],
+    "updatePolicy": "manual-only",
+    "builtIn": false,
+    "order": 999,
+    "contentHash": "sha256:f964e0488d8e3654a1dcb78788dd83465a7c5dc2487dc443814ab66833a00ec1"
+  },
+  {
+    "id": "linux",
+    "name": "Linux 系统工具",
+    "color": "#FCC624",
+    "platforms": [
+      "linux"
+    ],
+    "updatePolicy": "manual-only",
+    "builtIn": false,
+    "order": 76,
+    "contentHash": "sha256:ff15d25581b4ac11edbf772fda3daab4ca057682e99cdd0570c4b64b6608d088"
+  },
+  {
+    "id": "obsidian",
+    "name": "Obsidian",
+    "color": "#7C3AED",
+    "platforms": [
+      "mac",
+      "windows",
+      "linux"
+    ],
+    "updatePolicy": "manual-only",
+    "builtIn": false,
+    "order": 999,
+    "contentHash": "sha256:a550b203db6f4a8bf4583a2918273bd4b8193e3136f70777fdcd172b409c3043"
+  },
+  {
+    "id": "openclaw",
+    "name": "OpenClaw",
+    "color": "#e55934",
+    "platforms": [
+      "mac",
+      "windows",
+      "linux"
+    ],
+    "updatePolicy": "version-driven",
+    "builtIn": false,
+    "order": 999,
+    "contentHash": "sha256:1d7e5bc39eefe14e0e6df656aefdbdc4a6deec4a9216b4de5b77043d9ca769d9"
+  },
+  {
+    "id": "opencode",
+    "name": "OpenCode",
+    "color": "#e8445a",
+    "platforms": [
+      "mac",
+      "windows",
+      "linux"
+    ],
+    "updatePolicy": "version-driven",
+    "builtIn": true,
+    "order": 5,
+    "contentHash": "sha256:e9747487bab5b89d0fb2dcbff32e3c62454a1297d2eb36ccdeb8ed509efecf7d"
+  },
+  {
+    "id": "shell",
+    "name": "Shell",
+    "color": "#1E1E1E",
+    "platforms": [
+      "mac",
+      "windows",
+      "linux"
+    ],
+    "updatePolicy": "manual-only",
+    "builtIn": false,
+    "order": 77,
+    "contentHash": "sha256:0338702ac7b3192e8fd4358ff33d33a271a4a5ea957da34bd81f54ea2a7f23eb"
+  },
+  {
+    "id": "typora",
+    "name": "Typora",
+    "color": "#2a3333",
+    "platforms": [
+      "mac",
+      "windows",
+      "linux"
+    ],
+    "updatePolicy": "manual-only",
+    "builtIn": false,
+    "order": 999,
+    "contentHash": "sha256:a577fe3f854fc9b4287f8ec5d97ee7988ff81f801eae4289b669eb7c8a2bf086"
+  },
+  {
+    "id": "unix-cli",
+    "name": "Unix/POSIX 基础命令",
+    "color": "#4B5563",
+    "platforms": [
+      "mac",
+      "linux"
+    ],
+    "updatePolicy": "manual-only",
+    "builtIn": false,
+    "order": 75,
+    "contentHash": "sha256:74a8e5cb621f8293b887bac938b947d2a647f3c6d6020bb3f59da660a556b789"
+  },
+  {
+    "id": "vs-code",
+    "name": "VS Code",
+    "color": "#007ACC",
+    "platforms": [
+      "mac",
+      "windows",
+      "linux"
+    ],
+    "updatePolicy": "manual-only",
+    "builtIn": true,
+    "order": 7,
+    "contentHash": "sha256:46ce9cfe5381b9e9e7e8dab0b229e501832ed76cb36b3908fcca54f1c671a25e"
+  }
 ];

@@ -149,14 +149,23 @@ function exampleFor(toolId, command, context = "") {
   return item.examples[0];
 }
 
-assert.strictEqual(exampleFor("linux", "kill -9").value, "kill -9 12345");
-assert.strictEqual(exampleFor("linux", "kill -9").copyable, false);
-assert(exampleFor("linux", "kill -9").warning);
-assert.strictEqual(exampleFor("linux", "tar -czf").value, "tar -czf archive.tar.gz example-dir");
-assert.strictEqual(exampleFor("linux", "|").value, 'cat app.log | grep "ERROR"');
-assert.strictEqual(exampleFor("linux", ">").value, 'echo "example" > output.txt');
-assert.strictEqual(exampleFor("linux", "Ctrl+R", "shell-builtin-readline").copyable, false);
-assert.strictEqual(exampleFor("linux", "bg", "shell-builtin").copyable, false);
+function exampleValueFor(toolId, command, value, context = "") {
+  const item = window.CHEATSHEET_DATA[toolId].items.find((candidate) =>
+    candidate.cmd === command && (candidate.context || "") === context
+  );
+  assert(item, `${toolId} ${command}: item not found`);
+  const example = item.examples.find((candidate) => candidate.value === value);
+  assert(example, `${toolId} ${command}: example ${value} not found`);
+  return example;
+}
+
+assert.strictEqual(exampleValueFor("unix-cli", "kill", "kill -9 12345", "posix-utility").copyable, false);
+assert(exampleValueFor("unix-cli", "kill", "kill -9 12345", "posix-utility").warning);
+assert.strictEqual(exampleValueFor("unix-cli", "tar", "tar -czf archive.tar.gz example-dir", "external-command").value, "tar -czf archive.tar.gz example-dir");
+assert.strictEqual(exampleFor("shell", "|").value, "printf '%s\\n' error | grep error");
+assert.strictEqual(exampleFor("shell", ">").copyable, false);
+assert.strictEqual(exampleFor("shell", "Ctrl+R").copyable, false);
+assert.strictEqual(exampleFor("shell", "bg", "shell-builtin").copyable, true);
 assert.strictEqual(exampleFor("antigravity-cli", "/quit").value, "/quit");
 assert.strictEqual(exampleFor("antigravity-cli", "AGENTS.md").copyable, false);
 assert.strictEqual(exampleFor("antigravity-cli", ".agents/skills/<名称>.md").value, "查看或编辑 .agents/skills/lint.md");
@@ -226,9 +235,9 @@ for (const toolId of ["cursor", "idea", "typora", "vs-code"]) {
   );
 }
 
-for (const toolId of ["claude-code", "codex", "git", "linux"]) {
-  const scenarioRich = Object.values(window.CHEATSHEET_ENRICHMENTS[toolId])
-    .flatMap((enrichment) => enrichment.examples)
+for (const toolId of ["claude-code", "codex", "git", "unix-cli"]) {
+  const scenarioRich = window.CHEATSHEET_DATA[toolId].items
+    .flatMap((item) => item.examples)
     .filter((example) => example.scenario && example.goal && example.expected);
   assert(
     scenarioRich.length >= 10,

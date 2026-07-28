@@ -5,20 +5,21 @@ window.CHEATSHEET_DATA["shell"] = {
     "id": "shell",
     "name": "Shell",
     "color": "#1E1E1E",
-    "source": "第一方来源与确定性官方入口清单，核验于 2026-07-14",
+    "source": "第一方 Shell 语言、内置命令、配置与快捷键清单，核验于 2026-07-16",
     "builtIn": false,
     "updatePolicy": "manual-only",
     "verifiedVersion": "POSIX.1-2024 / bash 5.2",
-    "contentCheckedAt": "2026-07-02",
-    "sourceCheckedAt": "2026-07-02",
+    "contentCheckedAt": "2026-07-16",
+    "sourceCheckedAt": "2026-07-16",
     "sourceUrl": "https://www.gnu.org/software/bash/manual/",
     "sourceTier": "official",
-    "coverage": "官方入口全集；精确范围、组件与平台限制见 shared/official-inventories/shell.json",
+    "coverage": "Shell 内置、语法、配置、作业控制和快捷键闭合清单；精确范围见 shared/official-inventories/shell.json",
     "platforms": [
       "mac",
+      "windows",
       "linux"
     ],
-    "order": 999,
+    "order": 77,
     "sources": [
       {
         "id": "posix-shell-utilities",
@@ -105,9 +106,9 @@ window.CHEATSHEET_DATA["shell"] = {
     "officialCoverage": {
       "scope": "all-command-entrypoints",
       "status": "complete",
-      "total": 94,
-      "covered": 94,
-      "checkedAt": "2026-07-13",
+      "total": 100,
+      "covered": 100,
+      "checkedAt": "2026-07-16",
       "sourceIds": [
         "posix-shell-utilities",
         "gnu-bash-manual",
@@ -115,8 +116,9 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux-man7",
         "bash-local-help"
       ],
-      "inventoryHash": "sha256:beee55c475ffea222d58ac6ba844548d79810eafef1dd93fc65e8327a129d0b9"
-    }
+      "inventoryHash": "sha256:4c2e5c7b233b2ba36ce5c40e5d4a701856f877d22669b9a83169b13b5446fecb"
+    },
+    "updatedAt": "2026-07-16"
   },
   "items": [
     {
@@ -178,6 +180,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "windows"
       ],
+      "context": "shell-builtin",
       "id": "posix-cd",
       "evidenceRefs": [
         {
@@ -260,7 +263,8 @@ window.CHEATSHEET_DATA["shell"] = {
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/pwd.html",
           "checkedAt": "2026-07-02"
         }
-      ]
+      ],
+      "context": "shell-builtin"
     },
     {
       "cat": "slash",
@@ -321,6 +325,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "windows"
       ],
+      "context": "shell-builtin",
       "id": "posix-echo",
       "evidenceRefs": [
         {
@@ -392,6 +397,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "windows"
       ],
+      "context": "shell-builtin",
       "id": "posix-printf",
       "evidenceRefs": [
         {
@@ -464,6 +470,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "windows"
       ],
+      "context": "shell-builtin",
       "id": "posix-read",
       "evidenceRefs": [
         {
@@ -536,6 +543,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "windows"
       ],
+      "context": "shell-builtin",
       "id": "posix-test",
       "evidenceRefs": [
         {
@@ -713,6 +721,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "windows"
       ],
+      "context": "shell-builtin",
       "id": "posix-true",
       "evidenceRefs": [
         {
@@ -781,6 +790,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "windows"
       ],
+      "context": "shell-builtin",
       "id": "posix-false",
       "evidenceRefs": [
         {
@@ -1244,6 +1254,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "windows"
       ],
+      "context": "shell-builtin",
       "id": "posix-getopts",
       "evidenceRefs": [
         {
@@ -1315,6 +1326,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "windows"
       ],
+      "context": "shell-builtin",
       "id": "posix-umask",
       "evidenceRefs": [
         {
@@ -3570,6 +3582,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "mac"
       ],
+      "context": "shell-builtin",
       "id": "9f72d802481e6123",
       "evidenceRefs": [
         {
@@ -3638,6 +3651,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "mac"
       ],
+      "context": "shell-builtin",
       "id": "a0fea5659995fe20",
       "evidenceRefs": [
         {
@@ -3707,6 +3721,7 @@ window.CHEATSHEET_DATA["shell"] = {
         "linux",
         "mac"
       ],
+      "context": "shell-builtin",
       "id": "eab85ba371a77a11",
       "evidenceRefs": [
         {
@@ -3928,7 +3943,8 @@ window.CHEATSHEET_DATA["shell"] = {
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/kill.html",
           "checkedAt": "2026-07-02"
         }
-      ]
+      ],
+      "context": "shell-builtin"
     },
     {
       "cat": "flag",
@@ -6336,6 +6352,439 @@ window.CHEATSHEET_DATA["shell"] = {
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html · 2.3.1 Alias Substitution（对命令词加引用/反斜杠可抑制别名替换）",
           "checkedAt": "2026-07-02"
+        }
+      ]
+    },
+    {
+      "cat": "slash",
+      "cmd": "|",
+      "en": "Pipe one command output into another",
+      "zh": "将前一命令的标准输出连接到后一命令",
+      "shell": {
+        "layer": "syntax",
+        "family": "posix-sh",
+        "portability": "posix",
+        "topic": "syntax"
+      },
+      "evidenceStatus": "verified",
+      "keywords": [
+        "|",
+        "将前一命令的标准输出连接到后一命令",
+        "Pipe one command output into another",
+        "Shell",
+        "syntax"
+      ],
+      "examples": [
+        {
+          "value": "printf '%s\\n' error | grep error",
+          "description": "建立标准输出到标准输入的管道，适合需要把一段输出交给下一条命令筛选",
+          "copyable": true,
+          "authorship": "editorial",
+          "evidenceTier": "first-party",
+          "adaptation": "adapted",
+          "sourceType": "official",
+          "sourceIds": [
+            "posix-shell-utilities"
+          ],
+          "scenario": "需要把一段输出交给下一条命令筛选时",
+          "goal": "建立标准输出到标准输入的管道",
+          "expected": "grep 接收到 printf 的输出并显示匹配行",
+          "caveat": "管道中每个命令通常在独立执行环境中运行",
+          "platforms": [
+            "mac",
+            "linux",
+            "windows"
+          ],
+          "groundingRefs": [
+            {
+              "sourceId": "posix-shell-utilities",
+              "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html",
+              "claims": [
+                "value",
+                "behavior",
+                "expected",
+                "caveat"
+              ]
+            }
+          ]
+        }
+      ],
+      "platforms": [
+        "mac",
+        "linux",
+        "windows"
+      ],
+      "id": "shell-pipe-syntax",
+      "evidenceRefs": [
+        {
+          "sourceId": "posix-shell-utilities",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html",
+          "checkedAt": "2026-07-16"
+        }
+      ]
+    },
+    {
+      "cat": "slash",
+      "cmd": ">",
+      "en": "Redirect standard output and replace the target",
+      "zh": "覆盖写入标准输出重定向",
+      "shell": {
+        "layer": "syntax",
+        "family": "posix-sh",
+        "portability": "posix",
+        "topic": "syntax"
+      },
+      "evidenceStatus": "verified",
+      "keywords": [
+        ">",
+        "覆盖写入标准输出重定向",
+        "Redirect standard output and replace the target",
+        "Shell",
+        "syntax"
+      ],
+      "examples": [
+        {
+          "value": "printf 'ready\\n' > status.txt",
+          "description": "把标准输出写入并替换目标文件，适合需要生成一份新的状态文件",
+          "copyable": false,
+          "warning": "目标文件存在时会被覆盖，请先核对路径或备份。",
+          "riskLevel": "deleteOrOverwrite",
+          "authorship": "editorial",
+          "evidenceTier": "first-party",
+          "adaptation": "adapted",
+          "sourceType": "official",
+          "sourceIds": [
+            "posix-shell-utilities"
+          ],
+          "scenario": "需要生成一份新的状态文件时",
+          "goal": "把标准输出写入并替换目标文件",
+          "expected": "status.txt 只包含本次写入的 ready 行",
+          "caveat": "目标文件存在时会被截断，先确认内容可覆盖",
+          "platforms": [
+            "mac",
+            "linux",
+            "windows"
+          ],
+          "groundingRefs": [
+            {
+              "sourceId": "posix-shell-utilities",
+              "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html",
+              "claims": [
+                "value",
+                "behavior",
+                "expected",
+                "caveat"
+              ]
+            }
+          ]
+        }
+      ],
+      "platforms": [
+        "mac",
+        "linux",
+        "windows"
+      ],
+      "id": "shell-redirect-out",
+      "evidenceRefs": [
+        {
+          "sourceId": "posix-shell-utilities",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html",
+          "checkedAt": "2026-07-16"
+        }
+      ]
+    },
+    {
+      "cat": "slash",
+      "cmd": ">>",
+      "en": "Append standard output to a target file",
+      "zh": "追加写入标准输出重定向",
+      "shell": {
+        "layer": "syntax",
+        "family": "posix-sh",
+        "portability": "posix",
+        "topic": "syntax"
+      },
+      "evidenceStatus": "verified",
+      "keywords": [
+        ">>",
+        "追加写入标准输出重定向",
+        "Append standard output to a target file",
+        "Shell",
+        "syntax"
+      ],
+      "examples": [
+        {
+          "value": "printf 'next\\n' >> status.log",
+          "description": "把标准输出附加到文件末尾，适合需要保留旧日志并追加一行",
+          "copyable": true,
+          "authorship": "editorial",
+          "evidenceTier": "first-party",
+          "adaptation": "adapted",
+          "sourceType": "official",
+          "sourceIds": [
+            "posix-shell-utilities"
+          ],
+          "scenario": "需要保留旧日志并追加一行时",
+          "goal": "把标准输出附加到文件末尾",
+          "expected": "status.log 原内容保留并在末尾新增 next",
+          "caveat": "持续追加会增加文件体积，应配合轮转策略",
+          "platforms": [
+            "mac",
+            "linux",
+            "windows"
+          ],
+          "groundingRefs": [
+            {
+              "sourceId": "posix-shell-utilities",
+              "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html",
+              "claims": [
+                "value",
+                "behavior",
+                "expected",
+                "caveat"
+              ]
+            }
+          ]
+        }
+      ],
+      "platforms": [
+        "mac",
+        "linux",
+        "windows"
+      ],
+      "id": "shell-redirect-append",
+      "evidenceRefs": [
+        {
+          "sourceId": "posix-shell-utilities",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html",
+          "checkedAt": "2026-07-16"
+        }
+      ]
+    },
+    {
+      "cat": "slash",
+      "cmd": "history",
+      "en": "Display Bash command history",
+      "zh": "显示 Bash 历史记录",
+      "shell": {
+        "layer": "builtin",
+        "family": "bash",
+        "portability": "bash",
+        "topic": "history"
+      },
+      "evidenceStatus": "verified",
+      "keywords": [
+        "history",
+        "显示 Bash 历史记录",
+        "Display Bash command history",
+        "Shell"
+      ],
+      "examples": [
+        {
+          "value": "history 20",
+          "description": "显示最近二十条 Bash 历史，适合需要回顾刚执行过的命令",
+          "copyable": true,
+          "authorship": "editorial",
+          "evidenceTier": "first-party",
+          "adaptation": "adapted",
+          "sourceType": "official",
+          "sourceIds": [
+            "gnu-bash-manual"
+          ],
+          "scenario": "需要回顾刚执行过的命令时",
+          "goal": "显示最近二十条 Bash 历史",
+          "expected": "终端输出带编号的近期历史条目",
+          "caveat": "历史保存范围受 HISTSIZE、HISTFILE 和会话写入时机影响",
+          "platforms": [
+            "mac",
+            "linux",
+            "windows"
+          ],
+          "groundingRefs": [
+            {
+              "sourceId": "gnu-bash-manual",
+              "locator": "https://www.gnu.org/software/bash/manual/html_node/Bash-History-Builtins.html",
+              "claims": [
+                "value",
+                "behavior",
+                "expected",
+                "caveat"
+              ]
+            }
+          ]
+        }
+      ],
+      "platforms": [
+        "mac",
+        "linux",
+        "windows"
+      ],
+      "id": "shell-history",
+      "evidenceRefs": [
+        {
+          "sourceId": "gnu-bash-manual",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://www.gnu.org/software/bash/manual/html_node/Bash-History-Builtins.html",
+          "checkedAt": "2026-07-16"
+        }
+      ]
+    },
+    {
+      "cat": "shortcut",
+      "cmd": "Ctrl+R",
+      "en": "Search Bash history backward",
+      "zh": "向后搜索 Bash 历史",
+      "shell": {
+        "layer": "shortcut",
+        "family": "bash",
+        "portability": "bash",
+        "topic": "history"
+      },
+      "evidenceStatus": "verified",
+      "keywords": [
+        "Ctrl+R",
+        "向后搜索 Bash 历史",
+        "Search Bash history backward",
+        "Shell",
+        "history"
+      ],
+      "examples": [
+        {
+          "value": "Ctrl+R",
+          "description": "进入反向增量历史搜索，适合需要快速找回之前输入过的长命令",
+          "copyable": false,
+          "authorship": "editorial",
+          "evidenceTier": "first-party",
+          "adaptation": "adapted",
+          "sourceType": "official",
+          "sourceIds": [
+            "gnu-bash-manual"
+          ],
+          "scenario": "需要快速找回之前输入过的长命令时",
+          "goal": "进入反向增量历史搜索",
+          "expected": "提示符切换到 reverse-i-search 并随输入更新匹配",
+          "caveat": "这是交互式 Bash/Readline 键位；其他 Shell 或编辑模式可能不同",
+          "platforms": [
+            "mac",
+            "linux",
+            "windows"
+          ],
+          "groundingRefs": [
+            {
+              "sourceId": "gnu-bash-manual",
+              "locator": "https://www.gnu.org/software/bash/manual/html_node/Searching.html",
+              "claims": [
+                "value",
+                "behavior",
+                "expected",
+                "caveat"
+              ]
+            }
+          ]
+        }
+      ],
+      "platforms": [
+        "mac",
+        "linux",
+        "windows"
+      ],
+      "id": "shell-ctrl-r",
+      "evidenceRefs": [
+        {
+          "sourceId": "gnu-bash-manual",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://www.gnu.org/software/bash/manual/html_node/Searching.html",
+          "checkedAt": "2026-07-16"
+        }
+      ]
+    },
+    {
+      "cat": "shortcut",
+      "cmd": "Ctrl+C",
+      "en": "Interrupt the foreground job",
+      "zh": "中断前台作业",
+      "shell": {
+        "layer": "shortcut",
+        "family": "posix-sh",
+        "portability": "cross-platform",
+        "topic": "jobs"
+      },
+      "evidenceStatus": "verified",
+      "keywords": [
+        "Ctrl+C",
+        "中断前台作业",
+        "Interrupt the foreground job",
+        "Shell",
+        "jobs"
+      ],
+      "examples": [
+        {
+          "value": "Ctrl+C",
+          "description": "向前台进程组发送中断信号，适合前台命令不再需要继续运行",
+          "copyable": false,
+          "authorship": "editorial",
+          "evidenceTier": "first-party",
+          "adaptation": "adapted",
+          "sourceType": "official",
+          "sourceIds": [
+            "gnu-bash-manual"
+          ],
+          "scenario": "前台命令不再需要继续运行时",
+          "goal": "向前台进程组发送中断信号",
+          "expected": "多数命令停止并返回 Shell 提示符",
+          "caveat": "程序可以捕获或忽略 SIGINT，未保存的工作可能丢失",
+          "platforms": [
+            "mac",
+            "linux",
+            "windows"
+          ],
+          "groundingRefs": [
+            {
+              "sourceId": "gnu-bash-manual",
+              "locator": "https://www.gnu.org/software/bash/manual/html_node/Signals.html",
+              "claims": [
+                "value",
+                "behavior",
+                "expected",
+                "caveat"
+              ]
+            }
+          ]
+        }
+      ],
+      "platforms": [
+        "mac",
+        "linux",
+        "windows"
+      ],
+      "id": "shell-ctrl-c",
+      "evidenceRefs": [
+        {
+          "sourceId": "gnu-bash-manual",
+          "claims": [
+            "existence",
+            "semantics"
+          ],
+          "locator": "https://www.gnu.org/software/bash/manual/html_node/Signals.html",
+          "checkedAt": "2026-07-16"
         }
       ]
     }

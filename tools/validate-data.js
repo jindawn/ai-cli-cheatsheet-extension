@@ -161,6 +161,14 @@ if (fs.existsSync(reviewDir)) {
     scenarioReviews.set(name.slice(0, -5), JSON.parse(fs.readFileSync(path.join(reviewDir, name), "utf8")));
   }
 }
+const componentFixtureDir = path.join(root, "shared", "official-component-fixtures");
+const componentFixtures = new Map();
+if (fs.existsSync(componentFixtureDir)) {
+  for (const name of fs.readdirSync(componentFixtureDir).filter((value) => value.endsWith(".json"))) {
+    componentFixtures.set(name.slice(0, -5), JSON.parse(fs.readFileSync(path.join(componentFixtureDir, name), "utf8")));
+  }
+}
+const adapterRegistry = JSON.parse(fs.readFileSync(path.join(root, "shared", "official-inventory-adapters.json"), "utf8")).adapters;
 
 function exampleContentHash(itemId, exampleIndex, example) {
   const clean = Object.fromEntries(Object.entries(example).filter(([key]) => key !== "review"));
@@ -534,6 +542,80 @@ for (const id of files) {
       || inventory.closure?.entryCount !== inventory.entries.length
       || !Array.isArray(inventory.sourceIds) || !inventory.sourceIds.length) {
       fail(`${id}: official inventory lacks deterministic adapter closure metadata`);
+    }
+    const registeredAdapter = adapterRegistry[id];
+    if (!registeredAdapter
+      || registeredAdapter.kind !== inventory.adapter.kind
+      || registeredAdapter.version !== inventory.adapter.version) {
+      fail(`${id}: official inventory adapter does not match shared/official-inventory-adapters.json`);
+    }
+    if (registeredAdapter.kind === "official-component-index-union") {
+      const fixture = componentFixtures.get(id);
+      if (!fixture || fixture.schemaVersion !== 1 || fixture.toolId !== id
+        || !Array.isArray(fixture.components) || !fixture.components.length) {
+        fail(`${id}: official component-index adapter requires an independent component fixture`);
+      }
+      const fixtureManifestHash = `sha256:${crypto.createHash("sha256")
+        .update(JSON.stringify(fixture.components)).digest("hex")}`;
+      if (fixture.manifestHash !== fixtureManifestHash
+        || inventory.closure.sourceManifestHash !== fixtureManifestHash) {
+        fail(`${id}: official component fixture manifest hash mismatch`);
+      }
+      const fixtureComponents = fixture.components.map((component) => component.id);
+      const fixtureSourceIds = [...new Set(fixture.components.map((component) => component.sourceId))];
+      if (JSON.stringify(fixtureComponents) !== JSON.stringify(registeredAdapter.components)
+        || JSON.stringify(fixtureSourceIds) !== JSON.stringify(registeredAdapter.sourceIds)
+        || JSON.stringify(fixtureComponents) !== JSON.stringify(inventory.closure.components)) {
+        fail(`${id}: component fixture, adapter and inventory scopes differ`);
+      }
+      const posixCommands = new Set(
+        id === "unix-cli"
+          ? fixture.components.find((component) => component.id === "posix-utilities")?.entries.map((entry) => entry.command) || []
+          : []
+      );
+      if (id === "unix-cli" && posixCommands.size !== 155) {
+        fail(`${id}: pinned POSIX Issue 8 index must contain all 155 utility pages`);
+      }
+      const expectedCommands = new Set();
+      const canonicalCommands = new Set(fixture.components.flatMap((component) => component.entries)
+        .map((entry) => entry.command.toLocaleLowerCase()));
+      const expectedAliases = new Set();
+      const expectedComponentCounts = {};
+      for (const component of fixture.components) {
+        if (!component.id || !component.version || !component.sourceId || !component.parser
+          || !/^https:\/\//.test(component.sourceUrl || "")
+          || !/^https:\/\//.test(component.downloadUrl || "")
+          || !/^[a-f0-9]{64}$/.test(component.archiveSha256 || "")
+          || !Array.isArray(component.entries) || !component.entries.length
+          || !Array.isArray(component.exclusions)) {
+          fail(`${id}: component ${component.id || "?"} lacks a pinned source, parser, entries or exclusion list`);
+        }
+        expectedComponentCounts[component.id] = component.entries.length;
+        for (const entry of component.entries) {
+          if (!entry.command || !entry.locator) fail(`${id}: component ${component.id} contains an ungrounded entry`);
+          const context = id === "linux" ? "linux-system" : posixCommands.has(entry.command) ? "posix-utility" : "external-command";
+          expectedCommands.add(`${entry.command.trim().replace(/\s+/g, " ")}\0${context}`);
+          for (const alias of entry.aliases || []) {
+            if (!canonicalCommands.has(alias.toLocaleLowerCase())) expectedAliases.add(alias.toLocaleLowerCase());
+          }
+        }
+      }
+      const actualCommands = new Set(inventory.entries.map((entry) =>
+        `${entry.command.trim().replace(/\s+/g, " ")}\0${(entry.context || "").toLocaleLowerCase()}`
+      ));
+      const actualAliases = new Set(inventory.entries.flatMap((entry) => entry.aliases || [])
+        .map((alias) => alias.toLocaleLowerCase()));
+      if (expectedCommands.size !== actualCommands.size
+        || [...expectedCommands].some((command) => !actualCommands.has(command))) {
+        fail(`${id}: rendered inventory is missing an entry discovered by an official component parser`);
+      }
+      if (expectedAliases.size !== actualAliases.size
+        || [...expectedAliases].some((alias) => !actualAliases.has(alias))) {
+        fail(`${id}: rendered inventory is missing an official alias from the component fixture`);
+      }
+      if (JSON.stringify(expectedComponentCounts) !== JSON.stringify(inventory.closure.componentCounts)) {
+        fail(`${id}: component counts do not match the parsed official fixtures`);
+      }
     }
     const serialized = JSON.stringify(inventory.entries);
     const inventoryHash = `sha256:${crypto.createHash("sha256").update(serialized).digest("hex")}`;

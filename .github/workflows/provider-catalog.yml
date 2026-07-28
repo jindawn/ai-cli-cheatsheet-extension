@@ -1,0 +1,40 @@
+name: Publish Provider Catalog
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  validate-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Sign and self-verify catalog
+        env:
+          PROVIDER_CATALOG_SIGNING_KEY: ${{ secrets.PROVIDER_CATALOG_SIGNING_KEY }}
+        run: |
+          test -n "$PROVIDER_CATALOG_SIGNING_KEY"
+          python tools/provider-catalog.py write-public-key --output shared/provider-catalog-public-key.json
+          python tools/provider-catalog.py sign \
+            --input shared/provider-catalog-template.json \
+            --output provider-catalog-envelope.json
+          python tools/provider-catalog.py verify \
+            --input provider-catalog-envelope.json \
+            --shared-dir shared
+      - name: Publish versioned signed catalog
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view provider-catalog --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload provider-catalog provider-catalog-envelope.json --repo "$GITHUB_REPOSITORY" --clobber
+          else
+            gh release create provider-catalog provider-catalog-envelope.json \
+              --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" \
+              --title "Provider adapter catalog" \
+              --notes "Signed declarative provider adapters for the local bridge."
+          fi

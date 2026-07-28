@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "catalogVersion": 1,
+  "minimumProtocolVersion": 5,
+  "adapters": [
+    {
+      "id": "qwen",
+      "displayName": "Qwen Code",
+      "source": "builtin",
+      "transport": "cli",
+      "verified": true,
+      "driver": "builtin-qwen",
+      "executableCandidates": ["qwen"],
+      "loginCommand": "",
+      "capabilities": ["structured-output", "read-only", "maintenance", "cancel"],
+      "recommendationOrder": 40
+    }
+  ]
+}

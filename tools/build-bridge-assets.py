@@ -131,6 +131,14 @@ def build_windows(binary, output, version, require_signing):
     manifest_path = work / f"{HOST_NAME}.json"
     write_json(manifest_path, manifest)
     upgrade_code = str(uuid.uuid5(uuid.NAMESPACE_DNS, "com.aicli.cheatsheet.bridge"))
+    # WiX refuses an auto-generated GUID for a component that mixes files with a
+    # registry keypath (WIX0230), so the payload is split: one component per
+    # file, plus a registry-only component. The registry component carries an
+    # explicit GUID derived from a fixed name — a component GUID has to stay
+    # byte-identical across releases or an upgrade orphans the old
+    # native-messaging registration instead of replacing it.
+    registry_guid = str(uuid.uuid5(uuid.NAMESPACE_DNS, "com.aicli.cheatsheet.bridge.registration"))
+    host_json_value = f"[INSTALLFOLDER]{HOST_NAME}.json"
     wxs = work / "bridge.wxs"
     wxs.write_text(f'''<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
   <Package Name="AI CLI Cheatsheet Bridge" Manufacturer="AI CLI Cheatsheet" Version="{version}" UpgradeCode="{upgrade_code}" Scope="perMachine">
@@ -138,15 +146,23 @@ def build_windows(binary, output, version, require_signing):
     <MediaTemplate EmbedCab="yes" />
     <StandardDirectory Id="ProgramFiles64Folder">
       <Directory Id="INSTALLFOLDER" Name="AI CLI Cheatsheet">
-        <Component Id="BridgeFiles" Guid="*" Bitness="always64">
-          <File Source="{bridge}" />
-          <File Source="{manifest_path}" />
-          <RegistryValue Root="HKLM" Key="Software\\Google\\Chrome\\NativeMessagingHosts\\{HOST_NAME}" Type="string" Value="[INSTALLFOLDER]{HOST_NAME}.json" KeyPath="yes" />
-          <RegistryValue Root="HKLM" Key="Software\\Microsoft\\Edge\\NativeMessagingHosts\\{HOST_NAME}" Type="string" Value="[INSTALLFOLDER]{HOST_NAME}.json" />
+        <Component Id="BridgeExecutable" Guid="*" Bitness="always64">
+          <File Source="{bridge}" KeyPath="yes" />
+        </Component>
+        <Component Id="BridgeHostManifest" Guid="*" Bitness="always64">
+          <File Source="{manifest_path}" KeyPath="yes" />
+        </Component>
+        <Component Id="BridgeRegistration" Guid="{registry_guid}" Bitness="always64">
+          <RegistryValue Root="HKLM" Key="Software\\Google\\Chrome\\NativeMessagingHosts\\{HOST_NAME}" Type="string" Value="{host_json_value}" KeyPath="yes" />
+          <RegistryValue Root="HKLM" Key="Software\\Microsoft\\Edge\\NativeMessagingHosts\\{HOST_NAME}" Type="string" Value="{host_json_value}" />
         </Component>
       </Directory>
     </StandardDirectory>
-    <Feature Id="Main" Title="AI CLI Cheatsheet Bridge" Level="1"><ComponentRef Id="BridgeFiles" /></Feature>
+    <Feature Id="Main" Title="AI CLI Cheatsheet Bridge" Level="1">
+      <ComponentRef Id="BridgeExecutable" />
+      <ComponentRef Id="BridgeHostManifest" />
+      <ComponentRef Id="BridgeRegistration" />
+    </Feature>
   </Package>
 </Wix>
 ''', encoding="utf-8")

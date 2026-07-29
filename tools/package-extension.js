@@ -13,10 +13,16 @@ const valueFor = (flag) => {
 };
 const channel = valueFor("--channel");
 const outputArg = valueFor("--output");
-const bridgeInstallersReady = args.includes("--bridge-installers-ready");
+// Three states, not a boolean: "unsigned" installers still let a user install
+// the bridge by double-clicking, they just have to click through one OS
+// security prompt. Collapsing that into false is what left store users with an
+// install dialog that offered no way forward at all.
+const BRIDGE_INSTALLER_STATES = ["signed", "unsigned", "none"];
+const bridgeInstallers = valueFor("--bridge-installers") ?? "none";
 
-if (!['source', 'store'].includes(channel) || !outputArg) {
-  console.error("Usage: node tools/package-extension.js --channel source|store --output <directory> [--bridge-installers-ready]");
+if (!['source', 'store'].includes(channel) || !outputArg
+  || !BRIDGE_INSTALLER_STATES.includes(bridgeInstallers)) {
+  console.error("Usage: node tools/package-extension.js --channel source|store --output <directory> [--bridge-installers signed|unsigned|none]");
   process.exit(2);
 }
 
@@ -65,6 +71,25 @@ function copyEntry(relativePath) {
   fs.cpSync(source, path.join(output, relativePath), { recursive: true });
 }
 
+function distributionSource(distributionChannel, version, persistence) {
+  return `"use strict";
+
+window.CHEATSHEET_DISTRIBUTION = Object.freeze({
+  channel: "${distributionChannel}",
+  releaseVersion: "${version}",
+  storeExtensionId: "jdiopjiebnamikpcknmnpahhlokccgjj",
+  bridgeInstallers: "${bridgeInstallers}",
+  capabilities: Object.freeze({
+    localRecommendations: true,
+    nativeCompanion: true,
+    aiRecommendations: false,
+    dataMaintenance: true,
+    persistence: "${persistence}",
+  }),
+});
+`;
+}
+
 fs.rmSync(output, { recursive: true, force: true });
 fs.mkdirSync(output, { recursive: true });
 for (const entry of [...commonEntries, ...(channel === "source" ? sourceEntries : storeEntries)]) copyEntry(entry);
@@ -76,13 +101,13 @@ if (channel === "store") {
   manifest.optional_permissions = ["nativeMessaging", "alarms", "unlimitedStorage"];
   manifest.description = "AI CLI、Unix/POSIX、Linux 系统、编辑器与开发工具的本地速查、个性化推荐和可选 AI 数据维护。";
   fs.writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
-  fs.writeFileSync(path.join(output, "distribution.js"), `"use strict";\n\nwindow.CHEATSHEET_DISTRIBUTION = Object.freeze({\n  channel: "store",\n  releaseVersion: "${manifest.version}",\n  storeExtensionId: "jdiopjiebnamikpcknmnpahhlokccgjj",\n  bridgeInstallersAvailable: ${bridgeInstallersReady},\n  capabilities: Object.freeze({\n    localRecommendations: true,\n    nativeCompanion: true,\n    aiRecommendations: false,\n    dataMaintenance: true,\n    persistence: "storage-overlay",\n  }),\n});\n`);
-} else if (bridgeInstallersReady) {
+  fs.writeFileSync(path.join(output, "distribution.js"), distributionSource("store", manifest.version, "storage-overlay"));
+} else if (bridgeInstallers !== "none") {
   const manifest = JSON.parse(fs.readFileSync(path.join(output, "manifest.json"), "utf8"));
-  // Source archives only expose graphical bridge installers after the release
-  // workflow has checked every platform asset. An unpacked checkout keeps its
-  // conservative preview configuration from distribution.js.
-  fs.writeFileSync(path.join(output, "distribution.js"), `"use strict";\n\nwindow.CHEATSHEET_DISTRIBUTION = Object.freeze({\n  channel: "source",\n  releaseVersion: "${manifest.version}",\n  storeExtensionId: "jdiopjiebnamikpcknmnpahhlokccgjj",\n  bridgeInstallersAvailable: true,\n  capabilities: Object.freeze({\n    localRecommendations: true,\n    nativeCompanion: true,\n    aiRecommendations: false,\n    dataMaintenance: true,\n    persistence: "repository-files",\n  }),\n});\n`);
+  // Source archives only advertise bridge installers the release workflow has
+  // actually produced. An unpacked checkout keeps the conservative "none"
+  // configuration committed in distribution.js.
+  fs.writeFileSync(path.join(output, "distribution.js"), distributionSource("source", manifest.version, "repository-files"));
 }
 
 auditReleasePath(output);

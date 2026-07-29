@@ -10,7 +10,8 @@ const root = path.resolve(__dirname, "..");
 const tempRoot = fs.mkdtempSync(path.join(root, ".package-test-"));
 
 function build(channel, extraArgs = []) {
-  const output = path.join(tempRoot, `${channel}${extraArgs.length ? "-ready" : ""}`);
+  const suffix = extraArgs.length ? `-${extraArgs[extraArgs.length - 1]}` : "";
+  const output = path.join(tempRoot, `${channel}${suffix}`);
   const result = spawnSync(process.execPath, [
     path.join(root, "tools", "package-extension.js"),
     "--channel", channel,
@@ -23,9 +24,10 @@ function build(channel, extraArgs = []) {
 
 try {
   const store = build("store");
-  const releasedStore = build("store", ["--bridge-installers-ready"]);
+  const releasedStore = build("store", ["--bridge-installers", "signed"]);
+  const unsignedStore = build("store", ["--bridge-installers", "unsigned"]);
   const source = build("source");
-  const releasedSource = build("source", ["--bridge-installers-ready"]);
+  const releasedSource = build("source", ["--bridge-installers", "signed"]);
   const storeManifest = JSON.parse(fs.readFileSync(path.join(store, "manifest.json"), "utf8"));
   const sourceManifest = JSON.parse(fs.readFileSync(path.join(source, "manifest.json"), "utf8"));
 
@@ -48,8 +50,19 @@ try {
   assert(fs.readFileSync(path.join(store, "popup.html"), "utf8").includes("popup-tasks.js"));
   assert(fs.readFileSync(path.join(store, "popup.html"), "utf8").includes("dynamic-data.js"));
   assert(fs.readFileSync(path.join(store, "distribution.js"), "utf8").includes('persistence: "storage-overlay"'));
-  assert(fs.readFileSync(path.join(store, "distribution.js"), "utf8").includes("bridgeInstallersAvailable: false"));
-  assert(fs.readFileSync(path.join(releasedStore, "distribution.js"), "utf8").includes("bridgeInstallersAvailable: true"));
+  assert(fs.readFileSync(path.join(store, "distribution.js"), "utf8").includes('bridgeInstallers: "none"'));
+  assert(fs.readFileSync(path.join(releasedStore, "distribution.js"), "utf8").includes('bridgeInstallers: "signed"'));
+  // An unsigned installer still gets the user a working bridge; it must not be
+  // collapsed into "no installer at all".
+  assert(fs.readFileSync(path.join(unsignedStore, "distribution.js"), "utf8").includes('bridgeInstallers: "unsigned"'));
+  for (const rejected of ["yes", "true", "SIGNED", ""]) {
+    const result = spawnSync(process.execPath, [
+      path.join(root, "tools", "package-extension.js"),
+      "--channel", "store", "--output", path.relative(root, path.join(tempRoot, "rejected")),
+      "--bridge-installers", rejected,
+    ], { cwd: root, encoding: "utf8" });
+    assert.notStrictEqual(result.status, 0, `--bridge-installers must reject ${JSON.stringify(rejected)}`);
+  }
   assert(fs.readFileSync(path.join(store, "distribution.js"), "utf8").includes("localRecommendations: true"));
   assert(fs.readFileSync(path.join(store, "distribution.js"), "utf8").includes("nativeCompanion: true"));
   assert(fs.readFileSync(path.join(store, "distribution.js"), "utf8").includes("dataMaintenance: true"));
@@ -64,9 +77,9 @@ try {
   assert(fs.existsSync(path.join(source, "shared", "common-provider-catalog.json")));
   assert(fs.existsSync(path.join(source, "shared", "provider-catalog-public-key.json")));
   assert(fs.readFileSync(path.join(source, "distribution.js"), "utf8").includes('channel: "source"'));
-  assert(fs.readFileSync(path.join(source, "distribution.js"), "utf8").includes("bridgeInstallersAvailable: false"));
+  assert(fs.readFileSync(path.join(source, "distribution.js"), "utf8").includes('bridgeInstallers: "none"'));
   assert(fs.readFileSync(path.join(releasedSource, "distribution.js"), "utf8").includes('channel: "source"'));
-  assert(fs.readFileSync(path.join(releasedSource, "distribution.js"), "utf8").includes("bridgeInstallersAvailable: true"));
+  assert(fs.readFileSync(path.join(releasedSource, "distribution.js"), "utf8").includes('bridgeInstallers: "signed"'));
 
   const leakedValue = `sk-proj-${"a".repeat(32)}`;
   fs.writeFileSync(path.join(store, "accidental-config.txt"), `OPENAI_API_KEY=${leakedValue}\n`);

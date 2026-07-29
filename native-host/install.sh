@@ -7,6 +7,10 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
 HOST_NAME="com.aicli.cheatsheet_updater"
 MANIFEST_FILE="$HOST_NAME.json"
+# Always authorise the published store build alongside whatever ID the user
+# supplies, so installing the bridge from source does not lock the store
+# extension out of it (and vice versa).
+STORE_EXTENSION_ID="jdiopjiebnamikpcknmnpahhlokccgjj"
 OS_NAME="$(uname -s)"
 DEV_MODE="${AICLI_DEV:-0}"
 STANDALONE_MODE=0
@@ -165,21 +169,43 @@ validate_extension_id() {
   fi
 }
 
+# allowed_origins accumulates. Replacing it meant a source checkout and the
+# store build could never be registered at the same time: whichever was
+# installed last silently locked the other out of the bridge entirely.
 write_manifest() {
   local TARGET_DIR="$1"
-  local RUN_SH="$INSTALL_DIR/run.sh"
   mkdir -p "$TARGET_DIR"
-  cat > "$TARGET_DIR/$MANIFEST_FILE" << MEOF
-{
-  "name": "$HOST_NAME",
-  "description": "AI CLI 速查表插件的本地更新桥接程序",
-  "path": "$RUN_SH",
-  "type": "stdio",
-  "allowed_origins": [
-    "chrome-extension://$EXTENSION_ID/"
-  ]
-}
-MEOF
+  AICLI_MANIFEST_PATH="$TARGET_DIR/$MANIFEST_FILE" \
+  AICLI_HOST_NAME="$HOST_NAME" \
+  AICLI_RUN_SH="$INSTALL_DIR/run.sh" \
+  AICLI_EXTENSION_ID="$EXTENSION_ID" \
+  AICLI_STORE_EXTENSION_ID="$STORE_EXTENSION_ID" \
+  "$PYTHON_BIN" - <<'PY'
+import json
+import os
+import pathlib
+
+path = pathlib.Path(os.environ["AICLI_MANIFEST_PATH"])
+origins = []
+try:
+    existing = json.loads(path.read_text(encoding="utf-8"))
+    if isinstance(existing.get("allowed_origins"), list):
+        origins = [item for item in existing["allowed_origins"] if isinstance(item, str)]
+except (OSError, ValueError):
+    origins = []
+for extension_id in (os.environ["AICLI_EXTENSION_ID"], os.environ["AICLI_STORE_EXTENSION_ID"]):
+    origin = f"chrome-extension://{extension_id}/"
+    if extension_id and origin not in origins:
+        origins.append(origin)
+path.write_text(json.dumps({
+    "name": os.environ["AICLI_HOST_NAME"],
+    "description": "AI CLI 速查表插件的本地更新桥接程序",
+    "path": os.environ["AICLI_RUN_SH"],
+    "type": "stdio",
+    "allowed_origins": origins,
+}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+print(f"   已授权 {len(origins)} 个扩展来源")
+PY
   echo "✅ 已注册到：$TARGET_DIR/$MANIFEST_FILE"
 }
 
@@ -225,13 +251,20 @@ if [ -f "$INSTALL_DIR/run.sh" ]; then
     refresh_runtime_path "$INSTALL_DIR/run.sh"
     if [ -n "$EXTENSION_ID" ]; then
       validate_extension_id "$EXTENSION_ID"
-      for CHROME_DIR in "${CHROME_DIRS[@]}"; do
-        write_manifest "$CHROME_DIR"
-      done
-      if [ -f "$EDGE_DIR/$MANIFEST_FILE" ]; then
-        write_manifest "$EDGE_DIR"
-      fi
-      echo "✅ 已将现有注册更新为当前扩展 ID：$EXTENSION_ID"
+    fi
+    # Rewrite the registration even when no new ID was supplied: the merge is
+    # idempotent, and this is what backfills the store origin into a
+    # registration created before allowed_origins accumulated. The documented
+    # update path passes no ID, so gating this on one left existing installs
+    # unable to talk to the store build.
+    for CHROME_DIR in "${CHROME_DIRS[@]}"; do
+      write_manifest "$CHROME_DIR"
+    done
+    if [ -f "$EDGE_DIR/$MANIFEST_FILE" ]; then
+      write_manifest "$EDGE_DIR"
+    fi
+    if [ -n "$EXTENSION_ID" ]; then
+      echo "✅ 已把当前扩展 ID 加入授权：$EXTENSION_ID"
     fi
     echo ""
     echo "=== 更新完成 ==="

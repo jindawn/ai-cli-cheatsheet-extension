@@ -11,6 +11,10 @@ $ErrorActionPreference = "Stop"
 $ScriptDir  = Split-Path -Parent $MyInvocation.MyCommand.Path
 $ProjectDir = Split-Path -Parent $ScriptDir
 $HostName   = "com.aicli.cheatsheet_updater"
+# Always authorise the published store build alongside whatever ID the user
+# supplies, so installing the bridge from source does not lock the store
+# extension out of it (and vice versa).
+$StoreExtensionId = "jdiopjiebnamikpcknmnpahhlokccgjj"
 $InstallDir = Join-Path $env:APPDATA "aicli-cheatsheet"
 
 Write-Host ""
@@ -223,14 +227,33 @@ function Register-NativeHost {
     param($Browser, $RegPath)
 
     $ManifestPath = Join-Path $InstallDir "$HostName.$Browser.json"
+    # allowed_origins accumulates. Replacing it meant a source checkout and the
+    # store build could never be registered at the same time: whichever was
+    # installed last silently locked the other out of the bridge entirely.
+    $Origins = [System.Collections.Generic.List[string]]::new()
+    if (Test-Path $ManifestPath) {
+        try {
+            $Existing = Get-Content -Raw -Path $ManifestPath | ConvertFrom-Json
+            foreach ($Origin in @($Existing.allowed_origins)) {
+                if ($Origin -is [string] -and -not $Origins.Contains($Origin)) { $Origins.Add($Origin) }
+            }
+        } catch {
+            $Origins.Clear()
+        }
+    }
+    foreach ($Id in @($ExtensionId, $StoreExtensionId)) {
+        $Origin = "chrome-extension://$Id/"
+        if ($Id -and -not $Origins.Contains($Origin)) { $Origins.Add($Origin) }
+    }
     $Manifest = @{
         name            = $HostName
         description     = "AI CLI 速查表插件的本地更新桥接程序"
         path            = $RunBat
         type            = "stdio"
-        allowed_origins = @("chrome-extension://$ExtensionId/")
+        allowed_origins = @($Origins)
     } | ConvertTo-Json -Depth 3
     [IO.File]::WriteAllText($ManifestPath, $Manifest, [Text.UTF8Encoding]::new($false))
+    Write-Host "   已授权 $($Origins.Count) 个扩展来源" -ForegroundColor DarkGray
 
     $RegKey = "$RegPath\$HostName"
     New-Item -Path $RegKey -Force | Out-Null

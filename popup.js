@@ -279,8 +279,30 @@ function bridgeReleaseBase() {
   return `https://github.com/jindawn/ai-cli-cheatsheet-extension/releases/download/v${BRIDGE_VERSION}`;
 }
 
+function bridgeInstallerTrust() {
+  const declared = DISTRIBUTION.bridgeInstallers;
+  return declared === "signed" || declared === "unsigned" ? declared : "none";
+}
+
 function bridgeInstallersAvailable() {
-  return DISTRIBUTION.bridgeInstallersAvailable === true;
+  return bridgeInstallerTrust() !== "none";
+}
+
+function bridgeReleasePage() {
+  return `https://github.com/jindawn/ai-cli-cheatsheet-extension/releases/tag/v${BRIDGE_VERSION}`;
+}
+
+// Whichever OS prompt an unsigned installer trips, the user needs to know it is
+// expected and how to get past it. This is GUI guidance, never a command.
+function unsignedInstallerNotice() {
+  const os = runtimeOperatingSystem();
+  if (os === "windows") {
+    return "该安装包尚未做代码签名，Windows 会显示 SmartScreen 提示：点击「更多信息」再选「仍要运行」即可继续。";
+  }
+  if (os === "linux") {
+    return "该安装包尚未签名，部分包管理器会提示来源未验证，确认后即可安装。";
+  }
+  return "该安装包尚未做 Apple 公证，macOS 首次会拦下它：在下载的文件上按住 Control 点按并选「打开」，或到「系统设置 → 隐私与安全性」点「仍要打开」。";
 }
 
 async function bridgeInstallLinks({ upgrading = false } = {}) {
@@ -376,6 +398,58 @@ function bridgeInstallerRequired() {
   return companionState === "not-installed" || companionState === "outdated";
 }
 
+// Pure so every state combination can be asserted directly. The install dialog
+// used to serve one single "no installer" variant, which meant a brand-new
+// install was told to "keep using the AI environments you already detected"
+// while it had detected none and had no way to install anything.
+function bridgeDialogPlan({ trust, upgrading, featureUpgrade, bridgeFeature, version, unsignedNotice }) {
+  const installerAvailable = trust !== "none";
+  const feature = bridgeFeature || "该功能";
+  const title = upgrading ? "升级本机检测组件" : "安装本机检测组件";
+  const redetect = "安装完成后返回此处点击“重新检测本机 AI 环境”。";
+  let intro;
+  if (upgrading && !installerAvailable) {
+    intro = `${feature}需要新版检测组件。对应版本的安装包尚未发布，因此不会显示失效下载链接；已检测到的 AI 环境与维护功能不受影响。`;
+  } else if (featureUpgrade) {
+    intro = `${feature}需要较新的本机检测组件；安装完成后将自动继续该工具的安装准备。`;
+  } else if (upgrading) {
+    intro = `当前组件过旧，无法安全协商维护协议。升级到 ${version} 后，点击“重新检测”即可继续使用原有环境。`;
+  } else if (!installerAvailable) {
+    intro = "这不是安装 AI 环境。维护功能需要一个本机组件，而浏览器扩展无法自行安装它——这是浏览器的安全限制。当前版本尚未提供图形安装包，因此维护功能暂时不可用；速查、收藏和推荐不受影响。";
+  } else {
+    intro = "这不是安装 AI 环境。安装组件后，点击“检测”即可发现 Claude、Codex、Gemini 及其他已支持的本机 AI 环境。以后环境有变化时只需重新检测。";
+  }
+  if (installerAvailable) {
+    return {
+      title,
+      intro,
+      upgrading,
+      showDownloads: true,
+      steps: trust === "unsigned"
+        ? [unsignedNotice, "在系统安装界面确认安装。", redetect]
+        : ["下载后在系统安装界面确认安装。", redetect],
+    };
+  }
+  if (upgrading) {
+    return {
+      title,
+      intro,
+      upgrading,
+      showDownloads: false,
+      fallbackNote: "这个版本还没有可供下载的图形安装包；不会要求复制或执行任何安装命令。",
+      steps: ["继续使用已经检测到的 AI 环境与维护功能。", "安装包发布后，这里会显示对应系统的升级按钮。"],
+    };
+  }
+  return {
+    title,
+    intro,
+    upgrading,
+    showDownloads: false,
+    fallbackLinkLabel: "查看安装说明与发布页",
+    steps: ["发布页会说明该版本当前可用的安装方式。", redetect],
+  };
+}
+
 async function openBridgeDialog(intent = null) {
   pendingBridgeIntent = intent;
   const commonProviderId = typeof intent?.commonProviderId === "string"
@@ -390,28 +464,26 @@ async function openBridgeDialog(intent = null) {
   const title = document.getElementById("bridgeTitle");
   const intro = document.getElementById("bridgeIntro");
   if (!dialog || !actions || !steps || !title || !intro) return;
-  const featureUpgrade = intent?.bridgeUpgrade === true;
-  const upgrading = companionState === "outdated" || featureUpgrade;
-  const installerAvailable = bridgeInstallersAvailable();
-  title.textContent = upgrading ? "升级本机检测组件" : "安装本机检测组件";
-  if (upgrading && !installerAvailable) {
-    intro.textContent = `${intent?.bridgeFeature || "该功能"}需要新版检测组件。对应版本的签名安装包尚未发布，因此不会显示失效下载链接；已检测到的 AI 环境与维护功能不受影响。`;
-  } else if (featureUpgrade) {
-    intro.textContent = `${intent.bridgeFeature || "该功能"}需要较新的本机检测组件；安装完成后将自动继续该工具的安装准备。`;
-  } else if (upgrading) {
-    intro.textContent = `当前组件过旧，无法安全协商维护协议。升级到 ${BRIDGE_VERSION} 后，点击“重新检测”即可继续使用原有环境。`;
-  } else {
-    intro.textContent = "这不是安装 AI 环境。安装组件后，点击“检测”即可发现 Claude、Codex、Gemini 及其他已支持的本机 AI 环境。以后环境有变化时只需重新检测。";
-  }
-  if (installerAvailable) {
-    actions.innerHTML = (await bridgeInstallLinks({ upgrading })).map((item) =>
+  const plan = bridgeDialogPlan({
+    trust: bridgeInstallerTrust(),
+    upgrading: companionState === "outdated" || intent?.bridgeUpgrade === true,
+    featureUpgrade: intent?.bridgeUpgrade === true,
+    bridgeFeature: intent?.bridgeFeature,
+    version: BRIDGE_VERSION,
+    unsignedNotice: unsignedInstallerNotice(),
+  });
+  title.textContent = plan.title;
+  intro.textContent = plan.intro;
+  if (plan.showDownloads) {
+    actions.innerHTML = (await bridgeInstallLinks({ upgrading: plan.upgrading })).map((item) =>
       `<a class="text-btn primary" href="${item.href}" target="_blank" rel="noopener noreferrer">${RENDER.escapeHtml(item.label)}</a>`
     ).join("");
-    steps.innerHTML = "<li>下载后在系统安装界面确认安装。</li><li>安装完成后返回此处点击“重新检测本机 AI 环境”。</li>";
+  } else if (plan.fallbackLinkLabel) {
+    actions.innerHTML = `<a class="text-btn primary" href="${bridgeReleasePage()}" target="_blank" rel="noopener noreferrer">${RENDER.escapeHtml(plan.fallbackLinkLabel)}</a>`;
   } else {
-    actions.innerHTML = "<p class=\"meta\">当前本地预览未附带可验证的图形安装包；不会要求复制或执行任何安装命令。</p>";
-    steps.innerHTML = "<li>继续使用已经检测到的 AI 环境与维护功能。</li><li>签名安装包发布后，这里会显示对应系统的升级按钮。</li>";
+    actions.innerHTML = `<p class="meta">${RENDER.escapeHtml(plan.fallbackNote)}</p>`;
   }
+  steps.innerHTML = plan.steps.map((step) => `<li>${RENDER.escapeHtml(step)}</li>`).join("");
   document.getElementById("bridgeDialogStatus").className = "status";
   document.getElementById("bridgeDialogStatus").textContent = "";
   dialog.classList.add("show");

@@ -57,6 +57,21 @@ assert(host.includes('"--permission-mode"') && host.includes('"--tools"'), "Clau
   }
 }
 
+// Overwriting allowed_origins meant registering the bridge for a source checkout
+// silently locked the store build out of it, and vice versa.
+const STORE_ID = "jdiopjiebnamikpcknmnpahhlokccgjj";
+for (const [name, script] of [["install.sh", installSh], ["install.ps1", installPs1]]) {
+  assert(script.includes(STORE_ID), `${name} must always authorise the published store extension`);
+  assert(
+    /allowed_origins/.test(script) && /existing/i.test(script),
+    `${name} must merge into the existing allowed_origins instead of replacing them`,
+  );
+  assert(
+    !new RegExp(`allowed_origins"?\\s*[:=]\\s*@?\\(?\\[?"?chrome-extension://\\$`).test(script),
+    `${name} must not write allowed_origins as a single hard-coded entry`,
+  );
+}
+
 assert(builder.includes('STORE_EXTENSION_ID = "jdiopjiebnamikpcknmnpahhlokccgjj"'));
 assert(bridgeSpec.includes("ROOT = Path(SPECPATH).resolve().parent\n"), "PyInstaller must resolve the repository root from native-host/bridge.spec");
 assert(bridgeSpec.includes("console=True"), "the self-contained host must retain Native Messaging stdio on Windows");
@@ -73,15 +88,26 @@ assert(workflow.includes("if: needs.release-preflight.outputs.advanced_release =
 assert(workflow.includes("needs: [github-release, release-preflight]"), "Chrome submission must wait for the GitHub Release and release capability gate");
 assert(workflow.includes('test "$EXTENSION_ID" = "jdiopjiebnamikpcknmnpahhlokccgjj"'), "store submission must match the bridge allowed origin");
 assert(workflow.includes("runner: macos-15") && workflow.includes("runner: macos-15-intel"), "bridge builds need explicit current arm64 and Intel macOS runners");
-assert(workflow.includes("--require-signing") && builder.includes("notarytool"), "signed/notarized installers must be mandatory");
+assert(workflow.includes("--require-signing") && builder.includes("notarytool"), "signed/notarized installers must stay available when credentials exist");
 assert(workflow.includes("verify-release-assets.js") && workflow.includes("SHA256SUMS.asc"));
-assert(workflow.includes("--bridge-installers-ready"), "store package may expose installers only after the release assets are verified");
-assert(workflow.includes("--bridge-only") && workflow.includes("--channel source --output dist/source-release --bridge-installers-ready"), "source and store release packages may expose installers only after every bridge asset is present");
-assert(workflow.includes("--basic-only"), "the baseline extension release must remain publishable without signed bridge installers");
+assert(workflow.includes("--bridge-only") && workflow.includes('--bridge-installers "$INSTALLER_STATE"'), "release packages may expose installers only after every bridge asset is present");
+assert(!workflow.includes("--bridge-installers-ready"), "the boolean installer flag is replaced by the signed/unsigned/none state");
+assert(workflow.includes("--basic-only"), "the baseline extension release must remain publishable without any bridge installers");
+// Gating the bridge build on full signing capability shipped releases with no
+// installer at all, which left store users unable to enable maintenance.
+const bridgeJob = workflow.slice(workflow.indexOf("  build-bridge:"), workflow.indexOf("  github-release:"));
+assert(!/^    if:/m.test(bridgeJob), "the bridge build must not be gated on signing capability");
+assert(bridgeJob.includes('if [ "$ADVANCED_RELEASE" = "true" ] && [ "${{ matrix.platform }}" != "linux" ]'), "signing must be demanded only when every credential is present");
+assert(bridgeJob.includes('if [ -n "$PROVIDER_CATALOG_SIGNING_KEY" ]') && !bridgeJob.includes('test -n "$PROVIDER_CATALOG_SIGNING_KEY"'), "a missing catalog signing key must not block building the installer");
 const githubReleaseWorkflow = workflow.slice(workflow.indexOf("  github-release:"), workflow.indexOf("  chrome-web-store:"));
 assert(githubReleaseWorkflow.indexOf("actions/checkout@v4") < githubReleaseWorkflow.indexOf("name: release-assets"),
   "checkout must run before downloading release assets so its clean step cannot remove them");
-assert(builder.includes('"bridgeInstallersAvailable": true') || read("tools/package-extension.js").includes("bridgeInstallersAvailable: true"), "a verified source release package must expose graphical installer entry points");
+for (const state of ["state=none", "state=signed", "state=unsigned"]) {
+  assert(githubReleaseWorkflow.includes(state), `the release must resolve an explicit installer state: ${state}`);
+}
+assert(githubReleaseWorkflow.includes('BRIDGE_RESULT" != "success"') && githubReleaseWorkflow.includes("state=none"), "only a failed bridge build may leave the extension with no install path");
+assert(read("tools/package-extension.js").includes('bridgeInstallers: "${bridgeInstallers}"'), "a verified release package must declare which installer trust level it ships");
+assert(read("tools/package-extension.js").includes('BRIDGE_INSTALLER_STATES = ["signed", "unsigned", "none"]'), "installer availability must distinguish an unsigned installer from having none at all");
 
 assert(popup.includes("releases/download/v${BRIDGE_VERSION}"), "download URLs must be pinned to the extension version");
 assert(!popup.includes("/releases/latest/"), "download URLs must not use latest");

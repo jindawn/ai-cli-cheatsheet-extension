@@ -57,6 +57,21 @@ assert(host.includes('"--permission-mode"') && host.includes('"--tools"'), "Clau
   }
 }
 
+// Overwriting allowed_origins meant registering the bridge for a source checkout
+// silently locked the store build out of it, and vice versa.
+const STORE_ID = "jdiopjiebnamikpcknmnpahhlokccgjj";
+for (const [name, script] of [["install.sh", installSh], ["install.ps1", installPs1]]) {
+  assert(script.includes(STORE_ID), `${name} must always authorise the published store extension`);
+  assert(
+    /allowed_origins/.test(script) && /existing/i.test(script),
+    `${name} must merge into the existing allowed_origins instead of replacing them`,
+  );
+  assert(
+    !new RegExp(`allowed_origins"?\\s*[:=]\\s*@?\\(?\\[?"?chrome-extension://\\$`).test(script),
+    `${name} must not write allowed_origins as a single hard-coded entry`,
+  );
+}
+
 assert(builder.includes('STORE_EXTENSION_ID = "jdiopjiebnamikpcknmnpahhlokccgjj"'));
 assert(bridgeSpec.includes("ROOT = Path(SPECPATH).resolve().parent\n"), "PyInstaller must resolve the repository root from native-host/bridge.spec");
 assert(bridgeSpec.includes("console=True"), "the self-contained host must retain Native Messaging stdio on Windows");

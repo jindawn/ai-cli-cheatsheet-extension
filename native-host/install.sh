@@ -251,13 +251,20 @@ if [ -f "$INSTALL_DIR/run.sh" ]; then
     refresh_runtime_path "$INSTALL_DIR/run.sh"
     if [ -n "$EXTENSION_ID" ]; then
       validate_extension_id "$EXTENSION_ID"
-      for CHROME_DIR in "${CHROME_DIRS[@]}"; do
-        write_manifest "$CHROME_DIR"
-      done
-      if [ -f "$EDGE_DIR/$MANIFEST_FILE" ]; then
-        write_manifest "$EDGE_DIR"
-      fi
-      echo "✅ 已将现有注册更新为当前扩展 ID：$EXTENSION_ID"
+    fi
+    # Rewrite the registration even when no new ID was supplied: the merge is
+    # idempotent, and this is what backfills the store origin into a
+    # registration created before allowed_origins accumulated. The documented
+    # update path passes no ID, so gating this on one left existing installs
+    # unable to talk to the store build.
+    for CHROME_DIR in "${CHROME_DIRS[@]}"; do
+      write_manifest "$CHROME_DIR"
+    done
+    if [ -f "$EDGE_DIR/$MANIFEST_FILE" ]; then
+      write_manifest "$EDGE_DIR"
+    fi
+    if [ -n "$EXTENSION_ID" ]; then
+      echo "✅ 已把当前扩展 ID 加入授权：$EXTENSION_ID"
     fi
     echo ""
     echo "=== 更新完成 ==="

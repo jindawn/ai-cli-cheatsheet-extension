@@ -20,7 +20,7 @@ const MAINTENANCE_ENABLED = Boolean(CAPABILITIES.nativeCompanion)
 const BRIDGE_PROTOCOL_VERSION = 5;
 const MIN_COMPATIBLE_BRIDGE_PROTOCOL_VERSION = 3;
 const BRIDGE_SCHEMA_VERSION = 2;
-const BRIDGE_VERSION = DISTRIBUTION.releaseVersion || chrome.runtime?.getManifest?.().version || "1.8.0";
+const BRIDGE_VERSION = DISTRIBUTION.releaseVersion || chrome.runtime?.getManifest?.().version || "1.8.1";
 const COMPANION_PERMISSIONS = ["nativeMessaging", "alarms"];
 const STORAGE_PERMISSION = ["unlimitedStorage"];
 const ADD_PROVIDER_SENTINEL = "__add_provider__";
@@ -294,15 +294,20 @@ function bridgeReleasePage() {
 
 // Whichever OS prompt an unsigned installer trips, the user needs to know it is
 // expected and how to get past it. This is GUI guidance, never a command.
-function unsignedInstallerNotice() {
-  const os = runtimeOperatingSystem();
+//
+// The macOS wording deliberately routes through System Settings only. macOS 15
+// removed the Control-click bypass for applications, and this text has to stay
+// correct on versions where that shortcut no longer applies — the Settings path
+// works on every supported release. It also states the ordering, because the
+// "Open Anyway" entry only appears after one blocked attempt.
+function unsignedInstallerNotice(os = runtimeOperatingSystem()) {
   if (os === "windows") {
-    return "该安装包尚未做代码签名，Windows 会显示 SmartScreen 提示：点击「更多信息」再选「仍要运行」即可继续。";
+    return "该安装包尚未做代码签名，Windows 会拦下它并显示 SmartScreen 提示——这是预期的：展开「更多信息」后选「仍要运行」即可继续。";
   }
   if (os === "linux") {
-    return "该安装包尚未签名，部分包管理器会提示来源未验证，确认后即可安装。";
+    return "该安装包尚未签名，不同发行版的提示不一样：包管理器可能提示来源未验证，确认后即可安装。";
   }
-  return "该安装包尚未做 Apple 公证，macOS 首次会拦下它：在下载的文件上按住 Control 点按并选「打开」，或到「系统设置 → 隐私与安全性」点「仍要打开」。";
+  return "该安装包尚未做 Apple 公证，双击时会被系统拦下——这是预期的。先双击一次，再打开「系统设置 → 隐私与安全性」，在下方找到刚被拦下的记录点「仍要打开」，然后确认一次即可安装。";
 }
 
 async function bridgeInstallLinks({ upgrading = false } = {}) {

@@ -136,6 +136,28 @@ assert(freshNoInstaller.intro.includes("暂时不可用"), "a fresh install with
 const unsignedPlan = planContext.plan({ ...planArgs, trust: "unsigned", upgrading: false });
 assert(unsignedPlan.showDownloads, "an unsigned installer must still be offered for download");
 assert(unsignedPlan.steps[0] === planArgs.unsignedNotice, "an unsigned installer must warn about the OS prompt first");
+
+// Verified on macOS 26.5.1: an unsigned .pkg is rejected by Gatekeeper
+// (`spctl --assess --type install` → "rejected: no usable signature"), so the
+// bypass instructions have to be right. macOS 15 removed the Control-click
+// bypass for applications, and that shortcut cannot be verified for installer
+// packages here, so the copy must route through System Settings, which is valid
+// on every supported release.
+const noticeMatch = bridgePopupSource.match(
+  /\/\/ Whichever OS prompt an unsigned installer trips[\s\S]*?\nfunction unsignedInstallerNotice\([\s\S]*?\n\}\n/,
+);
+assert(noticeMatch, "the unsigned-installer notice should live in one helper");
+const noticeContext = { runtimeOperatingSystem: () => "mac" };
+vm.runInNewContext(`${noticeMatch[0]}\nthis.notice = unsignedInstallerNotice;`, noticeContext);
+const macNotice = noticeContext.notice("mac");
+assert(macNotice.includes("系统设置"), "macOS guidance must route through System Settings");
+assert(!macNotice.includes("Control"), "macOS guidance must not rely on the Control-click bypass removed in macOS 15");
+assert(/先双击|双击时/.test(macNotice), "macOS guidance must say the block happens on the first open attempt");
+for (const os of ["mac", "windows", "linux"]) {
+  const notice = noticeContext.notice(os);
+  assert(notice.length > 20, `${os} needs an actionable unsigned-installer notice`);
+  assert(!/```|\$ |sudo |bash /.test(notice), `${os} notice must not contain a terminal command`);
+}
 const signedPlan = planContext.plan({ ...planArgs, trust: "signed", upgrading: false });
 assert(signedPlan.showDownloads && !signedPlan.steps.includes(planArgs.unsignedNotice), "a signed installer needs no unsigned warning");
 

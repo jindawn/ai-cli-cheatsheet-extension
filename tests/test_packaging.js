@@ -36,7 +36,7 @@ try {
   assert.strictEqual(storeManifest.background.service_worker, "background.js");
   assert.deepStrictEqual(sourceManifest.permissions, ["nativeMessaging", "storage", "alarms"]);
   assert.strictEqual(sourceManifest.background.service_worker, "background.js");
-  assert.strictEqual(storeManifest.version, "1.8.0");
+  assert.strictEqual(storeManifest.version, "1.8.1");
 
   for (const forbidden of ["native-host", "tests", "tools"]) {
     assert.strictEqual(fs.existsSync(path.join(store, forbidden)), false, `store package contains ${forbidden}`);

@@ -6,9 +6,10 @@ window.CHEATSHEET_DISTRIBUTION = Object.freeze({
   channel: "source",
   releaseVersion: "1.8.0",
   storeExtensionId: "jdiopjiebnamikpcknmnpahhlokccgjj",
-  // Source checkouts are previews: never point users at an unverified release
-  // asset. The store packager enables this only after its release gate exists.
-  bridgeInstallersAvailable: false,
+  // "signed" | "unsigned" | "none". An unpacked checkout never points users at
+  // a release asset it cannot verify, so it stays "none" and the install dialog
+  // explains the source-install path instead.
+  bridgeInstallers: "none",
   capabilities: Object.freeze({
     localRecommendations: true,
     nativeCompanion: true,

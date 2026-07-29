@@ -75,13 +75,15 @@ assert(workflow.includes('test "$EXTENSION_ID" = "jdiopjiebnamikpcknmnpahhlokccg
 assert(workflow.includes("runner: macos-15") && workflow.includes("runner: macos-15-intel"), "bridge builds need explicit current arm64 and Intel macOS runners");
 assert(workflow.includes("--require-signing") && builder.includes("notarytool"), "signed/notarized installers must be mandatory");
 assert(workflow.includes("verify-release-assets.js") && workflow.includes("SHA256SUMS.asc"));
-assert(workflow.includes("--bridge-installers-ready"), "store package may expose installers only after the release assets are verified");
-assert(workflow.includes("--bridge-only") && workflow.includes("--channel source --output dist/source-release --bridge-installers-ready"), "source and store release packages may expose installers only after every bridge asset is present");
+assert(workflow.includes("--bridge-installers signed"), "store package may declare signed installers only after the release assets are verified");
+assert(workflow.includes("--bridge-only") && workflow.includes("--channel source --output dist/source-release --bridge-installers signed"), "source and store release packages may expose installers only after every bridge asset is present");
+assert(!workflow.includes("--bridge-installers-ready"), "the boolean installer flag is replaced by the signed/unsigned/none state");
 assert(workflow.includes("--basic-only"), "the baseline extension release must remain publishable without signed bridge installers");
 const githubReleaseWorkflow = workflow.slice(workflow.indexOf("  github-release:"), workflow.indexOf("  chrome-web-store:"));
 assert(githubReleaseWorkflow.indexOf("actions/checkout@v4") < githubReleaseWorkflow.indexOf("name: release-assets"),
   "checkout must run before downloading release assets so its clean step cannot remove them");
-assert(builder.includes('"bridgeInstallersAvailable": true') || read("tools/package-extension.js").includes("bridgeInstallersAvailable: true"), "a verified source release package must expose graphical installer entry points");
+assert(read("tools/package-extension.js").includes('bridgeInstallers: "${bridgeInstallers}"'), "a verified release package must declare which installer trust level it ships");
+assert(read("tools/package-extension.js").includes('BRIDGE_INSTALLER_STATES = ["signed", "unsigned", "none"]'), "installer availability must distinguish an unsigned installer from having none at all");
 
 assert(popup.includes("releases/download/v${BRIDGE_VERSION}"), "download URLs must be pinned to the extension version");
 assert(!popup.includes("/releases/latest/"), "download URLs must not use latest");

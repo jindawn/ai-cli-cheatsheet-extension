@@ -242,8 +242,8 @@ jobs:
         if: needs.release-preflight.outputs.advanced_release == 'true'
         run: |
           VERSION="${GITHUB_REF_NAME#v}"
-          node tools/package-extension.js --channel source --output dist/source-release --bridge-installers-ready
-          node tools/package-extension.js --channel store --output dist/store-release --bridge-installers-ready
+          node tools/package-extension.js --channel source --output dist/source-release --bridge-installers signed
+          node tools/package-extension.js --channel store --output dist/store-release --bridge-installers signed
           rm -f "release-assets/ai-cli-cheatsheet-source-v${VERSION}.zip"
           rm -f "release-assets/ai-cli-cheatsheet-store-v${VERSION}.zip"
           (cd dist/source-release && zip -X -q -r "../../release-assets/ai-cli-cheatsheet-source-v${VERSION}.zip" .)

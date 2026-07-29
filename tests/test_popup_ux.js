@@ -101,6 +101,44 @@ assert(bridgePopupSource.includes('provider.loginState === "probe-timeout" ? " �
 assert(bridgePopupSource.includes('["timeout", "本次检测超时"'), "a timed-out probe must not be grouped as an environment still to install");
 assert(bridgePopupSource.includes("data-refresh-provider") && bridgePopupSource.includes("companionProviderRefresh"), "each detected environment should be re-detectable on its own");
 
+// The install dialog must never present a state with no way forward. A brand-new
+// install with no installer used to be handed the upgrade wording ("keep using
+// the AI environments you already detected") plus zero actionable controls.
+const dialogPlanMatch = bridgePopupSource.match(
+  /\/\/ Pure so every state combination can be asserted directly\.[\s\S]*?\nfunction bridgeDialogPlan\(\{[\s\S]*?\n\}\n/,
+);
+assert(dialogPlanMatch, "the bridge dialog should derive its copy from one pure helper");
+const planContext = {};
+vm.runInNewContext(`${dialogPlanMatch[0]}\nthis.plan = bridgeDialogPlan;`, planContext);
+const planArgs = { version: "9.9.9", unsignedNotice: "系统会提示未签名" };
+for (const trust of ["signed", "unsigned", "none"]) {
+  for (const upgrading of [false, true]) {
+    const plan = planContext.plan({
+      ...planArgs, trust, upgrading, featureUpgrade: false, bridgeFeature: "",
+    });
+    // Every state needs at least one control: a download, or a link out.
+    const hasWayForward = plan.showDownloads || Boolean(plan.fallbackLinkLabel)
+      || (upgrading && Boolean(plan.fallbackNote));
+    assert(hasWayForward, `trust=${trust} upgrading=${upgrading} must offer a way forward`);
+    assert(plan.steps.length >= 2, `trust=${trust} upgrading=${upgrading} should keep concrete steps`);
+    assert(!plan.intro.includes("本地预览"), "a released package must not call itself a local preview");
+    if (!upgrading) {
+      assert(
+        !plan.steps.concat(plan.intro).join(" ").includes("继续使用已经检测到的"),
+        `a fresh install (trust=${trust}) must not claim the user already detected environments`,
+      );
+    }
+  }
+}
+const freshNoInstaller = planContext.plan({ ...planArgs, trust: "none", upgrading: false });
+assert(freshNoInstaller.fallbackLinkLabel, "a fresh install without an installer must still link somewhere");
+assert(freshNoInstaller.intro.includes("暂时不可用"), "a fresh install without an installer must say maintenance is unavailable");
+const unsignedPlan = planContext.plan({ ...planArgs, trust: "unsigned", upgrading: false });
+assert(unsignedPlan.showDownloads, "an unsigned installer must still be offered for download");
+assert(unsignedPlan.steps[0] === planArgs.unsignedNotice, "an unsigned installer must warn about the OS prompt first");
+const signedPlan = planContext.plan({ ...planArgs, trust: "signed", upgrading: false });
+assert(signedPlan.showDownloads && !signedPlan.steps.includes(planArgs.unsignedNotice), "a signed installer needs no unsigned warning");
+
 const outdatedMatch = bridgePopupSource.match(/function isOutdatedBridgeResponse\(response\) \{[\s\S]*?\n\}\n\nfunction bridgeInstallerRequired/);
 assert(outdatedMatch, "popup should classify incompatible bridge handshakes");
 const outdatedContext = {

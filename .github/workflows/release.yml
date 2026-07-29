@@ -121,7 +121,10 @@ jobs:
 
   build-bridge:
     needs: [build-and-test, release-preflight]
-    if: needs.release-preflight.outputs.advanced_release == 'true'
+    # Always build. An unsigned installer still lets a user install the bridge by
+    # double-clicking it; gating the whole job on full signing capability meant a
+    # release shipped no installer at all, which left store users with a
+    # maintenance feature they had no way to enable.
     strategy:
       fail-fast: false
       matrix:
@@ -149,8 +152,12 @@ jobs:
         env:
           PROVIDER_CATALOG_SIGNING_KEY: ${{ secrets.PROVIDER_CATALOG_SIGNING_KEY }}
         run: |
-          test -n "$PROVIDER_CATALOG_SIGNING_KEY"
-          python tools/provider-catalog.py write-public-key --output shared/provider-catalog-public-key.json
+          # Without the signing key the bridge simply ships the empty committed
+          # public key and reports the signed-catalog channel as unavailable.
+          # That must not block building the installer itself.
+          if [ -n "$PROVIDER_CATALOG_SIGNING_KEY" ]; then
+            python tools/provider-catalog.py write-public-key --output shared/provider-catalog-public-key.json
+          fi
           python -m pip install pyinstaller
           python -m PyInstaller native-host/bridge.spec --distpath dist/bridge-bin --workpath dist/bridge-work --noconfirm
       - name: Install Linux packaging tools
@@ -164,7 +171,7 @@ jobs:
         shell: pwsh
         run: dotnet tool install --global wix --version 5.0.2
       - name: Import macOS signing identities
-        if: matrix.platform == 'macos'
+        if: matrix.platform == 'macos' && needs.release-preflight.outputs.advanced_release == 'true'
         env:
           MACOS_CERTIFICATES_P12: ${{ secrets.MACOS_CERTIFICATES_P12 }}
           MACOS_CERTIFICATES_PASSWORD: ${{ secrets.MACOS_CERTIFICATES_PASSWORD }}
@@ -178,16 +185,17 @@ jobs:
           security import signing.p12 -k build.keychain -P "$MACOS_CERTIFICATES_PASSWORD" -T /usr/bin/codesign -T /usr/bin/productsign
           security set-key-partition-list -S apple-tool:,apple: -s -k "$KEYCHAIN_PASSWORD" build.keychain
       - name: Import Windows signing certificate
-        if: matrix.platform == 'windows'
+        if: matrix.platform == 'windows' && needs.release-preflight.outputs.advanced_release == 'true'
         shell: pwsh
         env:
           WINDOWS_SIGNING_PFX: ${{ secrets.WINDOWS_SIGNING_PFX }}
         run: |
           if (-not $env:WINDOWS_SIGNING_PFX) { throw "WINDOWS_SIGNING_PFX is required" }
           [IO.File]::WriteAllBytes("$env:RUNNER_TEMP\bridge-signing.pfx", [Convert]::FromBase64String($env:WINDOWS_SIGNING_PFX))
-      - name: Package signed bridge installer
+      - name: Package bridge installer
         shell: bash
         env:
+          ADVANCED_RELEASE: ${{ needs.release-preflight.outputs.advanced_release }}
           MACOS_APPLICATION_IDENTITY: ${{ secrets.MACOS_APPLICATION_IDENTITY }}
           MACOS_INSTALLER_IDENTITY: ${{ secrets.MACOS_INSTALLER_IDENTITY }}
           APPLE_ID: ${{ secrets.APPLE_ID }}
@@ -200,7 +208,11 @@ jobs:
           BINARY="dist/bridge-bin/aicli-cheatsheet-bridge"
           if [ "${{ matrix.platform }}" = "windows" ]; then BINARY="${BINARY}.exe"; fi
           EXTRA=()
-          if [ "${{ matrix.platform }}" != "linux" ]; then EXTRA+=(--require-signing); fi
+          # Demand signing only when every credential is present. Otherwise build
+          # the same installer unsigned rather than producing nothing.
+          if [ "$ADVANCED_RELEASE" = "true" ] && [ "${{ matrix.platform }}" != "linux" ]; then
+            EXTRA+=(--require-signing)
+          fi
           python tools/build-bridge-assets.py \
             --platform "${{ matrix.platform }}" \
             --arch "${{ matrix.arch }}" \
@@ -216,51 +228,74 @@ jobs:
 
   github-release:
     needs: [build-and-test, release-preflight, build-bridge]
-    if: ${{ always() && needs.build-and-test.result == 'success' && needs.release-preflight.result == 'success' && (needs.release-preflight.outputs.advanced_release != 'true' || needs.build-bridge.result == 'success') }}
+    if: ${{ always() && needs.build-and-test.result == 'success' && needs.release-preflight.result == 'success' }}
     runs-on: ubuntu-latest
+    outputs:
+      installer_state: ${{ steps.installers.outputs.state }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
+      - name: Resolve which installer trust level this release can advertise
+        id: installers
+        env:
+          ADVANCED_RELEASE: ${{ needs.release-preflight.outputs.advanced_release }}
+          BRIDGE_RESULT: ${{ needs.build-bridge.result }}
+        run: |
+          # "unsigned" is a real, usable outcome: the user double-clicks the same
+          # installer and clicks through one OS prompt. Only a failed bridge
+          # build leaves the extension with no install path to offer.
+          if [ "$BRIDGE_RESULT" != "success" ]; then
+            echo "state=none" >> "$GITHUB_OUTPUT"
+          elif [ "$ADVANCED_RELEASE" = "true" ]; then
+            echo "state=signed" >> "$GITHUB_OUTPUT"
+          else
+            echo "state=unsigned" >> "$GITHUB_OUTPUT"
+          fi
       - uses: actions/download-artifact@v4
         with:
           name: release-assets
           path: release-assets
       - uses: actions/download-artifact@v4
-        if: needs.release-preflight.outputs.advanced_release == 'true'
+        if: steps.installers.outputs.state != 'none'
         with:
           pattern: bridge-*
           path: release-assets
           merge-multiple: true
       - name: Verify bridge installers before enabling installer entry points
-        if: needs.release-preflight.outputs.advanced_release == 'true'
+        if: steps.installers.outputs.state != 'none'
         run: |
           VERSION="${GITHUB_REF_NAME#v}"
           node tools/verify-release-assets.js --directory release-assets --version "$VERSION" --bridge-only
       - name: Rebuild release packages with verified installer entry points
-        if: needs.release-preflight.outputs.advanced_release == 'true'
+        if: steps.installers.outputs.state != 'none'
+        env:
+          INSTALLER_STATE: ${{ steps.installers.outputs.state }}
         run: |
           VERSION="${GITHUB_REF_NAME#v}"
-          node tools/package-extension.js --channel source --output dist/source-release --bridge-installers signed
-          node tools/package-extension.js --channel store --output dist/store-release --bridge-installers signed
+          node tools/package-extension.js --channel source --output dist/source-release --bridge-installers "$INSTALLER_STATE"
+          node tools/package-extension.js --channel store --output dist/store-release --bridge-installers "$INSTALLER_STATE"
           rm -f "release-assets/ai-cli-cheatsheet-source-v${VERSION}.zip"
           rm -f "release-assets/ai-cli-cheatsheet-store-v${VERSION}.zip"
           (cd dist/source-release && zip -X -q -r "../../release-assets/ai-cli-cheatsheet-source-v${VERSION}.zip" .)
           (cd dist/store-release && zip -X -q -r "../../release-assets/ai-cli-cheatsheet-store-v${VERSION}.zip" .)
       - name: Verify basic extension release set
-        if: needs.release-preflight.outputs.advanced_release != 'true'
+        if: steps.installers.outputs.state == 'none'
         run: |
           VERSION="${GITHUB_REF_NAME#v}"
           node tools/verify-release-assets.js --directory release-assets --version "$VERSION" --basic-only
-      - name: Verify complete signed release set
+      - name: Verify complete release set
+        if: steps.installers.outputs.state != 'none'
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          node tools/verify-release-assets.js --directory release-assets --version "$VERSION"
+      - name: Sign the checksum manifest
         if: needs.release-preflight.outputs.advanced_release == 'true'
         env:
           RELEASE_GPG_PRIVATE_KEY: ${{ secrets.RELEASE_GPG_PRIVATE_KEY }}
           RELEASE_GPG_PASSPHRASE: ${{ secrets.RELEASE_GPG_PASSPHRASE }}
         run: |
-          VERSION="${GITHUB_REF_NAME#v}"
-          node tools/verify-release-assets.js --directory release-assets --version "$VERSION"
           test -n "$RELEASE_GPG_PRIVATE_KEY"
           echo "$RELEASE_GPG_PRIVATE_KEY" | base64 --decode | gpg --batch --import
           gpg --batch --yes --pinentry-mode loopback --passphrase "$RELEASE_GPG_PASSPHRASE" \
@@ -305,11 +340,14 @@ jobs:
         env:
           PUBLISHER_ID: ${{ vars.CWS_PUBLISHER_ID }}
           EXTENSION_ID: ${{ vars.CWS_EXTENSION_ID }}
-          ADVANCED_RELEASE: ${{ needs.release-preflight.outputs.advanced_release }}
+          # Gate on whether an installer exists at all, not on whether it is
+          # signed: a store build that advertises an unsigned installer still
+          # gives users a working way to enable maintenance.
+          INSTALLER_STATE: ${{ needs.github-release.outputs.installer_state }}
         run: |
-          if [ "$ADVANCED_RELEASE" != "true" ]; then
+          if [ "$INSTALLER_STATE" = "none" ]; then
             echo "enabled=false" >> "$GITHUB_OUTPUT"
-            echo "Signed bridge installers are not available; skipping Chrome Web Store submission."
+            echo "No bridge installer was produced; skipping Chrome Web Store submission."
           elif [ -n "$PUBLISHER_ID" ] && [ -n "$EXTENSION_ID" ]; then
             test "$EXTENSION_ID" = "jdiopjiebnamikpcknmnpahhlokccgjj"
             echo "enabled=true" >> "$GITHUB_OUTPUT"

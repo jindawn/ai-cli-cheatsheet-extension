@@ -13,7 +13,9 @@ import uuid
 
 
 STORE_EXTENSION_ID = "jdiopjiebnamikpcknmnpahhlokccgjj"
-HOST_NAME = "com.aicli.cheatsheet_updater"
+LEGACY_HOST_NAME = "com.aicli.cheatsheet_updater"
+STORE_HOST_NAME = "com.aicli.cheatsheet.store_bridge"
+HOST_NAMES = (STORE_HOST_NAME, LEGACY_HOST_NAME)
 
 
 def run(args):
@@ -23,9 +25,9 @@ def run(args):
     subprocess.run([str(value) for value in args], check=True, env=env)
 
 
-def native_manifest(executable):
+def native_manifest(executable, host_name=STORE_HOST_NAME):
     return {
-        "name": HOST_NAME,
+        "name": host_name,
         "description": "AI CLI 速查表查询与数据维护桥接",
         "path": str(executable),
         "type": "stdio",
@@ -49,16 +51,21 @@ def build_macos(binary, output, version, arch, require_signing):
     bridge = install_dir / "aicli-cheatsheet-bridge"
     shutil.copy2(binary, bridge)
     bridge.chmod(0o755)
-    manifest = native_manifest("/Library/Application Support/AI CLI Cheatsheet/aicli-cheatsheet-bridge")
-    write_json(chrome_dir / f"{HOST_NAME}.json", manifest)
-    write_json(edge_dir / f"{HOST_NAME}.json", manifest)
+    executable = "/Library/Application Support/AI CLI Cheatsheet/aicli-cheatsheet-bridge"
+    for host_name in HOST_NAMES:
+        manifest = native_manifest(executable, host_name)
+        write_json(chrome_dir / f"{host_name}.json", manifest)
+        write_json(edge_dir / f"{host_name}.json", manifest)
     uninstall = install_dir / "uninstall.command"
     uninstall.write_text(
         "#!/bin/sh\nset -eu\n"
         "if [ \"$(id -u)\" -ne 0 ]; then exec sudo \"$0\" \"$@\"; fi\n"
-        f"rm -f '/Library/Google/Chrome/NativeMessagingHosts/{HOST_NAME}.json'\n"
-        f"rm -f '/Library/Microsoft/Edge/NativeMessagingHosts/{HOST_NAME}.json'\n"
-        "rm -rf '/Library/Application Support/AI CLI Cheatsheet'\n"
+        + "".join(
+            f"rm -f '/Library/Google/Chrome/NativeMessagingHosts/{host_name}.json'\n"
+            f"rm -f '/Library/Microsoft/Edge/NativeMessagingHosts/{host_name}.json'\n"
+            for host_name in HOST_NAMES
+        )
+        + "rm -rf '/Library/Application Support/AI CLI Cheatsheet'\n"
         "echo 'AI CLI Cheatsheet bridge removed.'\n",
         encoding="utf-8",
     )
@@ -99,13 +106,17 @@ def build_linux(binary, output, version):
     bridge = bridge_dir / "aicli-cheatsheet-bridge"
     shutil.copy2(binary, bridge)
     bridge.chmod(0o755)
-    manifest = native_manifest("/usr/lib/ai-cli-cheatsheet/aicli-cheatsheet-bridge")
+    executable = "/usr/lib/ai-cli-cheatsheet/aicli-cheatsheet-bridge"
     for relative in (
         Path("etc/opt/chrome/native-messaging-hosts"),
         Path("etc/chromium/native-messaging-hosts"),
         Path("etc/opt/edge/native-messaging-hosts"),
     ):
-        write_json(work / relative / f"{HOST_NAME}.json", manifest)
+        for host_name in HOST_NAMES:
+            write_json(
+                work / relative / f"{host_name}.json",
+                native_manifest(executable, host_name),
+            )
     assets = []
     for package_type in ("deb", "rpm"):
         asset = output / f"ai-cli-cheatsheet-bridge-linux-x64-v{version}.{package_type}"
@@ -127,9 +138,11 @@ def build_windows(binary, output, version, require_signing):
     work.mkdir(parents=True)
     bridge = work / "aicli-cheatsheet-bridge.exe"
     shutil.copy2(binary, bridge)
-    manifest = native_manifest(r"C:\Program Files\AI CLI Cheatsheet\aicli-cheatsheet-bridge.exe")
-    manifest_path = work / f"{HOST_NAME}.json"
-    write_json(manifest_path, manifest)
+    executable = r"C:\Program Files\AI CLI Cheatsheet\aicli-cheatsheet-bridge.exe"
+    legacy_manifest_path = work / f"{LEGACY_HOST_NAME}.json"
+    store_manifest_path = work / f"{STORE_HOST_NAME}.json"
+    write_json(legacy_manifest_path, native_manifest(executable, LEGACY_HOST_NAME))
+    write_json(store_manifest_path, native_manifest(executable, STORE_HOST_NAME))
     upgrade_code = str(uuid.uuid5(uuid.NAMESPACE_DNS, "com.aicli.cheatsheet.bridge"))
     # WiX refuses an auto-generated GUID for a component that mixes files with a
     # registry keypath (WIX0230), so the payload is split: one component per
@@ -137,8 +150,10 @@ def build_windows(binary, output, version, require_signing):
     # explicit GUID derived from a fixed name — a component GUID has to stay
     # byte-identical across releases or an upgrade orphans the old
     # native-messaging registration instead of replacing it.
-    registry_guid = str(uuid.uuid5(uuid.NAMESPACE_DNS, "com.aicli.cheatsheet.bridge.registration"))
-    host_json_value = f"[INSTALLFOLDER]{HOST_NAME}.json"
+    legacy_registry_guid = str(uuid.uuid5(uuid.NAMESPACE_DNS, "com.aicli.cheatsheet.bridge.registration"))
+    store_registry_guid = str(uuid.uuid5(uuid.NAMESPACE_DNS, "com.aicli.cheatsheet.store_bridge.registration"))
+    legacy_json_value = f"[INSTALLFOLDER]{LEGACY_HOST_NAME}.json"
+    store_json_value = f"[INSTALLFOLDER]{STORE_HOST_NAME}.json"
     wxs = work / "bridge.wxs"
     wxs.write_text(f'''<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
   <Package Name="AI CLI Cheatsheet Bridge" Manufacturer="AI CLI Cheatsheet" Version="{version}" UpgradeCode="{upgrade_code}" Scope="perMachine">
@@ -149,19 +164,28 @@ def build_windows(binary, output, version, require_signing):
         <Component Id="BridgeExecutable" Guid="*" Bitness="always64">
           <File Source="{bridge}" KeyPath="yes" />
         </Component>
-        <Component Id="BridgeHostManifest" Guid="*" Bitness="always64">
-          <File Source="{manifest_path}" KeyPath="yes" />
+        <Component Id="LegacyBridgeHostManifest" Guid="*" Bitness="always64">
+          <File Source="{legacy_manifest_path}" KeyPath="yes" />
         </Component>
-        <Component Id="BridgeRegistration" Guid="{registry_guid}" Bitness="always64">
-          <RegistryValue Root="HKLM" Key="Software\\Google\\Chrome\\NativeMessagingHosts\\{HOST_NAME}" Type="string" Value="{host_json_value}" KeyPath="yes" />
-          <RegistryValue Root="HKLM" Key="Software\\Microsoft\\Edge\\NativeMessagingHosts\\{HOST_NAME}" Type="string" Value="{host_json_value}" />
+        <Component Id="StoreBridgeHostManifest" Guid="*" Bitness="always64">
+          <File Source="{store_manifest_path}" KeyPath="yes" />
+        </Component>
+        <Component Id="LegacyBridgeRegistration" Guid="{legacy_registry_guid}" Bitness="always64">
+          <RegistryValue Root="HKLM" Key="Software\\Google\\Chrome\\NativeMessagingHosts\\{LEGACY_HOST_NAME}" Type="string" Value="{legacy_json_value}" KeyPath="yes" />
+          <RegistryValue Root="HKLM" Key="Software\\Microsoft\\Edge\\NativeMessagingHosts\\{LEGACY_HOST_NAME}" Type="string" Value="{legacy_json_value}" />
+        </Component>
+        <Component Id="StoreBridgeRegistration" Guid="{store_registry_guid}" Bitness="always64">
+          <RegistryValue Root="HKLM" Key="Software\\Google\\Chrome\\NativeMessagingHosts\\{STORE_HOST_NAME}" Type="string" Value="{store_json_value}" KeyPath="yes" />
+          <RegistryValue Root="HKLM" Key="Software\\Microsoft\\Edge\\NativeMessagingHosts\\{STORE_HOST_NAME}" Type="string" Value="{store_json_value}" />
         </Component>
       </Directory>
     </StandardDirectory>
     <Feature Id="Main" Title="AI CLI Cheatsheet Bridge" Level="1">
       <ComponentRef Id="BridgeExecutable" />
-      <ComponentRef Id="BridgeHostManifest" />
-      <ComponentRef Id="BridgeRegistration" />
+      <ComponentRef Id="LegacyBridgeHostManifest" />
+      <ComponentRef Id="StoreBridgeHostManifest" />
+      <ComponentRef Id="LegacyBridgeRegistration" />
+      <ComponentRef Id="StoreBridgeRegistration" />
     </Feature>
   </Package>
 </Wix>

@@ -4,7 +4,7 @@
 // packager replaces channel-specific persistence and permission details.
 window.CHEATSHEET_DISTRIBUTION = Object.freeze({
   channel: "source",
-  releaseVersion: "1.8.1",
+  releaseVersion: "1.8.2",
   storeExtensionId: "jdiopjiebnamikpcknmnpahhlokccgjj",
   // "signed" | "unsigned" | "none". An unpacked checkout never points users at
   // a release asset it cannot verify, so it stays "none" and the install dialog

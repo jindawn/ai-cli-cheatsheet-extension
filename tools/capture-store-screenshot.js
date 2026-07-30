@@ -9,6 +9,7 @@ const { chromium } = require("playwright");
 const extensionRoot = path.resolve(process.argv[2] || "dist/store");
 const output = path.resolve(process.argv[3] || "store-assets/search-and-usage-1280x800.png");
 const captureRecommendations = /recommend|local-ai/i.test(path.basename(output));
+const captureBridgeRepair = /bridge-repair/i.test(path.basename(output));
 
 function unpackedExtensionId(root) {
   const digest = crypto.createHash("sha256").update(fs.realpathSync(root)).digest().subarray(0, 16);
@@ -35,7 +36,14 @@ function unpackedExtensionId(root) {
     }));
     await page.reload();
     await page.waitForSelector("#main .empty-welcome");
-    if (captureRecommendations) {
+    if (captureBridgeRepair) {
+      await page.evaluate(async () => {
+        companionState = "registration-conflict";
+        renderCompanionState();
+        await openBridgeDialog();
+      });
+      await page.waitForSelector("#bridgeDialog.show");
+    } else if (captureRecommendations) {
       await page.click("#openManage");
       await page.waitForSelector("#recommendedTools .recommend-card");
     } else {

@@ -3,7 +3,7 @@
   "name": "AI CLI 速查表",
   "short_name": "AI CLI速查",
   "description": "AI CLI、编辑器、Unix/POSIX、Linux 系统等 18 个工具分类的命令、参数和快捷键速查；查询与个性化推荐均在本地完成。",
-  "version": "1.8.1",
+  "version": "1.8.2",
   "background": { "service_worker": "background.js" },
   "permissions": ["nativeMessaging", "storage", "alarms"],
   "action": {

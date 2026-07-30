@@ -7,6 +7,7 @@ the same class of breakage fails locally instead of at release time.
 """
 
 import importlib.util
+import json
 import os
 import pathlib
 import tempfile
@@ -99,8 +100,62 @@ class WindowsInstallerTemplateTests(unittest.TestCase):
             value.get("Key")
             for value in self.root.iter(f"{{{WXS_NS}}}RegistryValue")
         ]
-        self.assertTrue(any("Google\\Chrome" in key for key in values))
-        self.assertTrue(any("Microsoft\\Edge" in key for key in values))
+        for host_name in assets.HOST_NAMES:
+            self.assertTrue(any("Google\\Chrome" in key and host_name in key for key in values))
+            self.assertTrue(any("Microsoft\\Edge" in key and host_name in key for key in values))
+
+
+class InstallerNativeHostTests(unittest.TestCase):
+    def _stub(self, output):
+        binary = output / "aicli-cheatsheet-bridge"
+        binary.write_bytes(b"stub")
+        binary.chmod(0o755)
+        return binary
+
+    def _assert_manifests(self, directory, executable):
+        for host_name in assets.HOST_NAMES:
+            path = directory / f"{host_name}.json"
+            self.assertTrue(path.is_file(), f"missing native host manifest {path}")
+            manifest = json.loads(path.read_text(encoding="utf-8"))
+            self.assertEqual(manifest["name"], host_name)
+            self.assertEqual(manifest["path"], executable)
+            self.assertEqual(
+                manifest["allowed_origins"],
+                [f"chrome-extension://{assets.STORE_EXTENSION_ID}/"],
+            )
+
+    def test_macos_payload_registers_store_and_legacy_hosts(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = pathlib.Path(directory)
+            with mock.patch.object(assets, "run"):
+                assets.build_macos(self._stub(output), output, "1.8.2", "arm64", False)
+            root = output / "macos-arm64-root"
+            executable = "/Library/Application Support/AI CLI Cheatsheet/aicli-cheatsheet-bridge"
+            self._assert_manifests(
+                root / "Library/Google/Chrome/NativeMessagingHosts", executable
+            )
+            self._assert_manifests(
+                root / "Library/Microsoft/Edge/NativeMessagingHosts", executable
+            )
+            uninstall = (
+                root / "Library/Application Support/AI CLI Cheatsheet/uninstall.command"
+            ).read_text(encoding="utf-8")
+            for host_name in assets.HOST_NAMES:
+                self.assertIn(f"{host_name}.json", uninstall)
+
+    def test_linux_payload_registers_store_and_legacy_hosts(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = pathlib.Path(directory)
+            with mock.patch.object(assets, "run"):
+                assets.build_linux(self._stub(output), output, "1.8.2")
+            root = output / "linux-root"
+            executable = "/usr/lib/ai-cli-cheatsheet/aicli-cheatsheet-bridge"
+            for relative in (
+                "etc/opt/chrome/native-messaging-hosts",
+                "etc/chromium/native-messaging-hosts",
+                "etc/opt/edge/native-messaging-hosts",
+            ):
+                self._assert_manifests(root / relative, executable)
 
 
 class WindowsSigningGateTests(unittest.TestCase):

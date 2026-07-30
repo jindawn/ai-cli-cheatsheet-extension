@@ -5,7 +5,9 @@ if (typeof importScripts === 'function') importScripts('dynamic-data.js');
 // background.js — service worker bridge between popup and native messaging host.
 // Keeps the native process alive even when the popup is closed.
 
-const NATIVE_HOST = 'com.aicli.cheatsheet_updater';
+const LEGACY_NATIVE_HOST = 'com.aicli.cheatsheet_updater';
+const STORE_NATIVE_HOST = 'com.aicli.cheatsheet.store_bridge';
+const STORE_EXTENSION_ID = 'jdiopjiebnamikpcknmnpahhlokccgjj';
 const PROTOCOL_VERSION = 5;
 const MIN_COMPATIBLE_PROTOCOL_VERSION = 3;
 const DATA_SCHEMA_VERSION = 2;
@@ -29,6 +31,34 @@ let nativePort = null;
 let taskActive = false;
 let taskSequence = 0;
 let activeTaskId = null;
+
+function nativeHostName() {
+  return chrome.runtime.id === STORE_EXTENSION_ID ? STORE_NATIVE_HOST : LEGACY_NATIVE_HOST;
+}
+
+function classifyNativeError(error) {
+  if (error?.code === 'native_handshake_timeout') return error;
+  const message = String(error?.message || '');
+  let code = 'native_host_unavailable';
+  if (/not found|not registered|host name is not registered/i.test(message)) {
+    code = 'native_host_not_found';
+  } else if (/forbidden|not allowed|access.*denied/i.test(message)) {
+    code = 'native_host_forbidden';
+  } else if (/failed to start|exited|disconnected|broken pipe|communication/i.test(message)) {
+    code = 'native_host_start_failed';
+  }
+  return Object.assign(error instanceof Error ? error : new Error(message || '本机检测组件不可用'), { code });
+}
+
+function nativeErrorMessage(code) {
+  const messages = {
+    native_host_not_found: '未找到本机检测组件',
+    native_host_forbidden: '检测到旧的本机组件注册冲突',
+    native_host_start_failed: '本机检测组件已注册但无法启动',
+    native_handshake_timeout: '本机检测超时',
+  };
+  return messages[code] || '本机检测组件连接失败';
+}
 
 // Safety-net keepalive: an alarm fires every minute while a task is running.
 // An open connectNative Port already prevents SW termination in most Chrome versions,
@@ -105,7 +135,7 @@ function broadcastCompletion(response) {
   chrome.runtime.sendMessage({ action: 'taskComplete', response }).catch(() => {});
 }
 
-function sendNativeOnce(message, { timeoutMs = 0 } = {}) {
+function sendNativeOnce(message, { timeoutMs = 0, hostName = nativeHostName() } = {}) {
   return new Promise((resolve, reject) => {
     let port;
     let settled = false;
@@ -118,16 +148,18 @@ function sendNativeOnce(message, { timeoutMs = 0 } = {}) {
       callback(value);
     };
     try {
-      port = chrome.runtime.connectNative(NATIVE_HOST);
+      port = chrome.runtime.connectNative(hostName);
     } catch (error) {
-      finish(reject, error);
+      finish(reject, classifyNativeError(error));
       return;
     }
     port.onMessage.addListener((response) => {
       finish(resolve, response);
     });
     port.onDisconnect.addListener(() => {
-      finish(reject, new Error(chrome.runtime.lastError?.message || '本机桥接连接已断开'));
+      finish(reject, classifyNativeError(
+        new Error(chrome.runtime.lastError?.message || '本机桥接连接已断开')
+      ));
     });
     if (timeoutMs > 0 && typeof setTimeout === 'function') {
       timeout = setTimeout(() => {
@@ -138,7 +170,7 @@ function sendNativeOnce(message, { timeoutMs = 0 } = {}) {
     try {
       port.postMessage(message);
     } catch (error) {
-      finish(reject, error);
+      finish(reject, classifyNativeError(error));
     }
   });
 }
@@ -180,11 +212,11 @@ function normalizeHandshakeResponse(response, effectiveProtocolVersion = null) {
   return response;
 }
 
-async function negotiateNativeHandshake(refreshCatalog) {
+async function negotiateNativeHandshakeForHost(hostName, refreshCatalog) {
   const requested = PROTOCOL_VERSION;
   const initial = await sendNativeOnce(
     handshakeRequest(requested, refreshCatalog),
-    { timeoutMs: HANDSHAKE_TIMEOUT_MS }
+    { timeoutMs: HANDSHAKE_TIMEOUT_MS, hostName }
   );
   if (initial?.ok) return normalizeHandshakeResponse(initial, requested);
 
@@ -196,11 +228,42 @@ async function negotiateNativeHandshake(refreshCatalog) {
     && initial?.schemaVersion === DATA_SCHEMA_VERSION) {
     const legacy = await sendNativeOnce(
       handshakeRequest(reported, refreshCatalog),
-      { timeoutMs: HANDSHAKE_TIMEOUT_MS }
+      { timeoutMs: HANDSHAKE_TIMEOUT_MS, hostName }
     );
     return normalizeHandshakeResponse(legacy, reported);
   }
   return normalizeHandshakeResponse(initial, requested);
+}
+
+async function negotiateNativeHandshake(refreshCatalog) {
+  const hostName = nativeHostName();
+  try {
+    return await negotiateNativeHandshakeForHost(hostName, refreshCatalog);
+  } catch (error) {
+    const classified = classifyNativeError(error);
+    if (hostName !== STORE_NATIVE_HOST || classified.code !== 'native_host_not_found') {
+      throw classified;
+    }
+
+    // The store channel never executes work through the legacy host. A one-shot
+    // probe is only used to distinguish a clean first install from the stale
+    // per-user registration that can shadow a system-wide package.
+    try {
+      const legacy = await negotiateNativeHandshakeForHost(LEGACY_NATIVE_HOST, false);
+      return {
+        ok: false,
+        code: 'bridge_migration_required',
+        error: '已检测到旧版组件。请安装当前版本以迁移到独立的商店注册。',
+        bridgeVersion: legacy?.bridgeVersion || legacy?.companionVersion,
+        protocolVersion: legacy?.protocolVersion,
+        schemaVersion: legacy?.schemaVersion,
+      };
+    } catch (legacyError) {
+      const legacyClassified = classifyNativeError(legacyError);
+      if (legacyClassified.code === 'native_host_not_found') throw classified;
+      throw legacyClassified;
+    }
+  }
 }
 
 async function importStoreTransfer(response, taskId) {
@@ -268,11 +331,14 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
     }
     negotiateNativeHandshake(msg.refreshCatalog === true)
       .then((response) => sendResponse(response))
-      .catch((error) => sendResponse({
-        ok: false,
-        error: error.code === 'native_handshake_timeout' ? '本机检测超时' : error.message,
-        code: error.code === 'native_handshake_timeout' ? 'native_handshake_timeout' : 'native_host_unavailable',
-      }));
+      .catch((error) => {
+        const classified = classifyNativeError(error);
+        sendResponse({
+          ok: false,
+          error: nativeErrorMessage(classified.code),
+          code: classified.code,
+        });
+      });
     return true;
   }
 
@@ -572,7 +638,7 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
     // Ack immediately so popup can update its UI without waiting for the task
     sendResponse({ ok: true, queued: true });
 
-    const taskPort = chrome.runtime.connectNative(NATIVE_HOST);
+    const taskPort = chrome.runtime.connectNative(nativeHostName());
     nativePort = taskPort;
 
     let responseReceived = false;
@@ -604,10 +670,12 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
       stopKeepalive();
       clearAlarm('taskTimeout');
       if (nativePort === taskPort) nativePort = null;
-      const errMsg = chrome.runtime.lastError?.message
-        ?? '连接本机检测组件失败。请重新检测；若仍失败，请重新安装组件。';
+      const nativeError = classifyNativeError(new Error(
+        chrome.runtime.lastError?.message || '本机桥接连接已断开'
+      ));
+      const errMsg = nativeErrorMessage(nativeError.code);
       const response = { ok: false, error: errMsg, diagnostic: {
-        stage: 'native-host', code: 'native_host_unavailable', reason: errMsg,
+        stage: 'native-host', code: nativeError.code, reason: errMsg,
         completedChecks: [],
         actions: ['重新检测本机 AI 环境', '重新安装本机检测组件'],
       } };

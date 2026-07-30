@@ -13,12 +13,15 @@ const vm = require("vm");
 const root = path.resolve(__dirname, "..");
 const SOURCE = fs.readFileSync(path.join(root, "background.js"), "utf8");
 const PROTOCOL_VERSION = 5;
+const STORE_EXTENSION_ID = "jdiopjiebnamikpcknmnpahhlokccgjj";
+const LEGACY_NATIVE_HOST = "com.aicli.cheatsheet_updater";
+const STORE_NATIVE_HOST = "com.aicli.cheatsheet.store_bridge";
 
 function flushMicrotasks() {
   return new Promise((resolve) => setImmediate(resolve));
 }
 
-function createChromeMock() {
+function createChromeMock(runtimeId = "a".repeat(32)) {
   const state = {
     sentMessages: [],
     sessionSets: [],
@@ -41,7 +44,7 @@ function createChromeMock() {
       },
     },
     runtime: {
-      id: "a".repeat(32),
+      id: runtimeId,
       lastError: null,
       sendMessage(msg) { state.sentMessages.push(msg); return Promise.resolve(); },
       connectNative(name) {
@@ -63,8 +66,8 @@ function createChromeMock() {
   return { chrome, state };
 }
 
-function loadBackground() {
-  const { chrome, state } = createChromeMock();
+function loadBackground(runtimeId) {
+  const { chrome, state } = createChromeMock(runtimeId);
   const timers = [];
   const context = {
     chrome,
@@ -123,12 +126,90 @@ const VALID_TOKEN = "a".repeat(32);
     const { chrome, state } = loadBackground();
     const handshake = dispatch(chrome, { action: "companionHandshake", protocolVersion: PROTOCOL_VERSION, schemaVersion: 2 });
     assert.strictEqual(handshake.async_, true);
+    assert.strictEqual(state.connectNativeCalls[0], LEGACY_NATIVE_HOST);
     assert.deepStrictEqual(JSON.parse(JSON.stringify(state.ports[0].messages[0])), {
       action: "handshake", protocolVersion: PROTOCOL_VERSION, schemaVersion: 2, extensionId: "a".repeat(32), refreshCatalog: false,
     });
     state.ports[0].onMessage.listener({ ok: true, protocolVersion: PROTOCOL_VERSION, schemaVersion: 2 });
     await flushMicrotasks();
     assert.strictEqual(handshake.getResponse().ok, true);
+  }
+  // The published store build uses an isolated host name, so a stale user-level
+  // source registration cannot shadow the packaged bridge.
+  {
+    const { chrome, state } = loadBackground(STORE_EXTENSION_ID);
+    const handshake = dispatch(chrome, {
+      action: "companionHandshake", protocolVersion: PROTOCOL_VERSION, schemaVersion: 2,
+    });
+    assert.strictEqual(state.connectNativeCalls[0], STORE_NATIVE_HOST);
+    state.ports[0].onMessage.listener({
+      ok: true, protocolVersion: PROTOCOL_VERSION, schemaVersion: 2,
+    });
+    await flushMicrotasks();
+    assert.strictEqual(handshake.getResponse().ok, true);
+  }
+  // A missing store host may probe the legacy host only to explain that an
+  // upgrade is required. The legacy host is never selected for store work.
+  {
+    const { chrome, state } = loadBackground(STORE_EXTENSION_ID);
+    const handshake = dispatch(chrome, {
+      action: "companionHandshake", protocolVersion: PROTOCOL_VERSION, schemaVersion: 2,
+    });
+    chrome.runtime.lastError = { message: "Specified native messaging host not found." };
+    state.ports[0].onDisconnect.listener();
+    chrome.runtime.lastError = null;
+    await flushMicrotasks();
+    assert.deepStrictEqual(state.connectNativeCalls, [STORE_NATIVE_HOST, LEGACY_NATIVE_HOST]);
+    state.ports[1].onMessage.listener({
+      ok: true, protocolVersion: PROTOCOL_VERSION, schemaVersion: 2, bridgeVersion: "1.8.1",
+    });
+    await flushMicrotasks();
+    assert.strictEqual(handshake.getResponse().code, "bridge_migration_required");
+    assert.strictEqual(handshake.getResponse().bridgeVersion, "1.8.1");
+  }
+  // A forbidden legacy registration is reported as a conflict instead of as
+  // an absent component.
+  {
+    const { chrome, state } = loadBackground(STORE_EXTENSION_ID);
+    const handshake = dispatch(chrome, {
+      action: "companionHandshake", protocolVersion: PROTOCOL_VERSION, schemaVersion: 2,
+    });
+    chrome.runtime.lastError = { message: "Specified native messaging host not found." };
+    state.ports[0].onDisconnect.listener();
+    chrome.runtime.lastError = null;
+    await flushMicrotasks();
+    chrome.runtime.lastError = { message: "Access to the specified native messaging host is forbidden." };
+    state.ports[1].onDisconnect.listener();
+    chrome.runtime.lastError = null;
+    await flushMicrotasks();
+    assert.strictEqual(handshake.getResponse().code, "native_host_forbidden");
+    assert(/注册冲突/.test(handshake.getResponse().error));
+  }
+  // A clean missing registration and a registered host that exits are distinct
+  // failures, so the popup can offer the right recovery instructions.
+  {
+    const { chrome, state } = loadBackground();
+    const handshake = dispatch(chrome, {
+      action: "companionHandshake", protocolVersion: PROTOCOL_VERSION, schemaVersion: 2,
+    });
+    chrome.runtime.lastError = { message: "Specified native messaging host not found." };
+    state.ports[0].onDisconnect.listener();
+    chrome.runtime.lastError = null;
+    await flushMicrotasks();
+    assert.strictEqual(handshake.getResponse().code, "native_host_not_found");
+    assert(/未找到/.test(handshake.getResponse().error));
+  }
+  {
+    const { chrome, state } = loadBackground();
+    const handshake = dispatch(chrome, {
+      action: "companionHandshake", protocolVersion: PROTOCOL_VERSION, schemaVersion: 2,
+    });
+    chrome.runtime.lastError = { message: "Native host has exited." };
+    state.ports[0].onDisconnect.listener();
+    chrome.runtime.lastError = null;
+    await flushMicrotasks();
+    assert.strictEqual(handshake.getResponse().code, "native_host_start_failed");
+    assert(/无法启动/.test(handshake.getResponse().error));
   }
   // A direct Detect click explicitly permits a one-shot signed catalog refresh.
   {
@@ -539,6 +620,16 @@ const VALID_TOKEN = "a".repeat(32);
     assert.strictEqual(getResponse().ok, true, "valid 32-hex token should be accepted");
     assert.strictEqual(state.connectNativeCalls.length, 1);
   }
+  {
+    const { chrome, state } = loadBackground(STORE_EXTENSION_ID);
+    const { getResponse } = dispatch(chrome, {
+      action: "startTask", mode: "apply_update", token: VALID_TOKEN,
+      confirm_risk: true, channel: "store",
+    });
+    assert.strictEqual(getResponse().ok, true);
+    assert.deepStrictEqual(state.connectNativeCalls, [STORE_NATIVE_HOST],
+      "store maintenance must never execute through the legacy host");
+  }
 
   // 1.7.3 不恢复 AI 再推荐，旧 suggest_tools 协议请求必须被拒绝。
   {
@@ -710,9 +801,11 @@ const VALID_TOKEN = "a".repeat(32);
     chrome.runtime.lastError = { message: "native host disconnected" };
     state.ports[0].onDisconnect.listener();
     assert.strictEqual(
-      state.sentMessages.some((m) => m.action === "taskComplete" && m.response.error === "native host disconnected"),
+      state.sentMessages.some((m) => m.action === "taskComplete"
+        && m.response.error === "本机检测组件已注册但无法启动"
+        && m.response.diagnostic?.code === "native_host_start_failed"),
       true,
-      "disconnect without a prior message should broadcast the lastError reason"
+      "disconnect without a prior message should broadcast a safe classified reason"
     );
     chrome.runtime.lastError = null;
 

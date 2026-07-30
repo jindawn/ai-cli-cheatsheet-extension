@@ -53,7 +53,7 @@ jobs:
             echo "Signed bridge installers and signed checksums are enabled."
           else
             echo "advanced_release=false" >> "$GITHUB_OUTPUT"
-            echo "Signed bridge installers are unavailable for this release; publishing verified extension archives without installer entry points."
+            echo "Advanced signing is unavailable; publishing verified unsigned bridge installers."
           fi
 
   build-and-test:
@@ -231,7 +231,7 @@ jobs:
 
   github-release:
     needs: [build-and-test, release-preflight, build-bridge]
-    if: ${{ always() && needs.build-and-test.result == 'success' && needs.release-preflight.result == 'success' }}
+    if: ${{ always() && needs.build-and-test.result == 'success' && needs.release-preflight.result == 'success' && needs.build-bridge.result == 'success' }}
     runs-on: ubuntu-latest
     outputs:
       installer_state: ${{ steps.installers.outputs.state }}
@@ -343,21 +343,20 @@ jobs:
         env:
           PUBLISHER_ID: ${{ vars.CWS_PUBLISHER_ID }}
           EXTENSION_ID: ${{ vars.CWS_EXTENSION_ID }}
+          CWS_SERVICE_ACCOUNT_JSON: ${{ secrets.CWS_SERVICE_ACCOUNT_JSON }}
           # Gate on whether an installer exists at all, not on whether it is
           # signed: a store build that advertises an unsigned installer still
           # gives users a working way to enable maintenance.
           INSTALLER_STATE: ${{ needs.github-release.outputs.installer_state }}
         run: |
           if [ "$INSTALLER_STATE" = "none" ]; then
-            echo "enabled=false" >> "$GITHUB_OUTPUT"
-            echo "No bridge installer was produced; skipping Chrome Web Store submission."
-          elif [ -n "$PUBLISHER_ID" ] && [ -n "$EXTENSION_ID" ]; then
-            test "$EXTENSION_ID" = "jdiopjiebnamikpcknmnpahhlokccgjj"
-            echo "enabled=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "enabled=false" >> "$GITHUB_OUTPUT"
-            echo "Chrome Web Store IDs are not configured; skipping store submission."
+            echo "No bridge installer was produced; refusing to publish a store build without a working install path." >&2
+            exit 1
           fi
+          test -n "$PUBLISHER_ID"
+          test "$EXTENSION_ID" = "jdiopjiebnamikpcknmnpahhlokccgjj"
+          test -n "$CWS_SERVICE_ACCOUNT_JSON"
+          echo "enabled=true" >> "$GITHUB_OUTPUT"
       - uses: actions/checkout@v4
         if: steps.cws.outputs.enabled == 'true'
       - uses: actions/setup-node@v4
@@ -368,13 +367,16 @@ jobs:
         if: steps.cws.outputs.enabled == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
+          ADVANCED_RELEASE: ${{ needs.release-preflight.outputs.advanced_release }}
         run: |
           mkdir release-assets
           gh release download "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --dir release-assets
           VERSION="${GITHUB_REF_NAME#v}"
-          test -s release-assets/SHA256SUMS.asc
+          if [ "$ADVANCED_RELEASE" = "true" ]; then
+            test -s release-assets/SHA256SUMS.asc
+          fi
           node tools/verify-release-assets.js --directory release-assets --version "$VERSION" --check
-      - name: Upload and submit staged review
+      - name: Upload and submit for automatic full release
         if: steps.cws.outputs.enabled == 'true'
         env:
           CWS_SERVICE_ACCOUNT_JSON: ${{ secrets.CWS_SERVICE_ACCOUNT_JSON }}

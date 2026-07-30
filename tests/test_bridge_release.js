@@ -20,7 +20,7 @@ const providerRegistry = read("native-host/provider_registry.py");
 const legacyProviderAdapters = JSON.parse(read("shared/provider-adapters.json"));
 const v5ProviderAdapters = JSON.parse(read("shared/provider-adapters-v5.json"));
 
-assert(host.includes("PROTOCOL_VERSION = 5") && host.includes('COMPANION_VERSION = "1.8.1"'));
+assert(host.includes("PROTOCOL_VERSION = 5") && host.includes('COMPANION_VERSION = "1.8.2"'));
 assert(host.includes("PROJECT_DIR = os.path.realpath(_project_base_dir())"), "the frozen bridge must load bundled shared resources from _MEIPASS");
 assert(officialInventory.includes("sys._MEIPASS"), "the frozen official-inventory adapter must load bundled snapshots from _MEIPASS");
 assert(bridgeSpec.includes('(str(ROOT / "shared"), "shared")'), "the bridge bundle must include official component fixtures as well as rendered inventories");
@@ -73,6 +73,11 @@ for (const [name, script] of [["install.sh", installSh], ["install.ps1", install
 }
 
 assert(builder.includes('STORE_EXTENSION_ID = "jdiopjiebnamikpcknmnpahhlokccgjj"'));
+assert(builder.includes('STORE_HOST_NAME = "com.aicli.cheatsheet.store_bridge"')
+  && builder.includes('LEGACY_HOST_NAME = "com.aicli.cheatsheet_updater"'),
+  "release installers must register isolated store and legacy native host names");
+assert(read("background.js").includes("chrome.runtime.id === STORE_EXTENSION_ID ? STORE_NATIVE_HOST : LEGACY_NATIVE_HOST"),
+  "the store extension must use the isolated native host while source installs keep the legacy host");
 assert(bridgeSpec.includes("ROOT = Path(SPECPATH).resolve().parent\n"), "PyInstaller must resolve the repository root from native-host/bridge.spec");
 assert(bridgeSpec.includes("console=True"), "the self-contained host must retain Native Messaging stdio on Windows");
 assert(builder.includes('allowed_origins') && !builder.includes('chrome-extension://*/'), "installer manifests must use one exact origin");
@@ -87,6 +92,9 @@ assert(workflow.includes("needs: [build-and-test, release-preflight, build-bridg
 assert(workflow.includes("if: needs.release-preflight.outputs.advanced_release == 'true'"), "bridge installers must be gated on complete signing capability");
 assert(workflow.includes("needs: [github-release, release-preflight]"), "Chrome submission must wait for the GitHub Release and release capability gate");
 assert(workflow.includes('test "$EXTENSION_ID" = "jdiopjiebnamikpcknmnpahhlokccgjj"'), "store submission must match the bridge allowed origin");
+assert(workflow.includes('test -n "$CWS_SERVICE_ACCOUNT_JSON"'), "store submission must fail closed without API credentials");
+assert(workflow.includes('if [ "$ADVANCED_RELEASE" = "true" ]') && workflow.includes("test -s release-assets/SHA256SUMS.asc"),
+  "only advanced releases may require a signed checksum manifest");
 assert(workflow.includes("runner: macos-15") && workflow.includes("runner: macos-15-intel"), "bridge builds need explicit current arm64 and Intel macOS runners");
 assert(workflow.includes("--require-signing") && builder.includes("notarytool"), "signed/notarized installers must stay available when credentials exist");
 assert(workflow.includes("verify-release-assets.js") && workflow.includes("SHA256SUMS.asc"));
@@ -132,13 +140,16 @@ assert(popup.includes("refreshCatalog: true") && popup.includes("companionState 
 // native-host/ rather than against a duplicated list of names.
 assert(bridgeSpec.includes('(str(ROOT / "shared"), "shared")'), "the bridge bundle must include the common AI environment directory");
 assert(workflow.includes("PROVIDER_CATALOG_SIGNING_KEY"), "release builds must inject the Ed25519 catalog key");
-assert(!popup.includes('runCompanionTask("suggest_tools"'), "AI re-recommendations must stay disabled in 1.8.1");
+assert(!popup.includes('runCompanionTask("suggest_tools"'), "AI re-recommendations must stay disabled in 1.8.2");
+assert(read("tools/publish-chrome-store.js").includes('publishType: "DEFAULT_PUBLISH"')
+  && read("tools/publish-chrome-store.js").includes("deployPercentage: 100"),
+  "approved Chrome Web Store releases must publish automatically to 100% of users");
 
 const basicAssets = fs.mkdtempSync(path.join(os.tmpdir(), "aicli-basic-release-"));
 try {
   for (const filename of [
-    "ai-cli-cheatsheet-source-v1.8.1.zip",
-    "ai-cli-cheatsheet-store-v1.8.1.zip",
+    "ai-cli-cheatsheet-source-v1.8.2.zip",
+    "ai-cli-cheatsheet-store-v1.8.2.zip",
   ]) {
     fs.writeFileSync(path.join(basicAssets, filename), `fixture:${filename}`);
   }
@@ -146,7 +157,7 @@ try {
     process.execPath,
     path.join(root, "tools", "verify-release-assets.js"),
     "--directory", basicAssets,
-    "--version", "1.8.1",
+    "--version", "1.8.2",
     "--basic-only",
   ];
   let result = spawnSync(verify[0], verify.slice(1), { encoding: "utf8" });

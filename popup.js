@@ -20,7 +20,7 @@ const MAINTENANCE_ENABLED = Boolean(CAPABILITIES.nativeCompanion)
 const BRIDGE_PROTOCOL_VERSION = 5;
 const MIN_COMPATIBLE_BRIDGE_PROTOCOL_VERSION = 3;
 const BRIDGE_SCHEMA_VERSION = 2;
-const BRIDGE_VERSION = DISTRIBUTION.releaseVersion || chrome.runtime?.getManifest?.().version || "1.8.1";
+const BRIDGE_VERSION = DISTRIBUTION.releaseVersion || chrome.runtime?.getManifest?.().version || "1.8.2";
 const COMPANION_PERMISSIONS = ["nativeMessaging", "alarms"];
 const STORAGE_PERMISSION = ["unlimitedStorage"];
 const ADD_PROVIDER_SENTINEL = "__add_provider__";
@@ -241,6 +241,9 @@ function renderCompanionState() {
     "not-authorized": "尚未授权本机桥接权限，基础查询、收藏和本地推荐不受影响。",
     "not-installed": "未检测到本机检测组件。安装完成后点击“重新检测”。",
     outdated: `本机检测组件版本不兼容，请安装 ${BRIDGE_VERSION}。`,
+    "migration-required": `已检测到旧版组件，请安装 ${BRIDGE_VERSION} 完成商店注册迁移。`,
+    "registration-conflict": "检测到旧的本机组件注册冲突，请安装当前版本修复。",
+    "start-failed": "本机检测组件已注册但无法启动，请重新安装当前版本。",
     error: "检测组件异常，请重新检测。未执行任何模型任务。",
     "detect-timeout": "检测超时，请重新检测。未执行任何模型任务。",
     detecting: "正在检测本机 AI 环境；不会调用模型。",
@@ -248,10 +251,12 @@ function renderCompanionState() {
   };
   const catalogRefreshFailed = companionState === "ready"
     && ["failed", "backoff"].includes(companionHandshake?.catalogRefresh?.status);
-  const isCompanionError = companionState === "error" || companionState === "detect-timeout";
+  const isCompanionError = ["error", "detect-timeout", "registration-conflict", "start-failed"]
+    .includes(companionState);
   const isCompanionWarning = companionState === "not-authorized"
     || companionState === "not-installed"
-    || companionState === "outdated" || catalogRefreshFailed;
+    || companionState === "outdated"
+    || companionState === "migration-required" || catalogRefreshFailed;
   status.className = `meta${isCompanionError ? " err" : isCompanionWarning ? " warn" : ""}`;
   status.setAttribute("role", isCompanionError ? "alert" : "status");
   const optionalUpdateNote = companionState === "ready" && bridgeUpdateAvailable()
@@ -350,12 +355,25 @@ function isOutdatedBridgeResponse(response) {
   const error = String(response?.error || "");
   const reportedProtocol = response?.protocolVersion;
   const reportedSchema = response?.schemaVersion;
-  return response?.code === "bridge_outdated"
+  return ["bridge_outdated", "bridge_migration_required"].includes(response?.code)
     || (Number.isInteger(reportedProtocol) && (reportedProtocol < MIN_COMPATIBLE_BRIDGE_PROTOCOL_VERSION
       || reportedProtocol > BRIDGE_PROTOCOL_VERSION))
     || (Number.isInteger(reportedSchema) && reportedSchema !== BRIDGE_SCHEMA_VERSION)
     || (/handshake/i.test(error) && /(?:未知|unknown)/i.test(error))
     || (/(?:协议|protocol|schema).*(?:不兼容|incompatible|不同)/i.test(error));
+}
+
+function companionStateForBridgeError(code) {
+  const states = {
+    bridge_migration_required: "migration-required",
+    bridge_outdated: "outdated",
+    native_handshake_timeout: "detect-timeout",
+    native_host_unavailable: "not-installed",
+    native_host_not_found: "not-installed",
+    native_host_forbidden: "registration-conflict",
+    native_host_start_failed: "start-failed",
+  };
+  return states[code] || "error";
 }
 
 function effectiveBridgeProtocol(handshake = companionHandshake) {
@@ -400,21 +418,29 @@ function bridgeUpdateAvailable(handshake = companionHandshake) {
 }
 
 function bridgeInstallerRequired() {
-  return companionState === "not-installed" || companionState === "outdated";
+  return ["not-installed", "outdated", "migration-required", "registration-conflict", "start-failed"]
+    .includes(companionState);
 }
 
 // Pure so every state combination can be asserted directly. The install dialog
 // used to serve one single "no installer" variant, which meant a brand-new
 // install was told to "keep using the AI environments you already detected"
 // while it had detected none and had no way to install anything.
-function bridgeDialogPlan({ trust, upgrading, featureUpgrade, bridgeFeature, version, unsignedNotice }) {
+function bridgeDialogPlan({
+  trust, upgrading, repairing, featureUpgrade, bridgeFeature, version, unsignedNotice,
+}) {
   const installerAvailable = trust !== "none";
   const feature = bridgeFeature || "该功能";
-  const title = upgrading ? "升级本机检测组件" : "安装本机检测组件";
+  const title = repairing ? "修复本机检测组件"
+    : upgrading ? "升级本机检测组件" : "安装本机检测组件";
   const redetect = "安装完成后返回此处点击“重新检测本机 AI 环境”。";
   let intro;
-  if (upgrading && !installerAvailable) {
+  if (repairing && !installerAvailable) {
+    intro = "已检测到本机组件注册冲突或启动失败，但当前版本尚未提供修复安装包；基础速查功能不受影响。";
+  } else if (upgrading && !installerAvailable) {
     intro = `${feature}需要新版检测组件。对应版本的安装包尚未发布，因此不会显示失效下载链接；已检测到的 AI 环境与维护功能不受影响。`;
+  } else if (repairing) {
+    intro = `安装 ${version} 会写入独立的商店组件注册，修复旧注册遮挡或组件无法启动的问题。`;
   } else if (featureUpgrade) {
     intro = `${feature}需要较新的本机检测组件；安装完成后将自动继续该工具的安装准备。`;
   } else if (upgrading) {
@@ -429,17 +455,19 @@ function bridgeDialogPlan({ trust, upgrading, featureUpgrade, bridgeFeature, ver
       title,
       intro,
       upgrading,
+      repairing,
       showDownloads: true,
       steps: trust === "unsigned"
         ? [unsignedNotice, "在系统安装界面确认安装。", redetect]
         : ["下载后在系统安装界面确认安装。", redetect],
     };
   }
-  if (upgrading) {
+  if (upgrading || repairing) {
     return {
       title,
       intro,
       upgrading,
+      repairing,
       showDownloads: false,
       fallbackNote: "这个版本还没有可供下载的图形安装包；不会要求复制或执行任何安装命令。",
       steps: ["继续使用已经检测到的 AI 环境与维护功能。", "安装包发布后，这里会显示对应系统的升级按钮。"],
@@ -449,6 +477,7 @@ function bridgeDialogPlan({ trust, upgrading, featureUpgrade, bridgeFeature, ver
     title,
     intro,
     upgrading,
+    repairing,
     showDownloads: false,
     fallbackLinkLabel: "查看安装说明与发布页",
     steps: ["发布页会说明该版本当前可用的安装方式。", redetect],
@@ -471,7 +500,9 @@ async function openBridgeDialog(intent = null) {
   if (!dialog || !actions || !steps || !title || !intro) return;
   const plan = bridgeDialogPlan({
     trust: bridgeInstallerTrust(),
-    upgrading: companionState === "outdated" || intent?.bridgeUpgrade === true,
+    upgrading: ["outdated", "migration-required"].includes(companionState)
+      || intent?.bridgeUpgrade === true,
+    repairing: ["registration-conflict", "start-failed"].includes(companionState),
     featureUpgrade: intent?.bridgeUpgrade === true,
     bridgeFeature: intent?.bridgeFeature,
     version: BRIDGE_VERSION,
@@ -582,6 +613,9 @@ function genericProviderBridgeFailureMessage() {
     "not-authorized": "未获得本机检测权限；授权后重新检测即可，未执行任何模型任务。",
     "not-installed": "未检测到本机检测组件。请安装后重新检测。",
     outdated: `本机检测组件版本不兼容，请升级至 ${BRIDGE_VERSION} 后重新检测。`,
+    "migration-required": `已检测到旧版组件，请安装 ${BRIDGE_VERSION} 完成商店注册迁移。`,
+    "registration-conflict": "检测到旧的本机组件注册冲突，请安装当前版本修复。",
+    "start-failed": "本机检测组件已注册但无法启动，请重新安装当前版本。",
     "detect-timeout": "检测超时，请重新检测。未执行任何模型任务。",
     detecting: "本机环境正在检测中，请稍候再试。",
   };
@@ -1235,9 +1269,12 @@ async function probeCompanion({ requestPermission = false, resumeIntent = false,
     });
     if (!response?.ok) {
       const outdated = isOutdatedBridgeResponse(response);
+      const code = response?.code === "bridge_migration_required"
+        ? "bridge_migration_required"
+        : outdated ? "bridge_outdated" : response?.code;
       throw Object.assign(new Error(outdated
         ? "已检测到不受支持的本机检测组件版本。"
-        : response?.error || "未检测到本机桥接"), { code: outdated ? "bridge_outdated" : response?.code });
+        : response?.error || "未检测到本机桥接"), { code });
     }
     companionHandshake = response;
     const protocolVersion = effectiveBridgeProtocol(response);
@@ -1301,22 +1338,22 @@ async function probeCompanion({ requestPermission = false, resumeIntent = false,
     return true;
   } catch (error) {
     companionHandshake = null;
-    companionState = error.code === "bridge_outdated"
-      ? "outdated"
-      : error.code === "native_handshake_timeout"
-        ? "detect-timeout"
-      : error.code === "native_host_unavailable"
-        ? "not-installed"
-        : "error";
+    companionState = companionStateForBridgeError(error.code);
     renderCompanionState();
     if (dialogStatus) {
       dialogStatus.textContent = companionState === "outdated"
         ? "检测组件协议不兼容，需要升级后再检测。"
-        : companionState === "detect-timeout"
-          ? "检测超时，请重新检测。未执行任何模型任务。"
-          : companionState === "not-installed"
+        : companionState === "migration-required"
+          ? "已检测到旧版组件，请安装当前版本完成商店注册迁移。"
+          : companionState === "detect-timeout"
+            ? "检测超时，请重新检测。未执行任何模型任务。"
+            : companionState === "not-installed"
             ? "未检测到本机检测组件。安装完成后重新检测。"
-            : "检测组件异常，请重新检测。未执行任何模型任务。";
+              : companionState === "registration-conflict"
+                ? "检测到旧的本机组件注册冲突，请安装当前版本修复。"
+                : companionState === "start-failed"
+                  ? "本机检测组件已注册但无法启动，请重新安装当前版本。"
+                  : "检测组件异常，请重新检测。未执行任何模型任务。";
       dialogStatus.className = "status show err";
     }
     return false;

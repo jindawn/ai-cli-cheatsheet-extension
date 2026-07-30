@@ -92,9 +92,14 @@ async function main() {
   const submission = await jsonRequest(`https://chromewebstore.googleapis.com/v2/${itemName}:publish`, token, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ publishType: "STAGED_PUBLISH", blockOnWarnings: true, skipReview: false }),
+    body: JSON.stringify({
+      publishType: "DEFAULT_PUBLISH",
+      deployInfos: [{ deployPercentage: 100 }],
+      blockOnWarnings: true,
+      skipReview: false,
+    }),
   });
-  console.log(`Chrome Web Store v${expectedVersion} submitted for staged review (${submission.state || "state pending"}).`);
+  console.log(`Chrome Web Store v${expectedVersion} submitted for review and automatic full release (${submission.state || "state pending"}).`);
 }
 
 main().catch((error) => {

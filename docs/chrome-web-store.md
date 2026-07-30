@@ -3,7 +3,7 @@
 ## 首次上架
 
 1. 在 Chrome Web Store Developer Dashboard 新建扩展条目。
-2. 先发布并验证 `v1.8.1` 的 macOS、Windows、Linux 桥接资产及 SHA-256，再上传 `ai-cli-cheatsheet-store-v1.8.1.zip`。
+2. 先发布并验证 `v1.8.2` 的 macOS、Windows、Linux 桥接资产及 SHA-256，再上传 `ai-cli-cheatsheet-store-v1.8.2.zip`。
 
    桥接安装包不再要求签名证书齐备：`release.yml` 的 `build-bridge` 总是运行，缺少签名 secret 时产出**未签名**安装包，商店包会随之声明 `bridgeInstallers: "unsigned"` 并在安装对话框里说明用户会遇到什么系统提示。只有桥接构建本身失败才会退回 `none`，那种情况下不要上架——维护功能会没有任何入口。上传前用 `unzip -p <zip> distribution.js | grep bridgeInstallers` 确认状态与预期一致。
 3. 首次提交和发布在开发者后台人工完成。
@@ -33,7 +33,7 @@ AI CLI 速查表是一款本地优先的开发工具查询扩展，帮助开发�
 - 可选使用桥接动态检测的 AI 环境查询并新增工具、检查官方更新；常见 AI CLI 可一键检测，其他工具输入名称后自动检测，找到后经一次风险确认，并由桥接在其自带的固定调用方式中试调用出可用的一种才会接入；已验证适配器仍优先使用，应用前显示差异与风险确认。
 - 查询不需要登录，不读取浏览的网页，不向项目服务器传输搜索或使用记录。
 
-Chrome Web Store 版随扩展更新内置数据。查询、收藏、偏好和个性化推荐全部在浏览器本地完成。维护功能折叠显示，首次使用才引导安装已签名的轻量本机桥接；模型选择与任务执行都由用户确认。
+Chrome Web Store 版随扩展更新内置数据。查询、收藏、偏好和个性化推荐全部在浏览器本地完成。维护功能折叠显示，首次使用才引导安装与当前版本匹配的轻量本机桥接；模型选择与任务执行都由用户确认。
 
 > 文案要求：商品详情应围绕单一用途和实际功能自然表述，不连续罗列产品名称或搜索关键词。
 
@@ -66,4 +66,4 @@ Chrome Web Store 版随扩展更新内置数据。查询、收藏、偏好和个
 - Variable `CWS_PUBLISHER_ID`：Chrome Web Store Publisher ID。
 - Variable `CWS_EXTENSION_ID`：首次创建的扩展条目 ID。
 
-后续 `vX.Y.Z` 标签会自动上传包并以 `STAGED_PUBLISH` 提交审核。审核通过后仍需在开发者后台人工点击发布。
+后续 `vX.Y.Z` 标签会自动上传包并以 `DEFAULT_PUBLISH`、100% 部署比例提交审核，同时保留审核并阻断警告。审核通过后会自动全量发布，无需在开发者后台再次点击发布。发布环境缺少 Publisher ID、正式扩展 ID 或服务账号密钥时，流水线会直接失败，避免绿色跳过造成误判。

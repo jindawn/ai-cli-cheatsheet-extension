@@ -63,6 +63,10 @@ assert(resolveGenericMatch, "generic provider resolution should have a dedicated
 assert(resolveGenericMatch[0].indexOf('beginGenericProviderDetection') < resolveGenericMatch[0].indexOf('await probeCompanion'), "the visible generic detection state must render before the bridge request");
 assert(bridgePopupSource.includes('genericProviderDetectionNonce') && bridgePopupSource.includes('isCurrentGenericProviderDetection'), "closing or retrying detection must not allow stale bridge results to overwrite the active view");
 assert(bridgePopupSource.includes('"detect-timeout": "检测超时，请重新检测。未执行任何模型任务。"'), "handshake timeouts should be concise and safe for the UI");
+assert(bridgePopupSource.includes('"registration-conflict": "检测到旧的本机组件注册冲突，请安装当前版本修复。"'),
+  "a forbidden legacy host must be shown as a registration conflict");
+assert(bridgePopupSource.includes('"start-failed": "本机检测组件已注册但无法启动，请重新安装当前版本。"'),
+  "a registered host that cannot start must not be shown as absent");
 assert(!bridgePopupSource.includes("companionErrorDetail") && bridgePopupSource.includes("检测组件异常，请重新检测。未执行任何模型任务。"), "unexpected bridge failures should use a concise fixed message instead of raw host text");
 assert(bridgePopupSource.includes('status.className = `meta${isCompanionError ? " err" : isCompanionWarning ? " warn" : ""}`') && bridgePopupSource.includes('status.setAttribute("role", isCompanionError ? "alert" : "status")'), "unexpected bridge failures must be announced as red alerts while upgrade states remain warnings");
 // The dropdown and the environment cards read the same handshake status, so
@@ -160,19 +164,45 @@ for (const os of ["mac", "windows", "linux"]) {
 }
 const signedPlan = planContext.plan({ ...planArgs, trust: "signed", upgrading: false });
 assert(signedPlan.showDownloads && !signedPlan.steps.includes(planArgs.unsignedNotice), "a signed installer needs no unsigned warning");
+const repairPlan = planContext.plan({
+  ...planArgs, trust: "signed", upgrading: false, repairing: true,
+});
+assert(repairPlan.title.includes("修复") && repairPlan.intro.includes("独立的商店组件注册"),
+  "registration conflicts must offer the isolated store-host installer as a repair");
 
-const outdatedMatch = bridgePopupSource.match(/function isOutdatedBridgeResponse\(response\) \{[\s\S]*?\n\}\n\nfunction bridgeInstallerRequired/);
+const outdatedMatch = bridgePopupSource.match(/function isOutdatedBridgeResponse\(response\) \{[\s\S]*?\n\}\n\nfunction companionStateForBridgeError/);
 assert(outdatedMatch, "popup should classify incompatible bridge handshakes");
 const outdatedContext = {
   BRIDGE_PROTOCOL_VERSION: 5,
   MIN_COMPATIBLE_BRIDGE_PROTOCOL_VERSION: 3,
   BRIDGE_SCHEMA_VERSION: 2,
 };
-vm.runInNewContext(`${outdatedMatch[0].replace(/\n\nfunction bridgeInstallerRequired$/, "")}\nthis.isOutdated = isOutdatedBridgeResponse;`, outdatedContext);
+vm.runInNewContext(`${outdatedMatch[0].replace(/\n\nfunction companionStateForBridgeError$/, "")}\nthis.isOutdated = isOutdatedBridgeResponse;`, outdatedContext);
 assert.strictEqual(outdatedContext.isOutdated({ protocolVersion: 3, schemaVersion: 2 }), false, "a v3 bridge response must stay eligible for compatibility negotiation");
 assert.strictEqual(outdatedContext.isOutdated({ protocolVersion: 4, schemaVersion: 2 }), false, "a v4 bridge response must stay eligible for compatibility negotiation");
 assert.strictEqual(outdatedContext.isOutdated({ protocolVersion: 2, schemaVersion: 2 }), true, "a bridge below the compatibility floor must require an upgrade");
 assert.strictEqual(outdatedContext.isOutdated({ protocolVersion: 5, schemaVersion: 2 }), false, "the current bridge protocol must remain valid");
+assert.strictEqual(outdatedContext.isOutdated({ code: "bridge_migration_required" }), true,
+  "a reachable legacy bridge must require the store-host migration");
+const errorStateMatch = bridgePopupSource.match(
+  /function companionStateForBridgeError\(code\) \{[\s\S]*?\n\}\n\nfunction effectiveBridgeProtocol/,
+);
+assert(errorStateMatch, "bridge error codes should map to explicit popup states in one place");
+const errorStateContext = {};
+vm.runInNewContext(
+  `${errorStateMatch[0].replace(/\n\nfunction effectiveBridgeProtocol$/, "")}\nthis.stateForError = companionStateForBridgeError;`,
+  errorStateContext,
+);
+for (const [code, expected] of [
+  ["native_host_not_found", "not-installed"],
+  ["native_host_forbidden", "registration-conflict"],
+  ["native_host_start_failed", "start-failed"],
+  ["native_handshake_timeout", "detect-timeout"],
+  ["bridge_outdated", "outdated"],
+  ["bridge_migration_required", "migration-required"],
+]) {
+  assert.strictEqual(errorStateContext.stateForError(code), expected, `${code} must remain distinguishable`);
+}
 assert(bridgePopupSource.includes("bridgeInstallerRequired") && bridgePopupSource.includes("await probeCompanion({ requestPermission: true, refreshCatalog: true })"), "maintenance should detect first and open installation only when needed");
 assert(bridgePopupSource.includes("if (entry.requiresBridgeUpgrade)") && bridgePopupSource.includes("closeCustomProviderDialog();\n    await openBridgeDialog({"), "a known legacy bridge must open the upgrade dialog directly instead of leaving Qwen in a detection form");
 assert(bridgePopupSource.includes("commonProviderId: entry.id") && bridgePopupSource.includes("pendingBridgeCommonProviderId"), "a bridge upgrade should remember the selected common provider and resume its installation preparation after detection");

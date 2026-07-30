@@ -53,6 +53,7 @@ Chrome Web Store 版随扩展更新内置数据。查询、收藏、偏好和个
 - 商店图标：`icons/icon128.png`（128×128）。
 - 必需截图：`store-assets/search-and-usage-1280x800.png`。
 - 个性化推荐截图：`store-assets/recommendations-and-local-ai-1280x800.png`。
+- 本机组件注册修复截图：`store-assets/bridge-repair-v1.8.2-1280x800.png`。
 - 可选小型宣传图：440×280 PNG/JPEG。
 - 可选大型宣传图：1400×560 PNG/JPEG。
 

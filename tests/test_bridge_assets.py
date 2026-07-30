@@ -7,11 +7,13 @@ the same class of breakage fails locally instead of at release time.
 """
 
 import importlib.util
+import os
 import pathlib
 import tempfile
 import unittest
 import uuid
 import xml.etree.ElementTree as ET
+from unittest import mock
 
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -99,6 +101,77 @@ class WindowsInstallerTemplateTests(unittest.TestCase):
         ]
         self.assertTrue(any("Google\\Chrome" in key for key in values))
         self.assertTrue(any("Microsoft\\Edge" in key for key in values))
+
+
+class WindowsSigningGateTests(unittest.TestCase):
+    """The release workflow exports WINDOWS_SIGNING_CERTIFICATE as a literal path.
+
+    When the import step is skipped that path names a file which was never
+    written, so treating a non-empty string as "a certificate exists" makes an
+    unsigned build invoke signtool and fail with WinError 2.
+    """
+
+    def _build(self, env):
+        directory = tempfile.mkdtemp()
+        output = pathlib.Path(directory)
+        binary = output / "aicli-cheatsheet-bridge.exe"
+        binary.write_bytes(b"MZ stub")
+        commands = []
+
+        def fake_run(args):
+            commands.append([str(item) for item in args])
+            if args[0] == "wix":  # pretend the MSI was produced
+                pathlib.Path(args[-1]).write_bytes(b"MSI stub")
+
+        with mock.patch.dict(os.environ, env, clear=False), \
+                mock.patch.object(assets, "run", side_effect=fake_run):
+            assets.build_windows(binary, output, "1.9.9", False)
+        return commands
+
+    def test_does_not_sign_when_the_certificate_path_does_not_exist(self):
+        commands = self._build({
+            "WINDOWS_SIGNING_CERTIFICATE": str(pathlib.Path(tempfile.gettempdir()) / "absent.pfx"),
+            "WINDOWS_SIGNING_PASSWORD": "",
+        })
+        self.assertFalse(
+            any(command[0] == "signtool" for command in commands),
+            "an unsigned build must not invoke signtool",
+        )
+        self.assertTrue(any(command[0] == "wix" for command in commands))
+
+    def test_does_not_sign_when_a_real_certificate_has_no_password(self):
+        with tempfile.NamedTemporaryFile(suffix=".pfx", delete=False) as handle:
+            handle.write(b"pfx stub")
+        commands = self._build({
+            "WINDOWS_SIGNING_CERTIFICATE": handle.name,
+            "WINDOWS_SIGNING_PASSWORD": "",
+        })
+        self.assertFalse(any(command[0] == "signtool" for command in commands))
+
+    def test_signs_when_the_certificate_and_password_are_both_present(self):
+        with tempfile.NamedTemporaryFile(suffix=".pfx", delete=False) as handle:
+            handle.write(b"pfx stub")
+        commands = self._build({
+            "WINDOWS_SIGNING_CERTIFICATE": handle.name,
+            "WINDOWS_SIGNING_PASSWORD": "secret",
+        })
+        signing = [command for command in commands if command[0] == "signtool"]
+        self.assertEqual(len(signing), 1, "a real certificate must still be used")
+        self.assertIn(handle.name, signing[0])
+
+    def test_require_signing_fails_closed_without_a_usable_certificate(self):
+        directory = tempfile.mkdtemp()
+        output = pathlib.Path(directory)
+        binary = output / "aicli-cheatsheet-bridge.exe"
+        binary.write_bytes(b"MZ stub")
+        env = {
+            "WINDOWS_SIGNING_CERTIFICATE": str(pathlib.Path(directory) / "absent.pfx"),
+            "WINDOWS_SIGNING_PASSWORD": "secret",
+        }
+        with mock.patch.dict(os.environ, env, clear=False), \
+                mock.patch.object(assets, "run", side_effect=lambda args: pathlib.Path(args[-1]).write_bytes(b"x")):
+            with self.assertRaises(RuntimeError):
+                assets.build_windows(binary, output, "1.9.9", True)
 
 
 if __name__ == "__main__":

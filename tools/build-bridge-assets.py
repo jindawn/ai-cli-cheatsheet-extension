@@ -170,9 +170,15 @@ def build_windows(binary, output, version, require_signing):
     run(["wix", "build", wxs, "-arch", "x64", "-o", asset])
     certificate = os.environ.get("WINDOWS_SIGNING_CERTIFICATE")
     password = os.environ.get("WINDOWS_SIGNING_PASSWORD")
-    if require_signing and (not certificate or not password):
-        raise RuntimeError("Windows release requires code-signing certificate and password")
-    if certificate:
+    # A path is not evidence of a certificate. The release workflow exports this
+    # variable unconditionally, so when the import step is skipped the variable
+    # still holds a path to a file that was never written. Signing therefore has
+    # to be driven by the file actually existing together with its password —
+    # otherwise an unsigned build invokes signtool and dies with WinError 2.
+    can_sign = bool(certificate) and bool(password) and Path(certificate).is_file()
+    if require_signing and not can_sign:
+        raise RuntimeError("Windows release requires an existing code-signing certificate and password")
+    if can_sign:
         run([
             "signtool", "sign", "/fd", "SHA256", "/tr", "http://timestamp.digicert.com",
             "/td", "SHA256", "/f", certificate, "/p", password, asset,

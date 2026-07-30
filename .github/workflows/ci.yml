@@ -72,3 +72,39 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Run native host tests
         run: python -m unittest discover -s tests -v
+
+  # The Windows installer template can only be validated by WiX itself, and it
+  # used to build exclusively on tag push. Two defects shipped that way: an
+  # invalid auto-GUID component (WIX0230) and an unsigned build invoking
+  # signtool with a certificate path that was never written. Building the MSI
+  # from a stub payload takes about a minute and catches both on the PR.
+  windows-installer:
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install WiX
+        shell: pwsh
+        run: dotnet tool install --global wix --version 5.0.2
+      - name: Build the MSI from a stub payload
+        shell: pwsh
+        run: |
+          python - <<'PY'
+          import importlib.util, pathlib
+          spec = importlib.util.spec_from_file_location("bba", "tools/build-bridge-assets.py")
+          assets = importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(assets)
+          out = pathlib.Path("dist/ci-installer")
+          out.mkdir(parents=True, exist_ok=True)
+          stub = out / "aicli-cheatsheet-bridge.exe"
+          stub.write_bytes(b"MZ stub payload")
+          # require_signing=False: this asserts the unsigned path works, which is
+          # the path every release without signing credentials actually takes.
+          produced = assets.build_windows(stub, out, "0.0.0", False)
+          for asset in produced:
+              size = asset.stat().st_size
+              print(f"built {asset.name} ({size} bytes)")
+              assert size > 0, f"{asset.name} is empty"
+          PY

@@ -201,7 +201,10 @@ jobs:
           APPLE_ID: ${{ secrets.APPLE_ID }}
           APPLE_APP_PASSWORD: ${{ secrets.APPLE_APP_PASSWORD }}
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
-          WINDOWS_SIGNING_CERTIFICATE: ${{ runner.temp }}\bridge-signing.pfx
+          # Only name a certificate when one was actually imported. This value is
+          # a literal path, so exporting it unconditionally made an unsigned
+          # build try to sign with a file that does not exist.
+          WINDOWS_SIGNING_CERTIFICATE: ${{ needs.release-preflight.outputs.advanced_release == 'true' && format('{0}\bridge-signing.pfx', runner.temp) || '' }}
           WINDOWS_SIGNING_PASSWORD: ${{ secrets.WINDOWS_SIGNING_PASSWORD }}
         run: |
           VERSION="${GITHUB_REF_NAME#v}"

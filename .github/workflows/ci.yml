@@ -72,3 +72,21 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Run native host tests
         run: python -m unittest discover -s tests -v
+
+  # The Windows installer template can only be validated by WiX itself, and it
+  # used to build exclusively on tag push. Two defects shipped that way: an
+  # invalid auto-GUID component (WIX0230) and an unsigned build invoking
+  # signtool with a certificate path that was never written. Building the MSI
+  # from a stub payload takes about a minute and catches both on the PR.
+  windows-installer:
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install WiX
+        shell: pwsh
+        run: dotnet tool install --global wix --version 5.0.2
+      - name: Build the MSI from a stub payload
+        run: python tools/smoke-bridge-installer.py --platform windows --output dist/ci-installer

@@ -89,22 +89,4 @@ jobs:
         shell: pwsh
         run: dotnet tool install --global wix --version 5.0.2
       - name: Build the MSI from a stub payload
-        shell: pwsh
-        run: |
-          python - <<'PY'
-          import importlib.util, pathlib
-          spec = importlib.util.spec_from_file_location("bba", "tools/build-bridge-assets.py")
-          assets = importlib.util.module_from_spec(spec)
-          spec.loader.exec_module(assets)
-          out = pathlib.Path("dist/ci-installer")
-          out.mkdir(parents=True, exist_ok=True)
-          stub = out / "aicli-cheatsheet-bridge.exe"
-          stub.write_bytes(b"MZ stub payload")
-          # require_signing=False: this asserts the unsigned path works, which is
-          # the path every release without signing credentials actually takes.
-          produced = assets.build_windows(stub, out, "0.0.0", False)
-          for asset in produced:
-              size = asset.stat().st_size
-              print(f"built {asset.name} ({size} bytes)")
-              assert size > 0, f"{asset.name} is empty"
-          PY
+        run: python tools/smoke-bridge-installer.py --platform windows --output dist/ci-installer

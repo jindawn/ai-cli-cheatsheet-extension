@@ -19,6 +19,7 @@ const installPs1 = read("native-host/install.ps1");
 const providerRegistry = read("native-host/provider_registry.py");
 const legacyProviderAdapters = JSON.parse(read("shared/provider-adapters.json"));
 const v5ProviderAdapters = JSON.parse(read("shared/provider-adapters-v5.json"));
+const { resolveChromeStoreConfig } = require("../tools/check-chrome-store-config");
 
 assert(host.includes("PROTOCOL_VERSION = 5") && host.includes('COMPANION_VERSION = "1.8.2"'));
 assert(host.includes("PROJECT_DIR = os.path.realpath(_project_base_dir())"), "the frozen bridge must load bundled shared resources from _MEIPASS");
@@ -91,8 +92,29 @@ assert(workflow.includes("release-preflight:"), "release must explicitly negotia
 assert(workflow.includes("needs: [build-and-test, release-preflight, build-bridge]"), "GitHub Release must wait for bridge builds when signed installer assets are available");
 assert(workflow.includes("if: needs.release-preflight.outputs.advanced_release == 'true'"), "bridge installers must be gated on complete signing capability");
 assert(workflow.includes("needs: [github-release, release-preflight]"), "Chrome submission must wait for the GitHub Release and release capability gate");
-assert(workflow.includes('test "$EXTENSION_ID" = "jdiopjiebnamikpcknmnpahhlokccgjj"'), "store submission must match the bridge allowed origin");
-assert(workflow.includes('test -n "$CWS_SERVICE_ACCOUNT_JSON"'), "store submission must fail closed without API credentials");
+assert(workflow.includes("CWS_MANUAL_UPLOAD: ${{ vars.CWS_MANUAL_UPLOAD }}"), "the release must expose an explicit manual-upload mode");
+assert(workflow.includes("node tools/check-chrome-store-config.js"), "store release configuration must use the tested fail-closed gate");
+assert.deepStrictEqual(resolveChromeStoreConfig({
+  INSTALLER_STATE: "unsigned",
+  CWS_MANUAL_UPLOAD: "true",
+}), { enabled: false, mode: "manual" }, "manual upload must skip the store API after installers are verified");
+assert.throws(() => resolveChromeStoreConfig({
+  INSTALLER_STATE: "unsigned",
+  CWS_MANUAL_UPLOAD: "false",
+  CWS_PUBLISHER_ID: "publisher",
+  CWS_EXTENSION_ID: "jdiopjiebnamikpcknmnpahhlokccgjj",
+}), /CWS_SERVICE_ACCOUNT_JSON/, "automatic publishing must fail closed without API credentials");
+assert.deepStrictEqual(resolveChromeStoreConfig({
+  INSTALLER_STATE: "signed",
+  CWS_MANUAL_UPLOAD: "false",
+  CWS_PUBLISHER_ID: "publisher",
+  CWS_EXTENSION_ID: "jdiopjiebnamikpcknmnpahhlokccgjj",
+  CWS_SERVICE_ACCOUNT_JSON: "{}",
+}), { enabled: true, mode: "automatic" }, "complete automatic publishing configuration must stay enabled");
+assert.throws(() => resolveChromeStoreConfig({
+  INSTALLER_STATE: "none",
+  CWS_MANUAL_UPLOAD: "true",
+}), /verified bridge installer/, "manual upload must not hide a missing installer set");
 assert(workflow.includes('if [ "$ADVANCED_RELEASE" = "true" ]') && workflow.includes("test -s release-assets/SHA256SUMS.asc"),
   "only advanced releases may require a signed checksum manifest");
 assert(workflow.includes("runner: macos-15") && workflow.includes("runner: macos-15-intel"), "bridge builds need explicit current arm64 and Intel macOS runners");

@@ -13,6 +13,8 @@ const officialInventory = read("native-host/official_inventory.py");
 const builder = read("tools/build-bridge-assets.py");
 const bridgeSpec = read("native-host/bridge.spec");
 const workflow = read(".github/workflows/release.yml");
+const repairWorkflow = read(".github/workflows/repair-macos-release.yml");
+const ciWorkflow = read(".github/workflows/ci.yml");
 const popup = read("popup.js");
 const installSh = read("native-host/install.sh");
 const installPs1 = read("native-host/install.ps1");
@@ -81,9 +83,20 @@ assert(read("background.js").includes("chrome.runtime.id === STORE_EXTENSION_ID 
   "the store extension must use the isolated native host while source installs keep the legacy host");
 assert(bridgeSpec.includes("ROOT = Path(SPECPATH).resolve().parent\n"), "PyInstaller must resolve the repository root from native-host/bridge.spec");
 assert(bridgeSpec.includes("console=True"), "the self-contained host must retain Native Messaging stdio on Windows");
+assert(
+  bridgeSpec.includes('sys.platform == "darwin"')
+    && bridgeSpec.includes("exclude_binaries=True")
+    && bridgeSpec.includes("COLLECT("),
+  "macOS must use an onedir payload so Python.framework is sealed before installation",
+);
 assert(builder.includes('allowed_origins') && !builder.includes('chrome-extension://*/'), "installer manifests must use one exact origin");
 assert(builder.includes('env["COPYFILE_DISABLE"] = "1"'), "macOS packages must not carry AppleDouble sidecars");
 assert(builder.includes('run(["xattr", "-cr", work])'), "macOS package roots must have resource-fork metadata cleared before signing");
+assert(
+  builder.includes("shutil.copytree(binary, install_dir, dirs_exist_ok=True, symlinks=True)")
+    && builder.includes("sign_macos_payload(install_dir, bridge, app_identity or"),
+  "macOS packaging must preserve the onedir runtime and seal it even without a Developer ID",
+);
 assert(builder.includes('exec sudo \\"$0\\" \\"$@\\"'), "the macOS uninstall entry must elevate before removing system files");
 for (const suffix of ["macos-{arch}-v{version}.pkg", "windows-x64-v{version}.msi", "linux-x64-v{version}.{package_type}"]) {
   assert(builder.includes(suffix), `missing versioned installer pattern: ${suffix}`);
@@ -120,6 +133,16 @@ assert(workflow.includes('if [ "$ADVANCED_RELEASE" = "true" ]') && workflow.incl
 assert(workflow.includes("runner: macos-15") && workflow.includes("runner: macos-15-intel"), "bridge builds need explicit current arm64 and Intel macOS runners");
 assert(workflow.includes("--require-signing") && builder.includes("notarytool"), "signed/notarized installers must stay available when credentials exist");
 assert(workflow.includes("verify-release-assets.js") && workflow.includes("SHA256SUMS.asc"));
+assert(
+  workflow.includes("pyinstaller==6.21.0")
+    && workflow.includes("verify-macos-bridge-pkg.py"),
+  "release builds must pin and execute the real packaged macOS bridge handshake",
+);
+assert(
+  ciWorkflow.includes("macos-bridge-installer:")
+    && ciWorkflow.includes("verify-macos-bridge-pkg.py"),
+  "PR CI must exercise the directory-based macOS package",
+);
 assert(workflow.includes("--bridge-only") && workflow.includes('--bridge-installers "$INSTALLER_STATE"'), "release packages may expose installers only after every bridge asset is present");
 assert(!workflow.includes("--bridge-installers-ready"), "the boolean installer flag is replaced by the signed/unsigned/none state");
 assert(workflow.includes("--basic-only"), "the baseline extension release must remain publishable without any bridge installers");
@@ -166,6 +189,26 @@ assert(!popup.includes('runCompanionTask("suggest_tools"'), "AI re-recommendatio
 assert(read("tools/publish-chrome-store.js").includes('publishType: "DEFAULT_PUBLISH"')
   && read("tools/publish-chrome-store.js").includes("deployPercentage: 100"),
   "approved Chrome Web Store releases must publish automatically to 100% of users");
+
+assert(
+  repairWorkflow.includes("workflow_dispatch:")
+    && repairWorkflow.includes("replace-${RELEASE_TAG}-macos-assets")
+    && repairWorkflow.includes("--json isImmutable")
+    && repairWorkflow.includes("SHA256SUMS.asc"),
+  "the in-place macOS repair must require explicit confirmation and reject immutable or signed releases",
+);
+assert(
+  repairWorkflow.includes("ai-cli-cheatsheet-bridge-macos-arm64-v${VERSION}.pkg")
+    && repairWorkflow.includes("ai-cli-cheatsheet-bridge-macos-x64-v${VERSION}.pkg")
+    && repairWorkflow.includes("release-assets/SHA256SUMS")
+    && repairWorkflow.includes("--clobber"),
+  "the repair workflow must replace only both macOS packages and their checksum manifest",
+);
+assert(
+  !repairWorkflow.includes("publish-chrome-store")
+    && !repairWorkflow.includes("ai-cli-cheatsheet-store-v${VERSION}.zip"),
+  "repairing release installers must not upload or rebuild the Chrome Web Store package",
+);
 
 const basicAssets = fs.mkdtempSync(path.join(os.tmpdir(), "aicli-basic-release-"));
 try {

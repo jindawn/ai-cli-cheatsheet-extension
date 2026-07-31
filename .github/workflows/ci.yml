@@ -90,3 +90,29 @@ jobs:
         run: dotnet tool install --global wix --version 5.0.2
       - name: Build the MSI from a stub payload
         run: python tools/smoke-bridge-installer.py --platform windows --output dist/ci-installer
+
+  macos-bridge-installer:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build the directory-based bridge
+        run: |
+          python -m pip install pyinstaller==6.21.0
+          python -m PyInstaller native-host/bridge.spec \
+            --distpath dist/bridge-bin \
+            --workpath dist/bridge-work \
+            --noconfirm
+      - name: Package and verify the arm64 bridge
+        run: |
+          python tools/build-bridge-assets.py \
+            --platform macos \
+            --arch arm64 \
+            --binary dist/bridge-bin/aicli-cheatsheet-bridge \
+            --output dist/bridge-assets \
+            --version 1.8.2
+          python tools/verify-macos-bridge-pkg.py \
+            --package dist/bridge-assets/ai-cli-cheatsheet-bridge-macos-arm64-v1.8.2.pkg \
+            --version 1.8.2

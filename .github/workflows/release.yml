@@ -158,7 +158,7 @@ jobs:
           if [ -n "$PROVIDER_CATALOG_SIGNING_KEY" ]; then
             python tools/provider-catalog.py write-public-key --output shared/provider-catalog-public-key.json
           fi
-          python -m pip install pyinstaller
+          python -m pip install pyinstaller==6.21.0
           python -m PyInstaller native-host/bridge.spec --distpath dist/bridge-bin --workpath dist/bridge-work --noconfirm
       - name: Install Linux packaging tools
         if: matrix.platform == 'linux'
@@ -223,6 +223,11 @@ jobs:
             --output dist/bridge-assets \
             --version "$VERSION" \
             "${EXTRA[@]}"
+          if [ "${{ matrix.platform }}" = "macos" ]; then
+            python tools/verify-macos-bridge-pkg.py \
+              --package "dist/bridge-assets/ai-cli-cheatsheet-bridge-macos-${{ matrix.arch }}-v${VERSION}.pkg" \
+              --version "$VERSION"
+          fi
       - uses: actions/upload-artifact@v4
         with:
           name: bridge-${{ matrix.platform }}-${{ matrix.arch }}

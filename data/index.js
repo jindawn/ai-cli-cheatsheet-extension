@@ -169,7 +169,7 @@ window.CHEATSHEET_TOOL_CATALOG = [
     "updatePolicy": "manual-only",
     "builtIn": false,
     "order": 76,
-    "contentHash": "sha256:ff15d25581b4ac11edbf772fda3daab4ca057682e99cdd0570c4b64b6608d088"
+    "contentHash": "sha256:1cfb4c8129669aa629ff93374aa475a3547eb7f89b2ddd7f61d69ec1bf5e8004"
   },
   {
     "id": "obsidian",
@@ -225,7 +225,7 @@ window.CHEATSHEET_TOOL_CATALOG = [
     "updatePolicy": "manual-only",
     "builtIn": false,
     "order": 77,
-    "contentHash": "sha256:0338702ac7b3192e8fd4358ff33d33a271a4a5ea957da34bd81f54ea2a7f23eb"
+    "contentHash": "sha256:2395cb61361de00d2e2010295bf662890e2a1a1ba22e95edbac44c0a4694577b"
   },
   {
     "id": "typora",
@@ -252,7 +252,7 @@ window.CHEATSHEET_TOOL_CATALOG = [
     "updatePolicy": "manual-only",
     "builtIn": false,
     "order": 75,
-    "contentHash": "sha256:74a8e5cb621f8293b887bac938b947d2a647f3c6d6020bb3f59da660a556b789"
+    "contentHash": "sha256:a2518c80fefee24dc12b58b9c7ddf46e16fc12635291ed9613c1a95a7ece8549"
   },
   {
     "id": "vs-code",

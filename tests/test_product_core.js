@@ -43,6 +43,27 @@ assert.strictEqual(
   "Replace should not be a global synonym for transform"
 );
 assert(core.scoreItem(sedItem, "old") > 0, "Example content should be searchable");
+const scenarioItem = {
+  cmd: "journalctl",
+  zh: "读取系统日志",
+  en: "Query systemd journal",
+  examples: [{
+    value: "journalctl -u api.service",
+    description: "查看 API 服务日志",
+    scenario: "部署后接口持续返回 502",
+    goal: "定位服务启动失败",
+    expected: "看到最近的错误堆栈",
+  }],
+};
+assert(core.scoreItem(scenarioItem, "接口") > 0, "Editorial scenario fields should be searchable");
+assert(core.scoreItem(scenarioItem, "启动失败") > 0, "Editorial goals should be searchable");
+assert(core.scoreItem(scenarioItem, "错误堆栈") > 0, "Editorial expected results should be searchable");
+const curationIndex = core.buildSearchIndex({ cmd: "find", zh: "查找文件" }, {
+  groupLabel: "项目与文件",
+  searchTerms: ["项目文件", "仓库源码"],
+});
+assert(core.scoreItem({ cmd: "find", zh: "查找文件" }, "项目文件", { searchIndex: curationIndex }) > 0,
+  "Developer group search terms should be indexed");
 assert(core.scoreItem(sedItem, "替换") > core.scoreItem({ ...sedItem, keywords: [], examples: [] }, "替换"), "Task keywords/examples should strengthen intent matches");
 assert(core.scoreItem({ cmd: "git revert", zh: "还原提交", en: "Revert commits" }, "回滚") > 0, "Rollback intent should expand to revert wording");
 assert(core.scoreItem({ cmd: "--yolo", zh: "绕过权限检查", en: "Bypass permissions" }, "忽略权限") > 0, "Permission bypass intent should be searchable");
@@ -161,6 +182,29 @@ const ranked = core.rankItems([
 ], "clear", { favourites: new Set(), recents: [] });
 assert.strictEqual(ranked[0].itemId, "1");
 assert.strictEqual(ranked[0].matchReason.field, "command");
+const exactBeforeScenario = core.rankItems([
+  {
+    toolId: "unix-cli",
+    itemId: "unix-curl",
+    item: { cmd: "curl", zh: "传输 URL", examples: [{ value: "curl URL", scenario: "调试 API 接口" }] },
+    displayCmd: "curl",
+    searchIndex: core.buildSearchIndex({ cmd: "curl", zh: "传输 URL" }),
+  },
+  {
+    toolId: "linux",
+    itemId: "linux-ip",
+    item: { cmd: "ip", zh: "网络配置", examples: [{ value: "ip addr", scenario: "curl 接口排障" }] },
+    displayCmd: "ip",
+    searchIndex: core.buildSearchIndex({ cmd: "ip", zh: "网络配置", examples: [{ value: "ip addr", scenario: "curl 接口排障" }] }),
+  },
+], "curl", { platform: "linux" });
+assert.strictEqual(exactBeforeScenario[0].itemId, "unix-curl", "Exact commands must outrank scenario-text matches");
+const linuxImplementationFirst = core.rankItems([
+  { toolId: "unix-cli", itemId: "unix-ps", item: { cmd: "ps", zh: "进程状态" }, displayCmd: "ps" },
+  { toolId: "linux", itemId: "linux-ps", item: { cmd: "ps", zh: "进程状态" }, displayCmd: "ps" },
+], "ps", { platform: "linux" });
+assert.strictEqual(linuxImplementationFirst[0].toolId, "linux",
+  "Linux implementation should win exact same-command ties on Linux");
 
 // 使用频率权重：同等匹配下复制次数越多得分越高，单次使用不加成（改动 5）
 const freqBase = { cat: "x", cmd: "deploy", en: "Deploy", zh: "部署" };

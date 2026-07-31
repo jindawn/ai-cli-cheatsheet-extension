@@ -13,6 +13,7 @@ import argparse
 from concurrent.futures import ThreadPoolExecutor
 import importlib.util
 import json
+import os
 from pathlib import Path
 import re
 import shutil
@@ -124,8 +125,15 @@ def ensure_posix_pages(cache: Path, contents: Path) -> None:
 
 def ensure_extracted(cache: Path, component_id: str, archive: Path) -> None:
     expected_root = REBUILDER.SOURCE_SPECS[component_id].get("root")
-    if not expected_root or (cache / expected_root).exists():
+    if not expected_root:
         return
+    extracted_root = cache / expected_root
+    if extracted_root.exists() and any(path.is_file() for path in extracted_root.rglob("*")):
+        return
+    # A cancelled older verification may leave only the destination directory.
+    # Treat that empty shell as incomplete instead of silently skipping extraction.
+    if extracted_root.exists():
+        shutil.rmtree(extracted_root)
     with tempfile.TemporaryDirectory(dir=cache, prefix="extract-") as temporary:
         stage = Path(temporary)
         # Extraction happens only after the archive matches its committed digest.
@@ -140,6 +148,19 @@ def ensure_extracted(cache: Path, component_id: str, archive: Path) -> None:
                 if member.isdir():
                     destination.mkdir(parents=True, exist_ok=True)
                     continue
+                if member.issym():
+                    if Path(member.linkname).is_absolute():
+                        raise RuntimeError(f"{component_id} archive contains an absolute symlink")
+                    link_target = (destination.parent / member.linkname).resolve()
+                    try:
+                        link_target.relative_to(stage_root)
+                    except ValueError as exc:
+                        raise RuntimeError(
+                            f"{component_id} archive symlink escapes extraction root"
+                        ) from exc
+                    destination.parent.mkdir(parents=True, exist_ok=True)
+                    os.symlink(member.linkname, destination)
+                    continue
                 if not member.isreg():
                     raise RuntimeError(f"{component_id} archive contains an unsupported special entry")
                 source = package.extractfile(member)
@@ -151,7 +172,7 @@ def ensure_extracted(cache: Path, component_id: str, archive: Path) -> None:
         roots = [path for path in stage.iterdir() if path.is_dir()]
         if len(roots) != 1:
             raise RuntimeError(f"{component_id} archive did not contain one source root")
-        shutil.move(str(roots[0]), str(cache / expected_root))
+        shutil.move(str(roots[0]), str(extracted_root))
 
 
 def verify(cache: Path) -> None:

@@ -3,7 +3,7 @@
 ## 首次上架
 
 1. 在 Chrome Web Store Developer Dashboard 新建扩展条目。
-2. 先发布并验证 `v1.8.2` 的 macOS、Windows、Linux 桥接资产及 SHA-256，再上传 `ai-cli-cheatsheet-store-v1.8.2.zip`。
+2. 先确认 `v1.8.2` 的 macOS、Windows、Linux 桥接资产及 SHA-256 仍公开可用，再上传 `ai-cli-cheatsheet-store-v1.8.3.zip`。扩展包的 `releaseVersion` 为 `1.8.3`，`bridgeReleaseVersion` 保持 `1.8.2`，安装按钮不会请求不存在的 v1.8.3 Bridge。
 
    桥接安装包不再要求签名证书齐备：`release.yml` 的 `build-bridge` 总是运行，缺少签名 secret 时产出**未签名**安装包，商店包会随之声明 `bridgeInstallers: "unsigned"` 并在安装对话框里说明用户会遇到什么系统提示。只有桥接构建本身失败才会退回 `none`，那种情况下不要上架——维护功能会没有任何入口。上传前用 `unzip -p <zip> distribution.js | grep bridgeInstallers` 确认状态与预期一致。
 3. 首次提交和发布在开发者后台人工完成。

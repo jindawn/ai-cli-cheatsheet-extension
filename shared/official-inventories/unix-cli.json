@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "toolId": "unix-cli",
   "scope": "all-command-entrypoints",
-  "checkedAt": "2026-07-23",
+  "checkedAt": "2026-07-31",
   "sourceIds": [
     "posix-shell-utilities",
     "gnu-manuals",

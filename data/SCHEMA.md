@@ -170,6 +170,19 @@ meta：
 
 ## 校验契约（生成端与仓库端同样严格）
 
+### 开发者命令精选视图
+
+`shared/developer-command-curation.json` 是 `unix-cli` 与 `linux` 官方全集之上的展示和场景层，不是第三套命令清单。每个工具对象必须包含：
+
+- `inventoryHash`：精确绑定当前 `shared/official-inventories/<tool-id>.json`；官方入口变化后必须先重新审阅精选。
+- `presentation`：管理页、首次设置页和结果来源标签使用的 `name`、`subtitle`、`platformLabel`、`implementationLabel`。
+- `featuredItemIds`：按默认展示顺序引用稳定条目 ID；不能填写命令文本或参数变体。
+- `itemSearchTerms`：可选的条目级开发意图词，用于在同组命令中精确排序；键必须是精选稳定 ID。
+- `groups[]`：六类开发场景及 `searchTerms`；每个精选 ID 只能属于一个主分组，所有分组的并集必须等于 `featuredItemIds`。
+- `examplesByItemId`：每个精选入口 1–3 个编辑案例；额外安全入口可以提供案例但不会自动变为精选。
+
+构建器把案例物化到 `data/*.js`，并同时生成场景审校快照；运行时 sidecar 只负责展示顺序、场景筛选和搜索词。无查询时 UI 显示精选，有查询时仍检索完整官方全集。任何 sidecar 引用越界、重复分组、清单哈希漂移或案例未物化都会阻止校验。
+
 - Native Host 和仓库 CI 都要求每条目具备合法的 `keywords`（3..8）、`examples`（1..3）和第一方 `groundingRefs`。缺失、降级或审校失败会终止新增/更新，不再只产生质量警告。
 - 每个工具必须具有 schema v2 官方清单、确定性适配器闭合证明和匹配当前内容哈希的场景审校快照。完整规则以根目录 `OFFICIAL_DATA_POLICY.md` 为准。
 - 组件全集工具还必须提交 `shared/official-component-fixtures/<id>.json`。夹具逐组件记录固定版本、下载地址、归档 SHA-256、解析器、公开入口及有理由的排除项；`tools/verify-official-command-sources.py` 会重新下载并复跑解析器，不能从渲染后的清单反向生成“证明”。

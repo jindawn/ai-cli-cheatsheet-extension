@@ -14,13 +14,16 @@ import datetime as dt
 import hashlib
 import html
 import json
+import os
 from pathlib import Path
 import re
 import sys
+import tempfile
 
 
 ROOT = Path(__file__).resolve().parents[1]
 TODAY = dt.date.today().isoformat()
+CURATION_PATH = ROOT / "shared" / "developer-command-curation.json"
 
 SOURCE_SPECS = {
     "posix-utilities": {
@@ -672,13 +675,63 @@ def curated_canonical_examples(entry: dict):
     return None
 
 
+def load_developer_curation(path: Path = CURATION_PATH) -> dict:
+    curation = json.loads(path.read_text())
+    if curation.get("schemaVersion") != 1 or not isinstance(curation.get("tools"), dict):
+        raise RuntimeError("developer command curation must use schemaVersion 1")
+    return curation
+
+
+def materialize_curated_examples(tool_id: str, item_id: str, entry: dict, curation: dict):
+    tool_curation = curation["tools"].get(tool_id)
+    if not tool_curation:
+        return None
+    templates = tool_curation.get("examplesByItemId", {}).get(item_id)
+    if templates is None:
+        return None
+    examples = []
+    for template in templates:
+        source_id = template.get("sourceId", entry["sourceId"])
+        locator = template.get("locator", entry["url"])
+        materialized = {
+            key: value for key, value in template.items()
+            if key not in {"sourceId", "locator"}
+        }
+        example = {
+            **materialized,
+            "copyable": template.get("copyable", True),
+            "sourceType": "manual",
+            "sourceIds": [source_id],
+            "authorship": "editorial",
+            "evidenceTier": "first-party",
+            "adaptation": "adapted",
+            "groundingRefs": [{
+                "sourceId": source_id,
+                "locator": locator,
+                "claims": ["value", "behavior", "expected"],
+            }],
+            "platforms": template.get("platforms", entry["platforms"]),
+        }
+        examples.append(example)
+    return examples
+
+
 def ensure_source(meta: dict, source: dict):
     if not any(item["id"] == source["id"] for item in meta["sources"]):
         meta["sources"].append(source)
 
 
-def build_dataset(tool_id: str, inventory: dict) -> dict:
+def build_dataset(tool_id: str, inventory: dict, curation: dict) -> dict:
     dataset = load_dataset(tool_id)
+    tool_curation = curation["tools"].get(tool_id)
+    if not tool_curation:
+        raise RuntimeError(f"{tool_id}: developer command curation is required")
+    rendered_inventory_hash = compact_hash(inventory["entries"])
+    if tool_curation.get("inventoryHash") != rendered_inventory_hash:
+        raise RuntimeError(
+            f"{tool_id}: developer command curation inventoryHash is stale; "
+            "review the curated selection and scenarios against the new official inventory"
+        )
     old_by_command = {item["cmd"].casefold(): item for item in dataset["items"]}
     if tool_id == "unix-cli":
         for source in [
@@ -720,6 +773,9 @@ def build_dataset(tool_id: str, inventory: dict) -> dict:
         curated_examples = curated_canonical_examples(entry)
         if curated_examples:
             item["examples"] = curated_examples
+        developer_examples = materialize_curated_examples(tool_id, item_id, entry, curation)
+        if developer_examples is not None:
+            item["examples"] = developer_examples
         item["components"] = entry["components"]
         item["constraints"] = entry["constraints"]
         item["usage"] = entry["usage"]
@@ -736,6 +792,11 @@ def build_dataset(tool_id: str, inventory: dict) -> dict:
                 example["evidenceTier"] = source_tiers[entry["sourceId"]]
                 example["groundingRefs"] = [{"sourceId": entry["sourceId"], "locator": entry["url"], "claims": ["value", "behavior", "expected"]}]
         items.append(item)
+    curated_ids = set(tool_curation.get("examplesByItemId", {}))
+    rendered_ids = {item["id"] for item in items}
+    missing_curated_ids = sorted(curated_ids - rendered_ids)
+    if missing_curated_ids:
+        raise RuntimeError(f"{tool_id}: curated item IDs are absent from the official union: {missing_curated_ids}")
     dataset["items"] = items
     meta = dataset["meta"]
     meta["updatedAt"] = TODAY
@@ -743,7 +804,7 @@ def build_dataset(tool_id: str, inventory: dict) -> dict:
     meta["sourceCheckedAt"] = TODAY
     meta["source"] = "固定官方发布标签与入口索引的确定性全集，核验于 " + TODAY
     meta["coverage"] = "登记官方组件的全部公开命令入口；组件版本、排除理由与平台限制见 shared/official-inventories/" + tool_id + ".json"
-    inventory_hash = compact_hash(inventory["entries"])
+    inventory_hash = rendered_inventory_hash
     meta["officialCoverage"] = {
         "scope": "all-command-entrypoints", "status": "complete", "total": len(items), "covered": len(items),
         "checkedAt": TODAY, "sourceIds": inventory["sourceIds"], "inventoryHash": inventory_hash,
@@ -765,6 +826,14 @@ def example_hash(item_id: str, index: int, example: dict) -> str:
 
 
 def build_review(tool_id: str, dataset: dict, inventory_hash: str) -> dict:
+    inventory_by_command = {
+        item["cmd"].casefold(): item
+        for item in dataset["items"]
+    }
+    for item in dataset["items"]:
+        entry = inventory_by_command[item["cmd"].casefold()]
+        for index, example in enumerate(item["examples"]):
+            audit_scenario_example(tool_id, entry, index, example)
     return {
         "schemaVersion": 1, "toolId": tool_id, "reviewVersion": "scenario-grounding-v2",
         "reviewedAt": TODAY, "inventoryHash": inventory_hash, "status": "passed",
@@ -775,19 +844,130 @@ def build_review(tool_id: str, dataset: dict, inventory_hash: str) -> dict:
     }
 
 
-def write_json(path: Path, value):
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n")
+OFFICIAL_EXPRESSION_OPTIONS = {
+    # POSIX find describes these as expression primaries rather than command
+    # options, so the inventory synopsis parser intentionally does not put them
+    # in entry.options. They are still first-party documented on entry.url.
+    "find": {"-name", "-type"},
+    "cp": {"-r"},
+    # Generated GNU man-page synopses abbreviate some complete option tables.
+    # Keep these first-party documented developer forms auditable without
+    # changing the canonical inventory projection or its stable hash.
+    "grep": {"-r"},
+    "tar": {"-c", "-t", "-x", "-z", "-f"},
+    # iproute2's generated ss synopsis collapses its complete option table to
+    # "[ options ]"; these flags are documented by the first-party ss manual.
+    "ss": {"-l", "-n", "-t"},
+    # GNU sed documents in-place editing. It is deliberately Linux-only in
+    # curation because the BSD sed bundled with macOS uses a different form.
+    "sed": {"-i"},
+    "journalctl": {"-f"},
+}
+
+NESTED_COMMAND_RULES = {
+    "watch": {"leadingOperands": 0, "optionArguments": {"-n", "--interval", "-x", "--exec"}},
+    "timeout": {"leadingOperands": 1, "optionArguments": {"-k", "--kill-after", "-s", "--signal"}},
+    "xargs": {"leadingOperands": 0, "optionArguments": {"-E", "-I", "-L", "-n", "-s"}},
+    "flock": {"leadingOperands": 1, "optionArguments": {"-E", "--conflict-exit-code", "-w", "--timeout"}},
+    "taskset": {"leadingOperands": 0, "optionArguments": {"-c", "--cpu-list", "-p", "--pid"}},
+    "nsenter": {"leadingOperands": 0, "optionArguments": {"-t", "--target", "-S", "--setuid", "-G", "--setgid"}},
+    "unshare": {"leadingOperands": 0, "optionArguments": {"-R", "--root", "-w", "--wd", "-S", "--setuid", "-G", "--setgid"}},
+}
 
 
-def write_dataset(path: Path, tool_id: str, value):
+def expand_short_option(token: str) -> list[str]:
+    if re.fullmatch(r"-[A-Za-z0-9]{2,}", token):
+        return [f"-{letter}" for letter in token[1:]]
+    return [token]
+
+
+def usage_options(entry: dict) -> set[str]:
+    usage = entry.get("usage", "")
+    options = set(entry.get("options", []))
+    for token in re.findall(r"(?<![\w-])--[A-Za-z0-9][A-Za-z0-9-]*|(?<![\w-])-[A-Za-z0-9]+", usage):
+        options.update(expand_short_option(token))
+    return options | OFFICIAL_EXPRESSION_OPTIONS.get(entry["cmd"], set())
+
+
+def primary_option_tokens(
+    value: str,
+    executable: str,
+    allowed_options: set[str] | None = None,
+) -> list[str]:
+    import shlex
+
+    tokens = shlex.split(value, posix=True)
+    if not tokens or Path(tokens[0]).name != executable:
+        raise RuntimeError(f"example does not execute canonical entry {executable}: {value}")
+    rule = NESTED_COMMAND_RULES.get(executable)
+    options = []
+    index = 1
+    leading_operands = rule["leadingOperands"] if rule else None
+    operands_seen = 0
+    while index < len(tokens):
+        argument = tokens[index]
+        if argument in {"<", ">", ">>", "2>", "2>>", "|", "||", "&&", ";"}:
+            break
+        if argument == "--":
+            break
+        if argument.startswith("--") and len(argument) > 2:
+            option = argument.split("=", 1)[0]
+            options.append(option)
+            if rule and option in rule["optionArguments"] and "=" not in argument:
+                index += 1
+        elif argument.startswith("-") and argument != "-":
+            if allowed_options and argument in allowed_options:
+                compact = [argument]
+            elif (
+                allowed_options
+                and re.fullmatch(r"-[A-Za-z0-9]{2,}", argument)
+                and all(f"-{letter}" in allowed_options for letter in argument[1:])
+            ):
+                compact = [f"-{letter}" for letter in argument[1:]]
+            else:
+                compact = expand_short_option(argument) if allowed_options is None else [argument]
+            options.extend(compact)
+            if rule and argument in rule["optionArguments"]:
+                index += 1
+            elif rule and compact and compact[-1] in rule["optionArguments"]:
+                index += 1
+        elif rule:
+            if operands_seen < leading_operands:
+                operands_seen += 1
+            else:
+                break
+        index += 1
+    return options
+
+
+def audit_scenario_example(tool_id: str, item: dict, example_index: int, example: dict) -> None:
+    value = example.get("value", "")
+    allowed = usage_options(item)
+    for option in primary_option_tokens(value, item["cmd"], allowed):
+        if item["cmd"] == "kill" and re.fullmatch(r"-[0-9]+", option):
+            continue
+        normalized = option
+        if normalized not in allowed and re.fullmatch(r"-[A-Za-z].+", option):
+            # Short options such as awk -F, attach their value to the option.
+            normalized = option[:2]
+        if normalized not in allowed:
+            raise RuntimeError(
+                f"{tool_id}:{item['id']} example {example_index} uses undocumented option {option}: {value}"
+            )
+
+
+def render_json(value) -> bytes:
+    return (json.dumps(value, ensure_ascii=False, indent=2) + "\n").encode()
+
+
+def render_dataset(tool_id: str, value: dict) -> bytes:
     text = "// Generated from validated structured data. Manual edits must follow data/SCHEMA.md.\n"
     text += "window.CHEATSHEET_DATA = window.CHEATSHEET_DATA || {};\n"
     text += f'window.CHEATSHEET_DATA["{tool_id}"] = ' + json.dumps(value, ensure_ascii=False, indent=2) + ";\n"
-    path.write_text(text)
+    return text.encode()
 
 
-def update_quality_baseline(counts: dict):
+def render_quality_baseline(counts: dict) -> bytes:
     path = ROOT / "shared/quality-baseline.json"
     baseline = json.loads(path.read_text())
     for row in baseline["tools"]:
@@ -795,10 +975,10 @@ def update_quality_baseline(counts: dict):
             count = counts[row["tool"]]
             row["platforms"] = {"mac": count if row["tool"] == "unix-cli" else 0, "windows": 0, "linux": count}
             row["categories"] = {"shortcut": 0, "slash": count, "flag": 0}
-    path.write_text(json.dumps(baseline, ensure_ascii=False, separators=(",", ":")) + "\n")
+    return (json.dumps(baseline, ensure_ascii=False, separators=(",", ":")) + "\n").encode()
 
 
-def write_coverage_report(outputs: dict):
+def render_coverage_report(outputs: dict) -> bytes:
     lines = [
         "# Unix/POSIX 与 Linux 官方命令覆盖报告",
         "",
@@ -831,31 +1011,186 @@ def write_coverage_report(outputs: dict):
                 f"`{component['archiveSha256']}` |"
             )
         lines.extend(["", f"组件清单摘要：`{fixture['manifestHash']}`", ""])
-    (ROOT / "docs" / "official-command-coverage.md").write_text("\n".join(lines) + "\n")
+    return ("\n".join(lines).rstrip("\n") + "\n").encode()
+
+
+def file_content_hash(path: Path) -> str:
+    if not path.exists():
+        return "missing"
+    return "sha256:" + sha256_bytes(path.read_bytes())
+
+
+def build_transaction_targets(outputs: dict) -> dict[Path, bytes]:
+    targets = {}
+    for tool_id, (fixture, inventory, dataset, review) in outputs.items():
+        targets[ROOT / "shared/official-component-fixtures" / f"{tool_id}.json"] = render_json(fixture)
+        targets[ROOT / "shared/official-inventories" / f"{tool_id}.json"] = render_json(inventory)
+        targets[ROOT / "data" / f"{tool_id}.js"] = render_dataset(tool_id, dataset)
+        targets[ROOT / "shared/scenario-reviews" / f"{tool_id}.json"] = render_json(review)
+    counts = {tool_id: len(values[1]["entries"]) for tool_id, values in outputs.items()}
+    targets[ROOT / "shared/quality-baseline.json"] = render_quality_baseline(counts)
+    targets[ROOT / "docs/official-command-coverage.md"] = render_coverage_report(outputs)
+    tool_ids = sorted(path.stem for path in (ROOT / "data").glob("*.js") if path.name != "index.js")
+    catalog = []
+    generated_datasets = {tool_id: values[2] for tool_id, values in outputs.items()}
+    for tool_id in tool_ids:
+        data_path = ROOT / "data" / f"{tool_id}.js"
+        raw = targets.get(data_path, data_path.read_bytes())
+        meta = generated_datasets.get(tool_id, load_dataset(tool_id))["meta"]
+        catalog.append({
+            "id": tool_id,
+            "name": meta.get("name", tool_id),
+            "color": meta.get("color", "#666666"),
+            "platforms": meta.get("platforms", []),
+            "updatePolicy": meta.get("updatePolicy", "release-driven"),
+            "builtIn": meta.get("builtIn") is True,
+            "order": meta.get("order", 999),
+            "contentHash": "sha256:" + sha256_bytes(raw),
+        })
+    index_text = (
+        "// Auto-generated by native-host/host.py. Keep this as the single data-file index.\n"
+        f"window.CHEATSHEET_FILES = {json.dumps(tool_ids, ensure_ascii=False, indent=2)};\n"
+        "\n// Lightweight metadata used before the full per-tool datasets are loaded.\n"
+        f"window.CHEATSHEET_TOOL_CATALOG = {json.dumps(catalog, ensure_ascii=False, indent=2)};\n"
+    )
+    targets[ROOT / "data/index.js"] = index_text.encode()
+    return targets
+
+
+def transaction_preview(
+    targets: dict[Path, bytes],
+    curation_hash: str | None = None,
+) -> tuple[dict, str]:
+    files = []
+    for path, content in sorted(targets.items(), key=lambda item: str(item[0])):
+        files.append({
+            "path": path.relative_to(ROOT).as_posix(),
+            "beforeHash": file_content_hash(path),
+            "afterHash": "sha256:" + sha256_bytes(content),
+        })
+    contract = {
+        "schemaVersion": 1,
+        "curationHash": curation_hash or file_content_hash(CURATION_PATH),
+        "files": files,
+    }
+    return contract, compact_hash(contract)
+
+
+def _stage_file(path: Path, content: bytes) -> Path:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    descriptor, temporary_name = tempfile.mkstemp(
+        prefix=f".{path.name}.",
+        suffix=".tmp",
+        dir=path.parent,
+    )
+    temporary = Path(temporary_name)
+    try:
+        with os.fdopen(descriptor, "wb") as handle:
+            handle.write(content)
+            handle.flush()
+            os.fsync(handle.fileno())
+    except Exception:
+        temporary.unlink(missing_ok=True)
+        raise
+    return temporary
+
+
+def atomic_write_transaction(
+    targets: dict[Path, bytes],
+    expected_before_hashes: dict[Path, str],
+    replace_func=os.replace,
+):
+    """Replace every generated artifact or restore all prior bytes on failure."""
+    for path, expected_hash in expected_before_hashes.items():
+        if file_content_hash(path) != expected_hash:
+            raise RuntimeError(f"source changed after preview: {path.relative_to(ROOT)}")
+
+    originals = {path: path.read_bytes() if path.exists() else None for path in targets}
+    staged = {}
+    replaced = []
+    try:
+        for path, content in targets.items():
+            staged[path] = _stage_file(path, content)
+        for path, expected_hash in expected_before_hashes.items():
+            if file_content_hash(path) != expected_hash:
+                raise RuntimeError(f"source changed while staging transaction: {path.relative_to(ROOT)}")
+        for path in sorted(targets, key=str):
+            replace_func(staged[path], path)
+            staged.pop(path)
+            replaced.append(path)
+    except Exception as apply_error:
+        rollback_errors = []
+        for path in reversed(replaced):
+            try:
+                original = originals[path]
+                if original is None:
+                    path.unlink(missing_ok=True)
+                else:
+                    rollback_temp = _stage_file(path, original)
+                    try:
+                        os.replace(rollback_temp, path)
+                    finally:
+                        rollback_temp.unlink(missing_ok=True)
+            except Exception as rollback_error:
+                rollback_errors.append(f"{path}: {rollback_error}")
+        if rollback_errors:
+            raise RuntimeError(
+                f"atomic apply failed ({apply_error}); rollback also failed: {'; '.join(rollback_errors)}"
+            ) from apply_error
+        raise RuntimeError(f"atomic apply failed; all replaced files were restored: {apply_error}") from apply_error
+    finally:
+        for temporary in staged.values():
+            temporary.unlink(missing_ok=True)
 
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--sources", type=Path, required=True, help="directory containing pinned archives and extracted trees")
+    parser.add_argument(
+        "--curation",
+        type=Path,
+        default=CURATION_PATH,
+        help="candidate developer-command-curation.json; an external candidate is installed atomically",
+    )
     parser.add_argument("--apply", action="store_true", help="write fixtures, inventories, data and scenario reviews")
+    parser.add_argument("--preview-output", type=Path, help="write the exact transaction preview JSON")
+    parser.add_argument("--confirm-hash", help="required with --apply; must match the printed preview hash")
     args = parser.parse_args()
+    curation_path = args.curation.resolve()
+    curation_bytes = curation_path.read_bytes()
+    curation = load_developer_curation(curation_path)
     outputs = {}
     for tool_id in ("unix-cli", "linux"):
         fixture = build_fixture(tool_id, args.sources)
         inventory = build_inventory(fixture)
-        dataset = build_dataset(tool_id, inventory)
+        dataset = build_dataset(tool_id, inventory, curation)
         review = build_review(tool_id, dataset, dataset["meta"]["officialCoverage"]["inventoryHash"])
         outputs[tool_id] = (fixture, inventory, dataset, review)
         print(f"{tool_id}: {len(inventory['entries'])} canonical entries; components={inventory['closure']['componentCounts']}")
+    targets = build_transaction_targets(outputs)
+    if curation_path != CURATION_PATH.resolve():
+        targets[CURATION_PATH] = curation_bytes
+    preview, preview_hash = transaction_preview(
+        targets,
+        "sha256:" + sha256_bytes(curation_bytes),
+    )
+    print(f"preview-hash: {preview_hash}")
+    if args.preview_output:
+        args.preview_output.parent.mkdir(parents=True, exist_ok=True)
+        args.preview_output.write_text(json.dumps({
+            **preview,
+            "previewHash": preview_hash,
+        }, ensure_ascii=False, indent=2) + "\n")
     if not args.apply:
         return
-    for tool_id, (fixture, inventory, dataset, review) in outputs.items():
-        write_json(ROOT / "shared/official-component-fixtures" / f"{tool_id}.json", fixture)
-        write_json(ROOT / "shared/official-inventories" / f"{tool_id}.json", inventory)
-        write_dataset(ROOT / "data" / f"{tool_id}.js", tool_id, dataset)
-        write_json(ROOT / "shared/scenario-reviews" / f"{tool_id}.json", review)
-    update_quality_baseline({tool_id: len(values[1]["entries"]) for tool_id, values in outputs.items()})
-    write_coverage_report(outputs)
+    if args.confirm_hash != preview_hash:
+        raise RuntimeError("--apply requires the exact preview hash through --confirm-hash")
+    expected_before_hashes = {
+        ROOT / entry["path"]: entry["beforeHash"]
+        for entry in preview["files"]
+    }
+    atomic_write_transaction(targets, expected_before_hashes)
+    print(f"applied transaction: {preview_hash}")
 
 
 if __name__ == "__main__":

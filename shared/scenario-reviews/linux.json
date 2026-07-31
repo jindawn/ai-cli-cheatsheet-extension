@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "toolId": "linux",
   "reviewVersion": "scenario-grounding-v2",
-  "reviewedAt": "2026-07-23",
+  "reviewedAt": "2026-07-31",
   "inventoryHash": "sha256:492668b3d06a5d2829615cb4945ba209aee02bbb0e05ef09794b8611580f7b94",
   "status": "passed",
   "examples": [
@@ -171,7 +171,7 @@
     {
       "itemId": "linux-coredumpctl",
       "exampleIndex": 0,
-      "contentHash": "sha256:42076b79f099f81626d95dbf0245ad9bec59fedcb25541a0b528079d3e2aa94c",
+      "contentHash": "sha256:c6fd42f3884268a5fc274b5560914a2fecba980917d91b65da0c773fd8e52204",
       "status": "passed"
     },
     {
@@ -213,7 +213,7 @@
     {
       "itemId": "linux-dmesg",
       "exampleIndex": 0,
-      "contentHash": "sha256:aadfeda8b80f0c95c2ab13ca9b78fb2a7b7e324db8c34d9377e2b584b1ab7d64",
+      "contentHash": "sha256:89a0874ce70eea1de37d357a4ff56241189229317c9e0c00d2196090bb585593",
       "status": "passed"
     },
     {
@@ -285,19 +285,19 @@
     {
       "itemId": "linux-findmnt",
       "exampleIndex": 0,
-      "contentHash": "sha256:47a278c1e70086a25be002a8caee72625d61dfe6ca7854de77defd08efce8e56",
+      "contentHash": "sha256:224482ac231d45ff2d50712205e85b73a56ca20f55c457f7009cf43729b1df81",
       "status": "passed"
     },
     {
       "itemId": "linux-flock",
       "exampleIndex": 0,
-      "contentHash": "sha256:6b0368003bd3dd01449dcbe425d66c4b9eb623fc3e9990e2426557a402166267",
+      "contentHash": "sha256:a3d0300b12a8b44b4a6e143fa82a99ae79d0809d026c3e8f6721a53c4c9b0df2",
       "status": "passed"
     },
     {
       "itemId": "linux-free",
       "exampleIndex": 0,
-      "contentHash": "sha256:e2cac09872987e4dc7175897184a230ed883b3e8d6aa9608e704508c1f39b475",
+      "contentHash": "sha256:02a31f58e8ef1e0cfec28ef099ee44a2d0830b802c4330a02a5d69bde3639a4b",
       "status": "passed"
     },
     {
@@ -327,7 +327,13 @@
     {
       "itemId": "linux-fstrim",
       "exampleIndex": 0,
-      "contentHash": "sha256:037e37336b70e41b85a8e010974cbc5a2549c7c62f5d2992f0c56cf36eccbd90",
+      "contentHash": "sha256:fcced32cf447bc30052d792100a883a41c35aa96512748dc7332e3151fc535ae",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-fstrim",
+      "exampleIndex": 1,
+      "contentHash": "sha256:a25277de01566a72ff126932725598573460ec63c6e586fb3fd249c7536ec11b",
       "status": "passed"
     },
     {
@@ -405,7 +411,7 @@
     {
       "itemId": "linux-ip",
       "exampleIndex": 0,
-      "contentHash": "sha256:a1d9b22319a3dfedd995484e3b634341c94100c8c5d88fa0156c051fb7aea9b1",
+      "contentHash": "sha256:b3bbea3543fae74c63f642dc220dc20fcf9b00d8ec5ac833fc2a645f8151990d",
       "status": "passed"
     },
     {
@@ -441,7 +447,13 @@
     {
       "itemId": "linux-journalctl",
       "exampleIndex": 0,
-      "contentHash": "sha256:b77d728662ddb455a2d7890cb4f4faca865a7190ecb2b34977cf8fe81f820908",
+      "contentHash": "sha256:726e7df519e90537215fb426eba8a89d7319c210afd86c7642245217e9e5a82b",
+      "status": "passed"
+    },
+    {
+      "itemId": "linux-journalctl",
+      "exampleIndex": 1,
+      "contentHash": "sha256:cc25be42360a34b9a70da1206395babaf037ae327ac9aeff1e606c2ef45495af",
       "status": "passed"
     },
     {
@@ -537,7 +549,7 @@
     {
       "itemId": "linux-lsblk",
       "exampleIndex": 0,
-      "contentHash": "sha256:00bdda2538a33cdb174d9287bc522c237295d926d922806e56ccfc2d8be6be42",
+      "contentHash": "sha256:f8c56cff6f8df5467602f023b26fa9bc9ac65ecb562c003c1d1af6196062a1c6",
       "status": "passed"
     },
     {
@@ -555,7 +567,7 @@
     {
       "itemId": "linux-lsfd",
       "exampleIndex": 0,
-      "contentHash": "sha256:afd8fe0883f34fa3ff379ce4bab9e56b51625831194c35277572299efdd8e0fe",
+      "contentHash": "sha256:072d4bedecc01fdef678df19b7fc3659eb671b94927596e8cad79e768330797b",
       "status": "passed"
     },
     {
@@ -573,7 +585,7 @@
     {
       "itemId": "linux-lslocks",
       "exampleIndex": 0,
-      "contentHash": "sha256:20f94b80a59372010b32cc557b838117da68801dcbe6a192b192ef694cd44adf",
+      "contentHash": "sha256:dd7425e216049c80b569169f8405ae98db46a8066f38a3a8948eebe6a6febec0",
       "status": "passed"
     },
     {
@@ -669,7 +681,7 @@
     {
       "itemId": "linux-namei",
       "exampleIndex": 0,
-      "contentHash": "sha256:3ed6fbcfd346b22f0a6e29bc83c6cabbe8fd99721bec958bf8be331b40825e4c",
+      "contentHash": "sha256:8b67212798766ce54034d7c541753562add03d7a1682cdb659c3d1efdda8a526",
       "status": "passed"
     },
     {
@@ -681,7 +693,7 @@
     {
       "itemId": "linux-networkctl",
       "exampleIndex": 0,
-      "contentHash": "sha256:7e582c47deb20471f43a90e65a52fa82b8052bc73b19f62cf15503cf6c0bb1c3",
+      "contentHash": "sha256:bc549d3e8fda30d4cbd4a1386eed5dd8fd0e39290ded6de5899e66066511ead4",
       "status": "passed"
     },
     {
@@ -699,7 +711,7 @@
     {
       "itemId": "linux-nsenter",
       "exampleIndex": 0,
-      "contentHash": "sha256:0b741abb54632931bccc21bb74320f4fbfdb56d0b8527c1a1dbfa4327757b5fc",
+      "contentHash": "sha256:372a0a372eb1e0c7e60c6c23362271c1b43fd560263f0755576dc84cb4815ca7",
       "status": "passed"
     },
     {
@@ -741,7 +753,7 @@
     {
       "itemId": "linux-pgrep",
       "exampleIndex": 0,
-      "contentHash": "sha256:15ce74942564016fc57bcf99e55d3e5050e58fd94db445f17f5729ae3db019c2",
+      "contentHash": "sha256:93fd3c68d8b93ccab133b4eb3f4b055ffcc6b091f220760720b73fa3481a07fa",
       "status": "passed"
     },
     {
@@ -771,7 +783,7 @@
     {
       "itemId": "linux-pkill",
       "exampleIndex": 0,
-      "contentHash": "sha256:5a853510a741e79c059e35d6afe451aecd88b6ac91dbf1e7856673aa3eeb98c0",
+      "contentHash": "sha256:6f58c52a4fec90dcd24f84991d618e7aed6bf7ff2b069218ab8742da547c9b26",
       "status": "passed"
     },
     {
@@ -789,7 +801,7 @@
     {
       "itemId": "linux-prlimit",
       "exampleIndex": 0,
-      "contentHash": "sha256:3e158898a4bbb96f66c2bf67f9a3f01c4d5b83c76cbd6e8d4cb083332eda8e40",
+      "contentHash": "sha256:d5dabe32fdd05add86e0e8187cc2d57b588d13e0bac49ad0a45321b0189e026b",
       "status": "passed"
     },
     {
@@ -849,7 +861,7 @@
     {
       "itemId": "linux-resolvectl",
       "exampleIndex": 0,
-      "contentHash": "sha256:b4d1653c2b629b8d75162ec60fe2718e5716c899bebe6cf36ba7de1f96cbb112",
+      "contentHash": "sha256:74b68ef488b0dac95af98c1919b2862ab289c0cee6888b1b6fda2b2f1c169e66",
       "status": "passed"
     },
     {
@@ -975,7 +987,7 @@
     {
       "itemId": "linux-ss",
       "exampleIndex": 0,
-      "contentHash": "sha256:5a6c0b3bfd67bafa1dae68e29bd8ca262420c82d052857000241210f542b23d8",
+      "contentHash": "sha256:de624ecab416c6e0a03c6e2f08482b789eb88d70da83c84552ad756d089e8c3c",
       "status": "passed"
     },
     {
@@ -1023,7 +1035,7 @@
     {
       "itemId": "linux-systemctl",
       "exampleIndex": 0,
-      "contentHash": "sha256:0d64e4f9fec446b2a6b1d1ba66ce10e73e6150157278f50389edb0edfbe0be8b",
+      "contentHash": "sha256:55167a40a0e7d27e50dab173142612ceadfd3520b40daa3531d9815e723efd6e",
       "status": "passed"
     },
     {
@@ -1389,7 +1401,7 @@
     {
       "itemId": "linux-taskset",
       "exampleIndex": 0,
-      "contentHash": "sha256:cf6bc98f401900366f192316b008e90ccd28edc5523dd2a37c3fa5fff95b2e01",
+      "contentHash": "sha256:4a1d91fefa5f944381056f07d773870c93fde6e57145de03c6ad6f30adf15e40",
       "status": "passed"
     },
     {
@@ -1461,7 +1473,7 @@
     {
       "itemId": "linux-unshare",
       "exampleIndex": 0,
-      "contentHash": "sha256:9c948f437b97f8f19d67d957f436ad41a1f95966983278b02b046fbbf11a69f9",
+      "contentHash": "sha256:0e83a0950768adb08d12d856c6ec2c79e26bec68ed25d2d7c31cda5baebd1976",
       "status": "passed"
     },
     {
@@ -1479,7 +1491,7 @@
     {
       "itemId": "linux-uptime",
       "exampleIndex": 0,
-      "contentHash": "sha256:38f61a145041bd01c8f363f32688a7d024d05e6901045bcc0a170c19e9c0bf5e",
+      "contentHash": "sha256:a4ad6538ff8c542dc258ec49d512c04607e39c6d35aa964be44cd93d8a8cddcb",
       "status": "passed"
     },
     {
@@ -1527,7 +1539,7 @@
     {
       "itemId": "linux-vmstat",
       "exampleIndex": 0,
-      "contentHash": "sha256:1e639e896ca8de048dbe1bed0f1f9fe553bb358fc7b092c27a03e064c81fc066",
+      "contentHash": "sha256:3193eb0d2b6c47ef592513504497f4513902c99bb264a906f2d7c8b9b6d1af5c",
       "status": "passed"
     },
     {
@@ -1551,7 +1563,7 @@
     {
       "itemId": "linux-watch",
       "exampleIndex": 0,
-      "contentHash": "sha256:7da2b1cf9f20999c7b4e69b9b0ff7b8da89804e4c47d576e4bc092594813eedd",
+      "contentHash": "sha256:67f9a7896f2e1f682143846bc7bf71ca047fefbc3e2dd30ebcc1b5249c1b2b21",
       "status": "passed"
     },
     {

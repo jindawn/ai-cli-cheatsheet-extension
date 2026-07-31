@@ -34,6 +34,19 @@ function unpackedExtensionId(extensionRoot) {
     const page = await context.newPage();
     await page.goto(`chrome-extension://${extensionId}/popup.html`);
     await page.waitForSelector("#main .empty-welcome");
+    await page.waitForSelector("#onboarding.show");
+    const onboardingText = await page.locator("#onboardTools").textContent();
+    assert(onboardingText.includes("开发常用命令")
+      && onboardingText.includes("Unix/POSIX · 文件、文本、网络、进程")
+      && onboardingText.includes("macOS · Linux")
+      && onboardingText.includes("Linux 运维排障")
+      && onboardingText.includes("服务器 / 容器 / WSL · 服务、日志、端口、资源")
+      && onboardingText.includes("Linux 主机"),
+    "first-run choices should use the same developer-focused command cards");
+    const onboardingOverflow = await page.evaluate(() =>
+      Math.max(...[...document.querySelectorAll("#onboardTools .tool-choice")]
+        .map((choice) => choice.scrollWidth - choice.clientWidth)));
+    assert(onboardingOverflow <= 0, "first-run two-column cards must not overflow the 460px popup");
 
     const loadState = await page.evaluate(() => ({
       loadedTools: Object.keys(window.CHEATSHEET_DATA || {}),
@@ -69,7 +82,21 @@ function unpackedExtensionId(extensionRoot) {
     const linuxToggle = page.locator('#manageToolToggles input[data-enabled="linux"]');
     assert.strictEqual(await linuxToggle.count(), 1, "macOS management must list Linux system tools");
     assert.strictEqual(await linuxToggle.isChecked(), false, "Linux tools should not be enabled by default on macOS");
-    assert((await linuxToggle.locator("xpath=..").textContent()).includes("仅 Linux"), "Linux tools need a visible platform badge");
+    const linuxChoiceText = await linuxToggle.locator("xpath=..").textContent();
+    assert(linuxChoiceText.includes("Linux 运维排障")
+      && linuxChoiceText.includes("服务器 / 容器 / WSL")
+      && linuxChoiceText.includes("Linux 主机"),
+    "Linux management should explain its developer scenario and target host");
+    const unixChoiceText = await page.locator('#manageToolToggles input[data-enabled="unix-cli"]')
+      .locator("xpath=..").textContent();
+    assert(unixChoiceText.includes("开发常用命令")
+      && unixChoiceText.includes("Unix/POSIX")
+      && unixChoiceText.includes("macOS · Linux"),
+    "Unix management should explain its developer scenario and supported hosts");
+    const toolChoiceOverflow = await page.evaluate(() =>
+      Math.max(...[...document.querySelectorAll("#manageToolToggles .tool-choice")]
+        .map((choice) => choice.scrollWidth - choice.clientWidth)));
+    assert(toolChoiceOverflow <= 0, "two-column management cards must not overflow the 460px popup");
     await page.locator("#maintenancePanel > summary").click();
     await page.fill("#addToolName", "Linux");
     await page.click("#addToolBtn");
@@ -94,6 +121,24 @@ function unpackedExtensionId(extensionRoot) {
     await linuxResult.locator(".copy-btn").click();
     await page.waitForTimeout(100);
     assert.strictEqual(await page.locator("#riskDialog.show").count(), 0, "confirmed Linux scope should not prompt twice");
+
+    await page.fill("#search", "");
+    await page.locator("#toggleFilters").click();
+    await page.locator('#toolFilters [data-tool="linux"]').click();
+    await page.waitForSelector("#developerCommandFilters .developer-command-nav");
+    const commandNav = await page.locator("#developerCommandFilters").textContent();
+    assert(commandNav.includes("精选 24")
+      && commandNav.includes("服务与日志")
+      && commandNav.includes("网络与端口")
+      && commandNav.includes("完整清单 262"),
+    "Linux browsing should expose featured scenarios and the complete inventory");
+    assert((await page.locator("#countBar").textContent()).includes("24 条结果"),
+      "the empty Linux view should contain the 24 featured commands");
+    assert.strictEqual(await page.locator('#main .entry-wrap[data-tool="linux"]').count(), 24,
+      "all 24 featured Linux commands should be visible without an extra expand action");
+    await page.locator('#developerCommandFilters [data-command-view="inventory"]').click();
+    assert((await page.locator("#countBar").textContent()).includes("262 条结果"),
+      "the complete-list action should restore every Linux official entry");
 
     await page.locator("#openManage").click();
 

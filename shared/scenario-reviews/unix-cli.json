@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "toolId": "unix-cli",
   "reviewVersion": "scenario-grounding-v2",
-  "reviewedAt": "2026-07-23",
+  "reviewedAt": "2026-07-31",
   "inventoryHash": "sha256:4a4541e5b16f5cdef82cb7971e5492ba04efe523aba3d6e22075a92f9d4f2ee1",
   "status": "passed",
   "examples": [
@@ -45,7 +45,7 @@
     {
       "itemId": "unix-awk",
       "exampleIndex": 0,
-      "contentHash": "sha256:54abaa70c2b03765c4b9a798124a4687908b19f3c8263d1e2ee8915c3a5ad1cf",
+      "contentHash": "sha256:a988f196590579063c88110a1b1e25a2fe0aade091fe28381879cd00e08644d7",
       "status": "passed"
     },
     {
@@ -111,7 +111,7 @@
     {
       "itemId": "unix-cat",
       "exampleIndex": 0,
-      "contentHash": "sha256:b52e3ad15893d4ac71a902431b087ce9bee1e379d1bd010da9f6a10c36f40f49",
+      "contentHash": "sha256:6cc2e8008b74a8b6197456db6c6eb2181a3d4095474841896cd679c293fbcf01",
       "status": "passed"
     },
     {
@@ -141,19 +141,13 @@
     {
       "itemId": "unix-chmod",
       "exampleIndex": 0,
-      "contentHash": "sha256:ec008a228e3715a3d23f866edd11886e4bff5f626552e5896049e91b6a720c8c",
+      "contentHash": "sha256:5374c8914f378890a8e3b2bdded470b4f32ea5c08d99afec52d68cc3693cbcf2",
       "status": "passed"
     },
     {
       "itemId": "unix-chmod",
       "exampleIndex": 1,
-      "contentHash": "sha256:c4cb487355e27e073b81da9b1f454db20abb5043a45b9518833fa3083fadcac0",
-      "status": "passed"
-    },
-    {
-      "itemId": "unix-chmod",
-      "exampleIndex": 2,
-      "contentHash": "sha256:575794e38dcd7c4d70b1444df6e704c7a14d553bbb1ff9281e1b7791eeb8ff22",
+      "contentHash": "sha256:3278cb4909f1937e21d347363016056b952197d8cf243c78e711e15d0b73b217",
       "status": "passed"
     },
     {
@@ -237,7 +231,7 @@
     {
       "itemId": "unix-curl",
       "exampleIndex": 0,
-      "contentHash": "sha256:eb1dd04cfbbbd3523824d12fbb2d934f275f131d807452c99386f52d0595d47a",
+      "contentHash": "sha256:3321acc4439221b5e3832a8fb3bc65815bea9c58481d2c2a8042791e0f0c6924",
       "status": "passed"
     },
     {
@@ -279,7 +273,7 @@
     {
       "itemId": "unix-df",
       "exampleIndex": 0,
-      "contentHash": "sha256:1f5ae6929b9406d6b7044ebfd6f0b9aef8ce1eb817ac9385433ed8235b0a4e53",
+      "contentHash": "sha256:6e03157b9e0e2a7691cd26c643d2bfa7c08b0a3bca215d8b93e1505f451300e3",
       "status": "passed"
     },
     {
@@ -315,7 +309,7 @@
     {
       "itemId": "unix-du",
       "exampleIndex": 0,
-      "contentHash": "sha256:4a28f728933e7261aaf3e14c58aca4fb4e20bf20395bd50c13bd717061f2c456",
+      "contentHash": "sha256:83ac13a43ca7cfb8fb8b3528931ef7be358c6028bff142721935930e9adaa411",
       "status": "passed"
     },
     {
@@ -387,13 +381,7 @@
     {
       "itemId": "unix-find",
       "exampleIndex": 0,
-      "contentHash": "sha256:49d55526d74dbf1a35bcea88e8b908da6116b413a989b1493086e3beeb3ef148",
-      "status": "passed"
-    },
-    {
-      "itemId": "unix-find",
-      "exampleIndex": 1,
-      "contentHash": "sha256:a6c63e5eba6ec984aa1eb3fc758e19e4d91a2c8ac1a0f9eb3a724d2fa70d7596",
+      "contentHash": "sha256:88fce1945f85d15f098f1b9de92fdb896e80c53c3bab6fa8a8020d7a98c10982",
       "status": "passed"
     },
     {
@@ -459,19 +447,13 @@
     {
       "itemId": "unix-grep",
       "exampleIndex": 0,
-      "contentHash": "sha256:9dd8056d6a32af4098177c5acf70dfed32102d50edc363450102164d9f38f98e",
+      "contentHash": "sha256:ab364db5bdf5faed2886a08d5fb3abbe2399cb56abfd3df966421cb61ae59b7f",
       "status": "passed"
     },
     {
       "itemId": "unix-grep",
       "exampleIndex": 1,
-      "contentHash": "sha256:bfe023dd1bfaf01bb89062b195522f64ac8befd9a7cf7d33c767ac65242a0804",
-      "status": "passed"
-    },
-    {
-      "itemId": "unix-grep",
-      "exampleIndex": 2,
-      "contentHash": "sha256:ff0c0293d5943bff175bb9b3ac911e193774c33e72cb57dd6dc5876069c54c1a",
+      "contentHash": "sha256:0c627be1caa0178162344c768c2697f0866ad643bf6f49fb8c1048a59ce86cec",
       "status": "passed"
     },
     {
@@ -549,19 +531,19 @@
     {
       "itemId": "unix-kill",
       "exampleIndex": 0,
-      "contentHash": "sha256:a3195046e721d6329109980f08303cdbf5a7a3615a2e7796d2c22957bd64a3b2",
+      "contentHash": "sha256:739d61004314c42fb471c5144b870070c07c614a92eabf7faee9e2f2ddbf16a9",
       "status": "passed"
     },
     {
       "itemId": "unix-kill",
       "exampleIndex": 1,
-      "contentHash": "sha256:8bcc925667c796d8eb6ea6589e03e1b4db3db30b6ae55d43dbe23f3a7436ed4a",
+      "contentHash": "sha256:24a7d1464471fbb25dee873e69980c751c278749d7d488341876b9dffcaffb40",
       "status": "passed"
     },
     {
       "itemId": "unix-less",
       "exampleIndex": 0,
-      "contentHash": "sha256:7b0eb031fafd1a19f325e6aa8f4f7a666bf3234000464830830bc0f345d86210",
+      "contentHash": "sha256:e0961d09f49dc9117cdfb20fef16875abf31b1664ee7b8820a1464b122f4cad7",
       "status": "passed"
     },
     {
@@ -621,7 +603,7 @@
     {
       "itemId": "unix-ls",
       "exampleIndex": 0,
-      "contentHash": "sha256:16fcd6ca7586bdbad04adc4c6db2b2a360c9e0916d0284bc2df1a4bceee82089",
+      "contentHash": "sha256:8dd4aba1575d8fa07d5c989027268b6a5ebda620199e755699a94e039c7d22d0",
       "status": "passed"
     },
     {
@@ -819,13 +801,7 @@
     {
       "itemId": "unix-ps",
       "exampleIndex": 0,
-      "contentHash": "sha256:93d14a267083badf3b1d7e34a302e56cd23a4f3cc2ec37bdb14dd19658a66bbe",
-      "status": "passed"
-    },
-    {
-      "itemId": "unix-ps",
-      "exampleIndex": 1,
-      "contentHash": "sha256:4a74407d90b1961f574b2cae91e7eba800a9cdf75d89ac24a6c0270adac9e1ac",
+      "contentHash": "sha256:0adbf5c8f9c05b9ac31656ebb7cf536bdac3b783e0a7436b7f8b212c791f00ed",
       "status": "passed"
     },
     {
@@ -837,7 +813,7 @@
     {
       "itemId": "unix-pwd",
       "exampleIndex": 0,
-      "contentHash": "sha256:4fe250594ac312d04ccd04007009169ab4c01a4e70aba10ebb81f669c6f0171d",
+      "contentHash": "sha256:fc3d368884c5bfd72af7e1a82e120ae4515bb4df34fd32b6d0cd9811f1e59eba",
       "status": "passed"
     },
     {
@@ -855,7 +831,7 @@
     {
       "itemId": "unix-realpath",
       "exampleIndex": 0,
-      "contentHash": "sha256:99815275fddef41790b505941895da07bab886c864ecb86807edac16db6963ac",
+      "contentHash": "sha256:10479e3634f6daac9c9f02b650764ceee71e585b1a1f87e54c591503db1d90d6",
       "status": "passed"
     },
     {
@@ -909,7 +885,7 @@
     {
       "itemId": "unix-scp",
       "exampleIndex": 0,
-      "contentHash": "sha256:e35f03f0043413bc0690a71c830d7916cfc933413613f513eb3d77dd28fba385",
+      "contentHash": "sha256:bed41f1cff14ffcd340e9c9c4c0e50225d4d0e27c821cb853bdadcdee90c8d56",
       "status": "passed"
     },
     {
@@ -921,13 +897,19 @@
     {
       "itemId": "unix-sed",
       "exampleIndex": 0,
-      "contentHash": "sha256:6f4249b086567035178fec1b8699ba511da98b6477ab58ebe0a71840a6730698",
+      "contentHash": "sha256:13cafdaab30436c5a789a6464dcbc1091bbfd168cd250fb15834d9c83c95083a",
       "status": "passed"
     },
     {
       "itemId": "unix-sed",
       "exampleIndex": 1,
-      "contentHash": "sha256:2f34f788319db5ba1628fe75ddf762fcc2bc961f44aacc7aba81fc8186dee188",
+      "contentHash": "sha256:a900674708568985650d1870ad361059eb705b7b2180baeec518fbcdff6d5692",
+      "status": "passed"
+    },
+    {
+      "itemId": "unix-sed",
+      "exampleIndex": 2,
+      "contentHash": "sha256:bb3c96b97d5e8a05ae82ed84a22bd72a1d610c9c25880dd051825a0fe2e836de",
       "status": "passed"
     },
     {
@@ -1011,7 +993,7 @@
     {
       "itemId": "unix-ssh",
       "exampleIndex": 0,
-      "contentHash": "sha256:05ab4ce3d7a74ecaca5f8040bc78eb7a6bba1dfe9aae533edba26b592e7189e3",
+      "contentHash": "sha256:d9113330083112f51e95543f53cb0b1bab80b3c7e76d8aa5cf64c91b21fe587c",
       "status": "passed"
     },
     {
@@ -1041,7 +1023,7 @@
     {
       "itemId": "unix-stat",
       "exampleIndex": 0,
-      "contentHash": "sha256:0caa88de51c6177d29cfec537023f1e68118414464586e8fdaf90a0435d6ac25",
+      "contentHash": "sha256:e9280618bf25d3bac24cea26e0ac983b3cf9b377a032f0831a3eb990822dba71",
       "status": "passed"
     },
     {
@@ -1095,13 +1077,13 @@
     {
       "itemId": "unix-tail",
       "exampleIndex": 0,
-      "contentHash": "sha256:3b9e5d95fd113db48102e247738774c147eefb20819e3e7165712acb0bfcead9",
+      "contentHash": "sha256:d391930f4bdc324812ffd5172e798402b7166959b26892764a9c284e1176f4c7",
       "status": "passed"
     },
     {
       "itemId": "unix-tail",
       "exampleIndex": 1,
-      "contentHash": "sha256:21a9d59afb6a5af8b4e3a568bc134376ac6e8634530ea0c73f7a228a1a086d81",
+      "contentHash": "sha256:af31b293df40d1831b5e6e7d9d35671ecb48bc7ef788697cee7a9e29c397ccec",
       "status": "passed"
     },
     {
@@ -1113,19 +1095,19 @@
     {
       "itemId": "unix-tar",
       "exampleIndex": 0,
-      "contentHash": "sha256:83c6181b7801a4953a9555e0629b79f536ea2bf7242b107449e03d91f3a205d4",
+      "contentHash": "sha256:4b837381a0da53ae70a1c896e5f0b435f7a0560b59b8f8a0996930a4deb1fe03",
       "status": "passed"
     },
     {
       "itemId": "unix-tar",
       "exampleIndex": 1,
-      "contentHash": "sha256:95747994c3a1e56c0cde41d21f8c1238d88afb24ac1027f283a61d23424f2a42",
+      "contentHash": "sha256:238ca8c8ae23977fc1eefcd8e5279566a1c9fe8aa72eb754c14b5aeb14239eaf",
       "status": "passed"
     },
     {
       "itemId": "unix-tar",
       "exampleIndex": 2,
-      "contentHash": "sha256:bcb8b4c871ec7b967adb8ab6323dc1a340301b9ed6b4c1b29e208ab3cbbbe0bf",
+      "contentHash": "sha256:c8e21b53db0ae34a3b224cb54fbe09e24b4a7096a2b937a5d6aa6f3c52e134cb",
       "status": "passed"
     },
     {
@@ -1149,13 +1131,13 @@
     {
       "itemId": "unix-timeout",
       "exampleIndex": 0,
-      "contentHash": "sha256:3fb44eeeceef4657385a65366d252e07a0c8426769d07c9909090e9b28e18c49",
+      "contentHash": "sha256:4b298a08360f8b6912199dcfa289f5ee96ea3239756811705ff0ba46a26769b4",
       "status": "passed"
     },
     {
       "itemId": "unix-top",
       "exampleIndex": 0,
-      "contentHash": "sha256:30ef7faeb892b2dcc18744464f7d8b5b2e12840ada03510897effd7777050283",
+      "contentHash": "sha256:68543210a5d9ed57e06b49a3a4c91555f9a48774a445e5fab47adb9168512f18",
       "status": "passed"
     },
     {
@@ -1263,7 +1245,7 @@
     {
       "itemId": "unix-updatedb",
       "exampleIndex": 0,
-      "contentHash": "sha256:704ff062a8d3ee4fda9d44e95c24e26892f5b3bc8cf1ef29c57721703f3400d1",
+      "contentHash": "sha256:e9bb503a359ae5036192002e94dcb3d12af15ccedbb442c092ba6a8c5dfc08b2",
       "status": "passed"
     },
     {
@@ -1341,7 +1323,7 @@
     {
       "itemId": "unix-wget",
       "exampleIndex": 0,
-      "contentHash": "sha256:a6260e4d98e4b4eff15191d36790d94c8b5cfae5a429613e95b15891f6b67b62",
+      "contentHash": "sha256:ac938870bd17b4fb0a6d1285204387aa918fa3396c62e6446d930aa67b0f88f9",
       "status": "passed"
     },
     {
@@ -1377,7 +1359,7 @@
     {
       "itemId": "unix-xargs",
       "exampleIndex": 0,
-      "contentHash": "sha256:e16f87b40c23f71930f84d44dd3d245f2c5a00e58e9a6528deaaab49a2ed799b",
+      "contentHash": "sha256:d8be42a69fbe6286ced777e0aa729bcc87e16ffc4b37855172e967ce5d4593de",
       "status": "passed"
     },
     {

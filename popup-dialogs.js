@@ -101,7 +101,8 @@
       doc.getElementById("onboardTools").innerHTML = deps.render.renderOnboardChoices(
         deps.getAllData(),
         deps.state.getToolIds(deps.getAllData()),
-        deps.getEnabledTools()
+        deps.getEnabledTools(),
+        deps.getDeveloperCuration?.() || null,
       );
     }
 

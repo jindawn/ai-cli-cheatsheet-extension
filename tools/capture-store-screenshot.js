@@ -10,6 +10,7 @@ const extensionRoot = path.resolve(process.argv[2] || "dist/store");
 const output = path.resolve(process.argv[3] || "store-assets/search-and-usage-1280x800.png");
 const captureRecommendations = /recommend|local-ai/i.test(path.basename(output));
 const captureBridgeRepair = /bridge-repair/i.test(path.basename(output));
+const captureCommandManagement = /command-management|developer-command/i.test(path.basename(output));
 
 function unpackedExtensionId(root) {
   const digest = crypto.createHash("sha256").update(fs.realpathSync(root)).digest().subarray(0, 16);
@@ -43,9 +44,11 @@ function unpackedExtensionId(root) {
         await openBridgeDialog();
       });
       await page.waitForSelector("#bridgeDialog.show");
-    } else if (captureRecommendations) {
+    } else if (captureRecommendations || captureCommandManagement) {
       await page.click("#openManage");
-      await page.waitForSelector("#recommendedTools .recommend-card");
+      await page.waitForSelector(captureCommandManagement
+        ? '#manageToolToggles input[data-enabled="unix-cli"]'
+        : "#recommendedTools .recommend-card");
     } else {
       await page.fill("#search", "恢复会话");
       await page.waitForSelector("#main .entry-wrap");
@@ -61,6 +64,8 @@ function unpackedExtensionId(root) {
     ` });
     if (captureRecommendations) {
       await page.locator("#recommendationPanel").evaluate((element) => element.scrollIntoView({ block: "start" }));
+    } else if (captureCommandManagement) {
+      await page.locator("#manageToolToggles").evaluate((element) => element.scrollIntoView({ block: "center" }));
     }
     fs.mkdirSync(path.dirname(output), { recursive: true });
     await page.screenshot({ path: output, fullPage: false });

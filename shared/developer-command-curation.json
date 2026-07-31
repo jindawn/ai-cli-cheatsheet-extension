@@ -1,0 +1,748 @@
+{
+  "schemaVersion": 1,
+  "tools": {
+    "unix-cli": {
+      "inventoryHash": "sha256:4a4541e5b16f5cdef82cb7971e5492ba04efe523aba3d6e22075a92f9d4f2ee1",
+      "presentation": {
+        "name": "开发常用命令",
+        "subtitle": "Unix/POSIX · 文件、文本、网络、进程",
+        "platformLabel": "macOS · Linux",
+        "implementationLabel": "通用/POSIX"
+      },
+      "featuredItemIds": [
+        "unix-pwd",
+        "unix-ls",
+        "unix-find",
+        "unix-cat",
+        "unix-stat",
+        "unix-realpath",
+        "unix-grep",
+        "unix-xargs",
+        "unix-sed",
+        "unix-awk",
+        "unix-tail",
+        "unix-less",
+        "unix-curl",
+        "unix-wget",
+        "unix-ssh",
+        "unix-scp",
+        "unix-ps",
+        "unix-top",
+        "unix-kill",
+        "unix-chmod",
+        "unix-df",
+        "unix-du",
+        "unix-tar",
+        "unix-timeout"
+      ],
+      "itemSearchTerms": {
+        "unix-find": ["项目文件"],
+        "unix-curl": ["接口", "API"],
+        "unix-tail": ["持续日志"]
+      },
+      "groups": [
+        {
+          "id": "project-files",
+          "label": "项目与文件",
+          "searchTerms": ["项目目录", "当前路径", "隐藏文件", "按文件名查找", "查看文件", "文件元数据", "规范路径"],
+          "itemIds": ["unix-pwd", "unix-ls", "unix-find", "unix-cat", "unix-stat", "unix-realpath"]
+        },
+        {
+          "id": "code-text",
+          "label": "代码与文本",
+          "searchTerms": ["代码搜索", "递归搜索", "批量处理", "批量替换", "提取字段", "正则"],
+          "itemIds": ["unix-grep", "unix-xargs", "unix-sed", "unix-awk"]
+        },
+        {
+          "id": "logs-output",
+          "label": "日志与输出",
+          "searchTerms": ["最新日志", "持续跟踪", "分页查看", "大文件", "日志搜索"],
+          "itemIds": ["unix-tail", "unix-less"]
+        },
+        {
+          "id": "http-remote",
+          "label": "HTTP 与远程",
+          "searchTerms": ["接口", "HTTP", "下载", "远程登录", "上传", "复制到服务器"],
+          "itemIds": ["unix-curl", "unix-wget", "unix-ssh", "unix-scp"]
+        },
+        {
+          "id": "process-permissions",
+          "label": "进程与权限",
+          "searchTerms": ["进程", "CPU", "结束进程", "权限", "执行权限", "超时", "命令卡住"],
+          "itemIds": ["unix-ps", "unix-top", "unix-kill", "unix-chmod", "unix-timeout"]
+        },
+        {
+          "id": "storage-archives",
+          "label": "存储与归档",
+          "searchTerms": ["磁盘空间", "目录大小", "归档", "压缩包", "打包", "解压前预览"],
+          "itemIds": ["unix-df", "unix-du", "unix-tar"]
+        }
+      ],
+      "examplesByItemId": {
+        "unix-pwd": [
+          {
+            "scenario": "在脚本或构建任务失败后，需要确认相对路径究竟从哪个物理目录解析",
+            "goal": "输出消除符号链接后的当前工作目录",
+            "value": "pwd -P",
+            "description": "-P 按物理目录层级解析当前路径，便于定位工作目录偏差。",
+            "expected": "终端输出一个绝对目录路径，其中不保留当前路径里的符号链接段。"
+          }
+        ],
+        "unix-ls": [
+          {
+            "scenario": "接手一个项目目录时，需要同时核对隐藏配置、权限、所有者和修改时间",
+            "goal": "查看包含隐藏项的长格式目录清单",
+            "value": "ls -la",
+            "description": "-l 展示元数据，-a 同时包含名称以点开头的目录项。",
+            "expected": "终端逐行列出当前目录的普通项与隐藏项，并显示权限、所有者、大小和时间。"
+          }
+        ],
+        "unix-find": [
+          {
+            "scenario": "测试任务报错但未给出文件路径，需要在当前项目文件中定位所有测试脚本",
+            "goal": "按名称模式递归查找项目文件",
+            "value": "find . -name '*.test.js' -type f",
+            "description": "从当前目录向下遍历，只输出名称匹配且类型为普通文件的路径。",
+            "expected": "终端逐行输出项目树中匹配 *.test.js 的普通文件路径；没有匹配时不输出路径。"
+          }
+        ],
+        "unix-cat": [
+          {
+            "scenario": "依赖安装异常时，需要快速确认项目清单的原始内容是否被意外改写",
+            "goal": "一次性输出 package.json 的完整文本",
+            "value": "cat package.json",
+            "description": "直接把小型文本文件写到标准输出，适合快速核对原始内容。",
+            "expected": "终端按文件顺序显示 package.json 的全部内容，文件本身保持不变。"
+          }
+        ],
+        "unix-stat": [
+          {
+            "scenario": "锁文件看似没有变化时，需要核对它的大小、时间戳和文件系统标识",
+            "goal": "查看 package-lock.json 的详细文件状态",
+            "value": "stat package-lock.json",
+            "description": "读取文件元数据，而不打开或修改文件内容。",
+            "expected": "终端显示该文件的大小、权限、时间戳及实现提供的其它状态字段。"
+          }
+        ],
+        "unix-realpath": [
+          {
+            "scenario": "构建脚本使用了包含上级目录段的相对路径，需要确认最终读取的是哪个文件",
+            "goal": "把相对路径解析成规范绝对路径",
+            "value": "realpath ./scripts/../package.json",
+            "description": "解析点号、上级目录段和实现可解析的符号链接，输出规范路径。",
+            "expected": "终端输出 package.json 对应的绝对规范路径，不修改目标文件。"
+          }
+        ],
+        "unix-grep": [
+          {
+            "scenario": "代码评审前需要在说明文件中定位尚未处理的 TODO，并保留行号便于跳转",
+            "goal": "搜索匹配文本并显示所在行号",
+            "value": "grep -n 'TODO' README.md",
+            "description": "-n 为每个匹配行添加行号，便于回到文件中精确定位。",
+            "expected": "终端输出包含 TODO 的行及其行号；没有匹配时不输出并返回非零状态。"
+          },
+          {
+            "scenario": "重构前需要确认旧接口名在源码树中还出现在哪些文件里",
+            "goal": "递归搜索目录中的匹配文本",
+            "value": "grep -r 'legacyApi' ./src",
+            "description": "-r 递归读取 src 下的文件并输出包含 legacyApi 的匹配行。",
+            "expected": "终端输出文件路径和匹配内容；没有匹配时不输出并返回非零状态。",
+            "sourceId": "gnu-manuals",
+            "locator": "https://ftp.gnu.org/gnu/grep/grep-3.12.tar.xz · doc/grep.texi"
+          }
+        ],
+        "unix-xargs": [
+          {
+            "scenario": "持续集成导出了一列变更文件，需要逐个规范化为一行一个参数供后续步骤检查",
+            "goal": "从标准输入组装参数并逐项调用 printf",
+            "value": "xargs -n 1 printf '%s\\n' < changed-files.txt",
+            "description": "-n 1 限制每次调用只附加一个输入参数，printf 是由 xargs 调用的嵌套命令。",
+            "expected": "终端逐行输出 changed-files.txt 中由 xargs 解析出的每个参数。"
+          }
+        ],
+        "unix-sed": [
+          {
+            "scenario": "迁移接口域名前，需要先查看配置文件中所有替换结果，避免直接改坏原文件",
+            "goal": "把旧域名替换为新域名并仅输出预览",
+            "value": "sed 's/api-old\\.example/api.example/g' config.env",
+            "description": "替换脚本作用于每一行；未使用原地编辑选项，因此结果只写到标准输出。",
+            "expected": "终端显示替换后的 config.env 文本，磁盘上的原文件保持不变。"
+          },
+          {
+            "scenario": "应用日志很长，需要先抽取开头八十行确认启动参数和版本信息",
+            "goal": "只打印指定的行号范围",
+            "value": "sed -n '1,80p' app.log",
+            "description": "-n 关闭默认输出，p 命令只打印第一至第八十行。",
+            "expected": "终端最多显示 app.log 的前八十行，日志文件保持不变。"
+          },
+          {
+            "scenario": "确认预览和备份都正确后，需要在 Linux 构建容器里原地迁移配置域名",
+            "goal": "使用 GNU sed 直接改写 config.env",
+            "value": "sed -i 's/api-old\\.example/api.example/g' config.env",
+            "description": "-i 会把替换结果写回 config.env，而不是只把预览打印到终端。",
+            "expected": "磁盘上的 config.env 被替换结果覆盖；成功时通常不会输出完整文件内容。",
+            "copyable": false,
+            "warning": "会直接改写并覆盖原文件；先运行不带 -i 的预览命令并创建可恢复备份。",
+            "caveat": "先完成预览和备份；此写法面向 GNU sed，macOS 自带 BSD sed 的 -i 参数形式不同。",
+            "riskLevels": ["deleteOrOverwrite"],
+            "platforms": ["linux"],
+            "sourceId": "gnu-manuals",
+            "locator": "https://ftp.gnu.org/gnu/sed/sed-4.10.tar.xz · doc/sed.texi"
+          }
+        ],
+        "unix-awk": [
+          {
+            "scenario": "测试结果导出为逗号分隔文本，需要快速查看用例名和耗时两列",
+            "goal": "按逗号切分并输出第一列与第三列",
+            "value": "awk -F, '{print $1, $3}' test-results.csv",
+            "description": "-F, 把逗号设为字段分隔符，程序只打印需要的两个字段。",
+            "expected": "终端为输入文件的每一行输出第一列和第三列，原文件保持不变。"
+          }
+        ],
+        "unix-tail": [
+          {
+            "scenario": "服务刚刚失败，需要先查看日志末尾的最近五十行而不是加载整个文件",
+            "goal": "输出 app.log 的最后五十行",
+            "value": "tail -n 50 app.log",
+            "description": "-n 50 限制输出为文件末尾五十行，适合快速查看最新日志。",
+            "expected": "终端按原顺序显示 app.log 最后的最多五十行，文件保持不变。"
+          },
+          {
+            "scenario": "本地开发服务正在复现偶发错误，需要持续日志输出观察下一次请求",
+            "goal": "持续跟随 app.log 追加的内容",
+            "value": "tail -f app.log",
+            "description": "-f 保持进程运行，并在文件追加新行时继续输出。",
+            "expected": "终端先显示日志末尾内容，随后持续显示新追加的行，直到用户结束 tail。"
+          }
+        ],
+        "unix-less": [
+          {
+            "scenario": "构建日志超过终端回滚缓冲区，需要分页阅读并在查看器内搜索错误",
+            "goal": "用交互式分页器打开 build.log",
+            "value": "less build.log",
+            "description": "分页器按需显示大文件，并支持滚动和斜杠搜索。",
+            "expected": "终端进入 less 查看界面；退出后 build.log 保持不变。"
+          }
+        ],
+        "unix-curl": [
+          {
+            "scenario": "接口/API 部署完成后，需要从当前终端确认健康检查端点能否返回响应",
+            "goal": "向 HTTPS 接口健康检查地址发起请求",
+            "value": "curl https://example.com/health",
+            "description": "curl 请求给定 URL，并把响应正文写到标准输出。",
+            "expected": "终端显示服务器返回的响应正文；网络或 HTTP 处理失败时返回相应状态。"
+          }
+        ],
+        "unix-wget": [
+          {
+            "scenario": "准备离线安装环境时，需要把公开发布包下载到当前目录",
+            "goal": "下载指定的 HTTPS 发布文件",
+            "value": "wget https://example.com/releases/tool.tar.gz",
+            "description": "wget 获取 URL 指向的文件，并按远端文件名保存到当前目录。",
+            "expected": "成功时当前目录出现下载文件；若同名文件已存在，实现会避免静默覆盖。"
+          }
+        ],
+        "unix-ssh": [
+          {
+            "scenario": "远程开发机上的服务异常，需要登录主机检查只在该环境存在的日志",
+            "goal": "建立到远程主机的交互式 SSH 会话",
+            "value": "ssh developer@example.com",
+            "description": "使用指定用户名连接远程主机，认证方式由本机 SSH 配置和服务端共同决定。",
+            "expected": "认证成功后进入远程命令行；失败时终端显示连接或认证诊断。"
+          }
+        ],
+        "unix-scp": [
+          {
+            "scenario": "需要把待部署归档上传到远程主机的临时目录供人工核对",
+            "goal": "通过 SSH 安全复制本地归档",
+            "value": "scp ./dist/app.tar developer@example.com:/tmp/app.tar",
+            "description": "把本地文件传到远程路径；目标已存在时可能被替换。",
+            "expected": "认证和传输成功后，远程 /tmp/app.tar 包含上传的归档内容。",
+            "copyable": false,
+            "warning": "远程目标可能被覆盖；执行前先登录主机确认目标路径和现有文件可恢复。",
+            "caveat": "先用只读远程会话检查 /tmp/app.tar 是否存在，并确认覆盖目标与恢复方式。",
+            "riskLevels": ["deleteOrOverwrite"]
+          }
+        ],
+        "unix-ps": [
+          {
+            "scenario": "测试进程没有退出，需要先查看当前用户空间中的完整进程清单和启动参数",
+            "goal": "以完整格式列出所有进程",
+            "value": "ps -ef",
+            "description": "-e 选择全部进程，-f 展示包含父进程和命令参数的完整格式。",
+            "expected": "终端输出进程表，包含 PID、父 PID 及命令等实现支持的字段。"
+          }
+        ],
+        "unix-top": [
+          {
+            "scenario": "开发机突然变慢，需要实时观察哪些进程占用 CPU 或内存",
+            "goal": "打开交互式进程资源视图",
+            "value": "top",
+            "description": "持续刷新系统和进程资源统计，适合定位瞬时高负载。",
+            "expected": "终端进入动态进程列表；退出查看器不会修改进程状态。"
+          }
+        ],
+        "unix-kill": [
+          {
+            "scenario": "已用只读进程列表确认测试进程 PID，需要先请求它执行清理后正常退出",
+            "goal": "向已核对的 PID 发送默认终止信号",
+            "value": "kill 12345",
+            "description": "默认终止信号允许目标进程捕获信号并执行自己的清理逻辑。",
+            "expected": "指定进程收到终止信号；是否以及何时退出取决于进程的信号处理。",
+            "copyable": false,
+            "warning": "会中断进程；必须先核对 PID、命令行和所有者，避免 PID 复用导致误终止。",
+            "caveat": "先用只读进程列表检查 PID、命令行和所有者，并确认服务能够安全恢复。",
+            "riskLevels": ["processDisruption"]
+          },
+          {
+            "scenario": "进程拒绝正常终止且会阻塞自动化流水线，已确认可以放弃未保存状态",
+            "goal": "作为最后手段向已核对的 PID 发送 SIGKILL",
+            "value": "kill -9 12345",
+            "description": "-9 发送不可捕获的 SIGKILL，目标进程无法执行清理或保存状态。",
+            "expected": "内核强制终止指定进程；尚未落盘的数据和临时状态可能丢失。",
+            "copyable": false,
+            "warning": "会立即强制中断进程并可能损坏数据或服务状态，只能作为最后手段。",
+            "caveat": "先用只读进程列表检查 PID，确认正常终止已失败、数据已有备份且服务可恢复。",
+            "riskLevels": ["processDisruption"]
+          }
+        ],
+        "unix-chmod": [
+          {
+            "scenario": "仓库中的检查脚本缺少执行位，需要在提交前修正该文件的所有者权限",
+            "goal": "为脚本所有者添加执行权限",
+            "value": "chmod u+x scripts/check.sh",
+            "description": "符号模式 u+x 只为文件所有者增加执行位，不改变其它已有权限位。",
+            "expected": "scripts/check.sh 的权限模式发生变化，文件内容保持不变。",
+            "copyable": false,
+            "warning": "权限变更会影响文件的可执行范围；先用 ls -l 核对目标和现有权限。",
+            "caveat": "先检查脚本内容、目标路径和现有模式，并通过 git diff 确认只提交预期的权限变化。",
+            "riskLevels": ["permissionChange"]
+          },
+          {
+            "scenario": "刚生成的团队脚本无法直接运行，需要按当前 umask 为允许的用户类别补上执行位",
+            "goal": "使用开发者常见写法为脚本添加执行权限",
+            "value": "chmod +x scripts/bootstrap.sh",
+            "description": "+x 按当前 umask 为对应用户类别增加执行位，不修改脚本内容。",
+            "expected": "scripts/bootstrap.sh 的权限模式发生变化，随后可按系统权限规则直接执行。",
+            "copyable": false,
+            "warning": "权限变更会影响谁能执行文件；先用 ls -l 检查目标、所有者和当前权限。",
+            "caveat": "确认脚本内容可信且目标路径正确后再执行；团队仓库还应检查提交中的文件模式差异。",
+            "riskLevels": ["permissionChange"]
+          }
+        ],
+        "unix-df": [
+          {
+            "scenario": "构建报磁盘空间不足，需要用可移植单位核对各文件系统剩余容量",
+            "goal": "以 1024 字节块显示文件系统空间",
+            "value": "df -k",
+            "description": "-k 使用 1024 字节块报告容量，便于在不同 POSIX 环境间比较。",
+            "expected": "终端输出已挂载文件系统的总量、已用、可用空间和挂载位置。"
+          }
+        ],
+        "unix-du": [
+          {
+            "scenario": "依赖目录膨胀导致缓存超限，需要汇总 node_modules 的磁盘占用",
+            "goal": "以 1024 字节块汇总单个目录",
+            "value": "du -sk ./node_modules",
+            "description": "-s 只输出汇总值，-k 使用 1024 字节块。",
+            "expected": "终端输出 node_modules 的汇总占用及目录名，不修改目录内容。"
+          }
+        ],
+        "unix-tar": [
+          {
+            "scenario": "收到发布归档后，需要在解包前检查其中的路径，避免把未知文件写入工作目录",
+            "goal": "列出 tar 归档目录而不提取文件",
+            "value": "tar tf release.tar",
+            "description": "传统选项 t 查看归档目录，f 指定后续的归档文件名；不会执行提取。",
+            "expected": "终端按归档顺序列出 release.tar 内的成员路径，当前目录不新增归档成员。"
+          },
+          {
+            "scenario": "已检查发布归档成员且准备好空的临时目录，需要解开 gzip 压缩包进行本地验收",
+            "goal": "提取 gzip 压缩的 tar 发布归档",
+            "value": "tar -xzf release.tar.gz",
+            "description": "-x 提取成员，-z 处理 gzip 压缩，-f 指定 release.tar.gz 归档文件。",
+            "expected": "归档成员被写入当前目录；若同名路径已存在，内容可能被覆盖。",
+            "copyable": false,
+            "warning": "提取会在当前目录创建文件并可能覆盖同名路径；不要直接在项目根目录处理未知归档。",
+            "caveat": "先用 tar -tzf release.tar.gz 预览成员路径，再进入新建的隔离临时目录执行提取。",
+            "riskLevels": ["deleteOrOverwrite"],
+            "sourceId": "gnu-manuals",
+            "locator": "https://ftp.gnu.org/gnu/tar/tar-1.35.tar.xz · doc/tar.texi"
+          },
+          {
+            "scenario": "准备上传构建产物前，需要把示例目录打成一个 gzip 压缩归档",
+            "goal": "创建 gzip 压缩的 tar 归档",
+            "value": "tar -czf archive.tar.gz example-dir",
+            "description": "-c 创建新归档，-z 使用 gzip 压缩，-f 指定 archive.tar.gz 输出文件。",
+            "expected": "当前目录生成 archive.tar.gz；同名文件存在时可能被替换。",
+            "copyable": false,
+            "warning": "会创建或覆盖 archive.tar.gz；不要在未核对路径时覆盖已有发布归档。",
+            "caveat": "先检查 example-dir 和目标路径，再为现有同名归档创建备份或改用新的文件名。",
+            "riskLevels": ["deleteOrOverwrite"],
+            "sourceId": "gnu-manuals",
+            "locator": "https://ftp.gnu.org/gnu/tar/tar-1.35.tar.xz · doc/tar.texi"
+          }
+        ],
+        "unix-timeout": [
+          {
+            "scenario": "自动化测试偶尔永久等待，需要给整个测试命令设置明确的最长运行时间",
+            "goal": "最多运行三十秒的 npm test",
+            "value": "timeout 30 npm test",
+            "description": "timeout 把 duration 后面的 npm test 作为嵌套命令执行，并在超过时限时发送终止信号。",
+            "expected": "测试在三十秒内完成时返回其状态；超时则由 timeout 终止并返回超时状态。"
+          }
+        ],
+        "unix-updatedb": [
+          {
+            "scenario": "想为单个源码目录试建 locate 数据库，但不能覆盖系统维护的默认数据库",
+            "goal": "把项目路径索引写入临时数据库文件",
+            "value": "updatedb --output /tmp/project-locate.db --localpaths ./src",
+            "description": "--output 选择独立数据库文件，--localpaths 把索引范围限制为项目源码目录。",
+            "expected": "成功时生成 /tmp/project-locate.db，系统默认 locate 数据库保持不变。",
+            "copyable": false,
+            "warning": "会创建或覆盖指定数据库文件并遍历源码路径；先确认输出文件不存在或可安全替换。",
+            "caveat": "先检查 /tmp/project-locate.db 的现有用途和 ./src 的读取范围；索引可能记录敏感文件名。",
+            "riskLevels": ["deleteOrOverwrite"]
+          }
+        ]
+      }
+    },
+    "linux": {
+      "inventoryHash": "sha256:492668b3d06a5d2829615cb4945ba209aee02bbb0e05ef09794b8611580f7b94",
+      "presentation": {
+        "name": "Linux 运维排障",
+        "subtitle": "服务器 / 容器 / WSL · 服务、日志、端口、资源",
+        "platformLabel": "Linux 主机",
+        "implementationLabel": "Linux 实现"
+      },
+      "featuredItemIds": [
+        "linux-systemctl",
+        "linux-journalctl",
+        "linux-dmesg",
+        "linux-coredumpctl",
+        "linux-pgrep",
+        "linux-pkill",
+        "linux-free",
+        "linux-vmstat",
+        "linux-uptime",
+        "linux-watch",
+        "linux-ss",
+        "linux-ip",
+        "linux-resolvectl",
+        "linux-networkctl",
+        "linux-lsfd",
+        "linux-lslocks",
+        "linux-lsblk",
+        "linux-findmnt",
+        "linux-namei",
+        "linux-flock",
+        "linux-taskset",
+        "linux-prlimit",
+        "linux-nsenter",
+        "linux-unshare"
+      ],
+      "itemSearchTerms": {
+        "linux-systemctl": ["服务失败"],
+        "linux-journalctl": ["持续日志"],
+        "linux-free": ["内存压力"],
+        "linux-vmstat": ["内存压力"],
+        "linux-ss": ["端口监听"],
+        "linux-nsenter": ["容器命名空间"],
+        "linux-unshare": ["容器命名空间"]
+      },
+      "groups": [
+        {
+          "id": "services-logs",
+          "label": "服务与日志",
+          "searchTerms": ["服务状态", "启动失败", "系统日志", "内核日志", "崩溃", "core dump"],
+          "itemIds": ["linux-systemctl", "linux-journalctl", "linux-dmesg", "linux-coredumpctl"]
+        },
+        {
+          "id": "process-resources",
+          "label": "进程与资源",
+          "searchTerms": ["进程名", "结束进程", "内存", "CPU", "负载", "运行时间", "持续观察"],
+          "itemIds": ["linux-pgrep", "linux-pkill", "linux-free", "linux-vmstat", "linux-uptime", "linux-watch"]
+        },
+        {
+          "id": "network-ports",
+          "label": "网络与端口",
+          "searchTerms": ["端口占用", "监听端口", "网络连接", "IP 地址", "DNS", "网卡", "网络状态"],
+          "itemIds": ["linux-ss", "linux-ip", "linux-resolvectl", "linux-networkctl"]
+        },
+        {
+          "id": "disks-files",
+          "label": "磁盘与文件",
+          "searchTerms": ["文件描述符", "文件锁", "块设备", "磁盘", "挂载点", "路径权限", "互斥锁"],
+          "itemIds": ["linux-lsfd", "linux-lslocks", "linux-lsblk", "linux-findmnt", "linux-namei", "linux-flock"]
+        },
+        {
+          "id": "task-limits",
+          "label": "任务与资源限制",
+          "searchTerms": ["CPU 亲和性", "资源限制", "ulimit", "任务隔离", "并发限制"],
+          "itemIds": ["linux-taskset", "linux-prlimit"]
+        },
+        {
+          "id": "containers-namespaces",
+          "label": "容器与命名空间",
+          "searchTerms": ["容器", "命名空间", "进入容器", "隔离环境", "WSL"],
+          "itemIds": ["linux-nsenter", "linux-unshare"]
+        }
+      ],
+      "examplesByItemId": {
+        "linux-systemctl": [
+          {
+            "scenario": "SSH 连接被拒绝，需要先确认服务失败是否来自单元未加载或最近一次启动失败",
+            "goal": "读取 sshd.service 的当前状态并定位服务失败",
+            "value": "systemctl status sshd.service",
+            "description": "status 子命令汇总单元加载状态、活动状态、主进程和近期日志。",
+            "expected": "终端显示 sshd.service 的状态；命令只读取状态，不启动或停止服务。"
+          }
+        ],
+        "linux-journalctl": [
+          {
+            "scenario": "系统刚出现异常，需要从统一日志中按时间查看最近记录并继续筛选线索",
+            "goal": "打开当前用户有权读取的 systemd 日志",
+            "value": "journalctl",
+            "description": "不加筛选条件时读取日志存储中的记录，默认可通过分页器浏览。",
+            "expected": "终端按时间显示当前权限范围内的日志记录，不修改日志内容。"
+          },
+          {
+            "scenario": "服务已经重启但问题仍在复现，需要持续日志流观察下一次失败",
+            "goal": "持续跟随 systemd journal 的新记录",
+            "value": "journalctl -f",
+            "description": "-f 保持 journalctl 运行，并在新日志到达时继续输出。",
+            "expected": "终端持续显示当前权限范围内的新日志记录，直到用户结束 journalctl。"
+          }
+        ],
+        "linux-dmesg": [
+          {
+            "scenario": "新接入设备没有出现，需要检查内核是否记录了驱动加载或硬件错误",
+            "goal": "读取内核环形缓冲区消息",
+            "value": "dmesg",
+            "description": "输出当前可读取的内核消息，便于查找驱动、设备和启动阶段诊断。",
+            "expected": "终端显示内核消息；受系统权限限制时会返回读取失败诊断。"
+          }
+        ],
+        "linux-coredumpctl": [
+          {
+            "scenario": "服务无日志退出，需要确认 systemd-coredump 是否保存了对应的崩溃记录",
+            "goal": "列出已保存的核心转储及元数据",
+            "value": "coredumpctl list",
+            "description": "list 子命令展示已登记核心转储的时间、进程、信号和保存状态。",
+            "expected": "终端输出当前权限可见的核心转储列表；没有记录时列表为空。"
+          }
+        ],
+        "linux-pgrep": [
+          {
+            "scenario": "同一主机运行多个 Node.js 服务，需要按名称核对 PID 和启动命令",
+            "goal": "列出名称匹配的进程及命令行",
+            "value": "pgrep -a node",
+            "description": "-a 在 PID 旁显示命令行，帮助区分同名进程。",
+            "expected": "终端输出所有匹配进程的 PID 与命令行；没有匹配时不输出并返回非零状态。"
+          }
+        ],
+        "linux-pkill": [
+          {
+            "scenario": "已确认测试工作进程可以停止，需要按进程名请求它们正常退出",
+            "goal": "向名称匹配的 example-worker 进程发送默认终止信号",
+            "value": "pkill example-worker",
+            "description": "按进程名匹配并发送终止信号，可能同时影响多个同名进程。",
+            "expected": "所有匹配进程收到终止信号；没有匹配时返回非零状态。",
+            "copyable": false,
+            "warning": "会中断同名进程；先用 pgrep -a example-worker 核对 PID、命令行和影响范围。",
+            "caveat": "先用只读的 pgrep -a example-worker 检查全部匹配项，并确认这些进程都可以恢复。",
+            "riskLevels": ["processDisruption"]
+          }
+        ],
+        "linux-free": [
+          {
+            "scenario": "主机出现内存压力并开始频繁交换，需要用统一单位比较物理内存和 swap 使用量",
+            "goal": "以 MiB 查看内存容量统计",
+            "value": "free -m",
+            "description": "-m 使用 MiB 展示总量、已用、可用内存和交换空间。",
+            "expected": "终端输出内存与 swap 统计表，不修改系统内存配置。"
+          }
+        ],
+        "linux-vmstat": [
+          {
+            "scenario": "接口响应偶发变慢并伴随内存压力，需要连续采样 CPU、内存、换页和 I/O 指标判断瓶颈",
+            "goal": "每秒采样一次并输出五组统计",
+            "value": "vmstat 1 5",
+            "description": "第一个操作数是采样间隔，第二个操作数限制样本数量。",
+            "expected": "终端依次输出五组进程、内存、换页、I/O 和 CPU 统计。"
+          }
+        ],
+        "linux-uptime": [
+          {
+            "scenario": "告警恢复后需要判断主机是否刚重启，从而区分进程故障与整机重启",
+            "goal": "以易读格式查看持续运行时间",
+            "value": "uptime -p",
+            "description": "-p 只展示易读的持续运行时长。",
+            "expected": "终端输出主机已运行的天、小时或分钟，不修改系统状态。"
+          }
+        ],
+        "linux-watch": [
+          {
+            "scenario": "压测期间需要在同一屏幕反复观察内存统计，而不手工重复输入命令",
+            "goal": "周期性执行 free -m",
+            "value": "watch free -m",
+            "description": "watch 把后面的 free -m 作为嵌套命令并定期刷新其输出。",
+            "expected": "终端进入持续刷新的内存统计视图，退出 watch 后停止重复执行。"
+          }
+        ],
+        "linux-ss": [
+          {
+            "scenario": "本地服务启动后请求仍被拒绝，需要确认 TCP 端口是否真的进入监听状态",
+            "goal": "列出 TCP 监听端口并避免名称解析干扰",
+            "value": "ss -lnt",
+            "description": "-l 仅显示监听套接字，-n 保留数字端口，-t 限定为 TCP。",
+            "expected": "终端输出当前可见的 TCP 监听地址和端口，不修改网络配置。"
+          }
+        ],
+        "linux-ip": [
+          {
+            "scenario": "容器无法访问外网，需要核对宿主机各接口的链路状态和已分配地址",
+            "goal": "显示所有网络接口的地址信息",
+            "value": "ip address show",
+            "description": "address show 子命令读取接口的 IPv4、IPv6 地址和链路属性。",
+            "expected": "终端按接口输出地址与状态信息，不修改任何网络配置。"
+          }
+        ],
+        "linux-resolvectl": [
+          {
+            "scenario": "域名解析结果与预期不符，需要确认每个链路正在使用的 DNS 服务器和搜索域",
+            "goal": "查看 systemd-resolved 的全局与逐链路状态",
+            "value": "resolvectl status",
+            "description": "status 子命令汇总解析器协议、DNS 服务器和各链路配置。",
+            "expected": "终端显示当前解析状态，不更改 DNS 设置。"
+          }
+        ],
+        "linux-networkctl": [
+          {
+            "scenario": "网卡已经存在但没有地址，需要先确认 systemd-networkd 看到的链路配置状态",
+            "goal": "查看网络链路的总体状态",
+            "value": "networkctl status",
+            "description": "status 子命令读取链路、地址、网关和在线状态摘要。",
+            "expected": "终端显示网络状态信息，不启动、停止或重新配置链路。"
+          }
+        ],
+        "linux-lsfd": [
+          {
+            "scenario": "服务提示文件句柄耗尽，需要把占用者、描述符编号和目标文件放在同一张表里",
+            "goal": "列出打开的文件描述符及其进程和目标",
+            "value": "lsfd",
+            "description": "使用默认列读取进程、描述符类型和目标等信息，便于定位句柄占用。",
+            "expected": "终端输出当前权限可见的文件描述符表，不关闭任何描述符。"
+          }
+        ],
+        "linux-lslocks": [
+          {
+            "scenario": "构建产物无法替换，需要确认是否有进程持有本地文件锁",
+            "goal": "列出系统当前文件锁",
+            "value": "lslocks",
+            "description": "读取内核公开的锁信息，并关联可见的进程和路径。",
+            "expected": "终端输出当前锁列表；命令不会释放或修改锁。"
+          }
+        ],
+        "linux-lsblk": [
+          {
+            "scenario": "挂载新磁盘前，需要确认设备、分区和父子关系，避免选错目标",
+            "goal": "查看块设备树",
+            "value": "lsblk",
+            "description": "以树形结构列出块设备及实现默认列。",
+            "expected": "终端显示磁盘、分区及挂载关系，不读取或改写设备内容。"
+          }
+        ],
+        "linux-findmnt": [
+          {
+            "scenario": "根目录空间告警，需要确认它实际对应的源设备、文件系统类型和挂载选项",
+            "goal": "查询根目录对应的挂载项",
+            "value": "findmnt /",
+            "description": "使用目标路径匹配挂载表中的对应记录。",
+            "expected": "终端输出根目录的源设备、目标、类型和选项等字段。"
+          }
+        ],
+        "linux-namei": [
+          {
+            "scenario": "服务能看到文件但无法打开，需要逐级核对路径组件、符号链接和目录权限",
+            "goal": "以长格式解析日志路径的每一级",
+            "value": "namei -l ./var/log/app.log",
+            "description": "-l 为路径中的每个组件展示类型、权限和所有者信息。",
+            "expected": "终端逐级输出路径解析结果，目标路径和权限保持不变。"
+          }
+        ],
+        "linux-flock": [
+          {
+            "scenario": "多个持续集成任务可能同时运行测试，需要用同一锁文件串行化这段命令",
+            "goal": "持有项目锁时执行 npm test",
+            "value": "flock /tmp/project-ci.lock npm test",
+            "description": "flock 在锁文件上获取锁，再把 npm test 作为嵌套命令运行。",
+            "expected": "获得锁后执行测试；其它使用同一锁的任务会按默认方式等待。"
+          }
+        ],
+        "linux-taskset": [
+          {
+            "scenario": "性能测试需要固定在一个 CPU 上运行，以减少跨核调度对结果的干扰",
+            "goal": "把 npm test 限定到 CPU 0",
+            "value": "taskset -c 0 npm test",
+            "description": "-c 使用 CPU 列表语法，后面的 npm test 是受亲和性约束的嵌套命令。",
+            "expected": "测试进程及其继承者在允许的 CPU 集合内运行；命令结束后约束随进程消失。"
+          }
+        ],
+        "linux-prlimit": [
+          {
+            "scenario": "服务报告打开文件过多，需要先只读查看目标进程当前的资源上限",
+            "goal": "读取 PID 4321 的资源限制",
+            "value": "prlimit --pid 4321",
+            "description": "只指定 --pid 而不提供新限制时，查询目标进程的资源上限。",
+            "expected": "终端输出该进程的软限制和硬限制；进程限制保持不变。"
+          }
+        ],
+        "linux-nsenter": [
+          {
+            "scenario": "已确认容器主进程 PID，需要进入容器命名空间核对实际文件视图",
+            "goal": "在目标容器命名空间的挂载视图中启动一个 shell",
+            "value": "nsenter --mount --target 4321 /bin/sh",
+            "description": "--target 选择进程，--mount 加入其挂载命名空间，再运行嵌套的 shell。",
+            "expected": "权限允许时启动一个看到目标挂载视图的 shell；退出 shell 后返回原命名空间。",
+            "copyable": false,
+            "warning": "进入目标命名空间后执行的命令可能修改容器或宿主文件；先核对 PID 并保持只读排查。",
+            "caveat": "先检查 PID、容器身份和挂载关系；进入后只读核对，避免对共享路径执行写操作。",
+            "riskLevels": ["processDisruption"]
+          }
+        ],
+        "linux-unshare": [
+          {
+            "scenario": "需要验证容器命名空间的挂载影响范围，但不希望实验进入调用者已有的命名空间",
+            "goal": "在新的容器命名空间式挂载视图中启动 shell",
+            "value": "unshare --mount /bin/sh",
+            "description": "--mount 创建新的挂载命名空间，并把 /bin/sh 作为嵌套程序运行。",
+            "expected": "权限允许时进入新命名空间中的 shell；退出后该进程命名空间随之结束。",
+            "caveat": "新命名空间并不自动提供完整容器隔离；仍应避免对共享路径执行写操作。"
+          }
+        ],
+        "linux-fstrim": [
+          {
+            "scenario": "计划对根文件系统执行 TRIM 前，需要先验证命令路径而不真正发送 FITRIM 操作",
+            "goal": "以 dry-run 模式检查根挂载点",
+            "value": "fstrim -n /",
+            "description": "-n 执行除 FITRIM ioctl 之外的检查流程，因此不会真正丢弃未使用块。",
+            "expected": "命令验证目标并返回状态，但不会向文件系统发出实际 TRIM 请求。",
+            "caveat": "读取挂载信息仍可能需要相应权限；真正执行时应遵循设备与发行版的维护策略。"
+          },
+          {
+            "scenario": "维护窗口内已确认文件系统和底层设备支持 TRIM，需要对根挂载点真正回收未使用块",
+            "goal": "执行 FITRIM 并显示回收量",
+            "value": "fstrim -v /",
+            "description": "-v 在实际向根文件系统发送 FITRIM 后报告被丢弃的字节数。",
+            "expected": "支持时终端显示已回收范围；不支持或权限不足时返回错误，设备状态可能已部分改变。",
+            "copyable": false,
+            "warning": "会对挂载文件系统实际发送块丢弃请求；仅在已确认设备支持且处于维护窗口时执行。",
+            "caveat": "先运行 fstrim -n / 检查并确认根挂载点、文件系统与存储设备的 TRIM 策略。",
+            "riskLevels": ["deleteOrOverwrite"]
+          }
+        ]
+      }
+    }
+  }
+}

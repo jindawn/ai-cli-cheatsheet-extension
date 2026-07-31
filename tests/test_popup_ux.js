@@ -21,6 +21,7 @@ assert(html.includes('id="categoryFilters" class="filters"'), "the filter panel 
 assert(html.includes('id="evidenceFilters"') && html.includes('id="exampleFilters"'), "quality and usage facets should be available");
 assert(html.includes('class="search-shortcut"'), "search should display its keyboard shortcut");
 assert(html.includes('id="shellFilters"'), "Shell-specific filters should have a dedicated container");
+assert(html.includes('id="developerCommandFilters"'), "developer command scenarios need a dedicated always-visible container");
 assert(html.includes("Git / Unix / Linux / Shell"), "terminal onboarding preset should expose Unix, Linux and Shell");
 assert(html.includes("个性化推荐") && !/id="recommendationPanel"[^>]*hidden/.test(html), "local recommendations must be visible in every channel");
 assert(!html.includes('id="localAiPanel"') && html.includes('id="bridgeDialog"'), "bridge setup should use a compact dialog rather than a permanent panel");
@@ -646,6 +647,197 @@ const manageAllPlatforms = render.renderManageToolToggles({ ...data, linux: { me
 assert(manageAllPlatforms.includes("Linux 系统工具") && manageAllPlatforms.includes("仅 Linux"), "management choices should list other-platform tools with a platform badge");
 const onboardAllPlatforms = render.renderOnboardChoices({ linux: { meta: { name: "Linux 系统工具", platforms: ["linux"] } } }, ["linux"], new Set());
 assert(onboardAllPlatforms.includes("仅 Linux") && !onboardAllPlatforms.includes("checked"), "onboarding should list but not preselect an unenabled Linux-only tool");
+const commandCuration = {
+  schemaVersion: 1,
+  tools: {
+    "unix-cli": {
+      inventoryHash: "sha256:test-unix",
+      presentation: {
+        name: "开发常用命令",
+        subtitle: "Unix/POSIX · 文件、文本、网络、进程",
+        platformLabel: "macOS · Linux",
+        implementationLabel: "通用/POSIX",
+      },
+      featuredItemIds: ["unix-find", "unix-sed"],
+      groups: [
+        { id: "project-files", label: "项目与文件", searchTerms: ["项目文件"], itemIds: ["unix-find"] },
+        { id: "code-text", label: "代码与文本", searchTerms: ["代码文本"], itemIds: ["unix-sed"] },
+      ],
+    },
+    linux: {
+      inventoryHash: "sha256:test-linux",
+      presentation: {
+        name: "Linux 运维排障",
+        subtitle: "服务器 / 容器 / WSL · 服务、日志、端口、资源",
+        platformLabel: "Linux 主机",
+        implementationLabel: "Linux 实现",
+      },
+      featuredItemIds: ["linux-ss"],
+      groups: [
+        { id: "network-ports", label: "网络与端口", searchTerms: ["端口监听"], itemIds: ["linux-ss"] },
+      ],
+    },
+  },
+};
+const commandData = {
+  "unix-cli": {
+    meta: {
+      id: "unix-cli", name: "Unix/POSIX 基础命令", color: "#555", platforms: ["mac", "linux"],
+      officialCoverage: { inventoryHash: "sha256:test-unix" },
+    },
+    items: [
+      { id: "unix-find", cat: "slash", cmd: "find", zh: "查找文件", examples: [] },
+      { id: "unix-awk", cat: "slash", cmd: "awk", zh: "处理文本", examples: [] },
+      { id: "unix-sed", cat: "slash", cmd: "sed", zh: "转换文本", examples: [] },
+    ],
+  },
+  linux: {
+    meta: {
+      id: "linux", name: "Linux 系统工具", color: "#666", platforms: ["linux"],
+      officialCoverage: { inventoryHash: "sha256:test-linux" },
+    },
+    items: [{ id: "linux-ss", cat: "slash", cmd: "ss", zh: "查看套接字", examples: [] }],
+  },
+};
+const curatedIndex = state.createEntryIndex(commandData, new Map(), core, commandCuration);
+const staleCommandCuration = {
+  ...commandCuration,
+  tools: {
+    ...commandCuration.tools,
+    "unix-cli": {
+      ...commandCuration.tools["unix-cli"],
+      inventoryHash: "sha256:stale",
+    },
+  },
+};
+const curatedState = {
+  ...baseState,
+  activeTool: "unix-cli",
+  enabledTools: new Set(["unix-cli", "linux"]),
+  developerCuration: commandCuration,
+  activeDeveloperGroup: null,
+  browseCommandInventory: false,
+  searchQuery: "",
+};
+assert.deepStrictEqual(
+  state.collectEntries(curatedIndex, commandData, core, curatedState).map((entry) => entry.itemId),
+  ["unix-find", "unix-sed"],
+  "an empty curated view should contain only featured commands",
+);
+assert.deepStrictEqual(
+  state.collectEntries(curatedIndex, commandData, core, {
+    ...curatedState, activeDeveloperGroup: "project-files",
+  }).map((entry) => entry.itemId),
+  ["unix-find"],
+  "scenario chips should select their unique primary group",
+);
+assert.deepStrictEqual(
+  state.collectEntries(curatedIndex, commandData, core, {
+    ...curatedState, searchQuery: "awk",
+  }).map((entry) => entry.itemId),
+  ["unix-find", "unix-awk", "unix-sed"],
+  "typing a query should automatically search the complete inventory",
+);
+assert.deepStrictEqual(
+  state.collectEntries(curatedIndex, commandData, core, {
+    ...curatedState, browseCommandInventory: true,
+  }).map((entry) => entry.itemId),
+  ["unix-find", "unix-awk", "unix-sed"],
+  "the complete-list action should retain every non-featured official entry",
+);
+assert.deepStrictEqual(
+  state.collectEntries(curatedIndex, commandData, core, {
+    ...curatedState,
+    developerCuration: staleCommandCuration,
+  }).map((entry) => entry.itemId),
+  ["unix-find", "unix-awk", "unix-sed"],
+  "a stale curation hash should safely fall back to the complete official inventory",
+);
+assert.strictEqual(
+  render.renderFilters(commandData, state, {
+    ...curatedState,
+    developerCuration: staleCommandCuration,
+  }).developerHtml,
+  "",
+  "stale curation navigation should not be shown",
+);
+const curatedFilters = render.renderFilters(commandData, state, curatedState);
+assert(curatedFilters.developerHtml.includes("精选 2")
+  && curatedFilters.developerHtml.includes("项目与文件")
+  && curatedFilters.developerHtml.includes("代码与文本")
+  && curatedFilters.developerHtml.includes("完整清单 3"),
+"curated tools should expose featured, scenario, and complete-list navigation");
+const searchedCuratedFilters = render.renderFilters(commandData, state, {
+  ...curatedState,
+  activeDeveloperGroup: "project-files",
+  searchQuery: "awk",
+});
+assert(searchedCuratedFilters.developerHtml.includes("正在检索完整清单 3 条")
+  && !searchedCuratedFilters.developerHtml.includes('chip active" data-developer-group')
+  && !searchedCuratedFilters.developerHtml.includes('chip active" data-command-view'),
+"complete-inventory search must not present bypassed scenario navigation as active");
+const curatedManage = render.renderManageToolToggles(
+  commandData,
+  ["unix-cli", "linux"],
+  { ...curatedState, enabledTools: new Set(["unix-cli", "linux"]) },
+);
+for (const label of [
+  "开发常用命令",
+  "Unix/POSIX · 文件、文本、网络、进程",
+  "macOS · Linux",
+  "Linux 运维排障",
+  "服务器 / 容器 / WSL · 服务、日志、端口、资源",
+  "Linux 主机",
+]) {
+  assert(curatedManage.includes(label), `management cards should show ${label}`);
+}
+const curatedOnboarding = render.renderOnboardChoices(
+  commandData,
+  ["unix-cli", "linux"],
+  new Set(["unix-cli"]),
+  commandCuration,
+);
+assert(curatedOnboarding.includes("开发常用命令") && curatedOnboarding.includes("Linux 运维排障"),
+  "onboarding and management should share the curated card presentation");
+const curatedAdvancedManage = render.renderManageTools(
+  commandData,
+  ["unix-cli", "linux"],
+  {
+    ...curatedState,
+    maintenanceReady: false,
+    deletableToolIds: new Set(),
+  },
+  state,
+  curatedIndex,
+);
+for (const label of [
+  "开发常用命令",
+  "Unix/POSIX · 文件、文本、网络、进程",
+  "macOS · Linux",
+  "Linux 运维排障",
+  "服务器 / 容器 / WSL · 服务、日志、端口、资源",
+  "Linux 主机",
+]) {
+  assert(curatedAdvancedManage.includes(label), `advanced management cards should show ${label}`);
+}
+const implementationEntry = {
+  ...curatedIndex.byKey.get("linux::linux-ss"),
+  displayCmd: "ss",
+  platformInfo: core.getPlatformCommand(commandData.linux.items[0], "linux"),
+};
+const implementationHtml = render.renderRow(implementationEntry, "ss", {
+  data: commandData,
+  core,
+  platform: "linux",
+  expandedExamples: new Set(),
+  favourites: new Set(),
+  helpers: state,
+}, true);
+assert(implementationHtml.includes("Linux 实现"), "search results should label the Linux implementation");
+assert(css.includes("grid-template-columns:minmax(0,1fr) minmax(0,1fr)")
+  && css.includes(".tool-choice-name")
+  && css.includes("overflow-wrap:anywhere"),
+"two-column tool cards should wrap long developer labels without horizontal overflow");
 const linuxExampleEntry = {
   ...linuxOnly,
   item: {
@@ -897,6 +1089,9 @@ const context = {
 };
 const popupSource = fs.readFileSync(path.join(root, "popup.js"), "utf8");
 const dialogSource = fs.readFileSync(path.join(root, "popup-dialogs.js"), "utf8");
+assert(popupSource.includes("clearDeveloperSearch")
+  && popupSource.includes('storageSet({ lastQuery: "" })'),
+"choosing a developer scenario should leave full-inventory search and activate the selected view");
 // 搜索框按 ↓ 应直达第一条结果（README 宣称的键盘路径）。
 assert(
   /search"\)\.addEventListener\("keydown"[\s\S]{0,300}ArrowDown[\s\S]{0,300}\.row-main/.test(popupSource),

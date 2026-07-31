@@ -20,7 +20,10 @@ const MAINTENANCE_ENABLED = Boolean(CAPABILITIES.nativeCompanion)
 const BRIDGE_PROTOCOL_VERSION = 5;
 const MIN_COMPATIBLE_BRIDGE_PROTOCOL_VERSION = 3;
 const BRIDGE_SCHEMA_VERSION = 2;
-const BRIDGE_VERSION = DISTRIBUTION.releaseVersion || chrome.runtime?.getManifest?.().version || "1.8.2";
+const BRIDGE_VERSION = DISTRIBUTION.bridgeReleaseVersion
+  || DISTRIBUTION.releaseVersion
+  || chrome.runtime?.getManifest?.().version
+  || "1.8.2";
 const COMPANION_PERMISSIONS = ["nativeMessaging", "alarms"];
 const STORAGE_PERMISSION = ["unlimitedStorage"];
 const ADD_PROVIDER_SENTINEL = "__add_provider__";
@@ -93,6 +96,9 @@ let searchLimit = STATE.SEARCH_INITIAL_LIMIT;
 let lastAutoExpandedQuery = "";
 let filtersOpen = false;
 let browseAll = false;
+let developerCuration = Object.freeze({ schemaVersion: 1, tools: Object.freeze({}) });
+let activeDeveloperGroup = null;
+let browseCommandInventory = false;
 let selectedResultKey = "";
 const { hideToast, showToast, showUndoToast } = window.CHEATSHEET_POPUP_TOAST.createToast(document);
 
@@ -114,6 +120,7 @@ const onboarding = DIALOGS.createOnboarding({
   getAllData,
   getEnabledTools: () => enabledTools,
   setEnabledTools: (value) => { enabledTools = value; },
+  getDeveloperCuration: () => developerCuration,
   getPlatform: () => platform,
   setPlatform: (value) => { platform = value; },
   storageSet,
@@ -150,6 +157,24 @@ function getAllData() {
 
 function getLoadedData() {
   return window.CHEATSHEET_DATA || {};
+}
+
+async function loadDeveloperCuration() {
+  try {
+    const response = await fetch(chrome.runtime.getURL("shared/developer-command-curation.json"), {
+      cache: "no-store",
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const candidate = await response.json();
+    if (candidate?.schemaVersion !== 1 || !candidate.tools || typeof candidate.tools !== "object") {
+      throw new Error("invalid schema");
+    }
+    developerCuration = candidate;
+  } catch (error) {
+    // The sidecar is a presentation/search enhancement. A damaged development
+    // checkout must still open with the complete official inventories.
+    console.warn(`Developer command curation unavailable: ${error.message}`);
+  }
 }
 
 function storageGet(keys) {
@@ -1474,6 +1499,10 @@ function currentState() {
     activeShellFilter,
     activeEvidence,
     activeExampleFilter,
+    activeDeveloperGroup,
+    browseCommandInventory,
+    developerCuration,
+    searchQuery: getDOM().search?.value || "",
     favourites,
     recents,
     enabledTools,
@@ -1502,11 +1531,13 @@ function clearHomeFilters() {
     activeShellFilter = null;
     activeEvidence = null;
     activeExampleFilter = null;
+    activeDeveloperGroup = null;
+    browseCommandInventory = false;
   });
 }
 
 function rebuildEntryIndex() {
-  entryIndex = STATE.createEntryIndex(getAllData(), enrichmentIndex, CORE);
+  entryIndex = STATE.createEntryIndex(getAllData(), enrichmentIndex, CORE, developerCuration);
 }
 
 function setStatus(text, kind = "", action = null) {
@@ -1625,6 +1656,8 @@ function renderFilters() {
   quick.querySelectorAll("[data-tool]").forEach((button) => button.addEventListener("click", () => {
     applyFilter(() => {
       activeTool = button.dataset.tool;
+      activeDeveloperGroup = null;
+      browseCommandInventory = false;
       if (activeTool !== "shell") activeShellFilter = null;
     });
   }));
@@ -1635,9 +1668,41 @@ function renderFilters() {
     applyFilter(() => {
       activeTool = button.dataset.tool;
       browseAll = activeTool === "all";
+      activeDeveloperGroup = null;
+      browseCommandInventory = false;
       if (activeTool !== "shell") activeShellFilter = null;
     });
   }));
+
+  const developerFilters = document.getElementById("developerCommandFilters");
+  developerFilters.innerHTML = html.developerHtml;
+  const clearDeveloperSearch = () => {
+    if (!getDOM().search?.value) return;
+    getDOM().search.value = "";
+    storageSet({ lastQuery: "" });
+  };
+  developerFilters.querySelectorAll("[data-developer-group]").forEach((button) =>
+    button.addEventListener("click", () => {
+      applyFilter(() => {
+        clearDeveloperSearch();
+        activeDeveloperGroup = button.dataset.developerGroup;
+        browseCommandInventory = false;
+      });
+    }));
+  developerFilters.querySelector('[data-command-view="featured"]')?.addEventListener("click", () => {
+    applyFilter(() => {
+      clearDeveloperSearch();
+      activeDeveloperGroup = null;
+      browseCommandInventory = false;
+    });
+  });
+  developerFilters.querySelector('[data-command-view="inventory"]')?.addEventListener("click", () => {
+    applyFilter(() => {
+      clearDeveloperSearch();
+      activeDeveloperGroup = null;
+      browseCommandInventory = true;
+    });
+  });
 
   const categories = document.getElementById("categoryFilters");
   categories.innerHTML = html.categoryHtml;
@@ -1681,6 +1746,11 @@ function rankVisibleEntries(query) {
   if (activeTool === "recent" && !query.trim()) ranked.sort((a, b) =>
     (recentOrder.get(`${a.toolId}::${a.itemId}`) ?? 99) - (recentOrder.get(`${b.toolId}::${b.itemId}`) ?? 99)
   );
+  if (!query.trim() && developerCuration.tools?.[activeTool] && !browseCommandInventory) {
+    ranked.sort((a, b) =>
+      (a.developerRank ?? Number.MAX_SAFE_INTEGER) - (b.developerRank ?? Number.MAX_SAFE_INTEGER)
+    );
+  }
   if (!query.trim() && activeTool === "all" && !activeCat && !browseAll) {
     const recentKeys = recents.map((item) => `${item.toolId}::${item.itemId}`);
     const priority = new Map(recentKeys.map((key, index) => [key, index]));
@@ -1745,6 +1815,7 @@ function bindHomeEvents() {
   document.getElementById("search").addEventListener("input", (event) => {
     resetResultLimits();
     storageSet({ lastQuery: event.target.value });
+    renderFilters();
     debouncedRender();
   });
   document.getElementById("toggleFilters").addEventListener("click", () => {
@@ -1764,6 +1835,7 @@ function bindHomeEvents() {
     getDOM().search.value = "";
     resetResultLimits();
     storageSet({ lastQuery: "" });
+    renderFilters();
     render();
   });
   document.getElementById("openManage").addEventListener("click", () => showView("manage"));
@@ -1798,6 +1870,7 @@ function bindHomeEvents() {
         search.value = "";
         resetResultLimits();
         storageSet({ lastQuery: "" });
+        renderFilters();
         render();
       } else {
         search.blur();
@@ -1896,7 +1969,11 @@ async function handleEnabledToolToggle(checkbox) {
     enabledTools.delete(toolId);
   }
   await storageSet({ enabledTools: [...enabledTools] });
-  if (activeTool !== "all" && !enabledTools.has(activeTool)) activeTool = "all";
+  if (activeTool !== "all" && !enabledTools.has(activeTool)) {
+    activeTool = "all";
+    activeDeveloperGroup = null;
+    browseCommandInventory = false;
+  }
   renderFilters();
   render();
   renderManage();
@@ -2308,7 +2385,7 @@ async function initialize() {
       stored = { ...stored, ...migration };
       await storageSet(migration);
     }
-    await loadDynamicData();
+    await Promise.all([loadDynamicData(), loadDeveloperCuration()]);
     const knownToolIds = STATE.getToolIds(getAllData());
     enabledTools = new Set(Array.isArray(stored.enabledTools)
       ? stored.enabledTools.filter((id) => catalogData[id])

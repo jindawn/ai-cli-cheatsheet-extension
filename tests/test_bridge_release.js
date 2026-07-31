@@ -16,6 +16,9 @@ const workflow = read(".github/workflows/release.yml");
 const repairWorkflow = read(".github/workflows/repair-macos-release.yml");
 const ciWorkflow = read(".github/workflows/ci.yml");
 const popup = read("popup.js");
+assert(popup.includes("DISTRIBUTION.bridgeReleaseVersion")
+  && popup.indexOf("DISTRIBUTION.bridgeReleaseVersion") < popup.indexOf("DISTRIBUTION.releaseVersion"),
+"installer URLs and compatibility checks must prefer the independently published bridge version");
 const installSh = read("native-host/install.sh");
 const installPs1 = read("native-host/install.ps1");
 const providerRegistry = read("native-host/provider_registry.py");

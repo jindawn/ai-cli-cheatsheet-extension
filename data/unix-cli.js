@@ -5,13 +5,13 @@ window.CHEATSHEET_DATA["unix-cli"] = {
     "id": "unix-cli",
     "name": "Unix/POSIX 基础命令",
     "color": "#4B5563",
-    "source": "固定官方发布标签与入口索引的确定性全集，核验于 2026-07-23",
+    "source": "固定官方发布标签与入口索引的确定性全集，核验于 2026-07-31",
     "builtIn": false,
     "sourceUrl": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/contents.html",
     "sourceTier": "official",
-    "updatedAt": "2026-07-23",
-    "contentCheckedAt": "2026-07-23",
-    "sourceCheckedAt": "2026-07-23",
+    "updatedAt": "2026-07-31",
+    "contentCheckedAt": "2026-07-31",
+    "sourceCheckedAt": "2026-07-31",
     "updatePolicy": "manual-only",
     "verificationStatus": "manual",
     "coverage": "登记官方组件的全部公开命令入口；组件版本、排除理由与平台限制见 shared/official-inventories/unix-cli.json",
@@ -66,179 +66,6 @@ window.CHEATSHEET_DATA["unix-cli"] = {
         "lastVerifiedAt": "2026-07-02",
         "resolvedUrl": "https://man7.org/linux/man-pages/man1/rm.1.html",
         "pageTitle": "rm(1) manual page",
-        "checkedAt": "2026-07-02",
-        "purposes": [
-          "command-existence",
-          "option-semantics"
-        ]
-      },
-      {
-        "id": "linux-less-man",
-        "registryId": "linux-man7",
-        "title": "less(1) manual page",
-        "url": "https://man7.org/linux/man-pages/man1/less.1.html",
-        "kind": "authoritative-reference",
-        "maintainer": "Linux man-pages project / man7.org",
-        "evidenceTier": "authoritative-community",
-        "lastVerifiedAt": "2026-07-02",
-        "resolvedUrl": "https://man7.org/linux/man-pages/man1/less.1.html",
-        "pageTitle": "less(1) manual page",
-        "checkedAt": "2026-07-02",
-        "purposes": [
-          "command-existence",
-          "option-semantics"
-        ]
-      },
-      {
-        "id": "linux-chmod-man",
-        "registryId": "linux-man7",
-        "title": "chmod(1) manual page",
-        "url": "https://man7.org/linux/man-pages/man1/chmod.1.html",
-        "kind": "authoritative-reference",
-        "maintainer": "Linux man-pages project / man7.org",
-        "evidenceTier": "authoritative-community",
-        "lastVerifiedAt": "2026-07-02",
-        "resolvedUrl": "https://man7.org/linux/man-pages/man1/chmod.1.html",
-        "pageTitle": "chmod(1) manual page",
-        "checkedAt": "2026-07-02",
-        "purposes": [
-          "command-existence",
-          "option-semantics"
-        ]
-      },
-      {
-        "id": "linux-ps-man",
-        "registryId": "linux-man7",
-        "title": "ps(1) manual page",
-        "url": "https://man7.org/linux/man-pages/man1/ps.1.html",
-        "kind": "authoritative-reference",
-        "maintainer": "Linux man-pages project / man7.org",
-        "evidenceTier": "authoritative-community",
-        "lastVerifiedAt": "2026-07-02",
-        "resolvedUrl": "https://man7.org/linux/man-pages/man1/ps.1.html",
-        "pageTitle": "ps(1) manual page",
-        "checkedAt": "2026-07-02",
-        "purposes": [
-          "command-existence",
-          "option-semantics",
-          "examples"
-        ]
-      },
-      {
-        "id": "linux-grep-man",
-        "registryId": "linux-man7",
-        "title": "grep(1) manual page",
-        "url": "https://man7.org/linux/man-pages/man1/grep.1.html",
-        "kind": "authoritative-reference",
-        "maintainer": "Linux man-pages project / man7.org",
-        "evidenceTier": "authoritative-community",
-        "lastVerifiedAt": "2026-07-02",
-        "resolvedUrl": "https://man7.org/linux/man-pages/man1/grep.1.html",
-        "pageTitle": "grep(1) manual page",
-        "checkedAt": "2026-07-02",
-        "purposes": [
-          "command-existence",
-          "option-semantics",
-          "examples"
-        ]
-      },
-      {
-        "id": "linux-find-man",
-        "registryId": "linux-man7",
-        "title": "find(1) manual page",
-        "url": "https://man7.org/linux/man-pages/man1/find.1.html",
-        "kind": "authoritative-reference",
-        "maintainer": "Linux man-pages project / man7.org",
-        "evidenceTier": "authoritative-community",
-        "lastVerifiedAt": "2026-07-02",
-        "resolvedUrl": "https://man7.org/linux/man-pages/man1/find.1.html",
-        "pageTitle": "find(1) manual page",
-        "checkedAt": "2026-07-02",
-        "purposes": [
-          "command-existence",
-          "option-semantics",
-          "examples"
-        ]
-      },
-      {
-        "id": "linux-curl-man",
-        "registryId": "linux-man7",
-        "title": "curl(1) manual page",
-        "url": "https://man7.org/linux/man-pages/man1/curl.1.html",
-        "kind": "authoritative-reference",
-        "maintainer": "Linux man-pages project / man7.org",
-        "evidenceTier": "authoritative-community",
-        "lastVerifiedAt": "2026-07-02",
-        "resolvedUrl": "https://man7.org/linux/man-pages/man1/curl.1.html",
-        "pageTitle": "curl(1) manual page",
-        "checkedAt": "2026-07-02",
-        "purposes": [
-          "command-existence",
-          "option-semantics"
-        ]
-      },
-      {
-        "id": "linux-tar-man",
-        "registryId": "linux-man7",
-        "title": "tar(1) manual page",
-        "url": "https://man7.org/linux/man-pages/man1/tar.1.html",
-        "kind": "authoritative-reference",
-        "maintainer": "Linux man-pages project / man7.org",
-        "evidenceTier": "authoritative-community",
-        "lastVerifiedAt": "2026-07-02",
-        "resolvedUrl": "https://man7.org/linux/man-pages/man1/tar.1.html",
-        "pageTitle": "tar(1) manual page",
-        "checkedAt": "2026-07-02",
-        "purposes": [
-          "command-existence",
-          "option-semantics"
-        ]
-      },
-      {
-        "id": "linux-ssh-man",
-        "registryId": "linux-man7",
-        "title": "ssh(1) manual page",
-        "url": "https://man7.org/linux/man-pages/man1/ssh.1.html",
-        "kind": "authoritative-reference",
-        "maintainer": "Linux man-pages project / man7.org",
-        "evidenceTier": "authoritative-community",
-        "lastVerifiedAt": "2026-07-02",
-        "resolvedUrl": "https://man7.org/linux/man-pages/man1/ssh.1.html",
-        "pageTitle": "ssh(1) manual page",
-        "checkedAt": "2026-07-02",
-        "purposes": [
-          "command-existence",
-          "option-semantics"
-        ]
-      },
-      {
-        "id": "linux-sed-man",
-        "registryId": "linux-man7",
-        "title": "sed(1) manual page",
-        "url": "https://man7.org/linux/man-pages/man1/sed.1.html",
-        "kind": "authoritative-reference",
-        "maintainer": "Linux man-pages project / man7.org",
-        "evidenceTier": "authoritative-community",
-        "lastVerifiedAt": "2026-07-02",
-        "resolvedUrl": "https://man7.org/linux/man-pages/man1/sed.1.html",
-        "pageTitle": "sed(1) manual page",
-        "checkedAt": "2026-07-02",
-        "purposes": [
-          "command-existence",
-          "option-semantics"
-        ]
-      },
-      {
-        "id": "linux-gawk-man",
-        "registryId": "linux-man7",
-        "title": "gawk(1) manual page",
-        "url": "https://man7.org/linux/man-pages/man1/gawk.1.html",
-        "kind": "authoritative-reference",
-        "maintainer": "Linux man-pages project / man7.org",
-        "evidenceTier": "authoritative-community",
-        "lastVerifiedAt": "2026-07-02",
-        "resolvedUrl": "https://man7.org/linux/man-pages/man1/gawk.1.html",
-        "pageTitle": "gawk(1) manual page",
         "checkedAt": "2026-07-02",
         "purposes": [
           "command-existence",
@@ -336,7 +163,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
       "status": "complete",
       "total": 220,
       "covered": 220,
-      "checkedAt": "2026-07-23",
+      "checkedAt": "2026-07-31",
       "sourceIds": [
         "posix-shell-utilities",
         "gnu-manuals",
@@ -434,7 +261,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/admin.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ XSI ] admin -i [ name ] [ -n ] [ -a login ] [ -d flag ] [ -e login ] [ -f flag ] [ -m mrlist ] [ -r rel ] [ -t [ name ] [ -y [ comment ]] newfile admin -n [ -a login ] [ -d flag ] [ -e login ] [ -f flag ] [ -m mrlist ] [ -t [ name ]] [ -y [ comment ]] newfile ... admin [ -a log",
@@ -513,7 +340,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/alias.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "alias [ alias-name [ = string ] ... ]",
@@ -586,7 +413,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/ar.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ SD ] ar -d [ -v ] archive file ... [ XSI ] ar -m [ -v ] archive file ... ar -m -a [ -v ] posname archive file ... ar -m -b [ -v ] posname archive file ... ar -m -i [ -v ] posname archive file ... [ XSI ] ar -p [ -v ] [ -s ] archive [ file ... ] [ XSI ] ar -q [ -cv ] archive fil",
@@ -667,7 +494,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/arch.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "arch [\\,OPTION\\/]...",
@@ -739,7 +566,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/asa.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ FR ] asa [ file ... ]",
@@ -809,7 +636,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/at.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "at [ -m ] [ -f file ] [ -q queuename ] -t time_arg at [ -m ] [ -f file ] [ -q queuename ] timespec ... at -r at_job_id ... at -l -q queuename at -l [ at_job_id ... ]",
@@ -843,7 +670,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/awk.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -855,19 +682,23 @@ window.CHEATSHEET_DATA["unix-cli"] = {
       ],
       "examples": [
         {
-          "value": "awk '{print $1}' access.log",
-          "description": "输出 access.log 每一行的第一列",
-          "sourceType": "quasi-official",
-          "authorship": "editorial",
-          "evidenceTier": "authoritative-community",
-          "adaptation": "adapted",
+          "scenario": "测试结果导出为逗号分隔文本，需要快速查看用例名和耗时两列",
+          "goal": "按逗号切分并输出第一列与第三列",
+          "value": "awk -F, '{print $1, $3}' test-results.csv",
+          "description": "-F, 把逗号设为字段分隔符，程序只打印需要的两个字段。",
+          "expected": "终端为输入文件的每一行输出第一列和第三列，原文件保持不变。",
+          "copyable": true,
+          "sourceType": "manual",
           "sourceIds": [
-            "linux-gawk-man"
+            "posix-shell-utilities"
           ],
+          "authorship": "editorial",
+          "evidenceTier": "first-party",
+          "adaptation": "adapted",
           "groundingRefs": [
             {
-              "sourceId": "gnu-manuals",
-              "locator": "https://www.gnu.org/software/coreutils/manual/ · awk",
+              "sourceId": "posix-shell-utilities",
+              "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/awk.html",
               "claims": [
                 "value",
                 "behavior",
@@ -875,9 +706,6 @@ window.CHEATSHEET_DATA["unix-cli"] = {
               ]
             }
           ],
-          "scenario": "终端中的当前任务需要“模式扫描与文本处理语言”，因此要调用对应的官方命令入口。",
-          "goal": "模式扫描与文本处理语言；使用 awk '{print $1}' access.log 完成这一步。",
-          "expected": "执行成功后，输出 access.log 每一行的第一列。",
           "platforms": [
             "mac",
             "linux"
@@ -962,7 +790,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/b2sum.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "b2sum [\\,OPTION\\/]... [\\,FILE\\/]...",
@@ -1034,7 +862,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/base32.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "base32 [\\,OPTION\\/]... [\\,FILE\\/]",
@@ -1106,7 +934,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/base64.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "base64 [\\,OPTION\\/]... [\\,FILE\\/]",
@@ -1179,7 +1007,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/basename.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "basename string [ suffix ]",
@@ -1251,7 +1079,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/basenc.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "basenc [\\,OPTION\\/]... [\\,FILE\\/]",
@@ -1321,7 +1149,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/batch.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "batch",
@@ -1391,7 +1219,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/bc.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "bc [ -l ] [ file ... ]",
@@ -1465,7 +1293,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/bg.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ UP ] bg [ job_id ... ]",
@@ -1537,7 +1365,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/c17.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ CD ] c17 [ options ... ] pathname [[ pathname ] [ -I directory ] [ -L directory ] [ -l library ] [ -R directory ]] ...",
@@ -1618,7 +1446,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/cal.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ XSI ] cal [[ month ] year ]",
@@ -1645,7 +1473,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/cat.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -1660,19 +1488,23 @@ window.CHEATSHEET_DATA["unix-cli"] = {
       ],
       "examples": [
         {
-          "value": "cat README.md",
-          "description": "把文件内容一次性输出到终端",
-          "sourceType": "official",
+          "scenario": "依赖安装异常时，需要快速确认项目清单的原始内容是否被意外改写",
+          "goal": "一次性输出 package.json 的完整文本",
+          "value": "cat package.json",
+          "description": "直接把小型文本文件写到标准输出，适合快速核对原始内容。",
+          "expected": "终端按文件顺序显示 package.json 的全部内容，文件本身保持不变。",
+          "copyable": true,
+          "sourceType": "manual",
+          "sourceIds": [
+            "posix-shell-utilities"
+          ],
           "authorship": "editorial",
           "evidenceTier": "first-party",
           "adaptation": "adapted",
-          "sourceIds": [
-            "gnu-manuals"
-          ],
           "groundingRefs": [
             {
-              "sourceId": "gnu-manuals",
-              "locator": "GNU manuals（检索 cat）",
+              "sourceId": "posix-shell-utilities",
+              "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/cat.html",
               "claims": [
                 "value",
                 "behavior",
@@ -1680,9 +1512,6 @@ window.CHEATSHEET_DATA["unix-cli"] = {
               ]
             }
           ],
-          "scenario": "继续修改相关对象前，需要先查看或拼接文件内容，确认当前状态与预期一致。",
-          "goal": "查看或拼接文件内容；使用 cat README.md 完成这一步。",
-          "expected": "执行后，终端或当前界面显示与“把文件内容一次性输出到终端”对应的信息。",
           "platforms": [
             "mac",
             "linux"
@@ -1766,7 +1595,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/cd.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "cd [ -L ] [ directory ] cd -P [ -e ] [ directory ]",
@@ -1843,7 +1672,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/cflow.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ XSI ] cflow [ -r ] [ -d num ] [ -D name [ = def ]] ... [ -i incl ] [ -I dir ] ... [ -U dir ] ... file ...",
@@ -1922,7 +1751,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/chcon.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "chcon [\\,OPTION\\/]... \\,CONTEXT FILE\\/... .br chcon [\\,OPTION\\/]... [\\,-u USER\\/] [\\,-r ROLE\\/] [\\,-l RANGE\\/] [\\,-t TYPE\\/] \\,FILE\\/... .br chcon [\\,OPTION\\/]... \\,--reference=RFILE FILE\\/...",
@@ -1995,7 +1824,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/chgrp.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "chgrp [ -h ] group file ... chgrp -R [ -H|-L|-P ] group file ...",
@@ -2028,7 +1857,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/chmod.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -2043,95 +1872,24 @@ window.CHEATSHEET_DATA["unix-cli"] = {
       ],
       "examples": [
         {
-          "value": "chmod 644 notes.txt",
-          "description": "设置文件权限（644 = 所有者读写、其他人只读）",
-          "warning": "会改变文件访问权限，确认数值与目标文件正确",
-          "scenario": "脚本权限错误或文件访问范围不符合预期",
-          "goal": "设置明确的所有者、组和其他用户权限",
-          "expected": "文件模式位发生变化",
-          "caveat": "先用 ls -l 检查，避免无意开放敏感文件",
-          "sourceType": "official",
+          "scenario": "仓库中的检查脚本缺少执行位，需要在提交前修正该文件的所有者权限",
+          "goal": "为脚本所有者添加执行权限",
+          "value": "chmod u+x scripts/check.sh",
+          "description": "符号模式 u+x 只为文件所有者增加执行位，不改变其它已有权限位。",
+          "expected": "scripts/check.sh 的权限模式发生变化，文件内容保持不变。",
+          "copyable": false,
+          "warning": "权限变更会影响文件的可执行范围；先用 ls -l 核对目标和现有权限。",
+          "caveat": "先检查脚本内容、目标路径和现有模式，并通过 git diff 确认只提交预期的权限变化。",
+          "riskLevels": [
+            "permissionChange"
+          ],
+          "sourceType": "manual",
+          "sourceIds": [
+            "posix-shell-utilities"
+          ],
           "authorship": "editorial",
           "evidenceTier": "first-party",
           "adaptation": "adapted",
-          "sourceIds": [
-            "gnu-manuals",
-            "linux-chmod-man"
-          ],
-          "copyable": false,
-          "riskLevels": [
-            "permissionChange"
-          ],
-          "groundingRefs": [
-            {
-              "sourceId": "gnu-manuals",
-              "locator": "GNU manuals（检索 chmod）",
-              "claims": [
-                "value",
-                "behavior",
-                "expected"
-              ]
-            }
-          ],
-          "platforms": [
-            "mac",
-            "linux"
-          ]
-        },
-        {
-          "value": "chmod +x scripts/deploy.sh",
-          "description": "为部署脚本添加可执行权限",
-          "warning": "会修改文件权限，请确认目标脚本可信且路径正确",
-          "sourceType": "official",
-          "authorship": "editorial",
-          "evidenceTier": "first-party",
-          "adaptation": "adapted",
-          "sourceIds": [
-            "gnu-manuals",
-            "linux-chmod-man"
-          ],
-          "copyable": false,
-          "riskLevels": [
-            "permissionChange"
-          ],
-          "caveat": "会修改文件权限，请确认目标脚本可信且路径正确；先用只读命令预览目标并保留备份",
-          "groundingRefs": [
-            {
-              "sourceId": "gnu-manuals",
-              "locator": "GNU manuals（检索 chmod +x）",
-              "claims": [
-                "value",
-                "behavior",
-                "expected"
-              ]
-            }
-          ],
-          "scenario": "准备新的工作环境或资源时，需要添加可执行权限，让后续步骤具备所需入口。",
-          "goal": "添加可执行权限；使用 chmod +x scripts/deploy.sh 完成这一步。",
-          "expected": "操作后，界面完成“为部署脚本添加可执行权限”对应的变化。",
-          "platforms": [
-            "mac",
-            "linux"
-          ]
-        },
-        {
-          "value": "chmod 755 scripts/deploy.sh",
-          "description": "设置所有者可读写执行、组和其他可读执行",
-          "generated": true,
-          "copyable": false,
-          "sourceType": "ai-derived",
-          "authorship": "generated",
-          "evidenceTier": "first-party",
-          "adaptation": "scenario-derived",
-          "warning": "此操作会改变文件权限或所有者，请确认目标和权限值",
-          "riskLevels": [
-            "permissionChange"
-          ],
-          "platforms": [
-            "mac",
-            "linux"
-          ],
-          "caveat": "此操作会改变文件权限或所有者，请确认目标和权限值；先用只读命令预览目标并保留备份",
           "groundingRefs": [
             {
               "sourceId": "posix-shell-utilities",
@@ -2143,11 +1901,44 @@ window.CHEATSHEET_DATA["unix-cli"] = {
               ]
             }
           ],
-          "scenario": "当前环境的默认设置不适合这次任务，需要设置所有者可读写执行、组和其他可读执行后再继续工作。",
-          "goal": "设置所有者可读写执行、组和其他可读执行；使用 chmod 755 scripts/deploy.sh 完成这一步。",
-          "expected": "操作后，界面完成“设置所有者可读写执行、组和其他可读执行”对应的变化。",
+          "platforms": [
+            "mac",
+            "linux"
+          ]
+        },
+        {
+          "scenario": "刚生成的团队脚本无法直接运行，需要按当前 umask 为允许的用户类别补上执行位",
+          "goal": "使用开发者常见写法为脚本添加执行权限",
+          "value": "chmod +x scripts/bootstrap.sh",
+          "description": "+x 按当前 umask 为对应用户类别增加执行位，不修改脚本内容。",
+          "expected": "scripts/bootstrap.sh 的权限模式发生变化，随后可按系统权限规则直接执行。",
+          "copyable": false,
+          "warning": "权限变更会影响谁能执行文件；先用 ls -l 检查目标、所有者和当前权限。",
+          "caveat": "确认脚本内容可信且目标路径正确后再执行；团队仓库还应检查提交中的文件模式差异。",
+          "riskLevels": [
+            "permissionChange"
+          ],
+          "sourceType": "manual",
           "sourceIds": [
             "posix-shell-utilities"
+          ],
+          "authorship": "editorial",
+          "evidenceTier": "first-party",
+          "adaptation": "adapted",
+          "groundingRefs": [
+            {
+              "sourceId": "posix-shell-utilities",
+              "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/chmod.html",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ],
+          "platforms": [
+            "mac",
+            "linux"
           ]
         }
       ],
@@ -2185,7 +1976,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/chown.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -2316,7 +2107,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/chroot.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "chroot [\\,OPTION\\/]... \\,NEWROOT \\/[\\,COMMAND \\/[\\,ARG\\/]...]",
@@ -2389,7 +2180,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/cksum.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "cksum [ file ... ]",
@@ -2462,7 +2253,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/cmp.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "cmp [ -l|-s ] file1 file2",
@@ -2538,7 +2329,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/comm.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "comm [ -123 ] file1 file2",
@@ -2612,7 +2403,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/command.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "command [ -p ] command_name [ argument ... ] command [ -p ][ -v|-V ] command_name",
@@ -2688,7 +2479,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/compress.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ XSI ] compress [ -fv ] [ -b value ] [ -g | -m algo ] [ file ... ] compress -c [ -fv ] [ -b value ] [ -g | -m algo ] [ file ] compress -d [ -cfv ] [ file ... ] uncompress [ -cfv ] [ file ... ] zcat [ file ... ]",
@@ -2770,7 +2561,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/coreutils.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "coreutils \\,--coreutils-prog=PROGRAM_NAME \\/[\\,PARAMETERS\\/]...",
@@ -2797,7 +2588,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/cp.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -2959,7 +2750,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/crontab.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "crontab [ file ] [ UP ] crontab [ -e |-l|-r ]",
@@ -3036,7 +2827,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/csplit.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "csplit [ -ks ] [ -f prefix ] [ -n number ] file arg ...",
@@ -3113,7 +2904,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/ctags.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ CD SD ] ctags [ -a ] [ -f tagsfile ] pathname ... ctags -x pathname ...",
@@ -3144,7 +2935,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://curl.se/docs/manpage.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -3156,23 +2947,23 @@ window.CHEATSHEET_DATA["unix-cli"] = {
       ],
       "examples": [
         {
-          "value": "curl -i https://example.com/health",
-          "description": "请求健康检查接口并显示响应头",
-          "scenario": "排查接口是否可达以及返回头是否正确",
-          "goal": "直接请求 HTTP 端点观察响应",
-          "expected": "终端显示状态头和响应体",
-          "caveat": "生产接口避免在命令历史中写入密钥",
-          "sourceType": "quasi-official",
-          "authorship": "editorial",
-          "evidenceTier": "authoritative-community",
-          "adaptation": "adapted",
+          "scenario": "接口/API 部署完成后，需要从当前终端确认健康检查端点能否返回响应",
+          "goal": "向 HTTPS 接口健康检查地址发起请求",
+          "value": "curl https://example.com/health",
+          "description": "curl 请求给定 URL，并把响应正文写到标准输出。",
+          "expected": "终端显示服务器返回的响应正文；网络或 HTTP 处理失败时返回相应状态。",
+          "copyable": true,
+          "sourceType": "manual",
           "sourceIds": [
-            "linux-curl-man"
+            "curl-docs"
           ],
+          "authorship": "editorial",
+          "evidenceTier": "first-party",
+          "adaptation": "adapted",
           "groundingRefs": [
             {
-              "sourceId": "gnu-manuals",
-              "locator": "https://www.gnu.org/software/coreutils/manual/ · curl",
+              "sourceId": "curl-docs",
+              "locator": "https://curl.se/docs/manpage.html",
               "claims": [
                 "value",
                 "behavior",
@@ -3262,7 +3053,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://github.com/curl/curl/releases/tag/curl-8_21_0 · docs/curl-config.md",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "curl-config [options]",
@@ -3335,7 +3126,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/cut.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "cut -b list [ -n ] [ file ... ] cut -c list [ file ... ] cut -f list [ -d delim ] [ -s ] [ file ... ]",
@@ -3415,7 +3206,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/cxref.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ XSI ] cxref [ -cs ] [ -o file ] [ -w num ] [ -D name [ = def ]] ... [ -I dir ] ... [ -U name ] ... file ...",
@@ -3497,7 +3288,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/date.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "date [ -u ] [ + format ] [ XSI ] date [ -u ] mmddhhmm [[ cc ] yy ]",
@@ -3577,7 +3368,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/dd.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "dd [ operand ... ]",
@@ -3650,7 +3441,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/delta.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ XSI ] delta [ -nps ] [ -g list ] [ -m mrlist ] [ -r SID ] [ -y [ comment ]] file ...",
@@ -3686,7 +3477,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/df.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -3701,19 +3492,23 @@ window.CHEATSHEET_DATA["unix-cli"] = {
       ],
       "examples": [
         {
-          "value": "df -h",
-          "description": "以人类可读单位查看各磁盘分区的空间使用情况",
-          "sourceType": "official",
+          "scenario": "构建报磁盘空间不足，需要用可移植单位核对各文件系统剩余容量",
+          "goal": "以 1024 字节块显示文件系统空间",
+          "value": "df -k",
+          "description": "-k 使用 1024 字节块报告容量，便于在不同 POSIX 环境间比较。",
+          "expected": "终端输出已挂载文件系统的总量、已用、可用空间和挂载位置。",
+          "copyable": true,
+          "sourceType": "manual",
+          "sourceIds": [
+            "posix-shell-utilities"
+          ],
           "authorship": "editorial",
           "evidenceTier": "first-party",
           "adaptation": "adapted",
-          "sourceIds": [
-            "gnu-manuals"
-          ],
           "groundingRefs": [
             {
-              "sourceId": "gnu-manuals",
-              "locator": "GNU manuals（检索 df -h）",
+              "sourceId": "posix-shell-utilities",
+              "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/df.html",
               "claims": [
                 "value",
                 "behavior",
@@ -3721,9 +3516,6 @@ window.CHEATSHEET_DATA["unix-cli"] = {
               ]
             }
           ],
-          "scenario": "继续修改相关对象前，需要先查看磁盘空间使用（人类可读），确认当前状态与预期一致。",
-          "goal": "查看磁盘空间使用（人类可读）；使用 df -h 完成这一步。",
-          "expected": "执行后，终端或当前界面显示与“以人类可读单位查看各磁盘分区的空间使用情况”对应的信息。",
           "platforms": [
             "mac",
             "linux"
@@ -3768,7 +3560,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/diff.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -3896,7 +3688,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/diffutils/diffutils-3.12.tar.xz · man/diff3.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "diff3 [\\,OPTION\\/]... \\,MYFILE OLDFILE YOURFILE\\/",
@@ -3968,7 +3760,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/dir.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "dir [\\,OPTION\\/]... [\\,FILE\\/]...",
@@ -4040,7 +3832,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/dircolors.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "dircolors [\\,OPTION\\/]... [\\,FILE\\/]",
@@ -4113,7 +3905,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/dirname.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "dirname string",
@@ -4140,7 +3932,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/du.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -4155,19 +3947,23 @@ window.CHEATSHEET_DATA["unix-cli"] = {
       ],
       "examples": [
         {
-          "value": "du -sh ./node_modules",
-          "description": "汇总查看某个目录占用的磁盘空间",
-          "sourceType": "official",
+          "scenario": "依赖目录膨胀导致缓存超限，需要汇总 node_modules 的磁盘占用",
+          "goal": "以 1024 字节块汇总单个目录",
+          "value": "du -sk ./node_modules",
+          "description": "-s 只输出汇总值，-k 使用 1024 字节块。",
+          "expected": "终端输出 node_modules 的汇总占用及目录名，不修改目录内容。",
+          "copyable": true,
+          "sourceType": "manual",
+          "sourceIds": [
+            "posix-shell-utilities"
+          ],
           "authorship": "editorial",
           "evidenceTier": "first-party",
           "adaptation": "adapted",
-          "sourceIds": [
-            "gnu-manuals"
-          ],
           "groundingRefs": [
             {
-              "sourceId": "gnu-manuals",
-              "locator": "GNU manuals（检索 du -sh）",
+              "sourceId": "posix-shell-utilities",
+              "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/du.html",
               "claims": [
                 "value",
                 "behavior",
@@ -4175,9 +3971,6 @@ window.CHEATSHEET_DATA["unix-cli"] = {
               ]
             }
           ],
-          "scenario": "继续修改相关对象前，需要先查看目录占用空间（汇总），确认当前状态与预期一致。",
-          "goal": "查看目录占用空间（汇总）；使用 du -sh ./node_modules 完成这一步。",
-          "expected": "执行后，终端或当前界面显示与“汇总查看某个目录占用的磁盘空间”对应的信息。",
           "platforms": [
             "mac",
             "linux"
@@ -4270,7 +4063,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/echo.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "echo [ string ... ]",
@@ -4340,7 +4133,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/ed.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "ed [ -p string ] [ -s ] [ file ]",
@@ -4416,7 +4209,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/env.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "env [ -i ] [ name = value ] ... [ utility [ argument ... ]]",
@@ -4490,7 +4283,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/ex.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ UP ] ex [ -rR ] [ -s|-v ] [ -c command ] [ -t tagstring ] [ -w size ] [ file ... ]",
@@ -4571,7 +4364,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/expand.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "expand [ -t tablist ] [ file ... ]",
@@ -4646,7 +4439,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/expr.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "expr operand ...",
@@ -4718,7 +4511,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/factor.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "factor [\\,OPTION\\/] [\\,NUMBER\\/]...",
@@ -4791,7 +4584,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/false.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "false",
@@ -4863,7 +4656,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/fc.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ UP ] fc [ -r ] [ -e editor ] [ first [ last ]] fc -l [ -nr ] [ first [ last ]] fc -s [ old = new ] [ first ]",
@@ -4941,7 +4734,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/fg.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ UP ] fg [ job_id ]",
@@ -5011,7 +4804,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/file.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "file [ -dh ] [ -M file ] [ -m file ] file ... file -i [ -h ] file ...",
@@ -5044,7 +4837,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/find.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -5059,52 +4852,23 @@ window.CHEATSHEET_DATA["unix-cli"] = {
       ],
       "examples": [
         {
-          "value": "find . -name \"*.log\"",
-          "description": "从当前目录递归查找匹配名字的文件",
-          "sourceType": "quasi-official",
-          "authorship": "editorial",
-          "evidenceTier": "authoritative-community",
-          "adaptation": "adapted",
+          "scenario": "测试任务报错但未给出文件路径，需要在当前项目文件中定位所有测试脚本",
+          "goal": "按名称模式递归查找项目文件",
+          "value": "find . -name '*.test.js' -type f",
+          "description": "从当前目录向下遍历，只输出名称匹配且类型为普通文件的路径。",
+          "expected": "终端逐行输出项目树中匹配 *.test.js 的普通文件路径；没有匹配时不输出路径。",
+          "copyable": true,
+          "sourceType": "manual",
           "sourceIds": [
-            "linux-find-man"
+            "posix-shell-utilities"
           ],
+          "authorship": "editorial",
+          "evidenceTier": "first-party",
+          "adaptation": "adapted",
           "groundingRefs": [
             {
-              "sourceId": "gnu-manuals",
-              "locator": "https://www.gnu.org/software/coreutils/manual/ · find",
-              "claims": [
-                "value",
-                "behavior",
-                "expected"
-              ]
-            }
-          ],
-          "scenario": "终端中的当前任务需要“在目录层级中搜索文件”，因此要调用对应的官方命令入口。",
-          "goal": "在目录层级中搜索文件；使用 find . -name \"*.log\" 完成这一步。",
-          "expected": "执行成功后，从当前目录递归查找匹配名字的文件。",
-          "platforms": [
-            "mac",
-            "linux"
-          ]
-        },
-        {
-          "value": "find . -name \"*.log\"",
-          "description": "从当前目录递归查找所有 .log 文件",
-          "sourceType": "quasi-official",
-          "scenario": "只知道文件名模式，不知道具体目录",
-          "goal": "递归定位匹配名称的文件",
-          "expected": "输出当前目录树下的匹配路径",
-          "caveat": "复杂条件注意括号和 shell 通配符转义",
-          "authorship": "editorial",
-          "evidenceTier": "authoritative-community",
-          "adaptation": "adapted",
-          "sourceIds": [
-            "linux-find-man"
-          ],
-          "groundingRefs": [
-            {
-              "sourceId": "gnu-manuals",
-              "locator": "https://www.gnu.org/software/coreutils/manual/ · find . -name",
+              "sourceId": "posix-shell-utilities",
+              "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/find.html",
               "claims": [
                 "value",
                 "behavior",
@@ -5198,7 +4962,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/fmt.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "fmt [\\,-WIDTH\\/] [\\,OPTION\\/]... [\\,FILE\\/]...",
@@ -5271,7 +5035,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/fold.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "fold [ -bs ] [ -w width ] [ file ... ]",
@@ -5347,7 +5111,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/fuser.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ XSI ] fuser [ -cfu ] file ...",
@@ -5423,7 +5187,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/gawk/gawk-5.4.1.tar.xz · doc/gawk.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "gawk [ \\*(PX or \\*(GN style options ] f program-file [ \\^ ] file .\\|.\\|. .br gawk [ \\*(PX or \\*(GN style options ] [ \\^ ] program-text file .\\|.\\|.",
@@ -5504,7 +5268,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/gawk/gawk-5.4.1.tar.xz · doc/gawkbug.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "gawkbug [\\^version] [\\^help] [email-address]",
@@ -5574,7 +5338,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/gencat.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "gencat catfile msgfile ...",
@@ -5647,7 +5411,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/get.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ XSI ] get [ -begkmnlLpst ] [ -c cutoff ] [ -i list ] [ -r SID ] [ -x list ] file ...",
@@ -5726,7 +5490,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/getconf.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "getconf [ -v specification ] system_var getconf [ -v specification ] path_var pathname",
@@ -5799,7 +5563,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/getopts.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "getopts optstring name [ param ... ]",
@@ -5869,7 +5633,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/gettext.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "gettext [ -e|-E ] [ -d textdomain ] [ textdomain ] msgid gettext [ -e|-E ] [ -n ] -s [ -d textdomain ] msgid ... ngettext [ -e|-E ] [ -d textdomain ] [ textdomain ] msgid msgid_plural n",
@@ -5902,7 +5666,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/grep.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -5917,18 +5681,19 @@ window.CHEATSHEET_DATA["unix-cli"] = {
       ],
       "examples": [
         {
-          "value": "grep \"TODO\" README.md",
-          "description": "在文件中搜索匹配文本",
-          "generated": true,
+          "scenario": "代码评审前需要在说明文件中定位尚未处理的 TODO，并保留行号便于跳转",
+          "goal": "搜索匹配文本并显示所在行号",
+          "value": "grep -n 'TODO' README.md",
+          "description": "-n 为每个匹配行添加行号，便于回到文件中精确定位。",
+          "expected": "终端输出包含 TODO 的行及其行号；没有匹配时不输出并返回非零状态。",
           "copyable": true,
-          "sourceType": "ai-derived",
-          "authorship": "generated",
-          "evidenceTier": "first-party",
-          "adaptation": "scenario-derived",
-          "platforms": [
-            "mac",
-            "linux"
+          "sourceType": "manual",
+          "sourceIds": [
+            "posix-shell-utilities"
           ],
+          "authorship": "editorial",
+          "evidenceTier": "first-party",
+          "adaptation": "adapted",
           "groundingRefs": [
             {
               "sourceId": "posix-shell-utilities",
@@ -5940,31 +5705,29 @@ window.CHEATSHEET_DATA["unix-cli"] = {
               ]
             }
           ],
-          "scenario": "终端中的当前任务需要“在文件中搜索匹配文本”，因此要调用对应的官方命令入口。",
-          "goal": "在文件中搜索匹配文本；使用 grep \"TODO\" README.md 完成这一步。",
-          "expected": "执行成功后，在文件中搜索匹配文本。",
-          "sourceIds": [
-            "posix-shell-utilities"
+          "platforms": [
+            "mac",
+            "linux"
           ]
         },
         {
-          "value": "grep -r \"TODO\" ./src",
-          "description": "递归查找 src 目录中包含 TODO 的行",
-          "sourceType": "quasi-official",
-          "scenario": "需要在源码目录中定位某段文本",
-          "goal": "递归找出包含关键词的文件和行",
-          "expected": "输出匹配文件路径与文本行",
-          "caveat": "二进制文件或大型依赖目录可能产生噪声",
-          "authorship": "editorial",
-          "evidenceTier": "authoritative-community",
-          "adaptation": "adapted",
+          "scenario": "重构前需要确认旧接口名在源码树中还出现在哪些文件里",
+          "goal": "递归搜索目录中的匹配文本",
+          "value": "grep -r 'legacyApi' ./src",
+          "description": "-r 递归读取 src 下的文件并输出包含 legacyApi 的匹配行。",
+          "expected": "终端输出文件路径和匹配内容；没有匹配时不输出并返回非零状态。",
+          "copyable": true,
+          "sourceType": "manual",
           "sourceIds": [
-            "linux-grep-man"
+            "gnu-manuals"
           ],
+          "authorship": "editorial",
+          "evidenceTier": "first-party",
+          "adaptation": "adapted",
           "groundingRefs": [
             {
               "sourceId": "gnu-manuals",
-              "locator": "https://www.gnu.org/software/coreutils/manual/ · grep -r",
+              "locator": "https://ftp.gnu.org/gnu/grep/grep-3.12.tar.xz · doc/grep.texi",
               "claims": [
                 "value",
                 "behavior",
@@ -5975,37 +5738,6 @@ window.CHEATSHEET_DATA["unix-cli"] = {
           "platforms": [
             "mac",
             "linux"
-          ]
-        },
-        {
-          "value": "grep -i \"error\" app.log",
-          "description": "忽略大小写搜索",
-          "generated": true,
-          "copyable": true,
-          "sourceType": "ai-derived",
-          "authorship": "generated",
-          "evidenceTier": "first-party",
-          "adaptation": "scenario-derived",
-          "platforms": [
-            "mac",
-            "linux"
-          ],
-          "groundingRefs": [
-            {
-              "sourceId": "posix-shell-utilities",
-              "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/grep.html",
-              "claims": [
-                "value",
-                "behavior",
-                "expected"
-              ]
-            }
-          ],
-          "scenario": "终端中的当前任务需要“忽略大小写搜索”，因此要调用对应的官方命令入口。",
-          "goal": "忽略大小写搜索；使用 grep -i \"error\" app.log 完成这一步。",
-          "expected": "执行成功后，忽略大小写搜索。",
-          "sourceIds": [
-            "posix-shell-utilities"
           ]
         }
       ],
@@ -6100,7 +5832,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/groups.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "groups [\\,OPTION\\/]... [\\,USERNAME\\/]...",
@@ -6170,7 +5902,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/hash.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "hash [ utility ... ] hash -r",
@@ -6199,7 +5931,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/head.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -6320,7 +6052,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/hostid.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "hostid [\\,OPTION\\/]",
@@ -6392,7 +6124,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/hostname.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "hostname [\\,NAME\\/] .br hostname \\,OPTION\\/",
@@ -6462,7 +6194,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/iconv.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "iconv [ -cs ] -f frommap -t tomap [ file ... ] iconv -f fromcode [ -cs ] [ -t tocode ] [ file ... ] iconv -t tocode [ -cs ] [ -f fromcode ] [ file ... ] iconv -l",
@@ -6541,7 +6273,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/id.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "id [ user ] id -G [ -n ] [ user ] id -g [ -nr ] [ user ] id -u [ -nr ] [ user ]",
@@ -6619,7 +6351,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/install.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "install [\\,OPTION\\/]... [\\,-T\\/] \\,SOURCE DEST\\/ .br install [\\,OPTION\\/]... \\,SOURCE\\/... \\,DIRECTORY\\/ .br install [\\,OPTION\\/]... \\,-t DIRECTORY SOURCE\\/... .br install [\\,OPTION\\/]... \\,-d DIRECTORY\\/...",
@@ -6691,7 +6423,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/ipcrm.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ XSI ] ipcrm [ -q msgid|-Q msgkey|-s semid|-S semkey|-m shmid|-M shmkey ] ...",
@@ -6770,7 +6502,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/ipcs.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ XSI ] ipcs [ -qms ] [ -a|-bcopt ]",
@@ -6851,7 +6583,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/jobs.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ UP ] jobs [ -l|-p ] [ job_id ... ]",
@@ -6927,7 +6659,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/join.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "join [ -a file_number |-v file_number ] [ -e string ] [ -o list ] [ -t char ] [ -1 field ] [ -2 field ] file1 file2",
@@ -6963,7 +6695,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/kill.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -6977,6 +6709,17 @@ window.CHEATSHEET_DATA["unix-cli"] = {
       ],
       "examples": [
         {
+          "scenario": "已用只读进程列表确认测试进程 PID，需要先请求它执行清理后正常退出",
+          "goal": "向已核对的 PID 发送默认终止信号",
+          "value": "kill 12345",
+          "description": "默认终止信号允许目标进程捕获信号并执行自己的清理逻辑。",
+          "expected": "指定进程收到终止信号；是否以及何时退出取决于进程的信号处理。",
+          "copyable": false,
+          "warning": "会中断进程；必须先核对 PID、命令行和所有者，避免 PID 复用导致误终止。",
+          "caveat": "先用只读进程列表检查 PID、命令行和所有者，并确认服务能够安全恢复。",
+          "riskLevels": [
+            "processDisruption"
+          ],
           "sourceType": "manual",
           "sourceIds": [
             "posix-shell-utilities"
@@ -6984,10 +6727,6 @@ window.CHEATSHEET_DATA["unix-cli"] = {
           "authorship": "editorial",
           "evidenceTier": "first-party",
           "adaptation": "adapted",
-          "platforms": [
-            "mac",
-            "linux"
-          ],
           "groundingRefs": [
             {
               "sourceId": "posix-shell-utilities",
@@ -6999,19 +6738,23 @@ window.CHEATSHEET_DATA["unix-cli"] = {
               ]
             }
           ],
-          "scenario": "已用只读进程列表确认 PID，需要先请求目标进程正常退出时",
-          "goal": "向已确认的 PID 发送默认终止信号，并让进程执行清理逻辑",
-          "value": "kill 12345",
-          "description": "不指定信号时请求目标进程正常终止；PID 必须先从当前机器的进程列表核对。",
-          "expected": "目标进程收到终止信号；是否立即退出取决于它的信号处理逻辑。",
-          "copyable": false,
-          "warning": "会中断目标进程；PID 复用可能导致误终止其它进程。",
-          "riskLevels": [
-            "processDisruption"
-          ],
-          "caveat": "先用只读进程列表检查 PID、命令行与所有者，并确认业务可恢复。"
+          "platforms": [
+            "mac",
+            "linux"
+          ]
         },
         {
+          "scenario": "进程拒绝正常终止且会阻塞自动化流水线，已确认可以放弃未保存状态",
+          "goal": "作为最后手段向已核对的 PID 发送 SIGKILL",
+          "value": "kill -9 12345",
+          "description": "-9 发送不可捕获的 SIGKILL，目标进程无法执行清理或保存状态。",
+          "expected": "内核强制终止指定进程；尚未落盘的数据和临时状态可能丢失。",
+          "copyable": false,
+          "warning": "会立即强制中断进程并可能损坏数据或服务状态，只能作为最后手段。",
+          "caveat": "先用只读进程列表检查 PID，确认正常终止已失败、数据已有备份且服务可恢复。",
+          "riskLevels": [
+            "processDisruption"
+          ],
           "sourceType": "manual",
           "sourceIds": [
             "posix-shell-utilities"
@@ -7019,10 +6762,6 @@ window.CHEATSHEET_DATA["unix-cli"] = {
           "authorship": "editorial",
           "evidenceTier": "first-party",
           "adaptation": "adapted",
-          "platforms": [
-            "mac",
-            "linux"
-          ],
           "groundingRefs": [
             {
               "sourceId": "posix-shell-utilities",
@@ -7034,17 +6773,10 @@ window.CHEATSHEET_DATA["unix-cli"] = {
               ]
             }
           ],
-          "scenario": "目标进程拒绝正常退出，且已经确认可以放弃未保存状态时",
-          "goal": "向已核对的 PID 发送 SIGKILL，作为最后手段强制终止进程",
-          "value": "kill -9 12345",
-          "description": "-9 发送不可捕获的 SIGKILL，不给目标进程执行清理或保存状态的机会。",
-          "expected": "内核强制终止目标进程；尚未落盘的数据和临时状态可能丢失。",
-          "copyable": false,
-          "warning": "会强制中断进程并可能造成数据或服务状态损坏，只能作为最后手段。",
-          "riskLevels": [
-            "processDisruption"
-          ],
-          "caveat": "先用只读进程列表检查 PID，并确认正常终止已失败、数据已有备份且服务可恢复。"
+          "platforms": [
+            "mac",
+            "linux"
+          ]
         }
       ],
       "context": "posix-utility",
@@ -7084,7 +6816,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://github.com/gwsw/less/tree/v708 · less.nro.VER",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -7096,19 +6828,23 @@ window.CHEATSHEET_DATA["unix-cli"] = {
       ],
       "examples": [
         {
-          "value": "less app.log",
-          "description": "分页浏览大文件，支持上下翻页和 / 搜索",
-          "sourceType": "quasi-official",
-          "authorship": "editorial",
-          "evidenceTier": "authoritative-community",
-          "adaptation": "adapted",
+          "scenario": "构建日志超过终端回滚缓冲区，需要分页阅读并在查看器内搜索错误",
+          "goal": "用交互式分页器打开 build.log",
+          "value": "less build.log",
+          "description": "分页器按需显示大文件，并支持滚动和斜杠搜索。",
+          "expected": "终端进入 less 查看界面；退出后 build.log 保持不变。",
+          "copyable": true,
+          "sourceType": "manual",
           "sourceIds": [
-            "linux-less-man"
+            "less-repository"
           ],
+          "authorship": "editorial",
+          "evidenceTier": "first-party",
+          "adaptation": "adapted",
           "groundingRefs": [
             {
-              "sourceId": "gnu-manuals",
-              "locator": "https://www.gnu.org/software/coreutils/manual/ · less",
+              "sourceId": "less-repository",
+              "locator": "https://github.com/gwsw/less/tree/v708 · less.nro.VER",
               "claims": [
                 "value",
                 "behavior",
@@ -7116,9 +6852,6 @@ window.CHEATSHEET_DATA["unix-cli"] = {
               ]
             }
           ],
-          "scenario": "终端中的当前任务需要“分页浏览文件内容”，因此要调用对应的官方命令入口。",
-          "goal": "分页浏览文件内容；使用 less app.log 完成这一步。",
-          "expected": "执行成功后，分页浏览大文件，支持上下翻页和 / 搜索。",
           "platforms": [
             "mac",
             "linux"
@@ -7202,7 +6935,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/lex.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ CD ] lex [ -t ] [ -n|-v ] [ file ... ]",
@@ -7280,7 +7013,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/link.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ XSI ] link file1 file2",
@@ -7307,7 +7040,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/ln.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -7432,7 +7165,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/locale.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "locale [ -a|-m ] locale [ -ck ] name ...",
@@ -7507,7 +7240,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/localedef.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "localedef [ -c ] [ -f charmap ] [ -i sourcefile ] [ -u code_set_name ] name",
@@ -7584,7 +7317,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/findutils/findutils-4.11.0.tar.xz · locate/locate.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "\\\" FIXME-2027: switch to .HP when groff-1.24 is more commonly available. .nr sA \\n(.j \\\" Save the adjustment mode. .na locate [ d\\ \\c path | \\*%database= path\\c ] [ e | E | \\*% [ non ] existing ] [ i | \\*%ignorecase ] [ 0 | null ] [ c | \\*%count ] [ w | \\*%wholename ] [ b | \\*%ba",
@@ -7663,7 +7396,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/logger.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "logger [ -i ] [ -f file ] [ -p priority ] [ -t tag ] [ string... ]",
@@ -7741,7 +7474,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/logname.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "logname",
@@ -7811,7 +7544,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/lp.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "lp [ -c ] [ -d dest ] [ -n copies ] [ -msw ] [ -o option ] ... [ -t title ] [ file ... ]",
@@ -7847,7 +7580,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/ls.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -7862,6 +7595,12 @@ window.CHEATSHEET_DATA["unix-cli"] = {
       ],
       "examples": [
         {
+          "scenario": "接手一个项目目录时，需要同时核对隐藏配置、权限、所有者和修改时间",
+          "goal": "查看包含隐藏项的长格式目录清单",
+          "value": "ls -la",
+          "description": "-l 展示元数据，-a 同时包含名称以点开头的目录项。",
+          "expected": "终端逐行列出当前目录的普通项与隐藏项，并显示权限、所有者、大小和时间。",
+          "copyable": true,
           "sourceType": "manual",
           "sourceIds": [
             "posix-shell-utilities"
@@ -7869,10 +7608,6 @@ window.CHEATSHEET_DATA["unix-cli"] = {
           "authorship": "editorial",
           "evidenceTier": "first-party",
           "adaptation": "adapted",
-          "platforms": [
-            "mac",
-            "linux"
-          ],
           "groundingRefs": [
             {
               "sourceId": "posix-shell-utilities",
@@ -7884,12 +7619,10 @@ window.CHEATSHEET_DATA["unix-cli"] = {
               ]
             }
           ],
-          "scenario": "需要同时核对目录中的隐藏项、权限、所有者和修改时间时",
-          "goal": "用 ls 的 -l 与 -a 选项查看完整长格式目录清单",
-          "value": "ls -la",
-          "description": "-l 显示长格式元数据，-a 同时包含名称以点开头的目录项。",
-          "expected": "终端逐行列出当前目录的可见项与隐藏项，并显示权限、所有者、大小和时间。",
-          "copyable": true
+          "platforms": [
+            "mac",
+            "linux"
+          ]
         }
       ],
       "context": "posix-utility",
@@ -7977,7 +7710,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/m4.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "m4 [ -s ] [ -D name [ = val ]] ... [ -U name ] ... [ file ... ]",
@@ -8053,7 +7786,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/mailx.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "Send Mode mailx [ -E ] [ -s subject ] address ... Receive Mode [ UP ] mailx -e mailx [ -HiNn ] [ -F ] [ -u user ] mailx -f [ -HiNn ] [ -F ] [ file ]",
@@ -8135,7 +7868,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/make.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ SD ] make [ -einpqrst ] [ -f makefile ] ... [ -j maxjobs ] [ -k|-S ] [ macro [ :: [ : ]] = value ... ] [ target_name ... ]",
@@ -8216,7 +7949,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/man.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ UP ] man [ -k ] name ...",
@@ -8291,7 +8024,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/md5sum.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "md5sum [\\,OPTION\\/]... [\\,FILE\\/]...",
@@ -8361,7 +8094,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/mesg.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "mesg [ y|n ]",
@@ -8388,7 +8121,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/mkdir.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -8514,7 +8247,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/mkfifo.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "mkfifo [ -m mode ] file ...",
@@ -8588,7 +8321,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/mknod.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "mknod [\\,OPTION\\/]... \\,NAME TYPE \\/[\\,MAJOR MINOR\\/]",
@@ -8660,7 +8393,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/mktemp.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "mktemp [\\,OPTION\\/]... [\\,TEMPLATE\\/]",
@@ -8732,7 +8465,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/more.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ UP ] more [ -ceisu ] [ -n number ] [ -p command ] [ -t tagstring ] [ file ... ]",
@@ -8811,7 +8544,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/msgfmt.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "msgfmt [ -cfSv ] [ -D dir ] [ -o outputfile ] pathname ...",
@@ -8845,7 +8578,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/mv.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -8968,7 +8701,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/newgrp.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "newgrp [ -l ] [ group ]",
@@ -9040,7 +8773,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/ngettext.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "gettext [ -e|-E ] [ -d textdomain ] [ textdomain ] msgid gettext [ -e|-E ] [ -n ] -s [ -d textdomain ] msgid ... ngettext [ -e|-E ] [ -d textdomain ] [ textdomain ] msgid msgid_plural n",
@@ -9119,7 +8852,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/nice.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "nice [ -n increment ] utility [ argument ... ]",
@@ -9195,7 +8928,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/nl.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ XSI ] nl [ -p ] [ -b type ] [ -d delim ] [ -f type ] [ -h type ] [ -i incr ] [ -l num ] [ -n format ] [ -s sep ] [ -v startnum ] [ -w width ] [ file ]",
@@ -9278,7 +9011,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/nm.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ SD ] nm [ -APv ] [ -g|-u ] [ -t format ] file ... [ XSI ] nm [ -APv ] [ -efox ] [ -g|-u ] [ -t format ] file ...",
@@ -9360,7 +9093,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/nohup.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "nohup utility [ argument ... ]",
@@ -9432,7 +9165,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/nproc.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "nproc [\\,OPTION\\/]...",
@@ -9504,7 +9237,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/numfmt.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "numfmt [\\,OPTION\\/]... [\\,NUMBER\\/]...",
@@ -9578,7 +9311,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/od.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "od [ -v ] [ -A address_base ] [ -j skip ] [ -N count ] [ -t type_string ] ... [ file ... ] [ XSI ] od [ -bcdosx ] [ file ] [[ + ] offset [ . ][ b ]]",
@@ -9660,7 +9393,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/paste.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "paste [ -s ] [ -d list ] file ...",
@@ -9733,7 +9466,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/patch.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "patch [ -blNR ] [ -c|-e|-n|-u ] [ -d dir ] [ -D define ] [ -i patchfile ] [ -o outfile ] [ -p num ] [ -r rejectfile ] [ file ]",
@@ -9815,7 +9548,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/pathchk.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "pathchk [ -p ] [ -P ] pathname ...",
@@ -9888,7 +9621,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/pax.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "pax [ -dv ] [ -c|-n ] [ -H|-L ] [ -o options ] [ -f archive ] [ -s replstr ] ... [ pattern ... ] pax -r [ -c|-n ] [ -dikuv ] [ -H|-L ] [ -f archive ] [ -o options ] ... [ -p string ] ... [ -s replstr ] ... [ pattern ... ] pax -w [ -dituvX ] [ -H|-L ] [ -b blocksize ] [[ -a ] [ -f",
@@ -9924,7 +9657,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://github.com/iputils/iputils/releases/tag/20250605 · ping/ping.rst",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -10043,7 +9776,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/pinky.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "pinky [\\,OPTION\\/]... [\\,USER\\/]...",
@@ -10117,7 +9850,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/pr.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ XSI ] pr [ + page ] [ - column ] [ -ad f Fmprt ] [ -e [ char ][ gap ]] [ -h header ] [ -i [ char ][ gap ]] [ -l lines ] [ -n [ char ][ width ]] [ -o offset ] [ -s [ char ]] [ -w width ] [ file ... ]",
@@ -10198,7 +9931,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/printenv.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "printenv [\\,OPTION\\/] [\\,VARIABLE\\/]...",
@@ -10271,7 +10004,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/printf.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "printf format [ argument ... ]",
@@ -10344,7 +10077,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/prs.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ XSI ] prs [ -a ] [ -d dataspec ] [ -r [ SID ]] file ... prs [ -e|-l ] -c cutoff [ -d dataspec ] file ... prs [ -e|-l ] -r [ SID ] [ -d dataspec ] file ...",
@@ -10378,7 +10111,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/ps.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -10393,18 +10126,19 @@ window.CHEATSHEET_DATA["unix-cli"] = {
       ],
       "examples": [
         {
-          "value": "ps",
-          "description": "查看进程状态",
-          "generated": true,
+          "scenario": "测试进程没有退出，需要先查看当前用户空间中的完整进程清单和启动参数",
+          "goal": "以完整格式列出所有进程",
+          "value": "ps -ef",
+          "description": "-e 选择全部进程，-f 展示包含父进程和命令参数的完整格式。",
+          "expected": "终端输出进程表，包含 PID、父 PID 及命令等实现支持的字段。",
           "copyable": true,
-          "sourceType": "ai-derived",
-          "authorship": "generated",
-          "evidenceTier": "first-party",
-          "adaptation": "scenario-derived",
-          "platforms": [
-            "mac",
-            "linux"
+          "sourceType": "manual",
+          "sourceIds": [
+            "posix-shell-utilities"
           ],
+          "authorship": "editorial",
+          "evidenceTier": "first-party",
+          "adaptation": "adapted",
           "groundingRefs": [
             {
               "sourceId": "posix-shell-utilities",
@@ -10416,37 +10150,6 @@ window.CHEATSHEET_DATA["unix-cli"] = {
               ]
             }
           ],
-          "scenario": "继续修改相关对象前，需要先查看进程状态，确认当前状态与预期一致。",
-          "goal": "查看进程状态；使用 ps 完成这一步。",
-          "expected": "执行后，终端或当前界面显示与“查看进程状态”对应的信息。",
-          "sourceIds": [
-            "posix-shell-utilities"
-          ]
-        },
-        {
-          "value": "ps aux | grep node",
-          "description": "列出进程并筛选包含 node 的进程",
-          "sourceType": "quasi-official",
-          "authorship": "editorial",
-          "evidenceTier": "authoritative-community",
-          "adaptation": "adapted",
-          "sourceIds": [
-            "linux-ps-man"
-          ],
-          "groundingRefs": [
-            {
-              "sourceId": "gnu-manuals",
-              "locator": "https://www.gnu.org/software/coreutils/manual/ · ps aux",
-              "claims": [
-                "value",
-                "behavior",
-                "expected"
-              ]
-            }
-          ],
-          "scenario": "继续修改相关对象前，需要先列出所有运行进程及详情，确认当前状态与预期一致。",
-          "goal": "列出所有运行进程及详情；使用 ps aux | grep node 完成这一步。",
-          "expected": "执行后，终端或当前界面显示与“列出进程并筛选包含 node 的进程”对应的信息。",
           "platforms": [
             "mac",
             "linux"
@@ -10539,7 +10242,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/ptx.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "ptx [\\,OPTION\\/]... [\\,INPUT\\/]... \\,(without -G)\\/ .br ptx \\,-G \\/[\\,OPTION\\/]... [\\,INPUT \\/[\\,OUTPUT\\/]]",
@@ -10566,7 +10269,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/pwd.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -10578,19 +10281,19 @@ window.CHEATSHEET_DATA["unix-cli"] = {
       ],
       "examples": [
         {
-          "scenario": "需要使用 gnu-coreutils / posix-utilities 提供的 pwd 来完成“return working directory name”时",
-          "goal": "按固定官方版本的定义调用 pwd，并依据退出状态判断该操作是否完成",
-          "value": "pwd",
-          "description": "pwd 的官方用途是“return working directory name”；这里直接使用规范入口，不把子命令或选项伪装成另一条程序。",
-          "expected": "终端按 gnu-coreutils / posix-utilities 的定义执行 pwd；缺少必需操作数时会明确返回用法诊断和非成功状态。",
+          "scenario": "在脚本或构建任务失败后，需要确认相对路径究竟从哪个物理目录解析",
+          "goal": "输出消除符号链接后的当前工作目录",
+          "value": "pwd -P",
+          "description": "-P 按物理目录层级解析当前路径，便于定位工作目录偏差。",
+          "expected": "终端输出一个绝对目录路径，其中不保留当前路径里的符号链接段。",
           "copyable": true,
           "sourceType": "manual",
           "sourceIds": [
             "posix-shell-utilities"
           ],
-          "authorship": "generated",
+          "authorship": "editorial",
           "evidenceTier": "first-party",
-          "adaptation": "scenario-derived",
+          "adaptation": "adapted",
           "groundingRefs": [
             {
               "sourceId": "posix-shell-utilities",
@@ -10686,7 +10389,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/read.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "read [ -r ] [ -d delim ] var ...",
@@ -10762,7 +10465,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/readlink.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "readlink [ -n ] file",
@@ -10790,19 +10493,19 @@ window.CHEATSHEET_DATA["unix-cli"] = {
       ],
       "examples": [
         {
-          "scenario": "需要使用 gnu-coreutils / posix-utilities 提供的 realpath 来完成“resolve a pathname”时",
-          "goal": "按固定官方版本的定义调用 realpath，并依据退出状态判断该操作是否完成",
-          "value": "realpath",
-          "description": "realpath 的官方用途是“resolve a pathname”；这里直接使用规范入口，不把子命令或选项伪装成另一条程序。",
-          "expected": "终端按 gnu-coreutils / posix-utilities 的定义执行 realpath；缺少必需操作数时会明确返回用法诊断和非成功状态。",
+          "scenario": "构建脚本使用了包含上级目录段的相对路径，需要确认最终读取的是哪个文件",
+          "goal": "把相对路径解析成规范绝对路径",
+          "value": "realpath ./scripts/../package.json",
+          "description": "解析点号、上级目录段和实现可解析的符号链接，输出规范路径。",
+          "expected": "终端输出 package.json 对应的绝对规范路径，不修改目标文件。",
           "copyable": true,
           "sourceType": "manual",
           "sourceIds": [
             "posix-shell-utilities"
           ],
-          "authorship": "generated",
+          "authorship": "editorial",
           "evidenceTier": "first-party",
-          "adaptation": "scenario-derived",
+          "adaptation": "adapted",
           "groundingRefs": [
             {
               "sourceId": "posix-shell-utilities",
@@ -10837,7 +10540,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/realpath.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "realpath [ -E|-e ] file",
@@ -10910,7 +10613,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/renice.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "renice [ -g|-p|-u ] -n increment ID ...",
@@ -10942,7 +10645,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/rm.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -11114,7 +10817,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/rmdel.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ XSI ] rmdel -r SID file ...",
@@ -11189,7 +10892,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/rmdir.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "rmdir [ -p ] dir ...",
@@ -11263,7 +10966,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/runcon.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "runcon [\\,CONTEXT COMMAND \\/[\\,ARG\\/]...] .br runcon [\\,-c\\/] [\\,-u USER\\/] [\\,-r ROLE\\/] [\\,-t TYPE\\/] [\\,-l RANGE\\/] \\,COMMAND \\/[\\,ARG\\/]...",
@@ -11336,7 +11039,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/sact.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ XSI ] sact file ...",
@@ -11409,7 +11112,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/sccs.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ XSI ] sccs [ -r ] [ -d path ] [ -p path ] command [ options ... ] [ operands ... ]",
@@ -11440,7 +11143,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://github.com/openssh/openssh-portable/tree/V_10_4_P1 · scp.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -11455,23 +11158,28 @@ window.CHEATSHEET_DATA["unix-cli"] = {
       ],
       "examples": [
         {
-          "scenario": "需要使用 openssh-client 提供的 scp 来完成“m scp d OpenSSH secure file copy”时",
-          "goal": "按固定官方版本的定义调用 scp，并依据退出状态判断该操作是否完成",
-          "value": "scp",
-          "description": "scp 的官方用途是“m scp d OpenSSH secure file copy”；这里直接使用规范入口，不把子命令或选项伪装成另一条程序。",
-          "expected": "终端按 openssh-client 的定义执行 scp；缺少必需操作数时会明确返回用法诊断和非成功状态。",
-          "copyable": true,
+          "scenario": "需要把待部署归档上传到远程主机的临时目录供人工核对",
+          "goal": "通过 SSH 安全复制本地归档",
+          "value": "scp ./dist/app.tar developer@example.com:/tmp/app.tar",
+          "description": "把本地文件传到远程路径；目标已存在时可能被替换。",
+          "expected": "认证和传输成功后，远程 /tmp/app.tar 包含上传的归档内容。",
+          "copyable": false,
+          "warning": "远程目标可能被覆盖；执行前先登录主机确认目标路径和现有文件可恢复。",
+          "caveat": "先用只读远程会话检查 /tmp/app.tar 是否存在，并确认覆盖目标与恢复方式。",
+          "riskLevels": [
+            "deleteOrOverwrite"
+          ],
           "sourceType": "manual",
           "sourceIds": [
             "openssh-portable-repository"
           ],
-          "authorship": "generated",
+          "authorship": "editorial",
           "evidenceTier": "first-party",
-          "adaptation": "scenario-derived",
+          "adaptation": "adapted",
           "groundingRefs": [
             {
               "sourceId": "openssh-portable-repository",
-              "locator": "https://github.com/openssh/openssh-portable/tree/V_10_4_P1/scp.1",
+              "locator": "https://github.com/openssh/openssh-portable/tree/V_10_4_P1 · scp.1",
               "claims": [
                 "value",
                 "behavior",
@@ -11561,7 +11269,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/diffutils/diffutils-3.12.tar.xz · man/sdiff.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "sdiff [\\,OPTION\\/]... \\,FILE1 FILE2\\/",
@@ -11588,7 +11296,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/sed.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -11603,23 +11311,23 @@ window.CHEATSHEET_DATA["unix-cli"] = {
       ],
       "examples": [
         {
-          "value": "sed 's/旧文本/新文本/g' file.txt",
-          "description": "预览把每行所有“旧文本”替换为“新文本”的结果",
-          "scenario": "需要批量替换文本但应先确认匹配范围",
-          "goal": "预览替换结果后再决定是否原地修改",
-          "expected": "默认输出替换后的文本而不改文件",
-          "caveat": "使用 -i 前先备份；macOS 与 GNU sed 参数不同",
-          "sourceType": "quasi-official",
-          "authorship": "editorial",
-          "evidenceTier": "authoritative-community",
-          "adaptation": "adapted",
+          "scenario": "迁移接口域名前，需要先查看配置文件中所有替换结果，避免直接改坏原文件",
+          "goal": "把旧域名替换为新域名并仅输出预览",
+          "value": "sed 's/api-old\\.example/api.example/g' config.env",
+          "description": "替换脚本作用于每一行；未使用原地编辑选项，因此结果只写到标准输出。",
+          "expected": "终端显示替换后的 config.env 文本，磁盘上的原文件保持不变。",
+          "copyable": true,
+          "sourceType": "manual",
           "sourceIds": [
-            "linux-sed-man"
+            "posix-shell-utilities"
           ],
+          "authorship": "editorial",
+          "evidenceTier": "first-party",
+          "adaptation": "adapted",
           "groundingRefs": [
             {
-              "sourceId": "gnu-manuals",
-              "locator": "https://www.gnu.org/software/coreutils/manual/ · sed",
+              "sourceId": "posix-shell-utilities",
+              "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/sed.html",
               "claims": [
                 "value",
                 "behavior",
@@ -11633,28 +11341,23 @@ window.CHEATSHEET_DATA["unix-cli"] = {
           ]
         },
         {
-          "value": "sed -i 's/旧文本/新文本/g' file.txt",
-          "description": "直接修改文件中的匹配文本",
-          "warning": "先运行不带 -i 的命令预览结果，并备份重要文件",
-          "platformValues": {
-            "mac": "sed -i '' 's/旧文本/新文本/g' file.txt",
-            "linux": "sed -i 's/旧文本/新文本/g' file.txt"
-          },
-          "scenario": "需要批量替换文本但应先确认匹配范围",
-          "goal": "预览替换结果后再决定是否原地修改",
-          "expected": "默认输出替换后的文本而不改文件",
-          "caveat": "使用 -i 前先备份；macOS 与 GNU sed 参数不同",
-          "sourceType": "quasi-official",
-          "authorship": "editorial",
-          "evidenceTier": "authoritative-community",
-          "adaptation": "adapted",
+          "scenario": "应用日志很长，需要先抽取开头八十行确认启动参数和版本信息",
+          "goal": "只打印指定的行号范围",
+          "value": "sed -n '1,80p' app.log",
+          "description": "-n 关闭默认输出，p 命令只打印第一至第八十行。",
+          "expected": "终端最多显示 app.log 的前八十行，日志文件保持不变。",
+          "copyable": true,
+          "sourceType": "manual",
           "sourceIds": [
-            "linux-sed-man"
+            "posix-shell-utilities"
           ],
+          "authorship": "editorial",
+          "evidenceTier": "first-party",
+          "adaptation": "adapted",
           "groundingRefs": [
             {
-              "sourceId": "gnu-manuals",
-              "locator": "https://www.gnu.org/software/coreutils/manual/ · sed",
+              "sourceId": "posix-shell-utilities",
+              "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/sed.html",
               "claims": [
                 "value",
                 "behavior",
@@ -11665,6 +11368,40 @@ window.CHEATSHEET_DATA["unix-cli"] = {
           "platforms": [
             "mac",
             "linux"
+          ]
+        },
+        {
+          "scenario": "确认预览和备份都正确后，需要在 Linux 构建容器里原地迁移配置域名",
+          "goal": "使用 GNU sed 直接改写 config.env",
+          "value": "sed -i 's/api-old\\.example/api.example/g' config.env",
+          "description": "-i 会把替换结果写回 config.env，而不是只把预览打印到终端。",
+          "expected": "磁盘上的 config.env 被替换结果覆盖；成功时通常不会输出完整文件内容。",
+          "copyable": false,
+          "warning": "会直接改写并覆盖原文件；先运行不带 -i 的预览命令并创建可恢复备份。",
+          "caveat": "先完成预览和备份；此写法面向 GNU sed，macOS 自带 BSD sed 的 -i 参数形式不同。",
+          "riskLevels": [
+            "deleteOrOverwrite"
+          ],
+          "platforms": [
+            "linux"
+          ],
+          "sourceType": "manual",
+          "sourceIds": [
+            "gnu-manuals"
+          ],
+          "authorship": "editorial",
+          "evidenceTier": "first-party",
+          "adaptation": "adapted",
+          "groundingRefs": [
+            {
+              "sourceId": "gnu-manuals",
+              "locator": "https://ftp.gnu.org/gnu/sed/sed-4.10.tar.xz · doc/sed.texi",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
           ]
         }
       ],
@@ -11750,7 +11487,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/seq.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "seq [\\,OPTION\\/]... \\,LAST\\/ .br seq [\\,OPTION\\/]... \\,FIRST LAST\\/ .br seq [\\,OPTION\\/]... \\,FIRST INCREMENT LAST\\/",
@@ -11822,7 +11559,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://github.com/openssh/openssh-portable/tree/V_10_4_P1 · sftp.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "m sftp p Fl 46AaCfNpqrv p Fl B Ar buffer_size p Fl b Ar batchfile p Fl c Ar cipher p Fl D Ar sftp_server_command p Fl F Ar ssh_config p Fl i Ar identity_file p Fl J Ar destination p Fl l Ar limit p Fl o Ar ssh_option p Fl P Ar port p Fl R Ar num_requests p Fl S Ar program p Fl s ",
@@ -11894,7 +11631,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/sh.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ OB ] sh [ -abCef h imnuvx ] [ -o option ] ... [ +abCef h imnuvx ] [ +o option ] ... [ command_file [ argument ... ]] [ OB ] sh -c [ -abCef h imnuvx ] [ -o option ] ... [ +abCef h imnuvx ] [ +o option ] ... command_string [ command_name [ argument ... ]] [ OB ] sh -s [ -abCef h ",
@@ -11975,7 +11712,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/sha1sum.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "sha1sum [\\,OPTION\\/]... [\\,FILE\\/]...",
@@ -12047,7 +11784,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/sha224sum.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "sha224sum [\\,OPTION\\/]... [\\,FILE\\/]...",
@@ -12119,7 +11856,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/sha256sum.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "sha256sum [\\,OPTION\\/]... [\\,FILE\\/]...",
@@ -12191,7 +11928,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/sha384sum.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "sha384sum [\\,OPTION\\/]... [\\,FILE\\/]...",
@@ -12263,7 +12000,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/sha512sum.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "sha512sum [\\,OPTION\\/]... [\\,FILE\\/]...",
@@ -12335,7 +12072,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/shred.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "shred [\\,OPTION\\/]... \\,FILE\\/...",
@@ -12407,7 +12144,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/shuf.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "shuf [\\,OPTION\\/]... [\\,FILE\\/] .br shuf \\,-e \\/[\\,OPTION\\/]... [\\,ARG\\/]... .br shuf \\,-i LO-HI \\/[\\,OPTION\\/]...",
@@ -12480,7 +12217,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/sleep.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "sleep time",
@@ -12507,7 +12244,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/sort.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -12636,7 +12373,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/split.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "split [ -l line_count ] [ -a suffix_length ] [ file [ name ]] split -b n [ k|m ] [ -a suffix_length ] [ file [ name ]]",
@@ -12667,7 +12404,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://github.com/openssh/openssh-portable/tree/V_10_4_P1 · ssh.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -12679,19 +12416,23 @@ window.CHEATSHEET_DATA["unix-cli"] = {
       ],
       "examples": [
         {
-          "value": "ssh user@example.com",
-          "description": "登录到远程主机的命令行",
-          "sourceType": "quasi-official",
-          "authorship": "editorial",
-          "evidenceTier": "authoritative-community",
-          "adaptation": "adapted",
+          "scenario": "远程开发机上的服务异常，需要登录主机检查只在该环境存在的日志",
+          "goal": "建立到远程主机的交互式 SSH 会话",
+          "value": "ssh developer@example.com",
+          "description": "使用指定用户名连接远程主机，认证方式由本机 SSH 配置和服务端共同决定。",
+          "expected": "认证成功后进入远程命令行；失败时终端显示连接或认证诊断。",
+          "copyable": true,
+          "sourceType": "manual",
           "sourceIds": [
-            "linux-ssh-man"
+            "openssh-portable-repository"
           ],
+          "authorship": "editorial",
+          "evidenceTier": "first-party",
+          "adaptation": "adapted",
           "groundingRefs": [
             {
-              "sourceId": "gnu-manuals",
-              "locator": "https://www.gnu.org/software/coreutils/manual/ · ssh",
+              "sourceId": "openssh-portable-repository",
+              "locator": "https://github.com/openssh/openssh-portable/tree/V_10_4_P1 · ssh.1",
               "claims": [
                 "value",
                 "behavior",
@@ -12699,9 +12440,6 @@ window.CHEATSHEET_DATA["unix-cli"] = {
               ]
             }
           ],
-          "scenario": "首次使用、凭据失效或切换账户后，需要重新完成身份验证。",
-          "goal": "SSH 远程登录；使用 ssh user@example.com 完成这一步。",
-          "expected": "执行成功后，登录到远程主机的命令行。",
           "platforms": [
             "mac",
             "linux"
@@ -12784,7 +12522,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://github.com/openssh/openssh-portable/tree/V_10_4_P1 · ssh-add.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "m ssh-add p Fl CcDdKkLlNqvXx p Fl E Ar fingerprint_hash p Fl H Ar hostkey_file p Fl h Ar destination_constraint p Fl S Ar provider p Fl t Ar life p Ar m ssh-add l s Ar pkcs11 p Fl Cv p Ar certificate ... m ssh-add l e Ar pkcs11 m ssh-add l T r pubkey ... m ssh-add l Q",
@@ -12856,7 +12594,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://github.com/openssh/openssh-portable/tree/V_10_4_P1 · ssh-agent.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "m ssh-agent p Fl c | s p Fl DdTU p Fl a Ar bind_address p Fl E Ar fingerprint_hash p Fl O Ar option p Fl P Ar allowed_providers p Fl t Ar life m ssh-agent p Fl TU p Fl a Ar bind_address p Fl E Ar fingerprint_hash p Fl O Ar option p Fl P Ar allowed_providers p Fl t Ar life r comma",
@@ -12928,7 +12666,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://github.com/openssh/openssh-portable/tree/V_10_4_P1 · ssh-keygen.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "m ssh-keygen p Fl q p Fl a Ar rounds p Fl b Ar bits p Fl C Ar comment p Fl f Ar output_keyfile p Fl m Ar format p Fl N Ar new_passphrase p Fl O Ar option p Fl t Cm ecdsa | ecdsa-sk | ed25519 | ed25519-sk | mldsa44-ed25519 | rsa p Fl w Ar provider p Fl Z Ar cipher m ssh-keygen l p",
@@ -13000,7 +12738,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://github.com/openssh/openssh-portable/tree/V_10_4_P1 · ssh-keyscan.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "m ssh-keyscan p Fl 46cDHqv p Fl f Ar file p Fl O Ar option p Fl p Ar port p Fl T Ar timeout p Fl t Ar type p Ar host | addrlist namelist",
@@ -13026,23 +12764,23 @@ window.CHEATSHEET_DATA["unix-cli"] = {
       ],
       "examples": [
         {
-          "scenario": "需要使用 gnu-coreutils 提供的 stat 来完成“stat display file or file system status”时",
-          "goal": "按固定官方版本的定义调用 stat，并依据退出状态判断该操作是否完成",
-          "value": "stat",
-          "description": "stat 的官方用途是“stat display file or file system status”；这里直接使用规范入口，不把子命令或选项伪装成另一条程序。",
-          "expected": "终端按 gnu-coreutils 的定义执行 stat；缺少必需操作数时会明确返回用法诊断和非成功状态。",
+          "scenario": "锁文件看似没有变化时，需要核对它的大小、时间戳和文件系统标识",
+          "goal": "查看 package-lock.json 的详细文件状态",
+          "value": "stat package-lock.json",
+          "description": "读取文件元数据，而不打开或修改文件内容。",
+          "expected": "终端显示该文件的大小、权限、时间戳及实现提供的其它状态字段。",
           "copyable": true,
           "sourceType": "manual",
           "sourceIds": [
             "gnu-manuals"
           ],
-          "authorship": "generated",
+          "authorship": "editorial",
           "evidenceTier": "first-party",
-          "adaptation": "scenario-derived",
+          "adaptation": "adapted",
           "groundingRefs": [
             {
               "sourceId": "gnu-manuals",
-              "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz/man/stat.1",
+              "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/stat.1",
               "claims": [
                 "value",
                 "behavior",
@@ -13072,7 +12810,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/stat.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "stat [\\,OPTION\\/]... \\,FILE\\/...",
@@ -13144,7 +12882,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/stdbuf.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "stdbuf \\,OPTION\\/... \\,COMMAND\\/",
@@ -13214,7 +12952,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/strings.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "strings [ -a ] [ -t format ] [ -n number ] [ file ... ]",
@@ -13291,7 +13029,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/strip.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ SD ] strip file ...",
@@ -13364,7 +13102,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/stty.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "stty [ -a|-g ] stty operand ...",
@@ -13439,7 +13177,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/sum.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "sum [\\,OPTION\\/]... [\\,FILE\\/]...",
@@ -13511,7 +13249,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/sync.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "sync [\\,OPTION\\/] [\\,FILE\\/]...",
@@ -13583,7 +13321,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/tabs.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ XSI ] tabs [ - n | -a|-a2|-c|-c2|-c3|-f|-p|-s|-u ] [ -T type ] tabs [ -T type ] n [[ sep [ + ] n ] ... ]",
@@ -13664,7 +13402,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/tac.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "tac [\\,OPTION\\/]... [\\,FILE\\/]...",
@@ -13691,7 +13429,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/tail.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -13705,19 +13443,23 @@ window.CHEATSHEET_DATA["unix-cli"] = {
       ],
       "examples": [
         {
+          "scenario": "服务刚刚失败，需要先查看日志末尾的最近五十行而不是加载整个文件",
+          "goal": "输出 app.log 的最后五十行",
           "value": "tail -n 50 app.log",
-          "description": "查看文件末尾若干行，常用于看最新日志",
-          "sourceType": "official",
+          "description": "-n 50 限制输出为文件末尾五十行，适合快速查看最新日志。",
+          "expected": "终端按原顺序显示 app.log 最后的最多五十行，文件保持不变。",
+          "copyable": true,
+          "sourceType": "manual",
+          "sourceIds": [
+            "posix-shell-utilities"
+          ],
           "authorship": "editorial",
           "evidenceTier": "first-party",
           "adaptation": "adapted",
-          "sourceIds": [
-            "gnu-manuals"
-          ],
           "groundingRefs": [
             {
-              "sourceId": "gnu-manuals",
-              "locator": "GNU manuals（检索 tail）",
+              "sourceId": "posix-shell-utilities",
+              "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/tail.html",
               "claims": [
                 "value",
                 "behavior",
@@ -13725,32 +13467,29 @@ window.CHEATSHEET_DATA["unix-cli"] = {
               ]
             }
           ],
-          "scenario": "终端中的当前任务需要“输出文件末尾部分”，因此要调用对应的官方命令入口。",
-          "goal": "输出文件末尾部分；使用 tail -n 50 app.log 完成这一步。",
-          "expected": "执行后，终端或当前界面显示与“查看文件末尾若干行，常用于看最新日志”对应的信息。",
           "platforms": [
             "mac",
             "linux"
           ]
         },
         {
+          "scenario": "本地开发服务正在复现偶发错误，需要持续日志输出观察下一次请求",
+          "goal": "持续跟随 app.log 追加的内容",
           "value": "tail -f app.log",
-          "description": "持续显示 app.log 新追加的日志内容",
-          "scenario": "服务运行中需要持续观察新日志",
-          "goal": "跟踪文件末尾追加内容",
-          "expected": "新日志写入时实时显示",
-          "caveat": "日志轮转后可能需要 -F 才能继续跟踪",
-          "sourceType": "official",
+          "description": "-f 保持进程运行，并在文件追加新行时继续输出。",
+          "expected": "终端先显示日志末尾内容，随后持续显示新追加的行，直到用户结束 tail。",
+          "copyable": true,
+          "sourceType": "manual",
+          "sourceIds": [
+            "posix-shell-utilities"
+          ],
           "authorship": "editorial",
           "evidenceTier": "first-party",
           "adaptation": "adapted",
-          "sourceIds": [
-            "gnu-manuals"
-          ],
           "groundingRefs": [
             {
-              "sourceId": "gnu-manuals",
-              "locator": "GNU manuals（检索 tail -f）",
+              "sourceId": "posix-shell-utilities",
+              "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/tail.html",
               "claims": [
                 "value",
                 "behavior",
@@ -13847,7 +13586,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/talk.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ UP ] talk address [ terminal ]",
@@ -13874,7 +13613,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/tar/tar-1.35.tar.xz · doc/tar.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -13889,93 +13628,103 @@ window.CHEATSHEET_DATA["unix-cli"] = {
       ],
       "examples": [
         {
-          "value": "tar -czf backup.tar.gz ./src",
-          "description": "把目录打包成 .tar.gz 压缩归档",
-          "sourceType": "quasi-official",
-          "authorship": "editorial",
-          "evidenceTier": "authoritative-community",
-          "adaptation": "adapted",
-          "sourceIds": [
-            "linux-tar-man"
-          ],
-          "groundingRefs": [
-            {
-              "sourceId": "gnu-manuals",
-              "locator": "https://www.gnu.org/software/coreutils/manual/ · tar",
-              "claims": [
-                "value",
-                "behavior",
-                "expected"
-              ]
-            }
-          ],
-          "scenario": "准备新的工作环境或资源时，需要创建或解压归档文件，让后续步骤具备所需入口。",
-          "goal": "创建或解压归档文件；使用 tar -czf backup.tar.gz ./src 完成这一步。",
-          "expected": "执行成功后，把目录打包成 .tar.gz 压缩归档。",
-          "platforms": [
-            "mac",
-            "linux"
-          ]
-        },
-        {
-          "value": "tar -xzf archive.tar.gz",
-          "description": "把 gzip 压缩的 tar 归档解压到当前目录",
-          "scenario": "收到 gzip 压缩归档，需要查看或解压内容",
-          "goal": "把归档恢复为目录和文件",
-          "expected": "文件写入当前目录",
-          "caveat": "先用 tar -tzf 查看路径，避免覆盖同名文件",
-          "sourceType": "quasi-official",
-          "authorship": "editorial",
-          "evidenceTier": "authoritative-community",
-          "adaptation": "adapted",
-          "sourceIds": [
-            "linux-tar-man"
-          ],
-          "groundingRefs": [
-            {
-              "sourceId": "gnu-manuals",
-              "locator": "https://www.gnu.org/software/coreutils/manual/ · tar -xzf",
-              "claims": [
-                "value",
-                "behavior",
-                "expected"
-              ]
-            }
-          ],
-          "platforms": [
-            "mac",
-            "linux"
-          ]
-        },
-        {
-          "value": "tar -czf archive.tar.gz example-dir",
-          "description": "创建 .tar.gz 归档",
-          "generated": true,
+          "scenario": "收到发布归档后，需要在解包前检查其中的路径，避免把未知文件写入工作目录",
+          "goal": "列出 tar 归档目录而不提取文件",
+          "value": "tar tf release.tar",
+          "description": "传统选项 t 查看归档目录，f 指定后续的归档文件名；不会执行提取。",
+          "expected": "终端按归档顺序列出 release.tar 内的成员路径，当前目录不新增归档成员。",
           "copyable": true,
-          "sourceType": "ai-derived",
-          "authorship": "generated",
-          "evidenceTier": "first-party",
-          "adaptation": "scenario-derived",
-          "platforms": [
-            "mac",
-            "linux"
-          ],
-          "groundingRefs": [
-            {
-              "sourceId": "gnu-manuals",
-              "locator": "https://ftp.gnu.org/gnu/tar/tar-1.35.tar.xz/doc/tar.1",
-              "claims": [
-                "value",
-                "behavior",
-                "expected"
-              ]
-            }
-          ],
-          "scenario": "准备新的工作环境或资源时，需要创建 .tar.gz 归档，让后续步骤具备所需入口。",
-          "goal": "创建 .tar.gz 归档；使用 tar -czf archive.tar.gz example-dir 完成这一步。",
-          "expected": "执行成功后，创建 .tar.gz 归档。",
+          "sourceType": "manual",
           "sourceIds": [
             "gnu-manuals"
+          ],
+          "authorship": "editorial",
+          "evidenceTier": "first-party",
+          "adaptation": "adapted",
+          "groundingRefs": [
+            {
+              "sourceId": "gnu-manuals",
+              "locator": "https://ftp.gnu.org/gnu/tar/tar-1.35.tar.xz · doc/tar.1",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ],
+          "platforms": [
+            "mac",
+            "linux"
+          ]
+        },
+        {
+          "scenario": "已检查发布归档成员且准备好空的临时目录，需要解开 gzip 压缩包进行本地验收",
+          "goal": "提取 gzip 压缩的 tar 发布归档",
+          "value": "tar -xzf release.tar.gz",
+          "description": "-x 提取成员，-z 处理 gzip 压缩，-f 指定 release.tar.gz 归档文件。",
+          "expected": "归档成员被写入当前目录；若同名路径已存在，内容可能被覆盖。",
+          "copyable": false,
+          "warning": "提取会在当前目录创建文件并可能覆盖同名路径；不要直接在项目根目录处理未知归档。",
+          "caveat": "先用 tar -tzf release.tar.gz 预览成员路径，再进入新建的隔离临时目录执行提取。",
+          "riskLevels": [
+            "deleteOrOverwrite"
+          ],
+          "sourceType": "manual",
+          "sourceIds": [
+            "gnu-manuals"
+          ],
+          "authorship": "editorial",
+          "evidenceTier": "first-party",
+          "adaptation": "adapted",
+          "groundingRefs": [
+            {
+              "sourceId": "gnu-manuals",
+              "locator": "https://ftp.gnu.org/gnu/tar/tar-1.35.tar.xz · doc/tar.texi",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ],
+          "platforms": [
+            "mac",
+            "linux"
+          ]
+        },
+        {
+          "scenario": "准备上传构建产物前，需要把示例目录打成一个 gzip 压缩归档",
+          "goal": "创建 gzip 压缩的 tar 归档",
+          "value": "tar -czf archive.tar.gz example-dir",
+          "description": "-c 创建新归档，-z 使用 gzip 压缩，-f 指定 archive.tar.gz 输出文件。",
+          "expected": "当前目录生成 archive.tar.gz；同名文件存在时可能被替换。",
+          "copyable": false,
+          "warning": "会创建或覆盖 archive.tar.gz；不要在未核对路径时覆盖已有发布归档。",
+          "caveat": "先检查 example-dir 和目标路径，再为现有同名归档创建备份或改用新的文件名。",
+          "riskLevels": [
+            "deleteOrOverwrite"
+          ],
+          "sourceType": "manual",
+          "sourceIds": [
+            "gnu-manuals"
+          ],
+          "authorship": "editorial",
+          "evidenceTier": "first-party",
+          "adaptation": "adapted",
+          "groundingRefs": [
+            {
+              "sourceId": "gnu-manuals",
+              "locator": "https://ftp.gnu.org/gnu/tar/tar-1.35.tar.xz · doc/tar.texi",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ],
+          "platforms": [
+            "mac",
+            "linux"
           ]
         }
       ],
@@ -14065,7 +13814,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/tee.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "tee [ -ai ] [ file ... ]",
@@ -14141,7 +13890,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/test.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "test [ expression ] [ [ expression ] ]",
@@ -14211,7 +13960,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/time.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "time [ -p ] utility [ argument ... ]",
@@ -14239,19 +13988,19 @@ window.CHEATSHEET_DATA["unix-cli"] = {
       ],
       "examples": [
         {
-          "scenario": "需要使用 gnu-coreutils / posix-utilities 提供的 timeout 来完成“execute a utility with a time limit”时",
-          "goal": "按固定官方版本的定义调用 timeout，并依据退出状态判断该操作是否完成",
-          "value": "timeout",
-          "description": "timeout 的官方用途是“execute a utility with a time limit”；这里直接使用规范入口，不把子命令或选项伪装成另一条程序。",
-          "expected": "终端按 gnu-coreutils / posix-utilities 的定义执行 timeout；缺少必需操作数时会明确返回用法诊断和非成功状态。",
+          "scenario": "自动化测试偶尔永久等待，需要给整个测试命令设置明确的最长运行时间",
+          "goal": "最多运行三十秒的 npm test",
+          "value": "timeout 30 npm test",
+          "description": "timeout 把 duration 后面的 npm test 作为嵌套命令执行，并在超过时限时发送终止信号。",
+          "expected": "测试在三十秒内完成时返回其状态；超时则由 timeout 终止并返回超时状态。",
           "copyable": true,
           "sourceType": "manual",
           "sourceIds": [
             "posix-shell-utilities"
           ],
-          "authorship": "generated",
+          "authorship": "editorial",
           "evidenceTier": "first-party",
-          "adaptation": "scenario-derived",
+          "adaptation": "adapted",
           "groundingRefs": [
             {
               "sourceId": "posix-shell-utilities",
@@ -14286,7 +14035,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/timeout.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "timeout [ -fp ] [ -k time ] [ -s signal_name ] duration utility [ argument ... ]",
@@ -14318,7 +14067,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/top.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -14333,23 +14082,23 @@ window.CHEATSHEET_DATA["unix-cli"] = {
       ],
       "examples": [
         {
-          "scenario": "需要使用 top-implementations 提供的 top 来完成“.\\\" ---------------------------------------------------------------------- top display Linux processes .\\\"”时",
-          "goal": "按固定官方版本的定义调用 top，并依据退出状态判断该操作是否完成",
+          "scenario": "开发机突然变慢，需要实时观察哪些进程占用 CPU 或内存",
+          "goal": "打开交互式进程资源视图",
           "value": "top",
-          "description": "top 的官方用途是“.\\\" ---------------------------------------------------------------------- top display Linux processes .\\\"”；这里直接使用规范入口，不把子命令或选项伪装成另一条程序。",
-          "expected": "终端按 top-implementations 的定义执行 top；缺少必需操作数时会明确返回用法诊断和非成功状态。",
+          "description": "持续刷新系统和进程资源统计，适合定位瞬时高负载。",
+          "expected": "终端进入动态进程列表；退出查看器不会修改进程状态。",
           "copyable": true,
           "sourceType": "manual",
           "sourceIds": [
             "procps-ng-repository"
           ],
-          "authorship": "generated",
+          "authorship": "editorial",
           "evidenceTier": "first-party",
-          "adaptation": "scenario-derived",
+          "adaptation": "adapted",
           "groundingRefs": [
             {
               "sourceId": "procps-ng-repository",
-              "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6/-/blob/v4.0.6/man/top.1",
+              "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/top.1",
               "claims": [
                 "value",
                 "behavior",
@@ -14395,7 +14144,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/touch.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -14522,7 +14271,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/tput.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "tput [ -T type ] operand ...",
@@ -14597,7 +14346,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/tr.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "tr [ -c|-C ] [ -s ] string1 string2 tr -s [ -c|-C ] string1 tr -d [ -c|-C ] string1 tr -ds [ -c|-C ] string1 string2",
@@ -14675,7 +14424,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/true.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "true",
@@ -14747,7 +14496,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/truncate.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "truncate \\,OPTION\\/... \\,FILE\\/...",
@@ -14820,7 +14569,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/tsort.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "tsort [ -w ] [ file ]",
@@ -14895,7 +14644,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/tty.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "tty",
@@ -14967,7 +14716,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/type.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ XSI ] type name ...",
@@ -15039,7 +14788,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/ulimit.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "ulimit [ -H|-S ] -a [ XSI ] ulimit [ -H|-S ] [ -c|-d|-f|-n|-s| -t |-v ] [ newlimit ]",
@@ -15118,7 +14867,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/umask.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "umask [ -S ] [ mask ]",
@@ -15190,7 +14939,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/unalias.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "unalias alias-name ... unalias -a",
@@ -15265,7 +15014,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/uname.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "uname [ -amnrsv ]",
@@ -15344,7 +15093,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/uncompress.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ XSI ] compress [ -fv ] [ -b value ] [ -g | -m algo ] [ file ... ] compress -c [ -fv ] [ -b value ] [ -g | -m algo ] [ file ] compress -d [ -cfv ] [ file ... ] uncompress [ -cfv ] [ file ... ] zcat [ file ... ]",
@@ -15425,7 +15174,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/unexpand.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "unexpand [ -a|-t tablist ] [ file ... ]",
@@ -15501,7 +15250,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/unget.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ XSI ] unget [ -ns ] [ -r SID ] file ...",
@@ -15532,7 +15281,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/uniq.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -15659,7 +15408,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/unlink.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ XSI ] unlink file",
@@ -15685,23 +15434,28 @@ window.CHEATSHEET_DATA["unix-cli"] = {
       ],
       "examples": [
         {
-          "scenario": "需要使用 gnu-findutils 提供的 updatedb 来完成“updatedb update a file name database”时",
-          "goal": "按固定官方版本的定义调用 updatedb，并依据退出状态判断该操作是否完成",
-          "value": "updatedb",
-          "description": "updatedb 的官方用途是“updatedb update a file name database”；这里直接使用规范入口，不把子命令或选项伪装成另一条程序。",
-          "expected": "终端按 gnu-findutils 的定义执行 updatedb；缺少必需操作数时会明确返回用法诊断和非成功状态。",
-          "copyable": true,
+          "scenario": "想为单个源码目录试建 locate 数据库，但不能覆盖系统维护的默认数据库",
+          "goal": "把项目路径索引写入临时数据库文件",
+          "value": "updatedb --output /tmp/project-locate.db --localpaths ./src",
+          "description": "--output 选择独立数据库文件，--localpaths 把索引范围限制为项目源码目录。",
+          "expected": "成功时生成 /tmp/project-locate.db，系统默认 locate 数据库保持不变。",
+          "copyable": false,
+          "warning": "会创建或覆盖指定数据库文件并遍历源码路径；先确认输出文件不存在或可安全替换。",
+          "caveat": "先检查 /tmp/project-locate.db 的现有用途和 ./src 的读取范围；索引可能记录敏感文件名。",
+          "riskLevels": [
+            "deleteOrOverwrite"
+          ],
           "sourceType": "manual",
           "sourceIds": [
             "gnu-manuals"
           ],
-          "authorship": "generated",
+          "authorship": "editorial",
           "evidenceTier": "first-party",
-          "adaptation": "scenario-derived",
+          "adaptation": "adapted",
           "groundingRefs": [
             {
               "sourceId": "gnu-manuals",
-              "locator": "https://ftp.gnu.org/gnu/findutils/findutils-4.11.0.tar.xz/locate/updatedb.1",
+              "locator": "https://ftp.gnu.org/gnu/findutils/findutils-4.11.0.tar.xz · locate/updatedb.1",
               "claims": [
                 "value",
                 "behavior",
@@ -15731,7 +15485,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/findutils/findutils-4.11.0.tar.xz · locate/updatedb.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "updatedb [ options ] .",
@@ -15812,7 +15566,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/uptime.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "uptime [\\,OPTION\\/]... [\\,FILE\\/]",
@@ -15884,7 +15638,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/users.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "users [\\,OPTION\\/]... [\\,FILE\\/]",
@@ -15957,7 +15711,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/uucp.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ UU ] uucp [ -cCdfjmr ] [ -n user ] source-file ... destination-file",
@@ -16036,7 +15790,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/uudecode.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "uudecode [ -o outfile ] [ file ]",
@@ -16108,7 +15862,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/uuencode.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "uuencode [ -m ] [ file ] decode_pathname",
@@ -16183,7 +15937,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/uustat.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ UU ] uustat [ -q|-k jobid |-r jobid ] uustat [ -s system ] [ -u user ]",
@@ -16262,7 +16016,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/uux.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ UU ] uux [ -jnp ] command-string",
@@ -16339,7 +16093,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/val.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ XSI ] val - val [ -s ] [ -m name ] [ -r SID ] [ -y type ] file ...",
@@ -16416,7 +16170,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/vdir.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "vdir [\\,OPTION\\/]... [\\,FILE\\/]...",
@@ -16488,7 +16242,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/vi.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ UP ] vi [ -rR ] [ -c command ] [ -t tagstring ] [ -w size ] [ file ... ]",
@@ -16564,7 +16318,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/wait.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "wait [ pid ... ]",
@@ -16591,7 +16345,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/wc.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -16672,7 +16426,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/wget/wget-1.25.0.tar.gz · doc/wget.texi",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -16684,23 +16438,23 @@ window.CHEATSHEET_DATA["unix-cli"] = {
       ],
       "examples": [
         {
-          "scenario": "需要使用 gnu-wget 提供的 wget 来完成“retrieve files using HTTP, HTTPS and FTP”时",
-          "goal": "按固定官方版本的定义调用 wget，并依据退出状态判断该操作是否完成",
-          "value": "wget",
-          "description": "wget 的官方用途是“retrieve files using HTTP, HTTPS and FTP”；这里直接使用规范入口，不把子命令或选项伪装成另一条程序。",
-          "expected": "终端按 gnu-wget 的定义执行 wget；缺少必需操作数时会明确返回用法诊断和非成功状态。",
+          "scenario": "准备离线安装环境时，需要把公开发布包下载到当前目录",
+          "goal": "下载指定的 HTTPS 发布文件",
+          "value": "wget https://example.com/releases/tool.tar.gz",
+          "description": "wget 获取 URL 指向的文件，并按远端文件名保存到当前目录。",
+          "expected": "成功时当前目录出现下载文件；若同名文件已存在，实现会避免静默覆盖。",
           "copyable": true,
           "sourceType": "manual",
           "sourceIds": [
             "gnu-manuals"
           ],
-          "authorship": "generated",
+          "authorship": "editorial",
           "evidenceTier": "first-party",
-          "adaptation": "scenario-derived",
+          "adaptation": "adapted",
           "groundingRefs": [
             {
               "sourceId": "gnu-manuals",
-              "locator": "https://ftp.gnu.org/gnu/wget/wget-1.25.0.tar.gz/doc/wget.texi",
+              "locator": "https://ftp.gnu.org/gnu/wget/wget-1.25.0.tar.gz · doc/wget.texi",
               "claims": [
                 "value",
                 "behavior",
@@ -16792,7 +16546,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/what.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ XSI ] what [ -s ] file ...",
@@ -16821,7 +16575,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/which/which-2.25.tar.gz · which.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -16953,7 +16707,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/who.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ XSI ] who [ -mTu ] [ -abdHlprt ] [ file ] [ XSI ] who [ -mu ] -s [ -bHlprt ] [ file ] who -q [ file ] who am i who am I",
@@ -17034,7 +16788,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/whoami.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "whoami [\\,OPTION\\/]...",
@@ -17104,7 +16858,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/write.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "write user_name [ terminal ]",
@@ -17130,19 +16884,19 @@ window.CHEATSHEET_DATA["unix-cli"] = {
       ],
       "examples": [
         {
-          "scenario": "需要使用 gnu-findutils / posix-utilities 提供的 xargs 来完成“construct argument lists and invoke utility”时",
-          "goal": "按固定官方版本的定义调用 xargs，并依据退出状态判断该操作是否完成",
-          "value": "xargs",
-          "description": "xargs 的官方用途是“construct argument lists and invoke utility”；这里直接使用规范入口，不把子命令或选项伪装成另一条程序。",
-          "expected": "终端按 gnu-findutils / posix-utilities 的定义执行 xargs；缺少必需操作数时会明确返回用法诊断和非成功状态。",
+          "scenario": "持续集成导出了一列变更文件，需要逐个规范化为一行一个参数供后续步骤检查",
+          "goal": "从标准输入组装参数并逐项调用 printf",
+          "value": "xargs -n 1 printf '%s\\n' < changed-files.txt",
+          "description": "-n 1 限制每次调用只附加一个输入参数，printf 是由 xargs 调用的嵌套命令。",
+          "expected": "终端逐行输出 changed-files.txt 中由 xargs 解析出的每个参数。",
           "copyable": true,
           "sourceType": "manual",
           "sourceIds": [
             "posix-shell-utilities"
           ],
-          "authorship": "generated",
+          "authorship": "editorial",
           "evidenceTier": "first-party",
-          "adaptation": "scenario-derived",
+          "adaptation": "adapted",
           "groundingRefs": [
             {
               "sourceId": "posix-shell-utilities",
@@ -17178,7 +16932,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/xargs.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ XSI ] xargs [ -prtx ] [ -E eofstr |-0 ] [ -I replstr |-L number |-n number ] [ -s size ] [ utility [ argument ... ]]",
@@ -17259,7 +17013,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/xgettext.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ CD ] xgettext [ -j ] [ -n ] [ -d default-domain ] [ -K keyword-spec ] ... [ -p pathname ] file ... xgettext -a [ -n ] [ -d default-domain ] [ -p pathname ] [ -x exclude-file ] file ...",
@@ -17341,7 +17095,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/yacc.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ CD ] yacc [ -dltv ] [ -b file_prefix ] [ -p sym_prefix ] grammar",
@@ -17420,7 +17174,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz · man/yes.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "yes [\\,STRING\\/]... .br yes \\,OPTION\\/",
@@ -17492,7 +17246,7 @@ window.CHEATSHEET_DATA["unix-cli"] = {
             "platform"
           ],
           "locator": "https://pubs.opengroup.org/onlinepubs/9799919799/utilities/zcat.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "[ XSI ] compress [ -fv ] [ -b value ] [ -g | -m algo ] [ file ... ] compress -c [ -fv ] [ -b value ] [ -g | -m algo ] [ file ] compress -d [ -cfv ] [ file ... ] uncompress [ -cfv ] [ file ... ] zcat [ file ... ]",

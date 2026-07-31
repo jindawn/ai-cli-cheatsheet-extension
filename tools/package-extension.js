@@ -19,6 +19,12 @@ const outputArg = valueFor("--output");
 // install dialog that offered no way forward at all.
 const BRIDGE_INSTALLER_STATES = ["signed", "unsigned", "none"];
 const bridgeInstallers = valueFor("--bridge-installers") ?? "none";
+const distributionInput = fs.readFileSync(path.join(root, "distribution.js"), "utf8");
+const bridgeReleaseVersionMatch = distributionInput.match(/bridgeReleaseVersion:\s*["']([^"']+)["']/);
+if (!bridgeReleaseVersionMatch) {
+  throw new Error("distribution.js must declare bridgeReleaseVersion");
+}
+const bridgeReleaseVersion = bridgeReleaseVersionMatch[1];
 
 if (!['source', 'store'].includes(channel) || !outputArg
   || !BRIDGE_INSTALLER_STATES.includes(bridgeInstallers)) {
@@ -52,18 +58,26 @@ const commonEntries = [
   "data",
   "enrichments",
   "icons",
-  "shared",
   "LICENSE",
   "PRIVACY.md",
 ];
 const sourceEntries = [
+  "shared",
   "native-host",
   "README.md",
   "INSTALL.md",
   "OFFICIAL_DATA_POLICY.md",
 ];
 
-const storeEntries = [];
+// The Web Store package only carries files read by the extension at runtime.
+// Source archives keep the complete shared tree because the bundled Native
+// Host also consumes validation, provider and source-registry contracts.
+const storeEntries = [
+  "shared/common-provider-catalog.json",
+  "shared/developer-command-curation.json",
+  "shared/official-inventories",
+  "shared/scenario-reviews",
+];
 
 function copyEntry(relativePath) {
   const source = path.join(root, relativePath);
@@ -71,12 +85,13 @@ function copyEntry(relativePath) {
   fs.cpSync(source, path.join(output, relativePath), { recursive: true });
 }
 
-function distributionSource(distributionChannel, version, persistence) {
+function distributionSource(distributionChannel, version, bridgeVersion, persistence) {
   return `"use strict";
 
 window.CHEATSHEET_DISTRIBUTION = Object.freeze({
   channel: "${distributionChannel}",
   releaseVersion: "${version}",
+  bridgeReleaseVersion: "${bridgeVersion}",
   storeExtensionId: "jdiopjiebnamikpcknmnpahhlokccgjj",
   bridgeInstallers: "${bridgeInstallers}",
   capabilities: Object.freeze({
@@ -101,13 +116,23 @@ if (channel === "store") {
   manifest.optional_permissions = ["nativeMessaging", "alarms", "unlimitedStorage"];
   manifest.description = "AI CLI、Unix/POSIX、Linux 系统、编辑器与开发工具的本地速查、个性化推荐和可选 AI 数据维护。";
   fs.writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
-  fs.writeFileSync(path.join(output, "distribution.js"), distributionSource("store", manifest.version, "storage-overlay"));
+  fs.writeFileSync(path.join(output, "distribution.js"), distributionSource(
+    "store",
+    manifest.version,
+    bridgeReleaseVersion,
+    "storage-overlay",
+  ));
 } else if (bridgeInstallers !== "none") {
   const manifest = JSON.parse(fs.readFileSync(path.join(output, "manifest.json"), "utf8"));
   // Source archives only advertise bridge installers the release workflow has
   // actually produced. An unpacked checkout keeps the conservative "none"
   // configuration committed in distribution.js.
-  fs.writeFileSync(path.join(output, "distribution.js"), distributionSource("source", manifest.version, "repository-files"));
+  fs.writeFileSync(path.join(output, "distribution.js"), distributionSource(
+    "source",
+    manifest.version,
+    bridgeReleaseVersion,
+    "repository-files",
+  ));
 }
 
 auditReleasePath(output);

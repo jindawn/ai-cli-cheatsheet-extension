@@ -716,25 +716,68 @@
     return enriched;
   }
 
-  function createEntryIndex(data, enrichmentIndex, core = globalScope.CHEATSHEET_CORE) {
+  function validDeveloperToolCuration(tool, candidate) {
+    if (!tool || !Array.isArray(tool.items) || !candidate || typeof candidate !== "object") {
+      return null;
+    }
+    const inventoryHash = tool.meta?.officialCoverage?.inventoryHash;
+    if (!inventoryHash || candidate.inventoryHash !== inventoryHash) return null;
+    if (!Array.isArray(candidate.featuredItemIds) || !Array.isArray(candidate.groups)) return null;
+    const itemIds = new Set(tool.items.map((item) => itemId(tool.meta?.id || "", item)));
+    if (!candidate.featuredItemIds.length
+      || candidate.featuredItemIds.some((featuredId) => !itemIds.has(featuredId))) {
+      return null;
+    }
+    const groupedIds = candidate.groups.flatMap((group) =>
+      Array.isArray(group.itemIds) ? group.itemIds : []
+    );
+    if (groupedIds.length !== candidate.featuredItemIds.length
+      || new Set(groupedIds).size !== groupedIds.length
+      || groupedIds.some((groupedId) => !candidate.featuredItemIds.includes(groupedId))) {
+      return null;
+    }
+    return candidate;
+  }
+
+  function createEntryIndex(data, enrichmentIndex, core = globalScope.CHEATSHEET_CORE, developerCuration = null) {
     const entries = [];
     const byKey = new Map();
     const validKeys = new Set();
     getToolIds(data).forEach((toolId) => {
       const tool = data[toolId];
+      const toolCuration = validDeveloperToolCuration(
+        tool,
+        developerCuration?.tools?.[toolId],
+      );
+      const featuredOrder = new Map((toolCuration?.featuredItemIds || [])
+        .map((featuredId, index) => [featuredId, index]));
+      const groupByItemId = new Map();
+      (toolCuration?.groups || []).forEach((group) => {
+        (group.itemIds || []).forEach((curatedItemId) => groupByItemId.set(curatedItemId, group));
+      });
       (tool?.items || []).forEach((rawItem) => {
         const id = itemId(toolId, rawItem);
         const key = `${toolId}::${id}`;
         const enrichedItem = enrichItem(enrichmentIndex, toolId, rawItem);
+        const developerGroup = groupByItemId.get(id) || null;
+        const presentation = toolCuration?.presentation || {};
         const entry = {
           toolId,
           itemId: id,
           key,
           rawItem,
           item: enrichedItem,
-          toolName: tool.meta.name,
+          toolName: [presentation.name, presentation.subtitle, tool.meta.name].filter(Boolean).join(" "),
           categoryLabel: CAT_LABEL[rawItem.cat],
-          searchIndex: core?.buildSearchIndex ? core.buildSearchIndex(enrichedItem) : null,
+          developerGroupId: developerGroup?.id || "",
+          developerGroupLabel: developerGroup?.label || "",
+          developerRank: featuredOrder.has(id) ? featuredOrder.get(id) : null,
+          implementationLabel: presentation.implementationLabel || "",
+          searchIndex: core?.buildSearchIndex ? core.buildSearchIndex(enrichedItem, {
+            groupLabel: developerGroup?.label || "",
+            searchTerms: developerGroup?.searchTerms || [],
+            itemSearchTerms: toolCuration?.itemSearchTerms?.[id] || [],
+          }) : null,
         };
         entries.push(entry);
         byKey.set(key, entry);
@@ -749,6 +792,11 @@
       ? new Set(visibleToolIds(data, state.enabledTools, state.platform))
       : new Set([state.activeTool].filter((id) => state.enabledTools.has(id)));
     const recentKeys = new Set(state.recents.map((item) => `${item.toolId}::${item.itemId}`));
+    const searchActive = Boolean(String(state.searchQuery || "").trim());
+    const curatedTool = validDeveloperToolCuration(
+      data[state.activeTool],
+      state.developerCuration?.tools?.[state.activeTool],
+    );
     return entryIndex.entries.flatMap((base) => {
       if (!ids.has(base.toolId)) return [];
       if (state.activeCat && base.rawItem.cat !== state.activeCat) return [];
@@ -763,6 +811,10 @@
       }
       if (state.activeTool === "recent" && !recentKeys.has(base.key)) return [];
       if (state.activeTool === "favourites" && !state.favourites.has(base.key)) return [];
+      if (curatedTool && base.toolId === state.activeTool && !searchActive && !state.browseCommandInventory) {
+        if (!Number.isInteger(base.developerRank)) return [];
+        if (state.activeDeveloperGroup && base.developerGroupId !== state.activeDeveloperGroup) return [];
+      }
       const platformInfo = core.getPlatformCommand(base.item, state.platform);
       return [{
         ...base,
@@ -915,7 +967,18 @@
     const parts = [];
     if (state.activeTool === "recent") parts.push("最近");
     else if (state.activeTool === "favourites") parts.push("收藏");
-    else if (state.activeTool !== "all" && data[state.activeTool]) parts.push(data[state.activeTool].meta.name);
+    else if (state.activeTool !== "all" && data[state.activeTool]) {
+      const presentation = state.developerCuration?.tools?.[state.activeTool]?.presentation;
+      parts.push(presentation?.name || data[state.activeTool].meta.name);
+    }
+    if (state.activeDeveloperGroup) {
+      const group = state.developerCuration?.tools?.[state.activeTool]?.groups
+        ?.find((candidate) => candidate.id === state.activeDeveloperGroup);
+      if (group) parts.push(group.label);
+    } else if (state.browseCommandInventory
+      && state.developerCuration?.tools?.[state.activeTool]) {
+      parts.push("完整清单");
+    }
     if (state.activeCat) parts.push(CAT_LABEL[state.activeCat]);
     if (state.activeEvidence) parts.push({ verified: "已核验", partial: "部分核验", unverified: "未核验" }[state.activeEvidence]);
     if (state.activeExampleFilter) parts.push(state.activeExampleFilter === "platform-examples" ? "首选平台用法" : "有用法");
@@ -1001,6 +1064,7 @@
     entryKey,
     buildEnrichmentIndex,
     enrichItem,
+    validDeveloperToolCuration,
     createEntryIndex,
     collectEntries,
     findEntry,

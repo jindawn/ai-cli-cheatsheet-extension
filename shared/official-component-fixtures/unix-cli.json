@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "toolId": "unix-cli",
-  "generatedAt": "2026-07-23",
+  "generatedAt": "2026-07-31",
   "components": [
     {
       "id": "posix-utilities",

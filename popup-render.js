@@ -34,6 +34,28 @@
     return label ? `<span class="platform-badge">${escapeHtml(label)}</span>` : "";
   }
 
+  function developerPresentation(toolId, meta, developerCuration) {
+    const presentation = developerCuration?.tools?.[toolId]?.presentation || {};
+    return {
+      name: presentation.name || meta?.name || toolId,
+      subtitle: presentation.subtitle || "",
+      platformLabel: presentation.platformLabel || platformScopeLabel(meta?.platforms),
+      implementationLabel: presentation.implementationLabel || "",
+    };
+  }
+
+  function renderToolChoice(toolId, meta, checked, inputAttribute, developerCuration) {
+    const presentation = developerPresentation(toolId, meta, developerCuration);
+    return `<label class="tool-choice${presentation.subtitle ? " tool-choice-featured" : ""}">
+      <input type="checkbox" ${inputAttribute}="${escapeHtml(toolId)}" ${checked ? "checked" : ""}>
+      <span class="tool-choice-copy">
+        <span class="tool-choice-name">${escapeHtml(presentation.name)}</span>
+        ${presentation.subtitle ? `<span class="tool-choice-subtitle">${escapeHtml(presentation.subtitle)}</span>` : ""}
+      </span>
+      ${presentation.platformLabel ? `<span class="platform-badge tool-choice-platform">${escapeHtml(presentation.platformLabel)}</span>` : ""}
+    </label>`;
+  }
+
   function normalizedSources(meta) {
     if (Array.isArray(meta.sources) && meta.sources.length) return meta.sources;
     if (!meta.sourceUrl) return [];
@@ -156,7 +178,8 @@
     const quickHtml = quickItems.map(([id, label]) =>
       `<button class="chip ${state.activeTool === id ? "active" : ""}" data-tool="${id}">${escapeHtml(label)}</button>`
     ).join("");
-    const toolHtml = [["all", "全部工具"], ...helpers.visibleToolIds(data, state.enabledTools, state.platform).map((id) => [id, data[id].meta.name])]
+    const toolHtml = [["all", "全部工具"], ...helpers.visibleToolIds(data, state.enabledTools, state.platform)
+      .map((id) => [id, developerPresentation(id, data[id].meta, state.developerCuration).name])]
       .map(([id, label]) => `<button class="chip ${state.activeTool === id ? "active" : ""}" data-tool="${id}">${escapeHtml(label)}</button>`)
       .join("");
     const categoryHtml = Object.entries(helpers.CAT_LABEL).map(([id, label]) =>
@@ -174,12 +197,54 @@
         ),
       ].join("")
       : "";
-    const filterLabel = helpers.activeFilterLabel(data, state);
-    const hasFilter = Boolean(state.activeCat || state.activeShellFilter || state.activeEvidence || state.activeExampleFilter || !["all", "recent", "favourites"].includes(state.activeTool));
+    const commandCuration = helpers.validDeveloperToolCuration(
+      data[state.activeTool],
+      state.developerCuration?.tools?.[state.activeTool],
+    );
+    const searchActive = Boolean(String(state.searchQuery || "").trim());
+    const developerHtml = commandCuration && data[state.activeTool]
+      ? (() => {
+        const presentation = developerPresentation(
+          state.activeTool,
+          data[state.activeTool].meta,
+          state.developerCuration,
+        );
+        const groupChips = (commandCuration.groups || []).map((group) =>
+          `<button class="chip ${!searchActive && !state.browseCommandInventory && state.activeDeveloperGroup === group.id ? "active" : ""}" data-developer-group="${escapeHtml(group.id)}">${escapeHtml(group.label)}</button>`
+        ).join("");
+        return `<section class="developer-command-nav">
+          <div class="developer-command-heading"><strong>${escapeHtml(presentation.name)}</strong><span>${escapeHtml(presentation.subtitle)}</span></div>
+          ${searchActive ? `<div class="developer-command-search-note">正在检索完整清单 ${data[state.activeTool].items.length} 条</div>` : ""}
+          <div class="filters developer-command-filters">
+            <button class="chip ${!searchActive && !state.browseCommandInventory && !state.activeDeveloperGroup ? "active" : ""}" data-command-view="featured">精选 ${commandCuration.featuredItemIds?.length || 0}</button>
+            ${groupChips}
+            <button class="chip ${!searchActive && state.browseCommandInventory ? "active" : ""}" data-command-view="inventory">完整清单 ${data[state.activeTool].items.length}</button>
+          </div>
+        </section>`;
+      })()
+      : "";
+    const displayState = searchActive || !commandCuration
+      ? { ...state, activeDeveloperGroup: null, browseCommandInventory: false }
+      : state;
+    const filterLabel = helpers.activeFilterLabel(data, displayState);
+    const hasFilter = Boolean(state.activeCat || state.activeShellFilter || state.activeEvidence
+      || state.activeExampleFilter || (!searchActive && commandCuration
+        && (state.activeDeveloperGroup || state.browseCommandInventory))
+      || !["all", "recent", "favourites"].includes(state.activeTool));
     const summaryHtml = hasFilter
       ? `<span>当前筛选：${escapeHtml(filterLabel)}</span><button class="filter-summary-clear" data-clear-filters>清除</button>`
       : "";
-    return { quickHtml, toolHtml, categoryHtml, evidenceHtml, exampleHtml, shellHtml, summaryHtml, hasFilter };
+    return {
+      quickHtml,
+      toolHtml,
+      categoryHtml,
+      evidenceHtml,
+      exampleHtml,
+      shellHtml,
+      developerHtml,
+      summaryHtml,
+      hasFilter,
+    };
   }
 
   function renderRow(entry, query, ctx, includeBadge = false) {
@@ -237,7 +302,7 @@
     return `<article class="entry-wrap" data-tool="${entry.toolId}" data-item="${entry.itemId}">
     <div class="row"><button class="row-main" data-copy-command aria-label="复制命令 ${escapeHtml(entry.displayCmd)}${note ? `（${escapeHtml(note)}）` : ""}">
     <span class="cmd"><span class="dot" style="background:${escapeHtml(tool.meta.color)}"></span>${highlightHtml(core, entry.displayCmd, query)}
-      ${includeBadge ? `<span class="context">${escapeHtml(tool.meta.name)}</span>` : ""}
+      ${includeBadge ? `<span class="context implementation-context">${escapeHtml(entry.implementationLabel || tool.meta.name)}</span>` : ""}
       ${entry.item.context ? `<span class="context">${escapeHtml(entry.item.context)}</span>` : ""}
       ${aliases}
       ${tags}
@@ -252,9 +317,13 @@
   }
 
   function renderManageToolToggles(data, toolIds, state) {
-    return toolIds.map((toolId) =>
-      `<label class="tool-choice"><input type="checkbox" data-enabled="${toolId}" ${state.enabledTools.has(toolId) ? "checked" : ""}> <span>${escapeHtml(data[toolId].meta.name)}</span>${platformBadge(data[toolId].meta)}</label>`
-    ).join("");
+    return toolIds.map((toolId) => renderToolChoice(
+      toolId,
+      data[toolId].meta,
+      state.enabledTools.has(toolId),
+      "data-enabled",
+      state.developerCuration,
+    )).join("");
   }
 
   // 仅接受 https 链接，避免 javascript: 等协议注入。
@@ -425,11 +494,24 @@
     });
     return [...grouped].map(([toolId, rows]) => {
       const tool = ctx.data[toolId];
-      const visible = state.expandedTools.has(toolId) ? rows : rows.slice(0, ctx.helpers.GROUP_INITIAL_LIMIT);
+      const presentation = developerPresentation(toolId, tool.meta, state.developerCuration);
+      const curated = ctx.helpers.validDeveloperToolCuration(
+        tool,
+        state.developerCuration?.tools?.[toolId],
+      );
+      const showCompleteCuratedSet = Boolean(
+        curated && state.activeTool === toolId && !state.browseCommandInventory,
+      );
+      const visible = showCompleteCuratedSet || state.expandedTools.has(toolId)
+        ? rows
+        : rows.slice(0, ctx.helpers.GROUP_INITIAL_LIMIT);
       const more = rows.length > visible.length
         ? `<button class="text-btn more-btn" data-expand="${toolId}">展开剩余 ${rows.length - visible.length} 条</button>`
         : "";
-      return `<section><div class="section-title"><span class="badge" style="background:${escapeHtml(tool.meta.color)}">${escapeHtml(tool.meta.name)}</span><span class="count">${rows.length} 条</span><button class="source-toggle" data-source="${toolId}" aria-expanded="false" aria-controls="source-${toolId}">来源与核验状态 ▾</button></div>${sourceCard(toolId, ctx.data, ctx.helpers)}${visible.map((entry) => renderRow(entry, query, ctx)).join("")}${more}</section>`;
+      const countLabel = curated && state.activeTool === toolId && !state.browseCommandInventory
+        ? `精选 ${rows.length} / 完整 ${tool.items.length}`
+        : `${rows.length} 条`;
+      return `<section><div class="section-title"><span class="badge" style="background:${escapeHtml(tool.meta.color)}">${escapeHtml(presentation.name)}</span><span class="count">${escapeHtml(countLabel)}</span><button class="source-toggle" data-source="${toolId}" aria-expanded="false" aria-controls="source-${toolId}">来源与核验状态 ▾</button></div>${sourceCard(toolId, ctx.data, ctx.helpers)}${visible.map((entry) => renderRow(entry, query, ctx)).join("")}${more}</section>`;
     }).join("");
   }
 
@@ -447,6 +529,7 @@
   function renderManageTools(data, toolIds, state, helpers, entryIndex) {
     return toolIds.map((toolId) => {
       const meta = data[toolId].meta;
+      const presentation = developerPresentation(toolId, meta, state.developerCuration);
       const catalogOnly = meta.catalogOnly === true;
       const canDelete = state.deletableToolIds instanceof Set
         ? state.deletableToolIds.has(toolId)
@@ -492,8 +575,14 @@
           evidenceCountsForExamples[example.evidenceTier] += 1;
         }
       }));
-      return `<div class="tool-card"><div class="tool-title"><input type="checkbox" data-enabled="${toolId}" id="enabled-${toolId}" ${state.enabledTools.has(toolId) ? "checked" : ""}><label for="enabled-${toolId}">${escapeHtml(meta.name)}</label>${platformBadge(meta)}</div>
-      <div class="meta">${catalogOnly ? "启用后按需加载完整数据" : `${escapeHtml(meta.coverage || meta.source)}<br>${escapeHtml(coverageText)}<br>来源 ${sources.length} 个 · ${escapeHtml(helpers.updateStatusLabel(meta))} · 数据整理方式：<span class="verify">${escapeHtml(verification)}</span>`}</div>
+      const presentationBadge = presentation.platformLabel
+        ? `<span class="platform-badge">${escapeHtml(presentation.platformLabel)}</span>`
+        : platformBadge(meta);
+      const presentationSubtitle = presentation.subtitle
+        ? `${escapeHtml(presentation.subtitle)}<br>`
+        : "";
+      return `<div class="tool-card"><div class="tool-title"><input type="checkbox" data-enabled="${toolId}" id="enabled-${toolId}" ${state.enabledTools.has(toolId) ? "checked" : ""}><label for="enabled-${toolId}">${escapeHtml(presentation.name)}</label>${presentationBadge}</div>
+      <div class="meta">${presentationSubtitle}${catalogOnly ? "启用后按需加载完整数据" : `${escapeHtml(meta.coverage || meta.source)}<br>${escapeHtml(coverageText)}<br>来源 ${sources.length} 个 · ${escapeHtml(helpers.updateStatusLabel(meta))} · 数据整理方式：<span class="verify">${escapeHtml(verification)}</span>`}</div>
       ${catalogOnly ? "" : `<details class="stats-detail"><summary>数据质量明细</summary>
         <div class="meta">条目核验：已核验 ${evidenceCounts.verified} / 部分核验 ${evidenceCounts.partial} / 未核验 ${evidenceCounts.unverified}</div>
         <div class="meta">${escapeHtml(coverageText)}</div>
@@ -549,10 +638,14 @@
     };
   }
 
-  function renderOnboardChoices(data, toolIds, enabledTools) {
-    return toolIds.map((toolId) =>
-      `<label class="tool-choice"><input type="checkbox" value="${toolId}" ${enabledTools.has(toolId) ? "checked" : ""}> <span>${escapeHtml(data[toolId].meta.name)}</span>${platformBadge(data[toolId].meta)}</label>`
-    ).join("");
+  function renderOnboardChoices(data, toolIds, enabledTools, developerCuration = null) {
+    return toolIds.map((toolId) => renderToolChoice(
+      toolId,
+      data[toolId].meta,
+      enabledTools.has(toolId),
+      "value",
+      developerCuration,
+    )).join("");
   }
 
   const api = {

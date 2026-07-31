@@ -169,6 +169,10 @@ if (fs.existsSync(componentFixtureDir)) {
   }
 }
 const adapterRegistry = JSON.parse(fs.readFileSync(path.join(root, "shared", "official-inventory-adapters.json"), "utf8")).adapters;
+const developerCuration = JSON.parse(fs.readFileSync(
+  path.join(root, "shared", "developer-command-curation.json"),
+  "utf8",
+));
 
 function exampleContentHash(itemId, exampleIndex, example) {
   const clean = Object.fromEntries(Object.entries(example).filter(([key]) => key !== "review"));
@@ -183,6 +187,113 @@ vm.runInContext(fs.readFileSync(path.join(root, "product-core.js"), "utf8"), con
 // enrichments remain readable for migration history, but can no longer hide a
 // missing example or bypass the global official/scenario contract.
 const enrichmentByItem = new WeakMap();
+
+function validateDeveloperCommandCuration() {
+  if (developerCuration.schemaVersion !== 1
+    || !developerCuration.tools || typeof developerCuration.tools !== "object"
+    || Array.isArray(developerCuration.tools)) {
+    fail("developer-command-curation.json must use schemaVersion 1");
+  }
+  for (const [toolId, curation] of Object.entries(developerCuration.tools)) {
+    const tool = data[toolId];
+    const inventory = officialInventories.get(toolId);
+    if (!tool || !inventory) fail(`developer curation references unknown official tool ${toolId}`);
+    const inventoryHash = `sha256:${crypto.createHash("sha256")
+      .update(JSON.stringify(inventory.entries)).digest("hex")}`;
+    if (curation.inventoryHash !== inventoryHash
+      || curation.inventoryHash !== tool.meta.officialCoverage.inventoryHash) {
+      fail(`${toolId}: developer curation inventoryHash is stale`);
+    }
+    for (const field of ["name", "subtitle", "platformLabel", "implementationLabel"]) {
+      if (typeof curation.presentation?.[field] !== "string"
+        || !curation.presentation[field].trim()) {
+        fail(`${toolId}: developer curation presentation.${field} is required`);
+      }
+    }
+    if (!Array.isArray(curation.featuredItemIds) || !curation.featuredItemIds.length
+      || new Set(curation.featuredItemIds).size !== curation.featuredItemIds.length) {
+      fail(`${toolId}: featuredItemIds must be a non-empty unique list`);
+    }
+    const itemById = new Map(tool.items.map((item) => [item.id, item]));
+    for (const itemId of curation.featuredItemIds) {
+      if (!itemById.has(itemId)) fail(`${toolId}: featured item is absent from the official dataset: ${itemId}`);
+    }
+    if (curation.itemSearchTerms !== undefined) {
+      if (!curation.itemSearchTerms || typeof curation.itemSearchTerms !== "object"
+        || Array.isArray(curation.itemSearchTerms)) {
+        fail(`${toolId}: itemSearchTerms must be an object`);
+      }
+      for (const [itemId, terms] of Object.entries(curation.itemSearchTerms)) {
+        if (!curation.featuredItemIds.includes(itemId)
+          || !Array.isArray(terms) || !terms.length
+          || terms.some((term) => typeof term !== "string" || !term.trim())) {
+          fail(`${toolId}:${itemId}: invalid itemSearchTerms`);
+        }
+      }
+    }
+    if (!Array.isArray(curation.groups) || !curation.groups.length) {
+      fail(`${toolId}: developer scenario groups are required`);
+    }
+    const groupIds = new Set();
+    const groupedItemIds = [];
+    for (const group of curation.groups) {
+      if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(group.id || "") || groupIds.has(group.id)) {
+        fail(`${toolId}: invalid or duplicate developer scenario group ${group.id || "(missing)"}`);
+      }
+      groupIds.add(group.id);
+      if (typeof group.label !== "string" || !containsCjk(group.label)
+        || !Array.isArray(group.searchTerms) || !group.searchTerms.length
+        || group.searchTerms.some((term) => typeof term !== "string" || !term.trim())
+        || !Array.isArray(group.itemIds) || !group.itemIds.length) {
+        fail(`${toolId}: invalid developer scenario group ${group.id}`);
+      }
+      groupedItemIds.push(...group.itemIds);
+    }
+    if (new Set(groupedItemIds).size !== groupedItemIds.length) {
+      fail(`${toolId}: every featured item must belong to exactly one primary developer group`);
+    }
+    if (JSON.stringify([...groupedItemIds].sort()) !== JSON.stringify([...curation.featuredItemIds].sort())) {
+      fail(`${toolId}: developer groups must cover exactly the featured item IDs`);
+    }
+    const curatedExamples = curation.examplesByItemId;
+    if (!curatedExamples || typeof curatedExamples !== "object" || Array.isArray(curatedExamples)) {
+      fail(`${toolId}: examplesByItemId is required`);
+    }
+    for (const itemId of curation.featuredItemIds) {
+      const examples = curatedExamples[itemId];
+      if (!Array.isArray(examples) || examples.length < 1 || examples.length > 3) {
+        fail(`${toolId}:${itemId}: every featured item needs 1-3 curated examples`);
+      }
+    }
+    for (const [itemId, examples] of Object.entries(curatedExamples)) {
+      const item = itemById.get(itemId);
+      if (!item) fail(`${toolId}: curated example references unknown item ${itemId}`);
+      if (!Array.isArray(examples) || !examples.length || examples.length > 3) {
+        fail(`${toolId}:${itemId}: curated example list must contain 1-3 entries`);
+      }
+      for (const [index, example] of examples.entries()) {
+        for (const field of SCENARIO_REQUIRED_FIELDS) {
+          if (typeof example[field] !== "string" || !example[field].trim()) {
+            fail(`${toolId}:${itemId}:${index}: curated ${field} is required`);
+          }
+        }
+        const materialized = item.examples[index];
+        if (!materialized || SCENARIO_REQUIRED_FIELDS.some((field) =>
+          materialized[field] !== example[field])) {
+          fail(`${toolId}:${itemId}: curated scenarios are not materialized in data/${toolId}.js`);
+        }
+        for (const field of ["copyable", "warning", "caveat", "riskLevels"]) {
+          if (example[field] !== undefined
+            && JSON.stringify(materialized[field]) !== JSON.stringify(example[field])) {
+            fail(`${toolId}:${itemId}:${index}: materialized ${field} differs from curation`);
+          }
+        }
+      }
+    }
+  }
+}
+
+validateDeveloperCommandCuration();
 
 for (const id of files) {
   const tool = data[id];

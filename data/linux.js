@@ -5,13 +5,13 @@ window.CHEATSHEET_DATA["linux"] = {
     "id": "linux",
     "name": "Linux 系统工具",
     "color": "#FCC624",
-    "source": "固定官方发布标签与入口索引的确定性全集，核验于 2026-07-23",
+    "source": "固定官方发布标签与入口索引的确定性全集，核验于 2026-07-31",
     "builtIn": false,
     "sourceUrl": "https://gitlab.com/procps-ng/procps",
     "sourceTier": "official",
-    "updatedAt": "2026-07-23",
-    "contentCheckedAt": "2026-07-23",
-    "sourceCheckedAt": "2026-07-23",
+    "updatedAt": "2026-07-31",
+    "contentCheckedAt": "2026-07-31",
+    "sourceCheckedAt": "2026-07-31",
     "updatePolicy": "manual-only",
     "verificationStatus": "manual",
     "coverage": "登记官方组件的全部公开命令入口；组件版本、排除理由与平台限制见 shared/official-inventories/linux.json",
@@ -94,7 +94,7 @@ window.CHEATSHEET_DATA["linux"] = {
       "status": "complete",
       "total": 262,
       "covered": 262,
-      "checkedAt": "2026-07-23",
+      "checkedAt": "2026-07-31",
       "sourceIds": [
         "procps-ng-repository",
         "systemd-man",
@@ -176,7 +176,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · disk-utils/addpart.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "addpart device partition start length",
@@ -248,7 +248,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · meson.build executable('addpart.static')",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "addpart.static device partition start length",
@@ -319,7 +319,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · term-utils/agetty.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "agetty [options] port [baudrate...] [term]",
@@ -399,7 +399,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tag/?h=v7.1.0 · man/man8/arpd.8",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "Usage: arpd [ -lkh? ] [ -a N ] [ -b dbase ] [ -B number ] [ -f file ] [-p interval ] [ -n time ] [ -R rate ] [ ]",
@@ -479,7 +479,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · text-utils/bits.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "bits [-h] [-V] [-w number] [mode] [mask|list]...",
@@ -557,7 +557,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/blkdiscard.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "blkdiscard [options] [-o offset] [-l length] device",
@@ -593,7 +593,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/blkid.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -721,7 +721,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · meson.build executable('blkid.static')",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "blkid.static --label label | --uuid uuid blkid [--no-encoding --garbage-collect --list-one --cache-file file] [--output format] [--match-tag tag] [--match-token NAME=value] [device...] blkid --probe [--offset offset] [--output format] [--size size] [--match-tag tag] [--match-types list]",
@@ -801,7 +801,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/blkpr.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "blkpr [options] device",
@@ -885,7 +885,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/blkzone.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "blkzone command [options] device",
@@ -965,7 +965,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · disk-utils/blockdev.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "blockdev [-q] [-v] command [command...] device [device...] blockdev --report [device...] blockdev -h|-V",
@@ -1041,7 +1041,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/bootctl.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "bootctl",
@@ -1112,7 +1112,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tag/?h=v7.1.0 · man/man8/bridge.8",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": ".ad l .in +8 .ti -8 bridge \"[ \" OPTIONS \" ] \" OBJECT \" { \" COMMAND \" | \" help \" }\" .sp .ti -8 OBJECT \" := { \" link \" | \" fdb \" | \" mdb \" | \" vlan \" | \" vni \" | \" monitor \" }\" .sp .ti -8 OPTIONS \" := { \" V[ersion] | s[tatistics] | n[etns] name | b[atch] filename | com[pressvlans] ",
@@ -1192,7 +1192,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/busctl.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "busctl",
@@ -1263,7 +1263,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/cal.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "cal [options] [[[day] month] year] cal [options] [timestamp|monthname]",
@@ -1347,7 +1347,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · disk-utils/cfdisk.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "cfdisk [options] [device]",
@@ -1431,7 +1431,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/chcpu.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "chcpu -c|-d|-e|-g cpu-list chcpu -p mode chcpu -r|-h|-V",
@@ -1511,7 +1511,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · login-utils/chfn.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "chfn [-f full-name] [-o office] [-p office-phone] [-h home-phone] [-u] [-V] [username|UID]",
@@ -1595,7 +1595,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/chmem.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "chmem [-h] [-V] [-v] [-c|-e|-d|-g] [SIZE|RANGE|-b BLOCKRANGE] [-z ZONE] [-m MEMMAP-ON-MEMORY]",
@@ -1675,7 +1675,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/choom.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "choom -p PID choom -p PID -n number choom -n number [--] command [argument ...]",
@@ -1751,7 +1751,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · schedutils/chrt.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "chrt [options] [priority] command [argument...] chrt --pid [options] [priority] PID",
@@ -1831,7 +1831,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · login-utils/chsh.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "chsh [-s shell] [-l] [-h] [-V] [username|UID]",
@@ -1911,7 +1911,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · text-utils/col.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "col options",
@@ -1991,7 +1991,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · text-utils/colcrt.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "colcrt [options] [file ...]",
@@ -2066,7 +2066,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · text-utils/colrm.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "colrm [first [last]]",
@@ -2137,7 +2137,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · text-utils/column.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "column [options] [file ...]",
@@ -2217,7 +2217,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/copyfilerange.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "copyfilerange [options] source destination range...",
@@ -2247,19 +2247,19 @@ window.CHEATSHEET_DATA["linux"] = {
       ],
       "examples": [
         {
-          "scenario": "需要使用 systemd 提供的 coredumpctl 来完成“Retrieve and process saved core dumps and metadata”时",
-          "goal": "按固定官方版本的定义调用 coredumpctl，并依据退出状态判断该操作是否完成",
-          "value": "coredumpctl",
-          "description": "coredumpctl 的官方用途是“Retrieve and process saved core dumps and metadata”；这里直接使用规范入口，不把子命令或选项伪装成另一条程序。",
-          "expected": "终端按 systemd 的定义执行 coredumpctl；缺少必需操作数时会明确返回用法诊断和非成功状态。",
+          "scenario": "服务无日志退出，需要确认 systemd-coredump 是否保存了对应的崩溃记录",
+          "goal": "列出已保存的核心转储及元数据",
+          "value": "coredumpctl list",
+          "description": "list 子命令展示已登记核心转储的时间、进程、信号和保存状态。",
+          "expected": "终端输出当前权限可见的核心转储列表；没有记录时列表为空。",
           "copyable": true,
           "sourceType": "manual",
           "sourceIds": [
             "systemd-man"
           ],
-          "authorship": "generated",
+          "authorship": "editorial",
           "evidenceTier": "first-party",
-          "adaptation": "scenario-derived",
+          "adaptation": "adapted",
           "groundingRefs": [
             {
               "sourceId": "systemd-man",
@@ -2273,8 +2273,7 @@ window.CHEATSHEET_DATA["linux"] = {
           ],
           "platforms": [
             "linux"
-          ],
-          "caveat": "该入口受以下条件限制：requires a Linux distribution built with systemd 261.1。"
+          ]
         }
       ],
       "components": [
@@ -2293,7 +2292,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/coredumpctl.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "coredumpctl",
@@ -2364,7 +2363,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · schedutils/coresched.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "{command} [get] [-s pid] {command} new [-t type] -d pid {command} new [-t type] - command [argument...] {command} copy [-s pid] [-t type] -d pid {command} copy [-s pid] [-t type] - command [argument...]",
@@ -2444,7 +2443,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/ctrlaltdel.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "ctrlaltdel hard|soft",
@@ -2515,7 +2514,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tag/?h=v7.1.0 · man/man8/dcb.8",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": ".sp .ad l .in +8 .ti -8 dcb \"[ \" OPTIONS \" ] \" \"{ \" app \" | \" buffer \" | \" ets \" | \" maxrate \" | \" pfc \" }\" \"{ \" COMMAND \" | \" help \" }\" .sp .ti -8 dcb \"[ \" -force \" ] \" \"-batch \" filename .sp .ti -8 dcb \"[ \" OPTIONS \" ] \" help .sp",
@@ -2595,7 +2594,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · disk-utils/delpart.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "delpart device partition",
@@ -2667,7 +2666,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · meson.build executable('delpart.static')",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "delpart.static device partition",
@@ -2738,7 +2737,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tag/?h=v7.1.0 · man/man8/devlink.8",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": ".sp .ad l .in +8 .ti -8 devlink \"[ \" OPTIONS \" ] { \" dev | port | monitor | sb | resource | region | health | trap | rate | lc | dpipe \" } { \" COMMAND \" | \" help \" }\" .sp .ti -8 devlink \"[ \" -force \" ] \" \"-batch \" filename .sp",
@@ -2774,7 +2773,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/dmesg.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -2786,35 +2785,32 @@ window.CHEATSHEET_DATA["linux"] = {
       ],
       "examples": [
         {
-          "value": "dmesg --level=err,warn",
-          "description": "只显示错误和警告级别的内核消息，用于排查驱动或硬件告警",
-          "scenario": "排查驱动或硬件告警时",
-          "goal": "只显示错误和警告级别的内核消息",
-          "expected": "输出匹配级别的内核日志行",
-          "caveat": "许多发行版限制普通用户读取 dmesg，需要相应权限",
+          "scenario": "新接入设备没有出现，需要检查内核是否记录了驱动加载或硬件错误",
+          "goal": "读取内核环形缓冲区消息",
+          "value": "dmesg",
+          "description": "输出当前可读取的内核消息，便于查找驱动、设备和启动阶段诊断。",
+          "expected": "终端显示内核消息；受系统权限限制时会返回读取失败诊断。",
           "copyable": true,
-          "sourceType": "official",
-          "authorship": "editorial",
-          "evidenceTier": "first-party",
-          "adaptation": "adapted",
+          "sourceType": "manual",
           "sourceIds": [
             "util-linux-repository"
           ],
-          "platforms": [
-            "linux"
-          ],
+          "authorship": "editorial",
+          "evidenceTier": "first-party",
+          "adaptation": "adapted",
           "groundingRefs": [
             {
               "sourceId": "util-linux-repository",
-              "locator": "https://github.com/util-linux/util-linux/blob/master/sys-utils/dmesg.1.adoc",
+              "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/dmesg.1.adoc",
               "claims": [
                 "value",
                 "behavior",
-                "expected",
-                "platform",
-                "caveat"
+                "expected"
               ]
             }
+          ],
+          "platforms": [
+            "linux"
           ]
         }
       ],
@@ -2901,7 +2897,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tag/?h=v7.1.0 · man/man8/dpll.8",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": ".ad l .in +8 .ti -8 dpll \"[ \" OPTIONS \" ]\" device \"{ \" COMMAND \" | \" help \" }\" .sp .ti -8 dpll \"[ \" OPTIONS \" ]\" pin \"{ \" COMMAND \" | \" help \" }\" .sp .ti -8 dpll \"[ \" OPTIONS \" ]\" monitor .ti -8 OPTIONS \" := { \" V | Version | j | json | p | pretty }",
@@ -2979,7 +2975,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/eject.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "eject [options] device|mountpoint",
@@ -3059,7 +3055,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/enosys.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "enosys [--syscall|-s syscall] command",
@@ -3139,7 +3135,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/exch.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "exch oldpath newpath",
@@ -3210,7 +3206,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/fadvise.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "fadvise [-a advice] [-o offset] [-l length] filename fadvise [-a advice] [-o offset] [-l length] -d file-descriptor",
@@ -3290,7 +3286,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/fallocate.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "fallocate [-c|-p|-z|-w] [-o offset] -l length [-n] filename fallocate -d [-o offset] [-l length] filename fallocate -r [-o offset] filename fallocate -x [-o offset] -l length filename",
@@ -3370,7 +3366,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · disk-utils/fdformat.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "fdformat [options] device",
@@ -3454,7 +3450,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · disk-utils/fdisk.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "fdisk [options] device fdisk -l [device...]",
@@ -3539,7 +3535,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · meson.build executable('fdisk.static')",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "fdisk.static [options] device fdisk -l [device...]",
@@ -3619,7 +3615,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/fincore.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "fincore [options] file...",
@@ -3699,7 +3695,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/findfs.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "findfs TAGNAME=value",
@@ -3726,7 +3722,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/findmnt.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -3738,35 +3734,32 @@ window.CHEATSHEET_DATA["linux"] = {
       ],
       "examples": [
         {
-          "value": "findmnt --target /",
-          "description": "按目标路径解析对应挂载项，用于确认根目录实际位于哪个文件系统",
-          "scenario": "确认根目录实际位于哪个文件系统时",
-          "goal": "按目标路径解析对应挂载项",
-          "expected": "输出匹配的源设备、目标、类型与选项",
-          "caveat": "结果来自内核挂载表，命名空间会影响可见范围",
+          "scenario": "根目录空间告警，需要确认它实际对应的源设备、文件系统类型和挂载选项",
+          "goal": "查询根目录对应的挂载项",
+          "value": "findmnt /",
+          "description": "使用目标路径匹配挂载表中的对应记录。",
+          "expected": "终端输出根目录的源设备、目标、类型和选项等字段。",
           "copyable": true,
-          "sourceType": "official",
-          "authorship": "editorial",
-          "evidenceTier": "first-party",
-          "adaptation": "adapted",
+          "sourceType": "manual",
           "sourceIds": [
             "util-linux-repository"
           ],
-          "platforms": [
-            "linux"
-          ],
+          "authorship": "editorial",
+          "evidenceTier": "first-party",
+          "adaptation": "adapted",
           "groundingRefs": [
             {
               "sourceId": "util-linux-repository",
-              "locator": "https://github.com/util-linux/util-linux/blob/master/sys-utils/findmnt.8.adoc",
+              "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/findmnt.8.adoc",
               "claims": [
                 "value",
                 "behavior",
-                "expected",
-                "platform",
-                "caveat"
+                "expected"
               ]
             }
+          ],
+          "platforms": [
+            "linux"
           ]
         }
       ],
@@ -3807,23 +3800,23 @@ window.CHEATSHEET_DATA["linux"] = {
       ],
       "examples": [
         {
-          "scenario": "需要使用 util-linux 提供的 flock 来完成“manage locks from shell scripts”时",
-          "goal": "按固定官方版本的定义调用 flock，并依据退出状态判断该操作是否完成",
-          "value": "flock",
-          "description": "flock 的官方用途是“manage locks from shell scripts”；这里直接使用规范入口，不把子命令或选项伪装成另一条程序。",
-          "expected": "终端按 util-linux 的定义执行 flock；缺少必需操作数时会明确返回用法诊断和非成功状态。",
+          "scenario": "多个持续集成任务可能同时运行测试，需要用同一锁文件串行化这段命令",
+          "goal": "持有项目锁时执行 npm test",
+          "value": "flock /tmp/project-ci.lock npm test",
+          "description": "flock 在锁文件上获取锁，再把 npm test 作为嵌套命令运行。",
+          "expected": "获得锁后执行测试；其它使用同一锁的任务会按默认方式等待。",
           "copyable": true,
           "sourceType": "manual",
           "sourceIds": [
             "util-linux-repository"
           ],
-          "authorship": "generated",
+          "authorship": "editorial",
           "evidenceTier": "first-party",
-          "adaptation": "scenario-derived",
+          "adaptation": "adapted",
           "groundingRefs": [
             {
               "sourceId": "util-linux-repository",
-              "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2/sys-utils/flock.1.adoc",
+              "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/flock.1.adoc",
               "claims": [
                 "value",
                 "behavior",
@@ -3833,8 +3826,7 @@ window.CHEATSHEET_DATA["linux"] = {
           ],
           "platforms": [
             "linux"
-          ],
-          "caveat": "该入口受以下条件限制：requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration。"
+          ]
         }
       ],
       "components": [
@@ -3853,7 +3845,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/flock.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "flock [options] file|directory command [arguments] flock [options] file|directory -c command flock [options] number",
@@ -3889,7 +3881,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/free.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -3901,35 +3893,32 @@ window.CHEATSHEET_DATA["linux"] = {
       ],
       "examples": [
         {
-          "value": "free -h",
-          "description": "以易读单位查看已用、可用内存和交换空间，用于排查主机内存压力",
-          "scenario": "排查主机内存压力时",
-          "goal": "以易读单位查看已用、可用内存和交换空间",
-          "expected": "输出内存与 swap 的容量统计",
-          "caveat": "读取的是瞬时统计，容器内结果可能受 cgroup 限制",
+          "scenario": "主机出现内存压力并开始频繁交换，需要用统一单位比较物理内存和 swap 使用量",
+          "goal": "以 MiB 查看内存容量统计",
+          "value": "free -m",
+          "description": "-m 使用 MiB 展示总量、已用、可用内存和交换空间。",
+          "expected": "终端输出内存与 swap 统计表，不修改系统内存配置。",
           "copyable": true,
-          "sourceType": "official",
-          "authorship": "editorial",
-          "evidenceTier": "first-party",
-          "adaptation": "adapted",
+          "sourceType": "manual",
           "sourceIds": [
             "procps-ng-repository"
           ],
-          "platforms": [
-            "linux"
-          ],
+          "authorship": "editorial",
+          "evidenceTier": "first-party",
+          "adaptation": "adapted",
           "groundingRefs": [
             {
               "sourceId": "procps-ng-repository",
-              "locator": "https://gitlab.com/procps-ng/procps/-/blob/master/man/free.1",
+              "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/free.1",
               "claims": [
                 "value",
                 "behavior",
-                "expected",
-                "platform",
-                "caveat"
+                "expected"
               ]
             }
+          ],
+          "platforms": [
+            "linux"
           ]
         }
       ],
@@ -4020,7 +4009,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · disk-utils/fsck.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "fsck [-lsAVRTMNP] [-r [fd]] [-C [fd]] [-t fstype] [filesystem...] [--] [fs-specific-options]",
@@ -4104,7 +4093,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · disk-utils/fsck.cramfs.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "fsck.cramfs [options] file",
@@ -4187,7 +4176,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · disk-utils/fsck.minix.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "fsck.minix [options] device",
@@ -4267,7 +4256,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/fsfreeze.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "fsfreeze --freeze|--unfreeze mountpoint",
@@ -4297,23 +4286,24 @@ window.CHEATSHEET_DATA["linux"] = {
       ],
       "examples": [
         {
-          "scenario": "需要使用 util-linux 提供的 fstrim 来完成“discard unused blocks on a mounted filesystem”时",
-          "goal": "按固定官方版本的定义调用 fstrim，并依据退出状态判断该操作是否完成",
-          "value": "fstrim",
-          "description": "fstrim 的官方用途是“discard unused blocks on a mounted filesystem”；这里直接使用规范入口，不把子命令或选项伪装成另一条程序。",
-          "expected": "终端按 util-linux 的定义执行 fstrim；缺少必需操作数时会明确返回用法诊断和非成功状态。",
+          "scenario": "计划对根文件系统执行 TRIM 前，需要先验证命令路径而不真正发送 FITRIM 操作",
+          "goal": "以 dry-run 模式检查根挂载点",
+          "value": "fstrim -n /",
+          "description": "-n 执行除 FITRIM ioctl 之外的检查流程，因此不会真正丢弃未使用块。",
+          "expected": "命令验证目标并返回状态，但不会向文件系统发出实际 TRIM 请求。",
+          "caveat": "读取挂载信息仍可能需要相应权限；真正执行时应遵循设备与发行版的维护策略。",
           "copyable": true,
           "sourceType": "manual",
           "sourceIds": [
             "util-linux-repository"
           ],
-          "authorship": "generated",
+          "authorship": "editorial",
           "evidenceTier": "first-party",
-          "adaptation": "scenario-derived",
+          "adaptation": "adapted",
           "groundingRefs": [
             {
               "sourceId": "util-linux-repository",
-              "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2/sys-utils/fstrim.8.adoc",
+              "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/fstrim.8.adoc",
               "claims": [
                 "value",
                 "behavior",
@@ -4323,8 +4313,41 @@ window.CHEATSHEET_DATA["linux"] = {
           ],
           "platforms": [
             "linux"
+          ]
+        },
+        {
+          "scenario": "维护窗口内已确认文件系统和底层设备支持 TRIM，需要对根挂载点真正回收未使用块",
+          "goal": "执行 FITRIM 并显示回收量",
+          "value": "fstrim -v /",
+          "description": "-v 在实际向根文件系统发送 FITRIM 后报告被丢弃的字节数。",
+          "expected": "支持时终端显示已回收范围；不支持或权限不足时返回错误，设备状态可能已部分改变。",
+          "copyable": false,
+          "warning": "会对挂载文件系统实际发送块丢弃请求；仅在已确认设备支持且处于维护窗口时执行。",
+          "caveat": "先运行 fstrim -n / 检查并确认根挂载点、文件系统与存储设备的 TRIM 策略。",
+          "riskLevels": [
+            "deleteOrOverwrite"
           ],
-          "caveat": "该入口受以下条件限制：requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration。"
+          "sourceType": "manual",
+          "sourceIds": [
+            "util-linux-repository"
+          ],
+          "authorship": "editorial",
+          "evidenceTier": "first-party",
+          "adaptation": "adapted",
+          "groundingRefs": [
+            {
+              "sourceId": "util-linux-repository",
+              "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/fstrim.8.adoc",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ],
+          "platforms": [
+            "linux"
+          ]
         }
       ],
       "components": [
@@ -4343,7 +4366,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/fstrim.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "fstrim [-v] [-o offset] [-l length] [-m minimum-size] -A|-a|mountpoint",
@@ -4423,7 +4446,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tag/?h=v7.1.0 · man/man8/genl.8",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": ".in +8 .ti -8 genl \"[ \" OPTIONS \" ] \" OBJECT .ti -8 genl \" { \" -V [ ersion \"] | \" -h [ elp \"] }\" .ti -8 OPTIONS \" := { \" s[tatistics] | d[etails] | j[son] | p[retty] } .ti -8 OBJECT \" := { \" ctrl CTRL_OPTS \" }\" .ti -8 CTRL_OPTS \" := { \" help \" | \" list \" | \" monitor \" | \" get PAR",
@@ -4503,7 +4526,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/getino.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "getino [--pidfs|--cgroupns|--ipcns|--netns|--mntns|--pidns|--timens|--userns|--utsns] [--print-pid|-p] PID[:inode]... getino [--print-pid|-p] PID[:inode]... getino PID[:inode]...",
@@ -4583,7 +4606,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/getopt.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "getopt optstring parameters getopt [options] [--] optstring parameters getopt [options] -o|--options optstring [options] [--] parameters",
@@ -4663,7 +4686,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/hardlink.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "hardlink [options] directory|file...",
@@ -4743,7 +4766,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · text-utils/hexdump.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "hexdump [options] file ... hd [options] file ...",
@@ -4823,7 +4846,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/homectl.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "homectl",
@@ -4850,7 +4873,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/hostnamectl.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -4968,7 +4991,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/hugetop.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "hugetop [ option \" .\\|.\\|.]\"",
@@ -5048,7 +5071,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/hwclock.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "hwclock [function] [option...]",
@@ -5128,7 +5151,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tag/?h=v7.1.0 · man/man8/ifstat.8",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": ".in +8 .ti -8 ifstat \" [ \" OPTIONS \" ] [ \" INTERFACE_LIST \" ]\" .ti -8 INTERFACE_LIST \" := \" INTERFACE_LIST \" | \" interface",
@@ -5208,7 +5231,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/importctl.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "importctl",
@@ -5279,7 +5302,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · schedutils/ionice.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "ionice [-c class] [-n level] [-t] -p PID ionice [-c class] [-n level] [-t] -P PGID ionice [-c class] [-n level] [-t] -u UID ionice [-c class] [-n level] [-t] command [argument] ...",
@@ -5315,7 +5338,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tag/?h=v7.1.0 · man/man8/ip.8",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -5327,35 +5350,32 @@ window.CHEATSHEET_DATA["linux"] = {
       ],
       "examples": [
         {
-          "value": "ip -brief address",
-          "description": "紧凑列出所有接口及其地址，用于快速核对接口地址和链路状态",
-          "scenario": "快速核对接口地址和链路状态时",
-          "goal": "紧凑列出所有接口及其地址",
-          "expected": "每个接口显示状态和 IPv4/IPv6 地址",
-          "caveat": "来自 iproute2；极简镜像需要单独安装",
+          "scenario": "容器无法访问外网，需要核对宿主机各接口的链路状态和已分配地址",
+          "goal": "显示所有网络接口的地址信息",
+          "value": "ip address show",
+          "description": "address show 子命令读取接口的 IPv4、IPv6 地址和链路属性。",
+          "expected": "终端按接口输出地址与状态信息，不修改任何网络配置。",
           "copyable": true,
-          "sourceType": "official",
-          "authorship": "editorial",
-          "evidenceTier": "first-party",
-          "adaptation": "adapted",
+          "sourceType": "manual",
           "sourceIds": [
             "iproute2-repository"
           ],
-          "platforms": [
-            "linux"
-          ],
+          "authorship": "editorial",
+          "evidenceTier": "first-party",
+          "adaptation": "adapted",
           "groundingRefs": [
             {
               "sourceId": "iproute2-repository",
-              "locator": "https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tree/man/man8/ip.8",
+              "locator": "https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tag/?h=v7.1.0 · man/man8/ip.8",
               "claims": [
                 "value",
                 "behavior",
-                "expected",
-                "platform",
-                "caveat"
+                "expected"
               ]
             }
+          ],
+          "platforms": [
+            "linux"
           ]
         }
       ],
@@ -5442,7 +5462,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/ipcmk.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "ipcmk [options]",
@@ -5522,7 +5542,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/ipcrm.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "ipcrm [options] ipcrm [shm|msg|sem] ID ...",
@@ -5602,7 +5622,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/ipcs.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "ipcs [options]",
@@ -5682,7 +5702,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/irqtop.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "irqtop [options]",
@@ -5762,7 +5782,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · disk-utils/isosize.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "isosize [options] iso9660imagefile",
@@ -5794,7 +5814,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/journalctl.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -5806,23 +5826,19 @@ window.CHEATSHEET_DATA["linux"] = {
       ],
       "examples": [
         {
-          "value": "journalctl -u sshd.service -n 50 --no-pager",
-          "description": "读取指定单元最近 50 条日志，用于定位 SSH 服务最近的启动失败",
-          "scenario": "定位 SSH 服务最近的启动失败时",
-          "goal": "读取指定单元最近 50 条日志",
-          "expected": "终端按时间顺序输出匹配的日志记录",
-          "caveat": "仅适用于使用 systemd-journald 的发行版，读取系统日志可能需要权限",
+          "scenario": "系统刚出现异常，需要从统一日志中按时间查看最近记录并继续筛选线索",
+          "goal": "打开当前用户有权读取的 systemd 日志",
+          "value": "journalctl",
+          "description": "不加筛选条件时读取日志存储中的记录，默认可通过分页器浏览。",
+          "expected": "终端按时间显示当前权限范围内的日志记录，不修改日志内容。",
           "copyable": true,
-          "sourceType": "official",
-          "authorship": "editorial",
-          "evidenceTier": "first-party",
-          "adaptation": "adapted",
+          "sourceType": "manual",
           "sourceIds": [
             "systemd-man"
           ],
-          "platforms": [
-            "linux"
-          ],
+          "authorship": "editorial",
+          "evidenceTier": "first-party",
+          "adaptation": "adapted",
           "groundingRefs": [
             {
               "sourceId": "systemd-man",
@@ -5830,11 +5846,41 @@ window.CHEATSHEET_DATA["linux"] = {
               "claims": [
                 "value",
                 "behavior",
-                "expected",
-                "platform",
-                "caveat"
+                "expected"
               ]
             }
+          ],
+          "platforms": [
+            "linux"
+          ]
+        },
+        {
+          "scenario": "服务已经重启但问题仍在复现，需要持续日志流观察下一次失败",
+          "goal": "持续跟随 systemd journal 的新记录",
+          "value": "journalctl -f",
+          "description": "-f 保持 journalctl 运行，并在新日志到达时继续输出。",
+          "expected": "终端持续显示当前权限范围内的新日志记录，直到用户结束 journalctl。",
+          "copyable": true,
+          "sourceType": "manual",
+          "sourceIds": [
+            "systemd-man"
+          ],
+          "authorship": "editorial",
+          "evidenceTier": "first-party",
+          "adaptation": "adapted",
+          "groundingRefs": [
+            {
+              "sourceId": "systemd-man",
+              "locator": "https://www.freedesktop.org/software/systemd/man/latest/journalctl.html",
+              "claims": [
+                "value",
+                "behavior",
+                "expected"
+              ]
+            }
+          ],
+          "platforms": [
+            "linux"
           ]
         }
       ],
@@ -5913,7 +5959,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/kernel-install.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "kernel-install",
@@ -6024,7 +6070,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/kill.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "kill [ q\\~\\c value |\\c queue \\~value\\c ] pid \" .\\|.\\|.\" kill signal [ q\\~\\c value |\\c queue \\~value\\c ] pid-or-pgid \" .\\|.\\|.\" .br kill s \\~signal [ q\\~\\c value |\\c queue \\~value\\c ] pid-or-pgid \" .\\|.\\|.\" .br kill signal \\~signal [ q\\~\\c value |\\c queue \\~value\\c ] pid-or-pgid \"",
@@ -6107,7 +6153,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · login-utils/last.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "last [options] [username|tty]... lastb [options] [username|tty]...",
@@ -6187,7 +6233,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/lastlog2.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "lastlog2 [options]",
@@ -6267,7 +6313,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/ldattach.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "ldattach [-1278denoVh] [-i iflag] [-s speed] [-m mtu] ldisc device",
@@ -6347,7 +6393,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · text-utils/line.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "line [-h|-V]",
@@ -6422,7 +6468,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tag/?h=v7.1.0 · man/man8/lnstat.8",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "lnstat [ options ]",
@@ -6502,7 +6548,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/localectl.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "localectl",
@@ -6573,7 +6619,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/logger.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "logger [options] message",
@@ -6653,7 +6699,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · login-utils/login.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "login [-p] [-s shell] [-h host] [-H] [[-f] username|UID]",
@@ -6687,7 +6733,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/loginctl.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -6805,7 +6851,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/look.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "look [options] string [file]",
@@ -6889,7 +6935,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/losetup.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "Set up a loop device: losetup [options] -f|loopdev file Get info: losetup [-l] [-a|loopdev] losetup -j file [-o offset] Recalibrate the size of a loop device: losetup -c loopdev Detach loop devices: losetup -d loopdev ... losetup -D Prevent loop devices from getting listed: loset",
@@ -6974,7 +7020,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · meson.build executable('losetup.static')",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "Set up a loop device: losetup.static [options] -f|loopdev file Get info: losetup [-l] [-a|loopdev] losetup -j file [-o offset] Recalibrate the size of a loop device: losetup -c loopdev Detach loop devices: losetup -d loopdev ... losetup -D Prevent loop devices from getting listed: loset",
@@ -7010,7 +7056,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/lsblk.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -7022,35 +7068,32 @@ window.CHEATSHEET_DATA["linux"] = {
       ],
       "examples": [
         {
-          "value": "lsblk -f",
-          "description": "显示块设备树及文件系统信息，用于挂载前确认磁盘、分区和文件系统",
-          "scenario": "挂载前确认磁盘、分区和文件系统时",
-          "goal": "显示块设备树及文件系统信息",
-          "expected": "输出设备层级、类型、UUID 与挂载点",
-          "caveat": "在容器或受限环境中设备信息可能不完整",
+          "scenario": "挂载新磁盘前，需要确认设备、分区和父子关系，避免选错目标",
+          "goal": "查看块设备树",
+          "value": "lsblk",
+          "description": "以树形结构列出块设备及实现默认列。",
+          "expected": "终端显示磁盘、分区及挂载关系，不读取或改写设备内容。",
           "copyable": true,
-          "sourceType": "official",
-          "authorship": "editorial",
-          "evidenceTier": "first-party",
-          "adaptation": "adapted",
+          "sourceType": "manual",
           "sourceIds": [
             "util-linux-repository"
           ],
-          "platforms": [
-            "linux"
-          ],
+          "authorship": "editorial",
+          "evidenceTier": "first-party",
+          "adaptation": "adapted",
           "groundingRefs": [
             {
               "sourceId": "util-linux-repository",
-              "locator": "https://github.com/util-linux/util-linux/blob/master/misc-utils/lsblk.8.adoc",
+              "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/lsblk.8.adoc",
               "claims": [
                 "value",
                 "behavior",
-                "expected",
-                "platform",
-                "caveat"
+                "expected"
               ]
             }
+          ],
+          "platforms": [
+            "linux"
           ]
         }
       ],
@@ -7137,7 +7180,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/lsclocks.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "lsclocks [option]",
@@ -7217,7 +7260,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/lscpu.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "lscpu [options]",
@@ -7251,23 +7294,23 @@ window.CHEATSHEET_DATA["linux"] = {
       ],
       "examples": [
         {
-          "scenario": "需要使用 util-linux 提供的 lsfd 来完成“list file descriptors”时",
-          "goal": "按固定官方版本的定义调用 lsfd，并依据退出状态判断该操作是否完成",
+          "scenario": "服务提示文件句柄耗尽，需要把占用者、描述符编号和目标文件放在同一张表里",
+          "goal": "列出打开的文件描述符及其进程和目标",
           "value": "lsfd",
-          "description": "lsfd 的官方用途是“list file descriptors”；这里直接使用规范入口，不把子命令或选项伪装成另一条程序。",
-          "expected": "终端按 util-linux 的定义执行 lsfd；缺少必需操作数时会明确返回用法诊断和非成功状态。",
+          "description": "使用默认列读取进程、描述符类型和目标等信息，便于定位句柄占用。",
+          "expected": "终端输出当前权限可见的文件描述符表，不关闭任何描述符。",
           "copyable": true,
           "sourceType": "manual",
           "sourceIds": [
             "util-linux-repository"
           ],
-          "authorship": "generated",
+          "authorship": "editorial",
           "evidenceTier": "first-party",
-          "adaptation": "scenario-derived",
+          "adaptation": "adapted",
           "groundingRefs": [
             {
               "sourceId": "util-linux-repository",
-              "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2/lsfd-cmd/lsfd.1.adoc",
+              "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · lsfd-cmd/lsfd.1.adoc",
               "claims": [
                 "value",
                 "behavior",
@@ -7277,8 +7320,7 @@ window.CHEATSHEET_DATA["linux"] = {
           ],
           "platforms": [
             "linux"
-          ],
-          "caveat": "该入口受以下条件限制：requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration。"
+          ]
         }
       ],
       "components": [
@@ -7297,7 +7339,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · lsfd-cmd/lsfd.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "lsfd [option]",
@@ -7377,7 +7419,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/lsipc.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "lsipc [options]",
@@ -7457,7 +7499,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/lsirq.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "lsirq [options]",
@@ -7491,23 +7533,23 @@ window.CHEATSHEET_DATA["linux"] = {
       ],
       "examples": [
         {
-          "scenario": "需要使用 util-linux 提供的 lslocks 来完成“list local system locks”时",
-          "goal": "按固定官方版本的定义调用 lslocks，并依据退出状态判断该操作是否完成",
+          "scenario": "构建产物无法替换，需要确认是否有进程持有本地文件锁",
+          "goal": "列出系统当前文件锁",
           "value": "lslocks",
-          "description": "lslocks 的官方用途是“list local system locks”；这里直接使用规范入口，不把子命令或选项伪装成另一条程序。",
-          "expected": "终端按 util-linux 的定义执行 lslocks；缺少必需操作数时会明确返回用法诊断和非成功状态。",
+          "description": "读取内核公开的锁信息，并关联可见的进程和路径。",
+          "expected": "终端输出当前锁列表；命令不会释放或修改锁。",
           "copyable": true,
           "sourceType": "manual",
           "sourceIds": [
             "util-linux-repository"
           ],
-          "authorship": "generated",
+          "authorship": "editorial",
           "evidenceTier": "first-party",
-          "adaptation": "scenario-derived",
+          "adaptation": "adapted",
           "groundingRefs": [
             {
               "sourceId": "util-linux-repository",
-              "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2/misc-utils/lslocks.8.adoc",
+              "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/lslocks.8.adoc",
               "claims": [
                 "value",
                 "behavior",
@@ -7517,8 +7559,7 @@ window.CHEATSHEET_DATA["linux"] = {
           ],
           "platforms": [
             "linux"
-          ],
-          "caveat": "该入口受以下条件限制：requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration。"
+          ]
         }
       ],
       "components": [
@@ -7537,7 +7578,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/lslocks.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "lslocks [options]",
@@ -7617,7 +7658,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · login-utils/lslogins.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "lslogins [options] [-s|-u[=UID]] [-g groups] [-l logins] [username]",
@@ -7697,7 +7738,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/lsmem.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "lsmem [options]",
@@ -7777,7 +7818,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/lsns.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "lsns [options] [namespace ID]",
@@ -7857,7 +7898,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/machinectl.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "machinectl",
@@ -7928,7 +7969,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/mcookie.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "mcookie [options]",
@@ -8006,7 +8047,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · term-utils/mesg.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "mesg [option] [n|y]",
@@ -8084,7 +8125,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · disk-utils/mkfs.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "mkfs [options] [-t type] [fs-options] device [size]",
@@ -8164,7 +8205,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · disk-utils/mkfs.bfs.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "mkfs.bfs [options] device [block-count]",
@@ -8248,7 +8289,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · disk-utils/mkfs.cramfs.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "mkfs.cramfs [options] directory file",
@@ -8332,7 +8373,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · disk-utils/mkfs.minix.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "mkfs.minix [options] device [size-in-blocks]",
@@ -8416,7 +8457,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · disk-utils/mkswap.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "mkswap [options] device [blocks] mkswap [options] --size size --file file",
@@ -8496,7 +8537,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · text-utils/more.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "more [options] file ...",
@@ -8580,7 +8621,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/mount.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "mount [-h|-V] mount [-l] [-t fstype] mount -a [-F] [-fnrsvw] [-t fstype] [-O optlist] mount [-fnrsvw] [-o options] device|mountpoint mount [-fnrsvw] [-o options] [-t fstype] device mountpoint mount --bind|--rbind|--move olddir newdir mount --make-[r]{shared|slave|private|unbindab",
@@ -8652,7 +8693,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · meson.build executable('mount.static')",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "mount.static [-h|-V] mount [-l] [-t fstype] mount -a [-F] [-fnrsvw] [-t fstype] [-O optlist] mount [-fnrsvw] [-o options] device|mountpoint mount [-fnrsvw] [-o options] [-t fstype] device mountpoint mount --bind|--rbind|--move olddir newdir mount --make-[r]{shared|slave|private|unbindab",
@@ -8723,7 +8764,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/mountpoint.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "mountpoint [-d|-q] directory|file mountpoint -x device",
@@ -8757,23 +8798,23 @@ window.CHEATSHEET_DATA["linux"] = {
       ],
       "examples": [
         {
-          "scenario": "需要使用 util-linux 提供的 namei 来完成“follow a pathname until a terminal point is found”时",
-          "goal": "按固定官方版本的定义调用 namei，并依据退出状态判断该操作是否完成",
-          "value": "namei",
-          "description": "namei 的官方用途是“follow a pathname until a terminal point is found”；这里直接使用规范入口，不把子命令或选项伪装成另一条程序。",
-          "expected": "终端按 util-linux 的定义执行 namei；缺少必需操作数时会明确返回用法诊断和非成功状态。",
+          "scenario": "服务能看到文件但无法打开，需要逐级核对路径组件、符号链接和目录权限",
+          "goal": "以长格式解析日志路径的每一级",
+          "value": "namei -l ./var/log/app.log",
+          "description": "-l 为路径中的每个组件展示类型、权限和所有者信息。",
+          "expected": "终端逐级输出路径解析结果，目标路径和权限保持不变。",
           "copyable": true,
           "sourceType": "manual",
           "sourceIds": [
             "util-linux-repository"
           ],
-          "authorship": "generated",
+          "authorship": "editorial",
           "evidenceTier": "first-party",
-          "adaptation": "scenario-derived",
+          "adaptation": "adapted",
           "groundingRefs": [
             {
               "sourceId": "util-linux-repository",
-              "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2/misc-utils/namei.1.adoc",
+              "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/namei.1.adoc",
               "claims": [
                 "value",
                 "behavior",
@@ -8783,8 +8824,7 @@ window.CHEATSHEET_DATA["linux"] = {
           ],
           "platforms": [
             "linux"
-          ],
-          "caveat": "该入口受以下条件限制：requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration。"
+          ]
         }
       ],
       "components": [
@@ -8803,7 +8843,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/namei.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "namei [options] pathname...",
@@ -8883,7 +8923,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tag/?h=v7.1.0 · man/man8/netshaper.8",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": ".ad l .in +8 .ti -8 netshaper \"[ \" OPTIONS \" ] { \" COMMAND \" | \" help \" }\" .sp .ti -8 OPTIONS \" := { \" V[ersion] | c[olor] | help } .ti -8 \"netshaper set\" dev DEV handle scope HANDLE_SCOPE \"[ \" id HANDLE_ID \" ]\" bw-max BW_MAX .ti -8 \"netshaper\" \" { \" show \" | \" delete \" }\" dev DE",
@@ -8913,19 +8953,19 @@ window.CHEATSHEET_DATA["linux"] = {
       ],
       "examples": [
         {
-          "scenario": "需要使用 systemd 提供的 networkctl 来完成“Query or modify the status of network links”时",
-          "goal": "按固定官方版本的定义调用 networkctl，并依据退出状态判断该操作是否完成",
-          "value": "networkctl",
-          "description": "networkctl 的官方用途是“Query or modify the status of network links”；这里直接使用规范入口，不把子命令或选项伪装成另一条程序。",
-          "expected": "终端按 systemd 的定义执行 networkctl；缺少必需操作数时会明确返回用法诊断和非成功状态。",
+          "scenario": "网卡已经存在但没有地址，需要先确认 systemd-networkd 看到的链路配置状态",
+          "goal": "查看网络链路的总体状态",
+          "value": "networkctl status",
+          "description": "status 子命令读取链路、地址、网关和在线状态摘要。",
+          "expected": "终端显示网络状态信息，不启动、停止或重新配置链路。",
           "copyable": true,
           "sourceType": "manual",
           "sourceIds": [
             "systemd-man"
           ],
-          "authorship": "generated",
+          "authorship": "editorial",
           "evidenceTier": "first-party",
-          "adaptation": "scenario-derived",
+          "adaptation": "adapted",
           "groundingRefs": [
             {
               "sourceId": "systemd-man",
@@ -8939,8 +8979,7 @@ window.CHEATSHEET_DATA["linux"] = {
           ],
           "platforms": [
             "linux"
-          ],
-          "caveat": "该入口受以下条件限制：build option: ENABLE_NETWORKD；requires a Linux distribution built with systemd 261.1。"
+          ]
         }
       ],
       "components": [
@@ -8960,7 +8999,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/networkctl.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "networkctl",
@@ -9031,7 +9070,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · login-utils/newgrp.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "newgrp [group [command]] newgrp [-c command] [group]",
@@ -9105,7 +9144,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · login-utils/nologin.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "nologin [-V] [-h]",
@@ -9139,23 +9178,28 @@ window.CHEATSHEET_DATA["linux"] = {
       ],
       "examples": [
         {
-          "scenario": "需要使用 util-linux 提供的 nsenter 来完成“run program in different namespaces”时",
-          "goal": "按固定官方版本的定义调用 nsenter，并依据退出状态判断该操作是否完成",
-          "value": "nsenter",
-          "description": "nsenter 的官方用途是“run program in different namespaces”；这里直接使用规范入口，不把子命令或选项伪装成另一条程序。",
-          "expected": "终端按 util-linux 的定义执行 nsenter；缺少必需操作数时会明确返回用法诊断和非成功状态。",
-          "copyable": true,
+          "scenario": "已确认容器主进程 PID，需要进入容器命名空间核对实际文件视图",
+          "goal": "在目标容器命名空间的挂载视图中启动一个 shell",
+          "value": "nsenter --mount --target 4321 /bin/sh",
+          "description": "--target 选择进程，--mount 加入其挂载命名空间，再运行嵌套的 shell。",
+          "expected": "权限允许时启动一个看到目标挂载视图的 shell；退出 shell 后返回原命名空间。",
+          "copyable": false,
+          "warning": "进入目标命名空间后执行的命令可能修改容器或宿主文件；先核对 PID 并保持只读排查。",
+          "caveat": "先检查 PID、容器身份和挂载关系；进入后只读核对，避免对共享路径执行写操作。",
+          "riskLevels": [
+            "processDisruption"
+          ],
           "sourceType": "manual",
           "sourceIds": [
             "util-linux-repository"
           ],
-          "authorship": "generated",
+          "authorship": "editorial",
           "evidenceTier": "first-party",
-          "adaptation": "scenario-derived",
+          "adaptation": "adapted",
           "groundingRefs": [
             {
               "sourceId": "util-linux-repository",
-              "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2/sys-utils/nsenter.1.adoc",
+              "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/nsenter.1.adoc",
               "claims": [
                 "value",
                 "behavior",
@@ -9165,8 +9209,7 @@ window.CHEATSHEET_DATA["linux"] = {
           ],
           "platforms": [
             "linux"
-          ],
-          "caveat": "该入口受以下条件限制：requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration。"
+          ]
         }
       ],
       "components": [
@@ -9185,7 +9228,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/nsenter.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "nsenter [options] [program [arguments]]",
@@ -9266,7 +9309,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · meson.build executable('nsenter.static')",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "nsenter.static [options] [program [arguments]]",
@@ -9346,7 +9389,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tag/?h=v7.1.0 · man/man8/nstat.8",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "nstat",
@@ -9417,7 +9460,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/oomctl.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "oomctl",
@@ -9488,7 +9531,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · disk-utils/partx.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "partx [-a|-d|-P|-r|-s|-u] [-t type] [-n M:N] [-] disk partx [-a|-d|-P|-r|-s|-u] [-t type] partition [disk]",
@@ -9569,7 +9612,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · meson.build executable('partx.static')",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "partx.static [-a|-d|-P|-r|-s|-u] [-t type] [-n M:N] [-] disk partx [-a|-d|-P|-r|-s|-u] [-t type] partition [disk]",
@@ -9649,7 +9692,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · text-utils/pg.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "pg -amount -p prompt -cefnrs +line +/pattern/ file ...",
@@ -9684,7 +9727,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/pgrep.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -9696,35 +9739,32 @@ window.CHEATSHEET_DATA["linux"] = {
       ],
       "examples": [
         {
+          "scenario": "同一主机运行多个 Node.js 服务，需要按名称核对 PID 和启动命令",
+          "goal": "列出名称匹配的进程及命令行",
           "value": "pgrep -a node",
-          "description": "按进程名列出 PID 和完整命令行，用于确认 Node.js 进程及其参数",
-          "scenario": "确认 Node.js 进程及其参数时",
-          "goal": "按进程名列出 PID 和完整命令行",
-          "expected": "输出所有匹配进程的 PID 与命令行",
-          "caveat": "匹配规则受进程 comm 名称长度影响，可结合 -f 谨慎扩大范围",
+          "description": "-a 在 PID 旁显示命令行，帮助区分同名进程。",
+          "expected": "终端输出所有匹配进程的 PID 与命令行；没有匹配时不输出并返回非零状态。",
           "copyable": true,
-          "sourceType": "official",
-          "authorship": "editorial",
-          "evidenceTier": "first-party",
-          "adaptation": "adapted",
+          "sourceType": "manual",
           "sourceIds": [
             "procps-ng-repository"
           ],
-          "platforms": [
-            "linux"
-          ],
+          "authorship": "editorial",
+          "evidenceTier": "first-party",
+          "adaptation": "adapted",
           "groundingRefs": [
             {
               "sourceId": "procps-ng-repository",
-              "locator": "https://gitlab.com/procps-ng/procps/-/blob/master/man/pgrep.1",
+              "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/pgrep.1",
               "claims": [
                 "value",
                 "behavior",
-                "expected",
-                "platform",
-                "caveat"
+                "expected"
               ]
             }
+          ],
+          "platforms": [
+            "linux"
           ]
         }
       ],
@@ -9767,7 +9807,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/pidof.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -9893,7 +9933,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/pidwait.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "pidwait",
@@ -9964,7 +10004,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/pipesz.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "pipesz [options] [--set size] [--] [command [argument...]] pipesz [options] --get",
@@ -10048,7 +10088,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/pivot_root.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "pivotroot newroot putold",
@@ -10075,7 +10115,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/pkill.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -10087,37 +10127,37 @@ window.CHEATSHEET_DATA["linux"] = {
       ],
       "examples": [
         {
-          "value": "pkill -TERM -x example-worker",
-          "description": "只向名称完全匹配的进程发送 TERM，用于需要让明确命名的测试工作进程优雅退出",
-          "scenario": "需要让明确命名的测试工作进程优雅退出时",
-          "goal": "只向名称完全匹配的进程发送 TERM",
-          "expected": "匹配进程收到终止信号并可执行清理",
-          "caveat": "先用 pgrep -a -x example-worker 核对目标；错误名称可能中断其他进程",
+          "scenario": "已确认测试工作进程可以停止，需要按进程名请求它们正常退出",
+          "goal": "向名称匹配的 example-worker 进程发送默认终止信号",
+          "value": "pkill example-worker",
+          "description": "按进程名匹配并发送终止信号，可能同时影响多个同名进程。",
+          "expected": "所有匹配进程收到终止信号；没有匹配时返回非零状态。",
           "copyable": false,
-          "warning": "先用 pgrep 精确核对目标，避免终止无关进程。",
-          "riskLevel": "processDisruption",
-          "sourceType": "official",
-          "authorship": "editorial",
-          "evidenceTier": "first-party",
-          "adaptation": "adapted",
+          "warning": "会中断同名进程；先用 pgrep -a example-worker 核对 PID、命令行和影响范围。",
+          "caveat": "先用只读的 pgrep -a example-worker 检查全部匹配项，并确认这些进程都可以恢复。",
+          "riskLevels": [
+            "processDisruption"
+          ],
+          "sourceType": "manual",
           "sourceIds": [
             "procps-ng-repository"
           ],
-          "platforms": [
-            "linux"
-          ],
+          "authorship": "editorial",
+          "evidenceTier": "first-party",
+          "adaptation": "adapted",
           "groundingRefs": [
             {
               "sourceId": "procps-ng-repository",
-              "locator": "https://gitlab.com/procps-ng/procps/-/blob/master/man/pgrep.1",
+              "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/pkill.1",
               "claims": [
                 "value",
                 "behavior",
-                "expected",
-                "platform",
-                "caveat"
+                "expected"
               ]
             }
+          ],
+          "platforms": [
+            "linux"
           ]
         }
       ],
@@ -10195,7 +10235,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/pmap.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "pmap [ option \" .\\|.\\|.]\" pid \" .\\|.\\|.\"",
@@ -10275,7 +10315,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/portablectl.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "portablectl",
@@ -10300,23 +10340,23 @@ window.CHEATSHEET_DATA["linux"] = {
       ],
       "examples": [
         {
-          "scenario": "需要使用 util-linux 提供的 prlimit 来完成“get and set process resource limits”时",
-          "goal": "按固定官方版本的定义调用 prlimit，并依据退出状态判断该操作是否完成",
-          "value": "prlimit",
-          "description": "prlimit 的官方用途是“get and set process resource limits”；这里直接使用规范入口，不把子命令或选项伪装成另一条程序。",
-          "expected": "终端按 util-linux 的定义执行 prlimit；缺少必需操作数时会明确返回用法诊断和非成功状态。",
+          "scenario": "服务报告打开文件过多，需要先只读查看目标进程当前的资源上限",
+          "goal": "读取 PID 4321 的资源限制",
+          "value": "prlimit --pid 4321",
+          "description": "只指定 --pid 而不提供新限制时，查询目标进程的资源上限。",
+          "expected": "终端输出该进程的软限制和硬限制；进程限制保持不变。",
           "copyable": true,
           "sourceType": "manual",
           "sourceIds": [
             "util-linux-repository"
           ],
-          "authorship": "generated",
+          "authorship": "editorial",
           "evidenceTier": "first-party",
-          "adaptation": "scenario-derived",
+          "adaptation": "adapted",
           "groundingRefs": [
             {
               "sourceId": "util-linux-repository",
-              "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2/sys-utils/prlimit.1.adoc",
+              "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/prlimit.1.adoc",
               "claims": [
                 "value",
                 "behavior",
@@ -10326,8 +10366,7 @@ window.CHEATSHEET_DATA["linux"] = {
           ],
           "platforms": [
             "linux"
-          ],
-          "caveat": "该入口受以下条件限制：requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration。"
+          ]
         }
       ],
       "components": [
@@ -10346,7 +10385,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/prlimit.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "prlimit [options] [--resource[=limits]] [--pid PID] prlimit [options] [--resource[=limits]] command [argument...]",
@@ -10417,7 +10456,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/ps.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "ps [ option \" .\\|.\\|.]\"",
@@ -10488,7 +10527,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/pwdx.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "pwdx [ option \" .\\|.\\|.]\" pid \" .\\|.\\|.\"",
@@ -10564,7 +10603,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · disk-utils/raw.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "raw /dev/raw/raw raw /dev/raw/raw /dev/ raw -q /dev/raw/raw raw -qa",
@@ -10640,7 +10679,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tag/?h=v7.1.0 · man/man8/rdma.8",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": ".sp .ad l .in +8 .ti -8 rdma \"[ \" OPTIONS \" ] \" OBJECT \" { \" COMMAND \" | \" help \" }\" .sp .ti -8 rdma \"[ \" -force \" ] \" \"-batch \" filename .sp .ti -8 OBJECT \" := { \" dev \" | \" link \" | \" resource \" | \" system \" | \" statistic \" | \" monitor \" }\" .sp .ti -8 OPTIONS \" := { \" V[ersion]",
@@ -10720,7 +10759,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/readprofile.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "readprofile [options]",
@@ -10800,7 +10839,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/rename.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "rename [options] substring replacement file...",
@@ -10880,7 +10919,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/renice.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "renice [-n|--priority|--relative] priority [-g|-p|-u] identifier...",
@@ -10960,7 +10999,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · disk-utils/resizepart.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "resizepart device partition length",
@@ -11032,7 +11071,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · meson.build executable('resizepart.static')",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "resizepart.static device partition length",
@@ -11057,19 +11096,19 @@ window.CHEATSHEET_DATA["linux"] = {
       ],
       "examples": [
         {
-          "scenario": "需要使用 systemd 提供的 resolvectl 来完成“Resolve domain names, IPV4 and IPv6 addresses, DNS resource records, and services; introspect and reconfigure the DNS resolver”时",
-          "goal": "按固定官方版本的定义调用 resolvectl，并依据退出状态判断该操作是否完成",
-          "value": "resolvectl",
-          "description": "resolvectl 的官方用途是“Resolve domain names, IPV4 and IPv6 addresses, DNS resource records, and services; introspect and reconfigure the DNS resolver”；这里直接使用规范入口，不把子命令或选项伪装成另一条程序。",
-          "expected": "终端按 systemd 的定义执行 resolvectl；缺少必需操作数时会明确返回用法诊断和非成功状态。",
+          "scenario": "域名解析结果与预期不符，需要确认每个链路正在使用的 DNS 服务器和搜索域",
+          "goal": "查看 systemd-resolved 的全局与逐链路状态",
+          "value": "resolvectl status",
+          "description": "status 子命令汇总解析器协议、DNS 服务器和各链路配置。",
+          "expected": "终端显示当前解析状态，不更改 DNS 设置。",
           "copyable": true,
           "sourceType": "manual",
           "sourceIds": [
             "systemd-man"
           ],
-          "authorship": "generated",
+          "authorship": "editorial",
           "evidenceTier": "first-party",
-          "adaptation": "scenario-derived",
+          "adaptation": "adapted",
           "groundingRefs": [
             {
               "sourceId": "systemd-man",
@@ -11083,8 +11122,7 @@ window.CHEATSHEET_DATA["linux"] = {
           ],
           "platforms": [
             "linux"
-          ],
-          "caveat": "该入口受以下条件限制：requires a Linux distribution built with systemd 261.1。"
+          ]
         }
       ],
       "aliases": [
@@ -11106,7 +11144,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/resolvectl.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "resolvectl",
@@ -11177,7 +11215,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · text-utils/rev.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "rev [option] [file...]",
@@ -11255,7 +11293,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/rfkill.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "rfkill [options] [command] [ID|type ...]",
@@ -11335,7 +11373,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tag/?h=v7.1.0 · man/man8/routel.8",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "routel \"[ \" OPTIONS \" ]\" \"[ \" tablenr [ ip route options... ] ] .ti 8 OPTIONS \" := {\" -h | --help | [{-f | --family } {inet | inet6 } | -4 | -6 }",
@@ -11406,7 +11444,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tag/?h=v7.1.0 · man/man8/rtacct.8",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "Usage: nstat [ -h?vVzrnasd:t:jp ] [ PATTERN [ PATTERN ] ] .br Usage: rtacct [ -h?vVzrnasd:t: ] [ ListOfRealms ]",
@@ -11486,7 +11524,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/rtcwake.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "rtcwake [options] [-d device] [-m standbymode] {-s seconds|-t timet}",
@@ -11566,7 +11604,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tag/?h=v7.1.0 · man/man8/rtmon.8",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": ".sp .ad l .in +8 .ti -8 \"rtmon\" \"[ \" OPTIONS \" ] \" \"file \" FILE \"[ \" all \"| \" OBJECTS \"]\" .ti -8 OPTIONS \":= { f[amily] { inet | inet6 | link | help } |\" \"-4 | -6 | -0 | -V[ersion] }\" .ti -8 OBJECTS \":= [\" link \"]\" \"[\" address \"]\" \"[\" route \"]\"",
@@ -11647,7 +11685,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · login-utils/runuser.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "runuser [options] -u user [[--] command [argument...]] runuser [options] [-] [user [argument...]]",
@@ -11727,7 +11765,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · term-utils/script.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "script [options] [file] [-- command [argument...]]",
@@ -11807,7 +11845,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · term-utils/scriptlive.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "scriptlive [options] timingfile typescript",
@@ -11887,7 +11925,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · term-utils/scriptreplay.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "scriptreplay [options] timingfile [typescript [divisor]]",
@@ -11967,7 +12005,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/setarch.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "setarch [arch] [options] [program [argument...]] arch [options] [program [argument...]]",
@@ -12047,7 +12085,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/setpgid.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "setpgid [options] program [arguments]",
@@ -12121,7 +12159,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/setpriv.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "setpriv [options] program [arguments]",
@@ -12201,7 +12239,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/setsid.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "setsid [options] program [arguments]",
@@ -12279,7 +12317,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · term-utils/setterm.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "setterm [options]",
@@ -12363,7 +12401,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · disk-utils/sfdisk.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "sfdisk [options] device [-N partition-number] sfdisk [options] command",
@@ -12448,7 +12486,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · meson.build executable('sfdisk.static')",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "sfdisk.static [options] device [-N partition-number] sfdisk [options] command",
@@ -12532,7 +12570,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/skill.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "skill [ signal-option ] [ other-option \" .\\|.\\|.]\" expression snice [ new-priority ] [ option \" .\\|.\\|.]\" expression",
@@ -12612,7 +12650,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/slabtop.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "slabtop [ option \" .\\|.\\|.]\"",
@@ -12692,7 +12730,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/snice.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "snice",
@@ -12719,7 +12757,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tag/?h=v7.1.0 · man/man8/ss.8",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -12731,35 +12769,32 @@ window.CHEATSHEET_DATA["linux"] = {
       ],
       "examples": [
         {
-          "value": "ss -lntp",
-          "description": "列出监听中的数字 TCP 套接字和进程，用于确认哪些进程正在监听 TCP 端口",
-          "scenario": "确认哪些进程正在监听 TCP 端口时",
-          "goal": "列出监听中的数字 TCP 套接字和进程",
-          "expected": "输出本地地址、端口及可见的进程信息",
-          "caveat": "查看其他用户的进程详情通常需要管理员权限",
+          "scenario": "本地服务启动后请求仍被拒绝，需要确认 TCP 端口是否真的进入监听状态",
+          "goal": "列出 TCP 监听端口并避免名称解析干扰",
+          "value": "ss -lnt",
+          "description": "-l 仅显示监听套接字，-n 保留数字端口，-t 限定为 TCP。",
+          "expected": "终端输出当前可见的 TCP 监听地址和端口，不修改网络配置。",
           "copyable": true,
-          "sourceType": "official",
-          "authorship": "editorial",
-          "evidenceTier": "first-party",
-          "adaptation": "adapted",
+          "sourceType": "manual",
           "sourceIds": [
             "iproute2-repository"
           ],
-          "platforms": [
-            "linux"
-          ],
+          "authorship": "editorial",
+          "evidenceTier": "first-party",
+          "adaptation": "adapted",
           "groundingRefs": [
             {
               "sourceId": "iproute2-repository",
-              "locator": "https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tree/man/man8/ss.8",
+              "locator": "https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tag/?h=v7.1.0 · man/man8/ss.8",
               "claims": [
                 "value",
                 "behavior",
-                "expected",
-                "platform",
-                "caveat"
+                "expected"
               ]
             }
+          ],
+          "platforms": [
+            "linux"
           ]
         }
       ],
@@ -12846,7 +12881,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/storagectl.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "storagectl",
@@ -12917,7 +12952,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · login-utils/su.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "su [options] [-] [user|UID [argument...]]",
@@ -13001,7 +13036,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · login-utils/sulogin.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "sulogin [options] [tty]",
@@ -13079,7 +13114,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · disk-utils/swaplabel.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "swaplabel [-L label] [-U UUID] device",
@@ -13162,7 +13197,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/swapon.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "swapon [options] [specialfile...] swapoff [-va] [specialfile...]",
@@ -13246,7 +13281,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/switch_root.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "switchroot [-hV] switchroot newroot init [arg...]",
@@ -13317,7 +13352,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/sysctl.8",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "sysctl [ option \" .\\|.\\|.]\" variable [\\c = value\\c ] .\\|.\\|. sysctl p file-or-regexp \" .\\|.\\|.\"",
@@ -13344,7 +13379,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemctl.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -13356,23 +13391,19 @@ window.CHEATSHEET_DATA["linux"] = {
       ],
       "examples": [
         {
+          "scenario": "SSH 连接被拒绝，需要先确认服务失败是否来自单元未加载或最近一次启动失败",
+          "goal": "读取 sshd.service 的当前状态并定位服务失败",
           "value": "systemctl status sshd.service",
-          "description": "查看单元状态和最近一次运行结果，用于检查 SSH 服务为何不可用",
-          "scenario": "检查 SSH 服务为何不可用时",
-          "goal": "查看单元状态和最近一次运行结果",
-          "expected": "输出单元的加载、活动状态和近期日志摘要",
-          "caveat": "仅适用于使用 systemd 的发行版；服务名因发行版而异",
+          "description": "status 子命令汇总单元加载状态、活动状态、主进程和近期日志。",
+          "expected": "终端显示 sshd.service 的状态；命令只读取状态，不启动或停止服务。",
           "copyable": true,
-          "sourceType": "official",
-          "authorship": "editorial",
-          "evidenceTier": "first-party",
-          "adaptation": "adapted",
+          "sourceType": "manual",
           "sourceIds": [
             "systemd-man"
           ],
-          "platforms": [
-            "linux"
-          ],
+          "authorship": "editorial",
+          "evidenceTier": "first-party",
+          "adaptation": "adapted",
           "groundingRefs": [
             {
               "sourceId": "systemd-man",
@@ -13380,11 +13411,12 @@ window.CHEATSHEET_DATA["linux"] = {
               "claims": [
                 "value",
                 "behavior",
-                "expected",
-                "platform",
-                "caveat"
+                "expected"
               ]
             }
+          ],
+          "platforms": [
+            "linux"
           ]
         }
       ],
@@ -13468,7 +13500,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd",
@@ -13539,7 +13571,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-ac-power.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-ac-power",
@@ -13610,7 +13642,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-analyze.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-analyze",
@@ -13681,7 +13713,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-ask-password.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-ask-password",
@@ -13752,7 +13784,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-battery-check.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-battery-check",
@@ -13823,7 +13855,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-binfmt.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-binfmt",
@@ -13896,7 +13928,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-bless-boot.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-bless-boot",
@@ -13968,7 +14000,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-bsod.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-bsod",
@@ -14039,7 +14071,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-cat.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-cat",
@@ -14110,7 +14142,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-cgls.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-cgls",
@@ -14181,7 +14213,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-cgtop.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-cgtop",
@@ -14252,7 +14284,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-creds.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-creds",
@@ -14323,7 +14355,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-cryptenroll.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-cryptenroll",
@@ -14398,7 +14430,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-cryptsetup.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-cryptsetup",
@@ -14469,7 +14501,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-delta.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-delta",
@@ -14540,7 +14572,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-detect-virt.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-detect-virt",
@@ -14611,7 +14643,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-dissect.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-dissect",
@@ -14682,7 +14714,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-escape.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-escape",
@@ -14753,7 +14785,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/systemd/systemd/tree/v261.1 · src/core/meson.build",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-executor",
@@ -14824,7 +14856,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/systemd/systemd/tree/v261.1 · src/import/meson.build",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-export",
@@ -14896,7 +14928,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-firstboot.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-firstboot",
@@ -14968,7 +15000,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-hwdb.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-hwdb",
@@ -15039,7 +15071,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-id128.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-id128",
@@ -15110,7 +15142,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-imds.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-imds",
@@ -15181,7 +15213,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-imdsd.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-imdsd",
@@ -15252,7 +15284,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/systemd/systemd/tree/v261.1 · src/import/meson.build",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-import",
@@ -15323,7 +15355,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/systemd/systemd/tree/v261.1 · src/import/meson.build",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-import-fs",
@@ -15394,7 +15426,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-inhibit.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-inhibit",
@@ -15467,7 +15499,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-journal-gatewayd.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-journal-gatewayd",
@@ -15538,7 +15570,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-journal-remote.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-journal-remote",
@@ -15611,7 +15643,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-journal-upload.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-journal-upload",
@@ -15689,7 +15721,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-mount.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-mount",
@@ -15760,7 +15792,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-mstack.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-mstack",
@@ -15831,7 +15863,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-mute-console.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-mute-console",
@@ -15903,7 +15935,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-networkd-wait-online.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-networkd-wait-online",
@@ -15974,7 +16006,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-notify.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-notify",
@@ -16045,7 +16077,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-nspawn.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-nspawn",
@@ -16116,7 +16148,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-path.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-path",
@@ -16187,7 +16219,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-pcrlock.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-pcrlock",
@@ -16258,7 +16290,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-pty-forward.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-pty-forward",
@@ -16329,7 +16361,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/systemd/systemd/tree/v261.1 · src/import/meson.build",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-pull",
@@ -16404,7 +16436,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-repart.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-repart",
@@ -16479,7 +16511,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/systemd/systemd/tree/v261.1 · src/repart/meson.build",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-repart.standalone",
@@ -16550,7 +16582,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-report.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-report",
@@ -16621,7 +16653,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/systemd/systemd/tree/v261.1 · src/report/meson.build",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-report-basic",
@@ -16692,7 +16724,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-run.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-run",
@@ -16763,7 +16795,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-socket-activate.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-socket-activate",
@@ -16834,7 +16866,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-socket-proxyd.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-socket-proxyd",
@@ -16905,7 +16937,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-stdio-bridge.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-stdio-bridge",
@@ -16980,7 +17012,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-sysctl.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-sysctl",
@@ -17052,7 +17084,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-sysext.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-sysext",
@@ -17124,7 +17156,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-sysinstall.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-sysinstall",
@@ -17196,7 +17228,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-sysupdate.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-sysupdate",
@@ -17271,7 +17303,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-sysusers.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-sysusers",
@@ -17346,7 +17378,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/systemd/systemd/tree/v261.1 · src/sysusers/meson.build",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-sysusers.standalone",
@@ -17421,7 +17453,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-tmpfiles.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-tmpfiles",
@@ -17496,7 +17528,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/systemd/systemd/tree/v261.1 · src/tmpfiles/meson.build",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-tmpfiles.standalone",
@@ -17567,7 +17599,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-tty-ask-password-agent.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-tty-ask-password-agent",
@@ -17638,7 +17670,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-vmspawn.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-vmspawn",
@@ -17709,7 +17741,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/systemd-vpick.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "systemd-vpick",
@@ -17734,23 +17766,23 @@ window.CHEATSHEET_DATA["linux"] = {
       ],
       "examples": [
         {
-          "scenario": "需要使用 util-linux 提供的 taskset 来完成“set or retrieve a process's CPU affinity”时",
-          "goal": "按固定官方版本的定义调用 taskset，并依据退出状态判断该操作是否完成",
-          "value": "taskset",
-          "description": "taskset 的官方用途是“set or retrieve a process's CPU affinity”；这里直接使用规范入口，不把子命令或选项伪装成另一条程序。",
-          "expected": "终端按 util-linux 的定义执行 taskset；缺少必需操作数时会明确返回用法诊断和非成功状态。",
+          "scenario": "性能测试需要固定在一个 CPU 上运行，以减少跨核调度对结果的干扰",
+          "goal": "把 npm test 限定到 CPU 0",
+          "value": "taskset -c 0 npm test",
+          "description": "-c 使用 CPU 列表语法，后面的 npm test 是受亲和性约束的嵌套命令。",
+          "expected": "测试进程及其继承者在允许的 CPU 集合内运行；命令结束后约束随进程消失。",
           "copyable": true,
           "sourceType": "manual",
           "sourceIds": [
             "util-linux-repository"
           ],
-          "authorship": "generated",
+          "authorship": "editorial",
           "evidenceTier": "first-party",
-          "adaptation": "scenario-derived",
+          "adaptation": "adapted",
           "groundingRefs": [
             {
               "sourceId": "util-linux-repository",
-              "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2/schedutils/taskset.1.adoc",
+              "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · schedutils/taskset.1.adoc",
               "claims": [
                 "value",
                 "behavior",
@@ -17760,8 +17792,7 @@ window.CHEATSHEET_DATA["linux"] = {
           ],
           "platforms": [
             "linux"
-          ],
-          "caveat": "该入口受以下条件限制：requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration。"
+          ]
         }
       ],
       "components": [
@@ -17780,7 +17811,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · schedutils/taskset.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "taskset [options] mask command [argument...] taskset [options] -p [mask] pid",
@@ -17858,7 +17889,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tag/?h=v7.1.0 · man/man8/tc.8",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "tc \"[ \" OPTIONS \" ]\" qdisc [ add | change | replace | link | delete ] dev DEV [ parent qdisc-id | root ] [ handle qdisc-id ] [ ingress_block BLOCK_INDEX ] [ egress_block BLOCK_INDEX ] qdisc [ qdisc specific parameters ] tc \"[ \" OPTIONS \" ]\" class [ add | change | replace | delete",
@@ -17894,7 +17925,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/timedatectl.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -18013,7 +18044,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tag/?h=v7.1.0 · man/man8/tipc.8",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": ".ad l .in +8 .ti -8 tipc \"[ \" OPTIONS \" ] \" COMMAND \" \" ARGUMENTS \" .sp .ti -8 COMMAND \" := { \" bearer \" | \" link \" | \" media \" | \" nametable \" | \" node \" | \" socket \" } .sp .ti -8 OPTIONS \" := { \" h[help] }",
@@ -18091,7 +18122,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/tload.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "tload [ option \" .\\|.\\|.]\" [ tty ]",
@@ -18171,7 +18202,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/top.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": ".\\\" ---------------------------------------------------------------------- \\*(WE [ option \" .\\|.\\|.]\" .\\\"",
@@ -18242,7 +18273,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/tunelp.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "tunelp [options] device",
@@ -18322,7 +18353,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · schedutils/uclampset.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "uclampset [options] [-m minimum] [-M maximum] -p PID uclampset [options] [-m minimum] [-M maximum] command [argument...]",
@@ -18402,7 +18433,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/udevadm.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "udevadm",
@@ -18473,7 +18504,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · text-utils/ul.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "ul [options] [file...]",
@@ -18554,7 +18585,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/umount.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "umount -a [-dflnrv] [-t fstype] [-O option...] umount [-dflnrv] {directory|device} umount -h|-V",
@@ -18635,7 +18666,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · meson.build executable('umount.static')",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "umount.static -a [-dflnrv] [-t fstype] [-O option...] umount [-dflnrv] {directory|device} umount -h|-V",
@@ -18669,23 +18700,24 @@ window.CHEATSHEET_DATA["linux"] = {
       ],
       "examples": [
         {
-          "scenario": "需要使用 util-linux 提供的 unshare 来完成“run program in new namespaces”时",
-          "goal": "按固定官方版本的定义调用 unshare，并依据退出状态判断该操作是否完成",
-          "value": "unshare",
-          "description": "unshare 的官方用途是“run program in new namespaces”；这里直接使用规范入口，不把子命令或选项伪装成另一条程序。",
-          "expected": "终端按 util-linux 的定义执行 unshare；缺少必需操作数时会明确返回用法诊断和非成功状态。",
+          "scenario": "需要验证容器命名空间的挂载影响范围，但不希望实验进入调用者已有的命名空间",
+          "goal": "在新的容器命名空间式挂载视图中启动 shell",
+          "value": "unshare --mount /bin/sh",
+          "description": "--mount 创建新的挂载命名空间，并把 /bin/sh 作为嵌套程序运行。",
+          "expected": "权限允许时进入新命名空间中的 shell；退出后该进程命名空间随之结束。",
+          "caveat": "新命名空间并不自动提供完整容器隔离；仍应避免对共享路径执行写操作。",
           "copyable": true,
           "sourceType": "manual",
           "sourceIds": [
             "util-linux-repository"
           ],
-          "authorship": "generated",
+          "authorship": "editorial",
           "evidenceTier": "first-party",
-          "adaptation": "scenario-derived",
+          "adaptation": "adapted",
           "groundingRefs": [
             {
               "sourceId": "util-linux-repository",
-              "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2/sys-utils/unshare.1.adoc",
+              "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/unshare.1.adoc",
               "claims": [
                 "value",
                 "behavior",
@@ -18695,8 +18727,7 @@ window.CHEATSHEET_DATA["linux"] = {
           ],
           "platforms": [
             "linux"
-          ],
-          "caveat": "该入口受以下条件限制：requires Linux with util-linux 2.42.2 installed; optional programs depend on distribution build configuration。"
+          ]
         }
       ],
       "components": [
@@ -18715,7 +18746,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/unshare.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "unshare [options] [program [arguments]]",
@@ -18796,7 +18827,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · meson.build executable('unshare.static')",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "unshare.static [options] [program [arguments]]",
@@ -18877,7 +18908,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/updatectl.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "updatectl",
@@ -18904,7 +18935,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/uptime.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -18916,35 +18947,32 @@ window.CHEATSHEET_DATA["linux"] = {
       ],
       "examples": [
         {
+          "scenario": "告警恢复后需要判断主机是否刚重启，从而区分进程故障与整机重启",
+          "goal": "以易读格式查看持续运行时间",
           "value": "uptime -p",
-          "description": "以可读格式查看持续运行时间，用于巡检主机是否刚重启过",
-          "scenario": "巡检主机是否刚重启过时",
-          "goal": "以可读格式查看持续运行时间",
-          "expected": "输出 up 后的天、小时或分钟",
-          "caveat": "-p 由 procps-ng 提供，极简环境可能未安装",
+          "description": "-p 只展示易读的持续运行时长。",
+          "expected": "终端输出主机已运行的天、小时或分钟，不修改系统状态。",
           "copyable": true,
-          "sourceType": "official",
-          "authorship": "editorial",
-          "evidenceTier": "first-party",
-          "adaptation": "adapted",
+          "sourceType": "manual",
           "sourceIds": [
             "procps-ng-repository"
           ],
-          "platforms": [
-            "linux"
-          ],
+          "authorship": "editorial",
+          "evidenceTier": "first-party",
+          "adaptation": "adapted",
           "groundingRefs": [
             {
               "sourceId": "procps-ng-repository",
-              "locator": "https://gitlab.com/procps-ng/procps/-/blob/master/man/uptime.1",
+              "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/uptime.1",
               "claims": [
                 "value",
                 "behavior",
-                "expected",
-                "platform",
-                "caveat"
+                "expected"
               ]
             }
+          ],
+          "platforms": [
+            "linux"
           ]
         }
       ],
@@ -19031,7 +19059,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · login-utils/utmpdump.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "utmpdump [options] filename",
@@ -19109,7 +19137,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/uuidd.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "uuidd [options]",
@@ -19189,7 +19217,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/uuidgen.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "uuidgen [options]",
@@ -19269,7 +19297,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/uuidparse.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "uuidparse [options] uuid",
@@ -19349,7 +19377,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://www.freedesktop.org/software/systemd/man/latest/varlinkctl.html",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "varlinkctl",
@@ -19420,7 +19448,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/tag/?h=v7.1.0 · man/man8/vdpa.8",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": ".sp .ad l .in +8 .ti -8 vdpa \"[ \" OPTIONS \" ] { \" dev | mgmtdev \" } { \" COMMAND \" | \" help \" }\" .sp",
@@ -19505,7 +19533,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · login-utils/vipw.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "vipw [options] vigr [options]",
@@ -19532,7 +19560,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/vmstat.8",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -19544,35 +19572,32 @@ window.CHEATSHEET_DATA["linux"] = {
       ],
       "examples": [
         {
+          "scenario": "接口响应偶发变慢并伴随内存压力，需要连续采样 CPU、内存、换页和 I/O 指标判断瓶颈",
+          "goal": "每秒采样一次并输出五组统计",
           "value": "vmstat 1 5",
-          "description": "每秒采样一次并连续输出五组统计，用于观察短时 CPU、内存和 I/O 波动",
-          "scenario": "观察短时 CPU、内存和 I/O 波动时",
-          "goal": "每秒采样一次并连续输出五组统计",
-          "expected": "输出进程、内存、分页、I/O 和 CPU 列",
-          "caveat": "第一行通常是自启动以来的平均值，后续行才是采样区间",
+          "description": "第一个操作数是采样间隔，第二个操作数限制样本数量。",
+          "expected": "终端依次输出五组进程、内存、换页、I/O 和 CPU 统计。",
           "copyable": true,
-          "sourceType": "official",
-          "authorship": "editorial",
-          "evidenceTier": "first-party",
-          "adaptation": "adapted",
+          "sourceType": "manual",
           "sourceIds": [
             "procps-ng-repository"
           ],
-          "platforms": [
-            "linux"
-          ],
+          "authorship": "editorial",
+          "evidenceTier": "first-party",
+          "adaptation": "adapted",
           "groundingRefs": [
             {
               "sourceId": "procps-ng-repository",
-              "locator": "https://gitlab.com/procps-ng/procps/-/blob/master/man/vmstat.8",
+              "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/vmstat.8",
               "claims": [
                 "value",
                 "behavior",
-                "expected",
-                "platform",
-                "caveat"
+                "expected"
               ]
             }
+          ],
+          "platforms": [
+            "linux"
           ]
         }
       ],
@@ -19659,7 +19684,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/w.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "w [ option \" .\\|.\\|.]\" [ user ]",
@@ -19739,7 +19764,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/waitpid.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "waitpid [-v] [--timeout|-t seconds] PID[:inode]...",
@@ -19819,7 +19844,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · term-utils/wall.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "wall [-n] [-t timeout] [-g group] [message | file]",
@@ -19853,7 +19878,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/watch.1",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "keywords": [
@@ -19865,35 +19890,32 @@ window.CHEATSHEET_DATA["linux"] = {
       ],
       "examples": [
         {
-          "value": "watch -n 2 'df -h'",
-          "description": "每两秒重新运行一次容量查询，用于短时间观察文件系统容量变化",
-          "scenario": "短时间观察文件系统容量变化时",
-          "goal": "每两秒重新运行一次容量查询",
-          "expected": "终端同一屏幕持续刷新 df 结果",
-          "caveat": "按 Ctrl+C 结束；引用命令时注意当前 shell 的转义规则",
+          "scenario": "压测期间需要在同一屏幕反复观察内存统计，而不手工重复输入命令",
+          "goal": "周期性执行 free -m",
+          "value": "watch free -m",
+          "description": "watch 把后面的 free -m 作为嵌套命令并定期刷新其输出。",
+          "expected": "终端进入持续刷新的内存统计视图，退出 watch 后停止重复执行。",
           "copyable": true,
-          "sourceType": "official",
-          "authorship": "editorial",
-          "evidenceTier": "first-party",
-          "adaptation": "adapted",
+          "sourceType": "manual",
           "sourceIds": [
             "procps-ng-repository"
           ],
-          "platforms": [
-            "linux"
-          ],
+          "authorship": "editorial",
+          "evidenceTier": "first-party",
+          "adaptation": "adapted",
           "groundingRefs": [
             {
               "sourceId": "procps-ng-repository",
-              "locator": "https://gitlab.com/procps-ng/procps/-/blob/master/man/watch.1",
+              "locator": "https://gitlab.com/procps-ng/procps/-/tags/v4.0.6 · man/watch.1",
               "claims": [
                 "value",
                 "behavior",
-                "expected",
-                "platform",
-                "caveat"
+                "expected"
               ]
             }
+          ],
+          "platforms": [
+            "linux"
           ]
         }
       ],
@@ -19980,7 +20002,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/wdctl.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "wdctl [options] [device...]",
@@ -20060,7 +20082,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/whereis.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "whereis [options] [-BMS directory... -f] name...",
@@ -20144,7 +20166,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · misc-utils/wipefs.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "wipefs [options] device... wipefs [--backup] -o offset device... wipefs [--backup] -a device...",
@@ -20224,7 +20246,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · term-utils/write.1.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "write user [ttyname]",
@@ -20295,7 +20317,7 @@ window.CHEATSHEET_DATA["linux"] = {
             "platform"
           ],
           "locator": "https://github.com/util-linux/util-linux/tree/v2.42.2 · sys-utils/zramctl.8.adoc",
-          "checkedAt": "2026-07-23"
+          "checkedAt": "2026-07-31"
         }
       ],
       "usage": "Get info: :: zramctl [options] Reset zram: :: zramctl -r zramdev... Print name of first unused zram device: :: zramctl -f Set up a zram device: :: zramctl [-f | zramdev] [-s size] [-t number] [-a algorithm]",

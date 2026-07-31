@@ -1,6 +1,6 @@
 # Unix/POSIX 与 Linux 官方命令覆盖报告
 
-> 由 `tools/rebuild-official-command-unions.py` 于 2026-07-23 根据固定官方来源生成。
+> 由 `tools/rebuild-official-command-unions.py` 于 2026-07-31 根据固定官方来源生成。
 
 闭合规则：组件解析器发现结果、官方清单、扩展数据和场景审校必须逐项一致。
 联网复验使用 `tools/verify-official-command-sources.py` 重新下载归档、校验 SHA-256 并复跑解析器。

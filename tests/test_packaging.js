@@ -5,6 +5,7 @@ const fs = require("fs");
 const os = require("os");
 const path = require("path");
 const { spawnSync } = require("child_process");
+const crypto = require("crypto");
 
 const root = path.resolve(__dirname, "..");
 const tempRoot = fs.mkdtempSync(path.join(root, ".package-test-"));
@@ -36,7 +37,7 @@ try {
   assert.strictEqual(storeManifest.background.service_worker, "background.js");
   assert.deepStrictEqual(sourceManifest.permissions, ["nativeMessaging", "storage", "alarms"]);
   assert.strictEqual(sourceManifest.background.service_worker, "background.js");
-  assert.strictEqual(storeManifest.version, "1.8.2");
+  assert.strictEqual(storeManifest.version, "1.8.3");
 
   for (const forbidden of ["native-host", "tests", "tools"]) {
     assert.strictEqual(fs.existsSync(path.join(store, forbidden)), false, `store package contains ${forbidden}`);
@@ -44,9 +45,23 @@ try {
   for (const required of ["manifest.json", "popup.html", "background.js", "popup-tasks.js", "dynamic-data.js", "shared", "data", "enrichments", "icons/icon128.png"]) {
     assert.strictEqual(fs.existsSync(path.join(store, required)), true, `store package is missing ${required}`);
   }
-  assert(fs.existsSync(path.join(store, "shared", "provider-adapters.json")), "store package is missing the legacy-safe provider catalog");
-  assert(fs.existsSync(path.join(store, "shared", "provider-adapters-v5.json")), "store package is missing the v5 provider overlay");
+  assert(fs.existsSync(path.join(store, "shared", "developer-command-curation.json")),
+    "store package is missing the developer command curation sidecar");
+  for (const buildOnly of [
+    "contract-fixtures.json",
+    "docker-scenario-enrichments.json",
+    "official-component-fixtures",
+    "provider-catalog-template.json",
+    "quality-baseline.json",
+    "source-registry.json",
+    "validation-rules.json",
+  ]) {
+    assert.strictEqual(fs.existsSync(path.join(store, "shared", buildOnly)), false,
+      `store package contains build-only shared input ${buildOnly}`);
+  }
   assert(fs.readFileSync(path.join(store, "distribution.js"), "utf8").includes('channel: "store"'));
+  assert(fs.readFileSync(path.join(store, "distribution.js"), "utf8").includes('releaseVersion: "1.8.3"'));
+  assert(fs.readFileSync(path.join(store, "distribution.js"), "utf8").includes('bridgeReleaseVersion: "1.8.2"'));
   assert(fs.readFileSync(path.join(store, "popup.html"), "utf8").includes("popup-tasks.js"));
   assert(fs.readFileSync(path.join(store, "popup.html"), "utf8").includes("dynamic-data.js"));
   assert(fs.readFileSync(path.join(store, "distribution.js"), "utf8").includes('persistence: "storage-overlay"'));
@@ -66,6 +81,26 @@ try {
   assert(fs.readFileSync(path.join(store, "distribution.js"), "utf8").includes("localRecommendations: true"));
   assert(fs.readFileSync(path.join(store, "distribution.js"), "utf8").includes("nativeCompanion: true"));
   assert(fs.readFileSync(path.join(store, "distribution.js"), "utf8").includes("dataMaintenance: true"));
+  const firstArchive = path.join(tempRoot, "store-first.zip");
+  const secondArchive = path.join(tempRoot, "store-second.zip");
+  for (const [archive, timezone] of [
+    [firstArchive, "UTC"],
+    [secondArchive, "Asia/Shanghai"],
+  ]) {
+    const archiveResult = spawnSync(process.execPath, [
+      path.join(root, "tools", "create-extension-archive.js"),
+      "--input", path.relative(root, unsignedStore),
+      "--output", path.relative(root, archive),
+    ], {
+      cwd: root,
+      encoding: "utf8",
+      env: { ...process.env, TZ: timezone },
+    });
+    assert.strictEqual(archiveResult.status, 0, archiveResult.stderr || archiveResult.stdout);
+  }
+  const sha256 = (file) => crypto.createHash("sha256").update(fs.readFileSync(file)).digest("hex");
+  assert.strictEqual(sha256(firstArchive), sha256(secondArchive),
+    "store ZIP creation should be reproducible across host timezones");
   assert(fs.existsSync(path.join(source, "native-host", "host.py")));
   assert(fs.existsSync(path.join(source, "native-host", "provider_registry.py")));
   assert(fs.existsSync(path.join(source, "background.js")));

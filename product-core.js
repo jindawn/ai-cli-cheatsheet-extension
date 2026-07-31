@@ -251,8 +251,15 @@
     ["examples", "用法", (item) => (item.examples || []).flatMap((example) => [
       example.value,
       example.description,
+      example.scenario,
+      example.goal,
+      example.expected,
+      example.prerequisites,
+      example.caveat,
       ...Object.values(example.platformValues || {}),
     ]).join(" ")],
+    ["curationItem", "开发场景", (_item, options) => options.searchIndex?.curationItem],
+    ["curation", "开发场景", (_item, options) => options.searchIndex?.curation],
     ["category", "分类", (_item, options) => options.categoryLabel],
   ];
 
@@ -325,7 +332,7 @@
     return (risk?.types || []).map((type) => RISK_DETAILS[type]).filter(Boolean);
   }
 
-  function buildSearchIndex(item) {
+  function buildSearchIndex(item, extra = {}) {
     return {
       aliases: (item.aliases || []).join(" "),
       zh: item.zh || "",
@@ -336,8 +343,18 @@
       examples: (item.examples || []).flatMap((example) => [
         example.value,
         example.description,
+        example.scenario,
+        example.goal,
+        example.expected,
+        example.prerequisites,
+        example.caveat,
         ...Object.values(example.platformValues || {}),
       ]).join(" "),
+      curation: [
+        extra.groupLabel,
+        ...(extra.searchTerms || []),
+      ].filter(Boolean).join(" "),
+      curationItem: (extra.itemSearchTerms || []).filter(Boolean).join(" "),
     };
   }
 
@@ -373,6 +390,8 @@
       else if (matchTypeInValue(searchIndex.keywords, term)) score = Math.max(score, SCORE.KEYWORDS);
       else if (matchTypeInValue(searchIndex.context, term)) score = Math.max(score, SCORE.CONTEXT);
       else if (matchTypeInValue(searchIndex.shell, term)) score = Math.max(score, SCORE.CONTEXT);
+      else if (matchTypeInValue(searchIndex.curationItem, term)) score = Math.max(score, SCORE.KEYWORDS + 40);
+      else if (matchTypeInValue(searchIndex.curation, term)) score = Math.max(score, SCORE.KEYWORDS);
       else if (matchTypeInValue(options.toolName, term)) score = Math.max(score, SCORE.TOOL_NAME);
       else if (matchTypeInValue(searchIndex.examples, term)) score = Math.max(score, SCORE.EXAMPLES);
       else if (matchTypeInValue(options.categoryLabel, term)) score = Math.max(score, SCORE.CATEGORY);
@@ -505,18 +524,20 @@
             displayCmd: entry.displayCmd,
             toolName: entry.toolName,
             categoryLabel: entry.categoryLabel,
+            searchIndex: entry.searchIndex,
           })
           : null;
         const platformInfo = options.platform ? getPlatformCommand(entry.item, options.platform) : null;
         const qualityRank = (entry.item.evidenceStatus === "verified" ? 4 : entry.item.evidenceStatus === "partial" ? 2 : 0)
           + (entry.item.examples?.length ? 1 : 0)
           + (platformInfo && !platformInfo.unsupported ? (platformInfo.usedFallback ? 1 : 2) : 0);
-        return { ...entry, score, qualityRank, originalIndex, matchReason };
+        const implementationRank = options.platform === "linux" && entry.toolId === "linux" ? 1 : 0;
+        return { ...entry, score, qualityRank, implementationRank, originalIndex, matchReason };
       })
       .filter((entry) => entry.score >= 0)
       .sort((a, b) => b.score - a.score
         || (normalizeText(a.displayCmd || a.item.cmd) === normalizeText(b.displayCmd || b.item.cmd)
-          ? b.qualityRank - a.qualityRank
+          ? b.implementationRank - a.implementationRank || b.qualityRank - a.qualityRank
           : 0)
         || a.originalIndex - b.originalIndex);
   }

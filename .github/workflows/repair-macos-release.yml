@@ -141,11 +141,24 @@ jobs:
           node tools/verify-release-assets.js \
             --directory release-assets \
             --version "$VERSION"
-          gh release upload "$RELEASE_TAG" \
-            "release-assets/ai-cli-cheatsheet-bridge-macos-arm64-v${VERSION}.pkg" \
-            "release-assets/ai-cli-cheatsheet-bridge-macos-x64-v${VERSION}.pkg" \
-            release-assets/SHA256SUMS \
-            --clobber
+          upload_with_retry() {
+            asset="$1"
+            for attempt in 1 2 3; do
+              if gh release upload "$RELEASE_TAG" "$asset" --clobber; then
+                return 0
+              fi
+              if [ "$attempt" -lt 3 ]; then
+                sleep "$((attempt * 5))"
+              fi
+            done
+            echo "Failed to replace $(basename "$asset") after 3 attempts" >&2
+            return 1
+          }
+          upload_with_retry \
+            "release-assets/ai-cli-cheatsheet-bridge-macos-arm64-v${VERSION}.pkg"
+          upload_with_retry \
+            "release-assets/ai-cli-cheatsheet-bridge-macos-x64-v${VERSION}.pkg"
+          upload_with_retry release-assets/SHA256SUMS
       - name: Re-download and verify repaired release
         env:
           GH_TOKEN: ${{ github.token }}

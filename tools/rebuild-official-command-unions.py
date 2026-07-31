@@ -905,29 +905,29 @@ def primary_option_tokens(
     leading_operands = rule["leadingOperands"] if rule else None
     operands_seen = 0
     while index < len(tokens):
-        token = tokens[index]
-        if token in {"<", ">", ">>", "2>", "2>>", "|", "||", "&&", ";"}:
+        argument = tokens[index]
+        if argument in {"<", ">", ">>", "2>", "2>>", "|", "||", "&&", ";"}:
             break
-        if token == "--":
+        if argument == "--":
             break
-        if token.startswith("--") and len(token) > 2:
-            option = token.split("=", 1)[0]
+        if argument.startswith("--") and len(argument) > 2:
+            option = argument.split("=", 1)[0]
             options.append(option)
-            if rule and option in rule["optionArguments"] and "=" not in token:
+            if rule and option in rule["optionArguments"] and "=" not in argument:
                 index += 1
-        elif token.startswith("-") and token != "-":
-            if allowed_options and token in allowed_options:
-                compact = [token]
+        elif argument.startswith("-") and argument != "-":
+            if allowed_options and argument in allowed_options:
+                compact = [argument]
             elif (
                 allowed_options
-                and re.fullmatch(r"-[A-Za-z0-9]{2,}", token)
-                and all(f"-{letter}" in allowed_options for letter in token[1:])
+                and re.fullmatch(r"-[A-Za-z0-9]{2,}", argument)
+                and all(f"-{letter}" in allowed_options for letter in argument[1:])
             ):
-                compact = [f"-{letter}" for letter in token[1:]]
+                compact = [f"-{letter}" for letter in argument[1:]]
             else:
-                compact = expand_short_option(token) if allowed_options is None else [token]
+                compact = expand_short_option(argument) if allowed_options is None else [argument]
             options.extend(compact)
-            if rule and token in rule["optionArguments"]:
+            if rule and argument in rule["optionArguments"]:
                 index += 1
             elif rule and compact and compact[-1] in rule["optionArguments"]:
                 index += 1

@@ -16,6 +16,7 @@ release without signing credentials actually takes.
 import argparse
 import importlib.util
 import pathlib
+import shutil
 import sys
 
 
@@ -42,16 +43,23 @@ def main():
     assets = load_builder()
     output = pathlib.Path(args.output)
     output.mkdir(parents=True, exist_ok=True)
-    suffix = ".exe" if args.platform == "windows" else ""
-    stub = output / f"aicli-cheatsheet-bridge{suffix}"
-    stub.write_bytes(b"MZ stub payload")
-    stub.chmod(0o755)
-
     if args.platform == "macos":
+        stub = output / "aicli-cheatsheet-bridge-bundle"
+        internal = stub / "_internal"
+        internal.mkdir(parents=True)
+        executable = stub / "aicli-cheatsheet-bridge"
+        shutil.copy2("/usr/bin/true", executable)
+        executable.chmod(0o755)
         produced = assets.build_macos(stub, output, args.version, args.arch, False)
     elif args.platform == "windows":
+        stub = output / "aicli-cheatsheet-bridge.exe"
+        stub.write_bytes(b"MZ stub payload")
+        stub.chmod(0o755)
         produced = assets.build_windows(stub, output, args.version, False)
     else:
+        stub = output / "aicli-cheatsheet-bridge"
+        stub.write_bytes(b"stub payload")
+        stub.chmod(0o755)
         produced = assets.build_linux(stub, output, args.version)
 
     if not produced:

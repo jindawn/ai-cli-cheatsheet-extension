@@ -112,6 +112,22 @@ class InstallerNativeHostTests(unittest.TestCase):
         binary.chmod(0o755)
         return binary
 
+    def _mac_bundle(self, output):
+        bundle = output / "aicli-cheatsheet-bridge-bundle"
+        framework = bundle / "_internal/Python.framework"
+        version = framework / "Versions/3.12"
+        resources = version / "Resources"
+        resources.mkdir(parents=True)
+        (resources / "Info.plist").write_text("<plist/>", encoding="utf-8")
+        (version / "Python").write_bytes(b"\xcf\xfa\xed\xfe python")
+        (framework / "Python").symlink_to("Versions/Current/Python")
+        (framework / "Resources").symlink_to("Versions/Current/Resources")
+        (framework / "Versions/Current").symlink_to("3.12")
+        executable = bundle / "aicli-cheatsheet-bridge"
+        executable.write_bytes(b"\xcf\xfa\xed\xfe bridge")
+        executable.chmod(0o755)
+        return bundle
+
     def _assert_manifests(self, directory, executable):
         for host_name in assets.HOST_NAMES:
             path = directory / f"{host_name}.json"
@@ -127,8 +143,19 @@ class InstallerNativeHostTests(unittest.TestCase):
     def test_macos_payload_registers_store_and_legacy_hosts(self):
         with tempfile.TemporaryDirectory() as directory:
             output = pathlib.Path(directory)
-            with mock.patch.object(assets, "run"):
-                assets.build_macos(self._stub(output), output, "1.8.2", "arm64", False)
+            commands = []
+            with mock.patch.dict(
+                os.environ,
+                {"MACOS_APPLICATION_IDENTITY": "", "MACOS_INSTALLER_IDENTITY": ""},
+                clear=False,
+            ), mock.patch.object(
+                assets,
+                "run",
+                side_effect=lambda args: commands.append([str(value) for value in args]),
+            ):
+                assets.build_macos(
+                    self._mac_bundle(output), output, "1.8.2", "arm64", False
+                )
             root = output / "macos-arm64-root"
             executable = "/Library/Application Support/AI CLI Cheatsheet/aicli-cheatsheet-bridge"
             self._assert_manifests(
@@ -142,6 +169,34 @@ class InstallerNativeHostTests(unittest.TestCase):
             ).read_text(encoding="utf-8")
             for host_name in assets.HOST_NAMES:
                 self.assertIn(f"{host_name}.json", uninstall)
+            installed = root / "Library/Application Support/AI CLI Cheatsheet"
+            self.assertTrue((installed / "_internal").is_dir())
+            self.assertTrue(
+                (installed / "_internal/Python.framework/Versions/Current").is_symlink()
+            )
+            signing = [
+                command for command in commands
+                if command[0] == "codesign" and "--sign" in command
+            ]
+            self.assertTrue(signing)
+            self.assertTrue(all("-" in command for command in signing))
+            framework_index = next(
+                index for index, command in enumerate(signing)
+                if command[-1].endswith("Python.framework")
+            )
+            bridge_index = next(
+                index for index, command in enumerate(signing)
+                if command[-1].endswith("/aicli-cheatsheet-bridge")
+            )
+            self.assertLess(framework_index, bridge_index)
+
+    def test_macos_rejects_the_old_onefile_payload(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = pathlib.Path(directory)
+            with self.assertRaisesRegex(RuntimeError, "onedir"):
+                assets.build_macos(
+                    self._stub(output), output, "1.8.2", "arm64", False
+                )
 
     def test_linux_payload_registers_store_and_legacy_hosts(self):
         with tempfile.TemporaryDirectory() as directory:

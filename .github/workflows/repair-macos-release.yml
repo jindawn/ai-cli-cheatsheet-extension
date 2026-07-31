@@ -1,0 +1,160 @@
+name: Repair macOS bridge release assets
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Existing mutable release tag to repair
+        required: true
+        default: v1.8.2
+        type: string
+      confirmation:
+        description: Type replace-v1.8.2-macos-assets for the default tag
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: repair-macos-bridge-${{ inputs.release_tag }}
+  cancel-in-progress: false
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.release.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Validate repair target and current release
+        id: release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ inputs.release_tag }}
+          CONFIRMATION: ${{ inputs.confirmation }}
+        run: |
+          if ! [[ "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "release_tag must be v<major>.<minor>.<patch>" >&2
+            exit 1
+          fi
+          if [ "$CONFIRMATION" != "replace-${RELEASE_TAG}-macos-assets" ]; then
+            echo "confirmation must equal replace-${RELEASE_TAG}-macos-assets" >&2
+            exit 1
+          fi
+          VERSION="${RELEASE_TAG#v}"
+          node tools/check-release.js --tag "$RELEASE_TAG"
+          if [ "$(gh release view "$RELEASE_TAG" --json isImmutable --jq '.isImmutable')" != "false" ]; then
+            echo "$RELEASE_TAG is immutable and cannot be repaired in place" >&2
+            exit 1
+          fi
+          mkdir existing-release
+          gh release download "$RELEASE_TAG" --dir existing-release
+          if [ -e existing-release/SHA256SUMS.asc ]; then
+            echo "Refusing to invalidate an existing signed checksum manifest" >&2
+            exit 1
+          fi
+          node tools/verify-release-assets.js \
+            --directory existing-release \
+            --version "$VERSION" \
+            --check
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+  build-macos:
+    needs: preflight
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: macos-15
+            arch: arm64
+          - runner: macos-15-intel
+            arch: x64
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build directory-based bridge
+        env:
+          PROVIDER_CATALOG_SIGNING_KEY: ${{ secrets.PROVIDER_CATALOG_SIGNING_KEY }}
+        run: |
+          if [ -n "$PROVIDER_CATALOG_SIGNING_KEY" ]; then
+            python tools/provider-catalog.py write-public-key \
+              --output shared/provider-catalog-public-key.json
+          fi
+          python -m pip install pyinstaller==6.21.0
+          python -m PyInstaller native-host/bridge.spec \
+            --distpath dist/bridge-bin \
+            --workpath dist/bridge-work \
+            --noconfirm
+      - name: Package and verify macOS bridge
+        env:
+          VERSION: ${{ needs.preflight.outputs.version }}
+        run: |
+          python tools/build-bridge-assets.py \
+            --platform macos \
+            --arch "${{ matrix.arch }}" \
+            --binary dist/bridge-bin/aicli-cheatsheet-bridge \
+            --output dist/bridge-assets \
+            --version "$VERSION"
+          python tools/verify-macos-bridge-pkg.py \
+            --package "dist/bridge-assets/ai-cli-cheatsheet-bridge-macos-${{ matrix.arch }}-v${VERSION}.pkg" \
+            --version "$VERSION"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: repaired-macos-${{ matrix.arch }}
+          path: dist/bridge-assets/ai-cli-cheatsheet-bridge-macos-*.pkg
+          if-no-files-found: error
+
+  replace-assets:
+    needs: [preflight, build-macos]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: repaired-macos-*
+          path: repaired
+          merge-multiple: true
+      - name: Replace only macOS installers and checksum manifest
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ inputs.release_tag }}
+          VERSION: ${{ needs.preflight.outputs.version }}
+        run: |
+          mkdir release-assets
+          gh release download "$RELEASE_TAG" --dir release-assets
+          node tools/verify-release-assets.js \
+            --directory release-assets \
+            --version "$VERSION" \
+            --check
+          cp "repaired/ai-cli-cheatsheet-bridge-macos-arm64-v${VERSION}.pkg" release-assets/
+          cp "repaired/ai-cli-cheatsheet-bridge-macos-x64-v${VERSION}.pkg" release-assets/
+          node tools/verify-release-assets.js \
+            --directory release-assets \
+            --version "$VERSION"
+          gh release upload "$RELEASE_TAG" \
+            "release-assets/ai-cli-cheatsheet-bridge-macos-arm64-v${VERSION}.pkg" \
+            "release-assets/ai-cli-cheatsheet-bridge-macos-x64-v${VERSION}.pkg" \
+            release-assets/SHA256SUMS \
+            --clobber
+      - name: Re-download and verify repaired release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ inputs.release_tag }}
+          VERSION: ${{ needs.preflight.outputs.version }}
+        run: |
+          mkdir verified-release
+          gh release download "$RELEASE_TAG" --dir verified-release
+          node tools/verify-release-assets.js \
+            --directory verified-release \
+            --version "$VERSION" \
+            --check

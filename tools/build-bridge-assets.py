@@ -16,6 +16,16 @@ STORE_EXTENSION_ID = "jdiopjiebnamikpcknmnpahhlokccgjj"
 LEGACY_HOST_NAME = "com.aicli.cheatsheet_updater"
 STORE_HOST_NAME = "com.aicli.cheatsheet.store_bridge"
 HOST_NAMES = (STORE_HOST_NAME, LEGACY_HOST_NAME)
+MACHO_MAGICS = {
+    b"\xfe\xed\xfa\xce",
+    b"\xce\xfa\xed\xfe",
+    b"\xfe\xed\xfa\xcf",
+    b"\xcf\xfa\xed\xfe",
+    b"\xca\xfe\xba\xbe",
+    b"\xbe\xba\xfe\xca",
+    b"\xca\xfe\xba\xbf",
+    b"\xbf\xba\xfe\xca",
+}
 
 
 def run(args):
@@ -40,7 +50,54 @@ def write_json(path, value):
     path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
+def is_macho(path):
+    if path.is_symlink() or not path.is_file():
+        return False
+    try:
+        with path.open("rb") as handle:
+            return handle.read(4) in MACHO_MAGICS
+    except OSError:
+        return False
+
+
+def codesign_arguments(identity):
+    arguments = ["codesign", "--force"]
+    if identity != "-":
+        arguments.extend(["--options", "runtime", "--timestamp"])
+    arguments.extend(["--sign", identity])
+    return arguments
+
+
+def sign_macos_payload(install_dir, bridge, identity):
+    """Sign every native dependency, then seal framework bundles and the host."""
+    native_files = sorted(
+        (path for path in install_dir.rglob("*") if is_macho(path) and path != bridge),
+        key=lambda path: len(path.parts),
+        reverse=True,
+    )
+    for path in native_files:
+        run([*codesign_arguments(identity), path])
+
+    frameworks = sorted(
+        (path for path in install_dir.rglob("*.framework") if path.is_dir()),
+        key=lambda path: len(path.parts),
+        reverse=True,
+    )
+    for framework in frameworks:
+        run([*codesign_arguments(identity), framework])
+
+    run([*codesign_arguments(identity), bridge])
+
+    for path in native_files:
+        run(["codesign", "--verify", "--strict", path])
+    for framework in frameworks:
+        run(["codesign", "--verify", "--deep", "--strict", framework])
+    run(["codesign", "--verify", "--deep", "--strict", bridge])
+
+
 def build_macos(binary, output, version, arch, require_signing):
+    if not binary.is_dir():
+        raise RuntimeError("macOS bridge payload must be a PyInstaller onedir directory")
     work = output / f"macos-{arch}-root"
     if work.exists():
         shutil.rmtree(work)
@@ -48,8 +105,10 @@ def build_macos(binary, output, version, arch, require_signing):
     chrome_dir = work / "Library" / "Google" / "Chrome" / "NativeMessagingHosts"
     edge_dir = work / "Library" / "Microsoft" / "Edge" / "NativeMessagingHosts"
     install_dir.mkdir(parents=True)
+    shutil.copytree(binary, install_dir, dirs_exist_ok=True, symlinks=True)
     bridge = install_dir / "aicli-cheatsheet-bridge"
-    shutil.copy2(binary, bridge)
+    if not bridge.is_file():
+        raise RuntimeError("macOS bridge payload is missing aicli-cheatsheet-bridge")
     bridge.chmod(0o755)
     executable = "/Library/Application Support/AI CLI Cheatsheet/aicli-cheatsheet-bridge"
     for host_name in HOST_NAMES:
@@ -75,8 +134,7 @@ def build_macos(binary, output, version, arch, require_signing):
     installer_identity = os.environ.get("MACOS_INSTALLER_IDENTITY")
     if require_signing and (not app_identity or not installer_identity):
         raise RuntimeError("macOS release requires application and installer signing identities")
-    if app_identity:
-        run(["codesign", "--force", "--options", "runtime", "--timestamp", "--sign", app_identity, bridge])
+    sign_macos_payload(install_dir, bridge, app_identity or "-")
     asset = output / f"ai-cli-cheatsheet-bridge-macos-{arch}-v{version}.pkg"
     command = ["pkgbuild", "--root", work, "--identifier", "com.aicli.cheatsheet.bridge", "--version", version]
     if installer_identity:
@@ -221,7 +279,9 @@ def main():
     args = parser.parse_args()
     if not re.fullmatch(r"\d+\.\d+\.\d+", args.version):
         parser.error("--version must be semver x.y.z")
-    if not args.binary.is_file():
+    if args.platform == "macos" and not args.binary.is_dir():
+        parser.error("--binary must be a PyInstaller onedir directory on macOS")
+    if args.platform != "macos" and not args.binary.is_file():
         parser.error("--binary does not exist")
     args.output.mkdir(parents=True, exist_ok=True)
     if args.platform == "macos":

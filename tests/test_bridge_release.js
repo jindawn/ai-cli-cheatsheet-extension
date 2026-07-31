@@ -205,6 +205,12 @@ assert(
   "the repair workflow must replace only both macOS packages and their checksum manifest",
 );
 assert(
+  repairWorkflow.includes("upload_with_retry()")
+    && repairWorkflow.includes("for attempt in 1 2 3")
+    && repairWorkflow.includes("after 3 attempts"),
+  "each mutable Release asset replacement must retry transient GitHub API failures independently",
+);
+assert(
   !repairWorkflow.includes("publish-chrome-store")
     && !repairWorkflow.includes("ai-cli-cheatsheet-store-v${VERSION}.zip"),
   "repairing release installers must not upload or rebuild the Chrome Web Store package",

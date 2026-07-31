@@ -70,7 +70,7 @@ jobs:
         run: node tools/check-release.js --tag "$GITHUB_REF_NAME"
       - name: Check JavaScript syntax
         run: |
-          printf '%s\0' popup.js popup-state.js popup-render.js popup-toast.js popup-dialogs.js popup-loader.js popup-tasks.js dynamic-data.js distribution.js pinyin-initials.js background.js product-core.js quality-core.js usage-examples.js tools/package-extension.js tools/audit-release-secrets.js tools/publish-chrome-store.js tools/capture-store-screenshot.js tools/verify-release-assets.js | xargs -0 -n1 node --check
+          printf '%s\0' popup.js popup-state.js popup-render.js popup-toast.js popup-dialogs.js popup-loader.js popup-tasks.js dynamic-data.js distribution.js pinyin-initials.js background.js product-core.js quality-core.js usage-examples.js tools/package-extension.js tools/audit-release-secrets.js tools/check-chrome-store-config.js tools/publish-chrome-store.js tools/capture-store-screenshot.js tools/verify-release-assets.js | xargs -0 -n1 node --check
           find data enrichments -name '*.js' -print0 | xargs -0 -n1 node --check
       - name: Validate data and application behavior
         run: |
@@ -338,31 +338,22 @@ jobs:
     permissions:
       contents: read
     steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
       - name: Check Chrome Web Store configuration
         id: cws
         env:
-          PUBLISHER_ID: ${{ vars.CWS_PUBLISHER_ID }}
-          EXTENSION_ID: ${{ vars.CWS_EXTENSION_ID }}
+          CWS_MANUAL_UPLOAD: ${{ vars.CWS_MANUAL_UPLOAD }}
+          CWS_PUBLISHER_ID: ${{ vars.CWS_PUBLISHER_ID }}
+          CWS_EXTENSION_ID: ${{ vars.CWS_EXTENSION_ID }}
           CWS_SERVICE_ACCOUNT_JSON: ${{ secrets.CWS_SERVICE_ACCOUNT_JSON }}
           # Gate on whether an installer exists at all, not on whether it is
           # signed: a store build that advertises an unsigned installer still
           # gives users a working way to enable maintenance.
           INSTALLER_STATE: ${{ needs.github-release.outputs.installer_state }}
-        run: |
-          if [ "$INSTALLER_STATE" = "none" ]; then
-            echo "No bridge installer was produced; refusing to publish a store build without a working install path." >&2
-            exit 1
-          fi
-          test -n "$PUBLISHER_ID"
-          test "$EXTENSION_ID" = "jdiopjiebnamikpcknmnpahhlokccgjj"
-          test -n "$CWS_SERVICE_ACCOUNT_JSON"
-          echo "enabled=true" >> "$GITHUB_OUTPUT"
-      - uses: actions/checkout@v4
-        if: steps.cws.outputs.enabled == 'true'
-      - uses: actions/setup-node@v4
-        if: steps.cws.outputs.enabled == 'true'
-        with:
-          node-version: "22"
+        run: node tools/check-chrome-store-config.js
       - name: Download and verify published GitHub Release assets
         if: steps.cws.outputs.enabled == 'true'
         env:

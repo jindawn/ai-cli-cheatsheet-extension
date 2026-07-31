@@ -63,8 +63,9 @@ Chrome Web Store 版随扩展更新内置数据。查询、收藏、偏好和个
 
 创建名为 `chrome-web-store` 的 Environment，并配置：
 
-- Secret `CWS_SERVICE_ACCOUNT_JSON`：已在 Chrome Web Store 开发者后台授权的 Google Cloud 服务账号 JSON。
+- Variable `CWS_MANUAL_UPLOAD`：设为 `true` 时只生成并校验商店 ZIP，由维护者手动上传；设为 `false` 或留空时启用自动提交并执行下列凭据门禁。
+- Secret `CWS_SERVICE_ACCOUNT_JSON`：自动提交模式必需，内容为已在 Chrome Web Store 开发者后台授权的 Google Cloud 服务账号 JSON。
 - Variable `CWS_PUBLISHER_ID`：Chrome Web Store Publisher ID。
 - Variable `CWS_EXTENSION_ID`：首次创建的扩展条目 ID。
 
-后续 `vX.Y.Z` 标签会自动上传包并以 `DEFAULT_PUBLISH`、100% 部署比例提交审核，同时保留审核并阻断警告。审核通过后会自动全量发布，无需在开发者后台再次点击发布。发布环境缺少 Publisher ID、正式扩展 ID 或服务账号密钥时，流水线会直接失败，避免绿色跳过造成误判。
+手动模式会在全平台安装包和商店 ZIP 校验完成后正常结束，不调用 Chrome Web Store API。自动模式会以 `DEFAULT_PUBLISH`、100% 部署比例提交审核，同时保留审核并阻断警告；审核通过后自动全量发布。自动模式缺少 Publisher ID、正式扩展 ID 或服务账号密钥时，流水线会直接失败，避免绿色跳过造成误判。
